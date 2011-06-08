@@ -4,7 +4,7 @@ Date: 2011-06-08
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
-Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam
+Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, spatstat, maptools
 Suggests: RColorBrewer, misc3d
 Imports: sp, optpart, vegan
 Description: S4 classes for phytosociological data. The classes document
@@ -23,7 +23,4 @@ Collate: AAA.R Vegsoup-Internal.R
          VegsoupDataPartition-EvenEvenMoreMethods.R
          Class-VegsoupDataPartitionFidelity.R
          VegsoupDataPartitionFidelity-Methods.R
-         Class-VegsoupDataLaTex.R VegsoupDataLaTex-Methods.R
-         Class-VegsoupDataLatexSites.R
-         Class-VegsoupDataLatexSpecies.R
 Respository: R-Forge
