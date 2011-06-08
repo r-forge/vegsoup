@@ -1,9 +1,7 @@
-setwd("~/Documents/Rpackages/vegbase")
+setwd("~/Documents/vegsoup/pkg/R")
 
 objs <- system("ls", intern = TRUE)
-objs <- objs[objs != "everythingelse"]
-objs <- objs[objs != "vegbase"]
 
-package.skeleton("vegbase", code_files = objs,
-	path = "~/Documents/Rpackages/vegbase",
+package.skeleton("vegsoup", code_files = objs,
+	path = "~/Desktop",
 	namespace = TRUE, force = TRUE)
