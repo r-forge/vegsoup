@@ -1,0 +1,9 @@
+pr	parawani river, village west: Orojolari, east Apakali, south Satkhe
+mt	Madatapha
+gl	Gorelovka
+ag	Abuli Gyol
+sg	Saghamo
+vg	Avchala Gyol	
+
+
+

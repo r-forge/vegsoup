@@ -1,0 +1,16 @@
+"plot";"variable";"value";"comment"
+"fv01";"logitude";16,101379;
+"fv01";"latitude";47,818451;
+"fv01";"precision";20;
+"fv01";"cov";80;
+"fv01";"hcov";80;
+"fv01";"tcov";50;
+"fv01";"htl";5;
+"fv01";"mcov";1;
+"fv01";"hhl2";0,05;
+"fv01";"hhl1";0,3;
+"fv01";"location";"Fischauer Vorberge, Burgruine Emmerberg";
+"fv01";"date";"30.05.2011";
+"fv01";"syntaxon";"Seselietum austriaci";
+"fv01";"rupi";"yes";"Rupicaprina rupicaprina dung"
+"fv01";"location.verbose";"on top of old limestopne wall";

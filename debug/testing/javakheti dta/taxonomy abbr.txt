@@ -1,0 +1,244 @@
+999 ambl radi
+999 brac mild
+154 brac rivu
+155 bryu arge
+156 bryu capi
+157 bryu pseu
+158 bryu spec1
+159 bryu spec2
+160 bryu weig
+999 call cord
+161 call cusp
+162 call lind
+163 call rich
+999 camp poly
+164 camp stel
+165 chil pall
+166 clim dend
+167 dich spec
+168 dicr bonj
+999 dicr spec
+169 drep adun
+171 hylo pyre
+999 hypn lind
+173 pell nees
+174 phil font
+175 phol spec
+176 plag dent
+177 plag elli
+178 poly juni
+179 poly peri
+180 poly spec
+181 poly stri
+182 rhiz magn
+183 rhiz punc
+999 ricc cana
+184 ricc flui
+185 scap irri
+186 spha fall
+187 spha fimb
+188 spha flex
+189 spha girg
+190 spha plat
+191 spha squa
+192 spha subs
+193 spha tere
+194 stram stra
+999 thui assi
+195 warn exan
+196 warn flui
+  1 agro plan
+204 agro stol
+  2 alch spec
+  3 alis plan
+215 alli spec
+  4 alop aequ
+NA alop spec
+  5 anth odor
+  6 anth spec
+220 arte arme
+  7 aula palu
+  8 batr tric
+  9 beck eruc
+ 10 bide trip
+235 blys comp
+ 11 brom vari
+211 buto umbe
+999 cala arun
+205 cala cane
+222 cala epig
+ 12 cala pseu
+NA cala spec
+ 13 cali palu
+ 14 calt poly
+ 15 card ulig
+ 16 care acut
+ 18 care cesp
+ 19 care cine
+ 20 care dian
+ 21 care dist
+ 22 care elat
+ 23 care hart
+201 care helo
+ 24 care hirt
+234 care host
+ 25 care huet
+ 26 care lach
+ 27 care lasi
+ 28 care oreo
+ 29 care pall
+ 30 care pani
+ 31 care rost
+ 32 care tran
+ 33 care vesi
+229 care vulp
+ 34 caru carv
+ 35 caru cauc
+ 36 cata aqua
+228 cent triu
+ 37 cera cera
+237 cera holo
+ 38 cera purp
+ 39 cham angu
+ 40 chen albu
+ 41 cirs arve
+999 cirs canu
+ 42 cirs oblo
+236 cirs simp
+206 cirs spec
+ 43 coma palu
+216 dact glom
+ 44 dact urve
+ 45 desc cesp
+202 elat alsi
+203 eleo acic
+ 46 eleo palu
+ 47 eleo quin
+ 48 eleo unig
+ 49 elyt repe
+ 50 epil anag
+ 51 epil palu
+ 52 epil spec1
+ 53 epil spec2
+ 54 epil tetr
+ 55 equi fluv
+ 56 erio vagi
+ 57 euph cauc
+ 58 fest ovin
+ 59 fest prat
+ 60 fest rubr
+ 61 fest rupr
+ 62 fest spec
+ 63 fili vulg
+ 64 gali bore
+999 gali palu
+ 66 gent bieb
+ 67 gent pyre
+ 68 gera spec1
+ 69 gera spec2
+ 70 geum riva
+ 71 glyc plic
+ 72 gree alga
+ 73 gymn cono
+ 74 heli adzh
+ 75 hier spec
+ 76 hord viol
+ 77 hype cauc
+ 78 inul brit
+ 79 iris sibi
+225 iris spec
+ 80 junc arti
+208 junc atra
+219 junc bufo
+233 junc comp
+ 81 junc effu
+ 82 junc fili
+ 83 junc infl
+ 84 lact seri
+ 85 lemn mino
+ 86 lemn tris
+ 87 limo aqua
+ 88 loli pere
+ 89 lotu cauc
+ 90 luzu pseu
+ 91 lysi vert
+232 lysi vulg
+ 92 ment arve
+ 93 ment long
+ 94 meny trif
+ 95 myos scor
+ 96 myos sylv
+230 myri vert
+ 97 nard stri
+231 nymp pelt
+172 omal supi
+ 98 pedi cauc
+ 99 phal arun
+100 phle alpi
+101 phle prat
+102 poa alpi
+103 poa palu
+224 poa prat
+104 poa triv
+105 poly amph
+106 poly carn
+107 poly comm
+999 pota alpi
+108 pota cris
+109 pota gram
+110 pota nata
+112 pota pusi
+207 pota spec
+113 pote anse
+114 pote erec
+115 pote supi
+200 prim auri
+116 prun vulg
+117 pyre bals
+197 pyre spec
+238 ranu acri
+118 ranu flam
+119 ranu oreo
+120 ranu repe
+121 rhin mino
+122 rori aust
+123 rori palu
+124 rume angu
+213 rume spec
+125 sali arme
+126 sali peta
+127 sali tria
+128 sang offi
+129 sani unci
+130 saxi cymb
+209 scir lacu
+131 scir sylv
+132 scir tabe
+133 scol fest
+134 scut gale
+135 sibb parv
+136 spar emer
+137 spar mini
+138 stel pers
+139 swer iber
+140 leuc vulg
+210 tara rude
+141 tara stev
+226 thal simp
+223 sene spec
+142 thla huet
+217 trif hybr
+143 trif prat
+144 trif repe
+145 trif spad
+238 trig palu
+146 trip cauc
+147 typh angu
+148 utri vulg
+999 vale offi
+149 vero anag
+150 vero scut
+151 vici gros
+152 viol mont
+153 viol spec1
+227 viol spec2

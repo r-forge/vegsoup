@@ -1,0 +1,18 @@
+"plot";"variable";"value";"comment"
+"ba01";"cov";25;
+"ba01";"hcov";25;
+"ba01";"scov";5;
+"ba01";"mcov";0;
+"ba01";"exp";"SW";
+"ba01";"slope";90;
+"ba01";"rock";75;
+"ba01";"hsl";1;
+"ba01";"hhl1";0,7;
+"ba01";"hhl2";0,3;
+"ba01";"plx";4;
+"ba01";"ply";6;
+"ba01";"date";08.06.2009;
+"ba01";"longitude";47,690582;
+"ba01";"latitude";13,075533;
+"ba01";"precision";50;
+"ba01";"location";"Großer Barmstein";

@@ -1,0 +1,482 @@
+"plot";"variable";"value"
+"cr01";"cov";"15"
+"cr02";"cov";"35"
+"cr03";"cov";"65"
+"cr04";"cov";"60"
+"cr05";"cov";"90"
+"cr06";"cov";"50"
+"cr07";"cov";"10"
+"cr09";"cov";"90"
+"cr10";"cov";"90"
+"cr11";"cov";"100"
+"cr08";"cov";"90"
+"cr12";"cov";"25"
+"cr13";"cov";"70"
+"cr14";"cov";"85"
+"cr15";"cov";"95"
+"cr16";"cov";"70"
+"cr17";"cov";"90"
+"cr18";"cov";"60"
+"cr19";"cov";"30"
+"cr20";"cov";"70"
+"cr21";"cov";"45"
+"cr22";"cov";"80"
+"cr23";"cov";"100"
+"cr24";"cov";"15"
+"cr25";"cov";"80"
+"cr26";"cov";"90"
+"cr27";"cov";"90"
+"cr01";"date";29.03.2011
+"cr02";"date";29.03.2011
+"cr03";"date";29.03.2011
+"cr04";"date";30.03.2011
+"cr05";"date";30.03.2011
+"cr06";"date";30.03.2011
+"cr07";"date";31.03.2011
+"cr09";"date";01.04.2011
+"cr10";"date";01.04.2011
+"cr11";"date";01.04.2011
+"cr08";"date";01.04.2011
+"cr12";"date";01.04.2011
+"cr13";"date";01.04.2011
+"cr14";"date";01.04.2011
+"cr15";"date";03.04.2011
+"cr16";"date";03.04.2011
+"cr17";"date";03.04.2011
+"cr18";"date";04.04.2011
+"cr19";"date";04.04.2011
+"cr20";"date";04.04.2011
+"cr21";"date";05.04.2011
+"cr22";"date";05.04.2011
+"cr23";"date";06.04.2011
+"cr24";"date";07.05.2011
+"cr25";"date";07.04.2011
+"cr26";"date";07.04.2011
+"cr27";"date";07.04.2011
+"cr01";"exp";"F"
+"cr02";"exp";"F"
+"cr03";"exp";"F"
+"cr04";"exp";"SW"
+"cr05";"exp";"F"
+"cr06";"exp";"F"
+"cr07";"exp";"F"
+"cr09";"exp";"F"
+"cr10";"exp";"F"
+"cr11";"exp";"F"
+"cr08";"exp";"NE"
+"cr12";"exp";"F"
+"cr13";"exp";"F"
+"cr14";"exp";"F"
+"cr15";"exp";"F"
+"cr16";"exp";"F"
+"cr17";"exp";"E"
+"cr18";"exp";"W"
+"cr19";"exp";"N"
+"cr20";"exp";"S"
+"cr21";"exp";"SW"
+"cr22";"exp";"F"
+"cr23";"exp";"F"
+"cr24";"exp";"S"
+"cr25";"exp";"S"
+"cr26";"exp";"F"
+"cr27";"exp";"NW"
+"cr01";"hcov";"15"
+"cr02";"hcov";"35"
+"cr03";"hcov";"65"
+"cr04";"hcov";"60"
+"cr05";"hcov";"90"
+"cr06";"hcov";"50"
+"cr07";"hcov";"10"
+"cr09";"hcov";"90"
+"cr10";"hcov";"90"
+"cr11";"hcov";"100"
+"cr08";"hcov";"45"
+"cr12";"hcov";"25"
+"cr13";"hcov";"70"
+"cr14";"hcov";"85"
+"cr15";"hcov";"95"
+"cr16";"hcov";"70"
+"cr17";"hcov";"80"
+"cr18";"hcov";"5"
+"cr19";"hcov";"25"
+"cr20";"hcov";"70"
+"cr21";"hcov";"15"
+"cr22";"hcov";"75"
+"cr23";"hcov";"100"
+"cr24";"hcov";"10"
+"cr25";"hcov";"80"
+"cr26";"hcov";"90"
+"cr27";"hcov";"65"
+"cr01";"hhl1";"1"
+"cr02";"hhl1";"3"
+"cr03";"hhl1";"3"
+"cr04";"hhl1";"1"
+"cr05";"hhl1";"1"
+"cr06";"hhl1";"1"
+"cr07";"hhl1";"29-03-2011"
+"cr09";"hhl1";"15"
+"cr10";"hhl1";"10"
+"cr11";"hhl1";"15"
+"cr08";"hhl1";"15"
+"cr12";"hhl1";"3"
+"cr13";"hhl1";"15"
+"cr14";"hhl1";"3"
+"cr15";"hhl1";"20"
+"cr16";"hhl1";"10"
+"cr17";"hhl1";"10"
+"cr18";"hhl1";"1"
+"cr19";"hhl1";"10"
+"cr20";"hhl1";"5"
+"cr21";"hhl1";"2"
+"cr22";"hhl1";"3"
+"cr23";"hhl1";"80"
+"cr24";"hhl1";"5"
+"cr25";"hhl1";"10"
+"cr26";"hhl1";"15"
+"cr27";"hhl1";"5"
+"cr01";"hhl2";"3"
+"cr02";"hhl2";"7"
+"cr03";"hhl2";"8"
+"cr04";"hhl2";"3"
+"cr05";"hhl2";"3"
+"cr06";"hhl2";"4"
+"cr07";"hhl2";"5"
+"cr09";"hhl2";"30"
+"cr10";"hhl2";"25"
+"cr11";"hhl2";"30"
+"cr08";"hhl2";"80"
+"cr12";"hhl2";"30"
+"cr13";"hhl2";"80"
+"cr14";"hhl2";"5"
+"cr15";"hhl2";"70"
+"cr16";"hhl2";"75"
+"cr17";"hhl2";"60"
+"cr18";"hhl2";"5"
+"cr19";"hhl2";"30"
+"cr20";"hhl2";"30"
+"cr21";"hhl2";"15"
+"cr22";"hhl2";"15"
+"cr23";"hhl2";"160"
+"cr24";"hhl2";"35"
+"cr25";"hhl2";"25"
+"cr26";"hhl2";"40"
+"cr27";"hhl2";"50"
+"cr08";"hsl1";"70"
+"cr17";"hsl1";"0.5"
+"cr18";"hsl1";"10"
+"cr19";"hsl1";"10"
+"cr21";"hsl1";"20"
+"cr22";"hsl1";"30"
+"cr24";"hsl1";"40"
+"cr27";"hsl1";"20"
+"cr08";"hsl2";"100"
+"cr17";"hsl2";"1"
+"cr18";"hsl2";"25"
+"cr19";"hsl2";"50"
+"cr21";"hsl2";"220"
+"cr22";"hsl2";"120"
+"cr24";"hsl2";"50"
+"cr27";"hsl2";"60"
+"cr01";"ink";"0"
+"cr02";"ink";"0"
+"cr03";"ink";"0"
+"cr04";"ink";"5"
+"cr05";"ink";"0"
+"cr06";"ink";"0"
+"cr07";"ink";"0"
+"cr09";"ink";"0"
+"cr10";"ink";"0"
+"cr11";"ink";"0"
+"cr08";"ink";"10"
+"cr12";"ink";"0"
+"cr13";"ink";"0"
+"cr14";"ink";"0"
+"cr15";"ink";"0"
+"cr16";"ink";"0"
+"cr17";"ink";"0"
+"cr18";"ink";"10"
+"cr19";"ink";"85"
+"cr20";"ink";"10"
+"cr21";"ink";"20"
+"cr22";"ink";"0"
+"cr23";"ink";"0"
+"cr24";"ink";"5"
+"cr25";"ink";"3"
+"cr26";"ink";"0"
+"cr27";"ink";"25"
+"cr04";"location";"Ag. Georgios"
+"cr05";"location";"near ruines of settlement"
+"cr06";"location";"terrace field below Ambelos"
+"cr09";"location";"terrace field below Kastri"
+"cr10";"location";"terrace field below Kastri"
+"cr11";"location";"terrace field below Kastri"
+"cr08";"location";"Gavdos Prinzess"
+"cr12";"location";"clay pit below Kastri"
+"cr13";"location";"clay pit below Kastri"
+"cr14";"location";"Natura 2000 site Karst pools in Kastri"
+"cr15";"location";"disturbed site in phrygana, valley below Antiskari"
+"cr16";"location";"disturbed site in phrygana, valley below Antiskari"
+"cr17";"location";"phrygana E of Antiskari"
+"cr18";"location";"near small Katarkt "
+"cr19";"location";"rock wall small Katarakt"
+"cr20";"location";"stony pasture"
+"cr21";"location";"heavily grazed stony phrygana above Kourtos"
+"cr22";"location";"terrace field, gap in phyrgana above Kourtos"
+"cr23";"location";"wetland in abandoned water resevoir"
+"cr24";"location";"edge of olive grove, margin of stone wall"
+"cr25";"location";"old terrace field"
+"cr26";"location";"cultivated terrace field"
+"cr27";"location";"gap in phrygana S of Mianmou"
+"cr01";"mcov";"0"
+"cr02";"mcov";"0"
+"cr03";"mcov";"0"
+"cr04";"mcov";"0"
+"cr05";"mcov";"0"
+"cr06";"mcov";"0"
+"cr07";"mcov";"0"
+"cr09";"mcov";"0"
+"cr10";"mcov";"15"
+"cr11";"mcov";"0"
+"cr08";"mcov";"3"
+"cr12";"mcov";"0"
+"cr13";"mcov";"0"
+"cr14";"mcov";"0"
+"cr15";"mcov";"0"
+"cr16";"mcov";"0"
+"cr17";"mcov";"0"
+"cr18";"mcov";"0"
+"cr19";"mcov";"0"
+"cr20";"mcov";"0"
+"cr21";"mcov";"3"
+"cr22";"mcov";"1"
+"cr23";"mcov";"0"
+"cr24";"mcov";"0"
+"cr25";"mcov";"0"
+"cr26";"mcov";"0"
+"cr27";"mcov";"40"
+"cr01";"plsx";"1"
+"cr02";"plsx";"1"
+"cr03";"plsx";"1"
+"cr04";"plsx";"1"
+"cr05";"plsx";"1"
+"cr06";"plsx";"1"
+"cr07";"plsx";"1"
+"cr09";"plsx";"2"
+"cr10";"plsx";"2"
+"cr11";"plsx";"2"
+"cr08";"plsx";"5"
+"cr12";"plsx";"2"
+"cr13";"plsx";"2"
+"cr14";"plsx";"0.5"
+"cr15";"plsx";"2"
+"cr16";"plsx";"2"
+"cr17";"plsx";"2"
+"cr18";"plsx";"2"
+"cr19";"plsx";"2"
+"cr20";"plsx";"2"
+"cr21";"plsx";"2"
+"cr22";"plsx";"2"
+"cr23";"plsx";"2"
+"cr24";"plsx";"2"
+"cr25";"plsx";"2"
+"cr26";"plsx";"2"
+"cr27";"plsx";"2"
+"cr01";"plsy";"1"
+"cr02";"plsy";"1"
+"cr03";"plsy";"1"
+"cr04";"plsy";"1"
+"cr05";"plsy";"1"
+"cr06";"plsy";"1"
+"cr07";"plsy";"1"
+"cr09";"plsy";"2"
+"cr10";"plsy";"2"
+"cr11";"plsy";"2"
+"cr08";"plsy";"5"
+"cr12";"plsy";"2"
+"cr13";"plsy";"2"
+"cr14";"plsy";"0.5"
+"cr15";"plsy";"2"
+"cr16";"plsy";"2"
+"cr17";"plsy";"2"
+"cr18";"plsy";"2"
+"cr19";"plsy";"2"
+"cr20";"plsy";"2"
+"cr21";"plsy";"2"
+"cr22";"plsy";"2"
+"cr23";"plsy";"2"
+"cr24";"plsy";"2"
+"cr25";"plsy";"2"
+"cr26";"plsy";"2"
+"cr27";"plsy";"2"
+"cr08";"rock";"10"
+"cr14";"rock";"15"
+"cr18";"rock";"10"
+"cr19";"rock";"70"
+"cr27";"rock";"5"
+"cr08";"scov";"40"
+"cr17";"scov";"25"
+"cr18";"scov";"55"
+"cr19";"scov";"10"
+"cr21";"scov";"20"
+"cr22";"scov";"15"
+"cr24";"scov";"5"
+"cr27";"scov";"15"
+"cr01";"soil";"fine sand"
+"cr02";"soil";"gravel and sand"
+"cr03";"soil";"gravel and sand"
+"cr04";"soil";"sand"
+"cr05";"soil";"gravel and sand"
+"cr06";"soil";"terra rossa"
+"cr07";"soil";"sandy loam"
+"cr09";"soil";"loam with stones"
+"cr10";"soil";"loam with stones"
+"cr11";"soil";"loam with stones"
+"cr08";"soil";"karst"
+"cr12";"soil";"clay"
+"cr13";"soil";"clay"
+"cr14";"soil";"mud"
+"cr15";"soil";"loam"
+"cr16";"soil";"loam"
+"cr17";"soil";"loam"
+"cr18";"soil";"stony loam"
+"cr19";"soil";"?"
+"cr20";"soil";"very stony loam"
+"cr21";"soil";"Very stony loam"
+"cr22";"soil";"stony loam"
+"cr23";"soil";
+"cr24";"soil";"loam"
+"cr25";"soil";"stony loam"
+"cr26";"soil";"terra rossa"
+"cr27";"soil";"gravel and sand"
+"cr01";"stones";"2"
+"cr02";"stones";"15"
+"cr03";"stones";"15"
+"cr04";"stones";"5"
+"cr05";"stones";"5"
+"cr06";"stones";"5"
+"cr07";"stones";"3"
+"cr09";"stones";"10"
+"cr10";"stones";"5"
+"cr11";"stones";"3"
+"cr08";"stones";"1"
+"cr12";"stones";"0"
+"cr13";"stones";"0"
+"cr14";"stones";"0"
+"cr15";"stones";"5"
+"cr16";"stones";"1"
+"cr17";"stones";"3"
+"cr18";"stones";"30"
+"cr21";"stones";"45"
+"cr22";"stones";"3"
+"cr24";"stones";"30"
+"cr25";"stones";"2"
+"cr26";"stones";"3"
+"cr27";"stones";"5"
+"cr01";"latitude";34,81044
+"cr02";"latitude";34,866882
+"cr03";"latitude";34,866781
+"cr04";"latitude";34,860748
+"cr05";"latitude";34,848999
+"cr06";"latitude";34,846359
+"cr07";"latitude";34,827469
+"cr08";"latitude";34,833979
+"cr09";"latitude";34,834808
+"cr10";"latitude";34,835342
+"cr11";"latitude";34,835342
+"cr12";"latitude";34,837941
+"cr13";"latitude";34,837911
+"cr14";"latitude";34,839251
+"cr15";"latitude";34,943268
+"cr16";"latitude";34,9431
+"cr17";"latitude";34,95108
+"cr18";"latitude";34,961921
+"cr19";"latitude";34,961728
+"cr20";"latitude";34,973896
+"cr21";"latitude";35,192459
+"cr22";"latitude";35,18718
+"cr23";"latitude";34,939087
+"cr24";"latitude";35,076218
+"cr25";"latitude";35,075043
+"cr26";"latitude";35,076187
+"cr27";"latitude";34,967926
+"cr01";"longitude";24,115036
+"cr02";"longitude";24,092484
+"cr03";"longitude";24,092626
+"cr04";"longitude";24,074341
+"cr05";"longitude";24,062103
+"cr06";"longitude";24,059387
+"cr07";"longitude";24,10405
+"cr08";"longitude";24,085594
+"cr09";"longitude";24,087479
+"cr10";"longitude";24,087311
+"cr11";"longitude";24,087143
+"cr12";"longitude";24,086706
+"cr13";"longitude";24,086546
+"cr14";"longitude";24,090698
+"cr15";"longitude";24,870743
+"cr16";"longitude";24,870743
+"cr17";"longitude";24,874741
+"cr18";"longitude";25,136873
+"cr19";"longitude";25,137249
+"cr20";"longitude";24,964441
+"cr21";"longitude";24,758804
+"cr22";"longitude";24,744232
+"cr23";"longitude";24,900681
+"cr24";"longitude";24,922791
+"cr25";"longitude";24,921799
+"cr26";"longitude";24,920288
+"cr27";"longitude";24,934708
+"cr01";"location";"souroundings of abandoned settlement, SE of Vatsiana, on the path to Tripiti "
+"cr02";"location";"parking area, E Agios Ioannis beach"
+"cr03";"location";"parking area, E Agios Ioannis beach"
+"cr04";"location";"square in front of chapel, Agios Georgios chapel"
+"cr05";"location";"square in front of abandoned settlement, NNE of Ampleos"
+"cr06";"location";"terrace field, NE of Ampelos"
+"cr07";"location";"picnic area, NE of Vatsiana on the hiking trail to Korfos"
+"cr08";"location";"phrygana, area of 'Gavdos Princess' bungalows, Kastri"
+"cr09";"location";"terrace field, NE Kastri"
+"cr10";"location";"terrace field, NE Kastri"
+"cr11";"location";"terrace field, NE Kastri"
+"cr12";"location";"clay pit, NNE of Kastri"
+"cr13";"location";"clay pit, NNE of Kastri"
+"cr14";"location";"karst pools, NE of Kastri, area E of the street"
+"cr15";"location";"phrygana, valley S of Antiskario"
+"cr16";"location";"phrygana, valley S of Antiskario"
+"cr17";"location";"phrygana, valley S of Antiskario"
+"cr18";"location";"phrygana, gorge N of Treis Ekklisies"
+"cr19";"location";"rockwall, gorge N of Treis Ekklisies"
+"cr20";"location";"terrace field, NNE of Krotos"
+"cr21";"location";"phrygana, ENE of Kouroutes, gravel road from Kouroutes to Rouvas forest"
+"cr22";"location";"phrygana, E of Kouroutes"
+"cr23";"location";"wetland in abandoned cistern, NNE of Gerokampos"
+"cr24";"location";"olive grove, SW of Plouti"
+"cr25";"location";"terrace field SW of Plouti"
+"cr26";"location";"cultivated field, SW of Plouti"
+"cr27";"location";"phrygana, SSW of Miamou"
+"cr01";"precision";10
+"cr02";"precision";10
+"cr03";"precision";10
+"cr04";"precision";10
+"cr05";"precision";10
+"cr06";"precision";10
+"cr07";"precision";10
+"cr08";"precision";10
+"cr09";"precision";10
+"cr10";"precision";10
+"cr11";"precision";10
+"cr12";"precision";10
+"cr13";"precision";10
+"cr14";"precision";10
+"cr15";"precision";10
+"cr16";"precision";10
+"cr17";"precision";10
+"cr18";"precision";10
+"cr19";"precision";10
+"cr20";"precision";10
+"cr21";"precision";10
+"cr22";"precision";10
+"cr23";"precision";10
+"cr24";"precision";10
+"cr25";"precision";10
+"cr26";"precision";10
+"cr27";"precision";10

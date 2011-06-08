@@ -1,0 +1,63 @@
+#	init vegbase
+source("/Users/roli/dropbox/Rpackages/vegsoup/debug/init debug.R")
+
+#	load data	
+setwd("~/dropbox/Rpackages/vegsoup/debug")
+
+load("species.Rdata")
+load("taxonomy.Rdata")
+load("sites.Rdata")
+qry <- Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "frequency"))
+dta <- VegsoupData(qry)
+
+dta <- dta[getDistconnected(dta) == 1,]
+dta <- dta[rowSums(dta) > 3, ]
+dta <- dta[ ,colSums(dta) > 3]
+
+#	ind <- Indspc(dta)
+#	ind <- Indpower(dta)
+#	table(SitesRaw(dta)$substrate)
+#	sub <- dta[dta@sites.raw$substrate == "xyl",]
+
+k = 20
+
+prt <- VegsoupDataPartition(dta, k = k, method = "ward")
+#	prt.isopam <- VegsoupDataPartition(dta, k = k, method = "isopam")
+#	prt.opt <- Optindval(prt)
+
+sig.prt <- Fidelity(prt)
+summary(sig.prt)
+tex <- Latex(sig.prt)
+tex <- Latex(prt, choice = "sites")
+sig.opt <- SigFidelity(prt)
+
+#	Confus(prt, prt.opt)
+#	write.csv2(tab$tab, paste(prt@method, ".csv", sep = ""))
+#	write.csv2(tab.opt$tab, paste(prt@method, "opt.csv", sep = ""))
+
+LaTex.input <- vector("numeric", length = getK(prt.opt))
+
+basic <- c("cov", "plsy", "plsx", "expo", "slope",
+	"date", "location", "elevation", "relief",
+	"vegetation", "substrate", "stones", "tree.diameter",
+	"tree.twig", "bark", "pl.meta")
+basic.tex.names <- c("Deck.", "b", "l", "Exp.", "Ink.",
+	"Datum", "Reg.", "msm", "Rel.", "Veget.", "Subst.",
+	"Steine", "B. Durchm", "Z. Durchm.", "Borke", "Zusatz")
+	
+for (i in 1:k) {
+	tex <- VegsoupDataLaTexPipe(prt, i, "part", type = "free",
+		basic = basic, basic.tex.names = basic.tex.names, pwidth = 10) 
+	LaTex.input[i] <- tex@file.name
+}
+
+LaTex.input <- sapply(LaTex.input,
+	function (x) paste(paste("\\input{", x,"}",
+		sep = ""), "\n\t\\clearpage"))
+
+LaTex.input <- gsub("./Tex/", "", LaTex.input)
+con <- file("./Tex/LaTex_input.tex", "w")
+	writeLines(LaTex.input, con)
+close(con)	
+
