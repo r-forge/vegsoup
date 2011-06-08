@@ -15,17 +15,18 @@ License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/
 LazyLoad: yes
 Collate: Class-Vegsoup.R Vegsoup-Methods.R
-	Class-VegsoupData.R VegsoupData-Methods.R
-	Class-VegsoupDataPartition.R VegsoupDataPartition-Methods.R
-	VegsoupDataPartition-MoreMethods.R
-	VegsoupDataPartition-EvenMoreMethods.R
-	VegsoupDataPartition-EvenEvenMoreMethods.R
-	Class-VegsoupDataPartitionFidelity.R
-	VegsoupDataPartitionFidelity-Methods.R
-	Class-VegsoupDataLaTex.R
-	Class-VegsoupDataLatexSites.R
-	Class-VegsoupDataLatexSpecies.R
+         Class-VegsoupData.R VegsoupData-Methods.R
+         Class-VegsoupDataPartition.R VegsoupDataPartition-Methods.R
+         VegsoupDataPartition-MoreMethods.R
+         VegsoupDataPartition-EvenMoreMethods.R
+         VegsoupDataPartition-EvenEvenMoreMethods.R
+         Class-VegsoupDataPartitionFidelity.R
+         VegsoupDataPartitionFidelity-Methods.R
+         Class-VegsoupDataLaTex.R
+         Class-VegsoupDataLatexSites.R
+         Class-VegsoupDataLatexSpecies.R
 Respository: R-Forge
+
 
                                         
                        
