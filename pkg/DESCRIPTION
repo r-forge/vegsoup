@@ -25,7 +25,6 @@ Collate: Class-Vegsoup.R Vegsoup-Methods.R
 	Class-VegsoupDataLaTex.R
 	Class-VegsoupDataLatexSites.R
 	Class-VegsoupDataLatexSpecies.R
-	Vegsoup-internal.R
 Respository: R-Forge
 
                                         
