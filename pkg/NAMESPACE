@@ -1,14 +1,101 @@
 #	import classes
-setOldClass("duleg")
-setOldClass("tabdev")
-setOldClass("disdiam")
-setOldClass("partana")
-setOldClass("silhouette")
+#setOldClass("duleg")
+#setOldClass("tabdev")
+#setOldClass("disdiam")
+#setOldClass("partana")
+#setOldClass("silhouette")
 
 #	VegsoupDataPartition methods
-setOldClass("agnes")
-setOldClass("pam")
-setOldClass("optpart")
-setOldClass("isopam")
-setOldClass("twins")
-setOldClass("partition")
+#setOldClass("agnes")
+#setOldClass("pam")
+#setOldClass("optpart")
+#setOldClass("isopam")
+#setOldClass("twins")
+#setOldClass("partition")
+
+import(methods)
+importFrom(graphics, plot, hist)
+importFrom(cluster, agnes, pam, optpart)
+importFrom(isopam, isopam)
+
+exportPattern("^[[:alpha:]]+")
+exportMethods(
+    "[",
+    "$",
+    "Abbreviation",
+    "Abbreviation<-",
+    "AbundanceScale",
+    "AbundanceScale<-",
+    "AprioriGrouping",
+    "Arrange",
+    "as.binary",
+    "as.character",
+    "as.numeric",
+    "coerce",
+    "colSums",
+    "Confus",
+    "Constancy",
+    "Contingency",
+    "coordinates",
+    "DecomposeNames",
+    "dim",
+    "Disdiam",
+    "Fidelity",
+    "FisherTest",
+    "getDist",
+    "getDistconnected",
+    "getK",
+    "getStat",
+    "head",
+    "Indpower",
+    "Indspc",
+    "Indval",
+    "Isamic",
+    "Latex",
+    "Layers",
+    "Layers<-",
+    "Multipatt",
+    "Murdoch",
+    "names",
+    "ncol",
+    "nrow",
+    "Optindval",
+    "Optsil",
+    "Partana",
+    "Partitioning",
+    "PartitioningMatrix",
+    "Phi",
+    "plot",
+    "Richness",
+    "rownames",
+    "rowSums",
+    "SigFidelity",
+    "Silhouette",
+    "Sites",
+    "Sites<-",
+    "SitesLong",
+    "SitesLong<-",
+    "SpatialPointsVegsoup",
+    "SpatialPointsVegsoup<-",
+    "SpatialPolygonsVegsoup",
+    "SpatialPolygonsVegsoup<-",
+    "SpeciesLong",
+    "SpeciesLong<-",
+    "Spread",
+    "Stride",
+    "summary",
+    "Tabdev",
+    "tail",
+    "Taxonomy",
+    "Taxonomy<-",
+    "Typal" 
+)
+exportClasses(
+    "Vegsoup",
+     "VegsoupData",
+     "VegsoupDataLaTex",
+     "VegsoupDataLaTexSites",
+     "VegsoupDataLaTexSpecies",
+     "VegsoupDataPartition",
+     "VegsoupDataPartitionFidelity" 
+)
