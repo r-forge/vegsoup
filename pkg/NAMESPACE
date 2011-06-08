@@ -84,11 +84,8 @@ exportMethods(
     "Typal" 
 )
 exportClasses(
-    "Vegsoup",
+     "Vegsoup",
      "VegsoupData",
-     "VegsoupDataLaTex",
-     "VegsoupDataLaTexSites",
-     "VegsoupDataLaTexSpecies",
      "VegsoupDataPartition",
      "VegsoupDataPartitionFidelity" 
 )
