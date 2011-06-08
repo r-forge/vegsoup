@@ -1,6 +1,7 @@
 #useDynLib()
 
 import(methods)
+importFrom(Hmisc, latex)
 importFrom(sp, coordinates)
 importFrom(graphics, plot, hist)
 importFrom(cluster, agnes, pam, optpart, partition, twins, silhouette)
