@@ -23,7 +23,7 @@ Collate: AAA.R Vegsoup-Internal.R
          VegsoupDataPartition-EvenEvenMoreMethods.R
          Class-VegsoupDataPartitionFidelity.R
          VegsoupDataPartitionFidelity-Methods.R
-         Class-VegsoupDataLaTex.R
+         Class-VegsoupDataLaTex.R VegsoupDataLaTex-Methods.R
          Class-VegsoupDataLatexSites.R
          Class-VegsoupDataLatexSpecies.R
 Respository: R-Forge
