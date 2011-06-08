@@ -15,8 +15,9 @@
 
 import(methods)
 importFrom(graphics, plot, hist)
-importFrom(cluster, agnes, pam, optpart)
+importFrom(cluster, agnes, pam, optpart, partition, twins)
 importFrom(isopam, isopam)
+importFrom(optpart, optpart)
 
 exportPattern("^[[:alpha:]]+")
 exportMethods(
