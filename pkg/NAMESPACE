@@ -1,12 +1,13 @@
 #useDynLib()
+#importFrom(isopam, isopam) package 'isopam' does not have a name space
+#importFrom(optpart, optpart, partana, tabdev, disdiam) package 'optpart' does not have a name space
 
 import(methods)
+importFrom(stills, head)
 importFrom(Hmisc, latex)
 importFrom(sp, coordinates)
 importFrom(graphics, plot, hist)
-importFrom(cluster, agnes, pam, optpart, partition, twins, silhouette)
-importFrom(isopam, isopam)
-importFrom(optpart, optpart, partana, tabdev, disdiam)
+importFrom(cluster, agnes, pam, silhouette)
 
 exportPattern("^[[:alpha:]]+")
 exportMethods(
