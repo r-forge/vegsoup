@@ -1,0 +1,1 @@
+tex.fig <- c("\\begin{figure}[]\n\\begin{center}\n\\includegraphics{file.name}\n\\end{center}\n\\end{figure}")
