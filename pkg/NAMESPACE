@@ -5,7 +5,7 @@
 #importFrom(optpart, optpart, partana, tabdev, disdiam)
 
 import(methods)
-importFrom(stills, head)
+importFrom(utils, head, tail)
 importFrom(Hmisc, latex)
 importFrom(sp, coordinates)
 importFrom(graphics, plot, hist)
