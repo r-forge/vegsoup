@@ -1,0 +1,1 @@
+R CMD INSTALL -l /Users/roli/Library/R/2.11/library pkgs /Users/roli/Documents/Rpackages/vegsoup/vegsoup
