@@ -1,3 +1,15 @@
+require(methods)
+require(vegan)
+require(optpart)
+require(Hmisc)
+library(misc3d)
+library(sp)
+library(cluster)
+library(labdsv)
+library(optpart)
+library(isopam)
+library(indicspecies)
+
 #	import classes
 setOldClass("duleg")
 setOldClass("tabdev")
