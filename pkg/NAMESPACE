@@ -1,6 +1,8 @@
 #useDynLib()
-#importFrom(isopam, isopam) package 'isopam' does not have a name space
-#importFrom(optpart, optpart, partana, tabdev, disdiam) package 'optpart' does not have a name space
+#package 'isopam' does not have a name space
+#importFrom(isopam, isopam)
+#package 'optpart' does not have a name space
+#importFrom(optpart, optpart, partana, tabdev, disdiam)
 
 import(methods)
 importFrom(stills, head)
