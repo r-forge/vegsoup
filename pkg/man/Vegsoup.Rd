@@ -13,42 +13,38 @@ Vegsoup(x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.p
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+Species data.frame
 }
   \item{y}{
-%%     ~~Describe \code{y} here~~
+Sites data.frame
 }
   \item{z}{
-%%     ~~Describe \code{z} here~~
+Taxonomy data.frame
 }
   \item{scale}{
-%%     ~~Describe \code{scale} here~~
+Abundance scale
 }
   \item{group}{
-%%     ~~Describe \code{group} here~~
+Apriori grouping, if any
 }
   \item{sp.points}{
-%%     ~~Describe \code{sp.points} here~~
+Object of class SpatialPointsDataFrame
 }
   \item{sp.polygons}{
-%%     ~~Describe \code{sp.polygons} here~~
+Object of class SpatialPolygonsDataFrame
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Constructor function to create an object of class Vegsoup. x should conform to the following format. Column names plot, abbr, layer, cov. x should have names plot, variable, value.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+An object of class Vegsoup.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -58,6 +54,7 @@ Vegsoup(x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.p
 
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
+%% ValidateVegsoup.R
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
