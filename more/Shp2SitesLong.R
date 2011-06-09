@@ -73,8 +73,8 @@ return(invisible(res))
 
 }
 
-df <- Shp2SitesLong(
-	dsn = "/Users/roli/Desktop/va_wgs84",
-	layer = "Point_ge",
-	plot.column = "comment")
-write.csv2(df, "~/foo.csv", row.names = FALSE)
+#df <- Shp2SitesLong(
+#	dsn = "/Users/roli/Desktop/rek.rar Folder",
+#	layer = "va",
+#	plot.column = "comment")
+#write.csv2(df, "~/foo.csv", row.names = FALSE)
