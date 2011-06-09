@@ -56,7 +56,7 @@ if (dim(coordinates(pt))[2] == 2 & !missing(elevation.column)) {
 
 if (dim(coordinates(pt))[2] == 3) {
 	names(df)[1:4] <- c("longitude", "latitude", "altitude", "plot")
-	res <- data.frame(as.character(df$plot), stack(df),
+	res <- data.frame(as.character(df$plot), stack(df, select = 1:3),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
 	names(res) <- c("plot", "variable", "value")
@@ -74,8 +74,7 @@ return(invisible(res))
 }
 
 df <- Shp2SitesLong(
-	dsn = "/Users/roli/Documents/javakheti/dta/shp/pt_plots",
-	layer = "pt_plots",
-	plot.column = "plot",
-	elevation.column = "ele")
+	dsn = "/Users/roli/Desktop/va_wgs84",
+	layer = "Point_ge",
+	plot.column = "comment")
 write.csv2(df, "~/foo.csv", row.names = FALSE)
