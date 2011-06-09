@@ -1,85 +1,22 @@
-"plot";"cov";"tcov";"scov";"hcov";"mcov";"rock";"bare";"debris";"htl";"hsl";"hhl1";"hhl2";"expo";"slope";"plsx";"plsy";"date";"ibex";"rupi";"soil";"rock.type";"rock.soil.verbose";"location.verbose";;"longitude";"latitude";"precision";"location"
-"hw01";20;0;0;20;2;50;30;0;0;0;0,3;0;"SE";40;5;5;"13.05.08";"yes";"yes";"shallow";"precipice";"Felshang, Rendzina";"bei WH Almfrieden, unterhalb kl. Ueberhang";;16,05698;47,83536;10;"Hohe Wand"
-"hw02";25;0;0;25;8;60;15;0;0;0;0,4;0;"S";55;3;6;"13.05.08";"yes";"yes";"shallow";"precipice";"Felshang, Rendzina";;;16,05674;47,83517;10;"Hohe Wand"
-"hw03";30;0;5;25;2;65;5;0;0;2,5;0,5;0;"SE";90;0;0;"13.05.08";"no";"no";"deep";"bank";;"Felswand";;16,05557;47,83525;10;"Hohe Wand"
-"hw04";30;0;0;30;3;50;20;0;0;0;0,5;0;"S";40;10;15;"13.05.08";"yes";"yes";"shallow";"precipice";"Felshang, Rendzina, Substrateinschwemmungen und -taschen";"Überbrücklsteig";;16,056;47,83538;10;"Hohe Wand"
-"hw05";20;0;2;20;2;50;30;0;0;2;0,5;0;"S";35;4;5;"14.05.08";"yes";"yes";"shallow";"headwall";"Felshang, Schutt-ueberlagert, feinsubstratreich";"Überbrücklsteig, Wandfuß";;16,05737;47,83472;10;"Hohe Wand"
-"hw06";80;0;2;80;2;15;5;0;0;2,5;0,5;0;"SE";20;6;4;"14.05.08";"yes";"yes";"shallow";"topwall";"Rendzina";"Mittelhang, Verebnung oberhalb Felswand";;16,05856;47,83578;10;"Hohe Wand"
-"hw07";35;0;1;35;1;25;40;0;0;1,5;1;0;"SE";55;10;10;"14.05.08";"yes";"yes";"shallow";"precipice";"Felshang, plattig, Feinsubstrateinschwemmungen";;;16,05846;47,8357;10;"Hohe Wand"
-"hw08";20;0;1;20;1;40;40;0;0;1,5;0,3;0;"S";50;4;7;"14.05.08";"yes";"yes";"shallow";"precipice";"Felsrücken, Fels, Rendzina";"Oberkante Felswand";;16,05879;47,83615;10;"Hohe Wand"
-"hw09";85;0;1;85;5;5;10;0;0;1,5;0,3;0;"SE";20;5;6;"14.05.08";"yes";"yes";"shallow";"topwall";"Rendzina";"Rücken";;16,05865;47,83619;10;"Hohe Wand"
-"hw10";25;0;0;25;12;55;20;0;0;0;0,5;0;"SE";40;7;5;"14.05.08";"yes";"yes";"shallow";"precipice";"Felshang, Feinsubstratreich, Bodenerrosion";"unterhalb Klettergarten bei Skywalk, lage unsicher";;16,04716;47,8299;10;"Hohe Wand"
-"hw11";45;0;0;45;2;5;10;40;0;0;0,5;1;"SE";30;8;6;"09.06.08";"yes";"yes";"shallow";"scree";"erdreiche Schuttflur";"Postlsteig, 20m unterhalb Wandfuß, bei Lägerflur";;16,04888;47,82973;10;"Hohe Wand"
-"hw12";35;0;0;35;5;40;10;15;0;0;0,3;0;"S";45;6;6;"09.06.08";"no";"yes";"shallow";"precipice";"Felshang mit Geroell, Protorendzina";;;16,04928;47,82983;10;"Hohe Wand"
-"hw13";45;0;0;45;0;5;50;0;0;0;0,2;0;"SE";5;10;1,5;"09.06.08";"yes";"yes";"shallow";"balme";"Balme unter Ueberhang";;;16,04888;47,83009;10;"Hohe Wand"
-"hw14";60;0;7;60;3;0;5;35;0;2,5;0,4;0;"SE";30;8;6;"09.06.08";"yes";"yes";"shallow";"scree";;;;16,04881;47,82944;10;"Hohe Wand"
-"hw15";50;0;3;45;3;45;5;0;0;2;1;0;"E";80;7;4;"09.06.08";"no";"no";"deep";"precipice";"Felshang, humoes";"direkt E HTL-Steig, oberhalb Klettergarte";;16,04838;47,82918;10;"Hohe Wand"
-"hw16";10;0;0;10;0;25;5;60;0;0;0;0;"SE";30;2;6;"09.06.08";"yes";"yes";"shallow";"balme";"Geroell, feinerdearm";"Balme";;16,04858;47,82903;10;"Hohe Wand"
-"hw17";50;0;0;50;2;20;30;0;0;0;0,8;0;"SE";60;3;6;"10.06.08";"no";"no";"deep";"precipice";"gestufter Felshang, humoes, feinsubstratreich";"Strasse HW, Kehre; uhalb Steinschlagnetz";;16,05879;47,83548;10;"Hohe Wand"
-"hw18";40;0;3;40;2;30;25;5;0;2;0,5;0;"null";40;6;3;"10.06.08";"yes";"yes";"shallow";"precipice";"Substraterrosion, Bodenverwundung";"gestufte Hangleiste";;16,05043;47,83095;10;"Hohe Wand"
-"hw19";25;0;3;25;0;75;0;0;0;2;0,7;0;"SW";80;6;5;"10.06.08";"no";"no";"deep";"bank";"Felsbank, sehr humoes";;;16,05068;47,83103;10;"Hohe Wand"
-"hw20";40;0;0;40;5;20;40;0;0;0;0,5;0,7;"SE";40;7;7;"10.06.08";"yes";"yes";"deep";"precipice";"Felshang, humoes, Humuserrosion";"HTL-Steig, direkt unterhalb Querung im oberen Bereich";;16,04795;47,82977;10;"Hohe Wand"
-"hw21";75;0;3;75;2;15;10;0;0;0;0,7;0;"E";85;4;2;"10.06.08";"no";"no";"deep";"bank";"Felsband, humoes";"Felsabsatz in Wand, neben grosser Linde";;16,04811;47,82947;10;"Hohe Wand"
-"hw22";30;0;0;30;10;20;40;10;0;0;0,1;0,7;"S";40;2;5;"10.06.08";"yes";"yes";"shallow";"precipice";"Felshang, humoes, Humuseinschwemmung";"kurz W HTL-Steig";;16,04769;47,82931;10;"Hohe Wand"
-"hw23";40;0;0;40;2;10;45;5;0;0;0,2;0,6;"SE";35;6;5;"11.06.08";"yes";"yes";"shallow";"precipice";"Felshang, humoes, Humuserrosion";"W Stollhofer Steilanstieg, unterhalb Ueberhang, oberhalb Felswand#";;16,05559;47,83412;10;"Hohe Wand"
-"hw24";60;0;10;60;3;5;35;0;0;3;0,5;1;"SE";35;4;6;"11.06.08";"yes";"yes";"shallow";"precipice";"Felshang, humoes, Humuserrosion";"direkt W 23";;16,05573;47,834;10;"Hohe Wand"
-"hw25";50;0;5;50;2;45;5;0;0;1,5;0,7;0;"SE";80;4;5;"11.06.08";"no";"no";"deep";"bank";"2-3 fast verbundene Rasenbaender in Felswand";"liegt unerhalb 23 und 24, 10m unterhalb im kronenschatten der Baeume deutl mehr Sesleria";;16,05598;47,83401;10;"Hohe Wand"
-"hw26";45;0;0;45;20;0;0;55;0;0;0,3;0,5;"SE";30;4;3;"12.06.08";"no";"no";"shallow";"scree";"Ruhschutt";"oberhalb Parkplatz Landeplatz, E Voellerinsteig, Umfeld Gebuesch";;16,04755;47,828;10;"Hohe Wand"
-"hw27";70;0;25;50;35;0;0;30;0;3;0,4;0;"SE";35;10;5;"12.06.08";"no";"yes";"shallow";"scree";"Ruhschutt, feinstubtrat reich";"oberhalb Landewiese bei Voellerinsteig, Waldbestand";;16,04704;47,82759;10;"Hohe Wand"
-"hw28";45;0;5;40;10;0;10;45;0;3;0,2;0,8;"SE";40;8;6;"12.06.08";"no";"yes";"shallow";"scree";"Ruhschutt, wo Schutt fehlt ist lehmige Erde, Braunlehm-Rendzina";"50m W 27";;16,04668;47,82737;10;"Hohe Wand"
-"hw29";55;0;5;40;10;10;10;25;0;3;0,3;0,6;"SE";40;8;4;"12.06.08";"no";"no";"shallow";"precipice";"Schutt, viel lehmige Anteile";"wenig W 27";;16,04638;47,82702;10;"Hohe Wand"
-"hw30";30;0;5;25;5;35;35;0;0;3;0,7;0;"SE";40;6;5;"12.06.08";"yes";"yes";"shallow";"precipice";"Felshang, humoes, Humuserrosion";"Steig E Tirolersteig, Freibereich innerhalb Flaumeichenbestand";;16,0453;47,82683;10;"Hohe Wand"
-"hw31";65;0;1;65;5;25;10;0;0;2;0,4;0;"E";30;3;7;"12.06.08";"yes";"yes";"shallow";"topwall";"Rendsina";"direkt rechts (östlich) Steig (Völlerin), danben Halbtrockenrasen durch Verbiss frei";;16,04495;47,82902;10;"Hohe Wand"
-"hw32";80;0;0;80;15;0;5;0;0;0;0,1;0;"SE";10;5;4;"12.06.08";"yes";"yes";"deep";"topwall";"Felshang, Rendsina, durchgehend homös";"direkt bei Kreuz, Einstieg Krumme Ries";;16,04085;47,82425;10;"Hohe Wand"
-"hw33";65;0;25;60;2;30;5;0;0;5;1;0;"SE";65;5;10;"03.08.08";"no";"no";"deep";"precipice";"Felshang, Rendsina, homös mit Substrattaschen";"direkt rechts (nordöstlich) Skywalk, ca. 45 m unterhalb Oberkante Hohe Wand";;16,04915;47,83026;10;"Hohe Wand"
-"hw34";50;0;1;50;2;40;10;0;0;5;1;0;"SE";75;5;7;"03.08.08";"no";"no";"deep";"precipice";"Felshang, Rendsina, homös mit Substrattaschen";"10 m unter 33";;16,04914;47,8302;10;"Hohe Wand"
-"hw35";60;0;0;60;1;35;5;0;0;0;1;0;"SE";75;5;5;"03.08.08";"no";"no";"deep";"precipice";"Felshang, Rendsina, homös mit Substrattaschen";"8 m unterhalb 34";;16,04915;47,83017;10;"Hohe Wand"
-"hw36";95;0;10;95;5;5;0;0;0;5;0,5;0;"SE";10;6;4;"03.08.08";"no";"yes";"shallow";"topwall";"flachgründig, Bodenauflage nahezu 100 %";"Gebüschsaum oberhalb 33 bis 35, direkt Wandabbruch";;16,04899;47,83038;10;"Hohe Wand"
-"hw37";20;0;0;20;5;45;35;0;0;0;0,3;0;"S";45;6;5;"04.08.08";"yes";"yes";"shallow";"precipice";"offener, stark verbissener Felshang, erdig";"Wagnersteig, 150 m östloch großer Felsaufbau zum Gipfelbereich Felsfuß";;16,01463;47,81099;10;"Hohe Wand"
-"hw38";20;0;0;20;3;30;50;0;0;0;0,3;0;"S";35;6;5;"04.08.08";"yes";"yes";"shallow";"precipice";"Felshang, verbissen, offen, Wandfuß bei Felswand";"ca. 250 m westlich 37. unterhalb Kreuz große Kanzel";;16,01408;47,81085;10;"Hohe Wand"
-"hw39";75;0;0;75;1;5;20;0;0;0;0,2;0;"S";15;7;4;"04.08.08";"yes";"yes";"shallow";"precipice";"Felshang, feinsubstratreich, erodiert, eutroph";"ca. 50m O und 50m unterhalb Kreuz große Kanzel, Absatz am Wandfuß";;16,01368;47,811;10;"Hohe Wand"
-"hw40";50;0;3;50;0;45;5;0;0;2;0,8;0;"S";90;2;3;"04.08.08";"no";"no";"deep";"bank";"Rasenband, feinsubstratreich";;;16,0131;47,81105;10;"Hohe Wand"
-"hw41";50;0;0;50;0;10;40;0;0;0;0,3;0;"S";5;5;1,5;"04.08.08";"yes";"yes";"shallow";"balme";"flachgründig über solidem Fels, vollgeschissen";"ca. 500 m östlich und 100 m unterhalb Kreuz Große Kanzel";;16,01678;47,81093;10;"Hohe Wand"
-"hw42";60;0;0;60;1;5;35;0;0;0;0,5;0;"S";25;5;6;"04.08.08";"yes";"yes";"shallow";"precipice";"Felshang, Substraterosion";"neben Balme an Rand verbissene Corylus, Amelanchier, Sorbus, Wildfütterung in der Nähe";;16,0166;47,81097;10;"Hohe Wand"
-"hw43";50;0;0;45;0;45;5;0;0;0;0,8;0;"S";80;3;7;"04.08.08";"no";"no";"deep";"bank";"Rasenband, getreppt, feinsubstratreich";"Unterhalb Gedenkkreuz, Große Kanzel";;16,01661;47,81116;10;"Hohe Wand"
-"hw44";60;0;0;60;2;20;20;0;0;0;0,6;0;"S";10;2;6;"04.08.08";"yes";"yes";"shallow";"bank";"Felshang, Rendsina, feinsubstrat arm";"breites Felsband (ca. 2-3 m), kein GPS! östlich Kreuz 20 m unterhalb Abseilstand direkt an Kante";;16,0167;47,8113;10;"Hohe Wand"
-"hw45";40;0;0;40;2;15;45;0;0;0;0,7;0;"S";30;6;4;"05.08.08";"no";"yes";"shallow";"precipice";"Felshang, Feinsubstratreich, Bodenerrosion";"direkt neben Weg Krumme Rieß";;16,03801;47,8224;10;"Hohe Wand"
-"hw46";75;0;10;70;1;15;5;0;0;1,2;0,8;0;"SE";80;5;1,5;"05.08.08";"no";"no";"deep";"bank";"Rasenband, feinsubstratreich, getreppt";"in Wand 100 m nordöstlich Gipfel Krumme Rieß, ca. 20 m unterhalb Wandkante, direkt neben Gebüsch mit Evonymus verrucosa und Fraxinus excelsior";;16,04105;47,82431;10;"Hohe Wand"
-"hw47";75;0;5;80;1;20;5;0;0;2;0,8;0;"SE";75;3;5;"05.08.08";"no";"no";"deep";"bank";"Felsnase, feinsubstratreich";"ca. 15 m unterhalb 46, blockartige Felsnase";;16,04105;47,82434;10;"Hohe Wand"
-"hw48";70;0;40;50;2;20;10;0;0;2,5;0,8;0;"E";85;10;10;"05.08.08";"no";"no";"deep";"precipice";"Felshang, superhomös";"20m nordwestlich 49";;16,04031;47,82349;10;"Hohe Wand"
-"hw49";50;0;0;50;1;45;5;0;0;0;0,8;0;"E";80;4;5;"05.08.08";"no";"no";"deep";"precipice";"Felshang, superhomös";"Felswand nordwestlich Gipfel krumme Rieß, ca. 50m unter Felsoberkante";;16,03986;47,82349;10;"Hohe Wand"
-"hw50";20;0;0;20;4;40;40;0;0;0;0,6;0;"SE";30;10;10;"05.08.08";"yes";"yes";"shallow";"precipice";"Felshang, Substraterosion";"unterhalb Balme in Felswand unterhalb Gipfel Krumme Rieß, Hardcore Verbissfläche";;16,04092;47,82388;10;"Hohe Wand"
-"hw51";50;0;3;50;0;40;10;0;0;1,5;0,8;0;"SE";85;1;2,5;"05.08.08";"no";"no";"deep";"precipice";"Felshang, Feinsubstratreich";"Wand 25 m über Wandfußsteig, auf Höhe Maiersdorf";;16,04031;47,82307;10;"Hohe Wand"
-"hw52";35;0;2;35;4;10;55;0;0;2,5;0,7;0;"S";25;6;7;"06.08.08";"yes";"yes";"shallow";"precipice";"Felshang";"anbei Steig zum Hubertushaus am Ostende des Wandfuß markante Wand";;16,02472;47,81111;10;"Hohe Wand"
-"hw53";5;0;2;5;0;94;1;0;0;1,5;0,3;0;"S";10;4;1,5;"06.08.08";"yes";"yes";"shallow";"balme";"Balme";"bei 52 (30 m westlich)";;16,02431;47,811;10;"Hohe Wand"
-"hw54";45;0;0;45;2;30;25;0;0;0;0,8;0;"SW";40;8;5;"06.08.08";"yes";"yes";"shallow";"precipice";"Felshang, Substraterosion";"Felskopf ca 500 m östlich Hubertushaus, ca 25 m  unterhalb Betonstempen am Felskopf (Gipfel)";;16,02882;47,81287;10;"Hohe Wand"
-"hw55";45;0;0;45;2;50;5;0;0;0;0,5;0;"S";80;2;4;"06.08.08";"no";"no";"deep";"bank";"Rasenband, getreppt, aufgelöst, kleine Substrattaschen und Humusploster";"?";;16,02885;47,81289;10;"Hohe Wand"
-"hw56";65;0;0;65;1;15;20;0;0;0;0,8;0;"SE";85;5;1;"06.08.08";"no";"no";"deep";"bank";"Rasenband, feinsubstratreich, kleine Substrattaschen";"?";;16,02903;47,81311;10;"Hohe Wand"
-"hw57";45;0;2;40;10;0;0;55;0;2;0,5;0;"SE";30;6;3;"20.08.08";"no";"no";"shallow";"scree";"Schutt";"direkt oberhalb Weg vom Parkplatz (Landewiese) Richtung NO";;16,05117;47,82963;10;"Hohe Wand"
-"hw58";85;0;60;50;35;0;0;15;0;3,5;0,5;1;"SE";30;15;5;"20.08.08";"no";"no";"shallow";"scree";"Schutt";"bei 57";;16,05127;47,82968;10;"Hohe Wand"
-"hw59";90;0;0;85;25;0;10;0;0;0;0,3;0;"SE";30;5;6;"20.08.08";"no";"no";"shallow";"headwall";"sekundärer Trockenrasen, Rensina, Substrat stabil, freie Bodenstellen";"?";;16,04939;47,82938;10;"Hohe Wand"
-"hw60";75;0;1;75;10;5;0;20;0;0;0,8;0;"SE";35;8;6;"20.08.08";"no";"no";"deep";"scree";"Schutt, feinsubstratreich";"unterhalb Skywalk";;16,04875;47,82946;10;"Hohe Wand"
-"hw61";95;5;80;75;30;0;0;5;9;5;0,3;0,6;"SE";30;15;5;"20.08.08";"no";"no";"shallow";"scree";"Schutt, gefestigt";"sw unterhalb Skywalk";;16,04765;47,82856;10;"Hohe Wand"
-"hw62";95;5;90;80;25;0;0;5;9,5;5;0,4;0,8;"SE";15;8;15;"20.08.08";"no";"no";"shallow";"scree";"Schutt, gefestigt";"Nordöstlich einer markanten Schuttrinne, zu dicht für Verbiss";;16,04712;47,82812;10;"Hohe Wand"
-"hw63";80;0;0;80;5;0;10;10;0;0;0,5;0;"SE";30;5;5;"20.08.08";"no";"yes";"shallow";"headwall";"Schutt, gefestigt, feinsubstratreich";"Am Begin weg zm Almfrieden, Überbrücklsteig";;16,05732;47,83457;10;"Hohe Wand"
-"fs01";10;0;0;10;0;0;0;0;0;0;0,5;0;"S";10;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Grillenberger Tal bei Berndorf, Tabelle 9, Niklfeld 1979, Aufnahme 9";;;;;
-"fs02";10;0;0;10;0;0;0;0;0;0;0,5;0;"SE";35;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Grillenberger Tal bei Berndorf, Tabelle 9, Niklfeld 1979, Aufnahme 10";;;;;
-"fs03";70;0;0;70;0;0;0;0;0;0;0,4;0,7;"SE";45;1;50;"23.09.62";"no";"no";"shallow";"precipice";"unbekannt";"Hohe Wand, Große Kanzel, am Wagnersteig, Arten in Klammer exkludiert (Felspflanzen?), Niklfeld 1964";;;;;
-"ts01";60;0;0;60;0;0;0;0;0;0;0,5;0;"SW";25;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Gradenbachtal, Weg zum Ahornsee, Tabelle 9, Niklfeld 1979, Aufnahme 11";;;;;
-"ts02";30;0;0;30;0;0;0;0;0;0;0,5;0;"SE";55;1;15;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Altausseer See, Tabelle 9, Niklfeld 1979, Aufnahme 12";;;;;
-"ts03";40;0;0;40;0;0;0;0;0;0;0,5;0;"S";45;1;40;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Altausseer See, Tabelle 9, Niklfeld 1979, Aufnahme 13";;;;;
-"ts04";75;0;0;75;0;0;0;0;0;0;0,5;0;"SW";35;1;30;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 14";;;;;
-"ts05";50;0;0;50;0;0;0;0;0;0;0,5;0;"S";40;1;50;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 15";;;;;
-"ts06";20;0;0;20;0;0;0;0;0;0;0,5;0;"S";45;1;5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 16";;;;;
-"ts07";5;0;0;5;0;0;0;0;0;0;0,5;0;"S";70;1;5;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 7";;;;;
-"ts08";3;0;0;3;0;0;0;0;0;0;0,5;0;"S";50;1;6;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 8";;;;;
-"ts09";60;0;0;60;0;0;0;0;0;0;0,5;0;"NE";30;1;5;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 9";;;;;
-"ts10";3;0;0;3;0;0;0;0;0;0;0,5;0;"NE";90;1;10;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 10";;;;;
-"sa01";40;0;0;40;0;0;0;0;0;0;0;0;"SW";40;1;60;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Gschwendtberg bei Frohnleiten, Tabelle 9, Niklfeld 1979, Aufnahme 29";;;;;
-"sa02";40;0;0;40;0;0;0;0;0;0;0;0;"SW";40;1;200;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 30";;;;;
-"sa03";25;0;0;25;0;0;0;0;0;0;0;0;"SE";25;1;100;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 31";;;;;
-"sa04";20;0;0;20;0;0;0;0;0;0;0;0;"S";20;1;80;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 32";;;;;
-"sa05";25;0;0;25;0;0;0;0;0;0;0;0;"E";25;1;70;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, bei Deutschfeistritz, Tabelle 9, Niklfeld 1979, Aufnahme 33";;;;;
-"sa06";15;0;0;15;0;0;0;0;0;0;0;0;"E";15;1;85;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, bei Deutschfeistritz, Tabelle 9, Niklfeld 1979, Aufnahme 34";;;;;
-"sa07";30;0;0;30;0;0;0;0;0;0;0;0;"NE";30;1;100;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Jungfernsprung bei Graz-Göstling, Tabelle 9, Niklfeld 1979, Aufnahme 35";;;;;
-"sa08";30;0;0;30;0;0;0;0;0;0;0;0;"SW";30;1;90;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Jungfernsprung bei Graz-Göstling, Tabelle 9, Niklfeld 1979, Aufnahme 36";;;;;
+"plot";"cov";"tcov";"scov";"hcov";"mcov";"htl";"hsl";"hhl1";"hhl2";"expo";"slope";"plsx";"plsy";"date";"ibex";"rupi";"soil";"rock.type";"rock.soil.verbose";"location.verbose"
+"fs01";10;0;0;10;0;0;0;0,5;0;"S";10;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Grillenberger Tal bei Berndorf, Tabelle 9, Niklfeld 1979, Aufnahme 9"
+"fs02";10;0;0;10;0;0;0;0,5;0;"SE";35;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Grillenberger Tal bei Berndorf, Tabelle 9, Niklfeld 1979, Aufnahme 10"
+"fs03";70;0;0;70;0;0;0;0,4;0,7;"SE";45;1;50;"23.09.62";"no";"no";"shallow";"precipice";"unbekannt";"Hohe Wand, Große Kanzel, am Wagnersteig, Arten in Klammer exkludiert (Felspflanzen?), Niklfeld 1964"
+"ts01";60;0;0;60;0;0;0;0,5;0;"SW";25;1;1,5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Gradenbachtal, Weg zum Ahornsee, Tabelle 9, Niklfeld 1979, Aufnahme 11"
+"ts02";30;0;0;30;0;0;0;0,5;0;"SE";55;1;15;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Altausseer See, Tabelle 9, Niklfeld 1979, Aufnahme 12"
+"ts03";40;0;0;40;0;0;0;0,5;0;"S";45;1;40;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Altausseer See, Tabelle 9, Niklfeld 1979, Aufnahme 13"
+"ts04";75;0;0;75;0;0;0;0,5;0;"SW";35;1;30;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 14"
+"ts05";50;0;0;50;0;0;0;0,5;0;"S";40;1;50;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 15"
+"ts06";20;0;0;20;0;0;0;0,5;0;"S";45;1;5;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Leopoldsteiner See bei Eisenerz, Tabelle 9, Niklfeld 1979, Aufnahme 16"
+"ts07";5;0;0;5;0;0;0;0,5;0;"S";70;1;5;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 7"
+"ts08";3;0;0;3;0;0;0;0,5;0;"S";50;1;6;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 8"
+"ts09";60;0;0;60;0;0;0;0,5;0;"NE";30;1;5;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 9"
+"ts10";3;0;0;3;0;0;0;0,5;0;"NE";90;1;10;"16.05.84";"no";"no";"shallow";"precipice";"unbekannt";"Niederösterreich, Pleinstein, Tabelle 2, Karrer 1985, Aufnahme 10"
+"sa01";40;0;0;40;0;0;0;0;0;"SW";40;1;60;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Gschwendtberg bei Frohnleiten, Tabelle 9, Niklfeld 1979, Aufnahme 29"
+"sa02";40;0;0;40;0;0;0;0;0;"SW";40;1;200;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 30"
+"sa03";25;0;0;25;0;0;0;0;0;"SE";25;1;100;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 31"
+"sa04";20;0;0;20;0;0;0;0;0;"S";20;1;80;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Peggauer Wand, Tabelle 9, Niklfeld 1979, Aufnahme 32"
+"sa05";25;0;0;25;0;0;0;0;0;"E";25;1;70;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, bei Deutschfeistritz, Tabelle 9, Niklfeld 1979, Aufnahme 33"
+"sa06";15;0;0;15;0;0;0;0;0;"E";15;1;85;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, bei Deutschfeistritz, Tabelle 9, Niklfeld 1979, Aufnahme 34"
+"sa07";30;0;0;30;0;0;0;0;0;"NE";30;1;100;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Jungfernsprung bei Graz-Göstling, Tabelle 9, Niklfeld 1979, Aufnahme 35"
+"sa08";30;0;0;30;0;0;0;0;0;"SW";30;1;90;"01.01.79";"no";"no";"shallow";"precipice";"unbekannt";"Steiermark, Jungfernsprung bei Graz-Göstling, Tabelle 9, Niklfeld 1979, Aufnahme 36"
