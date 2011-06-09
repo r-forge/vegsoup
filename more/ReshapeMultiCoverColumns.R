@@ -22,5 +22,5 @@ res <- res[res$cov != "",]
 
 
 }
-res <- ReshapeMultiCoverColumns("/Users/roli/Desktop/db/relevees/species.csv")
-write.csv2(res, "foo.csv")
+#res <- ReshapeMultiCoverColumns("/Users/roli/Desktop/db/relevees/species.csv")
+#write.csv2(res, "foo.csv")
