@@ -1,6 +1,33 @@
-library(rgdal)
+Shp2SitesLong <- function (dsn, layer, plot.column, round = TRUE) {
+
+require(rgdal)
 pt <- readOGR("/Users/roli/Desktop/va.rar Folder", "va")
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
 
-df <- cbind(coordinates(pt), as.character(pt$Comment))
+df <- data.frame(coordinates(pt),
+	as.character(pt@data[names(pt) == plot.column,]))
+
+if (dim(coordinates(pt))[2] == 2) {#
+	names(df)[1:3] <- c("longitude", "latitude", "plot")
+	res <- data.frame(rep(as.character(df$plot), 3), stack(df),
+		stringsAsFactors = FALSE)
+	res	 <- res[, c(1,3,2)]
+	names(res) <- c("plot", "variable", "value")
+}
+if (dim(coordinates(pt))[2] == 3) {#
+	names(df)[1:4] <- c("longitude", "latitude", "altitude", "plot")
+	res <- data.frame(as.character(df$plot), stack(df),
+		stringsAsFactors = FALSE)
+	res	 <- res[, c(1,3,2)]
+	names(res) <- c("plot", "variable", "value")
+
+}
+
+return(invisible(res))
+
+}
+df <- Shp2SitesLong(
+	dsn = "/Users/roli/Desktop/va.rar Folder",
+	layer = "va",
+	plot.column = "Comment")
 write.csv2(df, "~/foo.csv")
