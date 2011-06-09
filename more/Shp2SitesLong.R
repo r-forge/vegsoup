@@ -1,7 +1,7 @@
 Shp2SitesLong <- function (dsn, layer, plot.column, round = TRUE) {
 
 require(rgdal)
-pt <- readOGR("/Users/roli/Desktop/va.rar Folder", "va")
+pt <- readOGR(dsn, layer)
 
 
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
@@ -41,7 +41,7 @@ return(invisible(res))
 }
 
 df <- Shp2SitesLong(
-	dsn = "/Users/roli/Documents/hohewand/dta/shp/pt_plots",
+	dsn = "/Users/roli/Documents/hollersbach/dta/shp/pt_plots",
 	layer = "pt_plots",
 	plot.column = "PLOT")
 write.csv2(df, "~/foo.csv", row.names = FALSE)
