@@ -1,15 +1,26 @@
+#	reshape tables where layers are in seperate columns
+
 ReshapeMultiCoverColumns <- function (filename) {
-#	old colums style to new style
-#	tschirgant
-#	diploma
-df <- read.csv2(filename, colClasses = "character")
+
+res <- read.csv2(filename, colClasses = "character")
 
 
-df <- rbind(
-	cbind("hl", as.matrix(df[,c(1,2,3)])),
-	cbind("sl", as.matrix(df[,c(1,2,4)])),
-	cbind("tl", as.matrix(df[,c(1,2,5)])),
-	cbind("ml", as.matrix(df[,c(1,2,6)])))	
-df <- df[df[,4] != "",]
+res <- rbind(
+	cbind("hl", as.matrix(res[,c(1,2,3)])),
+	cbind("sl", as.matrix(res[,c(1,2,4)])),
+	cbind("tl", as.matrix(res[,c(1,2,5)])),
+	cbind("ml", as.matrix(res[,c(1,2,6)])))	
+
+
+res <- as.data.frame(res,
+	stringsAsFactors = FALSE)
+res <- res[,c(2,3,1,4)]
+names(res) <- c("plot", "abbr", "layer", "cov")
+
+res <- res[res$cov != "0",]
+res <- res[res$cov != "",]
+
+
 }
-write.csv2(df, "foo.csv")
+res <- ReshapeMultiCoverColumns("/Users/roli/Desktop/db/relevees/species.csv")
+write.csv2(res, "foo.csv")
