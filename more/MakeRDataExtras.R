@@ -20,9 +20,9 @@ sites <- sites.stack
 return(sites)
 }
 
-#sites <- stack.sites("/Users/roli/Dropbox/Rpackages/vegsoup/debug/testing/amadeus dta/sites.csv")
+sites <- stack.sites("/Users/roli/Documents/vegsoup/testing/amadeus dta/sites.csv")
 
-#write.csv2(sites, "/Users/roli/Dropbox/Rpackages/vegsoup/debug/testing/amadeus dta/sites2.csv")
+write.csv2(sites, "/Users/roli/Documents/vegsoup/debug/testing/amadeus dta/sites2.csv")
 
 #	function to construct abbreviation
 #	from full taxon names, very basic!
