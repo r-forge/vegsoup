@@ -20,6 +20,7 @@ sites <- sites.stack
 return(sites)
 }
 
-sites <- stack.sites("/Users/roli/Documents/vegsoup/testing/bad bruck dta/sites.csv")
+sites <- stack.sites("/Users/roli/Documents/vegsoup/testing/javakheti dta/sites.csv")
 
-write.csv2(sites, "/Users/roli/Documents/vegsoup/testing/bad bruck dta/sites2.csv")
+write.csv2(sites, "/Users/roli/Documents/vegsoup/testing/javakheti dta/sites2.csv",
+	row.names = FALSE)
