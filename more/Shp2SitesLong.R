@@ -2,16 +2,14 @@ Shp2SitesLong <- function (dsn, layer, plot.column, round = TRUE) {
 
 require(rgdal)
 pt <- readOGR(dsn, layer)
-
-
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
 
 df <- data.frame(coordinates(pt),
-	as.character(pt@data[names(pt) == plot.column,]))
+	as.character(pt@data[,names(pt) == plot.column]))
 
 if (dim(coordinates(pt))[2] == 2) {#
 	names(df)[1:3] <- c("longitude", "latitude", "plot")
-	res <- data.frame(rep(as.character(df$plot), 3), stack(df),
+	res <- data.frame(as.character(df$plot), stack(df),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
 	names(res) <- c("plot", "variable", "value")
@@ -41,7 +39,7 @@ return(invisible(res))
 }
 
 df <- Shp2SitesLong(
-	dsn = "/Users/roli/Documents/hollersbach/dta/shp/pt_plots",
+	dsn = "/Users/roli/Documents/hohewand/dta/shp/pt_plots",
 	layer = "pt_plots",
-	plot.column = "PLOT")
+	plot.column = "plot")
 write.csv2(df, "~/foo.csv", row.names = FALSE)
