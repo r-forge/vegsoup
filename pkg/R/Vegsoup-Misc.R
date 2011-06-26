@@ -3,7 +3,6 @@
 #	y: filename taxonomic reference list
 QueryTaxonomy <- function (x, y) {
 
-
 species <- read.csv2(x)
 taxonomy <- read.csv2(y)
 taxonomy <- taxonomy[c("abbr", "taxon")]
@@ -20,8 +19,8 @@ return(res)
 
 }
 
-y = "/Users/roli/Dropbox/vegbase standards/austrian standard list 2008/austrian standard list 2008.csv"	
-x = "/Users/roli/Documents/vegsoup/testing/amadeus dta/species.csv"	
+#y = "/Users/roli/Dropbox/vegbase standards/austrian standard list 2008/austrian standard list 2008.csv"	
+#x = "/Users/roli/Documents/vegsoup/testing/amadeus dta/species.csv"	
 
 taxonomy <- QueryTaxonomy(x, y)
 
