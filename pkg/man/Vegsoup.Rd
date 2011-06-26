@@ -2,7 +2,7 @@
 \alias{Vegsoup}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Create an object of class vegsoup
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

@@ -2,7 +2,7 @@
 \alias{QueryTaxonomy}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Query taxonomy for raw csv files.
+Query taxonomy for raw csv files
 }
 \description{
 Given a valid csv file representing species abundances, query the used abbreviation (column abbr) against a taxonomic reference list and create an translating taxa abbreviations to taxon names.  
@@ -38,7 +38,7 @@ Roland Kaiser
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+See Also as \code{\link{Vegsoup-class}}, ~~~
 }
 \examples{
 
