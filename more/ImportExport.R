@@ -1,3 +1,30 @@
+#	query and copy taxonomy.csv file matching species.csv
+#	x: filename species.csv
+#	y: filename taxonomic reference list
+QueryTaxonomy <- function (x, y) {
+
+
+species <- read.csv2(x)
+taxonomy <- read.csv2(y)
+taxonomy <- taxonomy[c("abbr", "taxon")]
+#	this checks for unique abbrevations
+rownames(taxonomy) <- taxonomy$abbr
+
+res <- taxonomy[as.character(unique(species$abbr)), ]
+if (any(is.na(res[, 1]))) {
+	test <- as.character(unique(species$abbr))[is.na(res[,1])]
+	warning("not found the following abbrevation(s) in supplied reference list")
+	print(test)
+}
+return(res)
+
+}
+
+y = "/Users/roli/Dropbox/vegbase standards/austrian standard list 2008/austrian standard list 2008.csv"	
+x = "/Users/roli/Documents/vegsoup/testing/amadeus dta/species.csv"	
+
+taxonomy <- QueryTaxonomy(x, y)
+
 #	reshape tables where layers are in seperate columns
 
 ReshapeMultiCoverColumns <- function (filename) {
