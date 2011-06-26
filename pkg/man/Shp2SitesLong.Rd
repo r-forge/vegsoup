@@ -2,7 +2,7 @@
 \alias{Shp2SitesLong}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Extract coordinates from ESRI Shapefile.
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -13,36 +13,34 @@ Shp2SitesLong(dsn, layer, plot.column, elevation.column, round = TRUE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dsn}{
-%%     ~~Describe \code{dsn} here~~
+data source name (folder where ESRI Shapefiles are stored)
 }
   \item{layer}{
-%%     ~~Describe \code{layer} here~~
+layer name (filename of the ESRI Shapefiles) 
 }
   \item{plot.column}{
-%%     ~~Describe \code{plot.column} here~~
+character string giving the name of the column in the ESRI Shapefile attribute table that identifies unique plots (Not case sensitive! See details!)
 }
   \item{elevation.column}{
-%%     ~~Describe \code{elevation.column} here~~
+character string giving the name of the column in the ESRI Shapefile attribute table that identifies altitude measurements (Not case sensitive! see details!). If missing and the geometry is 3d the function read the third dimension.
 }
   \item{round}{
-%%     ~~Describe \code{round} here~~
+integer round decimal places to given precision (See details!)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+If the supplied ESRI Shapefile is 3d, the third dimension is used as altitude. If some values are missing those will not raise NA's but will set to zero elevation. 
+Arguments plot.column and elevation are forced to lower case using function to.lower(). The same applies to column names in the dbf-file associated with the ESRI-Shapefile.
+Using WGS decimal coordinates, 6 decimals places are sufficient for a precision at the meter level.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns an object of class \code{"data.frame"} with columns 'plot', 'variable' and 'value' conforming vegsoup's raw data model.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -51,7 +49,7 @@ Shp2SitesLong(dsn, layer, plot.column, elevation.column, round = TRUE)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{VegsoupData-class}, \link{readOGR}}
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----

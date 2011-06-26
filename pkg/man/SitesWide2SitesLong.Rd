@@ -2,10 +2,10 @@
 \alias{SitesWide2SitesLong}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Stacks raw csv-files in wide format. 
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Stack a plot by measurement matrix to long format, with columns 'plot', 'variable' and 'value'.
 }
 \usage{
 SitesWide2SitesLong(filename)
@@ -13,24 +13,20 @@ SitesWide2SitesLong(filename)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{filename}{
-%%     ~~Describe \code{filename} here~~
+filename of csv-file to stack.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns an object of class \code{"data.frame"} with columns 'plot', 'variable' and 'value'.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -39,33 +35,10 @@ SitesWide2SitesLong(filename)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{VegsoupData-class}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (filename) {
-
-sites <- read.csv2(filename, colClasses = "character")
-
-sites.stack <- stack(sites)
-sites.stack[,1] <- as.character(sites.stack[,1])
-sites.stack[,2] <- as.character(sites.stack[,2])
-plot <- sites.stack[sites.stack$ind == "plot",]$values
-plot <- rep(plot, (nrow(sites.stack)/length(plot))- 1)
-sites.stack <- sites.stack[!sites.stack$ind == "plot",]
-sites.stack <- data.frame(plot,
-	variable = sites.stack[,2],
-	value = sites.stack[,1])
-sites.stack <- sites.stack[order(sites.stack$plot),]
-sites.stack[is.na(sites.stack)] <- ""
-rownames(sites.stack) <- 1:nrow(sites.stack)
-sites <- sites.stack
-return(sites)
-  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

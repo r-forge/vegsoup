@@ -2,10 +2,10 @@
 \alias{QueryTaxonomy}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+Query taxonomy for raw csv files.
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Given a valid csv file representing species abundances, query the used abbreviation (column abbr) against a taxonomic reference list and create an translating taxa abbreviations to taxon names.  
 }
 \usage{
 QueryTaxonomy(x, y)
@@ -13,27 +13,23 @@ QueryTaxonomy(x, y)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+filename of species csv-file. Should have a column named 'abbr' .
 }
   \item{y}{
-%%     ~~Describe \code{y} here~~
+filename of taxonomy csv-file. Should have columns named 'abbr' and 'taxon'.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+All unique abbreviations found in x are matched against y. Any non matching items are printed on the screen.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns an object of class \code{"data.frame"} with columns 'abbr' and 'taxon'.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -45,28 +41,7 @@ QueryTaxonomy(x, y)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (x, y) {
-
-species <- read.csv2(x)
-taxonomy <- read.csv2(y)
-taxonomy <- taxonomy[c("abbr", "taxon")]
-#	this checks for unique abbrevations
-rownames(taxonomy) <- taxonomy$abbr
-
-res <- taxonomy[as.character(unique(species$abbr)), ]
-if (any(is.na(res[, 1]))) {
-	test <- as.character(unique(species$abbr))[is.na(res[,1])]
-	warning("not found the following abbrevation(s) in supplied reference list")
-	print(test)
-  }
-return(res)
-
-  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
