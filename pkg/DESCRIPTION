@@ -1,11 +1,11 @@
 Package: vegsoup
 Version: 0.1-1
-Date: 2011-06-08
+Date: 2011-06-26
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
-Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, spatstat, maptools
-Suggests: RColorBrewer, misc3d
+Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, spatstat
+Suggests: RColorBrewer, misc3d, rgdal, maptools
 Imports: sp, optpart, vegan
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.

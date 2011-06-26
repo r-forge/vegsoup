@@ -22,7 +22,7 @@ return(res)
 #y = "/Users/roli/Dropbox/vegbase standards/austrian standard list 2008/austrian standard list 2008.csv"	
 #x = "/Users/roli/Documents/vegsoup/testing/amadeus dta/species.csv"	
 
-taxonomy <- QueryTaxonomy(x, y)
+#taxonomy <- QueryTaxonomy(x, y)
 
 #	reshape tables where layers are in seperate columns
 
