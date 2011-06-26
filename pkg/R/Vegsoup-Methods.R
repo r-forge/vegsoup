@@ -47,8 +47,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
-	} else {
-			
+	} else {			
 		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
 	}
 
@@ -59,8 +58,6 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		y <- data.frame(y, stringsAsFactors = FALSE)	
 	}	
 	
-	}
-
 	if (missing(z)) {
 		z <- data.frame(NULL)		
 		stop("query on taxonomy is empty!\n")
