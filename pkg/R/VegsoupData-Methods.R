@@ -54,9 +54,9 @@ VegsoupData <- function (obj, verbose = FALSE) {
 			res[,sel] <- xt[,,i]	
 		}
 		#	remove layers were species are absent
-		res <- res[,colSums(res) > 0]
+		res <- res[, colSums(res) > 0]
 		res <- as.data.frame(res)
-		#	rostore coverscale to character using scale$codes
+		#	restore coverscale to character using scale$codes
 		for (i in seq(along = scale$lims)) {
 			res[res == scale$lims[i]] <- scale$codes[i]
 		}
@@ -109,8 +109,9 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	}
 	#	cast sites data
 	#	check missing values
-	if (any(SitesLong(obj)[, 1:3] == "")) {
-		obj@sites.long[obj@sites.long == "", 1:3] <- 0
+	if (any(SitesLong(obj)[, 3] == "") | is.na(SitesLong(obj)[, 3]) ) {
+		obj@sites.long[obj@sites.long[, 3] == "", 3] <- 0
+		obj@sites.long[is.na(obj@sites.long[, 3]), 3] <- 0
 		warning("NAs and empty fields (\"\") in supplied sites",
 			" filled with zeros")
 	}
@@ -169,6 +170,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 }
 
 #	coercing methods
+#	coercion to class Vegsoup is automatic as defined by the contains= argument	
 setAs("VegsoupData", "list",
 	def = function (from) {
 		list(species = from@species,
@@ -176,29 +178,32 @@ setAs("VegsoupData", "list",
 	}
 )
 
-#	coercion to class Vegsoup is automatic as defined by the contains= argument
-	
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) names(x@species)
 )
+
 setMethod("rownames",
     signature(x = "VegsoupData", do.NULL = "missing",
     prefix = "missing"),
     function (x) rownames(x@species)
 )
+
 setMethod("dim",
     signature(x = "VegsoupData"),
 	    function (x) dim(x@species)
 )
+
 setMethod("nrow",
     signature(x = "VegsoupData"),
     function (x) nrow(x@species)
 )
+
 setMethod("ncol",
     signature(x = "VegsoupData"),
     function (x) ncol(x@species)
 )
+
 setMethod("head",
     signature(x = "VegsoupData"),
     function (x, n = 6L, choice, ...) {
@@ -211,6 +216,7 @@ setMethod("head",
     	return(res)
     }    	    
 )
+
 setMethod("tail",
     signature(x = "VegsoupData"),
     function (x, choice, ...) {
@@ -223,18 +229,21 @@ setMethod("tail",
     	return(res)
     }    	    
 )
+
 setMethod("rowSums",
 	signature(x = "VegsoupData"),
 	function (x, na.rm = FALSE, dims = 1) {
     	rowSums(as.binary(x))
     }
 )
+
 setMethod("colSums",
 	signature(x = "VegsoupData"),
 	function (x, na.rm = FALSE, dims = 1) {
     	colSums(as.binary(x))
     }
-) 
+)
+ 
 setMethod("coordinates",
    signature(obj = "VegsoupData"),
     function (obj) coordinates(obj@sp.points)

@@ -4,7 +4,6 @@
 \docType{package}
 \title{
 VegSoup
-
 }
 \description{
 More about what it does (maybe more than one line)
@@ -14,8 +13,8 @@ More about what it does (maybe more than one line)
 \tabular{ll}{
 Package: \tab vegsoup\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2011-06-08\cr
+Version: \tab 1.1\cr
+Date: \tab 2011-06-27\cr
 License: \tab What license is it under?\cr
 LazyLoad: \tab yes\cr
 Depends: \tab methods\cr
@@ -24,10 +23,10 @@ Depends: \tab methods\cr
 ~~ functions ~~
 }
 \author{
-Who wrote it
+Roland Kaiser
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+Maintainer: kardinal.eros@gmail.com
+
 }
 \references{
 ~~ Literature or other references for background information ~~

@@ -1,11 +1,11 @@
 #	helper fucntion for Vegsoup()
-#	set all to the unit square
-#	randomise random points
+#	random points in unit square
+#	
 .rpoisppSites <- function (x) {
 	require(spatstat)
 	require(maptools)
 	n <- length(unique(x$plot))
-	pts <- runifpoint(n, win = owin(c(0.2,0.8), c(0.2,0.8)) )
+	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
 	pts <- as.SpatialPoints.ppp(pts)
 	pts <- SpatialPointsDataFrame(pts,
 		data = data.frame(plots= unique(x$plot),
@@ -16,8 +16,8 @@
 
 	pgs <- vector("list", nrow(cents))
 	for (i in 1:nrow(cents)) {
-		pg <- coordinates(GridTopology(cents[i,] - 0.05/2, c(0.05,0.05), c(2,2)))
-		pg <- Polygons(list(Polygon(rbind(pg[c(1,3,4,2),], pg[1,]))), i)
+		pg <- coordinates(GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
+		pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 		pgs[[i]] <- pg
 	}
 
@@ -62,9 +62,18 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		z <- data.frame(NULL)		
 		stop("query on taxonomy is empty!\n")
 	} else {
-		z <- data.frame(y, stringsAsFactors = FALSE)[c("abbr", "taxon")]
+		z <- data.frame(z, stringsAsFactors = FALSE)[c("abbr", "taxon")]
 	}
 	
+	#	try to find coordinates
+#	lng <- y[grep("longitude", y$variable),]
+#	lat <- y[grep("latitude", y$variable),]	
+#	alt <- y[grep("altitude", y$variable),]
+	
+	latlng <- rbind(lng, lat, alt)
+	
+	
+	xtabs()
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
