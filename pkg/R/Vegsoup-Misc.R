@@ -116,7 +116,7 @@ if (dim(coordinates(pt))[2] == 3) {
 	res$value[res$variable == "longitude"] <-
 		round(res$value[res$variable == "longitude"], 6)
 	res$value[res$variable == "latitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
+		round(res$value[res$variable == "latitude"], 6)
 	res$value[res$variable == "altitude"] <-
 		round(res$value[res$variable == "altitude"], 0)
 
