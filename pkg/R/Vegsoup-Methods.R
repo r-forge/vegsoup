@@ -2,17 +2,18 @@
 #	random points in unit square
 #	
 .rpoisppSites <- function (x) {
+	x 
 	require(spatstat)
 	require(maptools)
 	n <- length(unique(x$plot))
 	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
 	pts <- as.SpatialPoints.ppp(pts)
 	pts <- SpatialPointsDataFrame(pts,
-		data = data.frame(plots= unique(x$plot),
+		data = data.frame(plot = unique(x$plot),
 			stringsAsFactors = FALSE))
 
 	cents <- coordinates(pts)
-	ids <- pts@data$plot
+	ids <- pts$plot
 
 	pgs <- vector("list", nrow(cents))
 	for (i in 1:nrow(cents)) {
@@ -64,16 +65,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	} else {
 		z <- data.frame(z, stringsAsFactors = FALSE)[c("abbr", "taxon")]
 	}
-	
-	#	try to find coordinates
-#	lng <- y[grep("longitude", y$variable),]
-#	lat <- y[grep("latitude", y$variable),]	
-#	alt <- y[grep("altitude", y$variable),]
-	
-	latlng <- rbind(lng, lat, alt)
-	
-	
-	xtabs()
+		
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
@@ -143,17 +135,60 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		}
 	}
 	
-	if (missing(sp.points))	{
+	if (missing(sp.points) & missing(sp.polygons))	{
 		#	generate random points
-		cat("\nSpatialPoints missing, use random pattern")
-		sp.points <- .rpoisppSites(x)[[1]]
-	}
 	
-	if (missing(sp.polygons)) {
-		cat("\nSpatialPolygons missing, use random pattern")
-		sp.polygons <- .rpoisppSites(x)[[2]]
-	}
+		#	try to find coordinates
+		test <- any(y$variable == "longitude") & any(y$variable == "latitude")
+		#	raises errors is subset operation!
+		test <- FALSE
+		if (test) { 
+			cat("found variables longitude and latitude")
+			lng <- y[grep("longitude", y$variable), ]
+			lat <- y[grep("latitude", y$variable), ]
+
+			if (nrow(lng) == nrow(lat)) {
+				lat <- lat[match(lng$plot, lat$plot), ]
+				latlng <- data.frame(plot = lat$plot, latitude = lat$value, longitude = lng$value,
+					stringsAsFactors = FALSE)
+				latlng <- latlng[sort(latlng$plot),]
+					
+				#	check decimal	
+				latlng[,2] <- as.numeric(gsub(",", ".", latlng[,2], fixed = TRUE))
+				latlng[,3] <- as.numeric(gsub(",", ".", latlng[,3], fixed = TRUE))
+				sp.points <- latlng
+				coordinates(sp.points) <- ~ longitude + latitude			
+			} 
+			
+			cents <- coordinates(sp.points)
+			ids <- sp.points$plot
+
+			pgs <- vector("list", nrow(cents))
+			for (i in 1:nrow(cents)) {
+				pg <- coordinates(GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
+				pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
+				pgs[[i]] <- pg
+			}
+			#	length(SpatialPolygons(pgs))
+			sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
+					data = data.frame(plot = sp.points$plot))
+					
+			if (!all(sp.points$plot %in% x$plot)) {
+				warning("\nnot a complete coordinates list, use random pattern")
+				tmp <- .rpoisppSites(x)	
+				sp.points <- tmp[[1]]
+				sp.polygons <- tmp[[2]] 
+			}
 	
+		} else {
+			cat("\nSpatialPoints and SpatialPolygons missing, use random pattern")
+			tmp <- .rpoisppSites(x)	
+			sp.points <- tmp[[1]]
+			sp.polygons <- tmp[[2]] 
+		}	
+
+	}
+		
 	if (any(sapply(y, is.factor))) {
 		y <- as.data.frame(as.matrix(y),
 			stringsAsFactors = FALSE)

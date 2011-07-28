@@ -37,7 +37,7 @@ if (debug) {
 		part.meth <- match.arg(method)
 	}
 	if (!missing(clustering) && method == "external") {
-		if (length(clustering == nrow(x@species.pa))) {
+		if (length(clustering == nrow(x))) {
 			k <- length(unique(clustering))
 			if (verbose) cat("... Use supplied vector,",
 				iflese(is.intger(k), k, as.intger(k)), 
@@ -238,12 +238,11 @@ setMethod("[",
     invisible(result)
 }
 
-.plotVegsoupPartition  <- function (x, y, ind = NULL, ...)
-{
+.plotVegsoupPartition  <- function (x, y, ind = NULL, ...) {
 	#	x = prt
 #	op <- par()
 #	on.exit(par(op))
-
+#	cat(class(x))
 	cat("\nLet me calculate capscale first ...")
 	cat("\nuse distance:", x@dist)
 	ord <- capscale(wisconsin(as.binary(x)) ~ 1, distance = x@dist,

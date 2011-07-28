@@ -769,7 +769,7 @@ setMethod("Abbreviation",
 #	suitable for plotting
 #	return a list
 
-.strideVegsoupData <- function (obj, method, stride, fidelity.method, partition.method, mode, verbose = FALSE, alpha = 0.05, ...) {
+.strideVegsoupData <- function (obj, method, stride, fidelity.method, partition.method, mode, verbose = TRUE, alpha = 0.05, ...) {
 	if (missing(fidelity.method))
 		fidelity.method = "IndVal.g"
 	if (missing(partition.method))
@@ -778,45 +778,48 @@ setMethod("Abbreviation",
 		stride = ceiling(ncol(obj) / 10)
 	if (missing(mode))
 		mode = 0
-	if (verbose)
-		cat("\nrun SigFideleity with mode", mode)
-	if (verbose)
-	cat("\nstride", stride)	
+	if (verbose) {
+		cat("compute", stride, "partitions for stride")
+		cat("\nrun SigFidelity with mode", mode)
+	}
 
 res <- vector("list", length = stride)
 names(res) <- 1:stride
 
-#if (verbose) {
-	pb <- txtProgressBar(min = 1, max = stride,
+if (verbose) {
+	pb.stride <- txtProgressBar(min = 1, max = stride,
 	char = '.', width = 45, style = 3)
-#}
+}
 
 cpu.time <- system.time({
 for (i in 1:stride) {
-	if (verbose)
-		setTxtProgressBar(pb, i)		
+	if (verbose) {
+		setTxtProgressBar(pb.stride, i)
+	}
 	i.prt <- VegsoupDataPartition(obj, k = i, method = partition.method)
-	i.fid <- Fidelity(i.prt, method = fidelity.method, verbose = verbose)
+	i.fid <- Fidelity(i.prt, method = fidelity.method, verbose = FALSE)
 	stat.fid <- apply(getStat(i.fid), 1, sum)#, 2)
 
 	if (i > 1) {
-		i.sig.fid <- SigFidelity(i.prt, verbose = verbose)
+		i.sig.fid <- SigFidelity(i.prt, verbose = FALSE)
 		i.sig.fid <- length(which(i.sig.fid$stat < alpha))
 	} else {
 		i.sig.fid <- 0
 	}
 	res[[i]] <- list(stat = stat.fid, n.sig = i.sig.fid)
 }
-})
-#if (verbose)
-	cat("\n  computed stride in", cpu.time[3], "sec")
+
 
 stat <- sapply(res, function (x) x[[1]])
 n.sig <- sapply(res, function (x) x$n.sig)
 diff.stat <- t(rbind(0, apply(stat, 1, diff)))
 diff.stat <- apply(diff.stat, 2,
 	function(x)	c(sum(x[x > 0]), sum(x[x < 0])))
-
+})	
+if (verbose) {
+	close(pb.stride)
+	cat("\n  computed stride in", cpu.time[3], "sec")
+}
 res <- list(
 	stat = stat,
 	n.sig = n.sig,
@@ -835,7 +838,7 @@ setMethod("Stride",
 )
 
 #	plotting method for stride list
-.plotVegsoupSpeciesIndicators <- function (x) {
+plotStride <- function (x) {
 #	x = Stride(dta)
 	xx <- 1:(ncol(x$stat)) # getK(obj)
 	y1 <- x$diff.stat[1, ]

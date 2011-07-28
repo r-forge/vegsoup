@@ -13,7 +13,7 @@
 .FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
 #	binary = TRUE; obj = prt; group = NULL
-if (getK(obj) == 1)
+if (getK(obj) == 1 & verbose)
 	cat("results maybe meaningless with k = ", getK(obj))
 if (binary) {
 	X <- as.binary(obj)
@@ -639,8 +639,9 @@ if (verbose) {
 cpu.time <- system.time({	
 for (i in 1:nsps) {
 	#	i = 1
-	if (verbose)
-		setTxtProgressBar(pb, i)	
+	if (verbose) {
+		setTxtProgressBar(pb, i)
+	}
 	dm[i,] <- fidelity.method(X[,i], cluster, method, group, ...)
 }
 
@@ -649,9 +650,10 @@ if (method == "IndVal.g") {
 	dm <- dm ^ 2
 }
 })
-if (verbose)
+if (verbose) {
+	close(pb)
 	cat("\n  computed diagnostic values in", cpu.time[3], "sec")
-#	close(pb)
+}	
 #	compute Fisher test
 ft <- dm
 if (verbose)
