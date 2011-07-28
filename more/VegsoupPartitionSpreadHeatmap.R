@@ -4,8 +4,8 @@ VegsoupPartitionSpreadHeatmap <- function (x, ...)
 if (!inherits(x, "VegsoupDataPartition"))
 	stop("supply an object of class VegsoupDataPartition")
 
-k1 <- x@species.pa
-x <- x@spread	
+k1 <- as.binary(x)
+x <- Spread(x)	
 k <- sort(unique(sapply(x, max)))
 
 if (max(k) > 1) {
