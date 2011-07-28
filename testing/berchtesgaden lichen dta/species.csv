@@ -35,7 +35,7 @@
 4;"clad digi";"ll";8;;
 4;"lepr spec";"ll";5;;
 4;"paop ambi";"ll";1,5;2;3
-5;"dime pine";"ll";0,1;;
+5;"dime pine";"ll";1;;
 5;"lepr spec";"ll";0,3;;
 5;"phly arge";"ll";14;;
 5;"plat repe";"ml";2;;
@@ -122,7 +122,6 @@
 14;"acro gemm";"ll";4;;
 14;"ambl subt";"ml";3;;
 14;"coll nigr";"ll";1,5;2,5;1
-14;"leca naeg";"ll";0,1;;
 14;"leca arge";"ll";0,5;;
 14;"lept satu";"ll";1;1,5;
 14;"leuc sciu";"ml";45;;
@@ -724,11 +723,9 @@
 110;"paop hype";"ll";2;1;1
 110;"plat glau";"ll";11;4;2
 110;"usne fili";"ll";1;1;2
-111;"hypo phys";"ll";17;;
 111;"hypo fari";"ll";17;4;2
 111;"paop ambi";"ll";2;1;1
 111;"plat glau";"ll";11;4;1
-111;"hypo fari";"ll";178;;
 111;"psev furf";"ll";16;3;1
 111;"psev furf cera";"ll";16;3;1
 111;"usne fili";"ll";0,5;1;2
@@ -2293,7 +2290,6 @@
 427;"pann cono";"ll";10;13;1
 427;"parm saxa";"ll";3;2;1
 427;"phly arge";"ll";5;;
-428;"ambl subt";"ll";15;;
 428;"hete spec";"ll";1;;
 428;"lept satu";"ll";3;2;1
 428;"leuc sciu";"ll";25;;
@@ -2361,7 +2357,6 @@
 442;"phly arge";"ll";3,5;;
 442;"phys adsc";"ll";8;0,5;1
 442;"phys stel";"ll";1;1;1
-442;"leca cytr";"ll";1;1;1
 443;"cala xant";"ll";2,5;;
 443;"leca carp";"ll";5,5;;
 443;"leca chla";"ll";6;;
@@ -2371,7 +2366,6 @@
 443;"phly arge";"ll";3;;
 443;"phys adsc";"ll";1;2;1
 443;"phys stel";"ll";1,5;2;1
-444;"leca subi";"ll";1;;
 444;"aman punc";"ll";2;;
 444;"cala xant";"ll";1;;
 444;"hypo phys";"ll";1,5;1,5;1
