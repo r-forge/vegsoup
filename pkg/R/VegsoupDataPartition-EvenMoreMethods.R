@@ -1,17 +1,29 @@
-.latexVegsoupDataPartitionSites <- function (object, p.col.width, ...) {
+.latexVegsoupDataPartitionSites <- function (object, p.col.width, filename, verbose = FALSE, ...) {
 #	object  <- prt
 
-sites <- object@sites	
+sites <- object@sites
+
+#	variables to drop for summary table	
 drop <- grep("date", names(sites), fixed = TRUE)
+drop <- c(drop, grep("longitude", names(sites), fixed = TRUE))
+drop <- c(drop, grep("latitude", names(sites), fixed = TRUE))
 
-if (length(drop) > 0) {
-	warning("droped date column, not meaningful for summary")
-	sites <- sites[,-grep("date", names(sites))]
+if (missing(filename)) {
+	filename <- "SitesPartitionTable"	
 }
-
+if (length(drop) > 0) {
+	if (verbose) {
+		cat("droped variables ",
+		paste(names(sites)[drop], collapse = ", "),
+		". not meaningful for summary")
+	}	
+	sites <- sites[ ,-drop]
+}
 if (missing(p.col.width)) {
 	p.col.width = "15mm"
-	warning("p.col.width missing, set to ", p.col.width, call. = FALSE)
+	if (verbose) {
+		cat("p.col.width missing, set to ", p.col.width, call. = FALSE)
+	}
 }
 
 part <- Partitioning(object)
@@ -21,6 +33,7 @@ char.cols <- sapply(sites, is.character)
 num.cols.agg <- matrix(NA,
 	ncol = length(which(num.cols)),
 	nrow = getK(object))
+	
 for (i in seq(along = which(num.cols))) {
 	i.median <- aggregate(sites[,which(num.cols)[i]], by = list(part), median)[,2]
 	i.mad <- aggregate(sites[,which(num.cols)[i]], by = list(part), mad)[,2]
@@ -63,10 +76,22 @@ p.col <- paste("|p{", p.col.width, "}", sep = "")
 col.just <- c(rep(p.col, ncol(tex)))
 #col.just[ncol(num.cols.agg) + 1] <- paste("|", col.just[ncol(num.cols.agg) + 1], sep = "")
 #	tex valid filenames
-filename <- paste("SitesPartitionTable")
-filename <- gsub(".", "_", filename, fixed = TRUE)
-filename <- gsub(" ", "_", filename, fixed = TRUE)
-filename <- paste(filename, ".tex", sep = "")
+#	to do! see .latexVegsoupDataPartitionFidelity
+#	more tests on filename
+if (length(grep(".", "_", filename, fixed = TRUE))) {
+		
+}
+
+if (length(grep(" ", filename, fixed = TRUE)) > 0) {
+	warning("LaTex assumes no blanks in filenames!",
+		" we replace all blanks!")
+	filename <- gsub(" ", "_", filename, fixed = TRUE)	
+}
+
+if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
+	warning("add file extension .tex to filename ", filename)
+	filename <- paste(filename, ".tex", sep = "")
+}
 
 latex(tex,
 	file = filename,
@@ -108,7 +133,7 @@ for(i in 1:getK(object)) {
 	i.tex <- gsub("0", ".", i.tex, fixed = TRUE)
 	i.tex <- cbind(DecomposeNames(i.part)[c("taxon", "layer")], i.tex)
 	#	tex valid filenames
-	filename <- paste("species", i, ".tex", sep = "")
+	filename <- paste(path, "species", i, ".tex", sep = "")
 	filenames <- c(filenames, filename)
 	caption <- paste("Cluster table", i)
 
@@ -128,14 +153,16 @@ for(i in 1:getK(object)) {
 }
 
 
-con <- file("species.tex")
+con <- file(paste(path, "species.tex", sep = ""))
 	writeLines(paste("\\input{../", filenames, "}", sep = ""), con)
 close(con)
 
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSitesRecursive <- function (object, ...) {}
+.latexVegsoupDataPartitionSitesRecursive <- function (object, path, ...) {
+	#	to do!	
+}
 
 setGeneric("Latex",
 	function (object, ...)

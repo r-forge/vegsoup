@@ -20,7 +20,27 @@ Fidelity(obj, ...)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+r: phi (point-biserial correlation coefficient)
+r.g: phi, group equalised
+cos: cosine (Ochiai index)
+cos.g: cosine (Ochiai index), group equalised
+r.ind: phi individual based
+r.ind.g: phi individual based, group equalised
+s.ind: square root of Indval A times Indval B
+s.ind.g: square root of Indval A.g * Indval B, group equalised
+IndVal.g: Indval, group equalised
+IndVal: Indval
+A.g: Indval A, group equalised
+A: Indval A
+B: Indval B
+u.hyp: Bruelheide's corrected u value
+u.binB: Bruelheide's corrected u value uBinB
+u.binA: Bruelheide's corrected u value uBinA
+g: G statistic
+chi: chi-square statistic with Yates correction
+Fisher: Fisher test
+CR: constancy ratio
+TCR: total cover ratio
 }
 \value{
 %%  ~Describe the value returned

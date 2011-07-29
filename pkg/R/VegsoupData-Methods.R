@@ -107,18 +107,21 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		"of", prod(dim(res)), "cells:",
 		cpu.time[3], "sec\n")
 	}
+	
 	#	cast sites data
+	
 	#	check missing values
-	if (any(SitesLong(obj)[, 3] == "") | is.na(SitesLong(obj)[, 3]) ) {
+	if (any(SitesLong(obj)[, 3] == "") | any(is.na(SitesLong(obj)[, 3]))) {
 		obj@sites.long[obj@sites.long[, 3] == "", 3] <- 0
 		obj@sites.long[is.na(obj@sites.long[, 3]), 3] <- 0
-		warning("NAs and empty fields (\"\") in supplied sites",
+		warning("NAs and empty fields (\"\") in supplied sites data",
 			" filled with zeros")
 	}
 	sites <- reshape(SitesLong(obj)[, 1:3],
 		direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
+	
 	#	tune data frame structure
 	
 	#	check NA's resulting from reshape
@@ -126,10 +129,24 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	if (any(is.na(sites))) {
 		sites[is.na(sites)] <- 0
 		warning("NAs in casted sites data frame",
-			" filled with zeros",
-			"\nslot @sites.long will no longer match for these entries")
-		#	to do
+			" filled with zeros")
 		#	paste back to @sites.long
+		tmp <- stack(sites)
+		tmp[,1] <- as.character(tmp[,1])
+		tmp[,2] <- as.character(tmp[,2])
+		plot <- tmp[tmp$ind == "plot",]$values
+		plot <- rep(plot, (nrow(tmp)/length(plot))- 1)
+		tmp <- tmp[!tmp$ind == "plot",]
+		tmp <- data.frame(plot,
+			variable = tmp[,2],
+			value = tmp[,1])
+		tmp <- tmp[order(tmp$plot),]
+		tmp$variable <- gsub("value.", "", tmp$variable, fixed = TRUE)
+		tmp <- data.frame(as.matrix(tmp), stringsAsFactors = FALSE)
+		tmp[is.na(tmp)] <- ""
+		rownames(tmp) <- 1:nrow(tmp)
+		#	to do testing aginst original @sites.long
+		obj@sites.long <- tmp[order(tmp$plot, tmp$variable),]
 	}
 	
 	#	change column mode to numeric if possible
@@ -361,10 +378,15 @@ if (missing(collapse) & missing(aggregate)) {
 			stop("length of collapse vector must match length(Layers(obj))")
 	}
 
-	#	obj = dta; verbose = FALSE; aggregate = "mean"; collapse = c("hl", "sl", "tl", "tl", "hl")
+	#	debug
+	#	obj = sub; verbose = TRUE; aggregate = "layer"; dec = 0, collapse = c("hl", "sl", "tl", "tl", "hl")
 	
-	if (inherits(obj, "VegsoupData")) 
-		res <- as(dta, "Vegsoup") else res <- obj
+	#	revert to class Vegsoup and cast again
+	if (inherits(obj, "VegsoupData")) { 
+		res <- as(obj, "Vegsoup")
+	} else {
+		res <- obj
+	}
 
 	species <- SpeciesLong(res)
 	scale <- AbundanceScale(res)
@@ -374,7 +396,7 @@ if (missing(collapse) & missing(aggregate)) {
 		byrow = FALSE,
 		dimnames = list(NULL, c("original", "collapsed")))
 	
-	if (verbose) print(collapse)		
+	if (verbose) print(collapse)	
 
 	species$layer <- factor(species$layer)
 	levels(species$layer) <- collapse[match(levels(species$layer), collapse[, 1]), 2]
@@ -403,20 +425,28 @@ if (missing(collapse) & missing(aggregate)) {
 		aggregate(cov ~ plot + abbr + layer, data = species,
 			FUN = sum)
 	}, layer = {
-		aggregate(cov ~ plot + abbr + layer, data = species,
-			FUN = function (x) {
-				round((1 - prod(1 - x / max(scale$lims))) * max(scale$lims), dec)
-				})		
+		if (scale$scale != "frequency") {
+			aggregate(cov ~ plot + abbr + layer, data = species,
+				FUN = function (x) {
+					round((1 - prod(1 - x / max(scale$lims))) * max(scale$lims), dec)
+				})
+		} else {
+			aggregate(cov ~ plot + abbr + layer, data = species,
+				FUN = function (x) {
+					round((1 - prod(1 - x / 100)) * 100, dec)	
+					})
+		}		
 	})
 	
 	species <- species[order(species$plot, species$layer, species$abbr), ]
-
-	if (any(max(species$cov) > max(scale$lims))) {
-		warning("reduced maximum aggregated abundance value to fit into limits: ",
-			min(scale$lims)[1], " to ", max(scale$lims))
-		species$cov[species$cov >  max(scale$lims)] <- max(scale$lims)
-	}
 	
+	if (scale$scale != "frequency") {
+		if (any(max(species$cov) > max(scale$lims))) {
+			warning("reduced maximum aggregated abundance value to fit into limits: ",
+				min(scale$lims)[1], " to ", max(scale$lims))
+			species$cov[species$cov >  max(scale$lims)] <- max(scale$lims)
+	}
+	}
 	species$cov <- ceiling(species$cov)
 	
 	#	back convert to original abundance scale if it was character
@@ -442,17 +472,21 @@ setMethod("Layers",
 
 #	Richness of data set
 .getRichnessVegsoupData <-  function (obj, choice = c("dataset", "sample"), ...) {
-	#	obj = dta
-	if (missing(choice)) choice <- "dataset"
-	choice <- choices[pmatch(choice, c("dataset", "sample"))]
-	if (is.na(choice)) choice <- "dataset"
+	#	obj = sub
+	choices <- c("dataset", "sample")
+	if (missing(choice)) {
+		choice <- "dataset"
+	}
+	choice <- choices[pmatch(choice, choices)]
+	if (is.na(choice)) {
+		choice <- "dataset"
+	}	
 		switch(choice, "dataset" = {
 		res <- length(unique(DecomposeNames(obj))$abbr)
 		}, "sample" = {
 		res <- as.binary(Layers(obj, aggregate = "layer", verbose = FALSE))
 		res <- rowSums(res)
 		})		
-#	obj = dta
 
 	return(res)
 }
@@ -540,41 +574,38 @@ setMethod("[",
 	function (x, i, j, ..., drop = TRUE)
     {
 	    #	debug
-	    #	x = dta; i = 1:20; j = 1:20
+	    #	x = dta; i = 1:20; j <- rep(TRUE, ncol(x))
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
 
-		ii <- apply(as.binary(x)[i,j], 1, sum) > 0 # plots
+		ii <- rowSums(as.binary(x)[i,j]) > 0 # plots
 		if (any(ii == FALSE)) {
 			cat("\n removed empty sites:",
 				rownames(x)[i][!ii])	
 		}
 		
-		jj <- apply(as.binary(x)[i,j], 2, sum) > 0 # species
+		jj <- colSums(as.binary(x)[i,j]) > 0 # species
 		if (any(jj == FALSE)) {
-			tmp <- names(x)[j][!jj]
+			#	tmp <- names(x)[j][!jj]
 			cat("\n removed empty species!")
 		}
-		
+
 		res@species <- as.character(x)[i,j][ii,jj]
 		res@species.long <-
-			res@species.long[res@species.long$plot %in%
-				rownames(res), ]
+			res@species.long[res@species.long$plot %in%	rownames(res), ]
 		res@species.long <-
 			res@species.long[paste(res@species.long$abbr,
-				res@species.long$layer, sep = "@") %in%
-				names(res), ]
+				res@species.long$layer, sep = "@") %in%	names(res), ]
 		res@sites <-
 			res@sites[match(rownames(res),
 				rownames(res@sites)), ]
 		if (any(sapply(res@sites, is.na))) stop("Error")
 		#	prone to error if ordering really matters?
-		#	maybe needs reordering?
 		res@sites.long <-
 			res@sites.long[res@sites.long$plot %in%
 				rownames(res), ]
-
+		res@sites.long <- res@sites.long[order(res@sites.long$plot, res@sites.long$variable), ]
 		if (length(res@group) != 0) {
 		res@group <-
 			res@group[names(res@group) %in%

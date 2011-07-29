@@ -23,9 +23,11 @@ setMethod("getStat",
 
 #	format and arrange fidelity table
 #	adapted from Sebastian Schmidtlein's isotab()
-.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, ...) {
+.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, verbose = FALSE, ...) {
 #	object = fid.prt
-
+if (missing(filename)) {
+	filename <- paste("FidelityTable")
+}
 if (missing(p.col.width)) {
 	p.col.width = "10mm"
 	warning("p.col.width missing, set to ", p.col.width, call. = FALSE)
@@ -185,11 +187,22 @@ names(tex) <- col.names
 tex <- as.matrix(tex)
 tex[tex == 0] <- "."
 
-#	tex valid filenames
-filename <- paste("FidelityTable")
-filename <- gsub(".", "_", filename, fixed = TRUE)
-filename <- gsub(" ", "_", filename, fixed = TRUE)
-filename <- paste(filename, ".tex", sep = "")
+#	to do! see .latexVegsoupDataPartitionSites
+#	more tests on filename
+if (length(grep(".", "_", filename, fixed = TRUE))) {
+		
+}
+
+if (length(grep(" ", filename, fixed = TRUE)) > 0) {
+	warning("LaTex assumes no blanks in filenames!",
+		" we replace all blanks!")
+	filename <- gsub(" ", "_", filename, fixed = TRUE)	
+}
+
+if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
+	warning("add file extension .tex to filename ", filename)
+	filename <- paste(filename, ".tex", sep = "")
+}
 
 latex(tex,
 	file = filename,
@@ -200,6 +213,10 @@ latex(tex,
 	lines.page = nrow(tex),
 	here = TRUE,
 	col.just = col.just)
+
+if (verbose) {
+	cat("printed file to", filename)	
+}
 
 return(invisible(res))
 }

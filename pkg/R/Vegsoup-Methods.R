@@ -188,11 +188,14 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		}	
 
 	}
-		
+	
 	if (any(sapply(y, is.factor))) {
 		y <- as.data.frame(as.matrix(y),
 			stringsAsFactors = FALSE)
 	}
+	
+	#	order slot sites.long
+	y <- y[order(y$plot, y$variable), ]
 	
 	res <- new("Vegsoup",
 		species.long = x,

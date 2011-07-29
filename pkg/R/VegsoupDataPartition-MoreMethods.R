@@ -10,9 +10,12 @@
 #	returns a list with objects of class matrix.
 #	optionally calculates bootstrap
 
-.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
+.FidelityVegsoupPartition <- function (obj, method, group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
 #	binary = TRUE; obj = prt; group = NULL
+if (missing(method)) {
+	method <- "r.g"	
+}
 if (getK(obj) == 1 & verbose)
 	cat("results maybe meaningless with k = ", getK(obj))
 if (binary) {
