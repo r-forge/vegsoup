@@ -154,7 +154,9 @@ for(i in 1:getK(object)) {
 
 
 con <- file(paste(path, "species.tex", sep = ""))
-	writeLines(paste("\\input{../", filenames, "}", sep = ""), con)
+	writeLines(paste("\\input{",
+			gsub(path, "", filenames, fixed = TRUE),
+			"}", sep = ""), con)
 close(con)
 
 return(invisible(res))
