@@ -138,7 +138,7 @@ SitesWide2SitesLong <- function (filename) {
 
 sites <- read.csv2(filename, colClasses = "character")
 
-sites.stack <- stack(sites)
+sites.stack <- stack(sites, stringsAsFactors = FALSE)
 sites.stack[,1] <- as.character(sites.stack[,1])
 sites.stack[,2] <- as.character(sites.stack[,2])
 plot <- sites.stack[sites.stack$ind == "plot",]$values
@@ -151,6 +151,9 @@ sites.stack <- sites.stack[order(sites.stack$plot),]
 sites.stack[is.na(sites.stack)] <- ""
 rownames(sites.stack) <- 1:nrow(sites.stack)
 sites <- sites.stack
+sites$value <- as.character(sites$value)
+sites$plot <- as.character(sites$plot)
+sites$variable <- as.character(sites$variable)
 return(sites)
 }
 
