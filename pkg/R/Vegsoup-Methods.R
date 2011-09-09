@@ -43,13 +43,14 @@
 #		if missing random polygon pattern is generated
 #		based on sp.points
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "frequency")
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, verbose = TRUE) {
+	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
 	} else {			
 		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
+		x <- x[order(x$plot, x$layer, x$abbr),]
 	}
 
 	if (missing(y)) {
@@ -137,13 +138,18 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	
 	if (missing(sp.points) & missing(sp.polygons))	{
 		#	generate random points
-	
+		
 		#	try to find coordinates
 		test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 		#	raises errors is subset operation!
-		test <- FALSE
-		if (test) { 
-			cat("found variables longitude and latitude")
+		if (verbose) {
+			cat("try to retrieve coordinates from sites data")
+		}
+
+		if (test) {
+			if (verbose) {		 
+				cat("found variables longitude and latitude")
+			}
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
 
@@ -151,21 +157,25 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				lat <- lat[match(lng$plot, lat$plot), ]
 				latlng <- data.frame(plot = lat$plot, latitude = lat$value, longitude = lng$value,
 					stringsAsFactors = FALSE)
-				latlng <- latlng[sort(latlng$plot),]
+				latlng <- latlng[order(latlng$plot),]
 					
 				#	check decimal	
 				latlng[,2] <- as.numeric(gsub(",", ".", latlng[,2], fixed = TRUE))
 				latlng[,3] <- as.numeric(gsub(",", ".", latlng[,3], fixed = TRUE))
 				sp.points <- latlng
-				coordinates(sp.points) <- ~ longitude + latitude			
-			} 
+				coordinates(sp.points) <- ~ longitude + latitude
+				cat("")			
+			} else {
+				warning("longitude and latitude do not match in length")
+			}
 			
 			cents <- coordinates(sp.points)
 			ids <- sp.points$plot
 
 			pgs <- vector("list", nrow(cents))
 			for (i in 1:nrow(cents)) {
-				pg <- coordinates(GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
+			#	to do use plsx and plsy	
+				pg <- coordinates(GridTopology(cents[i,] - 0.00005  /2, c(0.00005, 0.00005), c(2,2)))
 				pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 				pgs[[i]] <- pg
 			}

@@ -18,6 +18,7 @@ Collate: AAA.R Vegsoup-Misc.R
          Vegsoup-Internal.R
          Class-Vegsoup.R Vegsoup-Methods.R
          Class-VegsoupData.R VegsoupData-Methods.R
+         VegsoupData-MoreMethods.R
          Class-VegsoupDataPartition.R VegsoupDataPartition-Methods.R
          VegsoupDataPartition-MoreMethods.R
          VegsoupDataPartition-EvenMoreMethods.R
