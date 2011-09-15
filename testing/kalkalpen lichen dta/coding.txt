@@ -1,0 +1,13 @@
+borke	bark
+soz	forest.type (forest type, tree species mixture)
+bhd	dbh (diameter at breast height)
+deckung	cov (total cover)
+Gelände	geomorphology
+msm	altitude
+neig st	slope
+breite	pl.width (width of sample plot)
+ober	pl.upper.limit (upper limit of sample plot along trunk)
+unter	pl.lower.limit (lower limit of sample plot along trunk)
+veg	vegetation (a priori defined vegetation type)
+exp.st	exp.trunk (exposition of trunk)
+exp	exposition (exposition of slope)
