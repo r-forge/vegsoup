@@ -27,6 +27,7 @@ if (missing(p.col.width)) {
 }
 
 part <- Partitioning(object)
+
 num.cols <- sapply(sites, is.numeric)
 char.cols <- sapply(sites, is.character)
 
@@ -61,7 +62,20 @@ for (i in seq(along = which(char.cols))) {
 char.cols.agg <- as.data.frame(char.cols.agg, stringsAsFactors = FALSE)
 names(char.cols.agg) <- names(sites)[char.cols]
 
-tex <- res <- data.frame(partiton = 1:getK(object), num.cols.agg, char.cols.agg,
+#	add plots to parttion column
+part.plot <- data.frame(part, names(part))
+names(part.plot) <- c("partition", "plots")
+part.plot <- part.plot[order(part.plot$partition),]
+
+part.plot <- sapply(unique(part.plot$partition),
+	function (x) {
+		paste(x, paste(part.plot[part.plot$partition == x, 2], collapse = ", "), sep = ": ")
+	}
+)
+
+tex <- res <- data.frame(
+	partiton = part.plot,
+	num.cols.agg, char.cols.agg,
 	stringsAsFactors = FALSE)
 	
 caption <- paste("Summary table for sites variables grouped in",
