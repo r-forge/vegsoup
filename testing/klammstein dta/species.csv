@@ -32,7 +32,7 @@
 "ks01";"sedu albu";"hl";"+";
 "ks01";"sesl caer";"hl";1;
 "ks01";"sile nuta nuta";"hl";"+";
-"ks01";"sqam lama";"kl";"1";
+"ks01";"sqam lama";"ml";"1";
 "ks01";"teuc mont";"hl";"+";
 "ks01";"thes alpi";"hl";"+";
 "ks01";"thym prae poly";"hl";"+";
@@ -70,7 +70,7 @@
 "ks02";"sedu albu";"hl";"+";
 "ks02";"sesl caer";"hl";1;
 "ks02";"sorb aria aggr";"hl";"+";
-"ks02";"sqam lama";"kl";"1";
+"ks02";"sqam lama";"ml";"1";
 "ks02";"teuc mont";"hl";"+";
 "ks02";"thym prae poly";"hl";"+";
 "ks02";"vinc hiru";"hl";"+";
@@ -104,7 +104,7 @@
 "ks03";"sesl caer";"hl";"+";
 "ks03";"sile nuta nuta";"hl";"+";
 "ks03";"sorb aria aggr";"sl";"+";
-"ks03";"sqam lama";"kl";"1";
+"ks03";"sqam lama";"ml";"1";
 "ks03";"teuc mont";"hl";"1";
 "ks03";"thym prae poly";"hl";"1";
 "ks03";"vinc hiru";"hl";"1";
@@ -168,7 +168,7 @@
 "ks05";"scab colu";"hl";"+";
 "ks05";"sedu albu";"hl";"+";
 "ks05";"sesl caer";"hl";"+";
-"ks05";"sqam lama";"kl";"1";
+"ks05";"sqam lama";"ml";"1";
 "ks05";"teuc mont";"hl";"2a";
 "ks05";"thym prae poly";"hl";"1";
 "ks05";"vinc hiru";"hl";"+";
@@ -190,7 +190,7 @@
 "ks06";"pote caul";"hl";"+";
 "ks06";"rham cath";"hl";"+";
 "ks06";"scab colu";"hl";"+";
-"ks06";"sqam lama";"kl";"1";
+"ks06";"sqam lama";"ml";"1";
 "ks06";"teuc mont";"hl";"1";
 "ks06";"thym prae poly";"hl";"+";
 "ks06";"vinc hiru";"hl";"+";
@@ -257,7 +257,7 @@
 "ks08";"scab colu";"hl";"+";
 "ks08";"sesl caer";"hl";"+";
 "ks08";"sile nuta nuta";"hl";"+";
-"ks08";"sqam lama";"kl";"2a";
+"ks08";"sqam lama";"ml";"2a";
 "ks08";"teuc mont";"hl";1;
 "ks08";"thym prae poly";"hl";"+";
 "ks08";"vinc hiru";"hl";"+";
@@ -299,12 +299,12 @@
 "ks10";"care orni orni";"hl";"+";
 "ks10";"clin alpi alpi";"hl";"+";
 "ks10";"erys sylv";"hl";"+";
-"ks10";"frax exce";"tl";"2a";
+"ks10";"frax exce";"tl1";"2a";
 "ks10";"glob cord";"hl";1;
 "ks10";"gyps repe";"hl";"2a";
 "ks10";"juni comm comm";"sl";"2a";
 "ks10";"juni sabi";"hl";"2b";
-"ks10";"lari deci";"tl";"2a";
+"ks10";"lari deci";"tl1";"2a";
 "ks10";"lase lati lati";"hl";"+";
 "ks10";"leon hisp pseu";"hl";1;
 "ks10";"orig vulg";"hl";"+";
@@ -313,7 +313,7 @@
 "ks10";"saxi pani";"hl";"+";
 "ks10";"sedu albu";"hl";"+";
 "ks10";"sesl caer";"hl";"2a";
-"ks10";"sqam lama";"kl";1;
+"ks10";"sqam lama";"ml";1;
 "ks10";"teuc mont";"hl";"+";
 "ks11";"alli lusi";"hl";1;
 "ks11";"amel oval";"hl";"+";

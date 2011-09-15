@@ -1,7 +1,7 @@
 "plot";"abbr";"layer";"cov";"voucher.flag";"voucher";"sheets";"comment"
-"aw01";"acin alpi";"hl";"+";;;;
+"aw01";"clin acin";"hl";"+";;;;
 "aw01";"alli lusi";"hl";"2a";;;;
-"aw01";"anel oval";"sl";"r";;;;
+"aw01";"amel oval";"sl";"r";;;;
 "aw01";"aspl ruta";"hl";"+";;;;
 "aw01";"cala vari";"hl";1;;;;
 "aw01";"card defl viri";"hl";"+";;;;
@@ -14,7 +14,7 @@
 "aw01";"gyps repe";"hl";"2a";;;;
 "aw01";"heli numm obsc";"hl";"+";;;;
 "aw01";"juni comm comm";"hl";1;;;;
-"aw01";"lase lati";"hl";"r";;;;
+"aw01";"lase lati lati";"hl";"r";;;;
 "aw01";"leon hisp pseu";"hl";"+";;;;
 "aw01";"lotu corn slat";"hl";"+";;;;
 "aw01";"poa moli";"hl";1;"voucher";144;;
@@ -30,8 +30,8 @@
 "aw01";"thes alpi";"hl";"+";;;;
 "aw01";"thym prae prae";"hl";"2b";;;;
 "aw01";"vale offi tenu";"hl";"r";;;;
-"aw01";"vinc hier";"hl";"+";;;;
-"aw02";"acin alpi";"hl";1;;;;
+"aw01";"vinc hiru";"hl";"+";;;;
+"aw02";"clin acin";"hl";1;;;;
 "aw02";"alli lusi";"hl";1;;;;
 "aw02";"berb vulg";"hl";"+";;;;
 "aw02";"berb vulg";"sl";1;;;;
@@ -47,7 +47,7 @@
 "aw02";"gyps repe";"hl";"2a";;;;
 "aw02";"heli numm obsc";"hl";"+";"voucher";148;;
 "aw02";"juni sabi";"hl";"2a";;;;
-"aw02";"lase lati";"hl";"+";;;;
+"aw02";"lase lati lati";"hl";"+";;;;
 "aw02";"leon hisp pseu";"hl";"+";"voucher";143;;
 "aw02";"poa moli";"hl";"2a";;;;
 "aw02";"poly odor";"hl";"+";;;;
@@ -59,8 +59,8 @@
 "aw02";"sesl caer";"hl";"2b";;;;
 "aw02";"teuc mont";"hl";"+";;;;
 "aw02";"thym prae prae";"hl";"+";"voucher";145;;
-"aw02";"vinc hier";"hl";1;;;;
-"aw03";"acin alpi";"hl";1;;;;
+"aw02";"vinc hiru";"hl";1;;;;
+"aw03";"clin acin";"hl";1;;;;
 "aw03";"alli lusi";"hl";1;;;;
 "aw03";"amel oval";"hl";"+";;;;
 "aw03";"amel oval";"sl";1;;;;
@@ -76,7 +76,7 @@
 "aw03";"gyps repe";"hl";"2b";;;;
 "aw03";"heli numm obsc";"hl";1;;;;
 "aw03";"juni sabi";"hl";"2a";;;;
-"aw03";"lase lati";"hl";1;;;;
+"aw03";"lase lati lati";"hl";1;;;;
 "aw03";"orob alba";"hl";"r";"voucher";150;;
 "aw03";"poa moli";"hl";1;;;;
 "aw03";"poly odor";"hl";"+";;;;
@@ -91,4 +91,4 @@
 "aw03";"sorb aria aggr";"hl";"+";;;;
 "aw03";"teuc mont";"hl";"2a";;;;
 "aw03";"thym prae prae";"hl";"2a";;;;
-"aw03";"vinc hier";"hl";"2a";;;;
+"aw03";"vinc hiru";"hl";"2a";;;;
