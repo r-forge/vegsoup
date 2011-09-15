@@ -9,26 +9,24 @@
 "hs01";"rosa pseu";"sl";"+";"voucher";117;;"Blätter graugrün, nicht glänzend, ungerieben schwach duftend, leicht klebrig, ganze Pflanze ca. kniehoch"
 "hs01";"sedu albu";"hl";"+";;;;
 "hs01";"semp arac";"hl";"+";;;;
-"hs02";"alli mont";"hl";1;;;;
+"hs02";"alli lusi";"hl";1;;;;
 "hs02";"aste alpi";"hl";"2a";;;;
 "hs02";"erys sylv";"hl";"+";;;;
 "hs02";"euph cypa";"hl";"+";;;;
 "hs02";"gali anis";"hl";"+";;;;
 "hs02";"gyps repe";"hl";"+";;;;
 "hs02";"jovi glob aren";"hl";1;;;;
-"hs02";"moss spec";"ml";"2a";;;;"pillow like"
-"hs02";"moss spec";"ml";"2a";;;;"growing also on Juniperus sabina"
+"hs02";"bryo unde";"ml";"2a";;;;"pillow like: 2a, growing also on Juniperus sabina:2a; Schistidium apocarpum: 2b"
 "hs02";"poa moli";"hl";"+";;;;
 "hs02";"rosa pseu";"hl";"+";"voucher";108;3;"Blätter graugrün, nicht glänzend, ungerieben schwach duftend, leicht klebrig, ganze Pflanze ca. kniehoch"
 "hs02";"saxi pani";"hl";1;;;;
-"hs02";"schi apoc";"ml";"2b";;;;
 "hs02";"sedu albu";"hl";"+";;;;
-"hs02";"sedu dasi";"hl";"+";;;;
+"hs02";"sedu dasy";"hl";"+";;;;
 "hs02";"semp arac";"hl";"2a";;;;
-"hs02";"sesl albi";"hl";1;;;;
+"hs02";"sesl caer";"hl";1;;;;
 "hs02";"teuc mont";"hl";"+";;;;
 "hs02";"thym prae poly";"hl";1;"voucher";109;;
-"hs02";"vinc hier";"hl";"+";;;;
+"hs02";"vinc hiru";"hl";"+";;;;
 "hs03";"achi mill aggr";"hl";"+";;;;
 "hs03";"alli lusi";"hl";1;;;;
 "hs03";"aspl ruta";"hl";"+";;;;
@@ -47,14 +45,14 @@
 "hs03";"frag vesc";"hl";"+";;;;
 "hs03";"gali albu";"hl";"+";;;;
 "hs03";"gali anis";"hl";"+";;;;
-"hs03";"heli gran";"hl";"+";"voucher";111;;
+"hs03";"heli numm gran";"hl";"+";"voucher";111;;
 "hs03";"hier ampl";"hl";"+";"voucher";116;;"blühte in Kultur"
 "hs03";"hipp como";"hl";"+";;;;
 "hs03";"hype perf";"hl";"+";;;;
 "hs03";"jovi glob aren";"hl";1;;;;
-"hs03";"juni comm";"hl";"+";;;;
+"hs03";"juni comm comm";"hl";"+";;;;
 "hs03";"juni sabi";"hl";"+";;;;
-"hs03";"lase lati";"hl";"+";;;;
+"hs03";"lase lati lati";"hl";"+";;;;
 "hs03";"lili mart";"hl";"+";;;;
 "hs03";"lotu corn";"hl";"+";;;;
 "hs03";"orig vulg";"hl";"+";;;;
@@ -63,17 +61,17 @@
 "hs03";"poly odor";"hl";"+";;;;
 "hs03";"poly vulg";"hl";"+";;;;
 "hs03";"rosa glau";"hl";"+";;;;
-"hs03";"rosa spec";"hl";;;;;"see voucher 114 and 119"
+"hs03";"rosa pseu";"hl";"+";;;;"see voucher?"
 "hs03";"rubu idae";"hl";"+";;;;
 "hs03";"saxi pani";"hl";1;;;;
 "hs03";"scab luci luci";"hl";"+";;;;
 "hs03";"sedu albu";"hl";"+";;;;
 "hs03";"semp arac";"hl";1;;;;
-"hs03";"sesl albi";"hl";"2b";;;;
-"hs03";"sile nuta";"hl";"+";;;;
+"hs03";"sesl caer";"hl";"2b";;;;
+"hs03";"sile nuta nuta";"hl";"+";;;;
 "hs03";"teuc mont";"hl";"+";;;;
 "hs03";"thym prae poly";"hl";1;;;;
-"hs03";"vinc hier";"hl";1;;;;
+"hs03";"vinc hiru";"hl";1;;;;
 "hs04";"alli lusi";"hl";"+";;;;
 "hs04";"erys sylv";"hl";"+";;;;
 "hs04";"rosa pseu";"sl";"2b";;;;"cf."
@@ -90,7 +88,7 @@
 "hs04";"gera robe";"hl";"r";;;;
 "hs04";"rosa tome";"hl";1;;;;
 "hs04";"digi gran";"hl";"r";;;;
-"hs04";"sedu dasi";"hl";"+";;;;
+"hs04";"sedu dasy";"hl";"+";;;;
 "hs04";"rosa glau";"hl";"+";;;;
 "hs04";"dian cart lati";"hl";"+";;;;"cf."
 "hs04";"poly vulg";"hl";"+";;;;
@@ -113,7 +111,7 @@
 "hs05";"sedu albu";"hl";"+";;;;
 "hs05";"saxi pani";"hl";"+";;;;
 "hs05";"thym prae poly";"hl";"+";;;;
-"hs05";"vinc hier";"hl";"+";;;;
+"hs05";"vinc hiru";"hl";"+";;;;
 "hs05";"achi mill aggr";"hl";"+";;;;
 "hs05";"gali anis";"hl";"+";;;;
 "hs05";"orig vulg";"hl";1;;;;
@@ -134,7 +132,7 @@
 "hs06";"euph cypa";"hl";"2a";;;;
 "hs06";"orig vulg";"hl";"2a";;;;
 "hs06";"rosa vill";"hl";"2a";;;;
-"hs06";"vinc hier";"hl";1;;;;
+"hs06";"vinc hiru";"hl";1;;;;
 "hs06";"achi mill aggr";"hl";"+";;;;
 "hs06";"frax exce";"hl";"+";;;;
 "hs06";"rosa glau";"sl";"+";;;;
@@ -161,8 +159,8 @@
 "hs06";"gyps repe";"hl";"+";;;;
 "hs07";"cala vari";"hl";4;;;;
 "hs07";"frax exce";"tl1";"2a";;;;
-"hs07";"vinc hier";"hl";"2b";;;;
-"hs07";"pimp maja";"hl";1;;;;
+"hs07";"vinc hiru";"hl";"2b";;;;
+"hs07";"pimp majo slat";"hl";1;;;;
 "hs07";"orig vulg";"hl";1;;;;
 "hs07";"clin vulg vulg";"hl";"+";;;;
 "hs07";"daph meze";"hl";1;;;;
@@ -192,6 +190,6 @@
 "hs07";"rosa pseu";"hl";"+";;;;
 "hs07";"juni comm comm";"sl";"+";;;;
 "hs07";"lotu corn slat";"hl";"+";;;;
-"hs07";"scab coll";"hl";"+";;;;
+"hs07";"scab colu";"hl";"+";;;;
 "hs07";"phyt orbi";"hl";"+";;;;
 "hs07";"alli lusi";"hl";"+";;;;
