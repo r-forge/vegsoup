@@ -13,13 +13,13 @@
 "hs05";"bare";"1"
 "hs06";"bare";"1"
 "hs07";"bare";"1"
-"hs01";"comment";"hs01-02': E13,234553 N47,177902 1180msm; hs01-02'' 85m  E 13,234513 N47,177783 1090msm"
-"hs02";"comment";
-"hs03";"comment";"hs03': E 13,234072 N47,177880 1080msm; hs03'' 20m E13,234004 N47,177828 1070msm"
-"hs04";"comment";"hs04-07': E13,285921 N47,157870 1220msm;  hs04-07'' 95m: E13,285724 N47,157690 1130msm"
-"hs05";"comment";
-"hs06";"comment";
-"hs07";"comment";
+"hs01";"comment";"belay hs01-02': E13,234553 N47,177902 1180msm; hs01-02'' 85m  E 13,234513 N47,177783 1090msm"
+"hs02";"comment";"belay hs01-02': E13,234553 N47,177902 1180msm; hs01-02'' 85m  E 13,234513 N47,177783 1090msm; hs02 has two bolts"
+"hs03";"comment";"belay hs03': E 13,234072 N47,177880 1080msm; hs03'' 20m E13,234004 N47,177828 1070msm"
+"hs04";"comment";"belay hs04-07': E13,285921 N47,157870 1220msm;  hs04-07'' 95m: E13,285724 N47,157690 1130msm"
+"hs05";"comment";"belay hs04-07': E13,285921 N47,157870 1220msm;  hs04-07'' 95m: E13,285724 N47,157690 1130msm"
+"hs06";"comment";"belay hs04-07': E13,285921 N47,157870 1220msm;  hs04-07'' 95m: E13,285724 N47,157690 1130msm"
+"hs07";"comment";"belay hs04-07': E13,285921 N47,157870 1220msm;  hs04-07'' 95m: E13,285724 N47,157690 1130msm"
 "hs01";"cov";"60"
 "hs02";"cov";"70"
 "hs03";"cov";"60"
@@ -160,3 +160,10 @@
 "hs06";"stones";"1"
 "hs07";"stones";"0"
 "hs07";"tcov1";"5"
+"hs01";"belay";"hs01-02'"
+"hs02";"belay";"hs01-02'"
+"hs03";"belay";"hs03'"
+"hs04";"belay";"hs04-07"
+"hs05";"belay";"hs04-07"
+"hs06";"belay";"hs04-07"
+"hs07";"belay";"hs04-07"
