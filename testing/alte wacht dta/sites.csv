@@ -11,8 +11,8 @@
 "aw01";"latitude";"47,297483"
 "aw01";"longitude";"13,209362"
 "aw01";"mcov";1
-"aw01";"plx";8
-"aw01";"ply";8
+"aw01";"plsx";8
+"aw01";"plsy";8
 "aw01";"precision";20
 "aw01";"stones";1
 "aw01";"bare.soil";2
@@ -29,8 +29,8 @@
 "aw02";"latitude";"47,297465"
 "aw02";"longitude";"13,209480"
 "aw02";"mcov";1
-"aw02";"plx";8
-"aw02";"ply";8
+"aw02";"plsx";8
+"aw02";"plsy";8
 "aw02";"precision";20
 "aw02";"stones";1
 "aw02";"bare.soil";2
@@ -49,8 +49,8 @@
 "aw03";"latitude";"47,297303"
 "aw03";"longitude";"13,209332"
 "aw03";"mcov";1
-"aw03";"plx";8
-"aw03";"ply";8
+"aw03";"plsx";8
+"aw03";"plsy";8
 "aw03";"precision";20
 "aw03";"stones";2
 "aw03";"bare.soil";"30.07.11"
