@@ -30,12 +30,12 @@ ReshapeMultiCoverColumns <- function (filename) {
 
 res <- read.csv2(filename, colClasses = "character")
 
-
 res <- rbind(
 	cbind("hl", as.matrix(res[,c(1,2,3)])),
 	cbind("sl", as.matrix(res[,c(1,2,4)])),
 	cbind("tl", as.matrix(res[,c(1,2,5)])),
-	cbind("ml", as.matrix(res[,c(1,2,6)])))	
+	cbind("ml", as.matrix(res[,c(1,2,6)]))
+)
 
 
 res <- as.data.frame(res,
@@ -45,7 +45,6 @@ names(res) <- c("plot", "abbr", "layer", "cov")
 
 res <- res[res$cov != "0",]
 res <- res[res$cov != "",]
-
 
 }
 #res <- ReshapeMultiCoverColumns("/Users/roli/Desktop/db/relevees/species.csv")
@@ -177,4 +176,51 @@ MakeAbbr <- function (x)  {
     names <- abbreviate(names, 8)
    	names <- make.names(names, unique = TRUE)
     names
+}
+
+#	convert between matrix formats for import
+SpeciesWide2SpeciesLong <- function (file.name) {
+
+if(missing(file.name)) {
+	stop("please supply a csv file")	
+}
+
+x <- read.csv2(file.name,
+	stringsAsFactors = FALSE, check.names = FALSE)
+
+abbr <- grep("abbr", names(x))
+layer <- grep("layer", names(x))
+comment <- grep("comment", names(x))
+
+if(length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
+res <- c()	
+for (i in 4:ncol(x)) {
+#	i = 4	
+tmp <- data.frame(plot = names(x)[i],
+	abbr = x[, 2],
+	layer = x[, 3],
+	cov = x[,i],
+	comment = x[, 1],
+	stringsAsFactors = FALSE)
+	
+res <- rbind(res, tmp)
+	
+	
+}
+res <- res[res$cov != "0",]
+
+} else {
+	if (length(abbr) < 1) {
+		warning("did not find column abbr")		
+	}
+	if (length(layer) < 1) {
+		warning("did not find column abbr")		
+	}
+	if (length(comment) < 1) {
+		warning("did not find column comment")		
+	}
+	stop("can't coerce object")	
+
+}
+
 }
