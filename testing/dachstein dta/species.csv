@@ -16,7 +16,7 @@
 "ds01";"heli alpe";"hl";"+";;;
 "ds01";"gali nori";"hl";1;;;
 "ds01";"cetr isla";"ml";"+";;;
-"ds01";"agro rupe";"hl";1;;;
+"ds01";"agro rupe rupe";"hl";1;;;
 "ds01";"minu sedo";"hl";"+";;;
 "ds01";"tort tort";"ml";1;;;
 "ds01";"pote clus";"hl";"+";;;
@@ -43,10 +43,10 @@
 "ds02";"euph sali";"hl";"+";;;
 "ds02";"gent vern vern";"hl";1;;;
 "ds02";"gali nori";"hl";1;;;
-"ds02";"gent clus";"hl";"+";;;
+"ds02";"gent clus clus";"hl";"+";;;
 "ds02";"cetr eric";"ml";"+";;;
 "ds02";"clad rang";"ml";"+";;;
-"ds02";"agro rupe";"hl";1;;;
+"ds02";"agro rupe rupe";"hl";1;;;
 "ds02";"sile acau long";"hl";"+";;;
 "ds02";"kobr simp";"hl";"2a";;;
 "ds02";"cetr tile";"ml";1;;;
@@ -120,7 +120,7 @@
 "ds04";"pers vivi";"hl";"+";;;
 "ds04";"crep terg";"hl";"+";;;
 "ds04";"euph mini";"hl";"+";;;
-"ds04";"gent clus";"hl";"+";;;
+"ds04";"gent clus clus";"hl";"+";;;
 "ds04";"prim clus";"hl";"+";;;
 "ds04";"camp sche";"hl";"+";;;
 "ds04";"heli alpe";"hl";1;;;
@@ -149,7 +149,7 @@
 "ds05";"care capi";"hl";1;;;
 "ds05";"euph sali";"hl";"+";;;
 "ds05";"euph mini";"hl";"+";;;
-"ds05";"gent clus";"hl";1;;;
+"ds05";"gent clus clus";"hl";1;;;
 "ds05";"gent acau";"hl";"+";;;
 "ds05";"gent vern vern";"hl";"+";;;
 "ds05";"sesl caer";"hl";"2a";;;
