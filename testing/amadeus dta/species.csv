@@ -29,7 +29,7 @@
 "aa01a";"tara sect rude";"hl";"2a";;
 "aa01a";"trif dubi";"hl";"+";;
 "aa01a";"trif prat prat";"hl";"2a";;
-"aa01a";"trif repe";"hl";1;;
+"aa01a";"trif repe repe";"hl";1;;
 "aa01a";"tris flav";"hl";3;;
 "aa01a";"vale locu";"hl";"r";;
 "aa01a";"vero arve";"hl";"r";;
@@ -61,7 +61,7 @@
 "aa01b";"rume acet osa";"hl";1;;
 "aa01b";"tara sect rude";"hl";1;;
 "aa01b";"trif prat prat";"hl";"2b";;
-"aa01b";"trif repe";"hl";1;;
+"aa01b";"trif repe repe";"hl";1;;
 "aa01b";"tris flav";"hl";3;;
 "aa01b";"vero arve";"hl";"+";;
 "aa01b";"vero cham cham";"hl";1;;
@@ -126,7 +126,7 @@
 "aa01d";"rume obtu slat";"hl";"+";;
 "aa01d";"tara sect rude";"hl";1;;
 "aa01d";"trif prat prat";"hl";"2b";;
-"aa01d";"trif repe";"hl";1;;
+"aa01d";"trif repe repe";"hl";1;;
 "aa01d";"tris flav";"hl";3;;
 "aa01d";"vero arve";"hl";"+";;
 "aa01d";"vero cham cham";"hl";"+";;
@@ -194,7 +194,7 @@
 "aa02a";"rume obtu slat";"hl";1;;
 "aa02a";"sile dioi";"hl";1;;
 "aa02a";"tara sect rude";"hl";"2a";;
-"aa02a";"trif repe";"hl";"2a";;
+"aa02a";"trif repe repe";"hl";"2a";;
 "aa02a";"vero arve";"hl";"+";;
 "aa02a";"vero cham cham";"hl";"2a";;
 "aa02a";"vero fili";"hl";1;;
@@ -306,7 +306,7 @@
 "aa02e";"tara sect rude";"hl";"+";;
 "aa02e";"trag orie";"hl";1;;
 "aa02e";"trif prat prat";"hl";"2a";;
-"aa02e";"trif repe";"hl";1;;
+"aa02e";"trif repe repe";"hl";1;;
 "aa02e";"tris flav";"hl";"2a";;
 "aa02e";"vero cham cham";"hl";1;;
 "aa02e";"vero fili";"hl";"+";;
@@ -340,7 +340,7 @@
 "aa02f";"ranu repe";"hl";1;;
 "aa02f";"trag orie";"hl";"+";;
 "aa02f";"trif prat prat";"hl";"2a";;
-"aa02f";"trif repe";"hl";1;;
+"aa02f";"trif repe repe";"hl";1;;
 "aa02f";"tris flav";"hl";"2a";;
 "aa02f";"vero arve";"hl";"+";;
 "aa02f";"vero cham cham";"hl";1;;
@@ -384,7 +384,7 @@
 "aa03a";"tara sect rude";"hl";"+";;
 "aa03a";"trif dubi";"hl";"+";;
 "aa03a";"trif prat prat";"hl";1;;
-"aa03a";"trif repe";"hl";"+";;
+"aa03a";"trif repe repe";"hl";"+";;
 "aa03a";"tris flav";"hl";"+";;
 "aa03a";"vero arve";"hl";"+";;
 "aa03a";"vero cham cham";"hl";1;;
@@ -422,7 +422,7 @@
 "aa03b";"tara sect rude";"hl";"+";;
 "aa03b";"trif dubi";"hl";"+";;
 "aa03b";"trif prat prat";"hl";"2a";;
-"aa03b";"trif repe";"hl";1;;
+"aa03b";"trif repe repe";"hl";1;;
 "aa03b";"vero cham cham";"hl";1;;
 "aa03b";"vero serp serp";"hl";"+";;
 "aa03c";"achi mill aggr";"hl";"+";;
@@ -448,7 +448,7 @@
 "aa03c";"rume cris";"hl";"+";;
 "aa03c";"tara sect rude";"hl";1;;
 "aa03c";"trif prat prat";"hl";"+";;
-"aa03c";"trif repe";"hl";"2a";;
+"aa03c";"trif repe repe";"hl";"2a";;
 "aa03c";"vero arve";"hl";1;;
 "aa03d";"achi mill aggr";"hl";1;;
 "aa03d";"ajug rept";"hl";"+";;
@@ -555,7 +555,7 @@
 "aa04a";"rume obtu slat";"hl";"+";;
 "aa04a";"tara sect rude";"hl";"2b";;
 "aa04a";"trif prat prat";"hl";1;;
-"aa04a";"trif repe";"hl";"2b";;
+"aa04a";"trif repe repe";"hl";"2b";;
 "aa04a";"tris flav";"hl";"2a";;
 "aa04a";"vero arve";"hl";"+";;
 "aa04a";"vici sepi";"hl";"+";;
@@ -611,7 +611,7 @@
 "aa04c";"ranu repe";"hl";"2b";;
 "aa04c";"rume obtu slat";"hl";1;;
 "aa04c";"trif prat prat";"hl";1;;
-"aa04c";"trif repe";"hl";"2b";;
+"aa04c";"trif repe repe";"hl";"2b";;
 "aa04c";"tris flav";"hl";1;;
 "aa04c";"vero arve";"hl";1;;
 "aa02c";"pice pung";"tl";1;;

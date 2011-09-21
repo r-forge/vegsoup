@@ -32,7 +32,7 @@
 "ri01a";"tara sect rude";"hl";"+";;
 "ri01a";"trag orie";"hl";"+";;
 "ri01a";"trif prat prat";"hl";"2b";;
-"ri01a";"trif repe";"hl";"+";;
+"ri01a";"trif repe repe";"hl";"+";;
 "ri01a";"tris flav flav";"hl";"2a";;
 "ri01a";"vero cham cham";"hl";"+";;
 "ri01a";"vici crac";"hl";1;;
@@ -56,7 +56,7 @@
 "ri01b";"symp offi";"hl";"+";;
 "ri01b";"tara sect rude";"hl";1;;
 "ri01b";"trif prat prat";"hl";1;;
-"ri01b";"trif repe";"hl";3;;
+"ri01b";"trif repe repe";"hl";3;;
 "ri01b";"tris flav flav";"hl";"2a";;
 "ri01b";"vero fili";"hl";"+";;
 "ri01b";"vici crac";"hl";1;;
@@ -348,7 +348,7 @@
 "ri09a";"ranu repe";"hl";1;;
 "ri09a";"tara sect rude";"hl";1;;
 "ri09a";"trif prat prat";"hl";"2a";;
-"ri09a";"trif repe";"hl";1;;
+"ri09a";"trif repe repe";"hl";1;;
 "ri09a";"tris flav flav";"hl";1;;
 "ri09a";"vici crac";"hl";"+";;
 "ri09b";"achi mill aggr";"hl";1;;
@@ -380,7 +380,7 @@
 "ri09b";"symp offi";"hl";"+";;
 "ri09b";"tara sect rude";"hl";1;;
 "ri09b";"trif prat prat";"hl";"2b";;
-"ri09b";"trif repe";"hl";"2a";;
+"ri09b";"trif repe repe";"hl";"2a";;
 "ri09b";"tris flav flav";"hl";1;;
 "ri09b";"vici crac";"hl";1;;
 "ri10a";"acer pseu";"sl";"+";;
@@ -466,7 +466,7 @@
 "ri12a";"rume acet";"hl";"+";;
 "ri12a";"tara sect rude";"hl";"2a";;
 "ri12a";"trif prat prat";"hl";"+";;
-"ri12a";"trif repe";"hl";"2a";;
+"ri12a";"trif repe repe";"hl";"2a";;
 "ri12b";"bell pere";"hl";1;;
 "ri12b";"caps burs";"hl";"+";;
 "ri12b";"card prat aggr";"hl";"+";;
@@ -479,7 +479,7 @@
 "ri12b";"ranu repe";"hl";1;;
 "ri12b";"stel medi";"hl";"2m";"voucher";
 "ri12b";"tara sect rude";"hl";"2a";;
-"ri12b";"trif repe";"hl";"2a";;
+"ri12b";"trif repe repe";"hl";"2a";;
 "ri12b";"vero arve";"hl";"2m";;
 "ri13a";"acer plat";"sl";"+";;
 "ri13a";"acer plat";"tl1";"+";;
@@ -1163,7 +1163,7 @@
 "ri25a";"sile dioi";"hl";"+";;
 "ri25a";"tara sect rude";"hl";1;;
 "ri25a";"trif prat prat";"hl";"2a";;
-"ri25a";"trif repe";"hl";"2b";;
+"ri25a";"trif repe repe";"hl";"2b";;
 "ri25a";"tris flav flav";"hl";"2a";;
 "ri25a";"vero arve";"hl";"+";;
 "ri25a";"vero cham cham";"hl";1;;
@@ -1214,7 +1214,7 @@
 "ri27a";"rume acet";"hl";"+";;
 "ri27a";"tara sect rude";"hl";1;;
 "ri27a";"trif prat prat";"hl";"2b";;
-"ri27a";"trif repe";"hl";"2a";;
+"ri27a";"trif repe repe";"hl";"2a";;
 "ri27a";"tris flav flav";"hl";3;;
 "ri27a";"vero arve";"hl";"+";;
 "ri27a";"vero fili";"hl";"+";;

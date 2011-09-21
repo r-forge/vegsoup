@@ -34,7 +34,7 @@
 "wb01b";"gent ascl";"hl";"r";;;;
 "wb01b";"gymn dryo";"hl";"+";;;;
 "wb01b";"gymn robe";"hl";"+";;;;
-"wb01b";"lari deci";"tl1";1;;;;
+"wb01b";"lari deci deci";"tl1";1;;;;
 "wb01b";"lili mart";"hl";"+";;;;
 "wb01b";"loni alpi";"hl";"+";;;;
 "wb01b";"lyco anno";"hl";"r";;;;
@@ -232,7 +232,7 @@
 "wb04a";"homo alpi";"hl";"+";;;;
 "wb04a";"hupe sela";"hl";"+";;;;
 "wb04a";"knau maxi";"hl";"+";;;;
-"wb04a";"lari deci";"tl1";1;;;;
+"wb04a";"lari deci deci";"tl1";1;;;;
 "wb04a";"lili mart";"hl";"+";;;;
 "wb04a";"loni alpi";"hl";"+";;;;
 "wb04a";"loni alpi";"sl";"+";;;;
@@ -290,7 +290,7 @@
 "wb05a";"hier muro";"hl";"+";;;;
 "wb05a";"knau maxi";"hl";"+";;;;
 "wb05a";"lact mura";"hl";"+";;;;
-"wb05a";"lari deci";"tl1";1;;;;
+"wb05a";"lari deci deci";"tl1";1;;;;
 "wb05a";"lase lati lati";"hl";"+";;;;
 "wb05a";"loni alpi";"hl";"+";;;;
 "wb05a";"lyco anno";"hl";3;;;;
@@ -453,7 +453,7 @@
 "wb07a";"gymn robe";"hl";"+";;;;
 "wb07a";"impa noli";"hl";"+";;;;
 "wb07a";"lact mura";"hl";"+";;;;
-"wb07a";"lari deci";"tl2";"+";;;;
+"wb07a";"lari deci deci";"tl2";"+";;;;
 "wb07a";"meli nuta";"hl";1;;;;
 "wb07a";"merc pere";"hl";1;;;;
 "wb07a";"moli caer aggr";"hl";"+";;;;
@@ -539,8 +539,8 @@
 "wb08b";"hier muro";"hl";"+";;;;
 "wb08b";"hier spec ies";"hl";"+";;;;
 "wb08b";"juni comm comm";"hl";"r";;;;
-"wb08b";"lari deci";"sl";"+";;;;
-"wb08b";"lari deci";"tl1";1;;;;
+"wb08b";"lari deci deci";"sl";"+";;;;
+"wb08b";"lari deci deci";"tl1";1;;;;
 "wb08b";"lase lati lati";"hl";"+";;;;
 "wb08b";"leon inca";"hl";1;;;;
 "wb08b";"loni alpi";"hl";"+";;;;
@@ -595,8 +595,8 @@
 "wb08c";"glob cord";"hl";"+";;;;
 "wb08c";"hier bifi";"hl";1;;;;
 "wb08c";"knau maxi";"hl";"+";;;;
-"wb08c";"lari deci";"hl";"+";;;;
-"wb08c";"lari deci";"tl1";1;;;;
+"wb08c";"lari deci deci";"hl";"+";;;;
+"wb08c";"lari deci deci";"tl1";1;;;;
 "wb08c";"loni alpi";"hl";"+";;;;
 "wb08c";"lyco anno";"hl";1;;;;
 "wb08c";"mela sylv";"hl";"+";;;;
@@ -660,8 +660,8 @@
 "wb08d";"gymn cono cono";"hl";"+";;;;"cf."
 "wb08d";"hier bifi";"hl";"+";;;;
 "wb08d";"juni comm comm";"hl";"+";;;;
-"wb08d";"lari deci";"sl";1;;;;
-"wb08d";"lari deci";"tl1";1;;;;
+"wb08d";"lari deci deci";"sl";1;;;;
+"wb08d";"lari deci deci";"tl1";1;;;;
 "wb08d";"lase lati lati";"hl";"+";;;;
 "wb08d";"leon hisp hisp";"hl";"+";;;;
 "wb08d";"leon inca";"hl";"+";;;;
@@ -804,7 +804,7 @@
 "wb09c";"gymn dryo";"hl";"+";;;;
 "wb09c";"hupe sela";"hl";"+";;;;
 "wb09c";"lact mura";"hl";"+";;;;
-"wb09c";"lari deci";"tl1";"2a";;;;
+"wb09c";"lari deci deci";"tl1";"2a";;;;
 "wb09c";"loni alpi";"hl";"+";;;;
 "wb09c";"lyco anno";"hl";"+";;;;
 "wb09c";"maia bifo";"hl";"+";;;;
@@ -992,7 +992,7 @@
 "wb13b";"frax exce";"tl1";"+";;;;
 "wb13b";"gale mont";"hl";"+";;;;
 "wb13b";"gymn dryo";"hl";"+";;;;
-"wb13b";"lari deci";"tl1";"+";;;;
+"wb13b";"lari deci deci";"tl1";"+";;;;
 "wb13b";"merc pere";"hl";1;;;;
 "wb13b";"oxal acet";"hl";1;;;;
 "wb13b";"pice abie";"hl";"+";;;;
@@ -1241,7 +1241,7 @@
 "wb15c";"hepa nobi";"hl";1;;;;
 "wb15c";"hier bifi";"hl";"+";;;;
 "wb15c";"lact mura";"hl";"+";;;;
-"wb15c";"lari deci";"sl";"+";;;;
+"wb15c";"lari deci deci";"sl";"+";;;;
 "wb15c";"loni alpi";"hl";"+";;;;
 "wb15c";"meli nuta";"hl";"+";;;;
 "wb15c";"merc pere";"hl";1;;;;
@@ -1287,9 +1287,9 @@
 "wb16a";"gymn robe";"hl";1;;;;
 "wb16a";"hepa nobi";"hl";"+";;;;
 "wb16a";"hupe sela";"hl";"+";;;;
-"wb16a";"lari deci";"sl";"+";;;;
-"wb16a";"lari deci";"tl1";"2a";;;;
-"wb16a";"lari deci";"tl2";1;;;;
+"wb16a";"lari deci deci";"sl";"+";;;;
+"wb16a";"lari deci deci";"tl1";"2a";;;;
+"wb16a";"lari deci deci";"tl2";1;;;;
 "wb16a";"loni xylo";"hl";"+";;;;
 "wb16a";"loni xylo";"sl";"+";;;;
 "wb16a";"lyco anno";"hl";1;;;;
@@ -1343,7 +1343,7 @@
 "wb17a";"gymn robe";"hl";"+";;;;
 "wb17a";"hier bifi";"hl";"+";;;;
 "wb17a";"hier pilo sum";"hl";"+";;;;"cf."
-"wb17a";"lari deci";"hl";"+";;;;
+"wb17a";"lari deci deci";"hl";"+";;;;
 "wb17a";"leon hisp hisp";"hl";"+";;;;
 "wb17a";"linu cath";"hl";"+";;;;
 "wb17a";"meli nuta";"hl";"+";;;;
@@ -1386,9 +1386,9 @@
 "wb18a";"hier muro";"hl";"+";;;;
 "wb18a";"homo alpi";"hl";"+";;;;
 "wb18a";"knau maxi";"hl";"+";;;;
-"wb18a";"lari deci";"hl";"+";;;;
-"wb18a";"lari deci";"sl";"+";;;;
-"wb18a";"lari deci";"tl1";1;;;;
+"wb18a";"lari deci deci";"hl";"+";;;;
+"wb18a";"lari deci deci";"sl";"+";;;;
+"wb18a";"lari deci deci";"tl1";1;;;;
 "wb18a";"lyco anno";"hl";"2b";;;;
 "wb18a";"maia bifo";"hl";"+";;;;
 "wb18a";"mela sylv";"hl";"+";;;;"cf. Mela prat"
@@ -1423,9 +1423,9 @@
 "wb18b";"gymn dryo";"hl";"+";;;;
 "wb18b";"homo alpi";"hl";"+";;;;
 "wb18b";"hupe sela";"hl";"+";;;;
-"wb18b";"lari deci";"hl";"+";;;;
-"wb18b";"lari deci";"sl";"+";;;;
-"wb18b";"lari deci";"tl1";"+";;;;
+"wb18b";"lari deci deci";"hl";"+";;;;
+"wb18b";"lari deci deci";"sl";"+";;;;
+"wb18b";"lari deci deci";"tl1";"+";;;;
 "wb18b";"lyco anno";"hl";"2a";;;;
 "wb18b";"mela sylv";"hl";"+";;;;
 "wb18b";"merc pere";"hl";"+";;;;
@@ -1452,7 +1452,7 @@
 "wb19a";"care firm";"hl";3;;;;
 "wb19a";"eric carn";"hl";1;;;;
 "wb19a";"hier bifi";"hl";"+";;;;
-"wb19a";"lari deci";"hl";"+";;;;
+"wb19a";"lari deci deci";"hl";"+";;;;
 "wb19a";"leon hisp hisp";"hl";1;;;;
 "wb19a";"loni alpi";"hl";"+";;;;
 "wb19a";"phyt orbi";"hl";"+";;;;
@@ -1510,9 +1510,9 @@
 "wb20a";"homo alpi";"hl";"+";;;;
 "wb20a";"hupe sela";"hl";"+";;;;
 "wb20a";"knau maxi";"hl";"+";;;;
-"wb20a";"lari deci";"hl";"+";;;;
-"wb20a";"lari deci";"sl";1;;;;
-"wb20a";"lari deci";"tl1";"2a";;;;
+"wb20a";"lari deci deci";"hl";"+";;;;
+"wb20a";"lari deci deci";"sl";1;;;;
+"wb20a";"lari deci deci";"tl1";"2a";;;;
 "wb20a";"loni alpi";"hl";"+";;;;
 "wb20a";"mela sylv";"hl";"+";;;;
 "wb20a";"merc pere";"hl";1;;;;

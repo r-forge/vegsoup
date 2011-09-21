@@ -19,8 +19,8 @@
 "ks01";"juni comm comm";"hl";"+";
 "ks01";"juni comm comm";"sl";1;
 "ks01";"juni sabi";"hl";"2a";
-"ks01";"lari deci";"hl";"+";
-"ks01";"lari deci";"sl";"+";
+"ks01";"lari deci deci";"hl";"+";
+"ks01";"lari deci deci";"sl";"+";
 "ks01";"lase lati lati";"hl";"+";
 "ks01";"leon inca";"hl";"+";
 "ks01";"merc pere";"hl";"+";
@@ -56,7 +56,7 @@
 "ks02";"juni comm comm";"hl";"+";
 "ks02";"juni comm comm";"sl";1;
 "ks02";"juni sabi";"hl";"2a";
-"ks02";"lari deci";"hl";"+";
+"ks02";"lari deci deci";"hl";"+";
 "ks02";"lase lati lati";"hl";"+";
 "ks02";"poa moli";"hl";"+";
 "ks02";"poly cham";"hl";"+";
@@ -214,7 +214,7 @@
 "ks07";"heli numm obsc";"hl";"+";
 "ks07";"juni comm comm";"sl";1;
 "ks07";"juni sabi";"hl";"2a";
-"ks07";"lari deci";"sl";1;
+"ks07";"lari deci deci";"sl";1;
 "ks07";"lase lati lati";"hl";"+";
 "ks07";"orig vulg";"hl";"+";
 "ks07";"pice abie";"hl";"r";
@@ -304,7 +304,7 @@
 "ks10";"gyps repe";"hl";"2a";
 "ks10";"juni comm comm";"sl";"2a";
 "ks10";"juni sabi";"hl";"2b";
-"ks10";"lari deci";"tl1";"2a";
+"ks10";"lari deci deci";"tl1";"2a";
 "ks10";"lase lati lati";"hl";"+";
 "ks10";"leon hisp pseu";"hl";1;
 "ks10";"orig vulg";"hl";"+";

@@ -176,7 +176,7 @@
 "fu02e";"apos foet";"hl";"+";
 "fu02e";"vinc hier";"hl";"+";
 "fu02e";"abie alba";"hl";"+";
-"fu02e";"lari deci";"tl";1;
+"fu02e";"lari deci deci";"tl";1;
 "fu03a";"sesl albi";"hl";"2a";
 "fu03a";"buph sali";"hl";1;
 "fu03a";"care humi";"hl";4;
@@ -308,7 +308,7 @@
 "fu05b";"pren purp";"hl";"+";
 "fu05b";"viol reic";"hl";"+";
 "fu05b";"abie alba";"hl";"+";
-"fu05b";"lari deci";"hl";"r";
+"fu05b";"lari deci deci";"hl";"r";
 "fu05c";"fagu sylv";"tl";5;
 "fu05c";"fagu sylv";"hl";"+";
 "fu05c";"pice abie";"tl";"2a";
@@ -403,7 +403,7 @@
 "fu05g";"apos foet";"hl";"+";
 "fu05g";"myce mura";"hl";"+";
 "fu05h";"pice abie";"tl";4;
-"fu05h";"lari deci";"tl";3;
+"fu05h";"lari deci deci";"tl";3;
 "fu05h";"fagu sylv";"tl";3;
 "fu05h";"fagu sylv";"sl";"+";
 "fu05h";"frax exce";"hl";1;
@@ -717,8 +717,8 @@
 "fu07c";"knau maxi";"hl";"+";
 "fu08";"alnu glut";"sl";3;
 "fu08";"alnu glut";"hl";1;
-"fu08";"lari deci";"sl";"2b";
-"fu08";"lari deci";"hl";"2a";
+"fu08";"lari deci deci";"sl";"2b";
+"fu08";"lari deci deci";"hl";"2a";
 "fu08";"pice abie";"sl";1;
 "fu08";"pice abie";"hl";1;
 "fu08";"alnu inca";"sl";"2a";
@@ -774,8 +774,8 @@
 "fu08";"poa angu";"hl";"2a";
 "fu09";"pice abie";"tl";1;
 "fu09";"pice abie";"sl";"2a";
-"fu09";"lari deci";"tl";1;
-"fu09";"lari deci";"sl";1;
+"fu09";"lari deci deci";"tl";1;
+"fu09";"lari deci deci";"sl";1;
 "fu09";"alnu glut";"tl";5;
 "fu09";"alnu glut";"sl";1;
 "fu09";"sali purp";"sl";"2a";
@@ -829,8 +829,8 @@
 "fu09";"poa angu";"hl";1;
 "fu10";"pice abie";"sl";1;
 "fu10";"pice abie";"hl";1;
-"fu10";"lari deci";"sl";1;
-"fu10";"lari deci";"hl";"2a";
+"fu10";"lari deci deci";"sl";1;
+"fu10";"lari deci deci";"hl";"2a";
 "fu10";"alnu glut";"sl";"2b";
 "fu10";"alnu glut";"hl";"2a";
 "fu10";"alnu inca";"sl";1;
@@ -869,7 +869,7 @@
 "fu10";"cirs vulg";"hl";"+";
 "fu10";"plan lanc";"hl";"+";
 "fu10";"trif prat";"hl";1;
-"fu10";"trif repe";"hl";1;
+"fu10";"trif repe repe";"hl";1;
 "fu10";"cirs palu";"hl";"+";
 "fu10";"sonc aspe";"hl";"+";
 "fu10";"frag vesc";"hl";"+";

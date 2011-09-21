@@ -264,7 +264,7 @@
 "tg15a";"tara offi";"hl";"+";;;
 "tg15a";"thal minu";"hl";"+";;;
 "tg15a";"trif prat p";"hl";"2m";;;
-"tg15a";"trif repe";"hl";"+";;;
+"tg15a";"trif repe repe";"hl";"+";;;
 "tg15a";"vici crac";"hl";"+";;;
 "tg15b";"achi mill m";"hl";"+";;;
 "tg15b";"anth odor";"hl";"+";;;
@@ -338,7 +338,7 @@
 "tg16a";"rume acet";"hl";"+";;;
 "tg16a";"thal minu";"hl";"r";;;
 "tg16a";"trif prat p";"hl";"+";;;
-"tg16a";"trif repe";"hl";"2m";;;
+"tg16a";"trif repe repe";"hl";"2m";;;
 "tg16a";"vici crac";"hl";"+";;;
 "tg17a";"achi mill m";"hl";"2b";;;
 "tg17a";"arrh elat";"hl";"2a";;;
@@ -374,7 +374,7 @@
 "tg17a";"thym pule";"hl";"+";;;
 "tg17a";"trif medi";"hl";"+";;;
 "tg17a";"trif prat p";"hl";"1";;;
-"tg17a";"trif repe";"hl";"1";;;
+"tg17a";"trif repe repe";"hl";"1";;;
 "tg17a";"tris flav";"hl";"+";;;
 "tg17a";"vero cham c";"hl";"+";;;
 "tg18a";"achi mill m";"hl";"+";;;
@@ -628,7 +628,7 @@
 "tg1a";"symp offi";"hl";"+";;;
 "tg1a";"tara offi";"hl";"1";;;
 "tg1a";"trif prat p";"hl";"2a";;;
-"tg1a";"trif repe";"hl";"2m";;;
+"tg1a";"trif repe repe";"hl";"2m";;;
 "tg1a";"vici crac";"hl";"+";;;
 "tg1a";"vici sepi";"hl";"+";;;
 "tg1b";"achi mill m";"hl";"1";;;
@@ -705,7 +705,7 @@
 "tg28a";"sang offi";"hl";"1";;;
 "tg28a";"tome nite";"ml";"1";;;
 "tg28a";"trif prat p";"hl";"1";;;
-"tg28a";"trif repe";"hl";"+";;;
+"tg28a";"trif repe repe";"hl";"+";;;
 "tg28a";"vale dioi";"hl";"1";;;
 "tg28a";"vero cham c";"hl";"+";;;
 "tg28a";"vici crac";"hl";"+";;;
@@ -1027,7 +1027,7 @@
 "tg36a";"stel medi";"hl";"+";;;
 "tg36a";"tara offi";"hl";"1";;;
 "tg36a";"trif prat p";"hl";"1";;;
-"tg36a";"trif repe";"hl";"1";;;
+"tg36a";"trif repe repe";"hl";"1";;;
 "tg36a";"urti dioi";"hl";"1";;;
 "tg36a";"vici sepi";"hl";"+";;;
 "tg37a";"achn cala";"hl";"1";;;
@@ -1127,7 +1127,7 @@
 "tg38a";"tome nite";"ml";"1";;;
 "tg38a";"trif dubi";"hl";"+";;;
 "tg38a";"trif prat p";"hl";"2a";;;
-"tg38a";"trif repe";"hl";"2m";;;
+"tg38a";"trif repe repe";"hl";"2m";;;
 "tg39a";"ajug rept";"hl";"+";;;
 "tg39a";"alnu inca";"hl";"+";;;
 "tg39a";"alnu inca";"sl";"2a";;;

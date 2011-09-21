@@ -6,7 +6,7 @@
 "gmunden";"gm10a";"myce mura";"hl";"r";;
 "gmunden";"gm10a";"oxal acet";"hl";"+";;
 "gmunden";"gm10a";"samb nigr";"hl";"r";;
-"gmunden";"gm10a";"lari deci";"tl";"+";;
+"gmunden";"gm10a";"lari deci deci";"tl";"+";;
 "gmunden";"gm10a";"pice abie";"tl";5;;
 "gmunden";"gm10b";"anem nemo";"hl";1;;
 "gmunden";"gm10b";"athy fili";"hl";"+";;
@@ -166,7 +166,7 @@
 "gmunden";"gm17a";"jugl regi";"sl";"+";;
 "gmunden";"gm17a";"pice abie";"sl";"+";;
 "gmunden";"gm17a";"fagu sylv";"tl";4;;
-"gmunden";"gm17a";"lari deci";"tl";"2a";;
+"gmunden";"gm17a";"lari deci deci";"tl";"2a";;
 "gmunden";"gm17a";"pice abie";"tl";1;;
 "gmunden";"gm17b";"acer pseu";"hl";"+";;
 "gmunden";"gm17b";"ajug rept";"hl";"+";;
@@ -199,7 +199,7 @@
 "gmunden";"gm17b";"acer pseu";"tl";1;;
 "gmunden";"gm17b";"fagu sylv";"tl";"2a";;
 "gmunden";"gm17b";"frax exce";"tl";1;;
-"gmunden";"gm17b";"lari deci";"tl";1;;
+"gmunden";"gm17b";"lari deci deci";"tl";1;;
 "gmunden";"gm17b";"pice abie";"tl";"2b";;
 "gmunden";"gm17c";"acer pseu";"hl";"+";;
 "gmunden";"gm17c";"arum macu";"hl";"+";;
@@ -249,7 +249,7 @@
 "gmunden";"gm17d";"acer pseu";"tl";1;;
 "gmunden";"gm17d";"fagu sylv";"tl";5;;
 "gmunden";"gm17d";"frax exce";"tl";1;;
-"gmunden";"gm17d";"lari deci";"tl";1;;
+"gmunden";"gm17d";"lari deci deci";"tl";1;;
 "gmunden";"gm17d";"pice abie";"tl";1;;
 "gmunden";"gm18a";"acer pseu";"hl";"+";;
 "gmunden";"gm18a";"aego poda";"hl";"+";;
@@ -430,7 +430,7 @@
 "gmunden";"gm1a";"tara offi";"hl";"+";;
 "gmunden";"gm1a";"trif medi";"hl";1;;
 "gmunden";"gm1a";"trif prat";"hl";"2a";;
-"gmunden";"gm1a";"trif repe";"hl";1;;
+"gmunden";"gm1a";"trif repe repe";"hl";1;;
 "gmunden";"gm1a";"tris flav";"hl";"+";;
 "gmunden";"gm1a";"vero cham";"hl";"+";;
 "gmunden";"gm1a";"vici crac";"hl";"+";;
@@ -475,7 +475,7 @@
 "gmunden";"gm1b";"tara offi";"hl";"+";;
 "gmunden";"gm1b";"trif medi";"hl";1;;
 "gmunden";"gm1b";"trif prat";"hl";"2b";;
-"gmunden";"gm1b";"trif repe";"hl";1;;
+"gmunden";"gm1b";"trif repe repe";"hl";1;;
 "gmunden";"gm1b";"tris flav";"hl";1;;
 "gmunden";"gm1b";"vero cham";"hl";"+";;
 "gmunden";"gm1c";"achi mill";"hl";"+";;
@@ -546,7 +546,7 @@
 "gmunden";"gm1d";"rhin mino";"hl";"+";;
 "gmunden";"gm1d";"rume acet";"hl";"+";;
 "gmunden";"gm1d";"trif prat";"hl";"2a";;
-"gmunden";"gm1d";"trif repe";"hl";1;;
+"gmunden";"gm1d";"trif repe repe";"hl";1;;
 "gmunden";"gm1d";"tris flav";"hl";1;;
 "gmunden";"gm1d";"vero cham";"hl";"+";;
 "gmunden";"gm1d";"vici crac";"hl";"+";;
@@ -574,7 +574,7 @@
 "gmunden";"gm1e";"rume obtu";"hl";"+";;
 "gmunden";"gm1e";"stel gram";"hl";"+";;
 "gmunden";"gm1e";"trif prat";"hl";"+";;
-"gmunden";"gm1e";"trif repe";"hl";"+";;
+"gmunden";"gm1e";"trif repe repe";"hl";"+";;
 "gmunden";"gm1e";"tris flav";"hl";"2b";;
 "gmunden";"gm1e";"vero cham";"hl";"+";;
 "gmunden";"gm1e";"vici sepi";"hl";"+";;
@@ -645,7 +645,7 @@
 "gmunden";"gm1g";"rume acet";"hl";"+";;
 "gmunden";"gm1g";"rume obtu";"hl";1;;
 "gmunden";"gm1g";"trif prat";"hl";"2a";;
-"gmunden";"gm1g";"trif repe";"hl";"2a";;
+"gmunden";"gm1g";"trif repe repe";"hl";"2a";;
 "gmunden";"gm1g";"tris flav";"hl";"+";;
 "gmunden";"gm1g";"vici sepi";"hl";"+";;
 "gmunden";"gm20a";"acer camp";"hl";"+";;
@@ -706,7 +706,7 @@
 "gmunden";"gm20a";"acer pseu";"tl";1;;
 "gmunden";"gm20a";"betu pend";"tl";"2a";;
 "gmunden";"gm20a";"frax exce";"tl";"+";;
-"gmunden";"gm20a";"lari deci";"tl";1;;
+"gmunden";"gm20a";"lari deci deci";"tl";1;;
 "gmunden";"gm20a";"pice abie";"tl";3;;
 "gmunden";"gm20a";"popu trem";"tl";"+";;
 "gmunden";"gm20a";"quer robu";"tl";1;;
@@ -767,7 +767,7 @@
 "gmunden";"gm22b";"epip hell";"hl";"+";;
 "gmunden";"gm22b";"fagu sylv";"hl";"+";;
 "gmunden";"gm22b";"impa parv";"hl";"+";;
-"gmunden";"gm22b";"lari deci";"hl";"+";;
+"gmunden";"gm22b";"lari deci deci";"hl";"+";;
 "gmunden";"gm22b";"viol reic";"hl";"+";;
 "gmunden";"gm22b";"abie alba";"sl";"+";;
 "gmunden";"gm22b";"abie alba";"tl";1;;
@@ -794,7 +794,7 @@
 "gmunden";"gm22c";"fagu sylv";"sl";"+";;
 "gmunden";"gm22c";"abie alba";"tl";"+";;
 "gmunden";"gm22c";"fagu sylv";"tl";1;;
-"gmunden";"gm22c";"lari deci";"tl";"+";;
+"gmunden";"gm22c";"lari deci deci";"tl";"+";;
 "gmunden";"gm22c";"pice abie";"tl";5;;
 "gmunden";"gm22d";"abie alba";"hl";"+";;
 "gmunden";"gm22d";"fagu sylv";"hl";"2a";;
@@ -807,7 +807,7 @@
 "gmunden";"gm22d";"rubu idae";"hl";"+";;
 "gmunden";"gm22d";"vacc myrt";"hl";"+";;
 "gmunden";"gm22d";"fagu sylv";"tl";1;;
-"gmunden";"gm22d";"lari deci";"tl";1;;
+"gmunden";"gm22d";"lari deci deci";"tl";1;;
 "gmunden";"gm22d";"pice abie";"tl";5;"fifo";
 "gmunden";"gm22e";"abie alba";"hl";"+";;
 "gmunden";"gm22e";"dryo cart";"hl";"+";;
@@ -888,7 +888,7 @@
 "gmunden";"gm23c";"fagu sylv";"sl";1;;
 "gmunden";"gm23c";"fagu sylv";"tl";4;;
 "gmunden";"gm23c";"frax exce";"tl";1;;
-"gmunden";"gm23c";"lari deci";"tl";1;;
+"gmunden";"gm23c";"lari deci deci";"tl";1;;
 "gmunden";"gm23c";"pice abie";"tl";1;;
 "gmunden";"gm23d";"ajug rept";"hl";"+";;
 "gmunden";"gm23d";"athy fili";"hl";"+";;
@@ -919,10 +919,10 @@
 "gmunden";"gm23d";"quer robu";"sl";"+";;
 "gmunden";"gm23d";"fagu sylv";"tl";5;;
 "gmunden";"gm23d";"frax exce";"tl";"+";;
-"gmunden";"gm23d";"lari deci";"tl";1;;
+"gmunden";"gm23d";"lari deci deci";"tl";1;;
 "gmunden";"gm24a";"abie alba";"hl";"+";;
 "gmunden";"gm24a";"fagu sylv";"hl";"+";;
-"gmunden";"gm24a";"lari deci";"hl";"+";;
+"gmunden";"gm24a";"lari deci deci";"hl";"+";;
 "gmunden";"gm24a";"pice abie";"hl";"+";;
 "gmunden";"gm24a";"pren purp";"hl";"+";;
 "gmunden";"gm24a";"rubu frut";"hl";"+";;
@@ -1091,7 +1091,7 @@
 "gmunden";"gm31a";"trif dubi";"hl";1;;
 "gmunden";"gm31a";"trif medi";"hl";"2a";;
 "gmunden";"gm31a";"trif prat";"hl";"+";;
-"gmunden";"gm31a";"trif repe";"hl";"+";;
+"gmunden";"gm31a";"trif repe repe";"hl";"+";;
 "gmunden";"gm31a";"tris flav";"hl";1;;
 "gmunden";"gm31a";"vero cham";"hl";"+";;
 "gmunden";"gm31a";"vici crac";"hl";"+";;
@@ -1121,7 +1121,7 @@
 "gmunden";"gm5a";"rume obtu";"hl";1;;
 "gmunden";"gm5a";"tara offi";"hl";1;;
 "gmunden";"gm5a";"trif prat";"hl";1;;
-"gmunden";"gm5a";"trif repe";"hl";"2a";;
+"gmunden";"gm5a";"trif repe repe";"hl";"2a";;
 "gmunden";"gm5a";"tris flav";"hl";"+";;
 "gmunden";"gm5a";"vero cham";"hl";"+";;
 "gmunden";"gm5a";"vici sepi";"hl";"+";;
@@ -1207,7 +1207,7 @@
 "gmunden";"gm6b";"rume acet";"hl";"+";;
 "gmunden";"gm6b";"tara offi";"hl";"+";;
 "gmunden";"gm6b";"trif prat";"hl";"+";;
-"gmunden";"gm6b";"trif repe";"hl";1;;
+"gmunden";"gm6b";"trif repe repe";"hl";1;;
 "gmunden";"gm6b";"vale dioi";"hl";"2a";;
 "gmunden";"gm6b";"vici crac";"hl";"+";;
 "gmunden";"gm7a";"aego poda";"hl";3;;
@@ -1235,7 +1235,7 @@
 "gmunden";"gm7a";"sile dioi";"hl";"+";;
 "gmunden";"gm7a";"stac palu";"hl";1;;
 "gmunden";"gm7a";"stac sylv";"hl";"+";;
-"gmunden";"gm7a";"trif repe";"hl";1;;
+"gmunden";"gm7a";"trif repe repe";"hl";1;;
 "gmunden";"gm7a";"urti dioi";"hl";"2a";;
 "gmunden";"gm7a";"vici crac";"hl";"+";;
 "gmunden";"gm7a";"vici sepi";"hl";"+";;

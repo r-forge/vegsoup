@@ -61,7 +61,7 @@
 "wf02b";"quer robu";"hl";"+"
 "wf02b";"rubu frut aggr";"hl";"2a"
 "wf02b";"vacc myrt";"hl";4
-"wf02c";"lari deci";"tl1";1
+"wf02c";"lari deci deci";"tl1";1
 "wf02c";"pice abie";"tl1";4
 "wf02c";"pinu sylv";"tl1";"2b"
 "wf02c";"fagu sylv";"sl";1
@@ -171,7 +171,7 @@
 "wf07a";"luzu pilo";"hl";"+"
 "wf07a";"vacc myrt";"hl";"2a"
 "wf08a";"betu pend";"sl";1
-"wf08a";"lari deci";"sl";"2a"
+"wf08a";"lari deci deci";"sl";"2a"
 "wf08a";"pinu sylv";"sl";"2a"
 "wf08a";"sali capr";"sl";"+"
 "wf08a";"tili cord";"sl";"+"
@@ -181,7 +181,7 @@
 "wf08a";"epil angu";"hl";1
 "wf08a";"gale bifi";"hl";"2a"
 "wf08a";"junc effu";"hl";"+"
-"wf08a";"lari deci";"hl";"+"
+"wf08a";"lari deci deci";"hl";"+"
 "wf08a";"pinu sylv";"hl";1
 "wf08a";"rubu frut aggr";"hl";"2b"
 "wf08a";"rubu idae";"hl";3
@@ -290,8 +290,8 @@
 "wf11a";"acer camp";"sl";"2a"
 "wf11a";"acer camp";"hl";"+"
 "wf11a";"hipp rham rham";"sl";"+"
-"wf11a";"lari deci";"tl1";1
-"wf11a";"lari deci";"sl";"+"
+"wf11a";"lari deci deci";"tl1";1
+"wf11a";"lari deci deci";"sl";"+"
 "wf11a";"betu pend";"tl1";"+"
 "wf11a";"betu pend";"sl";"+"
 "wf11a";"equi arve";"hl";"+"
