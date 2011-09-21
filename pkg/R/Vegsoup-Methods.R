@@ -450,3 +450,34 @@ setReplaceMethod("SpatialPolygonsVegsoup",
 		return(obj)		
 	}
 )
+
+#	revert abunace scale for Braun-Blanquet scale
+.BraunBlanquetReduce <-  function (obj) {
+
+res <- SpeciesLong(obj)
+for (i in c("2m", "2a", "2b")) {
+	if (i == "2m")
+		res$cov[res$cov == i]  <- "1"
+	if (i == "2a")
+		res$cov[res$cov == i]  <- "2"
+	if (i == "2b")
+		res$cov[res$cov == i]  <- "2"
+}
+	
+obj@species.long <- res
+obj@scale <- list(scale = "Braun-Blanquet 2",
+	codes = c("r", "+", "1", "2", "3", "4", "5"),
+	lims = c(1, 2, 3, 13, 38, 68, 88))
+return(invisible(obj))
+}
+
+#if (!isGeneric("SpatialPolygons"))
+setGeneric("BraunBlanquetReduce",
+	function (obj, value)
+		standardGeneric("BraunBlanquetReduce")
+)
+
+setMethod("SpatialPolygonsVegsoup",
+    signature(obj = "Vegsoup"),
+    .BraunBlanquetReduce
+)

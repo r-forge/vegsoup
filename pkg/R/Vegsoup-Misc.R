@@ -192,15 +192,16 @@ abbr <- grep("abbr", names(x))
 layer <- grep("layer", names(x))
 comment <- grep("comment", names(x))
 
+#x <- c[c(abbr, layer, comment)]
 if(length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
 res <- c()	
 for (i in 4:ncol(x)) {
 #	i = 4	
 tmp <- data.frame(plot = names(x)[i],
-	abbr = x[, 2],
-	layer = x[, 3],
+	abbr = x$abbr,
+	layer = x$layer,
 	cov = x[,i],
-	comment = x[, 1],
+	comment = x$comment,
 	stringsAsFactors = FALSE)
 	
 res <- rbind(res, tmp)
