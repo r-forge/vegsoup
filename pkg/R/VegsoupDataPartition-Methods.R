@@ -238,22 +238,25 @@ setMethod("[",
     invisible(result)
 }
 
-.plotVegsoupPartition  <- function (x, y, ind = NULL, ...) {
+.plotVegsoupPartition  <- function (x, y) {
 	#	x = prt
 #	op <- par()
 #	on.exit(par(op))
-#	cat(class(x))
+	
 	cat("\nLet me calculate capscale first ...")
 	cat("\nuse distance:", x@dist)
-	ord <- capscale(wisconsin(as.binary(x)) ~ 1, distance = x@dist,
-		metaMDSdist = TRUE)
+
+	#	capscale has difficulties when using community matrix in the formula
+
+	ord <- capscale(getDist(prt) ~ 1,
+		comm = as.binary(x))
 	#	number of axes shown in plot, default to frist 3
 	axs <- matrix(c(1,2,1,3,2,3), 3,2, byrow = TRUE)
 	
-	#	ordisplom like
+	#	ordisplom like display
 	axs <- matrix(c(
-		1,3, 2,3, 3,NA,
-		1,2, 2,NA,	3,2,
+		1,3,  2,3,  3,NA,
+		1,2,  2,NA,	3,2,
 		1,NA, 2,1,	3,1),
 		9, 2, byrow = TRUE)	
 
@@ -265,8 +268,8 @@ setMethod("[",
 		stop("please supply sites column name or index!")
 	}
 	if (!missing(y) && !missing(ind)) {
-		cat("\nuse sites variable")
-		grp <- get.sites.variable(y, ind)	
+		cat("\nnot implemented yet")
+	#	grp <- get.sites.variable(y, ind)	
 	}
 
 	scs <- scores(ord, display = "sites")
@@ -277,20 +280,35 @@ setMethod("[",
 	}
 
 	par(mfrow = c(3,3), mar = rep(0,4))
-				scs <- scores(ord, choices = unique(c(axs))[!is.na(unique(c(axs)))])
+				scs <- scores(ord,
+					choices = unique(c(axs))[!is.na(unique(c(axs)))])
 	apply(axs, 1, function (x) {
 		if (!any(is.na(x))) {
+			# x  <- axs[1,]
 			lims <- range(scs$sites)
 			fig <- ordiplot(ord, choices = c(x),
-				type = "n", axes = TRUE,
+				type = "n", axes = FALSE,
 				xlim = lims, ylim = lims)
 			text(x = 0, y = par("usr")[3] - c(par("usr")[3] * 0.04),
 				colnames(scs$sites)[x[1]])
 			text(x = par("usr")[1] - c(par("usr")[1] * 0.04), y = 0,
 				colnames(scs$sites)[x[2]], srt = 90)
-			try(ordiellipse(fig, groups = grp, choices = c(x), conf = .95,
-				draw = "polygon", lty = 0, col = rgb(0,0,0,.2)), silent = TRUE)
+			cents <- try(
+				ordiellipse(fig, groups = grp,
+					choices = c(x), conf = .95,
+					draw = "polygon", lty = 0,
+					col = rgb(0,0,0,.2)),
+				silent = TRUE)
+			if(class(cents) != "try-error") {
+				labs <- sapply(cents, function (x) {
+				c(x = x$center[1], y = x$center[2])
+				})
+				text(x = labs[1,], y = labs[2,],
+					labels = dimnames(labs)[[2]],
+					font = 2, cex = 2)
+			}	
 			points(fig, "sites")
+	
 			ordispider(fig, groups = grp, choices = c(x),
 				lwd = c(1/.75)* .25 )
 		} else {
@@ -649,7 +667,7 @@ setGeneric("Optsil",
 )
 setMethod("Optsil",
     signature(obj = "VegsoupDataPartition"),
-    function (obj, ...) {
+    function (obj, maxit, ...) {
 	#	obj  <- prt
 		if (!inherits(obj, "VegsoupDataPartition"))
 			stop("Need object of class VegsoupDataPartition")

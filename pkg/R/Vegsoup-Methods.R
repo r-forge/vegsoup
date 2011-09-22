@@ -141,9 +141,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		
 		#	try to find coordinates
 		test <- any(y$variable == "longitude") & any(y$variable == "latitude")
-		#	raises errors is subset operation!
+		#	may raise errors in subset operations!
 		if (verbose) {
-			cat("try to retrieve coordinates from sites data")
+			cat("\ntry to retrieve coordinates from sites data")
 		}
 
 		if (test) {
@@ -477,7 +477,7 @@ setGeneric("BraunBlanquetReduce",
 		standardGeneric("BraunBlanquetReduce")
 )
 
-setMethod("SpatialPolygonsVegsoup",
+setMethod("BraunBlanquetReduce",
     signature(obj = "Vegsoup"),
     .BraunBlanquetReduce
 )

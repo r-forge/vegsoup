@@ -12,7 +12,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	txa <- Taxonomy(obj)
 	species.long <- SpeciesLong(obj)
 	
-	if (scale$scale == "Braun-Blanquet") {
+	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
 		stopifnot(is.character(species.long$cov))
 		if (length(lay) == 1) {
 			if (verbose) cat("\ndata is structered in only one layer")
