@@ -20,7 +20,7 @@ Latex(object, ...)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+%% To prevent the latex file from being displayed on screen store the result of latex in an object. Most of the time you will prefer the option rowname = NULL in latex().
 }
 \value{
 %%  ~Describe the value returned

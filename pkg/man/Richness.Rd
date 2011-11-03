@@ -8,7 +8,7 @@ function to do
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-Richness(obj, ...)
+%%  ~~ Richness(obj, choices = c("dataset", sample"), ...) ~~
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,7 +20,7 @@ Richness(obj, ...)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+%%     ~~Returns the dataset or sample richness.~~
 }
 \value{
 %%  ~Describe the value returned
