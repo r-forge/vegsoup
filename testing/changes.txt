@@ -1,0 +1,11 @@
+was	is
+re01a	wf11a
+re01b	wf11b
+re02a	wf12a
+re02b	wf12b
+re03a	wf13a
+re04a	wf14a
+re05a	wf15a
+re06a	wf16a
+re07a	wf17a
+re08a	wf18a
