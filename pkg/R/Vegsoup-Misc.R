@@ -19,11 +19,6 @@ return(res)
 
 }
 
-#y = "/Users/roli/Dropbox/vegbase standards/austrian standard list 2008/austrian standard list 2008.csv"	
-#x = "/Users/roli/Documents/vegsoup/testing/amadeus dta/species.csv"	
-
-#taxonomy <- QueryTaxonomy(x, y)
-
 #	reshape tables where layers are in seperate columns
 
 ReshapeMultiCoverColumns <- function (filename) {
@@ -47,8 +42,6 @@ res <- res[res$cov != "0",]
 res <- res[res$cov != "",]
 
 }
-#res <- ReshapeMultiCoverColumns("/Users/roli/Desktop/db/relevees/species.csv")
-#write.csv2(res, "foo.csv")
 
 #	plot.column, elevation.column are converted using to.lower
 
@@ -125,39 +118,34 @@ return(invisible(res))
 
 }
 
-#df <- Shp2SitesLong(
-#	dsn = "/Users/roli/Desktop/rek.rar Folder",
-#	layer = "va",
-#	plot.column = "comment")
-#write.csv2(df, "~/foo.csv", row.names = FALSE)
-
 #	stack sites data frame to match database structure
 
 SitesWide2SitesLong <- function (filename) {
 
-sites <- read.csv2(filename, colClasses = "character")
+res <- read.csv2(filename, colClasses = "character")
 
-sites.stack <- stack(sites, stringsAsFactors = FALSE)
-sites.stack[,1] <- as.character(sites.stack[,1])
-sites.stack[,2] <- as.character(sites.stack[,2])
-plot <- sites.stack[sites.stack$ind == "plot",]$values
-plot <- rep(plot, (nrow(sites.stack)/length(plot))- 1)
-sites.stack <- sites.stack[!sites.stack$ind == "plot",]
-sites.stack <- data.frame(plot,
-	variable = sites.stack[,2],
-	value = sites.stack[,1])
-sites.stack <- sites.stack[order(sites.stack$plot),]
-sites.stack[is.na(sites.stack)] <- ""
-rownames(sites.stack) <- 1:nrow(sites.stack)
-sites <- sites.stack
-sites$value <- as.character(sites$value)
-sites$plot <- as.character(sites$plot)
-sites$variable <- as.character(sites$variable)
-return(sites)
+res.stack <- stack(res, stringsAsFactors = FALSE)
+res.stack[,1] <- as.character(res.stack[,1])
+res.stack[,2] <- as.character(res.stack[,2])
+plot <- res.stack[res.stack$ind == "plot",]$values
+plot <- rep(plot, (nrow(res.stack)/length(plot))- 1)
+res.stack <- res.stack[!res.stack$ind == "plot",]
+res.stack <- data.frame(plot,
+	variable = res.stack[,2],
+	value = res.stack[,1])
+res.stack <- res.stack[order(res.stack$plot),]
+res.stack[is.na(res.stack)] <- ""
+rownames(res.stack) <- 1:nrow(res.stack)
+res <- res.stack
+res$value <- as.character(res$value)
+res$plot <- as.character(res$plot)
+res$variable <- as.character(res$variable)
+
+print(unique(res$variable))
+return(invisible(res))
+
 }
 
-#sites <- stack.sites("sites.csv")
-#write.csv2(sites, "sites2.csv", row.names = FALSE)
 
 MakeAbbr <- function (x)  {
 	 x = tb$taxon
@@ -184,7 +172,7 @@ SpeciesWide2SpeciesLong <- function (file.name) {
 if(missing(file.name)) {
 	stop("please supply a csv file")	
 }
-
+#	file.name = "./dta/csv/relevees/species wide matzendorf.csv"
 x <- read.csv2(file.name,
 	stringsAsFactors = FALSE, check.names = FALSE)
 
@@ -192,10 +180,13 @@ abbr <- grep("abbr", names(x))
 layer <- grep("layer", names(x))
 comment <- grep("comment", names(x))
 
+
 #x <- c[c(abbr, layer, comment)]
-if(length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
-res <- c()	
-for (i in 4:ncol(x)) {
+if (length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
+res <- c()
+
+
+for (i in c(max(c(abbr, layer, comment)) + 1):ncol(x)) {
 #	i = 4	
 tmp <- data.frame(plot = names(x)[i],
 	abbr = x$abbr,
@@ -209,7 +200,12 @@ res <- rbind(res, tmp)
 	
 }
 res <- res[res$cov != "0",]
+res <- res[res$cov != "",]
 
+print(table(res$cov))
+print(table(res$layer))
+
+return(invisible(res))
 } else {
 	if (length(abbr) < 1) {
 		warning("did not find column abbr")		

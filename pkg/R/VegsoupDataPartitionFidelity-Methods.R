@@ -133,55 +133,69 @@ res <- list(tab = res, typical = typ)
 #	sort layers
 if (length(dia) > 0) {
 	#	top of table, diagnostic/typical species
-	txanames <- DecomposeNames(object, verbose = FALSE)
-	txanames <- txanames[match(rownames(res$tab), txanames$abbr.layer), ]
-	rownames(txanames) <- txanames$abbr.layer
-	txanames.top <- txanames[rownames(diag), ]
-	txanames.top <- txanames.top[order(txanames.top$layer),]
-	top <- res$tab[rownames(txanames.top), ]
+	txn <- DecomposeNames(object, verbose = FALSE)
+	txn <- txn[match(rownames(res$tab), txn$abbr.layer), ]
+	rownames(txn) <- txn$abbr.layer
+	txn.top <- txn[rownames(diag), ]
+	txn.top <- txn.top[order(txn.top$layer),]
+	top <- res$tab[rownames(txn.top), ]
 	
 	#	bottom of table, remaining species
-	txanames <- DecomposeNames(object, verbose = FALSE)
-	txanames <- txanames[match(rownames(res$tab), txanames$abbr.layer), ]
-	rownames(txanames) <- txanames$abbr.layer
-	txanames.bottom <- txanames[-match(rownames(diag), rownames(res$tab)), ]
-	txanames.bottom <- txanames.bottom[order(txanames.bottom$layer),]
-	bottom <- res$tab[rownames(txanames.bottom), ]
+	txn <- DecomposeNames(object, verbose = FALSE)
+	txn <- txn[match(rownames(res$tab), txn$abbr.layer), ]
+	rownames(txn) <- txn$abbr.layer
+	txn.bottom <- txn[-match(rownames(diag), rownames(res$tab)), ]
+	txn.bottom <- txn.bottom[order(txn.bottom$layer),]
+	bottom <- res$tab[rownames(txn.bottom), ]
 	res$tab <- rbind(top, bottom)
 } else {
-	txanames <- DecomposeNames(object, verbose = FALSE)
-	txanames <- txanames[match(rownames(res$tab), txanames$abbr.layer), ]
-	rownames(txanames) <- txanames$abbr.layer
-	txanames <- txanames[order(txanames$layer), ]
-	res$tab <- res$tab[rownames(txanames), ]
+	txn <- DecomposeNames(object, verbose = FALSE)
+	txn <- txn[match(rownames(res$tab), txn$abbr.layer), ]
+	rownames(txn) <- txn$abbr.layer
+	txn <- txn[order(txn$layer), ]
+	res$tab <- res$tab[rownames(txn), ]
 }
 
 #	drop latex file
 tex <- as.data.frame(as.matrix(res$tab),
 	stringsAsFactors = FALSE)
 
-txanames <- DecomposeNames(object, verbose = FALSE) 
-txanames <- txanames[match(rownames(tex), txanames$abbr.layer),]
+txn <- DecomposeNames(object, verbose = FALSE) 
+txn <- txn[match(rownames(tex), txn$abbr.layer),]
 
-tex <- data.frame(taxon = txanames$taxon, layer = txanames$layer, tex,
+tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
 	stringsAsFactors = FALSE)
 	
 #	add blank lines and pointer to seperate diagnostic species
-tex.typical <- tex[match(unlist(typ), rownames(tex)), ]
-tex.others <- tex[-match(unlist(typ), rownames(tex)), ]
+#	test if any group has no typical species
+#	test for partitions without typical species
+untyp <- unlist(typ) == "Nothing particularly typical"
+tex.typical <- tex[match(unlist(typ)[!untyp], rownames(tex)), ]
+tex.others <- tex[-match(unlist(typ)[!untyp], rownames(tex)), ]
 
 #	block of typical species
 tex.typical.seperated <- c()
-for (i in 1:nc) {
-#	i = 1
+for (i in c(1:nc)) {#[!typ == "Nothing particularly typical"]
+#	i = 6
 	sel <- match(typ[[i]], rownames(tex.typical))
-	tmp <- tex.typical[sel[rep(1,2)], ]
-	rownames(tmp) <- c(i, paste("typical", i, sep =""))
-	tmp[1,1] <- ""
-	tmp[2,1] <- paste("\\textbf{typical for ", i, "}", sep = "")	
-	tmp[1:2, 2:ncol(tmp)] <- ""
-	tex.typical.seperated <- rbind(tex.typical.seperated,
-		rbind(tmp, tex.typical[sel, ]))
+	if (!any(is.na(sel))) {
+		tmp <- tex.typical[sel[rep(1,2)], ]
+		rownames(tmp) <- c(i, paste("typical", i, sep =""))
+		tmp[1,1] <- ""
+		tmp[2,1] <- paste("\\textbf{typical for ", i, "}", sep = "")	
+		tmp[1:2, 2:ncol(tmp)] <- ""
+		tmp <- rbind(tmp, tex.typical[sel, ])
+	} else {
+		tmp <- tex.typical[rep(1,2),]
+		rownames(tmp) <- c(i, paste("typical", i, sep =""))
+		tmp[1,1] <- ""
+		tmp[2,1] <- paste("\\textbf{Nothing particularly typical for ", i, "}", sep = "")	
+		tmp[1:2, 2:ncol(tmp)] <- ""
+		#tmp[tmp == ""] <- "0"	
+
+	}
+	tex.typical.seperated <- rbind(tex.typical.seperated, tmp)
+
 }
 
 #	block of remining species, not typical for a particular partition
@@ -233,25 +247,43 @@ tex[tex == 0] <- "."
 
 #	move rare species to table footer
 footer.species <- row.names(cntn)[rowSums(cntn) < footer.treshold]
+#	check if we loose the only typical species in a partition
+candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
+#	drop candidates from vector of footer species
+for (i in seq(along = typ)[!typ == "Nothing particularly typical"]) {
+	if (length(typ[[i]]) == 1 & any(!is.na(match(typ[[i]], footer.species)))) {
+		footer.species <- footer.species[-match(candidates[match(typ[[i]], candidates)], footer.species)]
+	} 
+}
+#	prune footer species and collapse to string 
 tex.footer <- tex[match(footer.species, row.names(tex)), ]
 tex <- tex[-match(footer.species, row.names(tex)), ]
 footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
 
-txanames <- DecomposeNames(object, verbose = FALSE)
+txn <- DecomposeNames(object, verbose = FALSE)
 
-txanames <- txanames[match(rownames(footer), txanames$abbr.layer), ]
+txn <- txn[match(rownames(footer), txn$abbr.layer), ]
 footer <- as.data.frame(footer, stringsAsFactors = FALSE)
-footer$taxon <- txanames$taxon
+footer$taxon <- txn$taxon
 tmp <- c()
 
 for (i in 1:nc) {
 	tmp.i <- data.frame(footer[, i], footer$taxon)
-	tmp.i <- paste("\\textbf{", i, "}: ",
-		paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
-	tmp <- c(tmp, tmp.i)
+	if (sum(tmp.i[,1]) > 0) {
+		tmp.i <- paste("\\textbf{", i, "}: ",
+			paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
+		tmp <- c(tmp, tmp.i)
+	}
 }
 
-footer <- paste("\\textbf{Occuring only once:}", paste(tmp, collapse = "\n\n "))
+#	nice language for low thresholds
+if (footer.treshold < 4) {
+	footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
+		paste(tmp, collapse = "\n\n "), sep = "")
+} else {
+	footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
+		paste(tmp, collapse = "\n\n "), sep = "")
+}
 footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
 
 #	remove rare species from list of typical species, if any
@@ -259,7 +291,13 @@ for (i in seq(along = typ)) {
 	tmp <- match(footer.species, typ[[i]])
 	if (any(!is.na(tmp))) {
 		tmp <- tmp[!is.na(tmp)]
-		typ[[i]] <- typ[[i]][-tmp]
+		if (length(typ[[i]][-tmp]) < 1) {
+			warning("list of typical species would be empty",
+				" if this rare species gets dropped!")
+			footer.species <- footer.species[-match(typ[[i]], footer.species)]
+		} else {
+			typ[[i]] <- typ[[i]][-tmp]
+		}
 	}
 }
 
@@ -274,7 +312,7 @@ for (i in c(1:nc) + lab.cols) {
 }
 
 #	to do! see .latexVegsoupDataPartitionSites
-#	more tests on filename
+#	more tests on filenames
 if (length(grep(".", "_", filename, fixed = TRUE))) {
 		
 }
@@ -289,6 +327,12 @@ if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 	warning("add file extension .tex to filename ", filename)
 	filename <- paste(filename, ".tex", sep = "")
 }
+
+#	times glyph in hybrid combinations
+#	Taxon is always in first position in the table
+tex[,1] <- gsub("×", "$\\times$", tex[,1], fixed = TRUE)
+footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
+
 
 latex(tex,
 	file = filename,
@@ -310,8 +354,6 @@ close(con)
 if (verbose) {
 	cat("appende footer to LaTex table in file", filename)	
 }
-
-
 
 return(invisible(res))
 }

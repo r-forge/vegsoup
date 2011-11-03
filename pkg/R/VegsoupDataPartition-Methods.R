@@ -15,12 +15,16 @@ debug = FALSE
 
 if (debug) {
 	x = dta; binary = TRUE; k = 3;
-	method = "isopam"; dist = "bray"
+	method = "isopam"
+	dist = "bray"
 	nitr = 99; polish = TRUE
+	method = "external"
+	clustering = Sites(dta)$association
+
 } else {
 	if (!inherits(x, "VegsoupData"))
 		stop("Need object of class VegsoupData")
-	if (missing(k)) {
+	if (missing(k) & missing(clustering)) {
 		k <- 1
 		warning("argument k missing, set to ", k)
 	}	
@@ -36,12 +40,11 @@ if (debug) {
 	} else {			
 		part.meth <- match.arg(method)
 	}
-	if (!missing(clustering) && method == "external") {
-		if (length(clustering == nrow(x))) {
+	if (!missing(clustering) & method == "external") {
+		if (length(clustering) == nrow(x)) {
 			k <- length(unique(clustering))
-			if (verbose) cat("... Use supplied vector,",
-				iflese(is.intger(k), k, as.intger(k)), 
-					"for partitioning")
+			if (verbose) cat("... Use supplied vector, number of partitons ",
+				ifelse(is.integer(k), k, as.integer(k)))
 		} else {
 			stop("... Length of clustering vector and matrix must match",
 				dim(x), length(clustering))
@@ -115,7 +118,7 @@ if (inherits(part, "partana")) {
 	names(grp) <- rownames(x)
 }
 if (is.vector(part)) {
-	grp <- as.numeric(part)
+	grp <- as.numeric(factor(part))
 	names(grp) <- rownames(x) # prone to error!
 }
 if (k != length(unique(grp)) && class(part) != "isopam") {

@@ -1,7 +1,13 @@
 .KMLVegsoupDataPartition <- function (obj, path, ...) {
 if (missing(path)) {
 	path <- getwd()	
-}	
+}
+#	obj = prt
+
+#	to do!
+#	implement roll over labels.
+
+
 begin.kml <- c(
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
 "<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:kml=\"http://www.opengis.net/kml/2.2\" xmlns:atom=\"http://www.w3.org/2005/Atom\">",
@@ -87,13 +93,24 @@ end.kml <- c(
 obj = prt
 
 if (max(Partitioning(obj)) > 10) {
-	stop("styled KML ouput is currently limited to 10 groups")
+	if (max(Partitioning(obj)) < 26) {
+		warning("numbered styled KML ouput is currently limited to 10 groups",
+			"\nuse alphabet as alternative to numbers")
+		paddle.file <- LETTERS[unique(Partitioning(obj))]
+		paddle.identifier <- LETTERS[Partitioning(obj)]
+		Partitioning(obj)
+	} else {	
+		paddle.file <- unique(Partitioning(obj))
+		paddle.identifier <- Partitioning(obj)
+	}
+} else {
+	warning("styled KML ouput is currently limited to 26 groups")	
 }
 
-styles.normal <- c(sapply(unique(Partitioning(obj)), .style.numbers.normal))
-styles.highlight <- c(sapply(unique(Partitioning(obj)), .style.numbers.highlight))
-stylemap <- c(sapply(unique(Partitioning(obj)), .stylemap.numbers))
-points <- data.frame(partitioning = Partitioning(obj),
+styles.normal <- c(sapply(paddle.file, .style.numbers.normal))
+styles.highlight <- c(sapply(paddle.file, .style.numbers.highlight))
+stylemap <- c(sapply(paddle.file, .stylemap.numbers))
+points <- data.frame(partitioning = paddle.identifier,
 	coordinates(obj), plot = names(Partitioning(obj)))
 
 folder <- unlist(sapply(unique(points$partitioning), FUN = function (x) {

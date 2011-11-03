@@ -22,10 +22,10 @@ end.description <- c(
 	"</description>"
 )					
 
-website.url.path <- "http://www.users.sbg.ac.at/~9722152/vegsoup/albums/"
+website.url.path <- "http://sabotag.hausdernatur.at/vegsoup/albums/"
 website.url <- paste(website.url.path, plot, sep = "")
 
-thumbnail.url.path <- "http://www.users.sbg.ac.at/~9722152/vegsoup/thumbnails/"
+thumbnail.url.path <- "http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
 thumbnail.url <- paste(thumbnail.url.path, plot, sep = "")
 
 img <- paste(
@@ -99,7 +99,7 @@ end.kml <- c(
 	"</Document>",
 	"</kml>")
 		
-obj = dta
+#obj = dta
 species.list <- SpeciesLong(obj)
 species.list$taxon <- Taxonomy(obj)$taxon[match(species.list$abbr, Taxonomy(obj)$abbr)]
 species.list <- species.list[, c(1,5,3,4)]

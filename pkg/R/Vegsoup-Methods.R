@@ -272,7 +272,6 @@ setReplaceMethod("Layers",
 )
 	
 #	get or set taxonomy (traits) data frame
-
 setGeneric("Taxonomy",
 	function (obj)
 		standardGeneric("Taxonomy")

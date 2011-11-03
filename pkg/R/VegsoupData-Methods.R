@@ -588,7 +588,7 @@ setMethod("[",
 		jj <- colSums(as.binary(x)[i,j]) > 0 # species
 		if (any(jj == FALSE)) {
 			#	tmp <- names(x)[j][!jj]
-			cat("\n removed empty species!")
+			cat("\nremoved empty species!\n")
 		}
 
 		res@species <- as.character(x)[i,j][ii,jj]
