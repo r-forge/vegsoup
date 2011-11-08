@@ -90,7 +90,7 @@ end.kml <- c(
 	"</Placemark>")
 }	
 		
-obj = prt
+#obj = prt
 
 if (max(Partitioning(obj)) > 10) {
 	if (max(Partitioning(obj)) < 26) {
@@ -99,13 +99,13 @@ if (max(Partitioning(obj)) > 10) {
 		paddle.file <- LETTERS[unique(Partitioning(obj))]
 		paddle.identifier <- LETTERS[Partitioning(obj)]
 		Partitioning(obj)
+	} else {
+		stop("styled KML ouput is currently limited to 26 groups")
+	}
 	} else {	
 		paddle.file <- unique(Partitioning(obj))
 		paddle.identifier <- Partitioning(obj)
 	}
-} else {
-	warning("styled KML ouput is currently limited to 26 groups")	
-}
 
 styles.normal <- c(sapply(paddle.file, .style.numbers.normal))
 styles.highlight <- c(sapply(paddle.file, .style.numbers.highlight))

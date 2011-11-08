@@ -1,4 +1,4 @@
-QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, verbose = FALSE) {
+QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE) {
 
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
 cmb <- test <- test[, c(1, 3, 4, 6)]
@@ -26,27 +26,34 @@ if (which(sel) == 1) {
 
 if (which(sel) == 2) {
 	species <- x
-	taxonomy <- ifelse(csv2,
-		read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE),
-		read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE))	
+	if (csv2) {
+		taxonomy <- read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE)
+	} else {
+		taxonomy <- read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE)
+	}
 }
 
 if (which(sel) == 3) {
-	species <- ifelse(csv2,
-		read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE),
-		read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE))
+	if (csv2) {
+		species <- read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE)
+	} else {	
+		species <- read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
+	}
 	taxonomy <- y
 }
 
 if (which(sel) == 4) {
-	species <- ifelse(csv2,
-		read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE),
-		read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
-		)
-	taxonomy <- ifelse(csv2,
-		read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE),
-		read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE))
+	if (csv2) {
+		species <- 	read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE)
+		taxonomy <- read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE)
+	} else {
+		species <- 	read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
+		taxonomy <- read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE)
+	}
 }
+
+#	for safety if x is supplied as data.frame
+species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
 
 #	keep only two columns
 taxonomy <- taxonomy[c("abbr", "taxon")]
@@ -54,14 +61,35 @@ taxonomy <- taxonomy[c("abbr", "taxon")]
 #	check unique abbrevations
 rownames(taxonomy) <- taxonomy$abbr
 
+test <- match(unique(species$abbr), taxonomy$abbr)
+if (any(is.na(test))) {
+	test <- unique(species$abbr)[is.na(test)]
+	cat("not found the following abbrevation(s) in supplied reference list\n")
+	print(test)
+	cat("did you mean?\n")
+	test.pmatch <- matrix(c(test, taxonomy$abbr[pmatch(test, taxonomy$abbr)]), ncol = 2)
+	print(test.pmatch)
+	if (pmatch) {
+		for (i in 1:nrow(test.pmatch)) {
+			species$abbr[species$abbr == test.pmatch[i,1]] <- test.pmatch[i,2]
+		}
+		cat("replaced", test.pmatch[,1])	
+	} else {
+		cat("if that is correct you can force me to replace those abbreviations!")
+		cat("\ncall the function again with option pmatch = TRUE")
+	}
+}
+
 res <- taxonomy[as.character(unique(species$abbr)), ]
 if (any(is.na(res[, 1]))) {
 	test <- as.character(unique(species$abbr))[is.na(res[,1])]
 	cat("not found the following abbrevation(s) in supplied reference list\n")
-	cat(test, "\n")
-	stop("Please review your data")
+	print(test, "\n")
+	#	to do!
+	#	implement pmatch as above
+	stop("Please review your reference list, you might need to include some new taxa")
 }
-return(res)
+return(list(taxonomy = res, species = species))
 }
 
 #	reshape tables where layers are in seperate columns
@@ -90,73 +118,100 @@ res <- res[res$cov != "",]
 
 #	plot.column, elevation.column are converted using to.lower
 
-Shp2SitesLong <- function (dsn, layer, plot.column, elevation.column, round = TRUE) {
+#	rename!
+#	Shp2SitesLong to ReadOGR2SitesLong	
+Shp2SitesLong <- function (dsn, layer, plot.column, elevation.column, round = TRUE, verbose = TRUE) {
 
 if (missing(plot.column)) {
 	stop ("please supply column name indicating plot ids in dbf file")
 }
 
 require(rgdal)
+dsn = "/Users/roli/Dropbox/aineck/dta/shp/pt_plots"
+layer = "pt_plots_epsg31255"
+plot.column = "COMMENT"
+elevation.column = "GPS_HEIGHT"
+#	first check column names aigeinst ogrInfo
+pt <- ogrInfo(dsn, layer)
+
+pt.names <- pt$iteminfo$name
+test <- match(c(plot.column, elevation.column), pt.names)
+if (any(is.na(test)) & verbose) {
+	cat("ogrinfo returns")
+	print(pt)
+	cat("you supplied: ", c(plot.column, elevation.column))
+	cat("I found only:", pt.names[test[!is.na(test)]])
+}
+
 pt <- readOGR(dsn, layer)
-names(pt) <- tolower(names(pt))
+
+#	to do!
+#	make CRS an argument to the function
+
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
 
 if (missing(elevation.column)) {
 	df <- data.frame(coordinates(pt),
-		as.character(pt@data[,names(pt) == tolower(plot.column)]),
+		plot = as.character(pt@data[,names(pt) == plot.column]),
 		stringsAsFactors = FALSE)
 } else {
 	df <- data.frame(coordinates(pt),
-		as.numeric(as.character(pt@data[,names(pt) == tolower(elevation.column)])),
-		as.character(pt@data[,names(pt) == tolower(plot.column)]),
+		altitude = as.numeric(as.character(pt@data[,names(pt) == elevation.column])),
+		plot = as.character(pt@data[,names(pt) == plot.column]),
 		stringsAsFactors = FALSE)
 }
 
-if (dim(coordinates(pt))[2] == 2 & missing(elevation.column)) {
-	
-	names(df)[1:3] <- c("longitude", "latitude", "plot")
+names(df)[1:2] <- c("longitude", "latitude")
+
+if (dim(coordinates(pt))[2] == 2 & missing(elevation.column)) {	
+
 	res <- data.frame(as.character(df$plot), stack(df),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
 	names(res) <- c("plot", "variable", "value")
-	res$value[res$variable == "longitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
-	res$value[res$variable == "latitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
-
+	if (round) {
+		res$value[res$variable == "longitude"] <-
+			round(res$value[res$variable == "longitude"], 6)
+		res$value[res$variable == "latitude"] <-
+			round(res$value[res$variable == "latitude"], 6)
+	}	
 }
 
 if (dim(coordinates(pt))[2] == 2 & !missing(elevation.column)) {
-	names(df)[1:4] <- c("longitude", "latitude", "altitude", "plot")
-
 	res <- data.frame(as.character(df$plot),
 		stack(df, select = 1:3),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
+	#	for safety
 	res[,3] <- as.numeric(as.character(res[,3]))
 	names(res) <- c("plot", "variable", "value")
-	res$value[res$variable == "longitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
-	res$value[res$variable == "latitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
-	res$value[res$variable == "altitude"] <-
-		round(res$value[res$variable == "altitude"], 0)
-
+	if (round) {
+		res$value[res$variable == "longitude"] <-
+			round(res$value[res$variable == "longitude"], 6)
+		res$value[res$variable == "latitude"] <-
+			round(res$value[res$variable == "latitude"], 6)
+		res$value[res$variable == "altitude"] <-
+			round(res$value[res$variable == "altitude"], 0)
+	}	
 }
 
 if (dim(coordinates(pt))[2] == 3) {
-	names(df)[1:4] <- c("longitude", "latitude", "altitude", "plot")
+	#	buggy!
+	if (verbose) {
+		cat("attempt to use z-dimension from OGR data source")
+	}
 	res <- data.frame(as.character(df$plot), stack(df, select = 1:3),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
 	names(res) <- c("plot", "variable", "value")
-	res$value[res$variable == "longitude"] <-
-		round(res$value[res$variable == "longitude"], 6)
-	res$value[res$variable == "latitude"] <-
-		round(res$value[res$variable == "latitude"], 6)
-	res$value[res$variable == "altitude"] <-
-		round(res$value[res$variable == "altitude"], 0)
-
+	if (round) {
+		res$value[res$variable == "longitude"] <-
+			round(res$value[res$variable == "longitude"], 6)
+		res$value[res$variable == "latitude"] <-
+			round(res$value[res$variable == "latitude"], 6)
+		res$value[res$variable == "altitude"] <-
+			round(res$value[res$variable == "altitude"], 0)
+	}
 }
 
 return(invisible(res))

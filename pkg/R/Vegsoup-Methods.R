@@ -50,6 +50,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		stop("query on species is empty!\n")	
 	} else {			
 		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
+		#	for safety			
+		x$plot <- as.character(x$plot)
+		x$abbr <- as.character(x$abbr)
+		x$layer <- as.character(x$layer)
+		x$cov <- as.character(x$cov)		
 		x <- x[order(x$plot, x$layer, x$abbr),]
 	}
 
@@ -64,7 +69,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		z <- data.frame(NULL)		
 		stop("query on taxonomy is empty!\n")
 	} else {
+		if (is.list(z) & any(names(z) == "species")) {
+			z <- z$taxonomy
+		}	
 		z <- data.frame(z, stringsAsFactors = FALSE)[c("abbr", "taxon")]
+		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
 	
