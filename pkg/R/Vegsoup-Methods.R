@@ -65,7 +65,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		stop("query on taxonomy is empty!\n")
 	} else {
 		z <- data.frame(z, stringsAsFactors = FALSE)[c("abbr", "taxon")]
+		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
+	
 		
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
