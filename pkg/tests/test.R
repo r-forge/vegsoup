@@ -32,4 +32,4 @@ taxonomy <- QueryTaxonomy(x = species, y = taxonomy)
 
 res <- Vegsoup(species, sites, taxonomy), scale = "frequency")
 #	leave one out will rise an error!
-#	taxonomy  <- QueryTaxonomy(x = species, y = taxonomy[- 2])
+
