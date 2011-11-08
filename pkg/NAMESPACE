@@ -74,6 +74,7 @@ exportMethods(
     "SpatialPolygonsVegsoup<-",
     "SpeciesLong",
     "SpeciesLong<-",
+#    "Specieslist",	
     "Spread",
     "Stride",
     "summary",
