@@ -753,12 +753,8 @@ setMethod("Indspc",
 if (verbose)
 	cat("\n use Vegsoup standard pattern taxa coding, blanks are dots")
 
-#	string deparse functions
-#	depreciated!
-#	VegsoupData now constructs abbreviated taxa names
-#	using make.names and pastes layer seperated with '@' 
-
-#	prefered method
+#	VegsoupData(obj) constructs abbreviated taxa names
+#	pasting make.names and layer seperated with '@' 
 	
 #	deparse compound taxon abbreviation and layer string
 #	seperator is '@'
@@ -781,10 +777,13 @@ if (all(is.na(res$taxon))) {
 return(invisible(res))
 }
 
+#if (!isGeneric("Specieslist")) {
 setGeneric("DecomposeNames",
 	function (obj, ...)
 		standardGeneric("DecomposeNames")
 )
+#}
+
 setMethod("DecomposeNames",
 	signature(obj = "VegsoupData"),
 	.DecomposeNamesVegsoupData

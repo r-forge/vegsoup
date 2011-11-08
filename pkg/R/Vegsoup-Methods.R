@@ -480,3 +480,16 @@ setMethod("BraunBlanquetReduce",
     signature(obj = "Vegsoup"),
     .BraunBlanquetReduce
 )
+	
+#if (!isGeneric("Specieslist")) {
+setGeneric("Specieslist",
+	function (obj)
+		standardGeneric("Specieslist")
+)
+#}
+setMethod("Specieslist",
+    signature(obj = "Vegsoup"),
+    function (obj) {
+    	res <- Taxonomy(obj)[c("abbr", "layer")]
+	}
+)

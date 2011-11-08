@@ -1,22 +1,67 @@
-#	query and copy taxonomy.csv file matching species.csv
-#	x: filename species.csv
-#	y: filename taxonomic reference list
-QueryTaxonomy <- function (x, y) {
+QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, verbose = FALSE) {
 
-species <- read.csv2(x)
-taxonomy <- read.csv2(y)
+test <- combn(c("x", "y", "file.x", "file.y"), 2)
+cmb <- test <- test[, c(1, 3, 4, 6)]
+tmp <- c(
+	x = !missing(x), y = !missing(y),
+	file.x = !missing(file.x), file.y = !missing(file.y))
+
+for (i in seq(along = tmp)) {
+	test[test == names(tmp[i])] <- tmp[i]
+}
+
+mode(test) <- "logical"
+
+sel <- apply(test, 2, all)
+if (all(sel == FALSE)) stop("please supply x respectively file.x and y respectively file.y")
+if (sum(as.numeric(sel)) > 1) {
+	cat("supplied", paste(cmb[, sel], collapse = " and "), "\n")
+	stop("\ni don't know what to choose?")
+}
+
+if (which(sel) == 1) {
+	species <- x
+	taxonomy <- y		
+}
+
+if (which(sel) == 2) {
+	species <- x
+	taxonomy <- ifelse(csv2,
+		read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE),
+		read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE))	
+}
+
+if (which(sel) == 3) {
+	species <- ifelse(csv2,
+		read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE),
+		read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE))
+	taxonomy <- y
+}
+
+if (which(sel) == 4) {
+	species <- ifelse(csv2,
+		read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE),
+		read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
+		)
+	taxonomy <- ifelse(csv2,
+		read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE),
+		read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE))
+}
+
+#	keep only two columns
 taxonomy <- taxonomy[c("abbr", "taxon")]
-#	this checks for unique abbrevations
+
+#	check unique abbrevations
 rownames(taxonomy) <- taxonomy$abbr
 
 res <- taxonomy[as.character(unique(species$abbr)), ]
 if (any(is.na(res[, 1]))) {
 	test <- as.character(unique(species$abbr))[is.na(res[,1])]
-	warning("not found the following abbrevation(s) in supplied reference list")
-	print(test)
+	cat("not found the following abbrevation(s) in supplied reference list\n")
+	cat(test, "\n")
+	stop("Please review your data")
 }
 return(res)
-
 }
 
 #	reshape tables where layers are in seperate columns
@@ -120,9 +165,33 @@ return(invisible(res))
 
 #	stack sites data frame to match database structure
 
-SitesWide2SitesLong <- function (filename) {
+SitesWide2SitesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
 
-res <- read.csv2(filename, colClasses = "character")
+if (missing(x) & missing(file)) {
+	stop("please supply either a data frmae or a csv file")	
+}
+
+if (!missing(file)) {
+	if (is.character(file)) {
+		if (csv2) {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		} else {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		}
+	}
+} else {
+	if (is.data.frame(x) & missing(file)) {
+		x <- x
+		} else {
+			stop("please supply a data.frame")	
+	}
+}
+
+
+#	drop any columns coded as factor to use stack()
+res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 
 res.stack <- stack(res, stringsAsFactors = FALSE)
 res.stack[,1] <- as.character(res.stack[,1])
@@ -141,9 +210,11 @@ res$value <- as.character(res$value)
 res$plot <- as.character(res$plot)
 res$variable <- as.character(res$variable)
 
-print(unique(res$variable))
-return(invisible(res))
+if (verbose) {
+	print(unique(res$variable))
+}	
 
+return(invisible(res))
 }
 
 
@@ -167,44 +238,56 @@ MakeAbbr <- function (x)  {
 }
 
 #	convert between matrix formats for import
-SpeciesWide2SpeciesLong <- function (file.name) {
+SpeciesWide2SpeciesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
 
-if(missing(file.name)) {
-	stop("please supply a csv file")	
+if (missing(x) & missing(file)) {
+	stop("please supply either a data frmae or a csv file")	
 }
-#	file.name = "./dta/csv/relevees/species wide matzendorf.csv"
-x <- read.csv2(file.name,
-	stringsAsFactors = FALSE, check.names = FALSE)
 
+if (!missing(file)) {
+	if (is.character(file)) {
+		if (csv2) {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		} else {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		}
+	}
+} else {
+	if (is.data.frame(x) & missing(file)) {
+
+		} else {
+			stop("please supply a data.frame")	
+	}
+}
+
+#	check schema
 abbr <- grep("abbr", names(x))
 layer <- grep("layer", names(x))
 comment <- grep("comment", names(x))
 
-
-#x <- c[c(abbr, layer, comment)]
 if (length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
+
 res <- c()
 
-
 for (i in c(max(c(abbr, layer, comment)) + 1):ncol(x)) {
-#	i = 4	
-tmp <- data.frame(plot = names(x)[i],
-	abbr = x$abbr,
-	layer = x$layer,
-	cov = x[,i],
-	comment = x$comment,
-	stringsAsFactors = FALSE)
+	tmp <- data.frame(plot = names(x)[i],
+		abbr = as.character(x$abbr),
+		layer = as.character(x$layer),
+		cov = as.character(x[,i]),
+		comment = as.character(x$comment),
+		stringsAsFactors = FALSE)
 	
-res <- rbind(res, tmp)
-	
-	
+	res <- rbind(res, tmp)
 }
 res <- res[res$cov != "0",]
 res <- res[res$cov != "",]
 
-print(table(res$cov))
-print(table(res$layer))
-
+if (verbose) {
+	print(table(res$cov))
+	print(table(res$layer))
+}
 return(invisible(res))
 } else {
 	if (length(abbr) < 1) {
@@ -216,8 +299,6 @@ return(invisible(res))
 	if (length(comment) < 1) {
 		warning("did not find column comment")		
 	}
-	stop("can't coerce object")	
-
+	stop("can't coerce object")
 }
-
 }
