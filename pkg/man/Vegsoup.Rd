@@ -35,7 +35,7 @@ Object of class SpatialPolygonsDataFrame
 }
 }
 \details{
-Constructor function to create an object of class Vegsoup. x should conform to the following format. Column names plot, abbr, layer, cov. x should have names plot, variable, value.
+Constructor function to create an object of class Vegsoup. x should conform to the following format. Column names plot, abbr, layer, cov. x should have names plot, variable, value. If an object returned from function \link{QueryTaxonomy} or an object that has a list element named \code{taxonomy} is used as argument for \code{z} element \code{$taxonomy} is used.
 }
 \value{
 An object of class Vegsoup.
