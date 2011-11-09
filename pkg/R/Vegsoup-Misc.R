@@ -64,7 +64,7 @@ rownames(taxonomy) <- taxonomy$abbr
 test <- match(unique(species$abbr), taxonomy$abbr)
 if (any(is.na(test))) {
 	test <- unique(species$abbr)[is.na(test)]
-	cat("not found the following abbrevation(s) in supplied reference list\n")
+	cat("the following abbrevation(s) used in x were not found in supplied reference list\n")
 	print(test)
 	cat("did you mean?\n")
 	test.pmatch <- matrix(c(test, taxonomy$abbr[pmatch(test, taxonomy$abbr)]), ncol = 2)
@@ -245,25 +245,22 @@ if (!missing(file)) {
 }
 
 
-#	drop any columns coded as factor to use stack()
+#	all columns must be of mode character to  use stack()
 res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
-
 res.stack <- stack(res, stringsAsFactors = FALSE)
-res.stack[,1] <- as.character(res.stack[,1])
-res.stack[,2] <- as.character(res.stack[,2])
+
 plot <- res.stack[res.stack$ind == "plot",]$values
 plot <- rep(plot, (nrow(res.stack)/length(plot))- 1)
 res.stack <- res.stack[!res.stack$ind == "plot",]
-res.stack <- data.frame(plot,
-	variable = res.stack[,2],
-	value = res.stack[,1])
+res.stack <- data.frame(
+	plot = as.character(plot),
+	variable = as.character(res.stack[,2]),
+	value = as.character(res.stack[,1]),
+	stringsAsFactors = FALSE)
 res.stack <- res.stack[order(res.stack$plot),]
 res.stack[is.na(res.stack)] <- ""
 rownames(res.stack) <- 1:nrow(res.stack)
 res <- res.stack
-res$value <- as.character(res$value)
-res$plot <- as.character(res$plot)
-res$variable <- as.character(res$variable)
 
 if (verbose) {
 	print(unique(res$variable))

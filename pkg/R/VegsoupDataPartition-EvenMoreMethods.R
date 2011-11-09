@@ -139,7 +139,7 @@ for(i in 1:getK(object)) {
 	#	i = 1
 	i.part <- object[Partitioning(object) == i, ]
 	i.part <- Arrange(i.part)
-	i.part <- i.part[,order(DecomposeNames(i.part)$layer)]
+	i.part <- i.part[,order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
 	
 	res[[i]] <- i.part
 	

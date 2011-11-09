@@ -48,13 +48,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
-	} else {			
-		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
-		#	for safety			
-		x$plot <- as.character(x$plot)
-		x$abbr <- as.character(x$abbr)
-		x$layer <- as.character(x$layer)
-		x$cov <- as.character(x$cov)		
+	} else {
+		#	for safety
+		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
+		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]			
 		x <- x[order(x$plot, x$layer, x$abbr),]
 	}
 
@@ -136,8 +133,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	if (missing(group))	{
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
-		cat("\nno grouping factor supplied,",
-			"use single partition")
+		if (verbose) {
+			cat("\nno grouping factor supplied,",
+				"use single partition")
+		}
 	} else {
 		stopifnot(!is.null(names(group)))
 		if (!is.integer(group)) {
@@ -154,12 +153,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 		#	may raise errors in subset operations!
 		if (verbose) {
-			cat("\ntry to retrieve coordinates from sites data")
+			cat("\nattempt to retrieve coordinates from sites data ...")
 		}
 
 		if (test) {
 			if (verbose) {		 
-				cat("found variables longitude and latitude")
+				cat("\n... found variables longitude and latitude!")
 			}
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
@@ -177,7 +176,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				coordinates(sp.points) <- ~ longitude + latitude
 				cat("")			
 			} else {
-				warning("longitude and latitude do not match in length")
+				warning("\n... did not succeed. longitude and latitude do not match in length")
 			}
 			
 			cents <- coordinates(sp.points)
