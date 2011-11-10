@@ -61,19 +61,23 @@ taxonomy <- taxonomy[c("abbr", "taxon")]
 #	check unique abbrevations
 rownames(taxonomy) <- taxonomy$abbr
 
-test <- match(unique(species$abbr), taxonomy$abbr)
-if (any(is.na(test))) {
-	test <- unique(species$abbr)[is.na(test)]
-	cat("the following abbrevation(s) used in x were not found in supplied reference list\n")
-	print(test)
+test1 <- match(unique(species$abbr), taxonomy$abbr)
+if (any(is.na(test1))) {
+	test1 <- unique(species$abbr)[is.na(test1)]
+	cat(paste("the following abbrevation(s) used in",
+	cmb[1,sel],
+	"were not found in supplied reference list",
+	cmb[2,sel],
+	"\n"))
+	print(test1)
 	cat("did you mean?\n")
-	test.pmatch <- matrix(c(test, taxonomy$abbr[pmatch(test, taxonomy$abbr)]), ncol = 2)
-	print(test.pmatch)
+	test1.pmatch <- matrix(c(test1, taxonomy$abbr[pmatch(test1, taxonomy$abbr)]), ncol = 2)
+	print(test1.pmatch)
 	if (pmatch) {
-		for (i in 1:nrow(test.pmatch)) {
-			species$abbr[species$abbr == test.pmatch[i,1]] <- test.pmatch[i,2]
+		for (i in 1:nrow(test1.pmatch)) {
+			species$abbr[species$abbr == test1.pmatch[i,1]] <- test1.pmatch[i,2]
 		}
-		cat("replaced", test.pmatch[,1])	
+		cat("replaced", test1.pmatch[,1])	
 	} else {
 		cat("if that is correct you can force me to replace those abbreviations!")
 		cat("\ncall the function again with option pmatch = TRUE")
@@ -82,9 +86,9 @@ if (any(is.na(test))) {
 
 res <- taxonomy[as.character(unique(species$abbr)), ]
 if (any(is.na(res[, 1]))) {
-	test <- as.character(unique(species$abbr))[is.na(res[,1])]
-	cat("not found the following abbrevation(s) in supplied reference list\n")
-	print(test, "\n")
+	test2 <- as.character(unique(species$abbr))[is.na(res[,1])]
+	cat("\nnot found the following abbrevation(s) in supplied reference list\n")
+	print(test2)
 	#	to do!
 	#	implement pmatch as above
 	stop("Please review your reference list, you might need to include some new taxa")
@@ -94,17 +98,50 @@ return(list(taxonomy = res, species = species))
 
 #	reshape tables where layers are in seperate columns
 
-ReshapeMultiCoverColumns <- function (filename) {
+ReshapeMultiCoverColumns <- function (x, file, layers, csv2 = TRUE, verbose = TRUE) {
 
-res <- read.csv2(filename, colClasses = "character")
+if (missing(x) & missing(file)) {
+	stop("please supply either a data frmae or a csv file")	
+}
 
-res <- rbind(
-	cbind("hl", as.matrix(res[,c(1,2,3)])),
-	cbind("sl", as.matrix(res[,c(1,2,4)])),
-	cbind("tl", as.matrix(res[,c(1,2,5)])),
-	cbind("ml", as.matrix(res[,c(1,2,6)]))
-)
+if (!missing(file)) {
+	if (is.character(file)) {
+		if (csv2) {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		} else {
+			x <- read.csv(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		}
+	}
+} else {
+	if (is.data.frame(x) & missing(file)) {
+			#	for safety
+			x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
+		} else {
+			stop("please supply a data.frame")	
+	}
+}
 
+if (missing(layers)) {
+	layers <- as.character(layers)
+	plot.abbr <- match(c("plot", "abbr"), names(x))
+	layers <- names(x)[-plot.abbr]
+	if (verbose) {
+		cat("attempt to use columns:", layers, "as layer")	
+	}
+}
+
+res <- x
+
+layers <- data.frame(layers, index = match(layers, names(x)),
+	stringsAsFactors = FALSE)
+
+res <- c()
+for (i in 1:nrow(layers)) {
+	res <- rbind(res,
+	cbind(layers[i, 1], as.matrix(x[, c(plot.abbr, as.integer(layers[i, 2]))])))
+}
 
 res <- as.data.frame(res,
 	stringsAsFactors = FALSE)
@@ -114,33 +151,42 @@ names(res) <- c("plot", "abbr", "layer", "cov")
 res <- res[res$cov != "0",]
 res <- res[res$cov != "",]
 
-}
+res <- res[order(res$plot, res$abbr, res$layer),]
 
-#	plot.column, elevation.column are converted using to.lower
+}
 
 #	rename!
 #	Shp2SitesLong to ReadOGR2SitesLong	
 Shp2SitesLong <- function (dsn, layer, plot.column, elevation.column, round = TRUE, verbose = TRUE) {
 
 if (missing(plot.column)) {
-	stop ("please supply column name indicating plot ids in dbf file")
+	stop ("please supply a column name in OGR data source indicating plot ids")
 }
 
+#if (missing(elevation.column)) {
+#	elevation.column <- ""
+#	if (verbose) {
+#		cat("no column for elevations supplied")		
+#	}
+#}
 require(rgdal)
-dsn = "/Users/roli/Dropbox/aineck/dta/shp/pt_plots"
-layer = "pt_plots_epsg31255"
-plot.column = "COMMENT"
-elevation.column = "GPS_HEIGHT"
+#dsn = "/Users/roli/Dropbox/traunsee/dta/shp/pt_ts_plots"
+#layer = "pt_ts_plots_epsg4326"
+#plot.column = "NAME"
+#elevation.column = "GPS_HEIGHT"
 #	first check column names aigeinst ogrInfo
 pt <- ogrInfo(dsn, layer)
 
 pt.names <- pt$iteminfo$name
-test <- match(c(plot.column, elevation.column), pt.names)
+test <- match(c(plot.column, ifelse(missing(elevation.column), "", elevation.column)), pt.names)
 if (any(is.na(test)) & verbose) {
-	cat("ogrinfo returns")
+	cat("\nogrinfo returns\n")
 	print(pt)
-	cat("you supplied: ", c(plot.column, elevation.column))
-	cat("I found only:", pt.names[test[!is.na(test)]])
+	cat("you supplied: ", c(plot.column, ifelse(missing(elevation.column), "", elevation.column)))
+	cat("\nI found only:",
+		ifelse(length(pt.names[test[!is.na(test)]]) == 0,
+			"... nothing?",
+			pt.names[test[!is.na(test)]]))
 }
 
 pt <- readOGR(dsn, layer)
@@ -151,6 +197,9 @@ pt <- readOGR(dsn, layer)
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
 
 if (missing(elevation.column)) {
+	if (verbose) {
+		cat("\nno column for elevations supplied")		
+	}
 	df <- data.frame(coordinates(pt),
 		plot = as.character(pt@data[,names(pt) == plot.column]),
 		stringsAsFactors = FALSE)
@@ -161,11 +210,11 @@ if (missing(elevation.column)) {
 		stringsAsFactors = FALSE)
 }
 
-names(df)[1:2] <- c("longitude", "latitude")
+names(df)[1:2] <- c("longitude", "latitude")	
 
 if (dim(coordinates(pt))[2] == 2 & missing(elevation.column)) {	
-
-	res <- data.frame(as.character(df$plot), stack(df),
+	res <- data.frame(as.character(df$plot),
+		stack(df, select = 1:2),
 		stringsAsFactors = FALSE)
 	res	 <- res[, c(1,3,2)]
 	names(res) <- c("plot", "variable", "value")
@@ -232,7 +281,7 @@ if (!missing(file)) {
 			x <- read.csv2(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
 		} else {
-			x <- read.csv2(file,
+			x <- read.csv(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
 		}
 	}
@@ -302,7 +351,7 @@ if (!missing(file)) {
 			x <- read.csv2(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
 		} else {
-			x <- read.csv2(file,
+			x <- read.csv(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
 		}
 	}

@@ -618,6 +618,7 @@ setMethod("[",
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
 		res@sp.points <- res@sp.points[i,]
 		res@sp.polygons <- res@sp.polygons[i,]
+		res@layers <- as.character(unique(res@species.long$layer))
 	    return(res)
     }
 )

@@ -2,7 +2,6 @@
 #	random points in unit square
 #	
 .rpoisppSites <- function (x) {
-	x 
 	require(spatstat)
 	require(maptools)
 	n <- length(unique(x$plot))
@@ -59,7 +58,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		y <- data.frame(NULL)
 		stop("query on sites is empty!\n")	
 	} else {
-		y <- data.frame(y, stringsAsFactors = FALSE)	
+		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)
 	}	
 	
 	if (missing(z)) {
@@ -73,6 +72,18 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
+	
+	#	intersect species and sites
+
+	if (length(unique(x$plot)) != length(unique(y$plot))) {
+		warning("unique(x$plot) and unique(y$plot) do not match in length",
+			" ... need to drop some data")
+		sel <- intersect(unique(x$plot), unique(y$plot))
+		x <- x[which(x$plot %in% sel), ]
+		y <- y[which(y$plot %in% sel), ]		
+	}
+	
+	#	subset z if necessary
 	
 		
 	#	make valid names	
@@ -258,7 +269,7 @@ setMethod("plot",
 #	inherited methods
 
 #	get or set layers
-#	new implementation for layers
+
 setGeneric("Layers",
 	function (obj, ...)
 	standardGeneric("Layers"))
@@ -279,6 +290,20 @@ setReplaceMethod("Layers",
 		#	to do: needs aggregation of cov
 		return(obj)		
 	}
+)
+
+#	method to return the layer columns from SpeciesLong(obj)
+setGeneric("Layer",
+	function (obj, ...)
+		standardGeneric("Layer"))
+
+.LayerVegsoupData <- function (obj) {
+	SpeciesLong(obj)$layer
+}
+
+setMethod("Layer",
+   signature(obj = "Vegsoup"),
+    .LayerVegsoupData
 )
 	
 #	get or set taxonomy (traits) data frame
