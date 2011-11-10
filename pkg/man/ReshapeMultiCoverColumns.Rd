@@ -2,25 +2,27 @@
 \alias{ReshapeMultiCoverColumns}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Reshape raw csv-files where abundance values are in seperate columns.
+Stacks data frames where abundance values for layers are in separate columns
 }
 \description{
 Utility function to translate some commonly used data models to store species data.
 }
 \usage{
-ReshapeMultiCoverColumns(filename)
+ReshapeMultiCoverColumns(x, file, layers, csv2 = TRUE, verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{filename}{
-filename of csv-file to translate.
-}
+\item{x}{ a data frame}
+\item{file}{ path to a csv-file}
+\item{file}{ a string converted to \code{as.character} naming the columns in x respectively file to tabe observations for layers}
+\item{csv2}{ use \code{read.csv2} instead of \code{read.csv}, defaults to \code{TRUE}}
+\item{verbose}{ if \code{TRUE} prints \code{names{x}} and \code{table{layer}}}   
 }
 \details{
-Currently there is no user interface to select colums from raw csv-files.
+Currently there is limited user interface to select.
 }
 \value{
-Returns an object of class \code{"data.frame"} with columns 'plot', 'abbr', 'layer' and 'cove'.
+\code{ReshapeMultiCoverColumns} returns a four-column \code{data.frame}. See \link{Vegsoup-class} or \link{SpeciesWide2SitesLong} for details.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -35,7 +37,7 @@ Roland Kaiser
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{VegsoupData-class}}
+\link{Vegsoupa-class}, \link{SpeciesWide2SitesLong} which performs something similar for species data in wide format (species by plot matrix) ,
 }
 
 \examples{

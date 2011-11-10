@@ -13,7 +13,7 @@ SpeciesWide2SpeciesLong(obj, file = TRUE, csv2 = TRUE, vervose = FALSE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{x}{ a data frame}
-\item{file}{ path to a csv-file stored on disk}
+\item{file}{ path to a csv-file}
 \item{csv2}{ use \code{read.csv2} instead of \code{read.csv}, defaults to \code{TRUE}}
 \item{verbose}{ if \code{TRUE} prints \code{table{cov}} and \code{table{layer}}}   
 }

@@ -18,7 +18,7 @@ SitesWide2SitesLong(obj, file, csv2 = TRUE, verbose)
 \item{verbose}{ if \code{TRUE} prints \code{unique{variable}}}   
 }
 \details{
-The supported data frame, either read from file, or passed as \code{R} object must have a column named exactly named as 'plot'. 
+The supplied \code{data.frame} (species by plot matrix, where rows are species and columns are plots!), either read from file, or passed as \code{R} object must have a columns named exactly named as \code{'plot'}, \code{'abbr'} and \code{'layer'}.
 }
 \value{
 \code{SitesWide2SitesLong} returns a four-column data.frame; the first column has the plot names (\code{plot}), the second the measured variable (\code{variable}), the third the value of the respective variable (\code{value}). Column 'value' is coerced to \code{as.character}.
@@ -37,6 +37,7 @@ Roland Kaiser (\email{kardinal.eros@gmail.com})
 
 \seealso{
 \link{Vegsoup-class},
+\link{ReshapeMultiCoverColumns} which performs something but observation on layers coded in sperate columns,
 \link{SpeciesWide2SpeciesLong} which performs something similar for sites data,
 \link{read.csv} in package \code{stills}.
 }
