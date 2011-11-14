@@ -3,7 +3,19 @@
 	
 plot <- unique(x[,1])
 table <- x[, -1]	
- 
+
+if (missing(website.url.path)) {
+	website.url.path <-
+		"http://sabotag.hausdernatur.at/vegsoup/albums/"
+}
+if (missing(thumbnail.url.path)) {
+	thumbnail.url.path <-
+		"http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
+}
+		
+website.url <- paste(website.url.path, plot, sep = "")
+thumbnail.url <- paste(thumbnail.url.path, plot, sep = "")
+
 begin.placemark <- c(
 	"<Placemark>",
 	"<name>", plot, "</name>")
@@ -22,15 +34,9 @@ end.description <- c(
 	"</description>"
 )					
 
-website.url.path <- "http://sabotag.hausdernatur.at/vegsoup/albums/"
-website.url <- paste(website.url.path, plot, sep = "")
-
-thumbnail.url.path <- "http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
-thumbnail.url <- paste(thumbnail.url.path, plot, sep = "")
-
 img <- paste(
 	"<a href=\"", website.url, "\"", ">",
-	"<img src=\"", thumbnail.url, "\"", " width=\"400\" >",
+	"<img title=\"Klick for Gallery\" src=\"", thumbnail.url, "\"", " width=\"400\" >",
 	"</a>", sep = "")
 
 coordinates <- coordinates(obj@sp.points[obj@sp.points$plot == plot,])
@@ -40,8 +46,9 @@ point <- c(
 	"<Point>",
 		paste("<coordinates>", coordinates[1], ",", coordinates[2], ",0", "</coordinates>", sep =""),
 	"</Point>")
-	
 
+
+#<th style="border-bottom: 1px solid #000000;">taxon</th><th style="border-bottom: 1px solid #000000;">layer</th><th style="border-bottom: 1px solid #000000;">cov</th>
 
 begin.table <- 
 	c("<tr>",
