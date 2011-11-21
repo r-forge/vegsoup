@@ -65,10 +65,10 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	} # end if "Braun Blanquet"
 	
 	cpu.time <- system.time({	
-	if (scale$scale == "frequency") {
+	if (scale$scale == "frequency" | scale$scale == "binary") {
 
 		if (!is.numeric(species.long$cov)) {
-			warning("changed mode to numeric", str(species.long$cov))
+			#	warning("changed mode to numeric", str(species.long$cov))
 			mode(species.long$cov) <- "numeric"
 		}	
 		xt  <- xtabs(cov ~ plot + abbr + layer,
@@ -306,7 +306,7 @@ setMethod("as.numeric",
     signature(x = "VegsoupData"),
     function (x, verbose = FALSE) {
     	#	x = dta
-		if (AbundanceScale(x)$scale == "frequency") {
+		if (AbundanceScale(x)$scale == "frequency" | AbundanceScale(x)$scale == "binary") {
 			res <- x@species
 			if (verbose) {
 				cat("  species matrix is numeric, scale:",

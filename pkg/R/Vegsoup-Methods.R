@@ -43,7 +43,7 @@
 #		based on sp.points
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, verbose = TRUE) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
+	#	x = species; y = sites; z = taxonomy; scale = list(scale = "binary")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
@@ -111,11 +111,16 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 			if (length(scale) == 1)	{
 				if (scale[[1]] == "frequency") {
 					scale <- c(scale, list(codes = NULL), list(lims = NULL))
-					stopifnot(is.numeric(x$cov))
+					x$cov <- as.numeric(x$cov)
+					if (any(is.na(x$cov))) {
+						str(x$cov)
+						stop("there seems to be digits mixed with charcters?")
+					}				
+				#	stopifnot(is.numeric(x$cov))
 				}
 				if (scale[[1]] == "binary") {
 					scale <- c(scale, list(codes = NULL), list(lims = NULL))
-					stopifnot(dim(table(x$cov)) > 2)
+				stopifnot(dim(table(x$cov)) < 3)
 				}
 				if (scale[[1]] == "Braun-Blanquet") {
 					scale <- list(

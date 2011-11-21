@@ -119,7 +119,7 @@ if (!missing(file)) {
 			#	for safety
 			x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 		} else {
-			stop("please supply a data.frame")	
+			stop("please supply a data.frame or use file argument")	
 	}
 }
 
@@ -270,7 +270,8 @@ return(invisible(res))
 #	stack sites data frame to match database structure
 
 SitesWide2SitesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
-
+#	file = "./dta/csv/odonata/species wide.csv"
+#	file = "./dta/csv/relevees/species wide ferschnitz.csv"
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frmae or a csv file")	
 }
@@ -280,16 +281,21 @@ if (!missing(file)) {
 		if (csv2) {
 			x <- read.csv2(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
+#			x <- read.csv2(file,
+#				colClasses = "character", check.names = FALSE)
+
 		} else {
 			x <- read.csv(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
+#			x <- read.csv2(file,
+#				colClasses = "character", check.names = FALSE)
 		}
 	}
 } else {
 	if (is.data.frame(x) & missing(file)) {
 		x <- x
 		} else {
-			stop("please supply a data.frame")	
+			stop("please supply a data.frame or use file argument")	
 	}
 }
 
@@ -348,11 +354,15 @@ if (missing(x) & missing(file)) {
 if (!missing(file)) {
 	if (is.character(file)) {
 		if (csv2) {
+#			x <- read.csv2(file,
+#				stringsAsFactors = FALSE, check.names = FALSE)
 			x <- read.csv2(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
+				colClasses = "character", check.names = FALSE)				
 		} else {
-			x <- read.csv(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
+#			x <- read.csv(file,
+#				stringsAsFactors = FALSE, check.names = FALSE)
+			x <- read.csv2(file,
+				colClasses = "character", check.names = FALSE)				
 		}
 	}
 } else {
@@ -403,3 +413,7 @@ return(invisible(res))
 	stop("can't coerce object")
 }
 }
+
+
+#	reverse geocoding
+#	readLines(url("http://maps.google.com/maps/geo?q=1600+Straßham+Wilhering+CA&output=csv&key=abcdefg"), n=1, warn=FALSE)

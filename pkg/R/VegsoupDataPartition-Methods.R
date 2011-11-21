@@ -251,7 +251,7 @@ setMethod("[",
 
 	#	capscale has difficulties when using community matrix in the formula
 
-	ord <- capscale(getDist(prt) ~ 1,
+	ord <- capscale(getDist(x) ~ 1,
 		comm = as.binary(x))
 	#	number of axes shown in plot, default to frist 3
 	axs <- matrix(c(1,2,1,3,2,3), 3,2, byrow = TRUE)
@@ -636,7 +636,7 @@ setGeneric("Isamic",
 setMethod("Isamic",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) { 	
-	   	tmp <- Constancy(prt) / 100
+	   	tmp <- Constancy(obj) / 100
     	res <- apply(tmp, 1, function (x) {
     			2*sum(abs(as.numeric(x)- 0.5)) / ncol(tmp)
     		})
