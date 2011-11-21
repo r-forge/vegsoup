@@ -19,7 +19,7 @@ SpeciesWide2SpeciesLong(obj, file = TRUE, csv2 = TRUE, vervose = FALSE)
 }
 \details{
 The supported data frame, either read from file, or passed as \code{R} object must have columns exactly named as 'abbr', 'layer' and 'comment'.
-The column 'comment' can have \code{NA} or \code{NULL}. This field is used to store taxonomic or other relvant information on a particular observation. The species matrix is assumed to have species in rows and plots in columns.
+The column 'comment' can have \code{NA} or \code{NULL}. This field is used to store taxonomic or other relvant information on a particular observation. The species matrix is assumed to have species in rows and plots in columns. If argument file is supplied, all columns are imported as \code{class("character")} (read.csv(…, colClasses = "character")
 }
 \value{
 \code{SpeciesWide2SpeciesLong} returns a five-column data frame; the first column has the plot names (\code{plot}), the second species abbreviations (\code{abbr}), the third the respective layer (\code{layer}), the fourth the abundance values (\code{cove}) and the last columns represents a comment field.
