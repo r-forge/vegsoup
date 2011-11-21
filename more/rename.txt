@@ -1,0 +1,4 @@
+rename data scheme and commands!
+
+layer to stratum
+cov to abu(dance)	
