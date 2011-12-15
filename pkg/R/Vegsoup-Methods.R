@@ -89,6 +89,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
+	row.names(z) <- z$abbr
 	
 	if (missing(scale)) {
 		warning("No cover scale provided", immediate. = TRUE)
@@ -224,6 +225,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		}	
 
 	}
+	
+	proj4string(sp.points) <- CRS("+init=epsg:4326")
+	proj4string(sp.polygons) <- CRS("+init=epsg:4326")
 	
 	if (any(sapply(y, is.factor))) {
 		y <- as.data.frame(as.matrix(y),
@@ -521,15 +525,26 @@ setMethod("BraunBlanquetReduce",
     .BraunBlanquetReduce
 )
 	
-#if (!isGeneric("Specieslist")) {
-setGeneric("Specieslist",
-	function (obj)
-		standardGeneric("Specieslist")
+#if (!isGeneric("SpeciesList")) {
+setGeneric("SpeciesList",
+	function (obj, layered)
+		standardGeneric("SpeciesList")
 )
 #}
-setMethod("Specieslist",
+setMethod("SpeciesList",
     signature(obj = "Vegsoup"),
-    function (obj) {
-    	res <- Taxonomy(obj)[c("abbr", "layer")]
+    function (obj, layered = FALSE) {
+    	if (missing(layered)) {
+    		layered <- FALSE
+    	}
+    	if (layered) {
+    	res <- SpeciesLong(obj)
+    	res <- unique(res[c("abbr", "layer")])
+    	res$taxon <- Taxonomy(dta)[res$abbr,]$taxon
+    	res <- res[order(res$layer, res$taxon), ]			
+    	} else {
+    	res <- Taxonomy(obj)[c("abbr", "taxon")]	
+    	}
+    	return(invisible(res))	
 	}
 )

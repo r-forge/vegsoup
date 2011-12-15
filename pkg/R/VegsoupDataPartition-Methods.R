@@ -339,6 +339,22 @@ setMethod("Partitioning",
 	function (obj) obj@part
 )
 
+setGeneric("Partitioning<-",
+	function (obj, value, ...)
+		standardGeneric("Partitioning<-")
+)
+setReplaceMethod("Partitioning",
+	signature(obj = "VegsoupDataPartition", value = "numeric"),
+	function (obj, value) {
+		#	to do: needs validity check
+		if (length(value) != length(Partitioning(obj))) {
+			stop("replacemenmt does not match in length: ")
+		}
+		obj@part <- value		
+		return(obj)		
+	}
+)
+
 #	retrieve distance matrix
 setGeneric("getDist",
 	function (obj)

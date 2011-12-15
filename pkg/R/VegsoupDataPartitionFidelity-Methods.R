@@ -23,34 +23,37 @@ setMethod("getStat",
 
 #	format and arrange fidelity table
 #	adapted and extend from Sebastian Schmidtlein's isotab()
-.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, stat.min, footer.treshold, molticols.footer, verbose = FALSE, ...) {
+.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, stat.min, footer.treshold, molticols.footer, verbose = FALSE, letters = FALSE, ...) {
 #	object = fid.prt
 if (missing(filename)) {
 	filename <- paste("FidelityTable")
 }
 if (missing(p.col.width)) {
-	p.col.width = "10mm"
+	p.col.width <- "10mm"
 	warning("p.col.width missing, set to ", p.col.width, call. = FALSE)
 }
 if (missing(p.max)) {
-	p.max = .05
+	p.max <- .05
 	warning("p.max missing, set to ", p.max, call. = FALSE)
 }
 if (missing(footer.treshold)) {
-	footer.treshold = 2
+	footer.treshold <- 2
 }
 if (missing(molticols.footer)) {
-	molticols.footer = 3
+	molticols.footer <- 3
 }
 cntn <- Contingency(object)
 cnst <- Constancy(object)
 nc <- ncol(cnst)
 sp <- ncol(object)
 
+#	can do, can also be a method for class VegsoupDataPartition
+#	if fidelity measure is calculöated by a some defaults?
+
 ft <- object@fisher.test
 N <- nrow(object)
 frq <- colSums(as.binary(object))
-siz <- table(Partitioning(object))  
+siz <- table(Partitioning(object))
 
 if (missing(stat.min) & object@method == "r.g") {
 	#	automatic guess adapted from isopam()
@@ -240,6 +243,7 @@ caption <- paste("Fidelity table for ",
 			table(Partitioning(object)), sep = ":", collapse = ", "),
 		". ",
 		sep = "")
+
 		
 names(tex) <- col.names
 tex <- as.matrix(tex)
@@ -333,7 +337,11 @@ if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 tex[,1] <- gsub("×", "$\\times$", tex[,1], fixed = TRUE)
 footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 
-
+if (letters) {
+	sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])
+	dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
+		LETTERS[sort(unique(Partitioning(object)))])
+}
 latex(tex,
 	file = filename,
 	caption = caption,

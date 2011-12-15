@@ -5,59 +5,35 @@
 function to do
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Create an object of class VegsoupDataPartition
 }
 \usage{
 VegsoupDataPartition(x, binary, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", clustering, polish = FALSE, nitr = 999, verbose = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
-}
-  \item{binary}{
-%%     ~~Describe \code{binary} here~~
-}
-  \item{k}{
-%%     ~~Describe \code{k} here~~
-}
-  \item{method}{
-%%     ~~Describe \code{method} here~~
-}
-  \item{dist}{
-%%     ~~Describe \code{dist} here~~
-}
-  \item{clustering}{
-%%     ~~Describe \code{clustering} here~~
-}
-  \item{polish}{
-%%     ~~Describe \code{polish} here~~
-}
-  \item{nitr}{
-%%     ~~Describe \code{nitr} here~~
-}
-  \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
+  \item{x}{object of class VegsoupData}
+  \item{binary}{use presence/absence only}
+  \item{k}{number of partitions to create}
+  \item{method}{clustering method, see details}
+  \item{dist}{a distance measure known by \link{vegdist}}
+  \item{clustering}{external vector of cluster partitons}
+  \item{polish}{apply optimal silhouette widths clustering \link{opts} on possible outgroups (single element partitions) to sweep them to an existing multi element partition}
+  \item{nitr}{number of iterations of function \link{tabbed} in calculating table deviance}
+  \item{verbose}{set to \code{TRUE} for verbose output}
+  \item{\dots}{passed to methods}
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Parttion an object of class VegsoupData using several clustering methods.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\code{VegsoupDataPartition} returns an object of class \code{VegsoupDataPartition}
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser (\email{kardinal.eros@gmail.com})
 }
 \note{
 %%  ~~further notes~~
@@ -66,7 +42,7 @@ VegsoupDataPartition(x, binary, k, method = c("ward", "flexible", "pam", "isopam
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+%%\code{\link{VegsoupDataPartition-class}}, ~~~
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

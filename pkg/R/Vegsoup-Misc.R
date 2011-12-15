@@ -1,5 +1,6 @@
 QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE) {
 
+#	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
 cmb <- test <- test[, c(1, 3, 4, 6)]
 tmp <- c(
@@ -61,6 +62,14 @@ taxonomy <- taxonomy[c("abbr", "taxon")]
 #	check unique abbrevations
 rownames(taxonomy) <- taxonomy$abbr
 
+#	sort(unique(sites$plot)) == sort(unique(species$plot))
+stopifnot(sort(unique(sites$plot)) == sort(unique(species$plot)))
+if (all(sort(unique(sites$plot)) == sort(unique(species$plot)))) {
+	
+} else {
+	stop("species and sites do not match")
+}	
+	
 test1 <- match(unique(species$abbr), taxonomy$abbr)
 if (any(is.na(test1))) {
 	test1 <- unique(species$abbr)[is.na(test1)]
@@ -84,11 +93,28 @@ if (any(is.na(test1))) {
 	}
 }
 
+ 
+#	to do! validity method for vegsoup
+test2 <- dim(species)[1] - dim(unique(species[,c(1:3)]))[1]
+
+if (test2 > 0) {
+	warning("\nspecies data not unique for ", test2, "sample(s)")
+	warning("\nremoved duplicted species:\n\n")
+	if (verbose) {
+		print(species[duplicated(species[,c(1:3)]),])
+	}
+	species <- species[!duplicated(species[,c(1:3)]),]
+} else {
+	if (verbose) {
+		cat("\nno duplicates found")
+	}
+}
+
 res <- taxonomy[as.character(unique(species$abbr)), ]
 if (any(is.na(res[, 1]))) {
-	test2 <- as.character(unique(species$abbr))[is.na(res[,1])]
+	test3 <- as.character(unique(species$abbr))[is.na(res[,1])]
 	cat("\nnot found the following abbrevation(s) in supplied reference list\n")
-	print(test2)
+	print(test3)
 	#	to do!
 	#	implement pmatch as above
 	stop("Please review your reference list, you might need to include some new taxa")

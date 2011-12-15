@@ -85,10 +85,12 @@ res <- c(
 res	
 }
 
-.KMLVegsoupData <- function (obj, path, thumbnail.url.path, website.url.path, ...) {
+.KMLVegsoupData <- function (obj, file, thumbnail.url.path, website.url.path, ...) {
 
-if (missing(path)) {
-	path <- getwd()	
+if (missing(file)) {
+	file <- paste(getwd(), "/vegsoup.kml", sep = "")
+	warning("\nargument file missing, drop KML to folder ",
+		getwd(), " as ./vegsoup.kml")
 }	
 begin.kml <- c(
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -119,13 +121,11 @@ res <- 	c(
 	placemark,
 	end.kml)	
 
-con <- file(paste(path, "/vegsoup.kml", sep = ""))
+con <- file(file)
 	writeLines(res, con)
 close(con)
 
 return(invisible(res))
-
-
 }
 
 setGeneric("KML",

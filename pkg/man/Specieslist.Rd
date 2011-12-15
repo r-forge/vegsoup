@@ -1,8 +1,8 @@
-\name{Specieslist}
-\alias{Specieslist}
+\name{SpeciesList}
+\alias{SpeciesList}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Species list
+Species List
 }
 \description{
 Return a species list of the data set.
@@ -12,17 +12,13 @@ Specieslist(obj)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
-  \item{value}{
-%%     ~~Describe \code{value} here~~
-}
+  \item{obj}{an object inheriting from \code{class("vegsoup")}}
+  \item{layered}{if \code{TRUE} returns species list for each layered.}
 }
 \details{
-Convinience method to return a unique species list from the data set. The same can be obtained using \code{Taxonomy(obj)}.
+Convinience method to return a unique species list from the data set. The same can be obtained using \code{Taxonomy(obj)}. If \code{layered = TRUE} returns a unique species list for each layer, if there is any, in the data set.
 }
-\value{ a two-column data.frame; the first column has the taxon abbreviations, the second the scientific taxon names.}
+\value{ a two-column data.frame; the first column has the taxon abbreviations, the second the scientific taxon names. If \code{layered = TRUE} an additional column identifying the layer is returned.}
 \references{
 %% ~put references to the literature/web site here ~
 }

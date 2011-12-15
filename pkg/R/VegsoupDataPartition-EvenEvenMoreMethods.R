@@ -100,7 +100,7 @@ if (max(Partitioning(obj)) > 10) {
 		paddle.identifier <- LETTERS[Partitioning(obj)]
 		Partitioning(obj)
 	} else {
-		stop("styled KML ouput is currently limited to 26 groups")
+		stop("styled KML ouput is currently limited to 26 groups (letter coding)")
 	}
 	} else {	
 		paddle.file <- unique(Partitioning(obj))
@@ -110,6 +110,9 @@ if (max(Partitioning(obj)) > 10) {
 styles.normal <- c(sapply(paddle.file, .style.numbers.normal))
 styles.highlight <- c(sapply(paddle.file, .style.numbers.highlight))
 stylemap <- c(sapply(paddle.file, .stylemap.numbers))
+
+#	to do! order folders!
+
 points <- data.frame(partitioning = paddle.identifier,
 	coordinates(obj), plot = names(Partitioning(obj)))
 

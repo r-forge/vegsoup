@@ -355,15 +355,17 @@ setMethod("$", "VegsoupData",
 	}
 )
 
-#	aggregate: layer means, the different layers are combined assuming there independence (a species occuring in two layers with a cover of 50% will result in a overall cover of 75%. sum will sum up cover values of all layers. (see ?tv.veg)
+#	Layers method
+#	to do! implement option drop to drop a specific layer
 .LayersVegsoupData <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
-if (missing(collapse) & missing(aggregate)) {
+if (missing(collapse) & missing(aggregate) & missing(drop)) {
 	return(obj@layers)	
 } else {
 	if (length(obj@layers) < 2) {
 		if (verbose) warning("has already only a single layer: ", obj@layers)
 		return(obj)
 	} else {
+	
 	#	check supplied arguments	
 	if (missing(aggregate)) {
 		aggregate <- "layer"
@@ -377,7 +379,7 @@ if (missing(collapse) & missing(aggregate)) {
 		if (length(collapse) > length(obj@layers))
 			stop("length of collapse vector must match length(Layers(obj))")
 	}
-
+	
 	#	debug
 	#	obj = sub; verbose = TRUE; aggregate = "layer"; dec = 0, collapse = c("hl", "sl", "tl", "tl", "hl")
 	
@@ -778,12 +780,12 @@ if (all(is.na(res$taxon))) {
 return(invisible(res))
 }
 
-#if (!isGeneric("Specieslist")) {
+
 setGeneric("DecomposeNames",
 	function (obj, ...)
 		standardGeneric("DecomposeNames")
 )
-#}
+
 
 setMethod("DecomposeNames",
 	signature(obj = "VegsoupData"),
