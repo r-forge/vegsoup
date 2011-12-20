@@ -563,28 +563,20 @@ setMethod("SpeciesList",
 	}
 )
 
-.gvisMapVegsoup <- function(obj) {
-	require(googleVis)
-	df <- data.frame(LatLong = apply(coordinates(obj)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
-	plot = rownames(Sites(obj)))
 
-	m <- gvisMap(df, "LatLong" , "plot")
-	plot(m)
-}
-
-#if (!isGeneric("googleVis")) {
-setGeneric("googleVis",
-	function (obj)
-		standardGeneric("googleVis")
+#if (!isGeneric("gvisMap")) {
+setGeneric("gvisMap",
+	function (data, locationvar = "", tipvar = "", options = list(), chartid)
+		standardGeneric("gvisMap")
 )
 #}
 
-#	googleVis package
-setMethod("googleVis",
-    signature(obj = "Vegsoup"),
-    function(obj) {
-	require(googleVis)
-	pt <- SpatialPointsVegsoup(obj)
+#	gvisMap package
+setMethod("gvisMap",
+    signature(data = "Vegsoup"),
+    function (data) {
+	require(gvisMap)
+	pt <- SpatialPointsVegsoup(data)
 	df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
 	Tip = pt$plot)
 	m <- gvisMap(df, "LatLong" , "Tip")

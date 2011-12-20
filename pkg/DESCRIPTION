@@ -6,7 +6,7 @@ Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, spatstat
 Suggests: RColorBrewer, misc3d, rgdal, maptools, googleVis
-Imports: sp, optpart, vegan
+Imports: sp, optpart, vegan, googleVis
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
 	Methods are provided for data manipulation, multivariate analysis,

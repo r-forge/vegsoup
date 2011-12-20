@@ -5,12 +5,12 @@
 #importFrom(optpart, optpart, partana, tabdev, disdiam)
 
 import(methods)
-importFrom(utils, head, tail)
-importFrom(Hmisc, latex)
-importFrom(sp, coordinates)
-importFrom(graphics, plot, hist)
-importFrom(cluster, agnes, pam, silhouette)
-importFrom(googleVis, gvisMap)
+importFrom("utils", head, tail)
+importFrom("Hmisc", latex)
+importFrom("sp", coordinates, bbox, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, spplot)
+importFrom("graphics", plot, hist)
+importFrom("cluster", agnes, pam, silhouette)
+importFrom("googleVis", gvisMap)
 
 exportPattern("^[[:alpha:]]+")
 exportMethods(
@@ -40,6 +40,7 @@ exportMethods(
     "getDistconnected",
     "getK",
     "getStat",
+    "gvisMap",	
     "head",
     "Indpower",
     "Indspc",
