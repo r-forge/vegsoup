@@ -358,7 +358,7 @@ setMethod("$", "VegsoupData",
 #	Layers method
 #	to do! implement option drop to drop a specific layer
 .LayersVegsoupData <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
-if (missing(collapse) & missing(aggregate) & missing(drop)) {
+if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
 } else {
 	if (length(obj@layers) < 2) {

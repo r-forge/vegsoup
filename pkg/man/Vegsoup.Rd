@@ -15,27 +15,17 @@ Vegsoup(x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.p
   \item{x}{
 Species data.frame
 }
-  \item{y}{
-Sites data.frame
-}
-  \item{z}{
-Taxonomy data.frame
-}
-  \item{scale}{
-Abundance scale
-}
-  \item{group}{
-Apriori grouping, if any
-}
-  \item{sp.points}{
-Object of class SpatialPointsDataFrame
-}
+  \item{y}{Sites data.frame}
+  \item{z}{Taxonomy data.frame}
+  \item{scale}{Abundance scale}
+  \item{group}{Apriori grouping, if any}
+  \item{sp.points}{Object of class SpatialPointsDataFrame}
   \item{sp.polygons}{
 Object of class SpatialPolygonsDataFrame
 }
 }
 \details{
-Constructor function to create an object of class Vegsoup. x should conform to the following format. Column names plot, abbr, layer, cov. x should have names plot, variable, value. If an object returned from function \link{QueryTaxonomy} or an object that has a list element named \code{taxonomy} is used as argument for \code{z} element \code{$taxonomy} is used.
+Constructor function to create an object of class Vegsoup. x should conform to the following format. Column names plot, abbr, layer, cov. x should have names plot, variable, value. If an object returned from function \link{QueryTaxonomy} or an object that has a list element named \code{taxonomy} is used as argument for \code{z} list element \code{$taxonomy} is used. If the sites data has variables exactly named longitude and latitude those will be used to gather coordinates. Coordinates have to be formatted as decimal degrees! See e.g. \link{char2dms} to convert between formats. Any alphanumeric characters will be discarded using \code{gsub(pattern = "[[:alpha:]]", replacement = "", ...}. Decimals ("," and ".") are handled consistently. 
 }
 \value{
 An object of class Vegsoup.

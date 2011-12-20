@@ -10,6 +10,7 @@ importFrom(Hmisc, latex)
 importFrom(sp, coordinates)
 importFrom(graphics, plot, hist)
 importFrom(cluster, agnes, pam, silhouette)
+importFrom(googleVis, gvisMap)
 
 exportPattern("^[[:alpha:]]+")
 exportMethods(

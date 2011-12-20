@@ -182,16 +182,26 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 
 			if (nrow(lng) == nrow(lat)) {
 				lat <- lat[match(lng$plot, lat$plot), ]
-				latlng <- data.frame(plot = lat$plot, latitude = lat$value, longitude = lng$value,
+				latlng <- data.frame(plot = lat$plot,
+					latitude = lat$value, longitude = lng$value,
 					stringsAsFactors = FALSE)
 				latlng <- latlng[order(latlng$plot),]
-					
-				#	check decimal	
-				latlng[,2] <- as.numeric(gsub(",", ".", latlng[,2], fixed = TRUE))
-				latlng[,3] <- as.numeric(gsub(",", ".", latlng[,3], fixed = TRUE))
+				#	to do! implemnt char2dms
+				
+				#	strip of N and E
+				latlng[, 2] <- gsub("[[:alpha:]]", "", latlng[,2])
+				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[,3])
+				
+				#	strip of blanks
+				latlng[, 2] <- gsub("[[:blank:]]", "", latlng[,2])
+				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[,3])
+				
+				#	check decimal and change mode
+				latlng[, 2] <- as.numeric(gsub(",", ".", latlng[, 2], fixed = TRUE))
+				latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
+				
 				sp.points <- latlng
-				coordinates(sp.points) <- ~ longitude + latitude
-				cat("")			
+				coordinates(sp.points) <- ~ longitude + latitude	
 			} else {
 				warning("\n... did not succeed. longitude and latitude do not match in length")
 			}
@@ -275,10 +285,7 @@ setMethod("plot",
     .plotVegsoup
 )
 
-#	inherited methods
-
 #	get or set layers
-
 setGeneric("Layers",
 	function (obj, ...)
 	standardGeneric("Layers"))
@@ -413,6 +420,7 @@ setReplaceMethod("SpeciesLong",
 		return(obj)		
 	}
 )
+
 #	get or set sites query in long format
 setGeneric("SitesLong",
 	function (obj)
@@ -435,7 +443,6 @@ setReplaceMethod("SitesLong",
 	}
 )
 
-
 #	get predefined grouping vector
 setGeneric("AprioriGrouping",
 	function (obj)
@@ -446,6 +453,11 @@ setMethod("AprioriGrouping",
     function (obj) obj@group
 )
 
+#	coordinates method
+setMethod("coordinates",
+   signature(obj = "Vegsoup"),
+    function (obj) coordinates(obj@sp.points)
+)
 #	get or set spatial points
 #if (!isGeneric("getSpatialPoints"))
 #if (!isGeneric("SpatialPoints"))
@@ -453,6 +465,7 @@ setGeneric("SpatialPointsVegsoup",
 	function (obj)
 		standardGeneric("SpatialPointsVegsoup")
 )
+
 #if (!isGeneric("SpatialPoints<-"))
 setGeneric("SpatialPointsVegsoup<-",
 	function (obj, value)
@@ -470,6 +483,7 @@ setReplaceMethod("SpatialPointsVegsoup",
 		return(obj)		
 	}
 )
+
 #	get spatial polygons
 #if (!isGeneric("SpatialPolygons"))
 setGeneric("SpatialPolygonsVegsoup",
@@ -546,5 +560,35 @@ setMethod("SpeciesList",
     	res <- Taxonomy(obj)[c("abbr", "taxon")]	
     	}
     	return(invisible(res))	
+	}
+)
+
+.gvisMapVegsoup <- function(obj) {
+	require(googleVis)
+	df <- data.frame(LatLong = apply(coordinates(obj)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
+	plot = rownames(Sites(obj)))
+
+	m <- gvisMap(df, "LatLong" , "plot")
+	plot(m)
+}
+
+#if (!isGeneric("googleVis")) {
+setGeneric("googleVis",
+	function (obj)
+		standardGeneric("googleVis")
+)
+#}
+
+#	googleVis package
+setMethod("googleVis",
+    signature(obj = "Vegsoup"),
+    function(obj) {
+	require(googleVis)
+	pt <- SpatialPointsVegsoup(obj)
+	df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
+	Tip = pt$plot)
+	m <- gvisMap(df, "LatLong" , "Tip")
+	plot(m)
+	return(invisible(m))
 	}
 )

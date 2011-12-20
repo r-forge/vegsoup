@@ -137,4 +137,3 @@ setMethod("KML",
     signature(obj = "VegsoupData"),
     .KMLVegsoupData
 )
-
