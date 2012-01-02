@@ -19,7 +19,8 @@ setClass("Vegsoup",
 			valid.abbr <-
 				all(object@species.long$abbr %in% object@taxonomy$abbr)
 			valid.sites <-
-				all(object@species.long$plot %in% object@sites.long$plot)
+#				all(object@species.long$plot %in% object@sites.long$plot)
+				all(sort(unique(object@species.long$plot)) == sort(unique(object@sites.long$plot)))
 
 			if (valid.abbr && valid.sites) {
 #				cat("\ntaxomomy lookup table matching",

@@ -61,16 +61,9 @@ taxonomy <- taxonomy[c("abbr", "taxon")]
 
 #	check unique abbrevations
 rownames(taxonomy) <- taxonomy$abbr
-
-#	sort(unique(sites$plot)) == sort(unique(species$plot))
-stopifnot(sort(unique(sites$plot)) == sort(unique(species$plot)))
-if (all(sort(unique(sites$plot)) == sort(unique(species$plot)))) {
-	
-} else {
-	stop("species and sites do not match")
-}	
 	
 test1 <- match(unique(species$abbr), taxonomy$abbr)
+
 if (any(is.na(test1))) {
 	test1 <- unique(species$abbr)[is.na(test1)]
 	cat(paste("the following abbrevation(s) used in",
@@ -119,6 +112,7 @@ if (any(is.na(res[, 1]))) {
 	#	implement pmatch as above
 	stop("Please review your reference list, you might need to include some new taxa")
 }
+
 return(list(taxonomy = res, species = species))
 }
 

@@ -8,7 +8,7 @@
 	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
 	pts <- as.SpatialPoints.ppp(pts)
 	pts <- SpatialPointsDataFrame(pts,
-		data = data.frame(plot = unique(x$plot),
+		data = data.frame(plot = sort(unique(x$plot)),
 			stringsAsFactors = FALSE))
 
 	cents <- coordinates(pts)
@@ -23,7 +23,7 @@
 
 	pgs <- SpatialPolygons(pgs)
 	pgs <- SpatialPolygonsDataFrame(pgs,
-		data = data.frame(plot = unique(x$plot)))
+		data = data.frame(plot = sort(unique(x$plot))))
 	return(list(pts, pgs))
 }
 
@@ -43,15 +43,21 @@
 #		based on sp.points
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, verbose = TRUE) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "binary")
+	#	x = species; y = sites; z = taxonomy; scale = list(scale = "freqency")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
 	} else {
 		#	for safety
 		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
-		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]			
-		x <- x[order(x$plot, x$layer, x$abbr),]
+		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
+		
+		if (length(grep("[:alpha:]", x$plot)) < 1) {
+				warning("... plot identifier in species contains only numbers, ",
+					"\nbut will be coded as character!", call. = FALSE)	
+			x$plot <- as.character(as.numeric(species$plot))
+		}	
+		x <- x[order(x$plot, x$layer, x$abbr), ]
 	}
 
 	if (missing(y)) {
@@ -59,6 +65,13 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		stop("query on sites is empty!\n")	
 	} else {
 		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)
+				
+		if (length(grep("[:alpha:]", y$plot)) < 1) {
+				warning("... plot identifier in sites contains only numbers, ", 
+					"\nbut will be coded as character!", call. = FALSE)	
+			y$plot <- as.character(as.numeric(y$plot))
+			y <- y[order(y$plot, y$variable), ]
+		}
 	}	
 	
 	if (missing(z)) {
@@ -68,29 +81,26 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		if (is.list(z) & any(names(z) == "species")) {
 			z <- z$taxonomy
 		}	
-		z <- data.frame(z, stringsAsFactors = FALSE)[c("abbr", "taxon")]
+		z <- data.frame(as.matrix(z), stringsAsFactors = FALSE)[c("abbr", "taxon")]
 		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
-	
-	#	intersect species and sites
 
-	if (length(unique(x$plot)) != length(unique(y$plot))) {
-		warning("unique(x$plot) and unique(y$plot) do not match in length",
-			" ... need to drop some data")
-		sel <- intersect(unique(x$plot), unique(y$plot))
-		x <- x[which(x$plot %in% sel), ]
-		y <- y[which(y$plot %in% sel), ]		
-	}
-	
-	#	subset z if necessary
-	
-		
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
 	row.names(z) <- z$abbr
 	
+	#	intersect species and sites
+	if (length(unique(x$plot)) != length(unique(y$plot))) {
+		warning("... unique(x$plot) and unique(y$plot) do not match in length, ",
+			"\nsome samples were dropped!", call. = FALSE)
+		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
+		x <- x[which(x$plot %in% sel), ]
+		y <- y[which(y$plot %in% sel), ]
+		z <- z[match(unique(x$abbr), z$abbr), ]
+	}
+		
 	if (missing(scale)) {
 		warning("No cover scale provided", immediate. = TRUE)
 		if (is.character(x$cov)) {
@@ -167,25 +177,26 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		#	generate random points
 		
 		#	try to find coordinates
-		test <- any(y$variable == "longitude") & any(y$variable == "latitude")
+		lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 		#	may raise errors in subset operations!
 		if (verbose) {
 			cat("\nattempt to retrieve coordinates from sites data ...")
 		}
 
-		if (test) {
+		if (lnglat.test) {
 			if (verbose) {		 
 				cat("\n... found variables longitude and latitude!")
 			}
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
-
-			if (nrow(lng) == nrow(lat)) {
+			lnglat.test <- nrow(lng) == nrow(lat)
+			if (lnglat.test) {
 				lat <- lat[match(lng$plot, lat$plot), ]
 				latlng <- data.frame(plot = lat$plot,
 					latitude = lat$value, longitude = lng$value,
 					stringsAsFactors = FALSE)
 				latlng <- latlng[order(latlng$plot),]
+				
 				#	to do! implemnt char2dms
 				
 				#	strip of N and E
@@ -201,14 +212,33 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
 				
 				sp.points <- latlng
-				coordinates(sp.points) <- ~ longitude + latitude	
+				sp.points <- sp.points[order(sp.points$plot), ]
+
+				if (!any(table(sp.points$plot) > 1)) {				
+					coordinates(sp.points) <- ~ longitude + latitude
+				} else {
+					lnglat.test <- FALSE
+					warning("... did not succeed!",
+						" Some coordinates seem to be doubled.",
+						"\nproblematic plots: ",
+						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]), collapse = " "),
+						call. = FALSE)
+#					if (verbose) {
+#						print(table(sp.points$plot)[table(sp.points$plot) > 1])
+#					}	
+				}		
 			} else {
-				warning("\n... did not succeed. longitude and latitude do not match in length")
+				lnglat.test <- FALSE
+				warning("\n... did not succeed!",
+					"\nlongitude and latitude do not match in length", call. = FALSE)
 			}
 			
+			if (lnglat.test) {
 			cents <- coordinates(sp.points)
 			ids <- sp.points$plot
-
+			
+			#	plot polygons around centers
+			#	to do! use plsx and plsy
 			pgs <- vector("list", nrow(cents))
 			for (i in 1:nrow(cents)) {
 			#	to do use plsx and plsy	
@@ -216,17 +246,15 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 				pgs[[i]] <- pg
 			}
-			#	length(SpatialPolygons(pgs))
+
 			sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
 					data = data.frame(plot = sp.points$plot))
-					
-			if (!all(sp.points$plot %in% x$plot)) {
-				warning("\nnot a complete coordinates list, use random pattern")
+			} else {		
+				warning("... not a complete coordinates list, use random pattern instead", call. = FALSE)
 				tmp <- .rpoisppSites(x)	
 				sp.points <- tmp[[1]]
 				sp.polygons <- tmp[[2]] 
-			}
-	
+			}	
 		} else {
 			cat("\nSpatialPoints and SpatialPolygons missing, use random pattern")
 			tmp <- .rpoisppSites(x)	

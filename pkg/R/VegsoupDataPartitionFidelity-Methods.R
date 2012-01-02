@@ -42,6 +42,11 @@ if (missing(footer.treshold)) {
 if (missing(molticols.footer)) {
 	molticols.footer <- 3
 }
+
+if (missing(letters) & getK(obj) > 10) {
+	letters = TRUE
+}
+
 cntn <- Contingency(object)
 cnst <- Constancy(object)
 nc <- ncol(cnst)
@@ -340,7 +345,7 @@ footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 if (letters) {
 	sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])
 	dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
-		LETTERS[sort(unique(Partitioning(object)))])
+		" (", LETTERS[sort(unique(Partitioning(object)))], ")", sep = "")
 }
 latex(tex,
 	file = filename,
