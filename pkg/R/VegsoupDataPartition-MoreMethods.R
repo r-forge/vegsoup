@@ -662,7 +662,8 @@ ft <- dm
 if (verbose)
 	cat("\n  calculate Fisher test ...")
 for (i in 1:nsps) {
-	ft[i,] <- fidelity.method(X[,i], cluster, "Fisher", alternative = "two.sided")
+#	warning! changed from two.sided to greater
+	ft[i,] <- fidelity.method(X[,i], cluster, "Fisher", alternative = "greater")
 }
 
 #	perform bootstrap of diagnostic values
@@ -792,16 +793,16 @@ if (verbose) {
 cpu.time <- system.time({
 	for (p in 1:nperm) {
 		if (verbose) setTxtProgressBar(pb, p)
-		pX <- as.matrix(X[sample(1:n.sites),])
+		pX <- as.matrix(X[sample(1:n.sites), ])
 		if (mode == 0) {
 			dmp <- t(pX)%*%U
 		} else {
-			aisp <- t(pX)%*%U
-			ni <- diag(t(U)%*%U)
-			aispni <- sweep(aisp,2,ni,"/")
+			aisp <- t(pX) %*% U
+			ni <- diag(t(U) %*% U)
+			aispni <- sweep(aisp,2, ni, "/")
 			aispni[is.na(aispni)] <- 0 # check for division by zero
-			s = apply(aispni,1,"sum")
-			dmp = sweep(aispni,1,s,"/")
+			s = apply(aispni, 1, "sum")
+			dmp = sweep(aispni, 1, s, "/")
 			dmp[is.na(dmp)] <- 0 # check for division by zero
 		}			
 		if (alternative == "less") {

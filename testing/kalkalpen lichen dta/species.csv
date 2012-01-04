@@ -138,7 +138,7 @@
 16;"frul dila";"ml";5;;
 16;"leca chla";"ll";1;;
 16;"melx fuli glab";"ll";1;2;5
-16;"ortt spec";"ml";0,5;;
+16;"orth spec";"ml";0,5;;
 16;"phly arge";"ll";2;;
 16;"pter fili";"ml";25;;
 17;"chry cand";"ll";20;;
@@ -900,7 +900,7 @@
 144;"lepr spec";"ll";1;;
 144;"leuc sciu";"ml";3;;
 144;"loba pulm";"ll";65;;
-144;"ortt stra";"ml";2;;
+144;"orth stra";"ml";2;;
 144;"phly arge";"ll";5;;
 144;"pore plat";"ml";2;;
 144;"pter fili";"ml";11;;
@@ -915,7 +915,7 @@
 145;"leuc sciu";"ml";3;;
 145;"loba pulm";"ll";7;5;1
 145;"neph pari";"ll";1;;
-145;"ortt stra";"ml";2;;
+145;"orth stra";"ml";2;;
 145;"pelt prae";"ll";3;3;1
 145;"psog stig";"ll";1;;
 145;"pter fili";"ml";2;;
@@ -926,7 +926,7 @@
 146;"cala xant";"ll";6;;
 146;"coll nigr";"ll";3;2;1
 146;"opeg vari";"ll";7;;
-146;"ortt pall";"ml";5;;
+146;"orth pall";"ml";5;;
 146;"phae hirs";"ll";1;;
 146;"sclo pall";"ll";5;;
 147;"aman punc";"ll";15;;
@@ -934,7 +934,7 @@
 147;"leca chla";"ll";0,5;;
 147;"leuc sciu";"ml";3;;
 147;"loba pulm";"ll";4;4;1
-147;"ortt pall";"ll";3;;
+147;"orth pall";"ll";3;;
 147;"pert amar";"ll";43;;
 148;"baci subi";"ll";0,5;;
 148;"cala xant";"ll";0,5;;
@@ -1239,7 +1239,7 @@
 215;"lepr spec";"ll";1,5;;
 215;"loba pulm";"ll";49;5;4
 215;"metz furc";"ml";1;;
-215;"ortt lyel";"ml";1;;
+215;"orth lyel";"ml";1;;
 215;"pter fili";"ml";17;;
 216;"agon tris";"ll";12;;
 216;"clad spec";"ll";0,5;;
@@ -1450,7 +1450,7 @@
 255;"grap scri";"ll";1;;
 255;"leca arge";"ll";3;;
 255;"leuc sciu";"ll";0,5;;
-255;"ortt spec";"ll";4;;
+255;"orth spec";"ll";4;;
 255;"phly arge";"ll";6;;
 255;"pter fili";"ll";4;;
 255;"pyre niti";"ll";23;;
@@ -1746,7 +1746,7 @@
 322;"hypo phys";"ll";2;1;1
 322;"leca chla";"ll";4;;
 322;"lepr spec";"ll";1;;
-322;"ortt spec";"ml";1;;
+322;"orth spec";"ml";1;;
 322;"parm sulc";"ll";26;3;2
 322;"ulot cris";"ml";9;;
 323;"hypo phys";"ll";6;2;2
@@ -1793,8 +1793,8 @@
 335;"frul dila";"ll";0,5;;
 335;"hypn cupr";"ll";0,5;;
 335;"melx fuli glab";"ll";18;3;1
-335;"ortt pall";"ll";0,5;;
-335;"ortt spec";"ll";1;;
+335;"orth pall";"ll";0,5;;
+335;"orth spec";"ll";1;;
 335;"pali tili";"ll";29;5;2
 335;"phly arge";"ll";4;;
 336;"clad coni";"ll";1;;
@@ -1811,8 +1811,8 @@
 338;"frul dila";"ml";9;;
 338;"loba ampl";"ll";2,5;3;2
 338;"loba pulm";"ll";2;4;4
-338;"ortt pall";"ml";2;;
-338;"ortt spec";"ll";8;;
+338;"orth pall";"ml";2;;
+338;"orth spec";"ll";8;;
 338;"pert leio";"ll";2;;
 338;"phys tene";"ll";0,5;0,5;1
 338;"pter fili";"ml";4;;
@@ -1845,7 +1845,7 @@
 341;"lepr spec";"ll";1,5;;
 341;"leuc sciu";"ml";5;;
 341;"melx fuli glab";"ll";1;1;1
-341;"ortt pall";"ml";1;;
+341;"orth pall";"ml";1;;
 341;"parm saxa";"ll";8;2;2
 341;"parm sulc";"ll";2;2;2
 341;"pseu cate";"ml";10;;
@@ -1968,7 +1968,7 @@
 369;"cete cetr";"ll";5;2;2
 369;"hypn cupr";"ml";9;;
 369;"hypo phys";"ll";14;2;2
-369;"ortt spec";"ml";2;;
+369;"orth spec";"ml";2;;
 369;"parm saxa";"ll";42;5;1
 369;"ulot cris";"ml";5;;
 370;"cete cetr";"ll";4;2;1
@@ -1980,7 +1980,7 @@
 370;"ulot cris";"ml";2;;
 373;"baci arce";"ll";4;;
 373;"frul dila";"ml";3;;
-373;"ortt spec";"ml";2;;
+373;"orth spec";"ml";2;;
 373;"phly arge";"ll";3;;
 373;"radu comp";"ml";3;;
 373;"rama fari";"ll";69;7;1
@@ -1988,7 +1988,7 @@
 374;"hypn cupr";"ml";57,5;;
 374;"lepr spec";"ll";1;;
 374;"metz furc";"ml";1;;
-374;"ortt spec";"ml";1;;
+374;"orth spec";"ml";1;;
 374;"parm sulc";"ll";8;2;2
 374;"pelt coll";"ll";12;3;2
 374;"pert albe";"ll";7;;
@@ -2003,7 +2003,7 @@
 376;"hypn cupr";"ml";7;;
 376;"loba pulm";"ll";28;12;1
 376;"melx fuli glab";"ll";10;3;1
-376;"ortt spec";"ml";2;;
+376;"orth spec";"ml";2;;
 376;"parm sulc";"ll";2;3;1
 376;"pelt coll";"ll";18;4;1
 376;"pert albe";"ll";13;;
@@ -2015,7 +2015,7 @@
 377;"leuc sciu";"ml";5;;
 377;"loba pulm";"ll";5,5;4;1
 377;"melx fuli glab";"ll";4;3;1
-377;"ortt pall";"ml";2;;
+377;"orth pall";"ml";2;;
 377;"parm sulc";"ll";8;3;1
 377;"pseu cate";"ml";2;;
 377;"pyla poly";"ml";5;;
@@ -2029,7 +2029,7 @@
 378;"lecl elae";"ll";1;;
 378;"lepr spec";"ll";2;;
 378;"metz furc";"ml";4;;
-378;"ortt spec";"ml";11;;
+378;"orth spec";"ml";11;;
 378;"pert albe";"ll";7;;
 378;"phly arge";"ll";17;;
 378;"pyla poly";"ml";1;;
@@ -2040,7 +2040,7 @@
 379;"leca chla";"ll";8;;
 379;"melx fuli glab";"ll";9;4;1
 379;"metz furc";"ml";3;;
-379;"ortt spec";"ml";3;;
+379;"orth spec";"ml";3;;
 379;"pert albe";"ll";2;;
 379;"phys adsc";"ll";9;;
 379;"radu comp";"ml";11;;
@@ -2348,8 +2348,8 @@
 435;"pter fili";"ml";15;;
 435;"radu comp";"ml";15;;
 438;"metz furc";"ml";2;;
-438;"ortt obtu";"ml";1;;
-438;"ortt spec";"ml";19;;
+438;"orth obtu";"ml";1;;
+438;"orth spec";"ml";19;;
 438;"phae enph";"ll";7;2,5;1
 438;"phys adsc";"ll";6;2;1
 438;"xant pari";"ll";6;1;1
@@ -2417,7 +2417,7 @@
 450;"lepr spec";"ll";0,5;;
 450;"leuc sciu";"ml";9;;
 450;"melx suau";"ll";6;3;2
-450;"ortt spec";"ml";4;;
+450;"orth spec";"ml";4;;
 450;"parm sulc";"ll";11;3;2
 451;"clad coni";"ll";45;;
 451;"clad squa";"ll";5;;

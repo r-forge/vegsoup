@@ -43,7 +43,7 @@
 #		based on sp.points
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, verbose = TRUE) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "freqency")
+	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Braun-Blanquet")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
@@ -52,7 +52,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
 		
-		if (length(grep("[:alpha:]", x$plot)) < 1) {
+		if (any(regexpr("[[:alpha:]]", x$plot) < 1)) {
 				warning("... plot identifier in species contains only numbers, ",
 					"\nbut will be coded as character!", call. = FALSE)	
 			x$plot <- as.character(as.numeric(species$plot))
@@ -66,12 +66,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	} else {
 		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)
 				
-		if (length(grep("[:alpha:]", y$plot)) < 1) {
+		if (any(regexpr("[[:alpha:]]", y$plot) < 1)) {
 				warning("... plot identifier in sites contains only numbers, ", 
 					"\nbut will be coded as character!", call. = FALSE)	
 			y$plot <- as.character(as.numeric(y$plot))
-			y <- y[order(y$plot, y$variable), ]
 		}
+		y <- y[order(y$plot, y$variable), ]
 	}	
 	
 	if (missing(z)) {
@@ -304,12 +304,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		by = list(spc), sum)$x
     
 	hist(occurences, xlab = "Species occurences", main = "")
-	res <- list(richness = res.1, occurences = res.2)
+	res <- list(richness, occurences)
 	return(invisible(res))
 }
     
 setMethod("plot",
-    signature(x = "Vegsoup", y = "missing"),
+    signature(x = "Vegsoup", y = "ANY"),
     .plotVegsoup
 )
 

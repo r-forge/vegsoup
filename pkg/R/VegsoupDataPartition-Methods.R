@@ -1,42 +1,38 @@
 #	generating function
-VegsoupDataPartition <- function (x, binary, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", clustering, polish = FALSE, nitr = 999, verbose = FALSE, ...) {
+VegsoupDataPartition <- function (x, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, verbose = FALSE, ...) {
 
-#	x	object of class VegsoupData
-#	binary	use presence/absence only
-#	number of partitions
-#	method	clustering method
-#	dist	a distance measure known by vegdist()
-#	clustering	external vector of cluster partitons
-#	polish	apply optsil clustering on possible outgroups
-#	tabdev	return object of class "tabdev"
-#	nitr	number of iterations in calculating table deviance
-	
-debug = FALSE
+#debug = FALSE
 
-if (debug) {
-	x = dta; binary = TRUE; k = 3;
-	method = "isopam"
-	dist = "bray"
-	nitr = 99; polish = TRUE
-	method = "external"
-	clustering = Sites(dta)$association
+#if (debug) {
+#	x = sub; binary = TRUE; k = 3;
+#	method = "isopam"
+#	dist = "bray"
+#	nitr = 99; polish = TRUE
+#	method = "external"
+#	clustering = Sites(dta)$association
 
-} else {
-	if (!inherits(x, "VegsoupData"))
+#} else {
+	if (!inherits(x, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
+	}
 	if (missing(k) & missing(clustering)) {
 		k <- 1
 		warning("argument k missing, set to ", k)
 	}	
-	if (missing(binary) && method != "external") 
+	if (missing(binary)) {
 		if (verbose) cat("... Set to binary")
 		binary = TRUE
-	if (missing(k) && missing(clustering))
-		stop("Need a value of k or optional clustering vetcor")
-	if (missing(method)) {
-		part.meth <- "flexible"	
-		if (verbose) cat("... Set default option", part.meth)
+	}	
+	if (missing(decostand.method)) {
+		decostand.method = NULL
+	}
 
+	if (missing(k) && missing(clustering)) {
+		stop("Need a value of k or optional clustering vetcor")
+	}
+	if (missing(method)) {
+		part.meth <- method <- "flexible"	
+		if (verbose) cat("... Set default option", part.meth)
 	} else {			
 		part.meth <- match.arg(method)
 	}
@@ -50,13 +46,40 @@ if (debug) {
 				dim(x), length(clustering))
 		}
 	}
-	if (!binary) {
-		dis <- vegdist(wisconsin(as.numeric(x)), dist)
+	if (binary) {
+		X <- as.binary(x)
 	} else {
-		dis <- vegdist(wisconsin(as.binary(x)), dist)
-	}	
-}
-
+		X <- as.numeric(x)
+	}
+	if (!is.null(decostand.method)) {
+		if (decostand.method == "wisconsin") {
+		    X <- decostand(X, "max", 2)
+    		X <- decostand(X, "tot", 1)
+    	} else {
+    		if (missing(MARGIN)) {
+    			X <- decostand(X, decostand.method)
+    		} else {
+    			X <- decostand(X, decostand.method, MARGIN)
+    		}
+    	}
+	}
+	if (missing(dist)) {
+		if (verbose) cat("... Use distance \"bray\"") 
+		dist  <- "bray"
+	}
+	
+	#	print settings before run
+	if (verbose) {
+		cat("\n... run with settings",
+			"\n    use binary data:", binary,
+			"\n    distance:", dist,
+			"\n    decostand method:", ifelse(is.null(decostand.method), "not active", decostand.method),
+			"\n    partitioning method:", method)
+		
+	}
+	
+dis <- vegdist(X, method = dist)
+		
 #	partitioning methods
 switch(part.meth,
 	   ward = {
@@ -84,10 +107,13 @@ switch(part.meth,
 		part <- .VegsoupDataPartitionOptpartBestopt(dis, k, numitr = 100,
 			...)
 	}, kmeans = {
-		part <- kmeans(as.binary(x), centers = k, nstart = 25)
+		if (verbose) cat("kmeans doesn't use distance matrices, ignore", dist)
+		part <- kmeans(as.binary(x), centers = k,
+			...)
+		
 	}, wards = {
 		part <- hclust(dis, method = "ward",
-		...)
+			...)
 	}, external = {
 		part <- clustering
 	}
@@ -133,14 +159,15 @@ if (k != length(unique(grp)) && class(part) != "isopam") {
 out.grp <- any(as.vector(table(grp)) == 1)
 
 if (out.grp) {
-	warning("single member groups detected!")
+	warning("single member groups detected!", call. = FALSE)
 }
-if (out.grp || polish) {
+#	fundamental change! 
+if (out.grp && polish) { # was ||
 	if (verbose) cat("\n... try to resolve using function optsil")
 	grp.opt <- optsil(grp, dis, k^2)$clustering
 	names(grp.opt) <- rownames(x)
 	if (any(as.vector(table(grp.opt)) == 1)) {
-		warning("\ndid not succeed in reallocation")
+		warning("\ndid not succeed in reallocation", call. = FALSE)
 	} else {
 		method <- c(method, "optsil")	
 		grp <- grp.opt
@@ -241,18 +268,19 @@ setMethod("[",
     invisible(result)
 }
 
-.plotVegsoupPartition  <- function (x, y) {
+.plotVegsoupPartition <- function (x, y) {
 	#	x = prt
 #	op <- par()
 #	on.exit(par(op))
 	
+	if (!inherits(x, "VegsoupDataPartition")) stop
 	cat("\nLet me calculate capscale first ...")
 	cat("\nuse distance:", x@dist)
 
 	#	capscale has difficulties when using community matrix in the formula
-
-	ord <- capscale(getDist(x) ~ 1,
-		comm = as.binary(x))
+#	tmp <- 
+	#cat(class(tmp))
+	ord <- capscale(as.binary(x) ~ 1, data = Sites(x))
 	#	number of axes shown in plot, default to frist 3
 	axs <- matrix(c(1,2,1,3,2,3), 3,2, byrow = TRUE)
 	
@@ -302,7 +330,7 @@ setMethod("[",
 					draw = "polygon", lty = 0,
 					col = rgb(0,0,0,.2)),
 				silent = TRUE)
-			if(class(cents) != "try-error") {
+			if (class(cents) != "try-error") {
 				labs <- sapply(cents, function (x) {
 				c(x = x$center[1], y = x$center[2])
 				})
@@ -320,6 +348,7 @@ setMethod("[",
 			text(0,0, labels = colnames(scs$sites)[x[1]], cex = 2)
 		}
 	})
+	return(invisible(ord))
 }
 	
 setMethod("plot",

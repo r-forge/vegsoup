@@ -39,7 +39,7 @@
 #  ..........................................................
 #  ---             Flexible beta clustering               ---
 
-    alpha <- 0.625  #    beta = 1-2*alpha
+#    alpha <- 0.625  #    beta = 1-2*alpha
 #   sih<-agnes(vegdist(JUICE.table,method='bray'), method='flexible', par.meth=c(alpha,alpha,1-2*alpha,0))
 #   prvni<-cutree(as.hclust(sih),no.clusters)
 #  ..........................................................
@@ -138,11 +138,11 @@
 
    		crossR<-apply(crosstab,1,function(x) max(x))
    		crossC<-apply(crosstab,2,function(x) max(x))
-   		F1<-sum(crossR)
-   		F2<-sum(crossC)
-   		F5<-2 * sum(crosstab)
-   		F3<-max(rowSums(crosstab))
-   		F4<-max(colSums(crosstab))
+   		F1<- sum(crossR)
+   		F2<- sum(crossC)
+   		F5<- 2 * sum(crosstab)
+   		F3<- max(rowSums(crosstab))
+   		F4<- max(colSums(crosstab))
    		lb[cycle]=(F1+F2-F3-F4)/(F5-F3-F4)
 
 #   ---------------------------------------------------------

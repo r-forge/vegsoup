@@ -70,9 +70,9 @@ taxon <- c("Bellis perennis", "Leontodon autumnalis", "Poa pratensis",
 	"Bormus hordeaceus", "Juncus bufonius", "Ranunculus flammula",
 	"Cheopodium album", "Sagina procumbens", "Agrostis stolonifera",
 	"Brachytethium rutabulum", "Cirsium arvense", "Juncus articulatus",
-	"Eleocharis püalustris", "Caliergonella cuspidata", "Rumex acetosa",
+	"Eleocharis palustris", "Caliergonella cuspidata", "Rumex acetosa",
 	"Trifolium pratense", "Anthoxanthum odoratum", "Plantago lanceolata",
-	"Aira pyramidalis", "Hypochaeris radicata", "Potentilla palustris",
+	"Aira praecox", "Hypochaeris radicata", "Potentilla palustris",
 	"Vicia latifolia", "Salix repens", "Empetrum nigrum")
 
 taxonomy <- data.frame(abbr = unique(species$abbr), taxon)

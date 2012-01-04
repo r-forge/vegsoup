@@ -292,7 +292,7 @@ setGeneric("as.binary",
 setMethod("as.binary",
     signature(obj = "VegsoupData"),
     function (obj) {
-		res <- obj@species != "0"
+			res <- obj@species != "0"
 		mode(res) <- "numeric"
 		res <- as.data.frame(res)
 		return(invisible(res))
@@ -307,7 +307,9 @@ setMethod("as.numeric",
     function (x, verbose = FALSE) {
     	#	x = dta
 		if (AbundanceScale(x)$scale == "frequency" | AbundanceScale(x)$scale == "binary") {
-			res <- x@species
+			res <- as.matrix(x@species)
+			mode(res) <- "numeric"
+			res <- as.data.frame(res)
 			if (verbose) {
 				cat("  species matrix is numeric, scale:",
 					AbundanceScale(x)$scale)

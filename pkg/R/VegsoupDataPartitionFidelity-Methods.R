@@ -43,7 +43,7 @@ if (missing(molticols.footer)) {
 	molticols.footer <- 3
 }
 
-if (missing(letters) & getK(obj) > 10) {
+if (missing(letters) & getK(object) > 10) {
 	letters = TRUE
 }
 
