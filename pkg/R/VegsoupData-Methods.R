@@ -170,18 +170,23 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	rownames(sites) <- sites$plot
 	sites <- sites[,-grep("plot", names(sites))]
 	sites <- sites[match(rownames(species), rownames(sites)), ]
-			
-	res <- new("VegsoupData",
-		species = species,
-		sites = sites,
-		taxonomy = obj@taxonomy,
-		layers = obj@layers,
-		species.long = obj@species.long,
-		group = obj@group,
-		sites.long = obj@sites.long,
-		scale = obj@scale,
-		sp.points = obj@sp.points,
-		sp.polygons = obj@sp.polygons)
+
+	#	develop class VegsoupData from class Vegsoup
+	res <- new("VegsoupData", obj)
+	#	assign slot
+	res@species = species
+	res@sites = sites			
+#	res <- new("VegsoupData",
+#		species = species,
+#		sites = sites,
+#		taxonomy = obj@taxonomy,
+#		layers = obj@layers,
+#		species.long = obj@species.long,
+#		group = obj@group,
+#		sites.long = obj@sites.long,
+#		scale = obj@scale,
+#		sp.points = obj@sp.points,
+#		sp.polygons = obj@sp.polygons)
 
 	return(res)
 }
@@ -552,6 +557,15 @@ setMethod("getDistconnected",
 setMethod("summary",
     signature(object = "VegsoupData"),
 	.summaryVegsoupData
+)
+
+#	to do! check summary method for class VegsoupDataPartitionFidelity
+
+setMethod("show",
+    signature(object = "VegsoupData"),
+    function (object) {
+			summary(object)
+    }
 )
 
 .plotVegsoupData <- function (x, y, ...)
