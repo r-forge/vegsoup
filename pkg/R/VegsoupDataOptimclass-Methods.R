@@ -39,48 +39,59 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 		close(pb.j)
 	}	
 		
-	#	develop class VegsoupDataOptimclass
-	res <- new("VegsoupDataOptimclass", obj)
+	#	develop class VegsoupDataOptimstride
+	res <- new("VegsoupDataOptimstride", obj)
 	
-	optimclass <- list(
+	optimstride <- list(
 		indicators = res.i,
 		settings = list(call = match.call(),
 			args = c(as.list(match.call())[-c(1,2)])))
-	optimclass$settings$args$method <- method
-	optimclass$settings$args$ft.treshold <- ft.treshold
-	optimclass$settings$args$alternative <- alternative
+	optimstride$settings$args$method <- method
+	optimstride$settings$args$ft.treshold <- ft.treshold
+	optimstride$settings$args$alternative <- alternative
 
-	res@optimclass <- optimclass
+	res@optimstride <- optimstride
 	return(res)
 }
 
 setMethod("show",
-    signature(object = "VegsoupDataOptimclass"),
+    signature(object = "VegsoupDataOptimstride"),
     function (object) {
-			print(object@optimclass)
+			print(object@optimstride)
     }
 )
 
-.summaryVegsoupDataOptimclass <- function (object) {
-#	OptimClass1 <- sum(ind)
-#	OptimClass2 <- sum(ind >= oc.treshold)
+.summaryVegsoupDataOptimstride <- function (object, oc.treshold = 2, ...) {
+
 #	res.j <- rbind(c(0, 0), res.j)
 #	dimnames(res.j) <- list(1:k, c("OptimClass1", "OptimClass2"))	
 
-#	object <- foo@optimclass
-	tmp <- object$indicators
-	oc.treshold <- object$settings	
+#	object <- foo
+	obj <- object@optimstride
+	args <- obj$settings$args
+	met <- args$method
+	ind <- obj$indicators
+	ftt <- args$ft.treshold
+	oct <- oc.treshold
+	
+	tmp <- sapply(ind, function (x) sapply(x, function (x) sum(x)))
+			
+	res <- list(optimclass1 = t(tmp), optimclass2 = apply(tmp, 2, function (x) sum(x >= oct)))
+	cat("OptimStride results for k:", args$k)
+	cat("\n\nOptimClass 1 (fisher test treshold: ", ftt, "):\n", sep = "")
+	print(res$optimclass1)
+	
+	cat("
+		\nOptimClass 2 (occurence treshold: ", oct, "):\n", sep = ""
+	)
+	print(res$optimclass2)
 
-
-
-
-
-
+	return(invisible(res))
 }
 
 setMethod("summary",
-    signature(object = "VegsoupDataOptimclass"),
-	.summaryVegsoupDataOptimclass
+    signature(object = "VegsoupDataOptimstride"),
+	.summaryVegsoupDataOptimstride
 )
 
 #	print mode uses invisible()
