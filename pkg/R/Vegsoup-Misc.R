@@ -1,4 +1,4 @@
-QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE) {
+QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = FALSE, verbose = FALSE) {
 
 #	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
@@ -112,6 +112,14 @@ if (any(is.na(res[, 1]))) {
 	#	implement pmatch as above
 	stop("Please review your reference list, you might need to include some new taxa")
 }
+
+if (any(is.na(species))) {
+	warning("\n... NAs introduced")
+}
+
+if (return.species == FALSE) {
+	species <- NULL
+}	
 
 return(list(taxonomy = res, species = species))
 }
@@ -415,9 +423,25 @@ for (i in c(max(c(abbr, layer, comment)) + 1):ncol(x)) {
 res <- res[res$cov != "0",]
 res <- res[res$cov != "",]
 
+if (length(grep(",", res$cov)) > 0) {
+	res$cov <- gsub(",", ".", res$cov)
+	if (verbose) {
+		"\n... groomed decimals, replaced colons with dots"
+	}
+
+}
 if (verbose) {
-	print(table(res$cov))
-	print(table(res$layer))
+	test <- try(as.numeric(res$cov))
+	if (class(test) != "try-error") {
+		cat("\n... cover seems to be numeric")
+		cat("\n    Tukey's five number summary:", fivenum(test))
+	} else {
+		cat("\n... cover seems to be categorical")
+		print(table(res$cov))
+	}
+	
+	cat("\n... data seems to have", length(unique(res$layer)), "layer:", unique(res$layer))
+#	print(table(res$layer))
 }
 return(invisible(res))
 } else {

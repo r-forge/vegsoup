@@ -28,21 +28,8 @@
 }
 
 #	generating function
-#	Objects can be created by calls of the form
-#	Vegsoup(x, y, z, ...)
-#	where x is a flat species data.frame
-#	y is flat sites data.frame
-#	and z is taxonomic reference list.
-#	additional arguments include:
-#	scale	abundance scale, possibly mixed?
-#	group	grouping vector
-#	sp.points	object of class SpatialPointsDataFrame
-#		if missing random point pattern is generated
-#	sp.polygons	object of class SpatialPolygonsDataFrame
-#		if missing random polygon pattern is generated
-#		based on sp.points
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, verbose = TRUE) {
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
 	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Braun-Blanquet")
 	if (missing(x)) {
 		x <- data.frame(NULL)
@@ -85,7 +72,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
-
+	
+	if	(!inherits(proj4string, "character")) {
+		stop("\n... argument proj4string does not inhertit from class 'character'")
+	}
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
@@ -154,6 +144,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				
 				}					
 			}
+		} else {
+			stop("please supply a list for argument scale")
 		}	
 	}
 
@@ -190,6 +182,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
 			lnglat.test <- nrow(lng) == nrow(lat)
+			
 			if (lnglat.test) {
 				lat <- lat[match(lng$plot, lat$plot), ]
 				latlng <- data.frame(plot = lat$plot,
@@ -234,21 +227,21 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 			}
 			
 			if (lnglat.test) {
-			cents <- coordinates(sp.points)
-			ids <- sp.points$plot
+				cents <- coordinates(sp.points)
+				ids <- sp.points$plot
 			
-			#	plot polygons around centers
-			#	to do! use plsx and plsy
-			pgs <- vector("list", nrow(cents))
-			for (i in 1:nrow(cents)) {
-			#	to do use plsx and plsy	
-				pg <- coordinates(GridTopology(cents[i,] - 0.00005  /2, c(0.00005, 0.00005), c(2,2)))
-				pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
-				pgs[[i]] <- pg
-			}
+				#	plot polygons around centers
+				#	to do! use plsx and plsy
+				pgs <- vector("list", nrow(cents))
+				for (i in 1:nrow(cents)) {
+				#	to do use plsx and plsy	
+					pg <- coordinates(GridTopology(cents[i,] - 0.00005  /2, c(0.00005, 0.00005), c(2,2)))
+					pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
+					pgs[[i]] <- pg
+				}
 
-			sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
-					data = data.frame(plot = sp.points$plot))
+				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
+						data = data.frame(plot = sp.points$plot))				
 			} else {		
 				warning("... not a complete coordinates list, use random pattern instead", call. = FALSE)
 				tmp <- .rpoisppSites(x)	
@@ -257,15 +250,17 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 			}	
 		} else {
 			cat("\nSpatialPoints and SpatialPolygons missing, use random pattern")
+			lnglat.sim <- TRUE
 			tmp <- .rpoisppSites(x)	
 			sp.points <- tmp[[1]]
-			sp.polygons <- tmp[[2]] 
+			sp.polygons <- tmp[[2]]
 		}	
-
 	}
 	
-	proj4string(sp.points) <- CRS("+init=epsg:4326")
-	proj4string(sp.polygons) <- CRS("+init=epsg:4326")
+	if (!lnglat.sim) {
+		proj4string(sp.points) <- CRS(proj4string)
+		proj4string(sp.polygons) <- CRS(proj4string)	
+	}	
 	
 	if (any(sapply(y, is.factor))) {
 		y <- as.data.frame(as.matrix(y),
@@ -289,43 +284,60 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 }	
 
 #	basic plotting function for testing
-.plotVegsoup <- function (x, y, ...) {
-	#	x = qry
-	op <- par()
-	on.exit(par(op))
-	par(mfrow = c(2,2))
-	plt <- x@species.long$plot		
+
+#	ploting method
+#if (!isGeneric("plot")) {
+setGeneric("plot", function(x, y, ...)
+	standardGeneric("plot"))
+#}	
+  
+setMethod("plot",
+    signature(x = "Vegsoup", y = "missing"),
+	function (x, ...) {
+
+	opar <- par(mfrow = c(1,2))
+	on.exit(par(opar))
+	
+	plt <- SpeciesLong(x)$plot		
 	richness <- aggregate(rep(1, length(plt)),
 		by = list(plt), sum)$x
-	hist(richness, xlab = "Species richness", main = "")
+	hist(richness, xlab = "Species richness", ...)
     
 	spc <- x@species.long$abbr
 	occurences <- aggregate(rep(1, length(spc)),
 		by = list(spc), sum)$x
     
-	hist(occurences, xlab = "Species occurences", main = "")
+	hist(occurences, xlab = "Species occurences", ...)
 	res <- list(richness, occurences)
 	return(invisible(res))
 }
-    
-setMethod("plot",
-    signature(x = "Vegsoup", y = "ANY"),
-    .plotVegsoup
+)
+
+#	ploting method
+#if (!isGeneric("summary")) {
+setGeneric("summary", function(object, ...)
+	standardGeneric("summary"))
+#}	
+#	summary
+setMethod("summary",
+    signature(object = "Vegsoup"),
+	function (object) {
+		cat("an object of class", class(object))
+		cat("\nproj4string:\n", proj4string(object))
+		cat("\nbbox:\n"); bbox(object)	
+	}
 )
 
 #	get or set layers
 setGeneric("Layers",
 	function (obj, ...)
 	standardGeneric("Layers"))
-
 setGeneric("Layers<-", function (obj, value)
-	standardGeneric("Layers<-"))
-		
+	standardGeneric("Layers<-"))		
 setMethod("Layers",
     signature(obj = "Vegsoup"),
     function (obj) obj@layers
 )
-
 setReplaceMethod("Layers",
 	signature(obj = "Vegsoup", value = "ANY"),
 	function (obj, value) {
@@ -340,14 +352,9 @@ setReplaceMethod("Layers",
 setGeneric("Layer",
 	function (obj, ...)
 		standardGeneric("Layer"))
-
-.LayerVegsoupData <- function (obj) {
-	SpeciesLong(obj)$layer
-}
-
 setMethod("Layer",
    signature(obj = "Vegsoup"),
-    .LayerVegsoupData
+	function (obj, ...) SpeciesLong(obj)$layer
 )
 	
 #	get or set taxonomy (traits) data frame
@@ -481,14 +488,54 @@ setMethod("AprioriGrouping",
     function (obj) obj@group
 )
 
+### spatial methods
+
+#	bbox method
+#	warning: returns bbox only for SpatialPoints!
+setMethod("bbox",
+	signature(obj = "Vegsoup"),
+    function (obj) bbox(obj@sp.points)
+)
+
 #	coordinates method
 setMethod("coordinates",
-   signature(obj = "Vegsoup"),
+	signature(obj = "Vegsoup"),
     function (obj) coordinates(obj@sp.points)
 )
+
+setReplaceMethod("coordinates",
+	signature(object = "Vegsoup", value = "ANY"),
+	function (object, value) 
+		stop("setting coordinates cannot be done on Spatial objects, where they have already been set")
+)
+		
+#	proj4string method
+setMethod("proj4string",
+	signature(obj = "Vegsoup"),
+	function (obj) proj4string(obj@sp.points)
+)
+
+setReplaceMethod("proj4string",
+	signature(obj = "Vegsoup", value = "character"),
+	function (obj, value) {
+		value <- CRS(value)
+		proj4string(obj@sp.points) <- value
+		obj
+	}
+)
+
+setMethod("spTransform",
+	signature(x = "Vegsoup", "CRS"),
+	function (x, CRSobj, ...) {
+		require(rgdal)
+		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
+		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...)
+		x	
+	}
+	
+)
 #	get or set spatial points
-#if (!isGeneric("getSpatialPoints"))
-#if (!isGeneric("SpatialPoints"))
+
 setGeneric("SpatialPointsVegsoup",
 	function (obj)
 		standardGeneric("SpatialPointsVegsoup")
@@ -558,10 +605,9 @@ return(invisible(obj))
 
 #if (!isGeneric("SpatialPolygons"))
 setGeneric("BraunBlanquetReduce",
-	function (obj, value)
+	function (obj)
 		standardGeneric("BraunBlanquetReduce")
 )
-
 setMethod("BraunBlanquetReduce",
     signature(obj = "Vegsoup"),
     .BraunBlanquetReduce
