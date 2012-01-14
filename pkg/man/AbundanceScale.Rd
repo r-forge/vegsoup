@@ -1,8 +1,7 @@
 \name{AbundanceScale}
 \alias{AbundanceScale}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+retrieves abundance scale from obj
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

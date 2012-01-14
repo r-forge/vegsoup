@@ -10,30 +10,20 @@ Revert Braun-Blanquet abunace scale from extended to simple.
 \usage{
 BraunBlanquetReduce(obj, value)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
-  \item{value}{
-%%     ~~Describe \code{value} here~~
-}
+  \item{obj}{an object inheriting from class \code{\link{Vegsoup-class}} }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Converts from 9 and 7 point Braun-Blanquet scale by merging abundance classes "2m", "2a" and "2b" to "1".
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+returns an object depending on the input class. 
 }
 \references{
-%% ~put references to the literature/web site here ~
+
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -42,7 +32,7 @@ BraunBlanquetReduce(obj, value)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+See Also as \code{\link{{AbundanceScale}}} and \code{\link{{AbundanceScale}<-}}, ~~~
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

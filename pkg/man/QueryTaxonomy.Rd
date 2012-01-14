@@ -18,6 +18,7 @@ QueryTaxonomy(x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE
 \item{file.y}{ path to a csv-file giving a taxonomic reference list. See details.}
 \item{csv2}{ use \code{read.csv2} instead of \code{read.csv}, defaults to \code{TRUE}.}
 \item{pmatch}{ use \code{pmatch} to match abbreviation in \code{x} respectively \code{file.x} against the reference, See details.}
+\item{return.species}{if \code{TRUE} returns species in long format in list element \code{$species} otherwise \code{NULL}}
 \item{verbose}{ print some messages.}
 }
 \details{
