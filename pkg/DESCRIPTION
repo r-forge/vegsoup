@@ -1,12 +1,12 @@
 Package: vegsoup
-Version: 0.1-1
-Date: 2011-06-26
+Version: 0.1-2
+Date: 2012-01-14
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 2.11.1), methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, spatstat
 Suggests: RColorBrewer, misc3d, rgdal, maptools, googleVis
-Imports: sp, optpart, vegan, googleVis
+#Imports: sp, optpart, vegan, googleVis
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
 	Methods are provided for data manipulation, multivariate analysis,
@@ -14,16 +14,21 @@ Description: S4 classes for phytosociological data. The classes document
 License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/
 LazyLoad: yes
-Collate: AAA.R Vegsoup-Misc.R
+Collate: AAA.R
+         Vegsoup-Misc.R
          Vegsoup-Internal.R
          Class-Vegsoup.R Vegsoup-Methods.R
-         Class-VegsoupData.R VegsoupData-Methods.R
-         VegsoupData-MoreMethods.R
-         Class-VegsoupDataPartition.R VegsoupDataPartition-Methods.R
-         VegsoupDataPartition-MoreMethods.R
-         VegsoupDataPartition-EvenMoreMethods.R
-         VegsoupDataPartition-EvenEvenMoreMethods.R
+         Class-VegsoupData.R
+         VegsoupData-BaseMethods.R
+         VegsoupData-OutputMethods.R
+         Class-VegsoupDataPartition.R
+         VegsoupDataPartition-BaseMethods.R
+         VegsoupDataPartition-FidelityMethods.R
+         VegsoupDataPartition-ClassificationStabilityMethods.R
+         VegsoupDataPartition-OutputMethods.R
          Class-VegsoupDataPartitionFidelity.R
-         VegsoupDataPartitionFidelity-Methods.R
-         VegsoupDataPartition-OptimClass.R
+         VegsoupDataPartitionFidelity-BaseMethods.R
+         VegsoupDataPartitionFidelity-OutputMethods.R
+         Class-VegsoupDataOptimstride.R
+         VegsoupDataOptimstride-BaseMethods.R
 Respository: R-Forge

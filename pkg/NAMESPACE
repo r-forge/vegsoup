@@ -3,12 +3,14 @@
 #importFrom(isopam, isopam)
 #package 'optpart' does not have a name space
 #importFrom(optpart, optpart, partana, tabdev, disdiam)
+#package 'vegan' does not have a name space
 
 import(methods)
+importFrom("graphics", plot, hist)# hist, lines, image, contour, pairs, boxplot
 importFrom("utils", head, tail)
 importFrom("Hmisc", latex)
-importFrom("sp", coordinates, bbox, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, spplot)
-importFrom("graphics", plot, hist)
+importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
+importFrom("rgdal", spTransform)
 importFrom("cluster", agnes, pam, silhouette)
 importFrom("googleVis", gvisMap)
 
@@ -90,5 +92,6 @@ exportClasses(
      "Vegsoup",
      "VegsoupData",
      "VegsoupDataPartition",
-     "VegsoupDataPartitionFidelity" 
+     "VegsoupDataPartitionFidelity",
+     "VegsoupDataOptimstride"
 )
