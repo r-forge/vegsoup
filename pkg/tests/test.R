@@ -49,3 +49,4 @@ std <- Stride(dta, stride = 6, verbose = TRUE)
 
 prt <- VegsoupDataPartition(dta, k = 3, verbose = TRUE, decostand.method = "wisconsin")
 
+VegsoupDataPartition(dta, k = 1, verbose = TRUE, decostand.method = "wisconsin")
