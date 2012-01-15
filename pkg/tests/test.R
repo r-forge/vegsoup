@@ -1,3 +1,5 @@
+suppressPackageStartupMessages(library(Vegsoup))
+
 setwd("/Users/roli/Documents/vegsoup/pkg/tests")
 library(vegsoup)
 
