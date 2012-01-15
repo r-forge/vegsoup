@@ -1,4 +1,4 @@
-VegsoupPartitionConstancyHeatmap <- function (x, ...) {
+.VegsoupPartitionConstancyHeatmap <- function (x, ...) {
 #	x <- prt
 if (!inherits(x, "VegsoupDataPartition"))
 	stop("supply an object of class VegsoupDataPartition")
@@ -52,7 +52,7 @@ res <- as.data.frame(t(res))
 return(invisible(res))
 }
 
-VegsoupPartitionSpreadHeatmap <- function (x, ...)
+.VegsoupPartitionSpreadHeatmap <- function (x, ...)
 {
 #	x <- prt
 if (!inherits(x, "VegsoupDataPartition"))

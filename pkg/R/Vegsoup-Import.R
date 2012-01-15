@@ -191,13 +191,15 @@ if (missing(plot.column)) {
 	stop ("please supply a column name in OGR data source indicating plot ids")
 }
 
+require(rgdal)
+
 #if (missing(elevation.column)) {
 #	elevation.column <- ""
 #	if (verbose) {
 #		cat("no column for elevations supplied")		
 #	}
 #}
-require(rgdal)
+
 #dsn = "/Users/roli/Dropbox/traunsee/dta/shp/pt_ts_plots"
 #layer = "pt_ts_plots_epsg4326"
 #plot.column = "NAME"
