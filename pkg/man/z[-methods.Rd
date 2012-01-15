@@ -5,7 +5,7 @@
 \alias{[,VegsoupDataPartition,ANY,ANY,missing-method}
 \title{Methods for Function [}
 \description{
- ~~ Methods for function \code{[}  ~~
+obj[c(1,1,2), ] is currently not implemented
 }
 \section{Methods}{
 \describe{

@@ -68,7 +68,7 @@ exportMethods(
     "Richness",
     "rownames",
     "rowSums",
-    "sample",
+    "SampleVegsoup",
     "SigFidelity",
     "Silhouette",
     "Sites",

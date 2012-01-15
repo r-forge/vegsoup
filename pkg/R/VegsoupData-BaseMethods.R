@@ -679,19 +679,25 @@ setMethod("[",
 
 #	
 
-#	sample data, usally with replacement
-if (!isGeneric("sample")) {
-setGeneric("sample", function (x, size, replace = FALSE, prob = NULL, ...)
-	standardGeneric("sample"))
-}
+#	sample data, usally without replacement
+#if (!isGeneric("sample")) {
+setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL, ...)
+	standardGeneric("SampleVegsoup"))
+#}
+#	warning: does not behave as expected for the user
+#	StablePartition() relies on this method
 #	to do: documentation
-#	think about a mehtod for class (VegsoupDataPartition) to sample conditional on Partitiong(obj)
-setMethod("sample",
+#	think about a method for class (VegsoupDataPartition) to sample conditional on Partitiong(obj)
+setMethod("SampleVegsoup",
     signature(x = "VegsoupData"),
-    function (x, size, replace = TRUE, prob = NULL) {
+    function (x, size, replace = FALSE, prob = NULL) {
     	#	For sample the default for size is the number of items inferred from the first argument
-    	n.plots <- dim(x)[1]
-    	sel <- unique(sort(sample(1:n.plots, replace = replace, prob = prob)))
+    	sel <- sample(1:dim(x)[1], replace = replace, prob = prob)
+    	if (any(table(sel) > 1)) {
+    		sel <- sort(unique(sel))
+    		warning("replace was set to ", replace,
+    			", can only select unique plots! A subsample will be returend!", call. = FALSE)
+    	}
     	res <- x[sel, ]
     	return(invisible(res))
     }

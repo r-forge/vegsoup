@@ -12,7 +12,7 @@ pb <- txtProgressBar (min = 1, max = nitr, char = '.',
 
 #setTxtProgressBar (pb, 1)
    
-prt <- VegsoupDataPartition(dta, k = k)
+prt <- VegsoupDataPartition(obj, k = k)
 
 rnd.lambda <- 0
 lambda <- vector(mode = 'numeric', length = nitr)
@@ -25,10 +25,10 @@ for (i in 1:nitr) {
 #	subset selection without replacement?
 #	replace implies the opposite?
 
-	prt.sub <- sample(obj, replace = TRUE)
+	sub <- suppressWarnings(SampleVegsoup(obj, replace = TRUE))
 		
 #	Subset classification
-	prt.sub <- VegsoupDataPartition(prt.sub, k = k, ...)
+	prt.sub <- VegsoupDataPartition(sub, k = k, ...)
 	prt.tmp <- prt[rownames(prt) %in% rownames(prt.sub),]
 		
 #	Raw lambda calculation

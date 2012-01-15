@@ -193,44 +193,28 @@ return(res)
 setMethod("[",
     signature(x = "VegsoupDataPartition",
     i = "ANY", j = "ANY", drop = "missing"),
-	function (x, i, j, ..., drop = TRUE)
-    {
+	function (x, i, j, ..., drop = TRUE) {
 	    part <- Partitioning(x)
 	    
 	    if (missing(i)) i <- rep(TRUE, nrow(x))
 	    if (missing(j)) j <- rep(TRUE, ncol(x))
 	    
-	    res <- as(x, "VegsoupData")[i, j]
+	    tmp <- as(x, "VegsoupData")
+	    tmp <- tmp[i, j]
 
-		if (length(unique(part[names(part) %in% rownames(res)])) != getK(x)) {
+		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
 			warning("Partitioning vector was subsetted!",
 				"k was changed accordingly")
 		}
 
 		#	develop class VegsoupDataPartition from class VegsoupData
-		res <- new("VegsoupDataPartition", obj)
-		res@part = part[names(part) %in% rownames(res)]
+		res <- new("VegsoupDataPartition", x)
+		res@part = part[names(part) %in% rownames(tmp)]
 		res@method = x@method
 		res@dist = x@dist
 		res@binary = x@binary
-		res@k = length(unique(part[names(part) %in% rownames(res)]))
-		res@group = res@group[names(part) %in% rownames(res)]
-#		res <- new("VegsoupDataPartition",
-#			part = part[names(part) %in% rownames(res)],
-#			method = x@method,
-#			k = length(unique(part[names(part) %in% rownames(res)])),
-#			dist = x@dist,
-#			binary = x@binary,
-#			species = res@species,
-#			sites = res@sites,
-#			species.long = res@species.long,
-#			sites.long = res@sites.long,
-#			taxonomy = res@taxonomy,
-#			scale = res@scale,
-#			layers = res@layers,
-#			group = res@group[names(part) %in% rownames(res)],
-#			sp.points = res@sp.points,
-#			sp.polygons = res@sp.polygons)
+		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
+		res@group = res@group[names(part) %in% rownames(tmp)]
 
 	    return(res)
     }
@@ -423,13 +407,13 @@ setMethod("summary",
 			choice <- "all"
 		}
 		switch(choice, "all" = {
-			.summaryVegsoupData(object, choice = "all")
+			summary(as(object, "VegsoupData"), choice = "all")
 			cat("\ntable of partition contingencies")
 			print(table(Partitioning(object)))
 		}, "species" = {
-			.summaryVegsoupData(object, choice = "species")
+			summary(as(object, "VegsoupData"), choice = "species")
 		}, "sites" = {
-			.summaryVegsoupData(object, choice = "sites")
+			summary(as(object, "VegsoupData"), choice = "sites")
 		}, "partition" = {
 			cat("\ntable of partition contingencies")
 			print(table(Partitioning(object)))	
