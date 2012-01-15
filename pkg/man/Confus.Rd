@@ -1,51 +1,42 @@
 \name{Confus}
 \alias{Confus}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+  Confusion Matrix and accuracy statistics for two partitionings
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+  \code{Confus} takes two objects inheriting from class \code{\link{VegsoupDataPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. comparison (predicted) class memberships (\code{obj2}), and calculates the kappa and Goodman-Kruskal lambda statistics.
 }
 \usage{
-Confus(obj1, obj2)
+  Confus(obj1, obj2)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj1}{
-%%     ~~Describe \code{obj1} here~~
-}
-  \item{obj2}{
-%%     ~~Describe \code{obj2} here~~
-}
+    \item{obj1}{an object of class \code{\link{VegsoupDataPartition}}. }
+    \item{obj2}{a second object of class \code{\link{VegsoupDataPartition}} to compare to \code{obj1}. }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+%%
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A list with the following components:
+\describe{
+  \item{confus }{the cross tabulation of \code{obj1} and \code{obj2} (\code{table(Partitioning(obj1), Partitioning(obj1))}). }
+  \item{correct }{the percentage of correctly predicted samples}
+  \item{kappa }{the value of the Kappa statistic}
+  \item{lambda }{the value of the Lambda statistic}
+}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classifications. Journal of the American Statistical Association, 49(268): 732-764.
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
-%%  ~~further notes~~
+%%
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+See Also \code{\link{confus}} in package 'optpart' and \code{\link{crosstable.statistics}} and \code{\link{associations}} in package 'polytomous', \code{\link{Association}}, \code{\link{Accuracy}} and \code{\link{Confus}} in package 'Vegsoup'. 
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~kwd }
+
