@@ -1,4 +1,6 @@
-.summaryVegsoupDataPartitionFidelity  <- function (object, ...) {
+setMethod("summary",
+    signature(object = "VegsoupDataPartitionFidelity"),
+	function (object, ...) {
 	cat("method", object@method)
 	if (all(is.na(object@lowerCI))) {
 		cat("\nno bootstrap performed")	
@@ -6,10 +8,6 @@
 		cat("\nnumber of bootstrap replicates", object@nboot)
 	}
 }
-
-setMethod("summary",
-    signature(object = "VegsoupDataPartitionFidelity"),
-	.summaryVegsoupDataPartitionFidelity
 )
 
 setGeneric("getStat",

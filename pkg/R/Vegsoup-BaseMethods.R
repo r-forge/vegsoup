@@ -1,33 +1,6 @@
-#	helper fucntion for Vegsoup()
-#	random points in unit square
-#	
-.rpoisppSites <- function (x) {
-	require(spatstat)
-	require(maptools)
-	n <- length(unique(x$plot))
-	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
-	pts <- as.SpatialPoints.ppp(pts)
-	pts <- SpatialPointsDataFrame(pts,
-		data = data.frame(plot = sort(unique(x$plot)),
-			stringsAsFactors = FALSE))
-
-	cents <- coordinates(pts)
-	ids <- pts$plot
-
-	pgs <- vector("list", nrow(cents))
-	for (i in 1:nrow(cents)) {
-		pg <- coordinates(GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
-		pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
-		pgs[[i]] <- pg
-	}
-
-	pgs <- SpatialPolygons(pgs)
-	pgs <- SpatialPolygonsDataFrame(pgs,
-		data = data.frame(plot = sort(unique(x$plot))))
-	return(list(pts, pgs))
-}
-
-#	generating function
+###	generating function
+#	to do: improve documentation, rewrite AbundanceScale interface
+#	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
 	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Braun-Blanquet")
@@ -84,7 +57,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	#	intersect species and sites
 	if (length(unique(x$plot)) != length(unique(y$plot))) {
 		warning("... unique(x$plot) and unique(y$plot) do not match in length, ",
-			"\nsome samples were dropped!", call. = FALSE)
+			"\nsome plots were dropped!", call. = FALSE)
 		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
 		x <- x[which(x$plot %in% sel), ]
 		y <- y[which(y$plot %in% sel), ]
@@ -283,42 +256,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 	res
 }	
 
-#	basic plotting function for testing
-
-#	ploting method
-#if (!isGeneric("plot")) {
-setGeneric("plot", function(x, y, ...)
-	standardGeneric("plot"))
-#}	
-  
-setMethod("plot",
-    signature(x = "Vegsoup", y = "missing"),
-	function (x, ...) {
-
-	opar <- par(mfrow = c(1,2))
-	on.exit(par(opar))
-	
-	plt <- SpeciesLong(x)$plot		
-	richness <- aggregate(rep(1, length(plt)),
-		by = list(plt), sum)$x
-	hist(richness, xlab = "Species richness", ...)
-    
-	spc <- x@species.long$abbr
-	occurences <- aggregate(rep(1, length(spc)),
-		by = list(spc), sum)$x
-    
-	hist(occurences, xlab = "Species occurences", ...)
-	res <- list(richness, occurences)
-	return(invisible(res))
-}
-)
-
-#	ploting method
+#	summary method
 #if (!isGeneric("summary")) {
 setGeneric("summary", function(object, ...)
 	standardGeneric("summary"))
 #}	
-#	summary
 setMethod("summary",
     signature(object = "Vegsoup"),
 	function (object) {
@@ -637,7 +579,37 @@ setMethod("SpeciesList",
 	}
 )
 
+#	ploting method
 
+
+#if (!isGeneric("plot")) {
+setGeneric("plot", function(x, y, ...)
+	standardGeneric("plot"))
+#}	
+  
+setMethod("plot",
+    signature(x = "Vegsoup", y = "missing"),
+	function (x, ...) {
+
+	opar <- par(mfrow = c(1,2))
+	on.exit(par(opar))
+	
+	plt <- SpeciesLong(x)$plot		
+	richness <- aggregate(rep(1, length(plt)),
+		by = list(plt), sum)$x
+	hist(richness, xlab = "Species richness", ...)
+    
+	spc <- x@species.long$abbr
+	occurences <- aggregate(rep(1, length(spc)),
+		by = list(spc), sum)$x
+    
+	hist(occurences, xlab = "Species occurences", ...)
+	res <- list(richness, occurences)
+	return(invisible(res))
+}
+)
+
+#	inherited visulalisation method
 #if (!isGeneric("gvisMap")) {
 setGeneric("gvisMap",
 	function (data, locationvar = "", tipvar = "", options = list(), chartid)
@@ -649,12 +621,12 @@ setGeneric("gvisMap",
 setMethod("gvisMap",
     signature(data = "Vegsoup"),
     function (data) {
-	require(gvisMap)
-	pt <- SpatialPointsVegsoup(data)
-	df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
-	Tip = pt$plot)
-	m <- gvisMap(df, "LatLong" , "Tip")
-	plot(m)
-	return(invisible(m))
+		require(gvisMap)
+		pt <- SpatialPointsVegsoup(data)
+		df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
+		Tip = pt$plot)
+		m <- gvisMap(df, "LatLong" , "Tip")
+		plot(m)
+		return(invisible(m))
 	}
 )

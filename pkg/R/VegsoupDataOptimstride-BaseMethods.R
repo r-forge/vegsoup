@@ -1,10 +1,5 @@
 #	generating function
-#	obj an object of class VegsoupData
-#	k number of clusters to create
-#	ft.treshold treshold value of Fisher test to defauklts to 1e-03
-#	alternative indicates the alternative hypothesis of Fisher exact test (\link{FisherTest}) and must be one of "two.sided", "greater" or "less" (see also \link{fisher.test}).
-#	method different clustering methods to compute. Character vector Availaible ones are: "ward", "flexible", "pam", "kmeans", "wards" (see \link{VegsoupDataPartition}) or missing which will compute all methods.
-#	... arguments passed to VegsoupDataPartition (see \link{VegsoupDataPartition})
+
 
 OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards"), CALL = match.call(), ...) {
 	if (missing(k)) stop("please supply k for stride")
@@ -57,12 +52,6 @@ setMethod("show",
 			print(object@optimstride)
     }
 )
-
-#	OptimClass1: total count of faithful species across all clusters
-#	OptimClass2: count of clusters that contain at least k faithful species, where k is a subjectively selected threshold value.
-#	Tichy et al 2010: Journal of Vegetation Science 21: 287–299
-
-
 
 setMethod("summary",
 	signature(object = "VegsoupDataOptimstride"),

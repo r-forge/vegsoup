@@ -1,9 +1,8 @@
 #	generating function
+#	to do: implement formula interface for method, high priority
 VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, verbose = FALSE, ...) {
 
-#debug = FALSE
-
-#if (debug) {
+#	debug
 #	obj = sub; binary = TRUE; k = 3;
 #	method = "isopam"
 #	dist = "bray"
@@ -11,7 +10,6 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 #	method = "external"
 #	clustering = Sites(dta)$association
 
-#} else {
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
 	}
@@ -191,13 +189,12 @@ return(res)
 }
 
 #	subsetting method
+#	to do: documentation
 setMethod("[",
     signature(x = "VegsoupDataPartition",
     i = "ANY", j = "ANY", drop = "missing"),
 	function (x, i, j, ..., drop = TRUE)
     {
-	    #	debug
-	    #	x = prt; i = 1:20; j = 1:20
 	    part <- Partitioning(x)
 	    
 	    if (missing(i)) i <- rep(TRUE, nrow(x))
@@ -206,60 +203,40 @@ setMethod("[",
 	    res <- as(x, "VegsoupData")[i, j]
 
 		if (length(unique(part[names(part) %in% rownames(res)])) != getK(x)) {
-			cat("Partitioning vector was subsetted!")
-			cat("k was changed accordingly ")
+			warning("Partitioning vector was subsetted!",
+				"k was changed accordingly")
 		}
-		res <- new("VegsoupDataPartition",
-			part = part[names(part) %in% rownames(res)],
-			method = x@method,
-			k = length(unique(part[names(part) %in% rownames(res)])),
-			dist = x@dist,
-			binary = x@binary,
-			species = res@species,
-			sites = res@sites,
-			species.long = res@species.long,
-			sites.long = res@sites.long,
-			taxonomy = res@taxonomy,
-			scale = res@scale,
-			layers = res@layers,
-			group = res@group[names(part) %in% rownames(res)],
-			sp.points = res@sp.points,
-			sp.polygons = res@sp.polygons)
+
+		#	develop class VegsoupDataPartition from class VegsoupData
+		res <- new("VegsoupDataPartition", obj)
+		res@part = part[names(part) %in% rownames(res)]
+		res@method = x@method
+		res@dist = x@dist
+		res@binary = x@binary
+		res@k = length(unique(part[names(part) %in% rownames(res)]))
+		res@group = res@group[names(part) %in% rownames(res)]
+#		res <- new("VegsoupDataPartition",
+#			part = part[names(part) %in% rownames(res)],
+#			method = x@method,
+#			k = length(unique(part[names(part) %in% rownames(res)])),
+#			dist = x@dist,
+#			binary = x@binary,
+#			species = res@species,
+#			sites = res@sites,
+#			species.long = res@species.long,
+#			sites.long = res@sites.long,
+#			taxonomy = res@taxonomy,
+#			scale = res@scale,
+#			layers = res@layers,
+#			group = res@group[names(part) %in% rownames(res)],
+#			sp.points = res@sp.points,
+#			sp.polygons = res@sp.polygons)
 
 	    return(res)
     }
 )
 
-#	VegsoupDataPartition helper functions
-
-.VegsoupDataPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) 
-{
-    if (class(dist) != "dist") {
-        stop("bestopt is only defined for objects of class dist")
-    }
-    best <- 0
-    ratios <- rep(0, numitr)
-    for (i in 1:numitr) {
-    	if (verbose) cat(".")
-		tmp <- optpart(k, dist)        
-        while (max(tmp$clustering) != k) {
-        	tmp <- optpart(k, dist)
-        	}
-        ratios[i] <- max(tmp$ratio)
-        if (ratios[i] > best) {
-            best <- ratios[i]
-            result <- tmp
-            itr <- i
-        }
-    }
-    cat("\nRatios for respective optparts \n")
-    print(format(ratios, digits = 4))
-    cat(paste("\nChoosing # ", itr, " ratio = ", format(best, 
-        digits = 4), "\n"))
-    invisible(result)
-}
-
-.plotVegsoupPartition <- function (x, y) {
+.plotVegsoupPartition <- function (x, ...) {
 	#	x = prt
 #	op <- par()
 #	on.exit(par(op))
@@ -341,32 +318,36 @@ setMethod("[",
 	})
 	return(invisible(ord))
 }
-	
+
+#	plot method
 setMethod("plot",
 	signature(x = "VegsoupDataPartition", y = "missing"),
 	.plotVegsoupPartition
 )
 
-#	generic getter methods
-
+#	getter method
 #	running partition vector
+#	if(!isGeneric("Partitioning")) {
 setGeneric("Partitioning",
 	function (obj)
 		standardGeneric("Partitioning")
 )
+#}
 setMethod("Partitioning",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) obj@part
 )
-
+#	if(!isGeneric("Partitioning<-")) {
 setGeneric("Partitioning<-",
 	function (obj, value, ...)
 		standardGeneric("Partitioning<-")
 )
+#}
 setReplaceMethod("Partitioning",
 	signature(obj = "VegsoupDataPartition", value = "numeric"),
 	function (obj, value) {
-		#	to do: needs validity check
+		#	warning!
+		#	to do: possibliy needs more validity checks?
 		if (length(value) != length(Partitioning(obj))) {
 			stop("replacemenmt does not match in length: ")
 		}
@@ -375,7 +356,9 @@ setReplaceMethod("Partitioning",
 	}
 )
 
+#	getter method
 #	retrieve distance matrix
+#	to do: documentation
 setGeneric("getDist",
 	function (obj)
 		standardGeneric("getDist")
@@ -386,13 +369,15 @@ setMethod("getDist",
 )
 
 #	connectedness of dissimilarities
-#	method for class VegsoupDataPartition
+#	method for class VegsoupDataPartition, check inheritance should be absolete!
+#	to do: documentation
 setMethod("getDistconnected",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj, ...) distconnected(getDist(obj), ...)
 )
 
-#	number of partitions
+#	number of partitions/clusters
+#	to do: documentation
 setGeneric("getK",
 	function (obj)
 		standardGeneric("getK")
@@ -403,6 +388,7 @@ setMethod("getK",
 )
 
 #	list of species occurence in clusters
+#	to do: documentation
 setGeneric("Spread",
 	function (obj)
 		standardGeneric("Spread")
@@ -423,33 +409,36 @@ setMethod("Spread",
 	}
 )
 
-.summaryVegsoupDataPartition <- function (object, choice = c("all", "species", "sites", "partition"), ...) {
-	if (missing(choice)) choice <- "all"
-		choices <- c("all", "species", "sites", "partition")
-	choice <- choices[pmatch(choice, choices)]
-	if (is.na(choice)) choice <- "all"
-	switch(choice, "all" = {
-		.summaryVegsoupData(object, choice = "all")
-		cat("\ntable of partition contingencies")
-		print(table(Partitioning(object)))
-	}, "species" = {
-		.summaryVegsoupData(object, choice = "species")
-	}, "sites" = {
-		.summaryVegsoupData(object, choice = "sites")
-	}, "partition" = {
-		cat("\ntable of partition contingencies")
-		print(table(Partitioning(object)))	
-	})	
-	
-}
-
-
+#	summary funection
+#	to do: documentation
 setMethod("summary",
     signature(object = "VegsoupDataPartition"),
-	.summaryVegsoupDataPartition
+	function (object, choice = c("all", "species", "sites", "partition"), ...) {
+		if (missing(choice)) {
+			choice <- "all"
+		}
+		choices <- c("all", "species", "sites", "partition")
+		choice <- choices[pmatch(choice, choices)]
+		if (is.na(choice)) {
+			choice <- "all"
+		}
+		switch(choice, "all" = {
+			.summaryVegsoupData(object, choice = "all")
+			cat("\ntable of partition contingencies")
+			print(table(Partitioning(object)))
+		}, "species" = {
+			.summaryVegsoupData(object, choice = "species")
+		}, "sites" = {
+			.summaryVegsoupData(object, choice = "sites")
+		}, "partition" = {
+			cat("\ntable of partition contingencies")
+			print(table(Partitioning(object)))	
+		})	
+	}
 )
 
 #	contingency table
+#	to do: documentation
 setGeneric("Contingency",
 	function (obj)
 		standardGeneric("Contingency")
@@ -466,6 +455,7 @@ setMethod("Contingency",
 )
 
 #	frequency (constancy) table	
+#	to do: documentation
 setGeneric("Constancy",
 	function (obj, ...)
 		standardGeneric("Constancy")
@@ -486,102 +476,7 @@ setMethod("Constancy",
 #	Fisher Test
 #	depreciated
 #	use Fidelity(obj, "Fisher") instead
-.FisherTestVegsoupPartition <-  function (obj, alternative = "two.sided") {
-
-#	apapted from isotab.R (package 'isopam')
-#	which borrowed by itself from fisher.test
-
-alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
-
-FisherPval <- function (x) {
-	p <- NULL
-	m <- sum(x[, 1])
-	n <- sum(x[, 2])
-	k <- sum(x[1, ])
-	x <- x[1, 1]
-	lo <- max(0, k - n)
-	hi <- min(k, m)
-	support <- lo:hi
-	logdc <- dhyper(support, m, n, k, log = TRUE)
-
-	dnhyper <- function (ncp) {
-		d <- logdc + log(ncp) * support
-		d <- exp(d - max(d))
-		d/sum(d)
-	}
-	pnhyper <- function (q, ncp = 1, upper.tail = FALSE) {
-		if (ncp == 1) {
-			if (upper.tail) { 
-				return(phyper(x - 1, m, n, k, lower.tail = FALSE))
-			} else {
-				return(phyper(x, m, n, k))
-			}	
-		}
-		if (ncp == 0) {
-			if (upper.tail) {
-				return(as.numeric(q <= lo))
-			} else {
-				return(as.numeric(q >= lo))
-			}	
-		}
-		if (ncp == Inf) {
-			if (upper.tail) {
-				return(as.numeric(q <= hi))
-			} else {
-				return(as.numeric(q >= hi))
-			}	
-		}
-		d <- dnhyper(ncp)
-		if (upper.tail) {
-			sum(d[support >= q])
-		} else {
-			sum(d[support <= q])
-		}	
-	}
-
-	p <- switch(alternative,
-		less = pnhyper(x, 1),
-		greater = pnhyper(x, 1, upper.tail = TRUE),
-		two.sided = {
-    	        relErr <- 1 + 10^(-7)
-        	    d <- dnhyper(1)
-            	sum(d[d <= d[x - lo + 1] * relErr])
-	        })
-	return(p)
-}	
-
-#	2 x 2 contingency table of observed frequencies
-#	natation follows Bruelheide (1995, 2000)
-#	cited in Chytry et al 2002:80
-
-ObservedFreqencyTable <- function (N, N_p, n, n_p) { 
-	res <- matrix(c(
-		n_p,
-		N_p - n_p,
-		n - n_p,
-		N - N_p - n + n_p), 2, 2)	
-	res[is.nan(res)] <- 0
-    return(res)	
-}
-
-N <- nrow(obj)						# number of plots
-n.i <- colSums(as.binary(obj))			# species frequencies
-N_pi <- table(Partitioning(obj))	# number of plots in partition
-n_pi <- Contingency(obj)			# number of occurences in partition
-
-res <- n_pi
-
-for (i in 1:ncol(obj)) { # loop over species
-	n <- n.i[i]						# n	
-    for (j in 1:length(N_pi)) {		# loop over partitions
-		N_p <- N_pi[j]
-		n_p <- n_pi[i,j]    	
-    	res[i,j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
-    }
-}
- 
-return(res)
-}
+#	to do: documentation
 
 setGeneric("FisherTest",
 	function (obj, ...)
@@ -589,41 +484,113 @@ setGeneric("FisherTest",
 )
 setMethod("FisherTest",
 	signature(obj = "VegsoupDataPartition"),
-	.FisherTestVegsoupPartition	
+	function (obj, alternative = "two.sided") {
+
+#	apapted from isotab.R (package 'isopam')
+#	which borrowed by itself from fisher.test
+
+	alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
+#	P-value of Fisher test
+	FisherPval <- function (x) {
+		p <- NULL
+		m <- sum(x[, 1])
+		n <- sum(x[, 2])
+		k <- sum(x[1, ])
+		x <- x[1, 1]
+		lo <- max(0, k - n)
+		hi <- min(k, m)
+		support <- lo:hi
+		logdc <- dhyper(support, m, n, k, log = TRUE)
+
+		dnhyper <- function (ncp) {
+			d <- logdc + log(ncp) * support
+			d <- exp(d - max(d))
+			d / sum(d)
+		}
+		
+		pnhyper <- function (q, ncp = 1, upper.tail = FALSE) {
+			if (ncp == 1) {
+				if (upper.tail) { 
+					return(phyper(x - 1, m, n, k, lower.tail = FALSE))
+				} else {
+					return(phyper(x, m, n, k))
+				}	
+			}
+			if (ncp == 0) {
+				if (upper.tail) {
+					return(as.numeric(q <= lo))
+				} else {
+					return(as.numeric(q >= lo))
+				}	
+			}
+			if (ncp == Inf) {
+				if (upper.tail) {
+					return(as.numeric(q <= hi))
+				} else {
+					return(as.numeric(q >= hi))
+				}	
+			}
+		
+			d <- dnhyper(ncp)
+		
+			if (upper.tail) {
+				sum(d[support >= q])
+			} else {
+				sum(d[support <= q])
+			}
+		}
+
+		res <- switch(alternative,
+			less = pnhyper(x, 1),
+			greater = pnhyper(x, 1, upper.tail = TRUE),
+			two.sided = {
+    		        relErr <- 1 + 10^(-7)
+        		    d <- dnhyper(1)
+            		sum(d[d <= d[x - lo + 1] * relErr])
+	        })
+	return(res)
+}	
+
+#	2 x 2 contingency table of observed frequencies
+#	natation follows Bruelheide (1995, 2000)
+#	cited in Chytry et al 2002:80
+
+	ObservedFreqencyTable <- function (N, N_p, n, n_p) { 
+		res <- matrix(c(
+			n_p,
+			N_p - n_p,
+			n - n_p,
+			N - N_p - n + n_p), 2, 2)	
+		res[is.nan(res)] <- 0
+    	return(res)	
+	}
+
+	N <- nrow(obj)						# number of plots
+	n.i <- colSums(as.binary(obj))			# species frequencies
+	N_pi <- table(Partitioning(obj))	# number of plots in partition
+	n_pi <- Contingency(obj)			# number of occurences in partition
+
+	res <- n_pi
+
+	for (i in 1:ncol(obj)) { # loop over species
+		n <- n.i[i]						# n	
+	    for (j in 1:length(N_pi)) {		# loop over partitions
+			N_p <- N_pi[j]
+			n_p <- n_pi[i,j]    	
+    		res[i,j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
+    	}
+	}
+ 
+return(res)
+
+}
 )
 	
 #	standardised Phi statistic
-#	depreciated
-#	use Fidelity(obj, func = "r.g") instead
-.PhiVegsoupPartition <- function (obj) {
-	
-cnti <- Contingency(obj)
-cnst <- Constancy(obj)
-nc <- ncol(cnst)
-N <- nrow(obj)
-SP <- ncol(obj)
-siz <- table(Partitioning(obj))
-S <- 1 / nc	# constant S (Tichy et al 2006)
-cs <- S * N	# new cluster sizes
-res <- cnst
-
-for (i in 1:SP) {	# loop over species
-	for (j in 1:ncol(cnst)) {	# loop over partitions
-		insd <- cnti[i, j]					# original n in cluster j
-		outs <- sum(cnti[i,-j])				# original n outside cluster j
-		oc <- cs * (insd / siz[j])				# new n in cluster j
-		on <- (N - cs) * (outs / (N - siz[j]))	# new n outside cluster j
-		total <- oc + on						# new total value
-		res.1 <- nv <- (N * oc - total * cs) 
-		res.2 <- sqrt(total * cs * (N - total) * (N - cs))            
-		nv <- res.1 / res.2
-		res[i,j] <- nv
-	}
-}
-res[is.na (res)] <- 0
-
-return(res)
-}
+#	depreciated, maybe usefull to speed up thimngs where Fidelity() is too slow
+#	preferred method is Fidelity(obj, func = "r.g")
+#	to do: documentation
+#	See also \code{\link{Fidelity}}, \code{\link{Indval}} and \code{\link{FisherTest}}
 
 setGeneric("Phi",
 	function (obj)
@@ -631,10 +598,41 @@ setGeneric("Phi",
 )
 setMethod("Phi",
 	signature(obj = "VegsoupDataPartition"),
-	.PhiVegsoupPartition	
+	function (obj) {
+	
+	cnti <- Contingency(obj)
+	cnst <- Constancy(obj)
+	nc <- ncol(cnst)
+	N <- nrow(obj)
+	SP <- ncol(obj)
+	siz <- table(Partitioning(obj))
+	S <- 1 / nc	# constant S (Tichy et al 2006)
+	cs <- S * N	# new cluster sizes
+	res <- cnst
+
+	for (i in 1:SP) {	# loop over species
+		for (j in 1:ncol(cnst)) {	# loop over partitions
+			insd <- cnti[i, j]					# original n in cluster j
+			outs <- sum(cnti[i,-j])				# original n outside cluster j
+			oc <- cs * (insd / siz[j])				# new n in cluster j
+			on <- (N - cs) * (outs / (N - siz[j]))	# new n outside cluster j
+			total <- oc + on						# new total value
+			res.1 <- nv <- (N * oc - total * cs) 
+			res.2 <- sqrt(total * cs * (N - total) * (N - cs))            
+			nv <- res.1 / res.2
+			res[i,j] <- nv
+		}
+	}
+	
+	res[is.na (res)] <- 0
+
+	return(res)
+}
 )
 
 #	Dufrene & Legendre's indicator value
+#	to do: documentation
+#	See also \code{\link{Fidelity}}, \code{\link{Phi}} and \code{\link{FisherTest}}
 setGeneric("Indval",
 	function (obj, ...)
 		standardGeneric("Indval")
@@ -647,24 +645,24 @@ setMethod("Indval",
 	}
 )
 
-#	De Cáceres et al. 2010 indicator species analysis by combining groups of sites
-setGeneric("Multipatt",
-	function (obj, ...)
-		standardGeneric("Multipatt")
-) 
-setMethod("Multipatt",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj, ...) {
-		if (getK(obj) == 1) {
-			stop("meaningless with k = ", getK(obj))
-		}	
-		res <- multipatt(as.binary(obj), Partitioning(obj),
-			...)
-		return(res)
-	}
-)
+#	indicator species analysis by combining groups of sites
+#setGeneric("Multipatt",
+#	function (obj, ...)
+#		standardGeneric("Multipatt")
+#) 
+#setMethod("Multipatt",
+#	signature(obj = "VegsoupDataPartition"),
+#	function (obj, ...) {
+#		if (getK(obj) == 1) {
+#			stop("meaningless with k = ", getK(obj))
+#		}	
+#		res <- multipatt(as.binary(obj), Partitioning(obj),
+#			...)
+#		return(res)
+#	}
+#)
 
-#	Aho et al 2009 indicator value minimizing intermediate occurrences
+#	Indicator value minimizing intermediate occurrences
 setGeneric("Isamic",
 	function (obj)
 		standardGeneric("Isamic")
@@ -681,6 +679,7 @@ setMethod("Isamic",
 )
 
 #	table deviance
+#	to do: documentation
 setGeneric("Tabdev",
 	function (obj, ...)
 		standardGeneric("Tabdev")
@@ -698,8 +697,10 @@ setMethod("Tabdev",
 	}
 )
 
-#	optimise partitioning using Dave Roberts optsil procedure
-#	see ?optsil for details. maxitr is set to one by default.
+#	Optimise partitioning using Dave Roberts optsil procedure
+#	to do: documentation
+#	maxitr is set to one by default.
+#	see \code{\link{optsil}} in package 'optpart' for details.
 setGeneric("Optsil",
 	function (obj, ...)
 		standardGeneric("Optsil")
@@ -733,7 +734,8 @@ setMethod("Optsil",
 	}
 )
 
-#	optimise partitioning by Dufrene & Legendre's indicator value
+#	Optimise partitioning by Dufrene & Legendre's indicator value
+#	to do: documentation
 setGeneric("Optindval",
 	function (obj, ...)
 		standardGeneric("Optindval")
@@ -760,7 +762,8 @@ setMethod("Optindval",
     }
 )
 
-#	indicator species analysis by Murdoch preference function
+#	Indicator species analysis by Murdoch preference function
+#	to do: documentation
 setGeneric("Murdoch",
 	function (obj, ...)
 		standardGeneric("Murdoch")
@@ -792,6 +795,7 @@ setMethod("Murdoch",
 )
 
 #	Partition Analysis
+#	to do: documentation
 setGeneric("Partana",
 	function (obj, ...)
 		standardGeneric("Partana")
@@ -817,6 +821,7 @@ setMethod("Partana",
 )
 
 #	Silhouette Analysis
+#	to do: documentation
 setGeneric("Silhouette",
 	function (obj, ...)
 		standardGeneric("Silhouette")
@@ -841,7 +846,8 @@ setMethod("Silhouette",
     }
 )
 
-#	identification of typal samples in a partition
+#	Identification of typal samples in a partition
+#	to do: documentation
 setGeneric("Typal",
 	function (obj)
 		standardGeneric("Typal")
@@ -859,9 +865,10 @@ setMethod("Typal",
     }
 )
 
-#	'head' like summary function based on
-#	identification of typal samples in a partition
-#	method for class VegsoupDataPartition
+#	'head' like print function based on identification of
+#	typal samples in a partition
+#	to do: documentation
+#	head is a primitive function
 setMethod("head",
     signature(x = "VegsoupDataPartition"),
     function (x, n = 6L, choice = "species", ...) {
@@ -885,7 +892,7 @@ setMethod("head",
 )
 
 #	dissimilarity diameters
-			
+#	to do: documentation		
 setGeneric("Disdiam",
 	function (obj, ...)
 		standardGeneric("Disdiam")
@@ -910,39 +917,13 @@ setMethod("Disdiam",
     }
 )
 
-#	confusion matrix to compare two clusterings
-setGeneric("Confus",
-	function (obj1, obj2)
-		standardGeneric("Confus")
-)
-
-setMethod("Confus",
-    signature(obj1 = "VegsoupDataPartition",
-    	obj2 = "VegsoupDataPartition"),
-	function (obj1, obj2) {
-	#	obj1 = prt; obj2 = prt.opt
-		cls <- Partitioning(obj1)
-    	N <- length(cls)
-	    nc <- length(table(cls))
-    	cmp <- Partitioning(obj2)
-		res <- table(cls, cmp)
-    	crt <- sum(diag(res))	# correct
-	    per <- crt / N			# percent
-		sum <- sum(rowSums(res) * colSums(res))
-	    kap <- (c(N * crt) - sum) / (N^2 - sum)
-    	res <- list(confus = res,
-    		correct = crt,
-    		percent = per, 
-        	kappa = kap)
-	    return(res)
-	}
-)
-
 #	tabulate partition vector to matrix
+#	to do: documentation
 setGeneric("PartitioningMatrix",
 	function (obj)
 		standardGeneric("PartitioningMatrix")
 )
+
 setMethod("PartitioningMatrix",
     signature(obj = "VegsoupDataPartition"),
 	function (obj) {
@@ -953,11 +934,13 @@ setMethod("PartitioningMatrix",
 	}
 )
 
-#	list occurences of species in partitions
+#	List occurences of species in partitions
+#	to do: documentation
 setGeneric("Spread",
 	function (object)
 		standardGeneric("Spread")
 )
+
 setMethod("Spread",
     signature(obj = "VegsoupDataPartition"),
 	function (object) {

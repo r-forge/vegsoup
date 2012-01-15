@@ -1,5 +1,5 @@
 #	generating function
-#	objects can be created by calls to Vegsoup(x, y, z)
+#	to do: documentation, high priority!
 
 VegsoupData <- function (obj, verbose = FALSE) {
 	require(stats)
@@ -132,14 +132,14 @@ VegsoupData <- function (obj, verbose = FALSE) {
 			" filled with zeros")
 		#	paste back to @sites.long
 		tmp <- stack(sites)
-		tmp[,1] <- as.character(tmp[,1])
-		tmp[,2] <- as.character(tmp[,2])
+		tmp[, 1] <- as.character(tmp[, 1])
+		tmp[, 2] <- as.character(tmp[, 2])
 		plot <- tmp[tmp$ind == "plot",]$values
-		plot <- rep(plot, (nrow(tmp)/length(plot))- 1)
+		plot <- rep(plot, (nrow(tmp)/length(plot)) - 1)
 		tmp <- tmp[!tmp$ind == "plot",]
 		tmp <- data.frame(plot,
-			variable = tmp[,2],
-			value = tmp[,1])
+			variable = tmp[, 2],
+			value = tmp[, 1])
 		tmp <- tmp[order(tmp$plot),]
 		tmp$variable <- gsub("value.", "", tmp$variable, fixed = TRUE)
 		tmp <- data.frame(as.matrix(tmp), stringsAsFactors = FALSE)
@@ -168,7 +168,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	names(sites) <- gsub("value.", "",
 		names(sites), fixed = TRUE)
 	rownames(sites) <- sites$plot
-	sites <- sites[,-grep("plot", names(sites))]
+	sites <- sites[, -grep("plot", names(sites))]
 	sites <- sites[match(rownames(species), rownames(sites)), ]
 
 	#	develop class VegsoupData from class Vegsoup
@@ -180,108 +180,20 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	return(res)
 }
 
-#	coercing methods
-#	coercion to class Vegsoup is automatic as defined by the contains= argument	
-setAs("VegsoupData", "list",
-	def = function (from) {
-		list(species = from@species,
-		sites = from@sites)
-	}
-)
+###	inherited methods based on 'primitive functions'
 #	'names' is a primitive function
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) names(x@species)
 )
-if (!isGeneric("rownames")) {
-setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
-	standardGeneric("rownames"))
-}	
-setMethod("rownames",
-    signature(x = "VegsoupData", do.NULL = "missing",
-    prefix = "missing"),
-    function (x) rownames(x@species)
-)
 #	'dim' is a primitive function
+#	to do: documentation
 setMethod("dim",
     signature(x = "VegsoupData"),
 	    function (x) dim(x@species)
 )
-#if (!isGeneric("dim")) {
-setGeneric("nrow", function(x)
-	standardGeneric("nrow"))
-#}	
-setMethod("nrow",
-    signature(x = "VegsoupData"),
-    function (x) nrow(x@species)
-)
-#if (!isGeneric("dim")) {
-setGeneric("ncol", function(x)
-	standardGeneric("ncol"))
-#}	
-setMethod("ncol",
-    signature(x = "VegsoupData"),
-    function (x) ncol(x@species)
-)
-#if (!isGeneric("head")) {
-setGeneric("head", function(x)
-	standardGeneric("head"))
-#}	
-setMethod("head",
-    signature(x = "VegsoupData"),
-    function (x, n = 6L, choice, ...) {
-	    if (missing(choice))
-	    	choice <- "species"	
-    	if (choice == "species")
-    		res <- head(x@species)
-    	if (choice == "sites")
-    		res <- head(x@sites)
-    	return(res)
-    }    	    
-)
-#if (!isGeneric("tail")) {
-setGeneric("tail", function (x)
-	standardGeneric("tail"))
-#}	
-setMethod("tail",
-    signature(x = "VegsoupData"),
-    function (x, choice, ...) {
-	    if (missing(choice))
-	    	choice <- "species"
-    	if (choice == "species")
-    		res <- tail(x@species, ...)
-    	if (choice == "sites")
-    		res <- tail(x@sites, ...)
-    	return(res)
-    }    	    
-)
-#if (!isGeneric("rowSums")) {
-setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
-	standardGeneric("rowSums"))
-#}
-setMethod("rowSums",
-	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1) {
-    	rowSums(as.binary(x))
-    }
-)
-#if (!isGeneric("colSums")) {
-setGeneric("colSums", function (x, na.rm = FALSE, dims = 1)
-	standardGeneric("colSums"))
-#}
-setMethod("colSums",
-	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1) {
-    	colSums(as.binary(x))
-    }
-)
-
-setMethod("coordinates",
-   signature(obj = "VegsoupData"),
-    function (obj) coordinates(obj@sp.points)
-)
-
 #	retrieve character matrix
+#	to do: documentation, validity chekcs against obj@scale, priority high!	
 setMethod("as.character",
     signature(x = "VegsoupData"),
     function (x) {
@@ -294,29 +206,67 @@ setMethod("as.character",
     	}
     	return(invisible(res))
     }
-)	
-
-#	retrieve binary matrix
-#if(!isGeneric("as.binary"))
-setGeneric("as.binary",
-	function (obj, ...)
-		standardGeneric("as.binary")
 )
-#	print mode uses invisible()
-#	use head(as.binray(obj))
-setMethod("as.binary",
-    signature(obj = "VegsoupData"),
-    function (obj) {
-			res <- obj@species != "0"
-		mode(res) <- "numeric"
-		res <- as.data.frame(res)
-		return(invisible(res))
+
+###	inherited methods based on functions in 'base'
+#if (!isGeneric("rownames")) {
+setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
+	standardGeneric("rownames"))
+#}	
+setMethod("rownames",
+    signature(x = "VegsoupData", do.NULL = "missing",
+    prefix = "missing"),
+    function (x) rownames(x@species)
+)
+#if (!isGeneric("dim")) {
+setGeneric("nrow", function(x)
+	standardGeneric("nrow"))
+#}
+#	to do: documentation
+setMethod("nrow",
+    signature(x = "VegsoupData"),
+    function (x) nrow(x@species)
+)
+#if (!isGeneric("dim")) {
+setGeneric("ncol", function(x)
+	standardGeneric("ncol"))
+#}
+#	to do: documentation
+setMethod("ncol",
+    signature(x = "VegsoupData"),
+    function (x) ncol(x@species)
+)
+#if (!isGeneric("rowSums")) {
+setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
+	standardGeneric("rowSums"))
+#}
+#	to do: documentation
+setMethod("rowSums",
+	signature(x = "VegsoupData"),
+	function (x, na.rm = FALSE, dims = 1) {
+    	rowSums(as.binary(x))
     }
-)	
+)
+#if (!isGeneric("colSums")) {
+setGeneric("colSums", function (x, na.rm = FALSE, dims = 1)
+	standardGeneric("colSums"))
+#}
+#	to do: documentation
+setMethod("colSums",
+	signature(x = "VegsoupData"),
+	function (x, na.rm = FALSE, dims = 1) {
+    	colSums(as.binary(x))
+    }
+)
 
 #	retrieve numeric matrix as defined in AbundanceScale(obj)
-#	print mode uses invisible()
-#	use head(as.binray(obj))
+#	print mode uses invisible()?
+#	use head(as.numeric(obj))?
+#	to do: documentation
+#if (!isGeneric("as.numeric")) {
+#setGeneric("as.numeric", function (x, ...)
+#	standardGeneric("as.numeric"))
+#}
 setMethod("as.numeric",
     signature(x = "VegsoupData"),
     function (x, verbose = FALSE) {
@@ -341,29 +291,105 @@ setMethod("as.numeric",
 		return(invisible(res))   	
     }
 )
+#	retrieve binary matrix
+#if(!isGeneric("as.binary"))
+setGeneric("as.binary",
+	function (obj, ...)
+		standardGeneric("as.binary")
+)
+#}
+#	print mode uses invisible()
+#	use head(as.binray(obj))?
+#	to do: documentation, possible rename to as.logical? priority high!
+#	would than become a already defined generic function
+#	be careful when renaming
+setMethod("as.binary",
+    signature(obj = "VegsoupData"),
+    function (obj) {
+			res <- obj@species != "0"
+		mode(res) <- "numeric"
+		res <- as.data.frame(res)
+		return(invisible(res))
+    }
+)
 
-#	sites
+#	inherited methods based on functions in 'utils'
+#if (!isGeneric("head")) {
+setGeneric("head", function(x)
+	standardGeneric("head"))
+#}
+#	to do: documentation
+setMethod("head",
+    signature(x = "VegsoupData"),
+    function (x, n = 6L, choice, ...) {
+	    if (missing(choice))
+	    	choice <- "species"	
+    	if (choice == "species")
+    		res <- head(x@species)
+    	if (choice == "sites")
+    		res <- head(x@sites)
+    	return(res)
+    }    	    
+)
+#if (!isGeneric("tail")) {
+setGeneric("tail", function (x)
+	standardGeneric("tail"))
+#}
+#	to do: documentation
+setMethod("tail",
+    signature(x = "VegsoupData"),
+    function (x, choice, ...) {
+	    if (missing(choice))
+	    	choice <- "species"
+    	if (choice == "species")
+    		res <- tail(x@species, ...)
+    	if (choice == "sites")
+    		res <- tail(x@sites, ...)
+    	return(res)
+    }    	    
+)
+
+###	inherited methods from 'Vegsoup'
+#	getter method for sites
+#	to do: documenation
+
+#	coercion method
+#	coercion to class Vegsoup is automatic as defined by the contains= argument
+#	to do: documenation
+setAs("VegsoupData", "list",
+	def = function (from) {
+		list(species = from@species,
+		sites = from@sites)
+	}
+)
+
+#if (!isGeneric("Sites")) {
 setGeneric("Sites",
 	function (obj, ...)
 		standardGeneric("Sites")
 )
-setGeneric("Sites<-",
-	function (obj, value, ...)
-		standardGeneric("Sites<-")
-)
+#}
 setMethod("Sites",
     signature(obj = "VegsoupData"),
     function (obj) obj@sites
 )
+#if (!isGeneric("Sites<-")) {
+setGeneric("Sites<-",
+	function (obj, value, ...)
+		standardGeneric("Sites<-")
+)
+#}
+#	replacement method for sites
+#	to do: needs comprehensive validity checks!
 setReplaceMethod("Sites",
 	signature(obj = "VegsoupData", value = "data.frame"),
 	function (obj, value) {
-		#	to do: needs validity check for several slots!
 		obj@sites <- value		
 		return(obj)		
 	}
 )
 
+#	indexing method
 setMethod("$", "VegsoupData", 
 	function(x, name) {
 		if (!("sites" %in% slotNames(x)))
@@ -373,7 +399,8 @@ setMethod("$", "VegsoupData",
 )
 
 #	Layers method
-#	to do! implement option drop to drop a specific layer
+#	to do: documenation, implement option drop to drop a specific layer! high priority!
+
 .LayersVegsoupData <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
@@ -489,26 +516,7 @@ setMethod("Layers",
     .LayersVegsoupData
 )
 
-#	Richness of data set
-.getRichnessVegsoupData <-  function (obj, choice = c("dataset", "sample"), ...) {
-	#	obj = sub
-	choices <- c("dataset", "sample")
-	if (missing(choice)) {
-		choice <- "dataset"
-	}
-	choice <- choices[pmatch(choice, choices)]
-	if (is.na(choice)) {
-		choice <- "dataset"
-	}	
-		switch(choice, "dataset" = {
-		res <- length(unique(DecomposeNames(obj))$abbr)
-		}, "sample" = {
-		res <- as.binary(Layers(obj, aggregate = "layer", verbose = FALSE))
-		res <- rowSums(res)
-		})		
-
-	return(res)
-}
+#	Species richness of data set
 
 setGeneric("Richness",
 	function (obj, ...)
@@ -516,10 +524,30 @@ setGeneric("Richness",
 )
 setMethod("Richness",
     signature(obj = "VegsoupData"),
-    .getRichnessVegsoupData
+	function (obj, choice = c("dataset", "sample"), ...) {
+		#	obj = sub
+		choices <- c("dataset", "sample")
+		if (missing(choice)) {
+			choice <- "dataset"
+		}
+		choice <- choices[pmatch(choice, choices)]
+		if (is.na(choice)) {
+			choice <- "dataset"
+		}	
+		
+		switch(choice, "dataset" = {
+			res <- length(unique(DecomposeNames(obj))$abbr)
+		}, "sample" = {
+			res <- as.binary(Layers(obj, aggregate = "layer", verbose = FALSE))
+			res <- rowSums(res)
+		})		
+
+		return(res)
+	}
 )
 
 #	connectedness of dissimilarities
+#	to do: documenation
 setGeneric("getDistconnected",
 	function (obj, ...)
 		standardGeneric("getDistconnected")
@@ -531,50 +559,20 @@ setMethod("getDistconnected",
 	}
 )
 
-.summaryVegsoupData  <- function (object, choice = c("all", "species", "sites"), ...) {
-#	object = dta
-	if (missing(choice)) choice <- "all"
-		choices <- c("all", "species", "sites")
-	choice <- choices[pmatch(choice, choices)]
-	if (is.na(choice)) choice <- "all"
-	cat("object of class", class(object), "\n")
-	species.summary <- paste(
-		"\n",
-		Richness(object), " species",
-		"\n", dim(object)[1], " sites (sample plots)",
-		"\nlayers ", length(Layers(object)),
-		" (", paste(Layers(object), collapse = ", "), ")",
-		"\nabundance scale ", AbundanceScale(object)$scale,
-		ifelse(length(object@taxonomy) > 0,
-			"\ntaxomomy lookup table supplied ",
-			"... but has non matching taxa!"),
-		sep = ""
-	)
-
-	switch(choice, "all" = {
-		cat(species.summary)
-		cat("\nsites ")	
-		str(Sites(object), no.list = TRUE)
-	}, "species" = {
-		cat(species.summary)
-	}, "sites" = {
-		cat("\nsites ")
-		str(Sites(object))		
-	})
-	cat("\nproj4string:\n", proj4string(object))
-	cat("\nbbox:\n"); bbox(object)		
-}
-
-#	showMethods("plot", classes ="VegsoupData")
-
+#	summary method
+#	to do: documenation
 setMethod("summary",
     signature(object = "VegsoupData"),
     function (object, choice = c("all", "species", "sites"), ...) {
 
-	if (missing(choice)) choice <- "all"
-		choices <- c("all", "species", "sites")
+	if (missing(choice)) {
+		choice <- "all"
+	}
+	choices <- c("all", "species", "sites")
 	choice <- choices[pmatch(choice, choices)]
-	if (is.na(choice)) choice <- "all"
+	if (is.na(choice)) {
+		choice <- "all"
+	}
 	cat("object of class", class(object), "\n")
 	species.summary <- paste(
 		"\n species: ", Richness(object),
@@ -603,8 +601,7 @@ setMethod("summary",
 }
 )
 
-#	to do! check summary method for class VegsoupDataPartitionFidelity
-
+#	to do: check summary method for class VegsoupDataPartitionFidelity
 setMethod("show",
     signature(object = "VegsoupData"),
     function (object) {
@@ -621,8 +618,11 @@ setMethod("plot",
 	}	
 )
 
-#	generic subsetting method for all slots
-#	VegsoupPartition has its own method!
+#	subsetting method for all slots
+#	to do: documenation
+#	VegsoupDataPartition implemts its own method,
+#	but internally coreces to class(VegsoupData)
+#	and apllies this method!
 setMethod("[",
     signature(x = "VegsoupData",
     i = "ANY", j = "ANY", drop = "missing"),
@@ -635,16 +635,15 @@ setMethod("[",
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
 
 		ii <- rowSums(as.binary(x)[i,j]) > 0 # plots
-		if (any(ii == FALSE)) {
-			cat("\n removed empty sites:",
-				rownames(x)[i][!ii])	
-		}
+#		if (any(ii == FALSE)) {
+#			cat("\n removed empty sites:",
+#				rownames(x)[i][!ii])	
+#		}
 		
 		jj <- colSums(as.binary(x)[i,j]) > 0 # species
-		if (any(jj == FALSE)) {
-			#	tmp <- names(x)[j][!jj]
-			cat("\nremoved empty species!\n")
-		}
+#		if (any(jj == FALSE)) {
+#			cat("\nremoved empty species!\n")
+#		}
 
 		res@species <- as.character(x)[i,j][ii,jj]
 		res@species.long <-
@@ -678,6 +677,25 @@ setMethod("[",
     }
 )
 
+#	
+
+#	sample data, usally with replacement
+if (!isGeneric("sample")) {
+setGeneric("sample", function (x, size, replace = FALSE, prob = NULL, ...)
+	standardGeneric("sample"))
+}
+#	to do: documentation
+#	think about a mehtod for class (VegsoupDataPartition) to sample conditional on Partitiong(obj)
+setMethod("sample",
+    signature(x = "VegsoupData"),
+    function (x, size, replace = TRUE, prob = NULL) {
+    	#	For sample the default for size is the number of items inferred from the first argument
+    	n.plots <- dim(x)[1]
+    	sel <- unique(sort(sample(1:n.plots, replace = replace, prob = prob)))
+    	res <- x[sel, ]
+    	return(invisible(res))
+    }
+)
 #	Function to rearrange object (species and sites data frames)
 #	by various reordering methods as option.
 #	Currently only presence/absencse data is used,
@@ -685,88 +703,142 @@ setMethod("[",
 #	Currently there is no way to pass down arguments
 #	to functions?
 #	
-.VegsoupDataArrange <- function (object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), dist = "bray", ...) {
-#	object = dta
-if (!inherits(object, "VegsoupData"))
-	stop("Need an object of class VegsoupData")
 
-if (missing(method)) {
-	method  <- "dca"
-	} else {
-	method <- match.arg(method)			
-}
-
-si.dis <- vegdist(as.binary(object), method = dist)
-sp.dis <- vegdist(t(as.binary(object)), method = dist)
-	
-switch(method, dca = {
-	use <- try(decorana(as.binary(object)), silent = TRUE, ...)
-	if (inherits(use, "try-error"))
-		use  <- NULL 
-
-	if (is.list(use)) {	
-		tmp <- scores(use, choices = 1, display = "sites")
-		si.ind <- order(tmp)
-		sp.ind <- try(order(scores(use, choices = 1, 
-                  display = "species")))
-		if (inherits(sp.ind, "try-error")) 
-			sp.ind <- order(wascores(tmp, object))
-	} else {
-			si.ind <- 1:dim(as.binary(object))[1]
-			sp.ind <- 1:dim(as.binary(object))[2]
-	}
-	}, hclust = {
-		si.ind <- hclust(si.dis,
-			method = "ward")$order
-		sp.ind <- hclust(sp.dis,
-			method = "ward")$order
-	}, ward = {
-		si.ind <- agnes(si.dis, diss = TRUE,
-			method = "ward")$order
-		sp.ind <- agnes(sp.dis, diss = TRUE,
-			method = "ward")$order
-	}, flexible = {
-	   	alpha <- 0.625
-	   	beta = 1 - 2 * alpha
-	   	si.ind <- agnes(si.dis, method = "flexible",
-	   		par.meth = c(alpha, alpha, beta, 0))$order
-	   	sp.ind <- agnes(sp.dis, method = "flexible",
-	   		par.meth = c(alpha, alpha, beta, 0))$order
-	}, pam = {
-		si.ind <- agnes(si.dis, diss = TRUE,
-			method = "ward")$order
-		sp.ind <- agnes(sp.dis, diss = TRUE,
-			method = "ward")$order	
-	}, packed = {
-		si.ind <- order(apply(as.binary(object), 1, sum), decreasing = TRUE)
-		sp.ind  <- order(apply(as.binary(object), 2, sum), decreasing = TRUE)
-	}
-)
-	
-res <- object[si.ind, sp.ind]
-
-return(res)
-
-}
 
 #	arrange und unpartitioned data set
+#	to do: documentation
+#	rewrite to accept argument binary = FALSE, high priority
+#	or use VegsoupDataPartition
+
 setGeneric("Arrange",
 	function (object, ...)
 		standardGeneric("Arrange")
 )
 setMethod("Arrange",
     signature(obj = "VegsoupData"),
-    .VegsoupDataArrange
+	function (object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), dist = "bray", ...) {
+	#	object = dta
+	
+	if (missing(method)) {
+		method  <- "dca"
+	} else {
+		method <- match.arg(method)			
+	}
+
+	si.dis <- vegdist(as.binary(object), method = dist)
+	sp.dis <- vegdist(t(as.binary(object)), method = dist)
+	
+	switch(method, dca = {
+		use <- try(decorana(as.binary(object)), silent = TRUE, ...)
+		if (inherits(use, "try-error")) {
+			use  <- NULL
+		}	
+
+		if (is.list(use)) {	
+			tmp <- scores(use, choices = 1, display = "sites")
+			si.ind <- order(tmp)
+			sp.ind <- try(order(scores(use, choices = 1, 
+                  display = "species")))
+			if (inherits(sp.ind, "try-error")) {
+				sp.ind <- order(wascores(tmp, object))
+			}
+		} else {
+			si.ind <- 1:dim(as.binary(object))[1]
+			sp.ind <- 1:dim(as.binary(object))[2]
+		}
+		}, hclust = {
+			si.ind <- hclust(si.dis,
+				method = "ward")$order
+			sp.ind <- hclust(sp.dis,
+				method = "ward")$order
+		}, ward = {
+			si.ind <- agnes(si.dis, diss = TRUE,
+				method = "ward")$order
+			sp.ind <- agnes(sp.dis, diss = TRUE,
+				method = "ward")$order
+		}, flexible = {
+		   	alpha <- 0.625
+	   		beta = 1 - 2 * alpha
+		   	si.ind <- agnes(si.dis, method = "flexible",
+		   		par.meth = c(alpha, alpha, beta, 0))$order
+	   		sp.ind <- agnes(sp.dis, method = "flexible",
+	   			par.meth = c(alpha, alpha, beta, 0))$order
+		}, pam = {
+			si.ind <- agnes(si.dis, diss = TRUE,
+				method = "ward")$order
+			sp.ind <- agnes(sp.dis, diss = TRUE,
+				method = "ward")$order	
+		}, packed = {
+			si.ind <- order(apply(as.binary(object), 1, sum), decreasing = TRUE)
+			sp.ind  <- order(apply(as.binary(object), 2, sum), decreasing = TRUE)
+		}
+	)
+	
+	res <- object[si.ind, sp.ind]
+
+	return(res)
+
+	}
+)
+
+#if (!isGeneric("DecomposeNames")) {
+setGeneric("DecomposeNames",
+	function (obj, ...)
+		standardGeneric("DecomposeNames")
+)
+#}
+
+#	getter method Abbrviation DecomposeNames
+#	convert abbr to taxon names from species matrix slot(obj, "species")
+#	to do: documentation
+setMethod("DecomposeNames",
+	signature(obj = "VegsoupData"),
+	function (obj, verbose = FALSE) {
+	#	obj <- dta; type = "nospace"
+	if (verbose) {
+		cat("\n use Vegsoup standard pattern taxa coding, blanks are dots")
+	}
+
+	#	VegsoupData(obj) constructs abbreviated taxa names
+	#	pasting make.names and layer seperated with '@' 
+	
+	#	deparse compound taxon abbreviation and layer string
+	#	seperator is '@'
+
+	abbr <- sapply(strsplit(names(obj), "@", fixed = TRUE),
+		   function (x) x[1])
+	layer <- sapply(strsplit(names(obj), "@", fixed = TRUE),
+		   function (x) x[2])
+
+	taxon <- Taxonomy(obj)$taxon[match(abbr, Taxonomy(obj)$abbr)]
+	res <- data.frame(abbr.layer = names(obj), abbr, layer, taxon, stringsAsFactors = FALSE)
+
+	if (all(is.na(res$layer))) {
+		warning("unable to deparse layer string, consider setting type to nospace")
+	}
+	if (all(is.na(res$taxon))) {
+		warning("unable to deparse taxon string, consider setting type to nospace")
+	}
+	return(invisible(res))
+	}
+)
+
+#	getter method Abbrviation
+#	to do: documentation
+setMethod("Abbreviation",
+    signature(obj = "VegsoupData"),
+    function (obj, ...) DecomposeNames(dta)$abbr
 )
 
 #	congruence between indicator and target species.
 #	Halme's indicator power
-			
+#	to do: documentation
+#if (!isGeneric("Indpower")) {			
 setGeneric("Indpower",
 	function (obj, ...)
 		standardGeneric("Indpower")
 )
-
+#}
 setMethod("Indpower",
     signature(obj = "VegsoupData"),
     function (obj, ...) {
@@ -780,11 +852,13 @@ setMethod("Indpower",
 
 
 #	compositional indicator species analysis
+#	to do: documentation
+#if (!isGeneric("Indspc")) {	
 setGeneric("Indspc",
 	function (obj, ...)
 		standardGeneric("Indspc")
 )
-
+#}
 setMethod("Indspc",
     signature(obj = "VegsoupData"),
     function (obj, method, ...) {
@@ -802,58 +876,13 @@ setMethod("Indspc",
     }
 )
 
-	
-#	convert abbr to taxon names from species matrix slot(obj, "species")
-.DecomposeNamesVegsoupData <- function (obj, verbose = FALSE) {
-#	obj <- dta; type = "nospace"
-if (verbose)
-	cat("\n use Vegsoup standard pattern taxa coding, blanks are dots")
-
-#	VegsoupData(obj) constructs abbreviated taxa names
-#	pasting make.names and layer seperated with '@' 
-	
-#	deparse compound taxon abbreviation and layer string
-#	seperator is '@'
-
-abbr <- sapply(strsplit(names(obj), "@", fixed = TRUE),
-		   function (x) x[1])
-layer <- sapply(strsplit(names(obj), "@", fixed = TRUE),
-		   function (x) x[2])
-
-taxon <- Taxonomy(obj)$taxon[match(abbr, Taxonomy(obj)$abbr)]
-res <- data.frame(abbr.layer = names(obj), abbr, layer, taxon, stringsAsFactors = FALSE)
-
-
-if (all(is.na(res$layer))) {
-	warning("unable to deparse layer string, consider setting type to nospace")
-}
-if (all(is.na(res$taxon))) {
-	warning("unable to deparse taxon string, consider setting type to nospace")
-}
-return(invisible(res))
-}
-
-
-setGeneric("DecomposeNames",
-	function (obj, ...)
-		standardGeneric("DecomposeNames")
-)
-
-
-setMethod("DecomposeNames",
-	signature(obj = "VegsoupData"),
-	.DecomposeNamesVegsoupData
-)
-
-#	get Abbrviation
-setMethod("Abbreviation",
-    signature(obj = "VegsoupData"),
-    function (obj, ...) DecomposeNames(dta)$abbr
-)
-
 #	create several clusterings along a vector
 #	suitable for plotting
 #	return a list
+#	to do: rewrite to complement VegsoupDataOptimStride, high priority!
+#	and make both function a pair with similar arguments
+#	maybe make it a function returning class(VegsoupDataOptimStride)?
+#	currently returns a list
 
 .strideVegsoupData <- function (obj, method, stride, fidelity.method, partition.method, mode, verbose = TRUE, alpha = 0.05, ...) {
 #	obj = dta	
@@ -978,11 +1007,9 @@ plotStride <- function (x) {
 }
 
 
-#Average Bray-Curtis dissimilarity of an outlier plot to other plots is greater than two standard deviations from the mean inter-plot dissimilarity (McCune & Grace 2002)
-
-#McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.
-#obj <- prt
-#dis <- getDist(obj)
-
-#greater <- mean(dis) + sd(dis) * 2
-#lower <- mean(dis) + sd(dis) * 2
+#	spatial methods
+#	to do: rewrite?
+#setMethod("coordinates",
+#  signature(obj = "VegsoupData"),
+#  function (obj) coordinates(obj@sp.points)
+#)
