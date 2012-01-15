@@ -24,17 +24,21 @@ setMethod("getStat",
 #	format and arrange fidelity table
 #	adapted and extend from Sebastian Schmidtlein's isotab()
 .latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, stat.min, footer.treshold, molticols.footer, verbose = FALSE, letters = FALSE, ...) {
-#	object = fid.prt
+#	object = prt
 if (missing(filename)) {
 	filename <- paste("FidelityTable")
 }
 if (missing(p.col.width)) {
 	p.col.width <- "10mm"
-	warning("p.col.width missing, set to ", p.col.width, call. = FALSE)
+	if (verbose) {
+		cat("p.col.width missing, set to ", p.col.width)
+	}
 }
 if (missing(p.max)) {
 	p.max <- .05
-	warning("p.max missing, set to ", p.max, call. = FALSE)
+	if (verbose) {
+		cat("p.max missing, set to ", p.max)
+	}
 }
 if (missing(footer.treshold)) {
 	footer.treshold <- 2
@@ -203,7 +207,6 @@ for (i in c(1:nc)) {#[!typ == "Nothing particularly typical"]
 
 	}
 	tex.typical.seperated <- rbind(tex.typical.seperated, tmp)
-
 }
 
 #	block of remining species, not typical for a particular partition
@@ -248,8 +251,7 @@ caption <- paste("Fidelity table for ",
 			table(Partitioning(object)), sep = ":", collapse = ", "),
 		". ",
 		sep = "")
-
-		
+	
 names(tex) <- col.names
 tex <- as.matrix(tex)
 tex[tex == 0] <- "."
@@ -258,42 +260,51 @@ tex[tex == 0] <- "."
 footer.species <- row.names(cntn)[rowSums(cntn) < footer.treshold]
 #	check if we loose the only typical species in a partition
 candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
+#	for data set with very low species diversity try to reduce footer treshold
+#	omit footer and raise a warning
+
+if (length(candidates) > 0) {
 #	drop candidates from vector of footer species
-for (i in seq(along = typ)[!typ == "Nothing particularly typical"]) {
-	if (length(typ[[i]]) == 1 & any(!is.na(match(typ[[i]], footer.species)))) {
-		footer.species <- footer.species[-match(candidates[match(typ[[i]], candidates)], footer.species)]
-	} 
-}
-#	prune footer species and collapse to string 
-tex.footer <- tex[match(footer.species, row.names(tex)), ]
-tex <- tex[-match(footer.species, row.names(tex)), ]
-footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
-
-txn <- DecomposeNames(object, verbose = FALSE)
-
-txn <- txn[match(rownames(footer), txn$abbr.layer), ]
-footer <- as.data.frame(footer, stringsAsFactors = FALSE)
-footer$taxon <- txn$taxon
-tmp <- c()
-
-for (i in 1:nc) {
-	tmp.i <- data.frame(footer[, i], footer$taxon)
-	if (sum(tmp.i[,1]) > 0) {
-		tmp.i <- paste("\\textbf{", i, "}: ",
-			paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
-		tmp <- c(tmp, tmp.i)
+	for (i in seq(along = typ)[!typ == "Nothing particularly typical"]) {
+		if (length(typ[[i]]) == 1 & any(!is.na(match(typ[[i]], footer.species)))) {
+			footer.species <- footer.species[-match(candidates[match(typ[[i]], candidates)], footer.species)]
+		} 
 	}
-}
 
-#	nice language for low thresholds
-if (footer.treshold < 4) {
-	footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
-		paste(tmp, collapse = "\n\n "), sep = "")
-} else {
-	footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
-		paste(tmp, collapse = "\n\n "), sep = "")
+	#	prune footer species and collapse to string 
+	tex.footer <- tex[match(footer.species, row.names(tex)), ]
+	tex <- tex[-match(footer.species, row.names(tex)), ]
+	footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
+
+	txn <- DecomposeNames(object, verbose = FALSE)
+
+	txn <- txn[match(rownames(footer), txn$abbr.layer), ]
+	footer <- as.data.frame(footer, stringsAsFactors = FALSE)
+	footer$taxon <- txn$taxon
+	tmp <- c()
+
+	for (i in 1:nc) {
+		tmp.i <- data.frame(footer[, i], footer$taxon)
+		if (sum(tmp.i[,1]) > 0) {
+			tmp.i <- paste("\\textbf{", i, "}: ",
+				paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
+			tmp <- c(tmp, tmp.i)
+		}
+	}
+
+	#	nice language for low thresholds
+	if (footer.treshold < 4) {
+		footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
+			paste(tmp, collapse = "\n\n "), sep = "")
+	} else {
+		footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
+			paste(tmp, collapse = "\n\n "), sep = "")
+	}
+	footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
+	} else {
+	warning("footer is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
+	footer <- ""
 }
-footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
 
 #	remove rare species from list of typical species, if any
 for (i in seq(along = typ)) {	
@@ -302,7 +313,7 @@ for (i in seq(along = typ)) {
 		tmp <- tmp[!is.na(tmp)]
 		if (length(typ[[i]][-tmp]) < 1) {
 			warning("list of typical species would be empty",
-				" if this rare species gets dropped!")
+				" if this rare species gets dropped!", call. = FALSE)
 			footer.species <- footer.species[-match(typ[[i]], footer.species)]
 		} else {
 			typ[[i]] <- typ[[i]][-tmp]
@@ -333,7 +344,7 @@ if (length(grep(" ", filename, fixed = TRUE)) > 0) {
 }
 
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
-	warning("add file extension .tex to filename ", filename)
+	warning("add file extension .tex to filename ", filename, call. = FALSE)
 	filename <- paste(filename, ".tex", sep = "")
 }
 
@@ -373,8 +384,8 @@ return(invisible(res))
 
 #	generic is set by VegsoupDataPartition-*Methods.R
 
-#	may also be called for its side effect
-setMethod("Latex",
-	signature(object = "VegsoupDataPartitionFidelity"),
-	.latexVegsoupDataPartitionFidelity	
-)
+#	overrides method definition in VegsoupDataPartition
+#setMethod("Latex",
+#	signature(object = "VegsoupDataPartitionFidelity"),
+#	.latexVegsoupDataPartitionFidelity	
+#)

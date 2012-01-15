@@ -260,15 +260,31 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 #if (!isGeneric("summary")) {
 setGeneric("summary", function(object, ...)
 	standardGeneric("summary"))
-#}	
+#}
 setMethod("summary",
     signature(object = "Vegsoup"),
 	function (object) {
 		cat("an object of class", class(object))
-		cat("\nproj4string:\n", proj4string(object))
-		cat("\nbbox:\n"); bbox(object)	
+		if (is.null(Taxonomy(object))) {
+			cat("\n  Taxonomy lookup table supplied")
+		} else {
+			cat("\n  Taxonomy lookup table missing")
+		}
+		cat("\n  proj4string:")
+		print(proj4string(object))
+		cat("\n  bbox:\n")
+		print(bbox(object))
 	}
 )
+
+#	inherited methods for show
+setMethod("show",
+    signature(object = "Vegsoup"),
+    function (object) {
+			summary(object)
+    }
+)
+
 
 #	get or set layers
 setGeneric("Layers",

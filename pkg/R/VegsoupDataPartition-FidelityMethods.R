@@ -12,7 +12,7 @@
 
 .FidelityVegsoupPartition <- function (obj, method, group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
-#	binary = TRUE; obj = prt; group = NULL
+#	binary = FALSE; obj = prt; group = NULL
 if (missing(method)) {
 	method <- "r.g"	
 }

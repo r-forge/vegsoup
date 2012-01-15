@@ -36,16 +36,18 @@ num.cols.agg <- matrix(NA,
 	nrow = getK(object))
 	
 for (i in seq(along = which(num.cols))) {
-	i.median <- aggregate(sites[,which(num.cols)[i]], by = list(part), median)[,2]
-	i.mad <- aggregate(sites[,which(num.cols)[i]], by = list(part), mad)[,2]
+	i.median <- aggregate(sites[, which(num.cols)[i]], by = list(part), median)[,2]
+	i.mad <- aggregate(sites[, which(num.cols)[i]], by = list(part), mad)[,2]
 	num.cols.agg[,i] <- paste(i.median, " (", round(i.mad, 3), ")", sep = "")
 }
+
 num.cols.agg <- as.data.frame(num.cols.agg, stringsAsFactors = FALSE)
 names(num.cols.agg) <- names(sites)[num.cols]
 
 char.cols.agg <- matrix(NA,
 	ncol = length(which(char.cols)),
 	nrow = getK(object))
+	
 for (i in seq(along = which(char.cols))) {
 	#	i = 1
 	i.table <- data.frame(variable = sites[,which(char.cols)[i]], part)
@@ -54,15 +56,14 @@ for (i in seq(along = which(char.cols))) {
 		j.tmp <- table(i.table[i.table$part == j,]$variable)
 		j.tmp <- sort(j.tmp[j.tmp > 0], decreasing = TRUE)
 		j.res <- c(j.res, paste(names(j.tmp), j.tmp, sep = ":", collapse = ", "))
-	}
-	
+	}	
 	char.cols.agg[,i] <- j.res
 }
 
 char.cols.agg <- as.data.frame(char.cols.agg, stringsAsFactors = FALSE)
 names(char.cols.agg) <- names(sites)[char.cols]
 
-#	add plots to parttion column
+#	add plots to partition column
 part.plot <- data.frame(part, names(part))
 names(part.plot) <- c("partition", "plots")
 part.plot <- part.plot[order(part.plot$partition),]
@@ -209,7 +210,7 @@ setMethod("Latex",
 	}
 )
 
-#	kml output
+#	KML output
 .KMLVegsoupDataPartition <- function (obj, path, ...) {
 if (missing(path)) {
 	path <- getwd()	

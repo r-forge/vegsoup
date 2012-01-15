@@ -601,13 +601,14 @@ setMethod("summary",
 }
 )
 
+#	Vegsoup inherits show method
 #	to do: check summary method for class VegsoupDataPartitionFidelity
-setMethod("show",
-    signature(object = "VegsoupData"),
-    function (object) {
-			summary(object)
-    }
-)
+#setMethod("show",
+#   signature(object = "VegsoupData"),
+#    function (object) {
+#			summary(object)
+#    }
+#)
 
 #	plot method
 setMethod("plot",
