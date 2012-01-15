@@ -6,7 +6,7 @@
 #package 'vegan' does not have a name space
 
 import(methods)
-importFrom("graphics", plot, hist)# hist, lines, image, contour, pairs, boxplot
+importFrom("graphics", plot, hist)
 importFrom("utils", head, tail)
 importFrom("Hmisc", latex)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
@@ -23,7 +23,9 @@ exportMethods(
     "AbundanceScale",
     "AbundanceScale<-",
     "AprioriGrouping",
+    "Accuracy",
     "Arrange",
+    "Association",
     "as.binary",
     "as.character",
     "as.numeric",
@@ -51,7 +53,6 @@ exportMethods(
     "Latex",
     "Layers",
     "Layers<-",
-    "Multipatt",
     "Murdoch",
     "names",
     "ncol",
@@ -66,6 +67,7 @@ exportMethods(
     "Richness",
     "rownames",
     "rowSums",
+    "sample",
     "SigFidelity",
     "Silhouette",
     "Sites",
