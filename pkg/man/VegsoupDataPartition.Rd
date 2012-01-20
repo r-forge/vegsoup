@@ -20,17 +20,20 @@ VegsoupDataPartition(x, binary = TRUE, k, method = c("ward", "flexible", "pam", 
   \item{clustering}{external vector of cluster partitons}
   \item{polish}{apply optimal silhouette widths clustering \link{opts} on possible outgroups (single element partitions) to sweep them to an existing multi element partition}
   \item{nitr}{number of iterations of function \link{tabbed} in calculating table deviance}
+  \item{decostand.method}{standardise data (see details)}
   \item{verbose}{set to \code{TRUE} for verbose output}
   \item{\dots}{passed to methods}
 }
 \details{
-Parttion an object of class VegsoupData using several clustering methods.
+Create a partitioned object of class VegsoupData using several clustering methods.
+Common data transformation are suported through the \code{decostand.method} interface which is wrapper for \code{\link{decostand}} in package 'vegan'. Additionally the Domin 2.6 transformation is supplied (Currall, 1987).
+
 }
 \value{
 \code{VegsoupDataPartition} returns an object of class \code{VegsoupDataPartition}
 }
 \references{
-%% ~put references to the literature/web site here ~
+Currall 1987: A transformation of the Domin scale, Plant ecoogy 72: 81-87.
 }
 \author{
 Roland Kaiser (\email{kardinal.eros@gmail.com})

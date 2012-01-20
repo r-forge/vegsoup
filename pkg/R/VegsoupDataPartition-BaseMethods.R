@@ -50,9 +50,17 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		X <- as.numeric(obj)
 	}
 	if (!is.null(decostand.method)) {
-		if (decostand.method == "wisconsin") {
-		    X <- decostand(X, "max", 2)
-    		X <- decostand(X, "tot", 1)
+		if (decostand.method == "wisconsin" | decostand.method == "domin2.6") {
+			if (decostand.method == "wisconsin") {			
+			    X <- decostand(X, "max", 2)
+    			X <- decostand(X, "tot", 1)
+    		}	
+    		if (decostand.method == "domin2.6" & !binary) {
+				X <- X^2.6 / 4
+			} else {
+				warning("Domin  2.6 transformation only allowed for non binary data",
+					"\nyou forced me to use binary=", binary)
+			}
     	} else {
     		if (missing(MARGIN)) {
     			X <- decostand(X, decostand.method)

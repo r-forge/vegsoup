@@ -1,3 +1,5 @@
+#	to do: add column for indicator value, high priority!
+
 .latexVegsoupDataPartitionSites <- function (object, p.col.width, filename, verbose = FALSE, ...) {
 #	object  <- prt
 

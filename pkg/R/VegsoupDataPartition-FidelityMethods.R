@@ -10,6 +10,7 @@
 #	returns a list with objects of class matrix.
 #	optionally calculates bootstrap
 
+#	to do: add column for indicator value, high priority!
 .FidelityVegsoupPartition <- function (obj, method, group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
 #	binary = FALSE; obj = prt; group = NULL
