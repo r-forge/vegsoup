@@ -2,13 +2,13 @@
 #	to do: improve documentation, rewrite AbundanceScale interface
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
-	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Braun-Blanquet")
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
+	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Domin")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
 	} else {
-		#	for safety
+		#	for safety and to ensure validity
 		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
 		
@@ -18,6 +18,17 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 			x$plot <- as.character(as.numeric(species$plot))
 		}	
 		x <- x[order(x$plot, x$layer, x$abbr), ]
+		if (dim(unique(unique(x)))[1] != dim(x)[1]) {
+			warning("found duplicated species abundances for plots:\n... ",
+				paste(x[duplicated(x), ]$plot, collapse = ", "),
+				"\n apply unique(x, fromLast = FALSE) to get rid of duplicates in x!",
+				"\n they will confuse me otherwise?",
+				" please review your data!")
+			x <- unique(x, fromLast = FALSE)
+		} else {
+			if (verbose) cat("\n species abundances for plots are unique, fine!" )
+		}
+		
 	}
 
 	if (missing(y)) {
@@ -89,7 +100,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 					if (any(is.na(x$cov))) {
 						str(x$cov)
 						stop("there seems to be digits mixed with charcters?")
-					}				
+				} 				
 				#	stopifnot(is.numeric(x$cov))
 				}
 				if (scale[[1]] == "binary") {
@@ -98,23 +109,22 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "frequency", "binary")
 				}
 				if (scale[[1]] == "Braun-Blanquet") {
 					scale <- list(
-					scale = "Braun-Blanquet", 
-					codes = c("r", "+", "1",
-						"2m", "2a", "2b", "3", "4", "5"),
-					lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
+						scale = "Braun-Blanquet", 
+						codes = c("r", "+", "1",
+							"2m", "2a", "2b", "3", "4", "5"),
+						lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
 				}
 				if (scale[[1]] == "Braun-Blanquet 2") {
 					scale <- list(
-					scale = "Braun-Blanquet", 
-					codes = c("r", "+", as.character(1:5)),
-					lims = c(1, 2, 3, 13, 38, 68, 88))
+						scale = "Braun-Blanquet", 
+						codes = c("r", "+", as.character(1:5)),
+						lims = c(1, 2, 3, 13, 38, 68, 88))
 				}
 				if (scale[[1]] == "Domin") {
 					scale <- list(
-					scale = "Domin",
-					codes <- c("+", as.character(1:9), "X"),
-        			lims <- c(0, 0.01, 0.1, 1, 5, 10, 25, 33, 50, 75, 90, 100))
-				
+						scale = "Domin",
+						codes = c("+", as.character(1:9), "X"),
+        				lims = c(0.01, 0.1, 1, 5, 10, 25, 33, 50, 75, 90, 100))
 				}					
 			}
 		} else {

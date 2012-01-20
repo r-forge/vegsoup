@@ -8,7 +8,7 @@ Create an object of class vegsoup
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-Vegsoup(x, y, z, scale = c("Braun-Blanquet", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat +datum=WGS84")
+Vegsoup(x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat +datum=WGS84")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -55,6 +55,13 @@ if (which(sel) == 4) {
 
 #	for safety if x is supplied as data.frame
 species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
+#	check names and bring to order
+if (all(c("plot", "abbr", "cov", "layer") %in% names(species))) {
+	species <- species[c("plot", "abbr", "cov", "layer")]	
+} else {
+	stop("\n need columns exactly named 'plot', 'abbr', 'cov', 'layer'")
+}
+ 
 
 #	keep only two columns
 taxonomy <- taxonomy[c("abbr", "taxon")]
@@ -91,12 +98,12 @@ if (any(is.na(test1))) {
 test2 <- dim(species)[1] - dim(unique(species[,c(1:3)]))[1]
 
 if (test2 > 0) {
-	warning("\nspecies data not unique for ", test2, "sample(s)")
+	warning("\nspecies data not unique for ", test2, " sample(s)")
 	warning("\nremoved duplicted species:\n\n")
 	if (verbose) {
-		print(species[duplicated(species[,c(1:3)]),])
+		print(species[duplicated(species[ ,c(1:4)]), ])
 	}
-	species <- species[!duplicated(species[,c(1:3)]),]
+	species <- species[!duplicated(species[, c(1:4)]), ]
 } else {
 	if (verbose) {
 		cat("\nno duplicates found")
@@ -115,6 +122,7 @@ if (any(is.na(res[, 1]))) {
 
 if (any(is.na(species))) {
 	warning("\n... NAs introduced")
+	cat(apply(species, 2, function (x) any(is.na(x))) )
 }
 
 if (return.species == FALSE) {

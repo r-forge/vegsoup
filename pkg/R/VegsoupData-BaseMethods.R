@@ -4,28 +4,34 @@
 VegsoupData <- function (obj, verbose = FALSE) {
 	require(stats)
 	#	obj <- qry; verbose = TRUE	
-	if (!inherits(obj, "Vegsoup"))
+	if (!inherits(obj, "Vegsoup")) {
 		stop("Need object of class Vegsoup")
-
+	}
+	
 	scale <- AbundanceScale(obj)
 	lay <- Layers(obj)
 	txa <- Taxonomy(obj)
 	species.long <- SpeciesLong(obj)
 	
+	#	 cats species matrix for Braun-Blanquet scales	
 	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
-		stopifnot(is.character(species.long$cov))
+		if (!is.character(species.long$cov)) {
+			stop("Abundance scale should be of mode charcter")
+		}
 		if (length(lay) == 1) {
 			if (verbose) cat("\ndata is structered in only one layer")
 		} else {
 			if (verbose) cat("\ndata is structered in layers: ", lay)
 		}
 		
-		cpu.time <- system.time({
+				cpu.time <- system.time({
 		#	change coverscale to numeric using scale$lims
-		tmp <- as.factor(species.long$cov)
-		levels(tmp) <- scale$lims[match(levels(tmp), scale$codes)]
-		species.long$cov <- as.numeric(as.character(tmp))
-
+		#	xtabs does not support non-integer values
+		cov.factor <- as.factor(species.long$cov)
+		cov.levels <- levels(cov.factor)
+		species.long$cov <- as.numeric(cov.factor)
+		stopifnot(any(is.na(species.long)) == FALSE)
+		
 		xt  <- xtabs(cov ~ plot + abbr + layer, data = species.long)
 		#	initialise species matrix	
 		if (dim(xt)[3] > 1) {
@@ -51,18 +57,88 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		for (i in 1:dim(xt)[3]) {
 			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
 				dimnames(res)$abbr, fixed = TRUE)
-			res[,sel] <- xt[,,i]	
+			res[, sel] <- xt[ , , i]
 		}
+		
 		#	remove layers were species are absent
 		res <- res[, colSums(res) > 0]
-		res <- as.data.frame(res)
-		#	restore coverscale to character using scale$codes
-		for (i in seq(along = scale$lims)) {
-			res[res == scale$lims[i]] <- scale$codes[i]
+		mode(res) <- "character"
+
+		#	restore abundance scale
+		for (i in cov.levels) {
+			res[res == i] <- scale$codes[scale$codes == i]
 		}
-		species <- res
+		species <- as.data.frame(res, stringsAsFactors = FALSE)
 		}) # end system.time
-	} # end if "Braun Blanquet"
+		
+	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
+
+	#	cast species matrix for Domin scale
+	#	this is Braun-Blanquet scale 
+	if (scale$scale == "Domin") {
+		if (!is.character(species.long$cov)) {
+			if (is.integer(species.long$cov)) {
+				warning("Codes for Domin scale supplied as integer, ",
+					"attempt to change mode to charcter")
+				species.long$cov <- as.character(species.long$cov)
+			} else {
+				stop("Abundance code must be either of mode charcter ",
+					"or integer for Domin scale")
+			}
+		}
+		if (length(lay) == 1) {
+			if (verbose) cat("\ndata is structered in only one layer")
+		} else {
+			if (verbose) cat("\ndata is structered in layers: ", lay)
+		}
+		
+		cpu.time <- system.time({
+		#	change coverscale to numeric using scale$lims
+		#	xtabs does not support non-integer values
+		cov.factor <- as.factor(species.long$cov)
+		cov.levels <- levels(cov.factor)
+		species.long$cov <- as.numeric(cov.factor)
+		stopifnot(any(is.na(species.long)) == FALSE)
+		
+		xt  <- xtabs(cov ~ plot + abbr + layer, data = species.long)
+		#	initialise species matrix	
+		if (dim(xt)[3] > 1) {
+			res <- matrix(0,
+			ncol = dim(xt)[2] * dim(xt)[3],
+			nrow = dim(xt)[1],
+			dimnames = list(
+				plot = dimnames(xt)$plot, 
+				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
+					rep(dimnames(xt)$layer,
+					each = dim(xt)[2]), sep = "@")))
+		} else {
+			res <- matrix(0,
+			ncol = dim(xt)[2],
+			nrow = dim(xt)[1],
+			dimnames = list(
+				plot = dimnames(xt)$plot, 
+				abbr = paste(dimnames(xt)$abbr,
+						dimnames(xt)$layer, sep = "@")))
+		}
+		
+		#	fill species matrix
+		for (i in 1:dim(xt)[3]) {
+			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
+				dimnames(res)$abbr, fixed = TRUE)
+			res[, sel] <- xt[ , , i]
+		}
+		
+		#	remove layers were species are absent
+		res <- res[, colSums(res) > 0]
+		mode(res) <- "character"
+		#
+		#	restore abundance scale to character using scale$codes
+		for (i in cov.levels) {
+			res[res == i] <- scale$codes[scale$codes == i]
+		}
+		species <- as.data.frame(res, stringsAsFactors = FALSE)
+		}) # end system.time
+	} # end if "Domin"
 	
 	cpu.time <- system.time({	
 	if (scale$scale == "frequency" | scale$scale == "binary") {
@@ -97,7 +173,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 				dimnames(res)$abbr, fixed = TRUE)
 			res[,sel] <- xt[,,i]	
 		}
-		res <- res[,colSums(res) > 0]
+		res <- res[, colSums(res) > 0]
 		species <- as.data.frame(res)
 	} # end if "frequency"	
 	}) # end system.time
