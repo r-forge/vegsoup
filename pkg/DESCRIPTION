@@ -33,4 +33,5 @@ Collate: AAA.R
          VegsoupDataPartitionFidelity-OutputMethods.R
          Class-VegsoupDataOptimstride.R
          VegsoupDataOptimstride-BaseMethods.R
+         ZZZ.R
 Respository: R-Forge

@@ -173,16 +173,13 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", 
 					stringsAsFactors = FALSE)
 				latlng <- latlng[order(latlng$plot),]
 				
-				#	to do! implemnt char2dms
-				
+				#	to do! implemnt char2dms				
 				#	strip of N and E
 				latlng[, 2] <- gsub("[[:alpha:]]", "", latlng[,2])
-				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[,3])
-				
+				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[,3])				
 				#	strip of blanks
 				latlng[, 2] <- gsub("[[:blank:]]", "", latlng[,2])
-				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[,3])
-				
+				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[,3])				
 				#	check decimal and change mode
 				latlng[, 2] <- as.numeric(gsub(",", ".", latlng[, 2], fixed = TRUE))
 				latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
@@ -192,8 +189,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", 
 
 				if (!any(table(sp.points$plot) > 1)) {				
 					coordinates(sp.points) <- ~ longitude + latitude
+					lnglat.sim <- FALSE					
 				} else {
 					lnglat.test <- FALSE
+					lnglat.sim <- TRUE					
 					warning("... did not succeed!",
 						" Some coordinates seem to be doubled.",
 						"\nproblematic plots: ",
@@ -205,6 +204,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", 
 				}		
 			} else {
 				lnglat.test <- FALSE
+				lnglat.sim <- TRUE					
 				warning("\n... did not succeed!",
 					"\nlongitude and latitude do not match in length", call. = FALSE)
 			}

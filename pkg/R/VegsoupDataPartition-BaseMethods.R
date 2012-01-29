@@ -81,7 +81,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 			"\n    distance:", dist,
 			"\n    decostand method:",
 				ifelse(is.null(decostand.method), "not active", decostand.method),
-			"\n    partitioning method:", method)
+			"\n    partitioning method:", method, "\n")
 		
 	}
 	
@@ -150,9 +150,15 @@ if (inherits(part, "partana")) {
 	grp <- part$clustering
 	names(grp) <- rownames(obj)
 }
-if (is.vector(part)) {
+if (is.vector(part)) { # method external
 	grp <- as.numeric(factor(part))
-	names(grp) <- rownames(obj) # prone to error!
+	names(grp) <- rownames(obj) # prone to error if clustering is not selected from sites!
+	if (verbose) {
+		print(data.frame(clustering = levels(factor(clustering)),
+			asigned = as.numeric(factor(levels(factor(clustering)))) )
+		)
+		
+	}
 }
 if (k != length(unique(grp)) && class(part) != "isopam") {
 	warning("did not converge for", k, "partitions",

@@ -26,7 +26,7 @@ VegsoupDataPartition(x, binary = TRUE, k, method = c("ward", "flexible", "pam", 
 }
 \details{
 Create a partitioned object of class VegsoupData using several clustering methods.
-Common data transformation are suported through the \code{decostand.method} interface which is wrapper for \code{\link{decostand}} in package 'vegan'. Additionally the Domin 2.6 transformation is supplied (Currall, 1987).
+Common data transformation are suported through the \code{decostand.method} interface which is wrapper for \code{\link{decostand}} in package 'vegan'. Additionally the Domin 2.6 transformation is supplied (Currall, 1987). If \code{method = "external"} and supllied grouping vector is of mode \code{character} \code{as.numeric(factor(clustering))} is used to construct the clustering vector.
 
 }
 \value{

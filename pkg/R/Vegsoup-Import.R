@@ -1,4 +1,4 @@
-QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = FALSE, verbose = FALSE) {
+QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = FALSE) {
 
 #	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
@@ -56,12 +56,15 @@ if (which(sel) == 4) {
 #	for safety if x is supplied as data.frame
 species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
 #	check names and bring to order
-if (all(c("plot", "abbr", "cov", "layer") %in% names(species))) {
-	species <- species[c("plot", "abbr", "cov", "layer")]	
+species.mandatory.columns <- c("plot", "abbr", "layer", "cov")
+
+if (!all(species.mandatory.columns %in% names(species))) {
+	stop("\n need mandatory columns ",
+		paste(species.mandatory.columns, collapse = ", "),
+		" in species data")	
 } else {
-	stop("\n need columns exactly named 'plot', 'abbr', 'cov', 'layer'")
-}
- 
+	species <- species[species.mandatory.columns]	
+}	
 
 #	keep only two columns
 taxonomy <- taxonomy[c("abbr", "taxon")]
@@ -95,7 +98,8 @@ if (any(is.na(test1))) {
 
  
 #	to do! validity method for vegsoup
-test2 <- dim(species)[1] - dim(unique(species[,c(1:3)]))[1]
+
+test2 <- dim(species)[1] - dim(unique(species[,c(1:4)]))[1]
 
 if (test2 > 0) {
 	warning("\nspecies data not unique for ", test2, " sample(s)")

@@ -477,7 +477,7 @@ setMethod("$", "VegsoupData",
 #	Layers method
 #	to do: documenation, implement option drop to drop a specific layer! high priority!
 
-.LayersVegsoupData <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
+"LayersVegsoupData" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
 } else {
@@ -501,7 +501,7 @@ if (missing(collapse) & missing(aggregate)) {
 	}
 	
 	#	debug
-	#	obj = sub; verbose = TRUE; aggregate = "layer"; dec = 0, collapse = c("hl", "sl", "tl", "tl", "hl")
+	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c("hl", "ml", "sl", "tl", "tl")
 	
 	#	revert to class Vegsoup and cast again
 	if (inherits(obj, "VegsoupData")) { 
@@ -567,7 +567,7 @@ if (missing(collapse) & missing(aggregate)) {
 			warning("reduced maximum aggregated abundance value to fit into limits: ",
 				min(scale$lims)[1], " to ", max(scale$lims))
 			species$cov[species$cov >  max(scale$lims)] <- max(scale$lims)
-	}
+		}
 	}
 	species$cov <- ceiling(species$cov)
 	
@@ -577,10 +577,11 @@ if (missing(collapse) & missing(aggregate)) {
 		levels(species$cov) <- scale$codes[match(levels(species$cov), scale$lims)]
 		species$cov <- as.character(species$cov)
 	}
-	
+
+	res <- VegsoupData(res)	
 	res@species.long <- species
 	res@layers <- unique(collapse[, 2])
-	res <- VegsoupData(res)
+
 	return(invisible(res))
 
 	}
@@ -589,7 +590,7 @@ if (missing(collapse) & missing(aggregate)) {
 
 setMethod("Layers",
    signature(obj = "VegsoupData"),
-    .LayersVegsoupData
+    LayersVegsoupData
 )
 
 #	Species richness of data set

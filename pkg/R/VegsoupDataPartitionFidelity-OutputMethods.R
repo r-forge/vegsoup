@@ -1,29 +1,6 @@
-#	summary method
-setMethod("summary",
-    signature(object = "VegsoupDataPartitionFidelity"),
-	function (object, ...) {
-	cat("method", object@method)
-	if (all(is.na(object@lowerCI))) {
-		cat("\nno bootstrap performed")	
-	} else {
-		cat("\nnumber of bootstrap replicates", object@nboot)
-	}
-}
-)
-
-#	getter method
-setGeneric("getStat",
-	function (obj, ...)
-		standardGeneric("getStat")
-)
-setMethod("getStat",
-	signature(obj = "VegsoupDataPartitionFidelity"),
-	function (obj) obj@stat	
-)
-
 #	format and arrange fidelity table
 #	adapted and extend from Sebastian Schmidtlein's isotab()
-.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, stat.min, footer.treshold, molticols.footer, verbose = FALSE, letters = FALSE, ...) {
+.latexVegsoupDataPartitionFidelity <- function (object, p.col.width, p.max, filename, stat.min, footer.treshold, molticols.footer, verbose = FALSE, letters = FALSE, caption.text, ...) {
 #	object = prt
 if (missing(filename)) {
 	filename <- paste("FidelityTable")
@@ -251,6 +228,8 @@ caption <- paste("Fidelity table for ",
 			table(Partitioning(object)), sep = ":", collapse = ", "),
 		". ",
 		sep = "")
+#	dirty		
+caption <- paste(caption, caption.text, collapse = " ")		
 	
 names(tex) <- col.names
 tex <- as.matrix(tex)
@@ -339,7 +318,7 @@ if (length(grep(".", "_", filename, fixed = TRUE))) {
 
 if (length(grep(" ", filename, fixed = TRUE)) > 0) {
 	warning("LaTex demands no blanks in filenames!",
-		" we replace all blanks!")
+		" replace all blanks with underscores!")
 	filename <- gsub(" ", "_", filename, fixed = TRUE)	
 }
 
