@@ -714,8 +714,14 @@ setMethod("[",
 	    
 		res@species <- as.character(x)[i, j, drop = FALSE]
 		
-		# remove empty plots and/or species
-		res@species <- res@species[rowSums(as.binary(x)[i, j, drop = FALSE]) > 0, , drop = FALSE]
+		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "Subset does not contain any species")		
+		
+		#	remove empty plots
+		res@species <- res@species[rowSums(res@species > 0) > 0, , drop = FALSE]		
+		#	remove empty species
+		res@species <- res@species[, colSums(res@species > 0) > 0, drop = FALSE]
+		
+		#	subset long format
 		res@species.long <-
 			res@species.long[res@species.long$plot %in%	rownames(res), ]
 		res@species.long <-
