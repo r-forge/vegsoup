@@ -696,7 +696,7 @@ setMethod("plot",
 	}	
 )
 
-#	subsetting method for all slots
+#	subsetting method
 #	to do: documenation
 #	VegsoupDataPartition implemts its own method,
 #	but internally coreces to class(VegsoupData)
@@ -704,26 +704,18 @@ setMethod("plot",
 setMethod("[",
     signature(x = "VegsoupData",
     i = "ANY", j = "ANY", drop = "missing"),
-	function (x, i, j, ..., drop = TRUE)
+    function (x, i, j, ..., drop = TRUE)
     {
 	    #	debug
 	    #	x = dta; i = 1:20; j <- rep(TRUE, ncol(x))
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
-
-		ii <- rowSums(as.binary(x)[i,j]) > 0 # plots
-#		if (any(ii == FALSE)) {
-#			cat("\n removed empty sites:",
-#				rownames(x)[i][!ii])	
-#		}
+	    
+		res@species <- as.character(x)[i, j, drop = FALSE]
 		
-		jj <- colSums(as.binary(x)[i,j]) > 0 # species
-#		if (any(jj == FALSE)) {
-#			cat("\nremoved empty species!\n")
-#		}
-
-		res@species <- as.character(x)[i,j][ii,jj]
+		# remove empty plots and/or species
+		res@species <- res@species[rowSums(as.binary(x)[i, j, drop = FALSE]) > 0, , drop = FALSE]
 		res@species.long <-
 			res@species.long[res@species.long$plot %in%	rownames(res), ]
 		res@species.long <-
@@ -735,13 +727,12 @@ setMethod("[",
 		if (any(sapply(res@sites, is.na))) stop("Error")
 		#	prone to error if ordering really matters?
 		res@sites.long <-
-			res@sites.long[res@sites.long$plot %in%
-				rownames(res), ]
+			res@sites.long[res@sites.long$plot %in%	rownames(res), ]
 		res@sites.long <- res@sites.long[order(res@sites.long$plot, res@sites.long$variable), ]
 		if (length(res@group) != 0) {
 		res@group <-
 			res@group[names(res@group) %in%
-				rownames(as.character(x)[i,j][ii,jj])]
+				rownames(res)]
 		}
 		#	Abbreviation relies on already subsetted taxonomy!
 		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
@@ -755,7 +746,7 @@ setMethod("[",
     }
 )
 
-#	
+#	#	coerc
 
 #	sample data, usally without replacement
 #if (!isGeneric("sample")) {
