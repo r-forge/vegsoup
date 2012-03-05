@@ -662,16 +662,26 @@ setMethod("summary",
 			"... but has non matching taxa!"),
 		sep = ""
 	)
+	if (dim(object)[1] == 1) {
+		species.list <- SpeciesLong(object)
+		species.list$taxon <- Taxonomy(obj)$taxon[match(species.list$abbr, Taxonomy(obj)$abbr)]
+		species.list <- species.list[, c(1,5,3,4)]
+		species.list <- apply(species.list[, -1], 1,
+			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = ""))
+	}		
 
+			#species.list <- paste(species.list, collapse = ", ")
 	switch(choice, "all" = {
 		cat(species.summary)
+		if (dim(object)[1] == 1) cat("\n species list\n", species.list)
 		cat("\nsites ")	
 		str(Sites(object), no.list = TRUE)
 	}, "species" = {
 		cat(species.summary)
+		if (dim(object)[1] == 1) cat("\nspecies", species.list)
 	}, "sites" = {
 		cat("\nsites ")
-		str(Sites(object))		
+		str(Sites(object), no.list = TRUE)		
 	})
 	cat("\n    proj4string:\n", proj4string(object))
 	cat("\n    bbox:\n"); bbox(object)		
@@ -714,7 +724,7 @@ setMethod("[",
 	    
 		res@species <- as.character(x)[i, j, drop = FALSE]
 		
-		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "Subset does not contain any species")		
+		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "subset does not contain any species!")		
 		
 		#	remove empty plots
 		res@species <- res@species[rowSums(res@species > 0) > 0, , drop = FALSE]		
@@ -731,6 +741,7 @@ setMethod("[",
 			res@sites[match(rownames(res),
 				rownames(res@sites)), ]
 		if (any(sapply(res@sites, is.na))) stop("Error")
+		
 		#	prone to error if ordering really matters?
 		res@sites.long <-
 			res@sites.long[res@sites.long$plot %in%	rownames(res), ]
