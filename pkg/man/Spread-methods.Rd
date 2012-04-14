@@ -4,13 +4,13 @@
 \alias{Spread,VegsoupDataPartition-method}
 \title{Methods for Function Spread}
 \description{
- ~~ Methods for function \code{Spread}  ~~
+\code{Spread} returns a list of species occurences and cluster assignments.
 }
 \section{Methods}{
 \describe{
 
 \item{\code{signature(obj = "VegsoupDataPartition")}}{
-%%  ~~describe this method here~~
+
 }
 }}
 \keyword{methods}
