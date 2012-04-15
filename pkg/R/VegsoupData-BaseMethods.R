@@ -756,8 +756,8 @@ setMethod("[",
 		   function (x) x[1])
  		#	taxonomy is subsetted!
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
-		res@sp.points <- res@sp.points[i,]
-		res@sp.polygons <- res@sp.polygons[i,]
+		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(res), ]
+		res@sp.polygons <- res@sp.polygons[res@sp.points$plot %in% rownames(res), ]
 		res@layers <- as.character(unique(res@species.long$layer))
 	    return(res)
     }

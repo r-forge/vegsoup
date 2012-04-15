@@ -22,9 +22,9 @@ if (length(drop) > 0) {
 	sites <- sites[ ,-drop]
 }
 if (missing(p.col.width)) {
-	p.col.width = "15mm"
+	p.col.width <- "15mm"
 	if (verbose) {
-		cat("p.col.width missing, set to ", p.col.width, call. = FALSE)
+		cat("p.col.width missing, set to ", p.col.width)
 	}
 }
 
@@ -132,8 +132,10 @@ if (missing(path)) {
 }	
 
 if (missing(p.col.width)) {
-	p.col.width = "10mm"
-	warning("p.col.width missing, set to ", p.col.width, call. = FALSE)
+	p.col.width <- "10mm"
+	if (verbose) {
+		cat("p.col.width missing, set to ", p.col.width, call. = FALSE)
+	}	
 }	
 
 res <- vector("list", length = getK(object))
@@ -192,23 +194,24 @@ setMethod("Latex",
 	signature(object = "VegsoupDataPartition"),
 	function (object, choice, recursive, ...) {
 			if (missing(choice)) {
-				choice  <- "species"	
+				choice <- "species"	
 			}
 			if (missing(recursive)) {
-				recursive  <- FALSE
+				recursive <- FALSE
 			}			
 			if (choice == "sites" & !recursive) {
-				.latexVegsoupDataPartitionSites(object, ...)
+				res <- .latexVegsoupDataPartitionSites(object, ...)
 			}
 			if (choice == "species" & !recursive) {
-				.latexVegsoupDataPartitionFidelity(Fidelity(object, ...))
+				res <- .latexVegsoupDataPartitionSpecies(object, ...)
 			}
 			if (choice == "sites" & recursive) {
-				.latexVegsoupDataPartitionSitesRecursive(object, ...)
+				res <- .latexVegsoupDataPartitionSitesRecursive(object, ...)
 			}
 			if (choice == "species" & recursive) {
-				.latexVegsoupDataPartitionSpeciesRecursive(object, ...)
+				res <- .latexVegsoupDataPartitionSpeciesRecursive(object, ...)
 			}			
+	return(invisible(res))
 	}
 )
 

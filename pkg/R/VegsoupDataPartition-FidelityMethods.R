@@ -11,12 +11,9 @@
 #	optionally calculates bootstrap
 
 #	to do: add column for indicator value, high priority!
-.FidelityVegsoupPartition <- function (obj, method, group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
+.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
-#	binary = FALSE; obj = prt; group = NULL
-if (missing(method)) {
-	method <- "r.g"	
-}
+#	binary = FALSE; obj = prt; group = NULL; method = "r.g"	
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
@@ -59,7 +56,7 @@ IndVal1 <- function (sav, gmv, group = NULL) {
 		if (is.na(m)) m <- 0
 		indvals[1,1] <- ifelse(sum(means) > 0,
 			m / sum(means), 0)
-		indvals[1,2] <- ifelse(sum(gmv==group) > 0,
+		indvals[1,2] <- ifelse(sum(gmv == group) > 0,
 			sum((gmv == group) & (sav > 0)) / sum(gmv == group), 0)
 		indvals[1,3] <- sqrt(indvals[1,1] * indvals[1,2])
 	}
@@ -395,7 +392,7 @@ g.s <- function (sav, gmv, group = NULL) {
 		g <- 0
 		for (ii in 1:2){
 			for (jj in 1:2){
-				if (x[ii,jj] != 0) g <- g + x[ii,jj] * log(x[ii,jj] / E[ii,jj])
+				if (x[ii, jj] != 0) g <- g + x[ii, jj] * log(x[ii, jj] / E[ii, jj])
 			}
 		}
 		g <- 2 * g
@@ -515,8 +512,7 @@ Fisher.s <-  function (sav, gmv, group = NULL, alternative = "greater") {
     	r[i] <- FisherPval(xm(N, Np, n, np))
     }
 	if (!is.null(group)) r <- r[group]
-	return(r)    
-
+	return(r)
 }
 
 
@@ -542,7 +538,7 @@ cr.s <- function (sav, gmv, group = NULL) {
 }
 
 
-#	total cover ratio as defiuned in Willner et al. 2009
+#	total cover ratio as defined in Willner et al. 2009
 tcr.ind.s <- function (sav, gmv, group = NULL) {
 	#	avoid ratios greater than 100
 #	cnst[cnst > 0 & cnst < 1] <- 1
@@ -557,7 +553,6 @@ tcr.ind.s <- function (sav, gmv, group = NULL) {
 	return(r)
 }
 
-
 #	method function
 fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 		 if (method == "r")			a <- r.s(sav, gmv, group)
@@ -568,14 +563,14 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 	else if (method == "r.ind.g")	a <- r.ind.g(sav, gmv, group, c)
 	else if (method == "s.ind")		a <- s.ind.s(sav, gmv, group, c)
 	else if (method == "s.ind.g")	a <- s.ind.g(sav, gmv, group, c)
-	else if (method == "IndVal.g")	a <- IndVal1(sav, gmv, group)[,3]
-	else if (method == "IndVal")	a <- IndVal2(sav, gmv, group)[,3]
-	else if (method == "A.g")		a <- IndVal1(sav, gmv, group)[,1]
-	else if (method == "A")			a <- IndVal2(sav, gmv, group)[,1]
-	else if (method == "B")			a <- IndVal2(sav, gmv, group)[,2]
-	else if (method == "u.hyp")		a <- u.s(sav, gmv, group)[,1]
-	else if (method == "u.binB")	a <- u.s(sav, gmv, group)[,2]
-	else if (method == "u.binA")	a <- u.s(sav, gmv, group)[,3]
+	else if (method == "IndVal.g")	a <- IndVal1(sav, gmv, group)[, 3]
+	else if (method == "IndVal")	a <- IndVal2(sav, gmv, group)[, 3]
+	else if (method == "A.g")		a <- IndVal1(sav, gmv, group)[, 1]
+	else if (method == "A")			a <- IndVal2(sav, gmv, group)[, 1]
+	else if (method == "B")			a <- IndVal2(sav, gmv, group)[, 2]
+	else if (method == "u.hyp")		a <- u.s(sav, gmv, group)[, 1]
+	else if (method == "u.binB")	a <- u.s(sav, gmv, group)[, 2]
+	else if (method == "u.binA")	a <- u.s(sav, gmv, group)[, 3]
 	else if (method == "g")			a <- g.s(sav, gmv, group)
 	else if (method == "chi")		a <- chi.s(sav, gmv, group)
 	else if (method == "Fisher")	a <- Fisher.s(sav, gmv, group, ...)
@@ -608,8 +603,8 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 	else if (method == "CR")		method.name <- "constancy ratio"
 	else if (method == "TCR")		method.name <- "total cover ratio"
   
-if (sum(is.na(cluster)) > 0) stop("Cannot deal with NA values. Remove and run again.")
-if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Remove and run again.")
+if (sum(is.na(cluster)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
+if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
   
 cluster <- as.factor(cluster)
 

@@ -51,14 +51,15 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	}
 	if (!is.null(decostand.method)) {
 		if (decostand.method == "wisconsin" | decostand.method == "domin2.6") {
-			if (decostand.method == "wisconsin") {			
+			if (decostand.method == "wisconsin") {
 			    X <- decostand(X, "max", 2)
     			X <- decostand(X, "tot", 1)
     		}	
     		if (decostand.method == "domin2.6" & !binary) {
 				X <- X^2.6 / 4
-			} else {
-				warning("Domin  2.6 transformation only allowed for non binary data",
+			}
+    		if (decostand.method == "domin2.6" & binary) {
+				warning("Domin 2.6 transformation is only allowed for non binary data",
 					"\nyou forced me to use binary=", binary)
 			}
     	} else {
@@ -70,8 +71,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
     	}
 	}
 	if (missing(dist)) {
-		if (verbose) cat("... Use distance \"bray\"") 
-		dist  <- "bray"
+		dist <- "bray"
 	}
 	
 	#	print settings before run
@@ -81,8 +81,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 			"\n    distance:", dist,
 			"\n    decostand method:",
 				ifelse(is.null(decostand.method), "not active", decostand.method),
-			"\n    partitioning method:", method, "\n")
-		
+			"\n    partitioning method:", method, "\n", ...)	
 	}
 	
 dis <- vegdist(X, method = dist)
@@ -116,8 +115,7 @@ switch(part.meth,
 	}, kmeans = {
 		if (verbose) cat("kmeans doesn't use distance matrices, ignore", dist)
 		part <- kmeans(as.binary(obj), centers = k,
-			...)
-		
+			...)		
 	}, wards = {
 		part <- hclust(dis, method = "ward",
 			...)
@@ -463,13 +461,45 @@ setMethod("Constancy",
 	function (obj, percentage = TRUE, ...) {
 		tmp <- t(as.matrix(table(Partitioning(obj))))
 		res <- Contingency(obj) / tmp[rep(1, nrow(Contingency(obj))),]
-		if (percentage)
+		if (percentage) {
 			res <- round (res * 100, 0)
+		}		
 		return(res)
 	}
 )
 
 #	summary statistics
+
+
+
+#	Tukey Five-Number Summary
+setGeneric("Fivenum",
+	function (obj, ...)
+		standardGeneric("Fivenum")
+)
+
+setMethod("Fivenum",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, na.rm = TRUE) {
+		tmp <- as.numeric(obj)
+		if (na.rm) tmp[tmp == 0] <- NA
+		tmp <- aggregate(tmp,
+			by = list(Partitioning(obj)),
+			FUN = function (x) fivenum(x, na.rm = TRUE), simplify = FALSE)
+		part <- tmp[, 1]
+		tmp <- tmp[, -1]
+		res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], 5),
+			dimnames = list(names(tmp), part,
+			c("min", "lower", "median", "upper", "max")))
+		for (i in 1:5) {
+			for (j in 1:nrow(res)) {
+				#	j = 1; i = 1
+				res[j, , i] <- sapply(tmp[, j], function (x) x[i])
+			}
+		}
+		return(invisible(res))	
+	}
+)
 
 #	Fisher Test
 #	depreciated
