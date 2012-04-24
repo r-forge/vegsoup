@@ -5,7 +5,7 @@
 function to do
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieve dataset or sample richness.
 }
 \usage{
 %%  ~~ Richness(obj, choices = c("dataset", sample"), ...) ~~
@@ -13,14 +13,14 @@ function to do
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+an object inheriting from \code{class(VegsoupData)}.
 }
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+  \item{choice}{
+return either dataset, or sample richness.
 }
 }
 \details{
-%%     ~~Returns the dataset or sample richness.~~
+In order to calculate richness all occurences of a particualr species in different layers if any are collapsed.
 }
 \value{
 %%  ~Describe the value returned
@@ -33,7 +33,7 @@ function to do
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roladn Kaiser
 }
 \note{
 %%  ~~further notes~~
