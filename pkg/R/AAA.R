@@ -1,7 +1,8 @@
 .onLoad <- function(lib, pkg) {
-	require(methods)
+
 }
 
 
-.onUnload <- function(libpath)
+.onUnload <- function(libpath) {
     library.dynam.unload("Vegsoup", libpath)
+}
