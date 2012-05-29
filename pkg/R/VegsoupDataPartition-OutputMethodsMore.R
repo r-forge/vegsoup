@@ -12,18 +12,22 @@
 #	\item{molticols.footer}{Number of columns to typeset species meeting conditions implied by \code{footer.treshold}}
 #	\item{fivenum.select}{if \code{mode = 2} a character vector selecting dimensions returned by \code{Fivenum} to become a pasted to the constancy value (see details).
 #	\item{caption.text}{addirtional user supplied text paste into automatically generated table caption (see details).}
-#	\item{letters}{use additional letters, only applicable if \code{getK(object <= 26)}}
+#	\item{use.letters}{use additional letters, only applicable if \code{getK(object <= 26)}}
 #	\item{mode}{type of ouput. \code{mode = 1} will typeset a species by cluster fidelity table. \code{mode = 2} will typeset a summary table for each cluster (see details)}.
 #	\item{verbose}{print function ouput to screen.}	
 #	\item{sep}{an optional character string to separate the summary statistics of \code{Fivenum}, defaults to \code{"/"}.}
+#	\item{recode}{recode result returend from \code{Fivenum} to ordinal scale if applicable, defaults to \code{"FALSE"}.}
 #	\item{...}{arguments passed to \link{code{Fidelity}} if object is not of \code{class(VegsoupDataPartitionFidelity)}.}
 
 
 #	details
-#	mode = 2 needs packe subfloat
+#	mode = 2 needs package subfloat
 
-.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, p.col.width = "10mm", footer.treshold, molticols.footer, letters = FALSE, caption.text = NULL, fivenum.select, sep = "/", verbose = FALSE, ...) {
-#	object = prt
+#	internal
+#	generic is set by VegsoupDataPartition-*Methods.R
+
+.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, p.col.width = "10mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+#	object = fid.prt; caption.text = NULL; p.col.width = "10mm"; sep = "/"; mode = 2
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -42,64 +46,74 @@ frq <- colSums(as.binary(object))
 siz <- table(Partitioning(object))
 
 if (missing(filename) & mode == 1) {
-	filename <- paste("FidelityTable")
+	filename = paste("FidelityTable")
 }
 if (missing(filename) & mode == 2) {
-	filename <- paste("ClusterSummary")
+	filename = paste("ClusterSummary")
 }
 if (missing(p.col.width)) {
-	p.col.width <- "10mm"
+	p.col.width = "10mm"
 	if (verbose) {
 		cat("\n p.col.width missing, set to ", p.col.width)
 	}
 }
 if (missing(p.max)) {
-	p.max <- .05
+	p.max = .05
 	if (verbose) {
 		cat("\n p.max missing, set to ", p.max)
 	}
 }
 if (missing(footer.treshold)) {
-	footer.treshold <- 2
+	footer.treshold = 2
 	if (verbose) {
 		cat("\n footer treshold missing, set to ", footer.treshold)
 	}	
 }
 if (missing(molticols.footer)) {
-	molticols.footer <- 3
+	molticols.footer = 3
 	if (verbose) {
 		cat("\n molticols footer missing, set to ", molticols.footer)
 	}	
 }
-if (missing(letters) & getK(object) > 10) {
-	letters <- TRUE
+if (missing(use.letters) & getK(object) > 10) {
+	use.letters = TRUE
 }
-
 if (missing(stat.min) & object@method == "r.g") {
 	#	automatic guess adapted from isopam()
-	stat.min <- round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
+	stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
 } else {
 	if (missing(stat.min)) {
 		stat.min = 0
+		warning("sta.min missing set to: ", stat.min,
+			"results may be meaningless. Please set an appropriate value for stat.min")
 	}
 }
 if (missing(fivenum.select)) {
 	fivenum.select = c("min", "median", "max")
 }
+if (missing(sites.columns)) {
+	sites.columns = names(Sites(object))
+	drop <- c(grep("longitude", sites.columns),
+		grep("latitude", sites.columns),
+		grep("precision", sites.columns))
+	sites.columns = sites.columns[-drop]
+}
 #	test and set file name
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
+	filename = paste(filename, ".tex", sep = "")
 	if (verbose) {
-		cat("\nadd file extension .tex to filename ", filename, call. = FALSE)
-	}	
-	filename <- paste(filename, ".tex", sep = "")
+		cat("\n add file extension .tex")
+	}
 }	
 if (length(grep(" ", filename, fixed = TRUE)) > 0) {
-	warning("LaTex demands no blanks in filenames!",
+	filename = gsub(" ", "_", filename, fixed = TRUE)	
+	if (verbose) {
+		warning("\n LaTex demands no blanks in filenames!",
 		" we replace all blanks with underscores")
-	filename <- gsub(" ", "_", filename, fixed = TRUE)	
+	}
 }
 
-
+###	init steps for mode 1 and 2
 #	significance symbols
 symb <- ft
 symb[ft > 0.05] <- ""
@@ -135,8 +149,13 @@ stat <- stat[ord.top, ]
 #	filter diagnostic species
 dia <- which(c(apply(ft, 1, min) <= p.max)[c(apply(stat, 1, max) >= stat.min)] == TRUE)
 
-if (length(dia) == 0) diag <- "No diagnostic species with given thresholds." 
-if (length(dia) > 0) diag <- frq.ft.top[names(dia), ]
+if (length(dia) == 0) {
+	diag <- "No diagnostic species with given thresholds." 
+}	
+
+if (length(dia) > 0) {
+	diag <- frq.ft.top[names(dia), ]
+}	
 
 #	for later use in the bottom part of the tables
 ord.bot <- names(as.matrix(frq)[order(-frq), ])
@@ -199,76 +218,76 @@ txn <- txn[match(rownames(tex), txn$abbr.layer), ]
 tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
 	stringsAsFactors = FALSE, check.names = FALSE)
 
-###	internal fucntion branching
-
+###	internal funtion branching mode 1
 #	standard mode, all species in one table
 #	add typesetting commands to intermediate results backuped as tex.out
 
 if (mode == 1) {
 	
-#	add blank lines and pointer to seperate diagnostic species
-#	test if any group has no typical species
-#	test for partitions without typical species
-untyp <- unlist(typ) == "Nothing particularly typical"
-tex.typical <- tex[match(unlist(typ)[!untyp], rownames(tex)), ]
-tex.others <- tex[-match(unlist(typ)[!untyp], rownames(tex)), ]
+	#	add blank lines and pointer to seperate diagnostic species
+	#	test if any group has no typical species
+	#	test for partitions without typical species
+	untyp <- unlist(typ) == "Nothing particularly typical"
+	tex.typical <- tex[match(unlist(typ)[!untyp], rownames(tex)), ]
+	tex.others <- tex[-match(unlist(typ)[!untyp], rownames(tex)), ]
 
-#	block of typical species
-tex.typical.seperated <- c()
-for (i in c(1:nc)) {#[!typ == "Nothing particularly typical"]
-#	i = 6
-	sel <- match(typ[[i]], rownames(tex.typical))
-	if (!any(is.na(sel))) {
-		tmp <- tex.typical[sel[rep(1,2)], ]
-		rownames(tmp) <- c(i, paste("typical", i, sep =""))
-		tmp[1, 1] <- ""
-		tmp[2, 1] <- paste("\\textbf{typical for ", i, "}", sep = "")	
-		tmp[1:2, 2:ncol(tmp)] <- ""
-		tmp <- rbind(tmp, tex.typical[sel, ])
-	} else {
-		tmp <- tex.typical[rep(1,2),]
-		rownames(tmp) <- c(i, paste("typical", i, sep =""))
-		tmp[1,1] <- ""
-		tmp[2,1] <- paste("\\textbf{Nothing particularly typical for ", i, "}", sep = "")	
-		tmp[1:2, 2:ncol(tmp)] <- ""
-	}
+	#	block of typical species
+	tex.typical.seperated <- c()
+	for (i in c(1:nc)) {
+		#[!typ == "Nothing particularly typical"]
+		#	i = 6
+		sel <- match(typ[[i]], rownames(tex.typical))
+		if (!any(is.na(sel))) {
+			tmp <- tex.typical[sel[rep(1,2)], ]
+			rownames(tmp) <- c(i, paste("typical", i, sep =""))
+			tmp[1, 1] <- ""
+			tmp[2, 1] <- paste("\\textbf{typical for ", i, "}", sep = "")	
+			tmp[1:2, 2:ncol(tmp)] <- ""
+			tmp <- rbind(tmp, tex.typical[sel, ])
+		} else {
+			tmp <- tex.typical[rep(1,2),]
+			rownames(tmp) <- c(i, paste("typical", i, sep =""))
+			tmp[1,1] <- ""
+			tmp[2,1] <- paste("\\textbf{Nothing particularly typical for ", i, "}", sep = "")	
+			tmp[1:2, 2:ncol(tmp)] <- ""
+		}
 	tex.typical.seperated <- rbind(tex.typical.seperated, tmp)
-}
+	}
 
-#	block of remaining species, not typical for a particular cluster
-tex.others.seperated <- tex.others[1,]
-rownames(tex.others.seperated) <- "others"
-tex.others.seperated[1, 1] <- "\\textbf{not particular typical}"
-tex.others.seperated[1, 2:ncol(tex.others.seperated)] <- ""
+	#	block of remaining species, not typical for a particular cluster
+	tex.others.seperated <- tex.others[1,]
+	rownames(tex.others.seperated) <- "others"
+	tex.others.seperated[1, 1] <- "\\textbf{not particular typical}"
+	tex.others.seperated[1, 2:ncol(tex.others.seperated)] <- ""
 
-empty.line <- tex.others.seperated[0,]
-empty.line[1, ] <- ""
-rownames(empty.line) <- "0"
+	empty.line <- tex.others.seperated[0,]
+	empty.line[1, ] <- ""
+	rownames(empty.line) <- "0"
 
-tex.others.seperated <- rbind(empty.line, tex.others.seperated, tex.others)
+	tex.others.seperated <- rbind(empty.line, tex.others.seperated, tex.others)
 
-tex <- rbind(tex.typical.seperated, tex.others.seperated)
+	tex <- rbind(tex.typical.seperated, tex.others.seperated)
 
-#	column widths and column names
-p.col <- paste("p{", p.col.width, "}", sep = "")
-col.just <- c("p{80mm}", "p{10mm}", rep(p.col, getK(object)))
-col.names <- c("Taxon", "Layer", 1:getK(object))
+	#	column widths and column names
+	p.col <- paste("p{", p.col.width, "}", sep = "")
+	col.just <- c("p{80mm}", "p{10mm}", rep(p.col, getK(object)))
+	col.names <- c("Taxon", "Layer", 1:getK(object))
 
-if (length(Layers(object)) < 2) {
-	tex <- tex[,-2]
-	col.just <- col.just[-2]
-	col.names <- col.names[-2]
-	add2caption  <- paste("All species in the same layer ",
-		Layers(object),
-		". ",
-		"Fidelity measure: ", object@method, ". ",
-		sep = "")
-} else {
-	add2caption  <- ""
-}
+	if (length(Layers(object)) < 2) {
+		tex <- tex[, -2]
+		col.just <- col.just[-2]
+		col.names <- col.names[-2]
+		add2caption  <- paste("All species in the same layer ",
+			Layers(object),
+			". ",
+			"Fidelity measure: ", object@method, ". ",
+			sep = "")
+	} else {
+		add2caption  <- ""
+	}
 
-#	table caption
-caption <- paste("Fidelity table for ",
+	#	table caption
+	caption <- paste("Fidelity table for ",
 		getK(object),
 		" partitions. ",
 		add2caption,
@@ -278,111 +297,117 @@ caption <- paste("Fidelity table for ",
 			table(Partitioning(object)), sep = ":", collapse = ", "),
 		". ",
 		sep = "")
-caption <- paste(caption, caption.text, collapse = " ")	# additional user supplied text	
+		caption <- paste(caption, caption.text, collapse = " ")	# additional user supplied text	
 
-#	prepare intermediate result for formating	
-names(tex) <- col.names
-tex <- as.matrix(tex)
-tex[tex == 0] <- "."
+		#	prepare intermediate result for formating	
+		names(tex) <- col.names
+		tex <- as.matrix(tex)
+		tex[tex == 0] <- "."
 
-#	move rare species to table footer
-footer.species <- row.names(cntn)[rowSums(cntn) < footer.treshold]
-#	check if we loose the only typical species in a partition
-candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
-#	for data set with very low species diversity try to reduce footer treshold
-#	omit footer and raise a warning
+		#	move rare species to table footer
+		footer.species <- row.names(cntn)[rowSums(cntn) < footer.treshold]
 
-if (length(candidates) > 0) {
-#	drop candidates from vector of footer species
-	for (i in seq(along = typ)[!typ == "Nothing particularly typical"]) {
-		if (length(typ[[i]]) == 1 & any(!is.na(match(typ[[i]], footer.species)))) {
-			footer.species <- footer.species[-match(candidates[match(typ[[i]], candidates)], footer.species)]
-		} 
+		#	check if we loose the only typical species in a partition
+		candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
+		
+		#	for data set with very low species diversity try to reduce footer treshold
+		#	omit footer and raise a warning
+
+	if (length(candidates) > 0) {
+	#	drop candidates from vector of footer species
+		for (i in seq(along = typ)[!typ == "Nothing particularly typical"]) {
+			if (length(typ[[i]]) == 1 & any(!is.na(match(typ[[i]], footer.species)))) {
+				footer.species <- footer.species[-match(candidates[match(typ[[i]], candidates)], footer.species)]
+			} 
+		}
+
+		#	prune footer species and collapse to string 
+		tex.footer <- tex[match(footer.species, row.names(tex)), ]
+		tex <- tex[-match(footer.species, row.names(tex)), ]
+		footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
+
+		txn <- DecomposeNames(object, verbose = FALSE)
+
+		txn <- txn[match(rownames(footer), txn$abbr.layer), ]
+		footer <- as.data.frame(footer, stringsAsFactors = FALSE)
+		footer$taxon <- txn$taxon
+		tmp <- c()
+
+		for (i in 1:nc) {
+			tmp.i <- data.frame(footer[, i], footer$taxon)
+			if (sum(tmp.i[,1]) > 0) {
+				tmp.i <- paste("\\textbf{", i, "}: ",
+					paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
+					tmp <- c(tmp, tmp.i)
+				}
+		}
+
+		#	nice language for low thresholds
+		if (footer.treshold < 4) {
+			footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
+				paste(tmp, collapse = "\n\n "), sep = "")
+			} else {
+			footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
+				paste(tmp, collapse = "\n\n "), sep = "")
+		}
+		footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
+	} else {
+		warning("footer is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
+		footer <- ""
 	}
 
-	#	prune footer species and collapse to string 
-	tex.footer <- tex[match(footer.species, row.names(tex)), ]
-	tex <- tex[-match(footer.species, row.names(tex)), ]
-	footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
-
-	txn <- DecomposeNames(object, verbose = FALSE)
-
-	txn <- txn[match(rownames(footer), txn$abbr.layer), ]
-	footer <- as.data.frame(footer, stringsAsFactors = FALSE)
-	footer$taxon <- txn$taxon
-	tmp <- c()
-
-	for (i in 1:nc) {
-		tmp.i <- data.frame(footer[, i], footer$taxon)
-		if (sum(tmp.i[,1]) > 0) {
-			tmp.i <- paste("\\textbf{", i, "}: ",
-				paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
-			tmp <- c(tmp, tmp.i)
+	#	remove rare species from list of typical species, if any
+	for (i in seq(along = typ)) {	
+		tmp <- match(footer.species, typ[[i]])
+		if (any(!is.na(tmp))) {
+			tmp <- tmp[!is.na(tmp)]
+			if (length(typ[[i]][-tmp]) < 1) {
+				warning("list of typical species would be empty",
+					" if this rare species gets dropped!", call. = FALSE)
+				footer.species <- footer.species[-match(typ[[i]], footer.species)]
+			} else {
+				typ[[i]] <- typ[[i]][-tmp]
+			}
 		}
 	}
+	#	add boxes around diagnostic species
+	lab.cols <- max(grep("[[:alpha:]]", dimnames(tex)[[2]]))
+	cellTexCmds <- matrix(rep("", NROW(tex) * NCOL(tex)), nrow = NROW(tex))
 
-	#	nice language for low thresholds
-	if (footer.treshold < 4) {
-		footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
-			paste(tmp, collapse = "\n\n "), sep = "")
-	} else {
-		footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
-			paste(tmp, collapse = "\n\n "), sep = "")
+	for (i in c(1:nc) + lab.cols) {
+		#	i = 2
+		sel <- match(typ[[i - lab.cols]], rownames(tex))
+		cellTexCmds[sel, i] <- "\\multicolumn{1}{|l|}"
+		tex[sel, i]  <- paste(cellTexCmds[sel, i], "{", tex[sel, i], "}", sep = "")
 	}
-	footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
-	} else {
-	warning("footer is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
-	footer <- ""
+	tex.out <- tex
+	footer.species <- footer
+	footer.sites <- NULL
 }
+# end if (mode == 1)
 
-#	remove rare species from list of typical species, if any
-for (i in seq(along = typ)) {	
-	tmp <- match(footer.species, typ[[i]])
-	if (any(!is.na(tmp))) {
-		tmp <- tmp[!is.na(tmp)]
-		if (length(typ[[i]][-tmp]) < 1) {
-			warning("list of typical species would be empty",
-				" if this rare species gets dropped!", call. = FALSE)
-			footer.species <- footer.species[-match(typ[[i]], footer.species)]
-		} else {
-			typ[[i]] <- typ[[i]][-tmp]
-		}
-	}
-}
-
-#	add boxes around diagnostic species
-lab.cols <- max(grep("[[:alpha:]]", dimnames(tex)[[2]]))
-cellTexCmds <- matrix(rep("", NROW(tex) * NCOL(tex)), nrow = NROW(tex))
-for (i in c(1:nc) + lab.cols) {
-#	i = 2
-	sel <- match(typ[[i - lab.cols]], rownames(tex))
-	cellTexCmds[sel, i] <- "\\multicolumn{1}{|l|}"
-	tex[sel, i]  <- paste(cellTexCmds[sel, i], "{", tex[sel, i], "}", sep = "")
-}
-
-} # end if (mode == 1)
-
-###	internal function branching
+###	internal function branching mode 2
 #	partition summary
+#	add typesetting commands to intermediate results backuped as tex.out
 
 if (mode == 2) {
-	cat("\n run mode 2")
+	if (verbose) cat("\n run mode", mode)
 	
 	#	species summary
-	fn <- Fivenum(object)
+	fn <- Fivenum(object, recode = FALSE)
 	fn <- fn[match(rownames(tex), rownames(fn)), ,]
 
-	fn.df <- t(apply(fn, c(2, 1), function (x) {
-		tex <- x[fivenum.select]
-		tex <- paste(tex, collapse = sep)
-		tex
+	fn.df <- t(apply(fn, c(2, 1),
+		function (x) {
+			res <- x[fivenum.select]
+			res <- paste(res, collapse = sep)
+			res
 		}))
 
 	#	sites summary	
 	sts <- Sites(object)
 	sts$part <- Partitioning(object)
-	sts <- sts[, c("part", "altitude", "substrate", "bark", "dbh", "exp.trunk",
-		"vegetation", "forest.type", "pl.lower.limit", "pl.upper.limit")]
+	sts <- sts[, c("part", sites.columns)]
 
 	#	resort to match order of intermediate result table 
 	fn.df <- fn.df[match(rownames(tex), rownames(fn.df)), ]
@@ -391,11 +416,11 @@ if (mode == 2) {
 	stat <- stat[match(rownames(tex), rownames(stat)), ]
 	sprd <- Spread(object)
 
-	tex <- footer <- footer.species <- vector("list", length = getK(object))
-	names(tex) <- names(footer) <- names(footer) <- 1:getK(object)
+	tex <- footer.sites <- footer.species <- vector("list", length = getK(object))
+	names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(object)
 	
 	for (i in 1:getK(object)) {
-		#	i = 23
+		#	i = 1
 		sel <- which(cnst[, i] > 0)
 		
 		#	main table
@@ -437,10 +462,11 @@ if (mode == 2) {
 		tmp <- sapply(tmp, function (x) x[order(x, decreasing = TRUE)])		
 		tmp <- sapply(tmp, function (x) paste(names(x), x, sep = ": ", collapse = "; "))
 		tmp <- data.frame(parameter = names(tmp), values = tmp, stringsAsFactors = FALSE)
-		footer[[i]] <- tmp
+		footer.sites[[i]] <- tmp
 	}
 	tex.out <- tex
-} # end if (mode == 2)
+}
+# end if (mode == 2)
 
 
 #	check species characters
@@ -448,11 +474,12 @@ if (mode == 2) {
 #	taxon is always in first position in the table
 
 if (mode == 1) {
-	
+	if (verbose) cat("\n run mode", mode)
+		
 	tex[, 1] <- gsub("×", "$\\times$", tex[, 1], fixed = TRUE)
 	footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 	tex <- gsub("%", "\\%", tex, fixed = TRUE)
-	if (letters) {
+	if (use.letters) {
 		sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])
 		dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
 			" (", LETTERS[sort(unique(Partitioning(object)))], ")", sep = "")
@@ -479,9 +506,11 @@ if (mode == 1) {
 		writeLines(footer, con)
 	close(con)
 }
+# end if (mode == 1)
 
 if (mode == 2) {
-	tex <- sapply(tex, function (x) {
+
+	tex.out <- sapply(tex.out, function (x) {
 			tmp <- x
 			tmp[, 1] <- gsub("×", "$\\times$", tmp[, 1], fixed = TRUE)
 			tmp
@@ -491,49 +520,44 @@ if (mode == 2) {
 	con <- file(filename)
 		writeLines("%start", con)
 	close(con)	
+
 	for (i in 1:getK(object)) {
-	latex(tex[[i]],
-		file = filename,
-		append = TRUE,
-		caption = paste("Partion summary for cluster", i, ".",
-			ifelse(length(caption.text) > 0, paste(" ", caption.text, ".", sep = ""), "")),
-		rowname = NULL,
-		booktabs = TRUE,
-		longtable = TRUE,
-		lines.page = nrow(tex[[i]]),
-		numeric.dollar = FALSE,
-		here = TRUE #, col.just = col.just
+		latex(as.matrix(tex.out[[i]]),
+			file = filename,
+			append = TRUE,
+			caption = paste("Partion summary for cluster", i, ".",
+				ifelse(length(caption.text) > 0, paste(" ", caption.text, ".", sep = ""), "")),
+			rowname = NULL,
+			booktabs = TRUE,
+			longtable = TRUE,
+			lines.page = nrow(tex.out[[i]]),
+#			numeric.dollar = FALSE, # raises errors in format.df
+			here = TRUE #, col.just = col.just
 		)
+
 	con <- file(filename)
 		tmp <- readLines(con)
 		hook <- max(grep("bottomrule", tmp))
 
 		tmp.bgn <- 1: c(hook -1) # begin
 		tmp.end <- hook:length(tmp) # end
-		tmp.ins1 <- footer.species[[i]] # insert
+		tmp.ins1 <- footer.species[[i]] # insert 1
 		tmp.ins1 <- apply(tmp.ins1, 1, function (x) {
-			paste(x[1], "& \\multicolumn{", dim(tex[[i]])[2] - 1, "}", "{p{200mm}}",
+			paste(x[1], "& \\multicolumn{", dim(tex.out[[i]])[2] - 1, "}", "{p{200mm}}",
 				"{", x[2], "}", "\\tabularnewline", sep = "")	
 		})
-		tmp.ins2 <- footer[[i]] # insert
+		tmp.ins2 <- footer.sites[[i]] # insert 2
 		tmp.ins2 <- apply(tmp.ins2, 1, function (x) {
-			paste(x[1], "& \\multicolumn{", dim(tex[[i]])[2] - 1, "}", "{p{200mm}}",
+			paste(x[1], "& \\multicolumn{", dim(tex.out[[i]])[2] - 1, "}", "{p{200mm}}",
 				"{", x[2], "}", "\\tabularnewline", sep = "")	
 		})
 		tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
 		writeLines(tmp, con)
 	close(con)		
-	}	
-
+	}
+		
 }
+# end if (mode == 2)
 
-return(invisible(list(table = tex.out, footer = footer, footer.species)))
+return(invisible(list(table = tex.out, footer.sites = footer.sites, footer.species = footer.species)))
 }
-
-#	generic is set by VegsoupDataPartition-*Methods.R
-
-#	may also be called for its side effect
-#setMethod("Latex",
-#	signature(object = "VegsoupDataPartitionFidelity"),
-#	.latexVegsoupDataPartitionFidelity	
-#)

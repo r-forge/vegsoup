@@ -93,8 +93,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		}
 		
 		cpu.time <- system.time({
-		#	change coverscale to numeric using scale$lims
-		#	xtabs does not support non-integer values
+		#	xtabs does not support non-integer values!			
+		#	workaround: change coverscale to numeric using scale$lims
 		cov.factor <- as.factor(species.long$cov)
 		cov.levels <- levels(cov.factor)
 		species.long$cov <- as.numeric(cov.factor)
@@ -131,7 +131,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		#	remove layers were species are absent
 		res <- res[, colSums(res) > 0]
 		mode(res) <- "character"
-		#
+		#	workaround
 		#	restore abundance scale to character using scale$codes
 		for (i in cov.levels) {
 			res[res == i] <- scale$codes[scale$codes == i]

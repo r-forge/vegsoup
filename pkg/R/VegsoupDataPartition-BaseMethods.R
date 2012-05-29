@@ -480,7 +480,7 @@ setGeneric("Fivenum",
 
 setMethod("Fivenum",
 	signature(obj = "VegsoupDataPartition"),
-	function (obj, na.rm = TRUE) {
+	function (obj, na.rm = TRUE, recode = FALSE) {
 		tmp <- as.numeric(obj)
 		if (na.rm) tmp[tmp == 0] <- NA
 		tmp <- aggregate(tmp,
@@ -496,6 +496,14 @@ setMethod("Fivenum",
 				#	j = 1; i = 1
 				res[j, , i] <- sapply(tmp[, j], function (x) x[i])
 			}
+		}
+		
+		if (recode) {
+			for (i in 1:dim(res)[3]) {
+				for (j in AbundanceScale(obj)$lims) {
+					res[, , i][res[, , i] == j] <- AbundanceScale(obj)$codes[AbundanceScale(obj)$lims == j]
+				}
+			}			
 		}
 		return(invisible(res))	
 	}
@@ -594,18 +602,18 @@ setMethod("FisherTest",
 	}
 
 	N <- nrow(obj)						# number of plots
-	n.i <- colSums(as.binary(obj))			# species frequencies
+	n_i <- colSums(as.binary(obj))			# species frequencies
 	N_pi <- table(Partitioning(obj))	# number of plots in partition
 	n_pi <- Contingency(obj)			# number of occurences in partition
 
 	res <- n_pi
 
 	for (i in 1:ncol(obj)) { # loop over species
-		n <- n.i[i]						# n	
+		n <- n_i[i]						# n	
 	    for (j in 1:length(N_pi)) {		# loop over partitions
 			N_p <- N_pi[j]
 			n_p <- n_pi[i,j]    	
-    		res[i,j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
+    		res[i, j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
     	}
 	}
  

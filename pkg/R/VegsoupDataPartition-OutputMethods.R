@@ -350,7 +350,7 @@ res <- c(
 	folder,
 	end.kml)
 	
-con <- file(paste(path, "/vegsoup partiton.kml", sep = ""))
+con <- file(paste(path, "/vegsoup partition.kml", sep = ""))
 	writeLines(res, con)
 close(con)
 	
