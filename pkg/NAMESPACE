@@ -1,18 +1,20 @@
-#useDynLib()
 #package 'isopam' does not have a name space
 #importFrom("isopam", isopam)
 #package 'optpart' does not have a name space
 #importFrom(optpart, optpart, partana, tabdev, disdiam)
 #package 'vegan' does not have a name space
 
+#useDynLib()
+
 import(methods)
 importFrom("graphics", plot, hist)
 importFrom("utils", head, tail)
 importFrom("Hmisc", latex)
+importFrom("rgdal", spTransform)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 importFrom("cluster", agnes, pam, silhouette)
-importFrom("rgdal", spTransform)
-importFrom("googleVis", gvisMap)
+
+#importFrom("googleVis", gvisMap)
 
 #exportPattern("^[^\\.]")
 exportPattern("^[[:alpha:]]+")
