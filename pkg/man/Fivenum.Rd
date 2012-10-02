@@ -2,7 +2,7 @@
 \alias{Fivenum}
 
 \title{
-Tukey Five-Number Summaries for 
+Tukey Five-Number Summaries for Community Matrix
 }
 
 \description{
@@ -35,7 +35,7 @@ Roland Kaiser
 }
 
 \seealso{
-\code{\link{boxplot.stats}},\code{\link{fivenum}},\code{\link{AbundanceScale}}.
+\code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\link{AbundanceScale}}.
 }
 \examples{
 #	get minmum

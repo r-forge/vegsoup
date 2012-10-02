@@ -11,17 +11,23 @@
 #	optionally calculates bootstrap
 
 #	to do: add column for indicator value, high priority!
-.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, binary = TRUE, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
+.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
 #	debug
 #	binary = FALSE; obj = prt; group = NULL; method = "r.g"	
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
-}	
-if (binary) {
-	X <- as.binary(obj)
-} else {
+}
+
+	
+if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
+	if (verbose)
+		print("individual based index")
 	X <- as.numeric(obj)
+} else {
+	X <- as.binary(obj)
+		if (verbose)
+		print("presence/absence based index")
 }
 
 cluster <- Partitioning(obj)
@@ -33,7 +39,7 @@ IndVal1 <- function (sav, gmv, group = NULL) {
 	means <- vector("numeric", nlevels(gmv))
 	
 	for (i in 1:nlevels(gmv)) {
-		means[i] <- mean(sav[gmv==levels(gmv)[i]])
+		means[i] <- mean(sav[gmv == levels(gmv)[i]])
 		if (is.na(means[i])) means[i] <- 0
 	}   
 	if (is.null(group)) {	# indval1 for all groups
@@ -48,7 +54,7 @@ IndVal1 <- function (sav, gmv, group = NULL) {
 				sum((gmv == levels(gmv)[i]) & (sav > 0)) / sum(gmv == levels(gmv)[i]), 0)
 			indvals[i,3] <- sqrt(indvals[i,1]*indvals[i,2])
 	}	 
-	} else {	# indval1 for one groups
+	} else {	# indval1 for one group
 		indvals <- data.frame(matrix(0, nrow = 1, ncol = 3))
 		row.names(indvals) <- c(group)
 		names(indvals) <- c("A.g", "B", "IndVal.g")
@@ -58,7 +64,7 @@ IndVal1 <- function (sav, gmv, group = NULL) {
 			m / sum(means), 0)
 		indvals[1,2] <- ifelse(sum(gmv == group) > 0,
 			sum((gmv == group) & (sav > 0)) / sum(gmv == group), 0)
-		indvals[1,3] <- sqrt(indvals[1,1] * indvals[1,2])
+		indvals[1,3] <- sqrt(indvals[1, 1] * indvals[1, 2])
 	}
 	return (indvals)
 }
@@ -80,20 +86,20 @@ IndVal2 <- function(sav, gmv, group = NULL) {
 				sums[i] / sum(sums), 0)
 			indvals[i,2] <- ifelse(sum(gmv == levels(gmv)[i]) > 0,
 				sum((gmv == levels(gmv)[i]) & (sav > 0)) / sum(gmv == levels(gmv)[i]), 0)
-			indvals[i,3] <- sqrt(indvals[i,1] * indvals[i,2])
+			indvals[i,3] <- sqrt(indvals[i, 1] * indvals[i, 2])
 		}
 	} else {  # indval2 for one group
-		indvals <- data.frame(matrix(0, nrow=1,ncol=3))
+		indvals <- data.frame(matrix(0, nrow = 1, ncol = 3))
 		row.names(indvals) <- c(group)
 		sg <- sum(sav[gmv==group])
-		indvals[1,1] <- ifelse(sum(sums) > 0,
+		indvals[1, 1] <- ifelse(sum(sums) > 0,
 			sg / sum(sums), 0)
-		indvals[1,2] <- ifelse(sum(gmv==group) > 0,
+		indvals[1, 2] <- ifelse(sum(gmv == group) > 0,
 			sum((gmv == group) & (sav > 0)) / sum(gmv == group), 0)
-		indvals[1,3] <- sqrt(indvals[1] * indvals[2])       
+		indvals[1, 3] <- sqrt(indvals[1] * indvals[2])       
 	}
 	names(indvals) <- c("A", "B", "IndVal")
-   return (indvals)
+	return(indvals)
 }
 
 
@@ -165,7 +171,7 @@ r.ind.s <- function (sav, gmv, group = NULL, c = 1) {
 		r <- vector("numeric", nlevels(gmv))
 		for (i in 1:nlevels(gmv)) {
 			ni <- sum(gmv == levels(gmv)[i])
-			aspi <- sum(sav*(gmv == levels(gmv)[i]))
+			aspi <- sum(sav * (gmv == levels(gmv)[i]))
 			num <- (N * aspi) - (asp * ni)
 			s2 <- N * c * asp - asp^2
 			g2 <- N * ni - ni^2
@@ -615,6 +621,7 @@ if (is.matrix(X) | is.data.frame(X)) {
 	nsps <- 1
 	nsites <- length(X)
 }
+
 ngroups <- nlevels(cluster)
 if (!is.null(group)) ngroups <- 1
 dm <- matrix(0,nsps,ngroups)  
@@ -655,10 +662,13 @@ if (verbose) {
 	close(pb)
 	cat("\n  computed diagnostic values in", cpu.time[3], "sec")
 }	
+
 #	compute Fisher test
 ft <- dm
 if (verbose)
 	cat("\n  calculate Fisher test ...")
+
+X <- as.binary(obj)	
 for (i in 1:nsps) {
 #	warning! changed from two.sided to greater
 	ft[i,] <- fidelity.method(X[,i], cluster, "Fisher", alternative = "greater")
@@ -853,4 +863,14 @@ setGeneric("SigFidelity",
 setMethod("SigFidelity",
 	signature(obj = "VegsoupDataPartition"),
 	.SigFidelityVegsoupPartition	
+)
+
+#	plotting method hist
+setMethod("hist",
+	signature(x = "VegsoupDataPartitionFidelity"),
+	function (x, ...) {
+		fig <- hist(x@stat, xlab = fid@method, ...)
+		return(fig)
+	}
+
 )

@@ -637,18 +637,18 @@ setMethod("plot",
 
 #	inherited visulalisation method
 #if (!isGeneric("gvisMap")) {
-setGeneric("gvisMap",
-	function (data, locationvar = "", tipvar = "", options = list(), chartid)
-		standardGeneric("gvisMap")
+setGeneric("QuickMap",
+	function (obj)
+		standardGeneric("QuickMap")
 )
 #}
 
 #	gvisMap package
-setMethod("gvisMap",
-    signature(data = "Vegsoup"),
-    function (data) {
-		require(gvisMap)
-		pt <- SpatialPointsVegsoup(data)
+setMethod("QuickMap",
+    signature(obj = "Vegsoup"),
+    function (obj) {
+		require(googleVis)
+		pt <- SpatialPointsVegsoup(obj)
 		df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1, function (x) paste(x, collapse = ":")),
 		Tip = pt$plot)
 		m <- gvisMap(df, "LatLong" , "Tip")

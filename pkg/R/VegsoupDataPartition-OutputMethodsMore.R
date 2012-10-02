@@ -3,31 +3,16 @@
 #	format and arrange fidelity table
 #	adapted from Sebastian Schmidtlein's isotab()
 
-#	\item{object} An object inheriting from \code{class(VegsoupDataPartition)}
-#	\item{p.col.width} Latex tag to set column width.
-#	\item{p.max}{Threshold value for Fisher test.}
-#	\item{stat.min}{Threshold value for fidelity statistic.}
-#	\item{filename}{output filename. File extension can be missing.}
-#	\item{footer.treshold}{Minimum number of occurences of a species to be excluded from the table, defaults to 2.}
-#	\item{molticols.footer}{Number of columns to typeset species meeting conditions implied by \code{footer.treshold}}
-#	\item{fivenum.select}{if \code{mode = 2} a character vector selecting dimensions returned by \code{Fivenum} to become a pasted to the constancy value (see details).
-#	\item{caption.text}{addirtional user supplied text paste into automatically generated table caption (see details).}
-#	\item{use.letters}{use additional letters, only applicable if \code{getK(object <= 26)}}
-#	\item{mode}{type of ouput. \code{mode = 1} will typeset a species by cluster fidelity table. \code{mode = 2} will typeset a summary table for each cluster (see details)}.
-#	\item{verbose}{print function ouput to screen.}	
-#	\item{sep}{an optional character string to separate the summary statistics of \code{Fivenum}, defaults to \code{"/"}.}
-#	\item{recode}{recode result returend from \code{Fivenum} to ordinal scale if applicable, defaults to \code{"FALSE"}.}
-#	\item{...}{arguments passed to \link{code{Fidelity}} if object is not of \code{class(VegsoupDataPartitionFidelity)}.}
 
 
-#	details
-#	mode = 2 needs package subfloat
+
+
 
 #	internal
 #	generic is set by VegsoupDataPartition-*Methods.R
 
 .latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, p.col.width = "10mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid.prt; caption.text = NULL; p.col.width = "10mm"; sep = "/"; mode = 2
+#	object = fid; caption.text = NULL; p.col.width = "10mm"; sep = "/"; mode = 2
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -49,7 +34,7 @@ if (missing(filename) & mode == 1) {
 	filename = paste("FidelityTable")
 }
 if (missing(filename) & mode == 2) {
-	filename = paste("ClusterSummary")
+	filename = paste("PartitionSummary")
 }
 if (missing(p.col.width)) {
 	p.col.width = "10mm"
@@ -83,8 +68,8 @@ if (missing(stat.min) & object@method == "r.g") {
 	stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
 } else {
 	if (missing(stat.min)) {
-		stat.min = 0
-		warning("sta.min missing set to: ", stat.min,
+		stat.min = 0.1
+		warning("stat.min missing set to: ", stat.min,
 			"results may be meaningless. Please set an appropriate value for stat.min")
 	}
 }
@@ -93,10 +78,12 @@ if (missing(fivenum.select)) {
 }
 if (missing(sites.columns)) {
 	sites.columns = names(Sites(object))
-	drop <- c(grep("longitude", sites.columns),
+	drp <- c(grep("longitude", sites.columns),
 		grep("latitude", sites.columns),
 		grep("precision", sites.columns))
-	sites.columns = sites.columns[-drop]
+	drp.zeros <- which(apply(Sites(object)[, sapply(Sites(object), is.numeric)], 2, sum) == 0)
+	drp <- c(drp, drp.zeros)
+	sites.columns = sites.columns[-drp]
 }
 #	test and set file name
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
@@ -394,7 +381,7 @@ if (mode == 2) {
 	if (verbose) cat("\n run mode", mode)
 	
 	#	species summary
-	fn <- Fivenum(object, recode = FALSE)
+	fn <- Fivenum(object, na.rm = TRUE, recode = recode)
 	fn <- fn[match(rownames(tex), rownames(fn)), ,]
 
 	fn.df <- t(apply(fn, c(2, 1),
@@ -426,6 +413,8 @@ if (mode == 2) {
 		#	main table
 		tmp <- data.frame(
 		#	abbr.layer = rownames(cnst[sel, ]),
+			typical = "",
+			stat = round(stat[sel ,i], 3),
 			constancy = cnst[sel, i],
 			contingency = cntn[sel, i],
 			occurences = 0,
@@ -436,11 +425,9 @@ if (mode == 2) {
 			breaks = seq(0, 100, by = 20),
 				labels = c("I","II", "III", "IV", "V")),
 				" (", fn.df[sel, i], ", n = ", cntn[sel, i], ")", sep = ""),
-			typical = "",
-			stat = round(stat[sel ,i], 3),
 			stringsAsFactors = FALSE)
 		
-		tmp$typical[match(typ[[i]], rownames(tmp))] <- "diag. species"
+		tmp$typical[match(typ[[i]], rownames(tmp))] <- "yes"
 		tmp <- tmp[order(-tmp$stat, tmp$constancy),]
 		tmp$occurences <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(x))
 		tmp$spread <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(unique(x)))
@@ -448,10 +435,10 @@ if (mode == 2) {
 			
 		tmp <- cbind(txn[match(rownames(tmp), txn$abbr.layer), c("taxon", "layer")], tmp,
 				row.names = rownames(tmp))
-		tex[[i]] <- tmp[tmp$contingency > footer.treshold | tmp$typical == "diag. species", ]
+		tex[[i]] <- tmp[tmp$contingency > footer.treshold | tmp$typical == "yes", ]
 		
 		#	rare species footer
-		tmp <- tmp[tmp$contingency <= footer.treshold & tmp$typical != "diag. species", ]
+		tmp <- tmp[tmp$contingency <= footer.treshold & tmp$typical != "yes", ]
 		tmp <- data.frame(parameter = paste("Occuring only ", c("once", "twice", "thrice")[footer.treshold], sep = ""),
 			values = paste(sort(tmp$taxon), collapse = ", "), stringsAsFactors = FALSE)
 		footer.species[[i]] <- tmp	

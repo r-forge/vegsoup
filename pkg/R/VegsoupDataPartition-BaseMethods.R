@@ -484,7 +484,7 @@ setMethod("Fivenum",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj, na.rm = TRUE, recode = FALSE) {
 		tmp <- as.numeric(obj)
-		if (na.rm) tmp[tmp == 0] <- NA
+		if (!na.rm) tmp[tmp == 0] <- NA
 		tmp <- aggregate(tmp,
 			by = list(Partitioning(obj)),
 			FUN = function (x) fivenum(x, na.rm = TRUE), simplify = FALSE)
@@ -500,12 +500,26 @@ setMethod("Fivenum",
 			}
 		}
 		
+		#if (recode) {
+		#	for (i in 1:dim(res)[3]) {
+		#		for (j in AbundanceScale(obj)$lims) {
+		#			res[, , i][res[, , i] == j] <- AbundanceScale(obj)$codes[AbundanceScale(obj)$lims == j]
+		#		}
+		#	}			
+		#}
 		if (recode) {
 			for (i in 1:dim(res)[3]) {
-				for (j in AbundanceScale(obj)$lims) {
-					res[, , i][res[, , i] == j] <- AbundanceScale(obj)$codes[AbundanceScale(obj)$lims == j]
-				}
+				tmp <- res[, , i]
+				mode(tmp) <- "numeric"
+				vals <- as.character(cut(tmp,
+					breaks = c(AbundanceScale(obj)$lims, 100),
+					labels = AbundanceScale(obj)$codes))
+				tmp.i <- tmp
+				mode(tmp.i) <- "character"
+				tmp.i[] <- vals
+				res[, , i] <- tmp.i
 			}			
+		res[is.na(res)] <- "."
 		}
 		return(invisible(res))	
 	}
