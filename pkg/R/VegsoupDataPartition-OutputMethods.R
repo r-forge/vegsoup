@@ -216,7 +216,7 @@ setMethod("Latex",
 )
 
 #	KML output
-.KMLVegsoupDataPartition <- function (obj, path, ...) {
+.KMLVegsoupDataPartition <- function (obj, path, add.label = FALSE, ...) {
 if (missing(path)) {
 	path <- getwd()	
 }
@@ -293,7 +293,7 @@ end.kml <- c(
 .placemark <- function (x) {
 	c(
 	"<Placemark>",
-	paste("<name>", x[4], "</name>", sep = ""),
+	ifelse(add.label, paste("<name>", x[4], "</name>", sep = ""), ""),
 	paste("<styleUrl>#partition", x[1], "</styleUrl>", sep = ""),
 	"<description>",
 	paste("partition", x[1]),

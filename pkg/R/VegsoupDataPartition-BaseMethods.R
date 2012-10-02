@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, verbose = FALSE, ...) {
+VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
 #	obj = sub; binary = TRUE; k = 3;
@@ -85,7 +85,9 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	}
 	
 dis <- vegdist(X, method = dist)
-		
+
+#	set seed
+	set.seed(seed)		
 #	partitioning methods
 switch(part.meth,
 	   ward = {
