@@ -8,19 +8,22 @@ function to do
 Create an object of class VegsoupDataPartition
 }
 \usage{
-VegsoupDataPartition(x, binary = TRUE, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", clustering, polish = FALSE, nitr = 999, verbose = FALSE, ...)
+VegsoupDataPartition(x, binary = TRUE, k, 
+  method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"),
+  dist = "bray", clustering, polish = FALSE, nitr = 999, verbose = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{object of class VegsoupData}
   \item{binary}{use presence/absence only}
   \item{k}{number of partitions to create}
-  \item{method}{clustering method, see details}
+  \item{method}{clustering method (see details)}
   \item{dist}{a distance measure known by \link{vegdist}}
   \item{clustering}{external vector of cluster partitons}
   \item{polish}{apply optimal silhouette widths clustering \link{opts} on possible outgroups (single element partitions) to sweep them to an existing multi element partition}
   \item{nitr}{number of iterations of function \link{tabbed} in calculating table deviance}
   \item{decostand.method}{standardise data (see details)}
+  \item{seed}{set random number generator to nake results from \code{method = "kmeans"} reproducible}
   \item{verbose}{set to \code{TRUE} for verbose output}
   \item{\dots}{passed to methods}
 }
