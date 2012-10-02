@@ -366,6 +366,11 @@ if (verbose) {
 return(invisible(res))
 }
 
+SRTM <- function (x) {
+	if (!inherits(obj, "VegsoupData")) stop("Need object inheriting from class VegsoupData")
+	require(geonames)
+	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
+}
 
 MakeAbbr <- function (x)  {
 	 x = tb$taxon
@@ -390,7 +395,7 @@ MakeAbbr <- function (x)  {
 SpeciesWide2SpeciesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
-	stop("please supply either a data frmae or a csv file")	
+	stop("please supply either a data frame or a csv file")	
 }
 
 if (!missing(file)) {
