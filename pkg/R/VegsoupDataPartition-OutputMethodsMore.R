@@ -415,10 +415,10 @@ if (mode == 2) {
 		#	abbr.layer = rownames(cnst[sel, ]),
 			typical = "",
 			stat = round(stat[sel ,i], 3),
-			constancy = cnst[sel, i],
-			contingency = cntn[sel, i],
-			occurences = 0,
-			outside = 0,
+			cons = cnst[sel, i],
+			cont = cntn[sel, i],
+			occu = 0,
+			out = 0,
 			spread = 0,
 			fn[sel, i, ],
 			summary = paste(cut(cnst[sel, i],
@@ -428,17 +428,17 @@ if (mode == 2) {
 			stringsAsFactors = FALSE)
 		
 		tmp$typical[match(typ[[i]], rownames(tmp))] <- "yes"
-		tmp <- tmp[order(-tmp$stat, tmp$constancy),]
-		tmp$occurences <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(x))
+		tmp <- tmp[order(-tmp$stat, tmp$cons),]
+		tmp$occu <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(x))
 		tmp$spread <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(unique(x)))
-		tmp$outside <- tmp$occurences - tmp$contingency
+		tmp$out <- tmp$occu - tmp$cont
 			
 		tmp <- cbind(txn[match(rownames(tmp), txn$abbr.layer), c("taxon", "layer")], tmp,
 				row.names = rownames(tmp))
-		tex[[i]] <- tmp[tmp$contingency > footer.treshold | tmp$typical == "yes", ]
+		tex[[i]] <- tmp[tmp$cont > footer.treshold | tmp$typical == "yes", ]
 		
 		#	rare species footer
-		tmp <- tmp[tmp$contingency <= footer.treshold & tmp$typical != "yes", ]
+		tmp <- tmp[tmp$cont <= footer.treshold & tmp$typical != "yes", ]
 		tmp <- data.frame(parameter = paste("Occuring only ", c("once", "twice", "thrice")[footer.treshold], sep = ""),
 			values = paste(sort(tmp$taxon), collapse = ", "), stringsAsFactors = FALSE)
 		footer.species[[i]] <- tmp	
