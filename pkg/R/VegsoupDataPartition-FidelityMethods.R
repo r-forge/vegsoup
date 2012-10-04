@@ -864,13 +864,3 @@ setMethod("SigFidelity",
 	signature(obj = "VegsoupDataPartition"),
 	.SigFidelityVegsoupPartition	
 )
-
-#	plotting method hist
-setMethod("hist",
-	signature(x = "VegsoupDataPartitionFidelity"),
-	function (x, ...) {
-		fig <- hist(x@stat, xlab = fid@method, ...)
-		return(fig)
-	}
-
-)
