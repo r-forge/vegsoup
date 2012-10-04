@@ -19,3 +19,13 @@ setMethod("getStat",
 	function (obj) obj@stat	
 )
 
+#	plotting method hist
+setMethod("hist",
+	signature(x = "VegsoupDataPartitionFidelity"),
+	function (x, ...) {
+		fig <- hist(x@stat, xlab = fid@method, ...)
+		return(fig)
+	}
+
+)
+
