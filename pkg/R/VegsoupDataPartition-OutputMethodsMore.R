@@ -3,16 +3,11 @@
 #	format and arrange fidelity table
 #	adapted from Sebastian Schmidtlein's isotab()
 
-
-
-
-
-
 #	internal
 #	generic is set by VegsoupDataPartition-*Methods.R
 
-.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, p.col.width = "10mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid; caption.text = NULL; p.col.width = "10mm"; sep = "/"; mode = 2
+.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -36,10 +31,16 @@ if (missing(filename) & mode == 1) {
 if (missing(filename) & mode == 2) {
 	filename = paste("PartitionSummary")
 }
-if (missing(p.col.width)) {
-	p.col.width = "10mm"
+if (missing(col.width)) {
+	col.width = "10mm"
 	if (verbose) {
-		cat("\n p.col.width missing, set to ", p.col.width)
+		cat("\n col.width missing, set to ", col.width)
+	}
+}
+if (missing(col.width)) {
+	taxa.width = "60mm"
+	if (verbose) {
+		cat("\n taxa.width missing, set to ", taxa.width)
 	}
 }
 if (missing(p.max)) {
@@ -256,8 +257,9 @@ if (mode == 1) {
 	tex <- rbind(tex.typical.seperated, tex.others.seperated)
 
 	#	column widths and column names
-	p.col <- paste("p{", p.col.width, "}", sep = "")
-	col.just <- c("p{80mm}", "p{10mm}", rep(p.col, getK(object)))
+	p.col <- paste("p{", col.width, "}", sep = "")
+	col.just <- c(paste("p{", taxa.width, "}", sep = ""), "p{10mm}",
+		rep(p.col, getK(object)))
 	col.names <- c("Taxon", "Layer", 1:getK(object))
 
 	if (length(Layers(object)) < 2) {

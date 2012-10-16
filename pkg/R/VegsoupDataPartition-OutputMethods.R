@@ -1,6 +1,6 @@
 #	to do: add column for indicator value, high priority!
 
-.latexVegsoupDataPartitionSites <- function (object, p.col.width, filename, verbose = FALSE, ...) {
+.latexVegsoupDataPartitionSites <- function (object, col.width, filename, verbose = FALSE, ...) {
 #	object  <- prt
 
 sites <- object@sites
@@ -21,10 +21,10 @@ if (length(drop) > 0) {
 	}	
 	sites <- sites[ ,-drop]
 }
-if (missing(p.col.width)) {
-	p.col.width <- "15mm"
+if (missing(col.width)) {
+	col.width <- "15mm"
 	if (verbose) {
-		cat("p.col.width missing, set to ", p.col.width)
+		cat("col.width missing, set to ", col.width)
 	}
 }
 
@@ -89,7 +89,7 @@ caption <- paste("Summary table for sites variables grouped in",
 		paste(names(table(Partitioning(object))),
 			table(Partitioning(object)), sep = ":", collapse = ", ")
 		)
-p.col <- paste("|p{", p.col.width, "}", sep = "")
+p.col <- paste("|p{", col.width, "}", sep = "")
 col.just <- c(rep(p.col, ncol(tex)))
 #col.just[ncol(num.cols.agg) + 1] <- paste("|", col.just[ncol(num.cols.agg) + 1], sep = "")
 #	tex valid filenames
@@ -124,17 +124,17 @@ latex(tex,
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSpeciesRecursive <- function (object, p.col.width, path, ...) {
+.latexVegsoupDataPartitionSpeciesRecursive <- function (object, col.width, path, ...) {
 	
 #	object  <- prt
 if (missing(path)) {
 	warning("no path supplied for LaTex files")
 }	
 
-if (missing(p.col.width)) {
-	p.col.width <- "10mm"
+if (missing(col.width)) {
+	col.width <- "10mm"
 	if (verbose) {
-		cat("p.col.width missing, set to ", p.col.width, call. = FALSE)
+		cat("col.width missing, set to ", col.width, call. = FALSE)
 	}	
 }	
 
@@ -144,7 +144,7 @@ for(i in 1:getK(object)) {
 	#	i = 1
 	i.part <- object[Partitioning(object) == i, ]
 	i.part <- Arrange(i.part)
-	i.part <- i.part[,order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
+	i.part <- i.part[, order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
 	
 	res[[i]] <- i.part
 	
@@ -156,7 +156,7 @@ for(i in 1:getK(object)) {
 	filenames <- c(filenames, filename)
 	caption <- paste("Cluster table", i)
 
-	p.col <- paste("p{", p.col.width, "}", sep = "")
+	p.col <- paste("p{", col.width, "}", sep = "")
 	col.just <- c("p{70mm}", "p{10mm}", rep(p.col, dim(i.part)[1]))
 	col.names <- c("Taxon", "Layer", 1:getK(object))
 	

@@ -13,7 +13,8 @@ Latex(object, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{An object inheriting from class \code{"VegsoupDataPartition"}}
-  \item{p.col.width}{Latex tag to set column width.}
+  \item{col.width}{Latex tag to set column width.}
+  \item{taxa.width}{Latex tag to set column width for taxa column.}
   \item{p.max}{Threshold value for Fisher test.}
   \item{stat.min}{Threshold value for fidelity statistic.}
   \item{filename}{output filename. File extension can be missing.}
