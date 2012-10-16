@@ -214,19 +214,19 @@ setMethod("[",
 	    if (missing(j)) j <- rep(TRUE, ncol(x))
 	    
 	    tmp <- as(x, "VegsoupData")
-	    tmp <- tmp[i, j]
+	    tmp <- tmp[i, j, ...]
 
 		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
 			warning("Partitioning vector was subsetted!",
-				"k was changed accordingly")
+				" k was changed accordingly")
 		}
 
 		#	develop class VegsoupDataPartition from class VegsoupData
-		res <- new("VegsoupDataPartition", x)
+		res <- new("VegsoupDataPartition", tmp)
 		res@part = part[names(part) %in% rownames(tmp)]
 		res@method = x@method
 		res@dist = x@dist
-		res@binary = x@binary
+		#res@binary = x@binary
 		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
 		res@group = res@group[names(part) %in% rownames(tmp)]
 

@@ -124,12 +124,16 @@ latex(tex,
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSpeciesRecursive <- function (object, col.width, path, ...) {
+.latexVegsoupDataPartitionSpeciesRecursive <- function (object, path, col.width, taxa.width, verbose, ...) {
 	
 #	object  <- prt
 if (missing(path)) {
 	warning("no path supplied for LaTex files")
 }	
+
+if (missing(verbose)) {
+	verbose = FALSE
+}
 
 if (missing(col.width)) {
 	col.width <- "10mm"
@@ -138,6 +142,12 @@ if (missing(col.width)) {
 	}	
 }	
 
+if (missing(taxa.width)) {
+	taxa.width <- "60mm"
+	if (verbose) {
+		cat("col.width missing, set to ", taxa.width, call. = FALSE)
+	}	
+}
 res <- vector("list", length = getK(object))
 filenames <- c()
 for(i in 1:getK(object)) {
@@ -157,8 +167,10 @@ for(i in 1:getK(object)) {
 	caption <- paste("Cluster table", i)
 
 	p.col <- paste("p{", col.width, "}", sep = "")
-	col.just <- c("p{70mm}", "p{10mm}", rep(p.col, dim(i.part)[1]))
-	col.names <- c("Taxon", "Layer", 1:getK(object))
+	col.just <- c(paste("p{", taxa.width, "}", sep = ""), "p{10mm}",
+		rep(p.col, dim(i.part)[1]))
+	
+	col.heads = c("Taxon", "Layer", paste("\\rotatebox{90}{", dimnames(i.tex)[[2]][-c(1,2)], "}"))
 	
 	latex(i.tex,
 	file = filename,
@@ -168,7 +180,8 @@ for(i in 1:getK(object)) {
 	longtable = TRUE,
 	lines.page = nrow(i.tex),
 	here = TRUE,
-	col.just = col.just) 
+	col.just = col.just,
+	colheads = col.heads) 
 }
 
 

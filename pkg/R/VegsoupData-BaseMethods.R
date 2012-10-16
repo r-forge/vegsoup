@@ -24,7 +24,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 			if (verbose) cat("\ndata is structered in layers: ", lay)
 		}
 		
-				cpu.time <- system.time({
+		cpu.time <- system.time({
 		#	change coverscale to numeric using scale$lims
 		#	xtabs does not support non-integer values
 		cov.factor <- as.factor(species.long$cov)
@@ -36,13 +36,13 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		#	initialise species matrix	
 		if (dim(xt)[3] > 1) {
 			res <- matrix(0,
-			ncol = dim(xt)[2] * dim(xt)[3],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
-					rep(dimnames(xt)$layer,
-					each = dim(xt)[2]), sep = "@")))
+				ncol = dim(xt)[2] * dim(xt)[3],
+				nrow = dim(xt)[1],
+				dimnames = list(
+					plot = dimnames(xt)$plot, 
+					abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
+						rep(dimnames(xt)$layer,
+						each = dim(xt)[2]), sep = "@")))
 		} else {
 			res <- matrix(0,
 			ncol = dim(xt)[2],
@@ -65,9 +65,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		mode(res) <- "character"
 
 		#	restore abundance scale
-		for (i in cov.levels) {
-			res[res == i] <- scale$codes[scale$codes == i]
-		}
+		res[] <- as.character(factor(as.vector(res), labels = c("0", cov.levels)))
 		species <- as.data.frame(res, stringsAsFactors = FALSE)
 		}) # end system.time
 		
@@ -362,7 +360,7 @@ setMethod("as.numeric",
 			levels(tmp) <- scale$lims[match(levels(tmp), scale$codes)]
 			tmp <- as.numeric(as.character(tmp))
 			tmp[is.na(tmp)] <- 0
-			res[,] <- tmp
+			res[, ] <- tmp
 		}
 		return(invisible(res))   	
     }
@@ -722,7 +720,7 @@ setMethod("[",
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
 	    
-		res@species <- as.character(x)[i, j, drop = FALSE]
+		res@species <- as.character(x)[i, j, ...]
 		
 		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "subset does not contain any species!")		
 		
