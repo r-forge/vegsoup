@@ -499,10 +499,10 @@ if (missing(collapse) & missing(aggregate)) {
 	}
 	
 	#	debug
-	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c("hl", "ml", "sl", "tl", "tl")
+	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c("hl", "wl", "wl", "wl", "hl")
 	
 	#	revert to class Vegsoup and cast again
-	if (inherits(obj, "VegsoupData")) { 
+	if (inherits(obj, "VegsoupData")) {
 		res <- as(obj, "Vegsoup")
 	} else {
 		res <- obj
@@ -546,7 +546,7 @@ if (missing(collapse) & missing(aggregate)) {
 			FUN = sum)
 	}, layer = {
 		if (scale$scale != "frequency") {
-			aggregate(cov ~ plot + abbr + layer, data = species,
+		aggregate(cov ~ plot + abbr + layer, data = species,
 				FUN = function (x) {
 					round((1 - prod(1 - x / max(scale$lims))) * max(scale$lims), dec)
 				})
@@ -570,16 +570,14 @@ if (missing(collapse) & missing(aggregate)) {
 	species$cov <- ceiling(species$cov)
 	
 	#	back convert to original abundance scale if it was character
-	if (scale.is.character) {	
-		species$cov <- as.factor(species$cov)
-		levels(species$cov) <- scale$codes[match(levels(species$cov), scale$lims)]
-		species$cov <- as.character(species$cov)
+	if (scale.is.character) {
+		species$cov <- as.character(cut(species$cov, breaks = c(0, scale$lims), labels = scale$codes))
 	}
-
-	res <- VegsoupData(res)	
+	
 	res@species.long <- species
 	res@layers <- unique(collapse[, 2])
-
+	res <- VegsoupData(res)
+	
 	return(invisible(res))
 
 	}
@@ -715,7 +713,7 @@ setMethod("[",
     function (x, i, j, ..., drop = TRUE)
     {
 	    #	debug
-	    #	x = dta; i = 1:20; j <- rep(TRUE, ncol(x))
+	    #	x = dta; i = 1:3; j <- 1:2; j <- rep(TRUE, ncol(x))
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
@@ -725,9 +723,9 @@ setMethod("[",
 		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "subset does not contain any species!")		
 		
 		#	remove empty plots
-		res@species <- res@species[rowSums(res@species > 0) > 0, , drop = FALSE]		
+		res@species <- res@species[rowSums(res@species != 0) > 0, , drop = FALSE]		
 		#	remove empty species
-		res@species <- res@species[, colSums(res@species > 0) > 0, drop = FALSE]
+		res@species <- res@species[, colSums(res@species != 0) > 0, drop = FALSE]
 		
 		#	subset long format
 		res@species.long <-
