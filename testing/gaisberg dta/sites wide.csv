@@ -1,0 +1,12 @@
+plot;cov;tcov1;tcov2;scov;hcov;mcov;htl1;htl2;hsl;hhl1;hhl2;plsx;plsy;expo;slope;rock;bare;stones;date;location;comment;altitude;rope;precision.vertical;precision.horizontal;longitude;latitude
+gb01;55;0;0;0;45;10;0;0;0;0,8;0,2;8;8;SW;60;53;2;0;2011-10-06;Gaisberg, obere rechte Kapaunwände Rechts;;9999;5;0;20;13.107848E;47.799759N
+gb02;83;0;35;10;73;10;0;6;2,5;0,8;0,3;8;8;SW;55;15;2;0;2011-10-06;Gaisberg, obere rechte Kapaunwände Rechts;;9999;20;0;20;13.107634E;47.799716N
+gb03;30;0;0;25;20;10;0;0;2,5;0,4;0,1;8;8;SW;45;70;2;0;2011-10-06;Gaisberg, obere rechte Kapaunwände Rechts;;9999;45;0;20;13.107634E;47.799593N
+gb04;55;0;0;50;35;10;0;0;5,5;0,3;0,05;8;8;W;80;63;2;0;2012-05-27;Gaisberg, linke untere Kapaunwände Links;im S angrenzend ein Fragment eines Aceri-Tilietum platyphylli seslerietosum Willner 2007 prov.;9999;12;0;20;13.104500E;47.802475N
+gb05;73;0;0;30;70;10;0;0;4;0,4;0,05;8;8;W;75;25;2;0;2012-05-27;Gaisberg, linke untere Kapaunwände Links;;9999;35;0;20;13.104119E;47.802537N
+gb06;85;60;20;5;70;3;18;12;3;0,4;0,2;16;16;W;60;30;0;0;2012-05-27;Gaisberg, linke untere Kapaunwände Links;Wandfuß;9999;0;0;20;13.104119E;47.802537N
+gb07;30;0;0;25;20;2;0;0;2,5;0,5;0,1;8;8;W;85;69;1;0;2012-06-07;Gaisberg, linke untere Kapaunwände Mitte;;9999;10;0;20;13.105273E;47.801676N
+gb08;69;0;15;40;80;3;0;9;4;0,8;0,15;8;8;W;50;2;18;0;2012-06-07;Gaisberg, linke untere Kapaunwände Mitte;;9999;25;0;20;13.105273E;47.801676N
+gb09;45;0;0;35;15;10;0;0;2,5;0,4;0,1;8;8;W;90;85;0;0;2012-06-07;Gaisberg, linke untere Kapaunwände Mitte;;9999;40;0;20;13.105273E;47.801676N
+gb10;95;90;20;5;75;5;25;15;5,5;0,5;0,15;16;16;W;50;15;10;0;2012-06-07;Gaisberg, linke untere Kapaunwände Mitte;Wandfuß;9999;0;0;20;13.105102E;47.801539N
+gb11;45;0;0;35;23;5;0;0;2;0,5;0,1;8;8;W;80;75;0;0;2012-06-07;Gaisberg, obere rechte Kapaunwände Links beim Holzsteg;;9999;5;0;20;13.106563E;47.800555N
