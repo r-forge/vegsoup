@@ -1,7 +1,0 @@
-plot;cov;tcov1;tcov2;scov;hcov;mcov;htl1;htl2;hsl;hhl1;hhl2;plsx;plsy;expo;slope;rock;bare;stones;date;location;comment;altitude;precision.vertical;precision.horizontal;longitude;latitude
-bs01;25;0;0;5;25;0;0;0;1;0,7;0,3;8;8;SW;90;75;0;0;2009-06-08;Großer Barmstein Südwest-Flanke;unter Felsdach;9999;50;;13.075533E;47.690582N
-bs02;30;0;0;20;25;1;0;0;1,5;0,3;0,1;8;8;SE;80;70;0;0;2012-10-20;Großer Barmstein Südost-Flanke;Wandoberkante;;;;13.075866E;47.690661N
-bs03;70;0;0;45;65;2;0;0;2;0,35;0,1;8;8;SE;80;30;0;0;2012-10-20;Großer Barmstein Südost-Flanke;;;;;13.075938E;47.690591N
-bs04;80;0;0;50;60;1;0;0;2;0,4;0,2;8;8;SE;75;20;0;0;2012-10-20;Großer Barmstein Südost-Flanke;;;;;13.076013E;47.690526N
-bs05;70;0;0;30;65;1;0;0;1,5;0,35;0,25;6;13;SE;85;30;0;0;2012-10-20;Großer Barmstein Südost-Flanke;;;;;13.076064E;47.690454N
-bs06;20;0;0;10;20;1;0;0;2,2;0,25;0,15;8;8;SE;85;80;0;0;2012-10-20;Großer Barmstein Südost-Flanke;;;;;13.076115E;47.690381N

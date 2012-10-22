@@ -1,5 +1,0 @@
-hw59	einseitswendiges Moos 1, gescheiteltes Moos 3
-hw61	gescheiteltes Moos 2b
-hw26	weitere moose 1
-hw27	weitere moose 1
-hw28	weitere moose +
