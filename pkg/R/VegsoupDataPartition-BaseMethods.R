@@ -13,10 +13,14 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
 	}
-	if (missing(k) & missing(clustering)) {
+	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {
 		k <- 1
 		warning("argument k missing, set to ", k)
 	}	
+	if (missing(k) & inherits(obj, "VegsoupDataOptimstride")) {
+		k <- summary(opt)$best.optimclass1
+		k <- as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
+	}
 	if (missing(binary)) {
 		if (verbose) cat("... Set to binary")
 		binary = TRUE

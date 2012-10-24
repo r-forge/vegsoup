@@ -1,5 +1,5 @@
 #	generating function
-
+#	warning! some how slot sp.points cab get messed up?
 
 OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards"), CALL = match.call(), ...) {
 	if (missing(k)) stop("please supply k for stride")
@@ -56,7 +56,7 @@ setMethod("show",
 setMethod("summary",
 	signature(object = "VegsoupDataOptimstride"),
 		function (object, oc.treshold = 2, silent = FALSE) {
-			#	object <- os
+			#	object <- opt; oc.treshold = 2
 		obj <- object@optimstride
 		args <- obj$settings$args
 		met <- args$method
@@ -68,7 +68,9 @@ setMethod("summary",
 		oc1 <- t(sapply(ind, function (x) sapply(x, function (x) sum(x))))
 		oc2 <- t(sapply(ind, function (x) sapply(x, function (x) length(which(x >= oct)))))
 		
-		res <- list(optimclass1 = oc1, optimclass2 = oc2, args = args)
+		best.oc1 <- sapply(obj$ind, function (x) (sapply(x, max)[which.max(sapply(x, max))] ) )
+
+		res <- list(optimclass1 = oc1, optimclass2 = oc2, best.optimclass1 = best.oc1, args = args)
 	
 		if (!silent) {
 			cat("OptimStride results for k:", args$k)
@@ -78,6 +80,9 @@ setMethod("summary",
 			cat("\nOptimClass 2 (occurence treshold: ",
 				oct, "):\n", sep = "")
 			print(res$optimclass2)
+			
+			cat("\nBest OptimClass\n", sep = "")
+			print(res$best.optimclass1)
 		}
 		return(invisible(res))
 		}

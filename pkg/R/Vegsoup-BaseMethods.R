@@ -3,7 +3,7 @@
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
-	#	x = species; y = sites; z = taxonomy$taxonomy; scale = list(scale = "Domin")
+	#	x = taxonomy$species; y = sites; z = taxonomy; scale = list(scale = "Domin")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
@@ -67,12 +67,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", 
 	
 	#	intersect species and sites
 	if (length(unique(x$plot)) != length(unique(y$plot))) {
-		warning("... unique(x$plot) and unique(y$plot) do not match in length, ",
-			"\nsome plots were dropped!", call. = FALSE)
 		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
 		x <- x[which(x$plot %in% sel), ]
 		y <- y[which(y$plot %in% sel), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
+		warning("\n... unique(x$plot) and unique(y$plot) do not match in length, ",
+			"\nsome plots were dropped!", call. = FALSE)		
 	}
 		
 	if (missing(scale)) {

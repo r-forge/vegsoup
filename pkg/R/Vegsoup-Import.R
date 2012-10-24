@@ -480,3 +480,16 @@ return(invisible(res))
 
 #	reverse geocoding
 #	readLines(url("http://maps.google.com/maps/geo?q=1600+Straßham+Wilhering+CA&output=csv&key=abcdefg"), n=1, warn=FALSE)
+
+
+#	
+test.fun <- function (x, y = 10) {
+	if (!is.character(x)) {
+		stop("geh in oarsch")
+	}
+	res <- .C("test",
+		x,
+		as.integer(y)	
+	)
+	return(x)
+}

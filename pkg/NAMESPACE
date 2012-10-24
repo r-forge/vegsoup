@@ -1,3 +1,5 @@
+useDynLib(vegsoup)
+
 #package 'isopam' does not have a name space
 #importFrom("isopam", isopam)
 #package 'optpart' does not have a name space
