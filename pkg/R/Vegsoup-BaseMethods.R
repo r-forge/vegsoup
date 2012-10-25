@@ -2,8 +2,8 @@
 #	to do: improve documentation, rewrite AbundanceScale interface
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
-	#	x = taxonomy$species; y = sites; z = taxonomy; scale = list(scale = "Domin")
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+proj=longlat", verbose = TRUE) {
+	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet 2")
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
