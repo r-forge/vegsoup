@@ -1,6 +1,6 @@
 suppressPackageStartupMessages(library(Vegsoup))
 
-setwd("/Users/roli/Documents/vegsoup/pkg/tests")
+#setwd("/Users/roli/Documents/vegsoup/pkg/tests")
 library(vegsoup)
 
 data(dune)
@@ -34,7 +34,9 @@ taxon <- c("Bellis perennis", "Leontodon autumnalis", "Poa pratensis",
 taxonomy <- data.frame(abbr = unique(species$abbr), taxon)
 taxonomy <- QueryTaxonomy(x = species, y = taxonomy)
 
+#	create sites data
 x <- data.frame(plot = row.names(dune.env), dune.env)
+
 #	groome plot names
 x$plot <- paste("dn", x$plot, sep = "")
 
@@ -47,8 +49,8 @@ species$cov <- as.character(cut(as.numeric(species$cov),
 qry <- Vegsoup(x = species, y = sites, z = taxonomy)
 dta <- VegsoupData(qry)
 
-std <- Stride(dta, stride = 6, verbose = TRUE)
-
+std <- OptimStride(dta, k = 6, verbose = TRUE, polish = TRUE)
+plot(std)
 prt <- VegsoupDataPartition(dta, k = 3, verbose = TRUE, decostand.method = "wisconsin")
+plot(prt)
 
-VegsoupDataPartition(dta, k = 1, verbose = TRUE, decostand.method = "wisconsin")
