@@ -6,7 +6,7 @@
 #	internal
 #	generic is set by VegsoupDataPartition-*Methods.R
 
-.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
 #	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
@@ -441,7 +441,8 @@ if (mode == 2) {
 		
 		#	rare species footer
 		tmp <- tmp[tmp$cont <= footer.treshold & tmp$typical != "yes", ]
-		tmp <- data.frame(parameter = paste("Occuring only ", c("once", "twice", "thrice")[footer.treshold], sep = ""),
+		tmp <- data.frame(parameter = paste("Occuring only ",
+			c("once", "twice", "thrice")[footer.treshold], sep = ""),
 			values = paste(sort(tmp$taxon), collapse = ", "), stringsAsFactors = FALSE)
 		footer.species[[i]] <- tmp	
 		
@@ -532,12 +533,16 @@ if (mode == 2) {
 		tmp.end <- hook:length(tmp) # end
 		tmp.ins1 <- footer.species[[i]] # insert 1
 		tmp.ins1 <- apply(tmp.ins1, 1, function (x) {
-			paste(x[1], "& \\multicolumn{", dim(tex.out[[i]])[2] - 1, "}", "{p{200mm}}",
+			paste(x[1], "& \\multicolumn{",
+				dim(tex.out[[i]])[2] - 1, "}",
+				"{p{", footer.width, "}}",
 				"{", x[2], "}", "\\tabularnewline", sep = "")	
 		})
 		tmp.ins2 <- footer.sites[[i]] # insert 2
 		tmp.ins2 <- apply(tmp.ins2, 1, function (x) {
-			paste(x[1], "& \\multicolumn{", dim(tex.out[[i]])[2] - 1, "}", "{p{200mm}}",
+			paste(x[1], "& \\multicolumn{",
+				dim(tex.out[[i]])[2] - 1, "}",
+				"{p{", footer.width, "}}",
 				"{", x[2], "}", "\\tabularnewline", sep = "")	
 		})
 		tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
