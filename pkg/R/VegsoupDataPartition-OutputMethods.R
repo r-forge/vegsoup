@@ -106,7 +106,9 @@ if (length(grep(" ", filename, fixed = TRUE)) > 0) {
 }
 
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
-	warning("add file extension .tex to filename ", filename)
+	if (verbose) {
+		cat("add file extension .tex to filename ", filename)
+	}
 	filename <- paste(filename, ".tex", sep = "")
 }
 
@@ -148,6 +150,7 @@ if (missing(taxa.width)) {
 		cat("col.width missing, set to ", taxa.width, call. = FALSE)
 	}	
 }
+
 res <- vector("list", length = getK(object))
 filenames <- c()
 for(i in 1:getK(object)) {
@@ -164,7 +167,7 @@ for(i in 1:getK(object)) {
 	#	tex valid filenames
 	filename <- paste(path, "species", i, ".tex", sep = "")
 	filenames <- c(filenames, filename)
-	caption <- paste("Cluster table", i)
+	caption <- paste("Sample table of Cluster", i)
 
 	p.col <- paste("p{", col.width, "}", sep = "")
 	col.just <- c(paste("p{", taxa.width, "}", sep = ""), "p{10mm}",

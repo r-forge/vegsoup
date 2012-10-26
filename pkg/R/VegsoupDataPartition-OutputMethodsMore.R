@@ -6,8 +6,8 @@
 #	internal
 #	generic is set by VegsoupDataPartition-*Methods.R
 
-.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2
+.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; 	p.max = .05
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -21,7 +21,7 @@ nc <- ncol(cnst) # number of clusters
 sp <- ncol(object) # number of species
 
 ft <- object@fisher.test
-N <- nrow(object)
+N <- nrow(object) # number of plots
 frq <- colSums(as.binary(object))
 siz <- table(Partitioning(object))
 
@@ -50,7 +50,7 @@ if (missing(p.max)) {
 	}
 }
 if (missing(footer.treshold)) {
-	footer.treshold = 2
+	footer.treshold = 1
 	if (verbose) {
 		cat("\n footer treshold missing, set to ", footer.treshold)
 	}	
@@ -79,20 +79,25 @@ if (missing(fivenum.select)) {
 }
 if (missing(sites.columns)) {
 	sites.columns = names(Sites(object))
-	drp <- c(grep("longitude", sites.columns),
+	#	drop coordiantes
+	drp <- c(
+		grep("longitude", sites.columns),
 		grep("latitude", sites.columns),
-		grep("precision", sites.columns))
+		grep("precision", sites.columns)
+	)
+	#	drop all columns constant at zero
 	drp.zeros <- which(apply(Sites(object)[, sapply(Sites(object), is.numeric)], 2, sum) == 0)
 	drp <- c(drp, drp.zeros)
-	sites.columns = sites.columns[-drp]
+	sites.columns <- sites.columns[ -drp ]
 }
-#	test and set file name
+#	set file name
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 	filename = paste(filename, ".tex", sep = "")
 	if (verbose) {
 		cat("\n add file extension .tex")
 	}
-}	
+}
+#	test filename
 if (length(grep(" ", filename, fixed = TRUE)) > 0) {
 	filename = gsub(" ", "_", filename, fixed = TRUE)	
 	if (verbose) {
@@ -120,14 +125,16 @@ rownames(frq.ft) <- names(object)
 stat <- object@stat
 
 #	sort table
-stat.idx <- apply(stat, 1, which.max)	# group association by fidelity measure
+# 	which cluster has highest fidelity measure
+stat.idx <- apply(stat, 1, which.max)
 frq.ord <- stat.idx
 
 for (i in 1:length(frq.ord)) {
 	frq.ord[i] <- cnst[i, stat.idx [i]]
 }	
 
-#	sorting
+#	sort freqency table
+#	first by fidelity measure and then by constancy
 frq.top <- as.matrix(frq)[order(stat.idx, -frq.ord), ]
 ord.top <- names(frq.top)
 frq.ft.top <- frq.ft[ord.top, ]
@@ -403,7 +410,7 @@ if (mode == 2) {
 	cnst <- cnst[match(rownames(tex), rownames(cnst)), ]
 	cntn <- cntn[match(rownames(tex), rownames(cntn)), ]
 	stat <- stat[match(rownames(tex), rownames(stat)), ]
-	sprd <- Spread(object)
+	sprd <- Spread(object) # speed issue, method is slow
 
 	tex <- footer.sites <- footer.species <- vector("list", length = getK(object))
 	names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(object)
@@ -431,8 +438,10 @@ if (mode == 2) {
 		
 		tmp$typical[match(typ[[i]], rownames(tmp))] <- "yes"
 		tmp <- tmp[order(-tmp$stat, tmp$cons),]
-		tmp$occu <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(x))
-		tmp$spread <- sapply(sprd[match(rownames(tmp), names(sprd))], function (x) length(unique(x)))
+		tmp$occu <- sapply(sprd[match(rownames(tmp), names(sprd))],
+			function (x) length(x))
+		tmp$spread <- sapply(sprd[match(rownames(tmp), names(sprd))],
+			function (x) length(unique(x)))
 		tmp$out <- tmp$occu - tmp$cont
 			
 		tmp <- cbind(txn[match(rownames(tmp), txn$abbr.layer), c("taxon", "layer")], tmp,
@@ -488,9 +497,7 @@ if (mode == 1) {
 		here = TRUE,
 		col.just = col.just)
 
-	if (verbose) {
-		cat("\nappend footer to LaTex table in file", filename)	
-	}
+	# append footer to LaTex table in file
 
 	con <- file(filename, open = "a")
 		writeLines(footer, con)
@@ -502,7 +509,11 @@ if (mode == 2) {
 
 	tex.out <- sapply(tex.out, function (x) {
 			tmp <- x
+			#	replace ×
 			tmp[, 1] <- gsub("×", "$\\times$", tmp[, 1], fixed = TRUE)
+			#	make taxa having cons >= a user defined constancy treshold
+			tmp[tmp[, 5] >= constancy.treshold, 1] <- 
+				paste("\\textbf{", tmp[tmp[, 5] >= constancy.treshold, 1], "}")
 			tmp
 			}, simplify = FALSE)
 		
@@ -522,7 +533,8 @@ if (mode == 2) {
 			longtable = TRUE,
 			lines.page = nrow(tex.out[[i]]),
 #			numeric.dollar = FALSE, # raises errors in format.df
-			here = TRUE #, col.just = col.just
+			here = TRUE
+#			, col.just = col.just
 		)
 
 	con <- file(filename)
@@ -531,6 +543,7 @@ if (mode == 2) {
 
 		tmp.bgn <- 1: c(hook -1) # begin
 		tmp.end <- hook:length(tmp) # end
+		
 		tmp.ins1 <- footer.species[[i]] # insert 1
 		tmp.ins1 <- apply(tmp.ins1, 1, function (x) {
 			paste(x[1], "& \\multicolumn{",
@@ -545,7 +558,11 @@ if (mode == 2) {
 				"{p{", footer.width, "}}",
 				"{", x[2], "}", "\\tabularnewline", sep = "")	
 		})
+		
 		tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
+		
+		#	bold taxon if cons == 100 
+		
 		writeLines(tmp, con)
 	close(con)		
 	}
