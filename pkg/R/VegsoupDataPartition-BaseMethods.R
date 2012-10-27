@@ -3,23 +3,26 @@
 VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
-#	obj = sub; binary = TRUE; k = 3;
+#	obj = dta; binary = TRUE; k = 3;
 #	method = "isopam"
 #	dist = "bray"
 #	nitr = 99; polish = TRUE
 #	method = "external"
-#	clustering = Sites(dta)$association
+#	clustering = "syntaxon"
 
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
 	}
+#	if (missing(dist)) {
+#		dist = "bray"
+#	}
 	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {
-		k <- 1
+		k = 1
 		warning("argument k missing, set to ", k)
 	}	
 	if (missing(k) & inherits(obj, "VegsoupDataOptimstride")) {
-		k <- summary(opt)$best.optimclass1
-		k <- as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
+		k = summary(opt)$best.optimclass1
+		#	k = as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
 	}
 	if (missing(binary)) {
 		if (verbose) cat("... Set to binary")
@@ -28,26 +31,42 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	if (missing(decostand.method)) {
 		decostand.method = NULL
 	}
-
 	if (missing(k) && missing(clustering)) {
 		stop("Need a value of k or optional clustering vetcor")
-	}
-	if (missing(method)) {
+	}	
+	if (missing(method) & missing(clustering)) {
 		part.meth <- method <- "flexible"	
-		if (verbose) cat("... Set default option", part.meth)
-	} else {			
-		part.meth <- match.arg(method)
+		if (verbose) {
+			cat("... Set default option", part.meth)
+		}	
+	} else {
+			part.meth <- match.arg(method)
 	}
-	if (!missing(clustering) & method == "external") {
+	if (!missing(clustering) | match.arg(method) == "external") {
+		if (missing(clustering)) {
+			warning("\n selected method external but did not define clustering")
+		}
+		part.meth <- method <- "external"
+		if (length(clustering) == 1) {
+			sel <- pmatch(clustering, names(Sites(obj)))
+			if (!is.na(sel)) {			
+				clustering = as.vector(Sites(obj)[, sel])
+				
+			} else {
+				stop("if length of clustering is 1 the argument has to match a column name of Sites(obj)")
+			}				
+		}
 		if (length(clustering) == nrow(obj)) {
 			k <- length(unique(clustering))
-			if (verbose) cat("... Use supplied vector, number of partitons ",
-				ifelse(is.integer(k), k, as.integer(k)))
+			if (verbose) {
+				cat("... Use supplied vector, number of partitons ",
+					ifelse(is.integer(k), k, as.integer(k)))
+			}	
 		} else {
-			stop("... Length of clustering vector and matrix must match",
+			stop("... length of clustering vector and nrow(obj) have to match",
 				dim(obj), length(clustering))
 		}
-	}
+	}		
 	if (binary) {
 		X <- as.binary(obj)
 	} else {
@@ -74,9 +93,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
     		}
     	}
 	}
-	if (missing(dist)) {
-		dist <- "bray"
-	}
+
 	
 	#	print settings before run
 	if (verbose) {
@@ -85,11 +102,12 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 			"\n    distance:", dist,
 			"\n    decostand method:",
 				ifelse(is.null(decostand.method), "not active", decostand.method),
-			"\n    partitioning method:", method, "\n", ...)	
+			"\n    partitioning method:", part.meth, "\n", ...)	
 	}
-	
-dis <- vegdist(X, method = dist)
 
+if (part.meth != "external") {	
+	dis <- vegdist(X, method = dist)
+}
 #	set seed
 	set.seed(seed)		
 #	partitioning methods
@@ -159,7 +177,7 @@ if (is.vector(part)) { # method external
 	names(grp) <- rownames(obj) # prone to error if clustering is not selected from sites!
 	if (verbose) {
 		print(data.frame(clustering = levels(factor(clustering)),
-			asigned = as.numeric(factor(levels(factor(clustering)))) )
+			assigned = as.numeric(factor(levels(factor(clustering)))) )
 		)
 		
 	}
@@ -201,7 +219,7 @@ res <- new("VegsoupDataPartition", obj)
 #	assign class slots
 res@part <- grp
 res@method <- part.meth	
-res@k = length(unique(grp))
+res@k <- length(unique(grp))
 
 return(res)
 }

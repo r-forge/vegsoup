@@ -126,7 +126,7 @@ latex(tex,
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSpeciesRecursive <- function (object, path, col.width, taxa.width, verbose, ...) {
+.latexVegsoupDataPartitionSpeciesRecursive <- function (object, path, col.width, taxa.width, caption.text, verbose, ...) {
 	
 #	object  <- prt
 if (missing(path)) {
@@ -177,7 +177,7 @@ for(i in 1:getK(object)) {
 	
 	latex(i.tex,
 	file = filename,
-	caption = caption,
+	caption = paste(caption, caption.text, collapse = " "),
 	rowname = NULL,
 	booktabs = TRUE,
 	longtable = TRUE,

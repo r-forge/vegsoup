@@ -461,6 +461,14 @@ if (mode == 2) {
 		tmp <- sapply(tmp, function (x) x[order(x, decreasing = TRUE)])		
 		tmp <- sapply(tmp, function (x) paste(names(x), x, sep = ": ", collapse = "; "))
 		tmp <- data.frame(parameter = names(tmp), values = tmp, stringsAsFactors = FALSE)
+		
+		#	& glyph that might be used in Sites(obj)
+		sel <- which(apply(tmp, 2, function (x) (length(grep("&", x)) > 0)))
+		if (length(sel) > 0) {
+			for (j in sel) {
+				tmp[, j] <- gsub("&", "\\&", tmp[,j ], fixed = TRUE)			
+		}  
+		}
 		footer.sites[[i]] <- tmp
 	}
 	tex.out <- tex
@@ -474,10 +482,16 @@ if (mode == 2) {
 
 if (mode == 1) {
 	if (verbose) cat("\n run mode", mode)
-		
+	
+	#	special characters used in taxon names
+	#	hybrid combinations 	
 	tex[, 1] <- gsub("×", "$\\times$", tex[, 1], fixed = TRUE)
 	footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
+	#	& gylph used in Sites(obj)
+	footer <- gsub("&", "\\&", footer, fixed = TRUE)
 	tex <- gsub("%", "\\%", tex, fixed = TRUE)
+	tex <- gsub("&", "\\&", tex, fixed = TRUE)	
+	
 	if (use.letters) {
 		sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])
 		dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
@@ -512,8 +526,11 @@ if (mode == 2) {
 			#	replace ×
 			tmp[, 1] <- gsub("×", "$\\times$", tmp[, 1], fixed = TRUE)
 			#	make taxa having cons >= a user defined constancy treshold
+			#	check first if we have a singleton
+			if (any(tmp[, 5] < 100)) {
 			tmp[tmp[, 5] >= constancy.treshold, 1] <- 
 				paste("\\textbf{", tmp[tmp[, 5] >= constancy.treshold, 1], "}")
+			}	
 			tmp
 			}, simplify = FALSE)
 		
@@ -560,8 +577,6 @@ if (mode == 2) {
 		})
 		
 		tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
-		
-		#	bold taxon if cons == 100 
 		
 		writeLines(tmp, con)
 	close(con)		

@@ -784,6 +784,7 @@ setMethod("SampleVegsoup",
     	return(invisible(res))
     }
 )
+
 #	Function to rearrange object (species and sites data frames)
 #	by various reordering methods as option.
 #	Currently only presence/absencse data is used,
@@ -791,7 +792,6 @@ setMethod("SampleVegsoup",
 #	Currently there is no way to pass down arguments
 #	to functions?
 #	
-
 
 #	arrange und unpartitioned data set
 #	to do: documentation
