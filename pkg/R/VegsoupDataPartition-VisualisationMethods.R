@@ -1,3 +1,6 @@
+ellipsoidhull
+
+
 .VegsoupPartitionConstancyHeatmap <- function (x, ...) {
 #	x <- prt
 if (!inherits(x, "VegsoupDataPartition"))
