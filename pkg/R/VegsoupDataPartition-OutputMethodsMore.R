@@ -489,8 +489,10 @@ if (mode == 1) {
 	footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 	#	& gylph used in Sites(obj)
 	footer <- gsub("&", "\\&", footer, fixed = TRUE)
+	footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 	tex <- gsub("%", "\\%", tex, fixed = TRUE)
-	tex <- gsub("&", "\\&", tex, fixed = TRUE)	
+	tex <- gsub("&", "\\&", tex, fixed = TRUE)
+	tex <- gsub("×", "$\\times$", tex, fixed = TRUE)
 	
 	if (use.letters) {
 		sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])

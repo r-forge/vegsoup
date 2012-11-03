@@ -111,6 +111,7 @@ setMethod("plot",
 			ylab = "No. of significant indicator species",
 			sub = paste("Fisher's exact test, treshold",
 				format(ft.treshold, scientific = TRUE)), ...)
+			rug(1:k, side = 3)
 		for (i in 1:nrow(oc1)) {
 			lines(1:k, oc1[i, ], lty = i)
 		}
@@ -123,6 +124,7 @@ setMethod("plot",
 				oc.treshold, "significant indicator species"),
 			sub = paste("Fisher's exact test, treshold",
 				format(ft.treshold,scientific = TRUE)), ...)
+			rug(1:k, side = 3)		
 		for (i in 1:nrow(oc2)) {
 			lines(1:k, oc2[i, ], lty = i)
 		}

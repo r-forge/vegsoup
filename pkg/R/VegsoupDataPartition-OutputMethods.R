@@ -232,10 +232,19 @@ setMethod("Latex",
 )
 
 #	KML output
-.KMLVegsoupDataPartition <- function (obj, path, add.label = FALSE, ...) {
+.KMLVegsoupDataPartition <- function (obj, path, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
 if (missing(path)) {
 	path <- getwd()	
 }
+if (missing(website.url.path)) {
+	website.url.path <-
+		"http://sabotag.hausdernatur.at/vegsoup/albums/"
+}
+if (missing(thumbnail.url.path)) {
+	thumbnail.url.path <-
+		"http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
+}
+
 #	obj = prt
 
 #	to do!
@@ -313,6 +322,11 @@ end.kml <- c(
 	paste("<styleUrl>#partition", x[1], "</styleUrl>", sep = ""),
 	"<description>",
 	paste("plot", x[4], "partition", x[1]),
+	#	add gallery
+	paste(
+	"<![CDATA[<a href=\"", paste(website.url.path, x[4], sep = ""), "\"", ">",
+	"<img title=\"Klick for Gallery\" src=\"", paste(thumbnail.url.path, x[4], sep = ""), "\"", " width=\"400\" >",
+	"</a>]]>", sep = ""),	
 	"</description>",
 	"<ExtendedData>",
 	paste("partition", x[1]),
@@ -354,7 +368,7 @@ folder <- unlist(sapply(unique(points$partitioning), FUN = function (x) {
 	res <- c(
 	"<Folder>",
 		paste("<name>partition", x, "</name>"),
-		c(apply(points[points$partitioning == x,], 1, .placemark)),	
+		c(apply(points[points$partitioning == x,], 1, .placemark)),
 	"</Folder>")
 	}
 ))

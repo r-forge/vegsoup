@@ -312,10 +312,10 @@ return(invisible(res))
 #	stack sites data frame to match database structure
 
 SitesWide2SitesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
-#	file = "./dta/csv/odonata/species wide.csv"
-#	file = "./dta/csv/relevees/species wide ferschnitz.csv"
+#	file = "~/Documents/vegsoup-data/windsfeld dta/sites wide.csv"
+
 if (missing(x) & missing(file)) {
-	stop("please supply either a data frmae or a csv file")	
+	stop("please supply either a data frame or a csv file")	
 }
 
 if (!missing(file)) {
@@ -356,6 +356,11 @@ res.stack <- data.frame(
 	stringsAsFactors = FALSE)
 res.stack <- res.stack[order(res.stack$plot),]
 res.stack[is.na(res.stack)] <- ""
+
+if (any(res.stack$plot == "")) {
+	stop("please review your data")
+}
+	
 rownames(res.stack) <- 1:nrow(res.stack)
 res <- res.stack
 

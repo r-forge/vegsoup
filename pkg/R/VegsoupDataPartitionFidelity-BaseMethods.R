@@ -23,8 +23,8 @@ setMethod("getStat",
 setMethod("hist",
 	signature(x = "VegsoupDataPartitionFidelity"),
 	function (x, ...) {
-		fig <- hist(x@stat, xlab = fid@method, ...)
-		return(fig)
+		fig <- hist(x@stat, xlab = x@method, ...)
+		return(invisible(fig))
 	}
 
 )
