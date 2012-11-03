@@ -16,7 +16,7 @@ PartitioningCombinations(obj)
     an object inhertiting from class \code{"VegsoupDataPartition"}
 }
   \item{collapse}{
-    character of be be used as seperator in dimnames.
+    character of be be used as seperator in dimnames. It is only allow to use charcters that can be iddentified with \code{grep("[:punct:]", collapse)}. See \code{\link{regex}} in package base.
   }
 }
 \details{
