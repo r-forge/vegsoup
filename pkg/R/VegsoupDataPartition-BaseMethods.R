@@ -492,6 +492,25 @@ setMethod("Constancy",
 	}
 )
 
+#	shared species
+setGeneric("Shared",
+	function (obj, ...)
+		standardGeneric("Shared")
+)
+
+setMethod("Shared",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, ...) {
+		X <- Constancy(obj) > 0
+		mode(X) <- "numeric"
+		
+		res <- designdist(t(X), method = "J/(A+B)*100", terms = "binary")
+
+	return(res)
+	}
+)
+
+
 #	summary statistics
 
 
@@ -1008,7 +1027,51 @@ setMethod("PartitioningMatrix",
 	}
 )
 
-1
+# Matrix of possible cluster (x) combinations
+.PartitioningCombinations <- function (obj, collapse) {
+	
+	if (missing(collapse)) {
+		collapse = "+"
+	}
+
+cluster <- levels(as.factor(Partitioning(obj)))
+
+cl.comb <- function (x) {
+	k <- length(x) # k <- getK(prt)
+	ep <- diag(1, k, k)
+	names.ep <- x
+    for (j in 2:k) {
+    	#cat(j)
+    	nco <- choose(k,j)
+    	co <- combn(k,j)
+    	epn <- matrix(0, ncol = nco, nrow = k)
+		for (i in 1:ncol(co)) {
+		#cat(i)
+		epn[co[,i],i] <- 1
+		names.ep <- c(names.ep, paste(x[co[,i]], collapse = collapse))
+		}
+	ep <- cbind(ep,epn)
+	}
+	colnames(ep) <- names.ep
+	return(ep)
+}
+res <- cl.comb(cluster)
+
+}
+
+
+#	Indicator value minimizing intermediate occurrences
+setGeneric("PartitioningCombinations",
+	function (obj, collapse)
+		standardGeneric("PartitioningCombinations")
+)
+setMethod("PartitioningCombinations",
+	signature(obj = "VegsoupDataPartition"),
+	.PartitioningCombinations
+)
+
+
+
 #	List occurences of species in partitions
 #	to do: documentation
 setGeneric("Spread",

@@ -1,4 +1,53 @@
-ellipsoidhull
+#	ellipsoidhull around partitions
+.EllipsoidHull <- function (x, add = FALSE, col = "red", ...) {
+
+res <- vector("list", length = getK(x))
+for (i in 1:getK(x)) {
+	xy <- as.matrix(coordinates(x)[Partitioning(x) == i,])
+	if (nrow(xy) >= 3) {
+		res[[i]] <- ellipsoidhull(xy)#, ...)
+	} else {
+		if (ncol(xy) > 1) {
+			res[[i]] <- xy.coords(x = xy[, 1], y = xy[, 2])
+		} else {
+			res[[i]] <- xy.coords(x = t(xy)[, 1], y = t(xy)[, 2])		
+		}
+	}
+}
+
+if (!add) {
+	plot(x@sp.points)
+} else {
+	points(x@sp.points)
+}
+sapply(res, function (x) {
+	if (class(x) == "ellipsoid") {
+		lines(predict(x), col = col)
+	} else {
+		points(x, col = col, cex = 2)
+	}
+	})
+
+return(invisible(res))
+}
+
+#if (!isGeneric("EllipsoidHull")) {
+setGeneric("EllipsoidHull",
+	function (x, ...)
+		standardGeneric("EllipsoidHull")
+)
+#}
+
+setMethod("EllipsoidHull",
+	signature(x = "VegsoupDataPartition"),
+	.EllipsoidHull
+)
+
+#EllipsoidHull(prt)
+
+#plot(pg)
+#points(prt@sp.points, pch = "+")
+#sapply(eh.prt, function (x) lines(predict(x), col = "red"))
 
 
 .VegsoupPartitionConstancyHeatmap <- function (x, ...) {
