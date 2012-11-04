@@ -2,10 +2,10 @@
 \alias{Abbreviation}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Get Abbreviations used to Encode Species
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Get the abbreviations used in species matrix and corresponding taxonomy data.frame.
 }
 \usage{
 Abbreviation(obj, ...)
@@ -13,39 +13,36 @@ Abbreviation(obj, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+an object inheriting from class \code{Vegsoup}
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+not used
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+returns a vector of mode \code{"character"}
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
+\examples{
+library(vegsoup)
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+data(testdata)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+Abbreviation(dta)}
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{method}
+\keyword{classes}% __ONLY ONE__ keyword per line

@@ -1,10 +1,10 @@
 \name{AbundanceScale}
 \alias{AbundanceScale}
 \title{
-retrieves abundance scale from obj
+Retrieves the Abundance Scale
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Retrieves abundance scale from \code{slot(obj, "scale")} of object. A list with three components \code{scale}, \code{codes} and \code{lims} (see value).
 }
 \usage{
 AbundanceScale(obj)
@@ -12,24 +12,24 @@ AbundanceScale(obj)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+an object inheriting from class \code{Vegsoup} 
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Predefined abundabce scales supplied by function \code{\link{Vegsoup}} include "Braun-Blanquet", "Braun-Blanquet 2",  "Domin", "frequency" and "binary". 
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
+a list with three components
+	\item{scale}{the name refered to the abunace scale}
+	\item{codes}{if scale is treated as ordinal, a vector of mode \code{"character"} giving the labels of the scale}
+	\item{lims}{mean percentage cover corresponding to \code{codes}}
 %% ...
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -38,10 +38,18 @@ AbundanceScale(obj)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{BraunBlanquetReduce}}, \code{\link{Vegsoup}}
 }
+
+\examples{
+library(vegsoup)
+
+data(testdata)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+AbundanceScale(dta)}
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{methods}
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

@@ -2,7 +2,7 @@
 \alias{BraunBlanquetReduce}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Reduce Braun-Blanquet abunace scale
+Reduce 9 Point Braun-Blanquet Abunance Scale to 7 Point 
 }
 \description{
 Revert Braun-Blanquet abunace scale from extended to simple.
@@ -11,10 +11,10 @@ Revert Braun-Blanquet abunace scale from extended to simple.
 BraunBlanquetReduce(obj, value)
 }
 \arguments{
-  \item{obj}{an object inheriting from class \code{\link{Vegsoup-class}} }
+  \item{obj}{an object inheriting from class \code{\link{Vegsoup}} }
 }
 \details{
-Converts from 9 and 7 point Braun-Blanquet scale by merging abundance classes "2m", "2a" and "2b" to "1".
+Converts from 9 and 7 point Braun-Blanquet scale by merging abundance classes "2m", "2a" and "2b" to "2".
 }
 \value{
 returns an object depending on the input class. 
@@ -32,7 +32,7 @@ Roland Kaiser
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-See Also as \code{\link{{AbundanceScale}}} and \code{\link{{AbundanceScale}<-}}, ~~~
+\code{\link{AbundanceScale}}
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
