@@ -4,8 +4,8 @@
 
 setClass("Vegsoup",
 	representation(
-	species.long = "data.frame", # in long format, casting by Vegsoup
-	sites.long = "data.frame", # in long format, casting by Vegsoup
+	species.long = "data.frame", # in long format, casting by VegsoupData
+	sites.long = "data.frame", # in long format, casting by VegsoupData
 	taxonomy = "data.frame", # in long format
 	scale = "list",
 	layers = "character",

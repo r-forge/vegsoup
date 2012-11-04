@@ -76,8 +76,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	if (scale$scale == "Domin") {
 		if (!is.character(species.long$cov)) {
 			if (is.integer(species.long$cov)) {
-				warning("Codes for Domin scale supplied as integer, ",
-					"attempt to change mode to charcter")
+				warning("\n Codes for Domin scale supplied as integer, ",
+					"attempt to change mode to charcter", call. = FALSE)
 				species.long$cov <- as.character(species.long$cov)
 			} else {
 				stop("Abundance code must be either of mode charcter ",
@@ -188,8 +188,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	if (any(SitesLong(obj)[, 3] == "") | any(is.na(SitesLong(obj)[, 3]))) {
 		obj@sites.long[obj@sites.long[, 3] == "", 3] <- 0
 		obj@sites.long[is.na(obj@sites.long[, 3]), 3] <- 0
-		warning("NAs and empty fields (\"\") in supplied sites data",
-			" filled with zeros")
+		warning("\n NAs and empty fields (\"\") in supplied sites data",
+			" filled with zeros", call. = FALSE)
 	}
 	sites <- reshape(SitesLong(obj)[, 1:3],
 		direction = "wide",
@@ -202,8 +202,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	#	missing variables values
 	if (any(is.na(sites))) {
 		sites[is.na(sites)] <- 0
-		warning("NAs in casted sites data frame",
-			" filled with zeros")
+		warning("\n NAs in casted sites data frame",
+			" filled with zeros", call. = FALSE)
 		#	paste back to @sites.long
 		tmp <- stack(sites)
 		tmp[, 1] <- as.character(tmp[, 1])
@@ -480,7 +480,7 @@ if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
 } else {
 	if (length(obj@layers) < 2) {
-		if (verbose) warning("has already only a single layer: ", obj@layers)
+		if (verbose) warning("\n obj has already only a single layer: ", obj@layers, call. = FALSE)
 		return(obj)
 	} else {
 	
@@ -562,8 +562,8 @@ if (missing(collapse) & missing(aggregate)) {
 	
 	if (scale$scale != "frequency") {
 		if (any(max(species$cov) > max(scale$lims))) {
-			warning("reduced maximum aggregated abundance value to fit into limits: ",
-				min(scale$lims)[1], " to ", max(scale$lims))
+			warning("\n reduced maximum aggregated abundance value to fit into limits: ",
+				min(scale$lims)[1], " to ", max(scale$lims), call. = FALSE)
 			species$cov[species$cov >  max(scale$lims)] <- max(scale$lims)
 		}
 	}
@@ -779,7 +779,7 @@ setMethod("SampleVegsoup",
     	sel <- sample(1:dim(x)[1], replace = replace, prob = prob)
     	if (any(table(sel) > 1)) {
     		sel <- sort(unique(sel))
-    		warning("replace was set to ", replace,
+    		warning("\n replace was set to ", replace,
     			", can only select unique plots! A subsample will be returend!", call. = FALSE)
     	}
     	res <- x[sel, ]
@@ -904,10 +904,10 @@ setMethod("DecomposeNames",
 	res <- data.frame(abbr.layer = names(obj), abbr, layer, taxon, stringsAsFactors = FALSE)
 
 	if (all(is.na(res$layer))) {
-		warning("unable to deparse layer string, consider setting type to nospace")
+		warning("\n unable to deparse layer string, consider setting type to nospace", call. = FALSE)
 	}
 	if (all(is.na(res$taxon))) {
-		warning("unable to deparse taxon string, consider setting type to nospace")
+		warning("\n unable to deparse taxon string, consider setting type to nospace", call. = FALSE)
 	}
 	return(invisible(res))
 	}

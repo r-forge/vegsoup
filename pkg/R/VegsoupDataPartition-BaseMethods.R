@@ -13,7 +13,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
 	}
-#	if (missing(dist)) {
+#	if (missing(k)) {
 #		dist = "bray"
 #	}
 	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {

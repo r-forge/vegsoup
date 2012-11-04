@@ -2,7 +2,7 @@
 #	to do: improve documentation, rewrite AbundanceScale interface
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "Domin", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", verbose = TRUE) {
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = TRUE) {
 	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet 2")
 	if (missing(x)) {
 		x <- data.frame(NULL)
@@ -19,11 +19,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 		}	
 		x <- x[order(x$plot, x$layer, x$abbr), ]
 		if (dim(unique(unique(x)))[1] != dim(x)[1]) {
-			warning("found duplicated species abundances for plots:\n... ",
+			warning("\n found duplicated species abundances for plots:\n... ",
 				paste(x[duplicated(x), ]$plot, collapse = ", "),
 				"\n apply unique(x, fromLast = FALSE) to get rid of duplicates in x!",
 				"\n they will confuse me otherwise?",
-				" please review your data!")
+				" please review your data!", call. = FALSE)
 			x <- unique(x, fromLast = FALSE)
 		} else {
 			if (verbose) cat("\n species abundances for plots are unique, fine!" )
@@ -38,7 +38,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)
 				
 		if (any(regexpr("[[:alpha:]]", y$plot) < 1)) {
-				warning("... plot identifier in sites contains only numbers, ", 
+				warning("\n ... plot identifier in sites contains only numbers, ", 
 					"\nbut will be coded as character!", call. = FALSE)	
 			y$plot <- as.character(as.numeric(y$plot))
 		}
@@ -72,14 +72,14 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 		y <- y[which(y$plot %in% sel), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
 		warning("\n... unique(x$plot) and unique(y$plot) do not match in length, ",
-			"\nsome plots were dropped!", call. = FALSE)		
+			"\n some plots were dropped!", call. = FALSE)		
 	}
 		
 	if (missing(scale)) {
-		warning("No cover scale provided", immediate. = TRUE)
+		warning("\n no cover scale provided", call. = FALSE)
 		if (is.character(x$cov)) {
-			warning("Interpret abundance values as charcter")
-			warning("\nset cover scale to default 9 point Braun-Blanquet scale")
+			warning("\n interpret abundance values as character",
+			"\n set cover scale to default 9 point Braun-Blanquet scale")
 			scale <- list(
 				scale = "Braun-Blanquet", 
 				codes = c("r", "+", "1",
@@ -125,7 +125,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 						scale = "Domin",
 						codes = c("+", as.character(1:9), "X"),
         				lims = c(0.01, 0.1, 1, 5, 10, 25, 33, 50, 75, 90, 100))
-				}					
+				}	
 			}
 		} else {
 			stop("please supply a list for argument scale")
@@ -136,15 +136,17 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
 		if (verbose) {
-			cat("\nno grouping factor supplied,",
+			cat("\n no grouping factor supplied,",
 				"use single partition")
 		}
 	} else {
-		stopifnot(!is.null(names(group)))
-		if (!is.integer(group)) {
-			group.names <- names(group)
+		#	stopifnot(!is.null(names(group)))
+		if (inherits(group, "numeric")) {
+		#	group.names <- names(group)
 			group <- as.integer(group)
-			names(group) <- group.names	
+			names(group) <- unique(x$plot)
+		} else {
+			stop("argument group must be of mode integer", call. = FALSE)	
 		}
 	}
 	
@@ -193,7 +195,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 				} else {
 					lnglat.test <- FALSE
 					lnglat.sim <- TRUE					
-					warning("... did not succeed!",
+					warning("\n ... did not succeed!",
 						" Some coordinates seem to be doubled.",
 						"\nproblematic plots: ",
 						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]), collapse = " "),
@@ -226,13 +228,13 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
 						data = data.frame(plot = sp.points$plot))				
 			} else {		
-				warning("... not a complete coordinates list, use random pattern instead", call. = FALSE)
+				warning("\n ... not a complete coordinates list, use random pattern instead", call. = FALSE)
 				tmp <- .rpoisppSites(x)	
 				sp.points <- tmp[[1]]
 				sp.polygons <- tmp[[2]] 
 			}	
 		} else {
-			cat("\nSpatialPoints and SpatialPolygons missing, use random pattern")
+			warning("\nSpatialPoints and SpatialPolygons missing, use random pattern", call. = FALSE)
 			lnglat.sim <- TRUE
 			tmp <- .rpoisppSites(x)	
 			sp.points <- tmp[[1]]
@@ -267,10 +269,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2",  "
 }	
 
 #	summary method
-#if (!isGeneric("summary")) {
+if (!isGeneric("summary")) {
 setGeneric("summary", function(object, ...)
 	standardGeneric("summary"))
-#}
+}
 setMethod("summary",
     signature(object = "Vegsoup"),
 	function (object) {
@@ -294,6 +296,14 @@ setMethod("show",
 			summary(object)
     }
 )
+
+#	inherited methods for hist
+if (!isGeneric("hist")) {
+setGeneric("hist",
+	function (x, ...)
+	standardGeneric("hist"))
+}	
+#	plotting method hist
 
 
 #	get or set layers
