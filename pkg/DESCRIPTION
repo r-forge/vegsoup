@@ -13,6 +13,7 @@ Description: S4 classes for phytosociological data. The classes document
 License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/
 LazyLoad: yes
+LazyData: yes
 Collate: AAA.R
          Vegsoup-Import.R
          Vegsoup-Internal.R
