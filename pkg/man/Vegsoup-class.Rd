@@ -7,21 +7,27 @@
 \alias{AbundanceScale,Vegsoup-method}
 \alias{AbundanceScale<-,Vegsoup,list-method}
 \alias{AprioriGrouping,Vegsoup-method}
+\alias{BraunBlanquetReduce,Vegsoup-method}
+\alias{coordinates,Vegsoup-method}
+\alias{Layer,Vegsoup-method}
 \alias{Layers,Vegsoup-method}
 \alias{Layers<-,Vegsoup-method}
 \alias{plot,Vegsoup,missing-method}
+\alias{QuickMap,Vegsoup-method}
 \alias{SitesLong,Vegsoup-method}
 \alias{SitesLong<-,Vegsoup,data.frame-method}
 \alias{SpatialPointsVegsoup,Vegsoup-method}
 \alias{SpatialPointsVegsoup<-,Vegsoup,SpatialPointsDataFrame-method}
 \alias{SpatialPolygonsVegsoup,Vegsoup-method}
 \alias{SpatialPolygonsVegsoup<-,Vegsoup,SpatialPolygonsDataFrame-method}
+\alias{SpeciesList,Vegsoup-method}
 \alias{SpeciesLong,Vegsoup-method}
 \alias{SpeciesLong<-,Vegsoup,data.frame-method}
+\alias{summary,Vegsoup-method}
 \alias{Taxonomy,Vegsoup-method}
 \alias{Taxonomy<-,Vegsoup,data.frame-method}
 
-\title{Class "Vegsoup"}
+\title{Class \code{"Vegsoup"}}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the class is. ~~
 }
@@ -48,17 +54,23 @@ Objects can be created by calls of the form \code{new("Vegsoup", ...)}.
     \item{AbundanceScale}{\code{signature(obj = "Vegsoup")}: ... }
     \item{AbundanceScale<-}{\code{signature(obj = "Vegsoup", value = "list")}: ... }
     \item{AprioriGrouping}{\code{signature(obj = "Vegsoup")}: ... }
+    \item{BraunBlanquetReduce}{\code{signature(obj = "Vegsoup")}: ... }
+    \item{coordinates}{\code{signature(obj = "Vegsoup")}: ... }
+    \item{Layer}{\code{signature(obj = "Vegsoup")}: ... }
     \item{Layers}{\code{signature(obj = "Vegsoup")}: ... }
     \item{Layers<-}{\code{signature(obj = "Vegsoup")}: ... }
     \item{plot}{\code{signature(x = "Vegsoup", y = "missing")}: ... }
+    \item{QuickMap}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SitesLong}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SitesLong<-}{\code{signature(obj = "Vegsoup", value = "data.frame")}: ... }
     \item{SpatialPointsVegsoup}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SpatialPointsVegsoup<-}{\code{signature(obj = "Vegsoup", value = "SpatialPointsDataFrame")}: ... }
     \item{SpatialPolygonsVegsoup}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SpatialPolygonsVegsoup<-}{\code{signature(obj = "Vegsoup", value = "SpatialPolygonsDataFrame")}: ... }
+    \item{SpeciesList}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SpeciesLong}{\code{signature(obj = "Vegsoup")}: ... }
     \item{SpeciesLong<-}{\code{signature(obj = "Vegsoup", value = "data.frame")}: ... }
+    \item{summary}{\code{signature(object = "Vegsoup")}: ... }
     \item{Taxonomy}{\code{signature(obj = "Vegsoup")}: ... }
     \item{Taxonomy<-}{\code{signature(obj = "Vegsoup", value = "data.frame")}: ... }
 	 }

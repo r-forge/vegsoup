@@ -3,10 +3,10 @@
 \docType{class}
 \alias{VegsoupDataPartitionFidelity-class}
 \alias{getStat,VegsoupDataPartitionFidelity-method}
-\alias{Latex,VegsoupDataPartitionFidelity-method}
+\alias{hist,VegsoupDataPartitionFidelity-method}
 \alias{summary,VegsoupDataPartitionFidelity-method}
 
-\title{Class "VegsoupDataPartitionFidelity"}
+\title{Class \code{"VegsoupDataPartitionFidelity"}}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the class is. ~~
 }
@@ -46,7 +46,7 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupDataPartition", distance 
 \section{Methods}{
   \describe{
     \item{getStat}{\code{signature(obj = "VegsoupDataPartitionFidelity")}: ... }
-    \item{Latex}{\code{signature(object = "VegsoupDataPartitionFidelity")}: ... }
+    \item{hist}{\code{signature(x = "VegsoupDataPartitionFidelity")}: ... }
     \item{summary}{\code{signature(object = "VegsoupDataPartitionFidelity")}: ... }
 	 }
 }

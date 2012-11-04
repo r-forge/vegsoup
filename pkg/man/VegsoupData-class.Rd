@@ -11,28 +11,29 @@
 \alias{as.numeric,VegsoupData-method}
 \alias{coerce,VegsoupData,list-method}
 \alias{colSums,VegsoupData-method}
-\alias{coordinates,VegsoupData-method}
 \alias{DecomposeNames,VegsoupData-method}
 \alias{dim,VegsoupData-method}
 \alias{getDistconnected,VegsoupData-method}
 \alias{head,VegsoupData-method}
 \alias{Indpower,VegsoupData-method}
 \alias{Indspc,VegsoupData-method}
+\alias{KML,VegsoupData-method}
 \alias{Layers,VegsoupData-method}
 \alias{names,VegsoupData-method}
 \alias{ncol,VegsoupData-method}
 \alias{nrow,VegsoupData-method}
-\alias{plot,VegsoupData,ANY-method}
+\alias{plot,VegsoupData,missing-method}
 \alias{Richness,VegsoupData-method}
 \alias{rownames,VegsoupData,missing,missing-method}
 \alias{rowSums,VegsoupData-method}
+\alias{SampleVegsoup,VegsoupData-method}
 \alias{Sites,VegsoupData-method}
 \alias{Sites<-,VegsoupData,data.frame-method}
 \alias{Stride,VegsoupData-method}
 \alias{summary,VegsoupData-method}
 \alias{tail,VegsoupData-method}
 
-\title{Class "VegsoupData"}
+\title{Class \code{"VegsoupData"}}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the class is. ~~
 }
@@ -68,21 +69,22 @@ Class \code{"\linkS4class{Vegsoup}"}, directly.
     \item{as.numeric}{\code{signature(x = "VegsoupData")}: ... }
     \item{coerce}{\code{signature(from = "VegsoupData", to = "list")}: ... }
     \item{colSums}{\code{signature(x = "VegsoupData")}: ... }
-    \item{coordinates}{\code{signature(obj = "VegsoupData")}: ... }
     \item{DecomposeNames}{\code{signature(obj = "VegsoupData")}: ... }
     \item{dim}{\code{signature(x = "VegsoupData")}: ... }
     \item{getDistconnected}{\code{signature(obj = "VegsoupData")}: ... }
     \item{head}{\code{signature(x = "VegsoupData")}: ... }
     \item{Indpower}{\code{signature(obj = "VegsoupData")}: ... }
     \item{Indspc}{\code{signature(obj = "VegsoupData")}: ... }
+    \item{KML}{\code{signature(obj = "VegsoupData")}: ... }
     \item{Layers}{\code{signature(obj = "VegsoupData")}: ... }
     \item{names}{\code{signature(x = "VegsoupData")}: ... }
     \item{ncol}{\code{signature(x = "VegsoupData")}: ... }
     \item{nrow}{\code{signature(x = "VegsoupData")}: ... }
-    \item{plot}{\code{signature(x = "VegsoupData", y = "ANY")}: ... }
+    \item{plot}{\code{signature(x = "VegsoupData", y = "missing")}: ... }
     \item{Richness}{\code{signature(obj = "VegsoupData")}: ... }
     \item{rownames}{\code{signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing")}: ... }
     \item{rowSums}{\code{signature(x = "VegsoupData")}: ... }
+    \item{SampleVegsoup}{\code{signature(x = "VegsoupData")}: ... }
     \item{Sites}{\code{signature(obj = "VegsoupData")}: ... }
     \item{Sites<-}{\code{signature(obj = "VegsoupData", value = "data.frame")}: ... }
     \item{Stride}{\code{signature(obj = "VegsoupData")}: ... }

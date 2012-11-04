@@ -3,28 +3,35 @@
 \docType{class}
 \alias{VegsoupDataPartition-class}
 \alias{[,VegsoupDataPartition,ANY,ANY,missing-method}
+\alias{Accuracy,VegsoupDataPartition,VegsoupDataPartition-method}
+\alias{Association,VegsoupDataPartition,VegsoupDataPartition-method}
 \alias{Confus,VegsoupDataPartition,VegsoupDataPartition-method}
 \alias{Constancy,VegsoupDataPartition-method}
 \alias{Contingency,VegsoupDataPartition-method}
 \alias{Disdiam,VegsoupDataPartition-method}
+\alias{EllipsoidHull,VegsoupDataPartition-method}
 \alias{Fidelity,VegsoupDataPartition-method}
 \alias{FisherTest,VegsoupDataPartition-method}
+\alias{Fivenum,VegsoupDataPartition-method}
 \alias{getDist,VegsoupDataPartition-method}
 \alias{getDistconnected,VegsoupDataPartition-method}
 \alias{getK,VegsoupDataPartition-method}
 \alias{head,VegsoupDataPartition-method}
 \alias{Indval,VegsoupDataPartition-method}
 \alias{Isamic,VegsoupDataPartition-method}
+\alias{KML,VegsoupDataPartition-method}
 \alias{Latex,VegsoupDataPartition-method}
-\alias{Multipatt,VegsoupDataPartition-method}
 \alias{Murdoch,VegsoupDataPartition-method}
 \alias{Optindval,VegsoupDataPartition-method}
 \alias{Optsil,VegsoupDataPartition-method}
 \alias{Partana,VegsoupDataPartition-method}
 \alias{Partitioning,VegsoupDataPartition-method}
+\alias{Partitioning<-,VegsoupDataPartition,numeric-method}
+\alias{PartitioningCombinations,VegsoupDataPartition-method}
 \alias{PartitioningMatrix,VegsoupDataPartition-method}
 \alias{Phi,VegsoupDataPartition-method}
 \alias{plot,VegsoupDataPartition,missing-method}
+\alias{Shared,VegsoupDataPartition-method}
 \alias{SigFidelity,VegsoupDataPartition-method}
 \alias{Silhouette,VegsoupDataPartition-method}
 \alias{Spread,VegsoupDataPartition-method}
@@ -32,7 +39,7 @@
 \alias{Tabdev,VegsoupDataPartition-method}
 \alias{Typal,VegsoupDataPartition-method}
 
-\title{Class "VegsoupDataPartition"}
+\title{Class \code{"VegsoupDataPartition"}}
 \description{
 %%  ~~ A concise (1-5 lines) description of what the class is. ~~
 }
@@ -66,31 +73,38 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupData", distance 2.
 \section{Methods}{
   \describe{
     \item{[}{\code{signature(x = "VegsoupDataPartition", i = "ANY", j = "ANY", drop = "missing")}: ... }
+    \item{Accuracy}{\code{signature(obj1 = "VegsoupDataPartition", obj2 = "VegsoupDataPartition")}: ... }
+    \item{Association}{\code{signature(obj1 = "VegsoupDataPartition", obj2 = "VegsoupDataPartition")}: ... }
     \item{Confus}{\code{signature(obj1 = "VegsoupDataPartition", obj2 = "VegsoupDataPartition")}: ... }
     \item{Constancy}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Contingency}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Disdiam}{\code{signature(obj = "VegsoupDataPartition")}: ... }
+    \item{EllipsoidHull}{\code{signature(x = "VegsoupDataPartition")}: ... }
     \item{Fidelity}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{FisherTest}{\code{signature(obj = "VegsoupDataPartition")}: ... }
+    \item{Fivenum}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{getDist}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{getDistconnected}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{getK}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{head}{\code{signature(x = "VegsoupDataPartition")}: ... }
     \item{Indval}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Isamic}{\code{signature(obj = "VegsoupDataPartition")}: ... }
+    \item{KML}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Latex}{\code{signature(object = "VegsoupDataPartition")}: ... }
-    \item{Multipatt}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Murdoch}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Optindval}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Optsil}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Partana}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Partitioning}{\code{signature(obj = "VegsoupDataPartition")}: ... }
+    \item{Partitioning<-}{\code{signature(obj = "VegsoupDataPartition", value = "numeric")}: ... }
+    \item{PartitioningCombinations}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{PartitioningMatrix}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Phi}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{plot}{\code{signature(x = "VegsoupDataPartition", y = "missing")}: ... }
+    \item{Shared}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{SigFidelity}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Silhouette}{\code{signature(obj = "VegsoupDataPartition")}: ... }
-    \item{Spread}{\code{signature(obj = "VegsoupDataPartition")}: ... }
+    \item{Spread}{\code{signature(object = "VegsoupDataPartition")}: ... }
     \item{summary}{\code{signature(object = "VegsoupDataPartition")}: ... }
     \item{Tabdev}{\code{signature(obj = "VegsoupDataPartition")}: ... }
     \item{Typal}{\code{signature(obj = "VegsoupDataPartition")}: ... }

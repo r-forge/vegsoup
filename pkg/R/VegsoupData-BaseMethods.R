@@ -733,6 +733,8 @@ setMethod("[",
 		res@species.long <-
 			res@species.long[paste(res@species.long$abbr,
 				res@species.long$layer, sep = "@") %in%	names(res), ]
+				
+		#	subset sites		
 		res@sites <-
 			res@sites[match(rownames(res),
 				rownames(res@sites)), ]
@@ -747,7 +749,7 @@ setMethod("[",
 			res@group[names(res@group) %in%
 				rownames(res)]
 		}
-		#	Abbreviation relies on already subsetted taxonomy!
+		#	method Abbreviation relies on already subsetted taxonomy!
 		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
 		   function (x) x[1])
  		#	taxonomy is subsetted!
