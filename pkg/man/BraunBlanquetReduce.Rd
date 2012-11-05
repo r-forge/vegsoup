@@ -25,8 +25,17 @@ returns an object depending on the input class.
 \author{
 Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
+\examples{
+library(vegsoup)
+
+data(testdata)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+		scale = list(scale = "Braun-Blanquet")))
+red <- BraunBlanquetReduce(dta)
+AbundanceScale(dta)
+AbundanceScale(red)
+class(BraunBlanquetReduce(red))
+
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

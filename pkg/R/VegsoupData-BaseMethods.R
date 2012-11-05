@@ -266,6 +266,7 @@ setMethod("dim",
     signature(x = "VegsoupData"),
 	    function (x) dim(x@species)
 )
+
 #	retrieve character matrix
 #	to do: documentation, validity chekcs against obj@scale, priority high!	
 setMethod("as.character",
@@ -353,7 +354,7 @@ setMethod("as.numeric",
 				cat("  species matrix is numeric, scale:",
 					AbundanceScale(x)$scale)
 			}
-		} else {		
+		} else {
 			res <- x@species
 			scale <- AbundanceScale(x)		
 			tmp <- as.factor(c(as.matrix(res)))
@@ -632,6 +633,23 @@ setMethod("getDistconnected",
 	}
 )
 
+#	matrix fill
+#	used in summary
+if (!isGeneric("MatrixFill")) {
+setGeneric("MatrixFill",
+	function (obj)
+	standardGeneric("MatrixFill"))
+}
+
+setMethod("MatrixFill",
+    signature(obj = "VegsoupData"),
+    function (obj) {
+	x <- nrow(obj)
+	y <- sum(dim(obj))
+	res <- x/y * 100
+	return(res)	
+})
+
 #	summary method
 #	to do: documenation
 setMethod("summary",
@@ -649,13 +667,14 @@ setMethod("summary",
 	cat("object of class", class(object), "\n")
 	species.summary <- paste(
 		"\n species: ", Richness(object),
-		"\n sites (sample plots): ", dim(object)[1], 
+		"\n sites (sample plots): ", dim(object)[1],
+		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
 		"\n layers: ", length(Layers(object)),
 		" (", paste(Layers(object), collapse = ", "), ")",
 		"\n abundance scale: ", AbundanceScale(object)$scale,
 		ifelse(length(object@taxonomy) > 0,
-			"\n taxomomy lookup table supplied ",
-			"... but has non matching taxa!"),
+			"\n taxomomy lookup table: supplied ",
+			"\n taxomomy lookup table: has non matching taxa!"),
 		sep = ""
 	)
 	if (dim(object)[1] == 1) {

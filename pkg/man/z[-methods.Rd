@@ -5,17 +5,20 @@
 \alias{[,VegsoupDataPartition,ANY,ANY,missing-method}
 \title{Methods for Function [}
 \description{
-obj[c(1,1,2), ] is currently not implemented
+Method to subset an object by indexing the species matrix.
 }
+%\details{
+
+%}
 \section{Methods}{
 \describe{
-
+Method to subset the object by indexing the species matrix. 
 \item{\code{signature(x = "VegsoupData", i = "ANY", j = "ANY", drop = "missing")}}{
-%%  ~~describe this method here~~
+
 }
 
 \item{\code{signature(x = "VegsoupDataPartition", i = "ANY", j = "ANY", drop = "missing")}}{
-%%  ~~describe this method here~~
+The method will raise a waring each time the subset operation data will loose a partion. Values of \code{getK(obj)} will be set to the next lowest number.
 }
 }}
 \keyword{methods}

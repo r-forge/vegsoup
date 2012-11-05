@@ -157,12 +157,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 		#	may raise errors in subset operations!
 		if (verbose) {
-			cat("\nattempt to retrieve coordinates from sites data ...")
+			cat("\n attempt to retrieve coordinates from sites data ...\n")
 		}
 
 		if (lnglat.test) {
 			if (verbose) {		 
-				cat("\n... found variables longitude and latitude!")
+				cat("\n found variables longitude and latitude!\n")
 			}
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
@@ -195,9 +195,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				} else {
 					lnglat.test <- FALSE
 					lnglat.sim <- TRUE					
-					warning("\n ... did not succeed!",
+					warning("\n did not succeed!",
 						" Some coordinates seem to be doubled.",
-						"\nproblematic plots: ",
+						"\n problematic plots: ",
 						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]), collapse = " "),
 						call. = FALSE)
 #					if (verbose) {
@@ -207,8 +207,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 			} else {
 				lnglat.test <- FALSE
 				lnglat.sim <- TRUE					
-				warning("\n... did not succeed!",
-					"\nlongitude and latitude do not match in length", call. = FALSE)
+				warning("\n did not succeed!",
+					"\n longitude and latitude do not match in length", call. = FALSE)
 			}
 			
 			if (lnglat.test) {
@@ -234,7 +234,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				sp.polygons <- tmp[[2]] 
 			}	
 		} else {
-			warning("\nSpatialPoints and SpatialPolygons missing, use random pattern", call. = FALSE)
+			warning("\n SpatialPoints and SpatialPolygons missing, use random pattern", call. = FALSE)
 			lnglat.sim <- TRUE
 			tmp <- .rpoisppSites(x)	
 			sp.points <- tmp[[1]]
@@ -278,9 +278,9 @@ setMethod("summary",
 	function (object) {
 		cat("an object of class", class(object))
 		if (is.null(Taxonomy(object))) {
-			cat("\n  Taxonomy lookup table supplied")
+			cat("\n taxonomy lookup table supplied")
 		} else {
-			cat("\n  Taxonomy lookup table missing")
+			cat("\n taxonomy lookup table missing")
 		}
 		cat("\n  proj4string:")
 		print(proj4string(object))

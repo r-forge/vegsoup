@@ -18,7 +18,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 #	}
 	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {
 		k = 1
-		warning("argument k missing, set to ", k)
+		warning(" argument k missing, set to ", k, call. = FALSE)
 	}	
 	if (missing(k) & inherits(obj, "VegsoupDataOptimstride")) {
 		k = summary(opt)$best.optimclass1
@@ -44,7 +44,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	}
 	if (!missing(clustering) | match.arg(method) == "external") {
 		if (missing(clustering)) {
-			warning("\n selected method external but did not define clustering")
+			warning(" selected method external but did not define clustering", call. = FALSE)
 		}
 		part.meth <- method <- "external"
 		if (length(clustering) == 1) {
@@ -82,8 +82,8 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 				X <- X^2.6 / 4
 			}
     		if (decostand.method == "domin2.6" & binary) {
-				warning("Domin 2.6 transformation is only allowed for non binary data",
-					"\nyou forced me to use binary=", binary)
+				warning(" Domin 2.6 transformation is only allowed for non binary data",
+					"\nyou forced me to use binary=", binary, call. = FALSE)
 			}
     	} else {
     		if (missing(MARGIN)) {
@@ -106,7 +106,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	}
 
 if (part.meth != "external") {	
-	dis <- vegdist(X, method = dist)
+	dis <- vegdist(X, dist)
 }
 #	set seed
 	set.seed(seed)		
@@ -183,8 +183,8 @@ if (is.vector(part)) { # method external
 	}
 }
 if (k != length(unique(grp)) && class(part) != "isopam") {
-	warning("did not converge for", k, "partitions",
-		"\nset k to", length(unique(grp)))
+	warning(" did not converge for", k, "partitions",
+		"\nset k to", length(unique(grp)), call. = FALSE)
 }
 	
 #	if method return outgroup try to refine clustering
@@ -194,7 +194,7 @@ if (k != length(unique(grp)) && class(part) != "isopam") {
 out.grp <- any(as.vector(table(grp)) == 1)
 
 if (out.grp) {
-	warning("single member groups detected!", call. = FALSE)
+	warning(" single member groups detected!", call. = FALSE)
 }
 #	fundamental change! 
 if (out.grp && polish) { # was ||
@@ -202,14 +202,14 @@ if (out.grp && polish) { # was ||
 	grp.opt <- optsil(grp, dis, k^2)$clustering
 	names(grp.opt) <- rownames(obj)
 	if (any(as.vector(table(grp.opt)) == 1)) {
-		warning("\ndid not succeed in reallocation", call. = FALSE)
+		warning(" did not succeed in reallocation", call. = FALSE)
 	} else {
 		method <- c(method, "optsil")	
 		grp <- grp.opt
-		cat("\n... successfully 'polished' clustering")
+		cat("\n successfully 'polished' clustering")
 		if (k !=  length(unique(grp))) {
-			cat("\n... reset intial k =", k,
-				"to k =", length(unique(grp)))
+			cat("\n reset intial k =", k,
+				"to k =", length(unique(grp)), "\n")
 		}
 	}	
 }
@@ -220,6 +220,8 @@ res <- new("VegsoupDataPartition", obj)
 res@part <- grp
 res@method <- part.meth	
 res@k <- length(unique(grp))
+res@binary = binary
+res@dist <- dist
 
 return(res)
 }
@@ -239,8 +241,8 @@ setMethod("[",
 	    tmp <- tmp[i, j, ...]
 
 		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
-			warning("Partitioning vector was subsetted!",
-				" k was changed accordingly")
+			warning(" Partitioning vector was subsetted!",
+				" k was changed accordingly", call. = FALSE)
 		}
 
 		#	develop class VegsoupDataPartition from class VegsoupData
@@ -345,33 +347,89 @@ setMethod("plot",
 	.plotVegsoupPartition
 )
 
+#	alternative plotting methof
+#	not a generic for plot
+
+if (!isGeneric("Rectangles")) {
+setGeneric("Rectangles",
+	function (obj, plot, ...)
+	standardGeneric("Rectangles"))
+}
+
+setMethod("Rectangles",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, plot, ...) {
+	#	obj <- prt
+	
+	if (missing(plot)) {
+		plot = TRUE	
+	}
+	p <- unique(Partitioning(obj))
+	d <- dim(obj)
+	
+	#	subsetting will issue a warning
+	#	this harmless and not of interessent at this point
+	op <- options()
+	options("warn" = -1)
+	res <- t(sapply(sort(p), function (x) dim(obj[Partitioning(obj) == x, ])))
+	options(op)	
+	
+	if (plot) {
+	
+	#	order
+	r <- res[order(res[, 1], res[,2]), ]		
+	plot(max(r[, 1]), max(r[, 2]),
+		xlim = c(0, max(r[, 1])), ylim = c(0, max(r[, 2])),
+		type = "n", bty = "n",
+		xlab = "number of sites", ylab = "number of species",
+		sub = paste("total number of sites and species:" , d[1], d[2]
+		))
+	rect(0, 0, r[,1], r[, 2], ...)
+	points(r[,1] , r[,2], pch = 16, col =" white", cex = 3)
+	text(r[,1] , r[,2], labels = 1:nrow(r), cex = 1, font = 2)
+	rug(1, side = 1, lwd = 1)
+	}
+	
+	return(res)
+	}
+)
+
+
 #	getter method
 #	running partition vector
-#	if(!isGeneric("Partitioning")) {
+if(!isGeneric("Partitioning")) {
 setGeneric("Partitioning",
 	function (obj)
 		standardGeneric("Partitioning")
 )
-#}
+}
+
+#	retrieve or set slot part
 setMethod("Partitioning",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) obj@part
 )
-#	if(!isGeneric("Partitioning<-")) {
+
+#	replace slot part
+if(!isGeneric("Partitioning<-")) {
 setGeneric("Partitioning<-",
 	function (obj, value, ...)
 		standardGeneric("Partitioning<-")
 )
-#}
+}
 setReplaceMethod("Partitioning",
 	signature(obj = "VegsoupDataPartition", value = "numeric"),
 	function (obj, value) {
 		#	warning!
 		#	to do: possibliy needs more validity checks?
 		if (length(value) != length(Partitioning(obj))) {
-			stop("replacemenmt does not match in length: ")
+			stop("replacement does not match in length: ")
 		}
-		obj@part <- value		
+				
+		names(value) <- rownames(obj)
+		obj@part <- value
+		obj@k <- length(unique(value))
+		
 		return(obj)		
 	}
 )
@@ -385,7 +443,15 @@ setGeneric("getDist",
 )
 setMethod("getDist",
 	signature(obj = "VegsoupDataPartition"),
-	function (obj) vegdist(as.binary(obj), obj@dist)
+	function (obj) {
+		if (obj@binary) {
+			m <- as.binary(obj)	
+		} else {
+			m <- as.numeric(obj)
+		}
+		res <- vegdist(m, obj@dist)
+		res
+	}
 )
 
 #	connectedness of dissimilarities
@@ -419,7 +485,7 @@ setMethod("Spread",
 		part  <- Partitioning(obj)
 		com <- as.binary(obj)
 		if (length(unique(part)) == 1)
-			warning("only single partition present")
+			warning(" only a single partition present", call. = FALSE)
 		res <- apply(com, 2, function (y) {
 			sapply(rownames(com[y > 0,]), # y
 				function (z) part[which(names(part) == z)],
@@ -949,7 +1015,7 @@ setMethod("Typal",
     signature(obj = "VegsoupDataPartition"),
     function (obj) {
 		if (getK(obj) == 1) {
-			warning("results are meaningless with k = ", getK(obj))
+			warning(" results are meaningless with k = ", getK(obj), call. = FALSE)
 			return(invisible(obj))
 		} else {
    			res <- typal(Partitioning(obj), getDist(obj))
@@ -1092,7 +1158,7 @@ setMethod("Spread",
 				function (z) part[which(names(part) == z)],
 					USE.NAMES = FALSE)
 		} else {
-			warning("single partition not meaningful")
+			warning(" a single partition is not meaningful", call. = FALSE)
 		}
 	}
 	)
