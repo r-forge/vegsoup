@@ -2,18 +2,37 @@
 #	to do: improve documentation, rewrite AbundanceScale interface
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = TRUE) {
+Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
 	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet 2")
+	if (missing(col.names)) {
+		col.names <- list(
+			x = c("plot", "abbr", "layer", "cov"),
+			y = c("plot", "variable", "value"),
+			z = c("abbr", "taxon"))
+	} else {	
+		if (!is.list(col.names)) {
+			stop("col.names must be a list")
+		} else {
+			if (length(col.names) != 3) {
+				stop("col.names must be a list of character and length 3")
+			} else {
+				names(col.names) <- c("x", "y", "z")
+				print(col.names)			
+			}
+		}
+	}
+	
 	if (missing(x)) {
 		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
 	} else {
 		#	for safety and to ensure validity
-		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
-		x  <- data.frame(x, stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
+		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)[col.names$x]
+		names(x) <- c("plot", "abbr", "layer", "cov")
+		stopifnot(ncol(x) == 4)
 		
 		if (any(regexpr("[[:alpha:]]", x$plot) < 1)) {
-				warning("... plot identifier in species contains only numbers, ",
+				warning("... plot identifier in x contains only numbers, ",
 					"\nbut will be coded as character!", call. = FALSE)	
 			x$plot <- as.character(as.numeric(species$plot))
 		}	
@@ -23,19 +42,22 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				paste(x[duplicated(x), ]$plot, collapse = ", "),
 				"\n apply unique(x, fromLast = FALSE) to get rid of duplicates in x!",
 				"\n they will confuse me otherwise?",
-				" please review your data!", call. = FALSE)
+				"\n please review your data!", call. = FALSE)
 			x <- unique(x, fromLast = FALSE)
 		} else {
-			if (verbose) cat("\n species abundances for plots are unique, fine!" )
+			if (verbose) {
+				cat("\n species abundances for plots are unique, fine!" )
+			}
 		}
-		
 	}
 
 	if (missing(y)) {
 		y <- data.frame(NULL)
 		stop("query on sites is empty!\n")	
 	} else {
-		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)
+		y <- as.data.frame(as.matrix(y), stringsAsFactors = FALSE)[col.names$y]
+		stopifnot(ncol(y) == 3)
+		names(y) = c("plot", "variable", "value")
 				
 		if (any(regexpr("[[:alpha:]]", y$plot) < 1)) {
 				warning("\n ... plot identifier in sites contains only numbers, ", 
@@ -52,7 +74,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		if (is.list(z) & any(names(z) == "species")) {
 			z <- z$taxonomy
 		}	
-		z <- data.frame(as.matrix(z), stringsAsFactors = FALSE)[c("abbr", "taxon")]
+		z <- data.frame(as.matrix(z), stringsAsFactors = FALSE)[col.names$z]
+		stopifnot(ncol(z) == 2)
+		names(z) = c("abbr", "taxon")
 		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}
@@ -60,6 +84,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	if	(!inherits(proj4string, "character")) {
 		stop("\n... argument proj4string does not inhertit from class 'character'")
 	}
+	
 	#	make valid names	
 	x$abbr <- make.names(x$abbr)
 	z$abbr <- make.names(z$abbr)
@@ -87,8 +112,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
 			cat("\n", scale$codes)	
 		} else {
-			cat("cover seems to be numeric")
-			cat("\nset abundance scale to frequency")
+			cat("\n cover seems to be numeric")
+			cat("\n set abundance scale to frequency")
 			scale <- c(scale = "frequency", list(codes = NULL), list(lims = NULL))
 		}	
 	} else {
@@ -277,10 +302,10 @@ setMethod("summary",
     signature(object = "Vegsoup"),
 	function (object) {
 		cat("an object of class", class(object))
-		if (is.null(Taxonomy(object))) {
-			cat("\n taxonomy lookup table supplied")
+		if (is.null(Taxonomy(object)) || nrow(Taxonomy(object)) != length(Abbreviation(object))) {
+			cat("\n taxonomy lookup table missing or uncomplete")
 		} else {
-			cat("\n taxonomy lookup table missing")
+			cat("\n taxonomy lookup table supplied and complete")
 		}
 		cat("\n  proj4string:")
 		print(proj4string(object))
