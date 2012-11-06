@@ -269,10 +269,10 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 }	
 
 #	summary method
-if (!isGeneric("summary")) {
+#if (!isGeneric("summary")) {
 setGeneric("summary", function(object, ...)
 	standardGeneric("summary"))
-}
+#}
 setMethod("summary",
     signature(object = "Vegsoup"),
 	function (object) {
@@ -293,16 +293,16 @@ setMethod("summary",
 setMethod("show",
     signature(object = "Vegsoup"),
     function (object) {
-			summary(object)
+			do.call("summary", list(object))
     }
 )
 
 #	inherited methods for hist
-if (!isGeneric("hist")) {
+#if (!isGeneric("hist")) {
 setGeneric("hist",
 	function (x, ...)
 	standardGeneric("hist"))
-}	
+#}	
 #	plotting method hist
 
 
@@ -519,11 +519,12 @@ setGeneric("SpatialPointsVegsoup",
 		standardGeneric("SpatialPointsVegsoup")
 )
 
-#if (!isGeneric("SpatialPoints<-"))
+#if (!isGeneric("SpatialPoints<-")) {
 setGeneric("SpatialPointsVegsoup<-",
 	function (obj, value)
 		standardGeneric("SpatialPointsVegsoup<-")
 )
+#}
 setMethod("SpatialPointsVegsoup",
     signature(obj = "Vegsoup"),
     function (obj) obj@sp.points

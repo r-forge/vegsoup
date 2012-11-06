@@ -491,16 +491,23 @@ if (missing(collapse) & missing(aggregate)) {
 	} else {
 		aggregate <- match.arg(aggregate)	
 	}
-	if (missing(collapse)) {
-		if (verbose) cat("collapse to a single layer\n")
+	if (missing(collapse) || length(collapse) == 1) {
+		if (verbose) {
+			cat("collapse to a single layer\n")
+		}
+		if (missing(collapse)) {
 			collapse <- rep("0l", length(obj@layers))
+		} else {
+			collapse <- rep(collapse, length(obj@layers))
+		}
 	} else {
-		if (length(collapse) > length(obj@layers))
+		if (length(collapse) > length(obj@layers)) {
 			stop("length of collapse vector must match length(Layers(obj))")
+		}
 	}
 	
 	#	debug
-	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c("hl", "wl", "wl", "wl", "hl")
+	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c(NA, NA, "sl", "tl", "tl")
 	
 	#	revert to class Vegsoup and cast again
 	if (inherits(obj, "VegsoupData")) {
@@ -516,8 +523,25 @@ if (missing(collapse) & missing(aggregate)) {
 		ncol = 2, nrow = length(res@layers),
 		byrow = FALSE,
 		dimnames = list(NULL, c("original", "collapsed")))
+		
+	if (verbose) {
+		print(collapse)
+	}
 	
-	if (verbose) print(collapse)	
+	if (any(is.na(collapse[,2]))) {
+		warning("NA in collapse, all species on these layers will be dropped", call. = FALSE)
+		ld <- collapse[is.na(collapse[,2 ]), 1]
+		collapse <- collapse[!is.na(collapse[,2 ]), ]
+		#	drop all occurences on these layers
+		species <- species[!species$layer %in% ld, ]
+		#	also drop from taxonomy
+		res@taxonomy <- Taxonomy(res)[Taxonomy(res)$abbr %in% unique(species$abbr), ]
+		
+		if (length(unique(SitesLong(res)$plot)) > length(unique(species$plot))) {
+			warning("also some plots will be dropped", call. = FALSE)
+			res@sites.long <- SitesLong(res)[SitesLong(res)$plot %in% species$plot, ]
+		}		
+	}	
 
 	species$layer <- factor(species$layer)
 	levels(species$layer) <- collapse[match(levels(species$layer), collapse[, 1]), 2]
@@ -525,7 +549,7 @@ if (missing(collapse) & missing(aggregate)) {
 
 	scale.is.character <- is.character(species$cov)
 	
-	#	convert original abundance scale to numeric
+	#	convert original abundance scale to numeric to allow calculations
 	if (scale.is.character) {
 		species$cov <- as.factor(species$cov)
 		levels(species$cov) <- scale$lims[match(levels(species$cov), scale$codes)]
@@ -783,10 +807,10 @@ setMethod("[",
 #	#	coerc
 
 #	sample data, usally without replacement
-#if (!isGeneric("sample")) {
-setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL, ...)
+if (!isGeneric("SampleVegsoup")) {
+setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL)
 	standardGeneric("SampleVegsoup"))
-#}
+}
 #	warning: does not behave as expected for the user
 #	StablePartition() relies on this method
 #	to do: documentation
@@ -794,8 +818,11 @@ setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL, ...
 setMethod("SampleVegsoup",
     signature(x = "VegsoupData"),
     function (x, size, replace = FALSE, prob = NULL) {
-    	#	For sample the default for size is the number of items inferred from the first argument
-    	sel <- sample(1:dim(x)[1], replace = replace, prob = prob)
+    	#	for sample the default for size is the number of items inferred from the first argument
+		if (missing(size)) {
+            size <- dim(x)[1]
+        }    
+		sel <- sample(1:dim(x)[1], size, replace = replace, prob = prob)
     	if (any(table(sel) > 1)) {
     		sel <- sort(unique(sel))
     		warning("\n replace was set to ", replace,
@@ -805,7 +832,7 @@ setMethod("SampleVegsoup",
     	return(invisible(res))
     }
 )
-
+#sample(dta)
 #	Function to rearrange object (species and sites data frames)
 #	by various reordering methods as option.
 #	Currently only presence/absencse data is used,

@@ -16,11 +16,13 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 #	print(method)
 	
 	for (i in seq(along = method)) {
-		print(method[i])
+#		cat(method[i])
 		res.j <- vector("list", length = k)
 		names(res.j) <- 1:k
 		res.j[[1]] <- 0
 		names(res.j[[1]]) <- 1
+#		since R 2.15.2 (2012-10-26)	txtProgressBar behaves differnt
+		print("\n")
 		pb.j <- txtProgressBar(min = 2, max = k,
 			char = '.', width = 45, style = 3)		
 		for (j in 2:k) {
@@ -29,20 +31,22 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 		}
 		res.i[[i]] <- res.j
 		close(pb.j)
+		print("\n")
 	}	
-		
+	
+#	very slow from here?
 	#	develop class VegsoupDataOptimstride
 	res <- new("VegsoupDataOptimstride", obj)
 	
-	optimstride <- list(
+	os <- list(
 		indicators = res.i,
 		settings = list(call = match.call(),
 			args = c(as.list(match.call())[-c(1,2)])))
-	optimstride$settings$args$method <- method
-	optimstride$settings$args$ft.treshold <- ft.treshold
-	optimstride$settings$args$alternative <- alternative
+	os$settings$args$method <- method
+	os$settings$args$ft.treshold <- ft.treshold
+	os$settings$args$alternative <- alternative
 
-	res@optimstride <- optimstride
+	res@optimstride <- os
 	return(res)
 }
 
@@ -64,10 +68,11 @@ setMethod("summary",
 		ftt <- args$ft.treshold
 		oct <- oc.treshold
 		args$oc.treshold <- oct
-	
+
 		oc1 <- t(sapply(ind, function (x) sapply(x, function (x) sum(x))))
 		oc2 <- t(sapply(ind, function (x) sapply(x, function (x) length(which(x >= oct)))))
 		
+		#	not a good guess!
 		best.oc1 <- sapply(obj$ind, function (x) (sapply(x, max)[which.max(sapply(x, max))] ) )
 
 		res <- list(optimclass1 = oc1, optimclass2 = oc2, best.optimclass1 = best.oc1, args = args)
@@ -88,17 +93,19 @@ setMethod("summary",
 		}
 )
 
-if (!isGeneric("plot")) {
-	setGeneric("plot", function(x, y, ...)
-		standardGeneric("plot"))
-}	
+#if (!isGeneric("plot")) {
+#	setGeneric("plot", function(x, y, ...)
+#		standardGeneric("plot"))
+#}	
 
 #	plot method
 setMethod("plot",
 	signature(x = "VegsoupDataOptimstride", y = "missing"),
 	function (x, mode = 1, oc.treshold = 2, silent = TRUE, ...) {
-	tmp <- summary(x, oc.treshold = oc.treshold, silent = silent)
-
+	#	x <- dta.os
+	
+	tmp <- summary(object = x, oc.treshold = oc.treshold, silent = silent)
+	
 	k <- tmp$args$k
 	ft.treshold <- tmp$args$ft.treshold
 	oc1 <- tmp$optimclass1

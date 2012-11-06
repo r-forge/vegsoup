@@ -2,7 +2,7 @@
 \alias{Layer}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Return layer for each observation
+Return Layer for Each Observation of Class extending Vegsoup
 }
 \description{
 Simply return the layer for each observation.
@@ -16,17 +16,17 @@ Layer(obj, ...)
   \item{\dots}{ passed from to methods}
 }
 \details{
-Simply return the layer for each observation (\code{SpeciesLong(obj)$layer}).
+Simply returns the layer for each observation, equivalent to \code{SpeciesLong(obj)\$layer}.
 }
 \value{\code{Layer} returns a character vector equal in length to \code{nrow(SpeciesLong(obj)}}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-Roland Kaiser (\email{kardinal.eros@gmail.com}
+Roland Kaiser %(\email{kardinal.eros@gmail.com}
 }
 \note{
-%%  ~~further notes~~
+The function will be renamed to avoid typos with method \code{Layers} or even dropped -- it is not very useful?.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
@@ -35,10 +35,15 @@ Roland Kaiser (\email{kardinal.eros@gmail.com}
 \link{Vegsoup-class}
 }
 \examples{
-#	forest <- unique(SpeciesLong(dta)[Layer(dta) == "tl1",]$plot)
-#	forest <- dta[match(forest, rownames(dta)), ]
+data(bigtestdata)
+dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
+	scale = list(scale = "Braun-Blanquet")))
+
+#	see how many occurences per layer
+table(Layer(dta))
+
+#	alternatively
+table(SpeciesLong(dta)$layer)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{methods}
 
