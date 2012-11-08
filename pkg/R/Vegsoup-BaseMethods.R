@@ -90,7 +90,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	z$abbr <- make.names(z$abbr)
 	row.names(z) <- z$abbr
 	
-	#	intersect species and sites
+	#	intersect x, y and z
 	if (length(unique(x$plot)) != length(unique(y$plot))) {
 		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
 		x <- x[which(x$plot %in% sel), ]
@@ -124,7 +124,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 					x$cov <- as.numeric(x$cov)
 					if (any(is.na(x$cov))) {
 						str(x$cov)
-						stop("there seems to be digits mixed with charcters?")
+						stop("there seems to be digits mixed with characters?")
 				} 				
 				#	stopifnot(is.numeric(x$cov))
 				}
@@ -138,24 +138,32 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 						codes = c("r", "+", "1",
 							"2m", "2a", "2b", "3", "4", "5"),
 						lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
+					stopifnot(!any(is.na(factor(x$cov,
+						levels = scale$codes, labels = scale$lims))))
 				}
 				if (scale[[1]] == "Braun-Blanquet 2") {
 					scale <- list(
 						scale = "Braun-Blanquet", 
 						codes = c("r", "+", as.character(1:5)),
 						lims = c(1, 2, 3, 13, 38, 68, 88))
+					stopifnot(!any(is.na(factor(x$cov,
+						levels = scale$codes, labels = scale$lims))))
 				}
 				if (scale[[1]] == "Domin") {
 					scale <- list(
 						scale = "Domin",
 						codes = c("+", as.character(1:9), "X"),
         				lims = c(0.01, 0.1, 1, 5, 10, 25, 33, 50, 75, 90, 100))
+					stopifnot(!any(is.na(factor(x$cov,
+						levels = scale$codes, labels = scale$lims))))
 				}	
 			}
 		} else {
 			stop("please supply a list for argument scale")
 		}	
 	}
+	
+	#	stoifnot(factor(cov, levels = scale$codes, labels = scale$lims))
 
 	if (missing(group))	{
 		group <- as.integer(rep(1, length(unique(x$plot))))
@@ -223,7 +231,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 					warning("\n did not succeed!",
 						" Some coordinates seem to be doubled.",
 						"\n problematic plots: ",
-						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]), collapse = " "),
+						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]),
+							collapse = " "),
 						call. = FALSE)
 #					if (verbose) {
 #						print(table(sp.points$plot)[table(sp.points$plot) > 1])
@@ -245,7 +254,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				pgs <- vector("list", nrow(cents))
 				for (i in 1:nrow(cents)) {
 				#	to do use plsx and plsy	
-					pg <- coordinates(GridTopology(cents[i,] - 0.00005  /2, c(0.00005, 0.00005), c(2,2)))
+					pg <- coordinates(GridTopology(
+						cents[i,] - 0.00005 / 2, c(0.00005, 0.00005), c(2,2)))
 					pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 					pgs[[i]] <- pg
 				}
@@ -253,13 +263,15 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
 						data = data.frame(plot = sp.points$plot))				
 			} else {		
-				warning("\n ... not a complete coordinates list, use random pattern instead", call. = FALSE)
+				warning("\n ... not a complete coordinates list",
+					"use random pattern instead", call. = FALSE)
 				tmp <- .rpoisppSites(x)	
 				sp.points <- tmp[[1]]
 				sp.polygons <- tmp[[2]] 
 			}	
 		} else {
-			warning("\n SpatialPoints and SpatialPolygons missing, use random pattern", call. = FALSE)
+			warning(paste("\n SpatialPoints and SpatialPolygons missing",
+				"use random pattern"), call. = FALSE)
 			lnglat.sim <- TRUE
 			tmp <- .rpoisppSites(x)	
 			sp.points <- tmp[[1]]

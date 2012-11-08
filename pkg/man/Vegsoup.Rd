@@ -88,7 +88,7 @@ data(testdata)
 
 qry <- Vegsoup(species, sites, taxonomy,
 		scale = list(scale = "Braun-Blanquet"))
-
+qry
 
 	
 }

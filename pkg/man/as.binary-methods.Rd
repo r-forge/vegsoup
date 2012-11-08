@@ -2,6 +2,10 @@
 \docType{methods}
 \alias{as.binary-methods}
 \alias{as.binary,VegsoupData-method}
+\alias{as.character-methods}
+\alias{as.character,VegsoupData-method}
+\alias{as.numeric-methods}
+\alias{as.numeric,VegsoupData-method}
 \title{Methods for Function as.binary}
 \description{
  ~~ Methods for function \code{as.binary}  ~~

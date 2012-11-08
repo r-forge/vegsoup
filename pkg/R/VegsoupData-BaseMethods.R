@@ -267,21 +267,111 @@ setMethod("dim",
 	    function (x) dim(x@species)
 )
 
-#	retrieve character matrix
-#	to do: documentation, validity chekcs against obj@scale, priority high!	
+### inherited methods based on 'generic functions'
+#	function to cast species matrix
+.cast <- function (obj, mode, ...) {
+	#	obj = dta; mode = 2
+			
+#	cpu.time <- system.time({
+	
+	#	slots
+	plot <- slot(obj, "species.long")$plot
+	abbr <- slot(obj, "species.long")$abbr
+	layer <- slot(obj, "species.long")$layer
+	cov <- slot(obj, "species.long")$cov
+	scale <- slot(obj, "scale")
+	
+	#	matrix dimensions
+	plots <- unique(plot)
+	species.layer <- paste(abbr, layer, sep = "@")	
+	species <- sort(unique(species.layer))
+		
+	#	cover transformation
+	if (mode == 1 & scale$scale != "frequency") {
+		cov <- factor(cov, levels = scale$codes, labels = scale$lims)
+		if (any(is.na(cov))) stop("scale codes do not perfectly match data" )
+	}
+#	})
+#	cat("\n init time objects", cpu.time[3], "sec")
+	if (mode == 1) {
+		cpu.time <- system.time({	
+		m <- t(vapply(plots,
+			USE.NAMES = FALSE,
+			FUN.VALUE = numeric(length(species)),
+			FUN = function (x) {
+				r <- numeric(length(species))
+				r[species %in% species.layer[plot == x]] <- cov[plot == x]
+				r
+			}))
+		dimnames(m) <- list(plots, species)		
+		})
+	}
+
+	if (mode == 2) {
+		cpu.time <- system.time({	
+		m <- t(vapply(plots,
+			USE.NAMES = FALSE,
+			FUN.VALUE = character(length(species)),
+			FUN = function (x) {
+				r <- character(length(species))
+				r[species %in% species.layer[plot == x]] <- cov[plot == x]
+				r
+			}))
+		dimnames(m) <- list(plots, species)		
+		})
+	}
+		
+	if (mode == 3) {
+		cpu.time <- system.time({			
+		m <- t(vapply(plots,
+			USE.NAMES = FALSE,
+			FUN.VALUE = integer(length(species)),
+			FUN = function (x) {
+				r <- integer(length(species))
+				r[species %in% species.layer[plot == x]] <- as.integer(1)
+				r
+			}))
+		dimnames(m) <- list(plots, species)
+		})		
+	}
+	cat("\n time to cast matrix", cpu.time[3], "sec")		
+
+	return(invisible(m))
+}
+
+#	as.character and as.numeric are already generic functions
+#if(!isGeneric("as.binary"))
+setGeneric("as.binary",
+	function (x, ...)
+		standardGeneric("as.binary")
+)
+#}
+
+#	print mode uses invisible()?
+#	use e.g. head(as.numeric(obj))?
+
 setMethod("as.character",
     signature(x = "VegsoupData"),
     function (x) {
-    	res <- as.matrix(x@species)
-    	if (mode(res) != "character") {
-	    	mode(res) <- "character"
-    		res <- as.data.frame(res, stringsAsFactors = FALSE)
-    	} else {
-    		res <- x@species
-    	}
-    	return(invisible(res))
+    	return(invisible(.cast(x, mode = 2)))
     }
 )
+
+setMethod("as.numeric",
+    signature(x = "VegsoupData"),
+    function (x) {
+    	return(invisible(.cast(x, mode = 1)))		    
+    }
+)
+	
+setMethod("as.binary",
+    signature(x = "VegsoupData"),
+    function (x) {
+    	return(invisible(.cast(x, mode = 3)))	    
+    }
+)	
+
+
 
 ###	inherited methods based on functions in 'base'
 #if (!isGeneric("rownames")) {
@@ -334,59 +424,7 @@ setMethod("colSums",
     }
 )
 
-#	retrieve numeric matrix as defined in AbundanceScale(obj)
-#	print mode uses invisible()?
-#	use head(as.numeric(obj))?
-#	to do: documentation
-#if (!isGeneric("as.numeric")) {
-#setGeneric("as.numeric", function (x, ...)
-#	standardGeneric("as.numeric"))
-#}
-setMethod("as.numeric",
-    signature(x = "VegsoupData"),
-    function (x, verbose = FALSE) {
-    	#	x = dta
-		if (AbundanceScale(x)$scale == "frequency" | AbundanceScale(x)$scale == "binary") {
-			res <- as.matrix(x@species)
-			mode(res) <- "numeric"
-			res <- as.data.frame(res)
-			if (verbose) {
-				cat("  species matrix is numeric, scale:",
-					AbundanceScale(x)$scale)
-			}
-		} else {
-			res <- x@species
-			scale <- AbundanceScale(x)		
-			tmp <- as.factor(c(as.matrix(res)))
-			levels(tmp) <- scale$lims[match(levels(tmp), scale$codes)]
-			tmp <- as.numeric(as.character(tmp))
-			tmp[is.na(tmp)] <- 0
-			res[, ] <- tmp
-		}
-		return(invisible(res))   	
-    }
-)
-#	retrieve binary matrix
-#if(!isGeneric("as.binary"))
-setGeneric("as.binary",
-	function (obj, ...)
-		standardGeneric("as.binary")
-)
-#}
-#	print mode uses invisible()
-#	use head(as.binray(obj))?
-#	to do: documentation, possible rename to as.logical? priority high!
-#	would than become a already defined generic function
-#	be careful when renaming
-setMethod("as.binary",
-    signature(obj = "VegsoupData"),
-    function (obj) {
-			res <- obj@species != "0"
-		mode(res) <- "numeric"
-		res <- as.data.frame(res)
-		return(invisible(res))
-    }
-)
+
 
 #	inherited methods based on functions in 'utils'
 #if (!isGeneric("head")) {
@@ -470,6 +508,7 @@ setMethod("$", "VegsoupData",
 		if (!("sites" %in% slotNames(x)))
 			stop("no $ method for object without slot sites")
 		x@sites[[name]]
+		#do.call("$", list = (Sites(x), name))
 	}
 )
 
