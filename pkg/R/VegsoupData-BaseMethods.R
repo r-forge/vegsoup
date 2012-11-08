@@ -254,26 +254,13 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	return(res)
 }
 
-###	inherited methods based on 'primitive functions'
-#	'names' is a primitive function
-setMethod("names",
-    signature(x = "VegsoupData"),
-    function (x) names(x@species)
-)
-#	'dim' is a primitive function
-#	to do: documentation
-setMethod("dim",
-    signature(x = "VegsoupData"),
-	    function (x) dim(x@species)
-)
-
 ### inherited methods based on 'generic functions'
 #	function to cast species matrix
 .cast <- function (obj, mode, ...) {
 	#	obj = dta; mode = 2
 			
 #	cpu.time <- system.time({
-	
+
 	#	slots
 	plot <- slot(obj, "species.long")$plot
 	abbr <- slot(obj, "species.long")$abbr
@@ -284,7 +271,7 @@ setMethod("dim",
 	#	matrix dimensions
 	plots <- unique(plot)
 	species.layer <- paste(abbr, layer, sep = "@")	
-	species <- sort(unique(species.layer))
+	species <- unique(species.layer)
 		
 	#	cover transformation
 	if (mode == 1 & scale$scale != "frequency") {
@@ -314,6 +301,9 @@ setMethod("dim",
 			FUN.VALUE = character(length(species)),
 			FUN = function (x) {
 				r <- character(length(species))
+				#	change to ""
+				#	there are several function that look for 0!
+				r[] <- "0"
 				r[species %in% species.layer[plot == x]] <- cov[plot == x]
 				r
 			}))
@@ -334,7 +324,7 @@ setMethod("dim",
 		dimnames(m) <- list(plots, species)
 		})		
 	}
-	cat("\n time to cast matrix", cpu.time[3], "sec")		
+	#	cat("\n time to cast matrix", cpu.time[3], "sec")		
 
 	return(invisible(m))
 }
@@ -349,7 +339,6 @@ setGeneric("as.binary",
 
 #	print mode uses invisible()?
 #	use e.g. head(as.numeric(obj))?
-
 setMethod("as.character",
     signature(x = "VegsoupData"),
     function (x) {
@@ -371,26 +360,52 @@ setMethod("as.binary",
     }
 )	
 
+#	'names' is a primitive function
+#	rename to colnames for consitency
+setMethod("names",
+    signature(x = "VegsoupData"),
+    function (x) {
+		unique(paste(
+			slot(x, "species.long")$abbr,
+			slot(x, "species.long")$layer, sep = "@"))
+	#	was rownames(x@species)
+	}
+)
 
-
-###	inherited methods based on functions in 'base'
+###	inherited
+#	methods based on functions in 'base'
 #if (!isGeneric("rownames")) {
 setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 	standardGeneric("rownames"))
 #}	
 setMethod("rownames",
-    signature(x = "VegsoupData", do.NULL = "missing",
-    prefix = "missing"),
-    function (x) rownames(x@species)
+    signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing"),
+    function (x) {
+		unique(slot(x, "species.long")$plot)	
+		#	was rownames(x@species)
+	}
 )
-#if (!isGeneric("dim")) {
+
+#	'dim' is a primitive function
+setMethod("dim",
+    signature(x = "VegsoupData"),
+	    function (x) {
+			c(nrow(x), ncol(x))
+		#	was dim(x@species)
+		}
+)
+
+#if (!isGeneric("nrow")) {
 setGeneric("nrow", function(x)
 	standardGeneric("nrow"))
 #}
 #	to do: documentation
 setMethod("nrow",
     signature(x = "VegsoupData"),
-    function (x) nrow(x@species)
+    function (x) {
+		length(rownames(x))
+	#	was nrow(x@species)
+	}
 )
 #if (!isGeneric("dim")) {
 setGeneric("ncol", function(x)
@@ -399,7 +414,10 @@ setGeneric("ncol", function(x)
 #	to do: documentation
 setMethod("ncol",
     signature(x = "VegsoupData"),
-    function (x) ncol(x@species)
+    function (x) {
+		length(names(x))
+	#	was ncol(x@species)
+	}
 )
 #if (!isGeneric("rowSums")) {
 setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
@@ -424,8 +442,6 @@ setMethod("colSums",
     }
 )
 
-
-
 #	inherited methods based on functions in 'utils'
 #if (!isGeneric("head")) {
 setGeneric("head", function(x)
@@ -434,13 +450,18 @@ setGeneric("head", function(x)
 #	to do: documentation
 setMethod("head",
     signature(x = "VegsoupData"),
-    function (x, n = 6L, choice, ...) {
+    function (x, n = 6L, choice, mode, ...) {
 	    if (missing(choice))
-	    	choice <- "species"	
+	    	choice = "species"	
+	    if (missing(mode))
+		    mode = 3 # binary
+	    if (missing(n))
+		    n = 6L
     	if (choice == "species")
-    		res <- head(x@species)
+			res <- head(as.binary(x), n, ...)
+    		#	was res <- head(x@species)
     	if (choice == "sites")
-    		res <- head(x@sites)
+    		res <- head(Sites(x), n, ...)
     	return(res)
     }    	    
 )
@@ -451,13 +472,18 @@ setGeneric("tail", function (x)
 #	to do: documentation
 setMethod("tail",
     signature(x = "VegsoupData"),
-    function (x, choice, ...) {
+    function (x, n = 6L, choice, mode, ...) {
 	    if (missing(choice))
-	    	choice <- "species"
-    	if (choice == "species")
-    		res <- tail(x@species, ...)
+	    	choice ="species"
+		if (missing(mode))
+		    mode = 3 # binary
+	    if (missing(n))
+			n = 6L
+		if (choice == "species")
+			res <- tail(as.binary(x), n, ...)
+    		#	res <- tail(x@species, ...)
     	if (choice == "sites")
-    		res <- tail(x@sites, ...)
+    		res <- tail(Sites(x), n, ...)
     	return(res)
     }    	    
 )
@@ -471,7 +497,9 @@ setMethod("tail",
 #	to do: documenation
 setAs("VegsoupData", "list",
 	def = function (from) {
-		list(species = from@species,
+		list(
+		species = as.character(from)@species,
+#	was	species = from@species,
 		sites = from@sites)
 	}
 )
@@ -788,56 +816,72 @@ setMethod("plot",
 #	to do: documenation
 #	VegsoupDataPartition implemts its own method,
 #	but internally coreces to class(VegsoupData)
-#	and apllies this method!
+#	and applies this method!
 setMethod("[",
     signature(x = "VegsoupData",
     i = "ANY", j = "ANY", drop = "missing"),
     function (x, i, j, ..., drop = TRUE)
     {
 	    #	debug
-	    #	x = dta; i = 1:3; j <- 1:2; j <- rep(TRUE, ncol(x))
+	    #	x = dta; i = c(2,3,1); j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
-	    
-		res@species <- as.character(x)[i, j, ...]
-		
-		if (all(unlist(res@species) == 0)) stop(call. = FALSE, "subset does not contain any species!")		
+	    #	change to as.binary(x)[i, j, ...]
+		#	when slot species is dropped
+		tmp <- as.character(x)[i, j, ...] 
+			
+		if (all(unlist(tmp) == 0)) {
+			stop(call. = FALSE, "subset does not contain any species!")
+		}
 		
 		#	remove empty plots
-		res@species <- res@species[rowSums(res@species != 0) > 0, , drop = FALSE]		
+		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
 		#	remove empty species
-		res@species <- res@species[, colSums(res@species != 0) > 0, drop = FALSE]
-		
-		#	subset long format
-		res@species.long <-
-			res@species.long[res@species.long$plot %in%	rownames(res), ]
-		res@species.long <-
-			res@species.long[paste(res@species.long$abbr,
-				res@species.long$layer, sep = "@") %in%	names(res), ]
+		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
+		#	assign slot species
+		res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
+		#	reordering according to tmp
+		#	was subset long format
+#		res@species.long <-
+#			res@species.long[res@species.long$plot %in%	rownames(tmp), ]
+#		res@species.long <-
+#			res@species.long[paste(res@species.long$abbr,
+#					res@species.long$layer, sep = "@") %in%	colnames(tmp), ]
+        #	melt to long format
+		cov <- array(t(tmp))
+		plot <- rep(dimnames(tmp)[[1]], each=dim(tmp)[2])
+		abbr.layer <- strsplit(
+			rep(dimnames(tmp)[[2]], dim(tmp)[1]), "@", fixed = TRUE)
+		abbr <- vapply(abbr.layer,
+			FUN.VALUE = character(1), FUN = function (x) x[1])
+		layer <- vapply(abbr.layer,
+				FUN.VALUE = character(1), FUN = function (x) x[2])
 				
-		#	subset sites		
+		res@species.long <- data.frame(plot, abbr, layer, cov)
+       	res@species.long <- res@species.long[res@species.long$cov != 0, ]
+		#	subset sites
 		res@sites <-
-			res@sites[match(rownames(res),
-				rownames(res@sites)), ]
+			res@sites[match(rownames(tmp),
+				rownames(Sites(res))), ]
 		if (any(sapply(res@sites, is.na))) stop("Error")
 		
 		#	prone to error if ordering really matters?
 		res@sites.long <-
-			res@sites.long[res@sites.long$plot %in%	rownames(res), ]
+			res@sites.long[res@sites.long$plot %in%	rownames(tmp), ]
 		res@sites.long <- res@sites.long[order(res@sites.long$plot, res@sites.long$variable), ]
 		if (length(res@group) != 0) {
 		res@group <-
 			res@group[names(res@group) %in%
-				rownames(res)]
+				rownames(tmp)]
 		}
 		#	method Abbreviation relies on already subsetted taxonomy!
 		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
 		   function (x) x[1])
  		#	taxonomy is subsetted!
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
-		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(res), ]
-		res@sp.polygons <- res@sp.polygons[res@sp.points$plot %in% rownames(res), ]
+		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(tmp), ]
+		res@sp.polygons <- res@sp.polygons[res@sp.points$plot %in% rownames(tmp), ]
 		res@layers <- as.character(unique(res@species.long$layer))
 	    return(res)
     }
@@ -846,10 +890,10 @@ setMethod("[",
 #	#	coerc
 
 #	sample data, usally without replacement
-if (!isGeneric("SampleVegsoup")) {
+#if (!isGeneric("SampleVegsoup")) {
 setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL)
 	standardGeneric("SampleVegsoup"))
-}
+#}
 #	warning: does not behave as expected for the user
 #	StablePartition() relies on this method
 #	to do: documentation

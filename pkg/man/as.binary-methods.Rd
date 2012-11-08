@@ -6,16 +6,14 @@
 \alias{as.character,VegsoupData-method}
 \alias{as.numeric-methods}
 \alias{as.numeric,VegsoupData-method}
-\title{Methods for Function as.binary}
+\title{Methods to Cast Species Matrix of Objects Extending \dQuote{VegsoupData}}
 \description{
- ~~ Methods for function \code{as.binary}  ~~
+The function creates a matrix of mode according the methods name. 
 }
 \section{Methods}{
 \describe{
-
-\item{\code{signature(obj = "VegsoupData")}}{
-%%  ~~describe this method here~~
+See \code{\link{as.binary}}, \code{\link{as.numeric}}, or \code{\link{as.character}} for more details.
 }
-}}
+}
 \keyword{methods}
 \keyword{ ~~ other possible keyword(s) ~~ }

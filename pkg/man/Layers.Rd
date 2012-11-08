@@ -81,6 +81,8 @@ dta.5 <- Layers(dta, aggregate = "layer",
 Layers(dta.5)
 dim(dta.5)
 
+#	subsetting can also be used 
+Layers(dta[, grep("@wl", names(dta))])
 }
 \seealso{
 \code{\link{Layer}}, \code{\link{Vegsoup}} and \code{\link{VegsoupData}}

@@ -1,24 +1,45 @@
 library(vegsoup)
-scale <- list(
-	scale = "Braun-Blanquet", 
-	codes = c("r", "+", "1",
-		"2m", "2a", "2b", "3", "4", "5"),
-	lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
 data(testdata)
-qry <- Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet"))
-dta1 <- VegsoupData(qry)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
 
-as.binary(dta1)
-as.numeric(dta1)
-as.character(dta1)
+summary(dta)
 
-summary(dta1)
-MatrixFill(dta1)
-Abbreviation(dta1)
-AbundanceScale(dta1)
-class(BraunBlanquetReduce(dta1))
+as.binary(dta)
+as.numeric(dta)
+as.character(dta)
+dta[1:3,]
+dim(dta[1:3,2:3])
 
+Layers(dta[, grep("@sl", names(dta))])
+dim(foo)
+as.character()
+head(dta)
+tail(dta, n=3L)
+names(dta)
+rownames(dta)
+ncol(dta)
+nrow(dta)
+dim(dta)
+
+rowSums(dta)
+colSums(dta)
+
+Layers(dta)
+dim(Layers(dta, collapse = c("hl", "sl", NA)))
+
+Richness(dta, "dataset")
+Richness(dta, "sample")
+t(as.character(dta))
+as.data.frame(t(as.character(Arrange(dta, "packed"))))
+Sites(Arrange(dta))
+SampleVegsoup(dta)
+MatrixFill(dta)
+Abbreviation(dta)
+AbundanceScale(dta)
+class(BraunBlanquetReduce(dta))
+
+Sites(dta)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy, group = c(rep(1, 3), rep(2, 3)),
 	scale = list(scale = "Braun-Blanquet")))
 AprioriGrouping(dta)

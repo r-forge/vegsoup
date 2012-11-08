@@ -1,11 +1,12 @@
 \name{head-methods}
 \docType{methods}
+\alias{head}
 \alias{head-methods}
-\alias{head,ANY-method}
-\alias{head,Matrix-method}
 \alias{head,VegsoupData-method}
 \alias{head,VegsoupDataPartition-method}
-\title{Methods for Function head}
+\alias{tail-methods}
+\alias{tail,VegsoupData-method}
+\title{Return the First or Last Part of the Species Matrix}
 \description{
  ~~ Methods for function \code{head}  ~~
 }
