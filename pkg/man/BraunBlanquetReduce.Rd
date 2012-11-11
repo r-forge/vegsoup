@@ -2,13 +2,13 @@
 \alias{BraunBlanquetReduce}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Reduce 9 Point Braun-Blanquet Abunance Scale to 7 Point 
+Reduce 9 Point Braun-Blanquet Abundance Scale to 7 Point 
 }
 \description{
-Revert Braun-Blanquet abunace scale from extended to simple.
+Revert Braun-Blanquet abundance scale from extended to simple.
 }
 \usage{
-BraunBlanquetReduce(obj, value)
+BraunBlanquetReduce(obj)
 }
 \arguments{
   \item{obj}{an object inheriting from class \code{\link{Vegsoup}} }

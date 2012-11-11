@@ -3,7 +3,7 @@
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet 2")
+	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
 	if (missing(col.names)) {
 		col.names <- list(
 			x = c("plot", "abbr", "layer", "cov"),
@@ -79,6 +79,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		names(z) = c("abbr", "taxon")
 		#	for safety
 		z <- z[match(unique(x$abbr), z$abbr), ]
+		#	alphabetic order
+		z <- z[order(z$abbr), ]
 	}
 	
 	if	(!inherits(proj4string, "character")) {
@@ -184,9 +186,8 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	}
 	
 	if (missing(sp.points) & missing(sp.polygons))	{
-		#	generate random points
-		
-		#	try to find coordinates
+		#	try to find coordinates, otherwise generate random points
+	
 		lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 		#	may raise errors in subset operations!
 		if (verbose) {
@@ -210,11 +211,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				
 				#	to do! implemnt char2dms				
 				#	strip of N and E
-				latlng[, 2] <- gsub("[[:alpha:]]", "", latlng[,2])
-				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[,3])				
+				latlng[, 2] <- gsub("[[:alpha:]]", "", latlng[, 2])
+				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[, 3])				
 				#	strip of blanks
-				latlng[, 2] <- gsub("[[:blank:]]", "", latlng[,2])
-				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[,3])				
+				latlng[, 2] <- gsub("[[:blank:]]", "", latlng[, 2])
+				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[, 3])				
 				#	check decimal and change mode
 				latlng[, 2] <- as.numeric(gsub(",", ".", latlng[, 2], fixed = TRUE))
 				latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
@@ -289,12 +290,56 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 			stringsAsFactors = FALSE)
 	}
 	
-	#	order slot sites.long
-	y <- y[order(y$plot, y$variable), ]
+	#	order sites
+	#y <- y[order(y$plot, y$variable), ]
+	
+	#	cast sites data	
+	#	replace missing values
+	if (any(y[, 3] == "") | any(is.na(y[, 3]))) {
+		y[y[, 3] == "", 3] <- 0
+		y[is.na(y[, 3]), 3] <- 0
+		if (verbose) {
+		cat("\n NAs and empty fields (\"\") in supplied sites data",
+			" filled with zeros", call. = FALSE)
+		}
+	}
+   	
+	y <- reshape(y[, 1:3],
+		direction = "wide",
+		timevar = "variable",
+		idvar = "plot")   
+
+	#	change column mode to numeric if possible
+	#	supress warning messages caused by as.numeric(x) 
+	#	needs a work around because longitude is coreced to numeric
+	#	because of similiarity to scientifiuc notion (13.075533E)
+	options(warn = -1)
+	y <- as.data.frame(
+		sapply(y,
+		function (x) {
+			if (!any(is.na(as.numeric(x)))) {
+				x <- as.numeric(x)
+			} else {
+				x <- as.character(x)	
+			}
+		}, simplify = FALSE),
+		stringsAsFactors = FALSE)
+	options(warn = 0)
+
+ 	#	groome names
+ 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+    #	assign row names
+	rownames(y) <- y$plot
+	y <- y[, -grep("plot", names(y))]
+	#	order to x
+	y <- y[match(unique(x$plot), rownames(y)), ]
+	#	change longitude column!
+	sel <- grep("longitude", names(y))
+	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
 	
 	res <- new("Vegsoup",
 		species.long = x,
-		sites.long = y,
+		sites = y, 
 		taxonomy = z,
 		scale = as.list(scale),
 		layers = as.character(unique(x$layer)),
@@ -340,8 +385,13 @@ setGeneric("hist",
 	function (x, ...)
 	standardGeneric("hist"))
 #}	
-#	plotting method hist
-
+#	ploting method hist
+setMethod("hist"),
+	signature(obj = "Vegsoup"),
+	function (x, ...) {
+	   res <- x@species.long$cov 
+	}
+)
 
 #	get or set layers
 setGeneric("Layers",
@@ -472,6 +522,28 @@ setReplaceMethod("SpeciesLong",
 )
 
 #	get or set sites query in long format
+.melt <- function (obj) {
+	#	obj = dta
+	res <- stack(
+			data.frame(plot = rownames(slot(obj, "sites")),
+				slot(obj, "sites"), stringsAsFactors = FALSE),
+		stringsAsFactors = FALSE) 
+
+	plot <- res[res$ind == "plot", ]$values
+	plot <- rep(plot, (nrow(res) / length(plot)) - 1)
+	res <- res[!res$ind == "plot", ]
+	res <- data.frame(
+		plot = as.character(plot),
+		variable = as.character(res[, 2]),
+		value = as.character(res[, 1]),
+		stringsAsFactors = FALSE)
+	res <- res[order(res$plot), ]
+	res[is.na(res)] <- ""
+
+	rownames(res) <- 1:nrow(res)
+	res	
+}
+
 setGeneric("SitesLong",
 	function (obj)
 		standardGeneric("SitesLong")
@@ -482,13 +554,13 @@ setGeneric("SitesLong<-",
 )
 setMethod("SitesLong",
     signature(obj = "Vegsoup"),
-    function (obj) obj@sites.long
+    function (obj) .melt(obj)
 )
 setReplaceMethod("SitesLong",
 	signature(obj = "Vegsoup", value = "data.frame"),
 	function (obj, value) {
 		#	to do: needs checking of plot names
-		obj@sites.long <- value
+		obj@sites <- value
 		return(obj)		
 	}
 )

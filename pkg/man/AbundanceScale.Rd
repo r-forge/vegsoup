@@ -26,7 +26,7 @@ a list with three components
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
+Shimwell, D.W. (1971). The Description and Classification of Vegetation. Sidgwick & Jackson.
 }
 \author{
 Roland Kaiser

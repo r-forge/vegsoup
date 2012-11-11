@@ -2,7 +2,7 @@
 \alias{Layers}
 
 \title{
-Modify the Layer Structure of Objects of Class Vegsoup and VegsoupData
+Modify the Layer Structure of Objects of Class \sQuote{VegsoupData}
 }
 \description{
 Modify an object's layer structure by suppling a layer combination vector as a character argument \code{collapse}. A layer that is intended to be collpased with one or more layers is simply given the same value of collapse. Different aggregation modes are provided.
@@ -29,13 +29,14 @@ Flag to print extra output.
 }
 }
 \details{
-Aggregation mode \code{"layer"} combines layers assuming their independence. For example, a species occurring in two layers with a cover of 50 \% will result in a overall cover of 75 \%. Mode \code{"sum"} will sum up cover values of all layers (see \code{\link{tv.veg}}). If \code{collapse} is missing, or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it must match length(Layers(obj)) (see \sQuote{examples}).
+Aggregation mode \code{"layer"} combines layers assuming their independence. For example, a species occurring in two layers with a cover of 50 \% will result in a overall cover of 75 \%. Mode \code{"sum"} will sum up cover values of all layers (see \code{\link{tv.veg}}). If \code{collapse} is missing, or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to match \code{length(Layers(obj))} (see \sQuote{Examples}).
 }
 \note{
-If there are any \code{NAs} in \code{collapse} all species that occur only on these layers will be dropped from the data set -- a warning is issued. This can be useful e.\,g. if you want to drop cryptogams (bryophytes and/or lichens) from a dataset that has no complete coverage for these taxa and would otherwise influence the analysis (see \sQuote{examples}).
+If there are any \code{NAs} in \code{collapse} all species that occur only on these layers will be dropped from the data set -- a warning is issued. This can be useful e.g. if you want to drop cryptogams (bryophytes and/or lichens) from a dataset that has no complete coverage for these taxa and would otherwise influence the analysis (see \sQuote{Examples}).
 }
 \value{
-An object depending on the input class.}
+An object depending on the input class.
+}
 \author{
 Roland Kaiser
 

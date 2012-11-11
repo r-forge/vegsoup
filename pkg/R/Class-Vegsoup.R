@@ -4,8 +4,9 @@
 
 setClass("Vegsoup",
 	representation(
-	species.long = "data.frame", # in long format, casting by VegsoupData
-	sites.long = "data.frame", # in long format, casting by VegsoupData
+	species.long = "data.frame", # in long format, casting by method
+	sites = "data.frame", # melt method
+#	was sites.long = "data.frame", # in long format, casting by VegsoupData
 	taxonomy = "data.frame", # in long format
 	scale = "list",
 	layers = "character",
@@ -20,7 +21,7 @@ setClass("Vegsoup",
 				all(object@species.long$abbr %in% object@taxonomy$abbr)
 			valid.sites <-
 #				all(object@species.long$plot %in% object@sites.long$plot)
-				all(sort(unique(object@species.long$plot)) == sort(unique(object@sites.long$plot)))
+				all(sort(unique(object@species.long$plot)) == sort(rownames(object@sites)))
 
 			if (valid.abbr && valid.sites) {
 #				cat("\ntaxomomy lookup table matching",

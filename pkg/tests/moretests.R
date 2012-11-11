@@ -8,12 +8,19 @@ summary(dta)
 as.binary(dta)
 as.numeric(dta)
 as.character(dta)
+
 dta[1:3,]
 dim(dta[1:3,2:3])
 
+s1 <- dta[1:2, ]
+s2 <- dta[3:4, ]
+s3 <- dta[5:6, ]
+
+res <- rbind(s3, s1, s2)
+
+
 Layers(dta[, grep("@sl", names(dta))])
-dim(foo)
-as.character()
+
 head(dta)
 tail(dta, n=3L)
 names(dta)

@@ -2,49 +2,62 @@
 \alias{Arrange}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Modify an Objects Internal Order as to Reflect a Vegetation Table
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+The method arranges the species matrix according to an ordination or cluster analysis. The method will perform reordering on all slots of the supplied object to reflect the order of plots and/or species as returned by the selected method. Currently there is no way to pass down arguments to functions.
 }
 \usage{
-Arrange(object, ...)
+Arrange(object, methods = c("dca", "hclust", "ward", "flexible", "pam", "packed"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{object} here~~
+An object inheriting from class \code{VegsoupData}.
 }
+  \item{methods}{
+methods applied species matrix to obtain new order of data set, defaults to \code{"dca"}. See \sQuote{Details}.
+}
+  \item{dist}{
+A similarity/disimilarity measure for any method that demands an object of class \code{dist} as input, defaults to \code{"bray"}.
+} 
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Not implemented yet. See \sQuote{Note}.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} without any additional arguments. Method \code{\dQuote{hclust}} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{\dQuote{hclust}} calls \code{\link{agnes}} with argument \code{method = "ward"}, and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. \code{"pam"} applies \code{\link{pam}}. Finally, method \code{"packed"} simply performs ordering by row and col sums. Argument \code{dist} accepts all methods supported by \code{\link{vegdist}}.
+
+Ordering by explicit indexing is available by using the extract method \code{\link{'['}} for obejcts of class \code{Vegsoup}.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A object of class depending of the input class.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
-%%  ~~further notes~~
+Currently only presence/absencse data is used (\code{as.binary(obj)}) and default options of all methods apply.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{VegsoupDataPartition}} and \code{\link{vegemite}} in package \pkg{vegan} for the ancestor of all vegetation table functions. \code{\link{ordtaxa}} for another implemantation
+}
+
+\examples{
+data(testdata)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))	
+Arrange(dta)
+Arrange(dta, "packed")
+as.data.frame(t(as.character()))	
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{methods}
+

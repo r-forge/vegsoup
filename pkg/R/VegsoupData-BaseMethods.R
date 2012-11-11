@@ -182,74 +182,11 @@ VegsoupData <- function (obj, verbose = FALSE) {
 		cpu.time[3], "sec\n")
 	}
 	
-	#	cast sites data
-	
-	#	check missing values
-	if (any(SitesLong(obj)[, 3] == "") | any(is.na(SitesLong(obj)[, 3]))) {
-		obj@sites.long[obj@sites.long[, 3] == "", 3] <- 0
-		obj@sites.long[is.na(obj@sites.long[, 3]), 3] <- 0
-		warning("\n NAs and empty fields (\"\") in supplied sites data",
-			" filled with zeros", call. = FALSE)
-	}
-	sites <- reshape(SitesLong(obj)[, 1:3],
-		direction = "wide",
-		timevar = "variable",
-		idvar = "plot")
-	
-	#	tune data frame structure
-	
-	#	check NA's resulting from reshape
-	#	missing variables values
-	if (any(is.na(sites))) {
-		sites[is.na(sites)] <- 0
-		warning("\n NAs in casted sites data frame",
-			" filled with zeros", call. = FALSE)
-		#	paste back to @sites.long
-		tmp <- stack(sites)
-		tmp[, 1] <- as.character(tmp[, 1])
-		tmp[, 2] <- as.character(tmp[, 2])
-		plot <- tmp[tmp$ind == "plot",]$values
-		plot <- rep(plot, (nrow(tmp)/length(plot)) - 1)
-		tmp <- tmp[!tmp$ind == "plot",]
-		tmp <- data.frame(plot,
-			variable = tmp[, 2],
-			value = tmp[, 1])
-		tmp <- tmp[order(tmp$plot),]
-		tmp$variable <- gsub("value.", "", tmp$variable, fixed = TRUE)
-		tmp <- data.frame(as.matrix(tmp), stringsAsFactors = FALSE)
-		tmp[is.na(tmp)] <- ""
-		rownames(tmp) <- 1:nrow(tmp)
-		#	to do testing aginst original @sites.long
-		obj@sites.long <- tmp[order(tmp$plot, tmp$variable),]
-	}
-	
-	#	change column mode to numeric if possible
-	#	supress warning messages caused by as.numeric(x)
-	options(warn = -1)
-	sites <- as.data.frame(
-		sapply(sites,
-		function (x) {
-			if (!any(is.na(as.numeric(x)))) {
-				x <- as.numeric(x)
-			} else {
-				x <- as.character(x)	
-			}
-		}, simplify = FALSE),
-		stringsAsFactors = FALSE)
-	options(warn = 0)
-	
-	#	groome names
-	names(sites) <- gsub("value.", "",
-		names(sites), fixed = TRUE)
-	rownames(sites) <- sites$plot
-	sites <- sites[, -grep("plot", names(sites))]
-	sites <- sites[match(rownames(species), rownames(sites)), ]
-
 	#	develop class VegsoupData from class Vegsoup
 	res <- new("VegsoupData", obj)
 	#	assign class slot
 	res@species = species
-	res@sites = sites			
+#	res@sites = sites			
 
 	return(res)
 }
@@ -540,9 +477,167 @@ setMethod("$", "VegsoupData",
 	}
 )
 
-#	Layers method
-#	to do: documenation, implement option drop to drop a specific layer! high priority!
+#	subsetting method
+#	to do: documenation
+#	VegsoupDataPartition implemts its own method,
+#	but internally coreces to class(VegsoupData)
+#	and applies this method!
+setMethod("[",
+    signature(x = "VegsoupData",
+    i = "ANY", j = "ANY", drop = "missing"),
+    function (x, i, j, ..., drop = TRUE)
+    {
+	    #	debug
+	    #	x = dta; i = c(2,3,1); j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
+	    res <- x
+	    if (missing(i)) i <- rep(TRUE, nrow(res))
+	    if (missing(j)) j <- rep(TRUE, ncol(res))
+	    #	change to as.binary(x)[i, j, ...]
+		#	when slot species is dropped
+		tmp <- as.character(x)[i, j, ...] 
+			
+		if (all(unlist(tmp) == 0)) {
+			stop(call. = FALSE, "subset does not contain any species!")
+		}
+		
+		#	remove empty plots
+		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
+		#	remove empty species
+		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
+		#	assign slot species
+		res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
 
+        #	melt to long format
+		cov <- array(t(tmp))
+		plot <- rep(dimnames(tmp)[[1]], each = dim(tmp)[2])
+		abbr.layer <- strsplit(
+			rep(dimnames(tmp)[[2]], dim(tmp)[1]), "@", fixed = TRUE)
+		abbr <- vapply(abbr.layer,
+			FUN = function (x) x[1], FUN.VALUE = character(1))
+		layer <- vapply(abbr.layer,
+			FUN = function (x) x[2], FUN.VALUE = character(1))
+				
+		res@species.long <- data.frame(plot, abbr, layer, cov,
+			stringsAsFactors = FALSE)
+       	res@species.long <- res@species.long[res@species.long$cov != 0, ]
+		#	subset sites
+		res@sites <- res@sites[match(rownames(tmp),	rownames(Sites(res))), ]
+
+		if (any(sapply(res@sites, is.na))) stop("Error")
+	   
+		if (length(res@group) != 0) {
+		res@group <-
+			res@group[names(res@group) %in%
+				rownames(tmp)]
+		}
+		#	method Abbreviation relies on already subsetted taxonomy!
+		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
+		   function (x) x[1])
+ 		#	subset taxonomy, layers and spatial slots
+		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
+		res@layers <- as.character(unique(res@species.long$layer)) 
+		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(tmp), ]
+		res@sp.polygons <- res@sp.polygons[res@sp.polygons$plot %in% rownames(tmp), ]
+
+	    return(res)
+    }
+)
+
+#	rbind like method to fuse objects
+.rbind.VegsoupData <- function (..., deparse.level = 1) {
+	allargs <- list(...)
+	
+	#	test scale
+	test <- length(unique((sapply(allargs, function (x) AbundanceScale(x)$scale))))
+	if (test != 1) {
+		stop("\n scale is not the same for all objects")
+	}  else {
+		scale <- sapply(allargs[1], AbundanceScale, simplify = FALSE)[[1]]
+	}
+	#	species	
+	rows <- vapply(allargs,
+		FUN = function (x) nrow(slot(x, "species.long")),
+		FUN.VALUE = integer(1))
+	
+    x <- as.data.frame(matrix("", nrow = sum(rows), ncol = 4),
+    	rownames = 1:sum(rows), stringsAsFactors = FALSE)
+    names(x) <- c("plot", "abbr", "layer", "cov")
+    x$plot <- unlist(sapply(allargs,
+    	FUN = function (x) slot(x, "species.long")$plot))
+    x$abbr <- unlist(sapply(allargs,
+    	FUN = function (x) slot(x, "species.long")$abbr))    
+    x$layer <- unlist(sapply(allargs,
+    	FUN = function (x) slot(x, "species.long")$layer))        
+    x$cov <- unlist(sapply(allargs,
+    	FUN = function (x) slot(x, "species.long")$cov))
+	#	sites
+	y <- do.call("rbind", sapply(allargs, SitesLong, simplify = FALSE))
+  	#	copied from Vegsoup
+	y <- reshape(y[, 1:3],
+		direction = "wide",
+		timevar = "variable",
+		idvar = "plot")
+		
+	options(warn = -1)
+	y <- as.data.frame(
+		sapply(y,
+		function (x) {
+			if (!any(is.na(as.numeric(x)))) {
+				x <- as.numeric(x)
+			} else {
+				x <- as.character(x)	
+			}
+		}, simplify = FALSE),
+		stringsAsFactors = FALSE)
+	options(warn = 0)
+
+ 	#	groome names
+ 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+    #	assign row names
+	rownames(y) <- y$plot
+	y <- y[, -grep("plot", names(y))]
+	#	order to x
+	y <- y[match(unique(x$plot), rownames(y)), ]
+	#	change longitude column!
+	sel <- grep("longitude", names(y))
+	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
+    #	taxonomy
+	z <- do.call("rbind", sapply(allargs, Taxonomy, simplify = FALSE))
+	z <- unique(z)
+	z <- z[order(z$abbr), ]
+	#	spatial
+	pts <- do.call("rbind",
+		sapply(allargs, SpatialPointsVegsoup, simplify = FALSE))
+	pgs <- do.call("rbind",
+		sapply(allargs, function (x) as(x@sp.polygons, "SpatialPolygons"), simplify = FALSE)
+		)
+	pgs <- SpatialPolygonsDataFrame(pgs, data = pts@data, match.ID = FALSE)	
+
+	res <- new("Vegsoup",
+		species.long = x,
+		sites = y, 
+		taxonomy = z,
+		scale = as.list(scale),
+		layers = as.character(unique(x$layer)),
+		group = rep(integer(1), nrow(y)),
+		sp.points = pts,
+		sp.polygons = pgs
+		)
+	res <- VegsoupData(res)	    
+}
+
+#if (!isGeneric("rbind")) {
+	setGeneric("rbind", function(..., deparse.level = 1)
+		standardGeneric("rbind"),
+		signature = "...")
+#}
+
+setMethod("rbind",
+    signature(... = "VegsoupData"),
+	.rbind.VegsoupData
+)
+
+#	Layers method
 "LayersVegsoupData" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
@@ -603,11 +698,18 @@ if (missing(collapse) & missing(aggregate)) {
 		species <- species[!species$layer %in% ld, ]
 		#	also drop from taxonomy
 		res@taxonomy <- Taxonomy(res)[Taxonomy(res)$abbr %in% unique(species$abbr), ]
-		
-		if (length(unique(SitesLong(res)$plot)) > length(unique(species$plot))) {
+
+		if (length(res@sites$plot) > length(unique(species$plot))) {
 			warning("also some plots will be dropped", call. = FALSE)
-			res@sites.long <- SitesLong(res)[SitesLong(res)$plot %in% species$plot, ]
+			res@sites <- res@sites[res@sites$plot %in% species$plot, ]
 		}		
+		
+		#	also need to subset spatial objects!
+		
+#		if (length(unique(SitesLong(res)$plot)) > length(unique(species$plot))) {
+#			warning("also some plots will be dropped", call. = FALSE)
+#			res@sites.long <- SitesLong(res)[SitesLong(res)$plot %in% species$plot, ]
+#		}		
 	}	
 
 	species$layer <- factor(species$layer)
@@ -682,7 +784,6 @@ setMethod("Layers",
 )
 
 #	Species richness of data set
-
 setGeneric("Richness",
 	function (obj, ...)
 		standardGeneric("Richness")
@@ -812,83 +913,6 @@ setMethod("plot",
 	}	
 )
 
-#	subsetting method
-#	to do: documenation
-#	VegsoupDataPartition implemts its own method,
-#	but internally coreces to class(VegsoupData)
-#	and applies this method!
-setMethod("[",
-    signature(x = "VegsoupData",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = TRUE)
-    {
-	    #	debug
-	    #	x = dta; i = c(2,3,1); j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
-	    res <- x
-	    if (missing(i)) i <- rep(TRUE, nrow(res))
-	    if (missing(j)) j <- rep(TRUE, ncol(res))
-	    #	change to as.binary(x)[i, j, ...]
-		#	when slot species is dropped
-		tmp <- as.character(x)[i, j, ...] 
-			
-		if (all(unlist(tmp) == 0)) {
-			stop(call. = FALSE, "subset does not contain any species!")
-		}
-		
-		#	remove empty plots
-		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
-		#	remove empty species
-		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
-		#	assign slot species
-		res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
-		#	reordering according to tmp
-		#	was subset long format
-#		res@species.long <-
-#			res@species.long[res@species.long$plot %in%	rownames(tmp), ]
-#		res@species.long <-
-#			res@species.long[paste(res@species.long$abbr,
-#					res@species.long$layer, sep = "@") %in%	colnames(tmp), ]
-        #	melt to long format
-		cov <- array(t(tmp))
-		plot <- rep(dimnames(tmp)[[1]], each=dim(tmp)[2])
-		abbr.layer <- strsplit(
-			rep(dimnames(tmp)[[2]], dim(tmp)[1]), "@", fixed = TRUE)
-		abbr <- vapply(abbr.layer,
-			FUN.VALUE = character(1), FUN = function (x) x[1])
-		layer <- vapply(abbr.layer,
-				FUN.VALUE = character(1), FUN = function (x) x[2])
-				
-		res@species.long <- data.frame(plot, abbr, layer, cov)
-       	res@species.long <- res@species.long[res@species.long$cov != 0, ]
-		#	subset sites
-		res@sites <-
-			res@sites[match(rownames(tmp),
-				rownames(Sites(res))), ]
-		if (any(sapply(res@sites, is.na))) stop("Error")
-		
-		#	prone to error if ordering really matters?
-		res@sites.long <-
-			res@sites.long[res@sites.long$plot %in%	rownames(tmp), ]
-		res@sites.long <- res@sites.long[order(res@sites.long$plot, res@sites.long$variable), ]
-		if (length(res@group) != 0) {
-		res@group <-
-			res@group[names(res@group) %in%
-				rownames(tmp)]
-		}
-		#	method Abbreviation relies on already subsetted taxonomy!
-		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
-		   function (x) x[1])
- 		#	taxonomy is subsetted!
-		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
-		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(tmp), ]
-		res@sp.polygons <- res@sp.polygons[res@sp.points$plot %in% rownames(tmp), ]
-		res@layers <- as.character(unique(res@species.long$layer))
-	    return(res)
-    }
-)
-
-#	#	coerc
-
 #	sample data, usally without replacement
 #if (!isGeneric("SampleVegsoup")) {
 setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL)
@@ -915,7 +939,7 @@ setMethod("SampleVegsoup",
     	return(invisible(res))
     }
 )
-#sample(dta)
+
 #	Function to rearrange object (species and sites data frames)
 #	by various reordering methods as option.
 #	Currently only presence/absencse data is used,
@@ -983,10 +1007,8 @@ setMethod("Arrange",
 	   		sp.ind <- agnes(sp.dis, method = "flexible",
 	   			par.meth = c(alpha, alpha, beta, 0))$order
 		}, pam = {
-			si.ind <- agnes(si.dis, diss = TRUE,
-				method = "ward")$order
-			sp.ind <- agnes(sp.dis, diss = TRUE,
-				method = "ward")$order	
+			si.ind <- pam(si.dis, diss = TRUE)$order
+			sp.ind <- pam(sp.dis, diss = TRUE)$order	
 		}, packed = {
 			si.ind <- order(apply(as.binary(object), 1, sum), decreasing = TRUE)
 			sp.ind  <- order(apply(as.binary(object), 2, sum), decreasing = TRUE)
