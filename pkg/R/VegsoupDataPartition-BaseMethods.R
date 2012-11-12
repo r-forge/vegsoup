@@ -232,6 +232,7 @@ setMethod("[",
     signature(x = "VegsoupDataPartition",
     i = "ANY", j = "ANY", drop = "missing"),
 	function (x, i, j, ..., drop = TRUE) {
+		#	x <- prt; i = Partitioning(x) == 2
 	    part <- Partitioning(x)
 	    
 	    if (missing(i)) i <- rep(TRUE, nrow(x))
@@ -239,7 +240,7 @@ setMethod("[",
 	    
 	    tmp <- as(x, "VegsoupData")
 	    tmp <- tmp[i, j, ...]
-
+        
 		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
 			warning(" Partitioning vector was subsetted!",
 				" k was changed accordingly", call. = FALSE)
@@ -250,7 +251,6 @@ setMethod("[",
 		res@part = part[names(part) %in% rownames(tmp)]
 		res@method = x@method
 		res@dist = x@dist
-		#res@binary = x@binary
 		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
 		res@group = res@group[names(part) %in% rownames(tmp)]
 
@@ -1042,9 +1042,9 @@ setMethod("head",
     			res <- Sites(x)[sel,]
     	} else {
 	    	if (choice == "species")
-    			res <- head(x@species, ...)
+    			res <- head(as.character(x), ...)
 	    	if (choice == "sites")
-    			res <- head(x@sites, ...)
+    			res <- head(as.character(x), ...)
     	}	
     	return(res)
     }    	    

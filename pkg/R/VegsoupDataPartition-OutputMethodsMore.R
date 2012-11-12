@@ -7,7 +7,7 @@
 #	generic is set by VegsoupDataPartition-*Methods.R
 
 .latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; 	p.max = .05
+#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(object)); verbose = TRUE
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -90,6 +90,7 @@ if (missing(sites.columns)) {
 	drp <- c(drp, drp.zeros)
 	sites.columns <- sites.columns[ -drp ]
 }
+#	debug from here
 #	set file name
 if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 	filename = paste(filename, ".tex", sep = "")
@@ -138,6 +139,7 @@ for (i in 1:length(frq.ord)) {
 frq.top <- as.matrix(frq)[order(stat.idx, -frq.ord), ]
 ord.top <- names(frq.top)
 frq.ft.top <- frq.ft[ord.top, ]
+#	breaks here
 ft <- ft[ord.top, ]
 stat <- stat[ord.top, ]
 

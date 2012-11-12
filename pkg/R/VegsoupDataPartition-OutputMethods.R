@@ -132,22 +132,25 @@ return(invisible(res))
 if (missing(path)) {
 	warning("no path supplied for LaTex files")
 }	
-
 if (missing(verbose)) {
 	verbose = FALSE
 }
-
 if (missing(col.width)) {
 	col.width <- "10mm"
 	if (verbose) {
 		cat("col.width missing, set to ", col.width, call. = FALSE)
 	}	
 }	
-
 if (missing(taxa.width)) {
 	taxa.width <- "60mm"
 	if (verbose) {
 		cat("col.width missing, set to ", taxa.width, call. = FALSE)
+	}	
+}
+if (missing(caption.text)) {
+	caption.text <- ""
+	if (verbose) {
+		cat("caption.text missing, set to", caption.text, call. = FALSE)
 	}	
 }
 
@@ -368,7 +371,7 @@ folder <- unlist(sapply(unique(points$partitioning), FUN = function (x) {
 	res <- c(
 	"<Folder>",
 		paste("<name>partition", x, "</name>"),
-		c(apply(points[points$partitioning == x,], 1, .placemark)),
+		c(apply(points[points$partitioning == x, ], 1, .placemark)),
 	"</Folder>")
 	}
 ))
@@ -379,7 +382,9 @@ res <- c(
 	stylemap,
 	folder,
 	end.kml)
-	
+
+#	x = 1
+#	c(apply(points[points$partitioning == x, ], 1, .placemark))	
 con <- file(paste(path, "/vegsoup partition.kml", sep = ""))
 	writeLines(res, con)
 close(con)

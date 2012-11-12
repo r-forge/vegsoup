@@ -489,6 +489,7 @@ setMethod("[",
     {
 	    #	debug
 	    #	x = dta; i = c(2,3,1); j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
+		#	x <- prt; i = Partitioning(x) == 2
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
@@ -536,8 +537,8 @@ setMethod("[",
  		#	subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
 		res@layers <- as.character(unique(res@species.long$layer)) 
-		res@sp.points <- res@sp.points[res@sp.points$plot %in% rownames(tmp), ]
-		res@sp.polygons <- res@sp.polygons[res@sp.polygons$plot %in% rownames(tmp), ]
+		res@sp.points <- res@sp.points[match(rownames(tmp), res@sp.points$plot), ]
+		res@sp.polygons <- res@sp.polygons[match(rownames(tmp), res@sp.points$plot), ]
 
 	    return(res)
     }
@@ -546,7 +547,7 @@ setMethod("[",
 #	rbind like method to fuse objects
 .rbind.VegsoupData <- function (..., deparse.level = 1) {
 	allargs <- list(...)
-	
+	#	allargs <- list(dta1, dta2)
 	#	test scale
 	test <- length(unique((sapply(allargs, function (x) AbundanceScale(x)$scale))))
 	if (test != 1) {
@@ -570,9 +571,12 @@ setMethod("[",
     	FUN = function (x) slot(x, "species.long")$layer))        
     x$cov <- unlist(sapply(allargs,
     	FUN = function (x) slot(x, "species.long")$cov))
+	
+	#x <- x[order(x$plot, x$abbr, x$layer), ]
 	#	sites
 	y <- do.call("rbind", sapply(allargs, SitesLong, simplify = FALSE))
-  	#	copied from Vegsoup
+  	
+	#	copied from Vegsoup
 	y <- reshape(y[, 1:3],
 		direction = "wide",
 		timevar = "variable",
@@ -594,8 +598,10 @@ setMethod("[",
  	#	groome names
  	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
     #	assign row names
-	rownames(y) <- y$plot
+	rownames(y) <- y$plot 
 	y <- y[, -grep("plot", names(y))]
+	#	set NAs
+	y[is.na(y)] <- 0
 	#	order to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
@@ -608,9 +614,10 @@ setMethod("[",
 	#	spatial
 	pts <- do.call("rbind",
 		sapply(allargs, SpatialPointsVegsoup, simplify = FALSE))
-	pgs <- do.call("rbind",
-		sapply(allargs, function (x) as(x@sp.polygons, "SpatialPolygons"), simplify = FALSE)
-		)
+#	cbind(unique(x$plot), pts$plot)
+#	check validity of polygon IDs		
+	pgs <- sapply(allargs, function (x) as(x@sp.polygons, "SpatialPolygons"), simplify = FALSE)
+	pgs <- do.call("rbind", pgs)
 	pgs <- SpatialPolygonsDataFrame(pgs, data = pts@data, match.ID = FALSE)	
 
 	res <- new("Vegsoup",

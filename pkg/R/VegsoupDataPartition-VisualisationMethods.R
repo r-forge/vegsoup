@@ -1,6 +1,6 @@
 #	ellipsoidhull around partitions
 .EllipsoidHull <- function (x, add = FALSE, col = "red", ...) {
-
+#	x <- prt
 res <- vector("list", length = getK(x))
 for (i in 1:getK(x)) {
 	xy <- as.matrix(coordinates(x)[Partitioning(x) == i,])

@@ -74,7 +74,7 @@ IndVal2 <- function(sav, gmv, group = NULL) {
 	sums <- vector("numeric", nlevels(gmv)) 
 	
 	for (i in 1:nlevels(gmv)) {
-		sums[i]=sum(sav[gmv==levels(gmv)[i]])
+		sums[i] <- sum(sav[gmv == levels(gmv)[i]])
 	}
    
 	if (is.null(group)) {   # indval2 for all groups
@@ -652,6 +652,7 @@ for (i in 1:nsps) {
 	}
 	dm[i,] <- fidelity.method(X[,i], cluster, method, group, ...)
 }
+rownames(dm) <- names(obj) 	# Latex method need rownames for indexing
 
 #	IndVal.g returns the square root of indval (package(labdsv))!
 if (method == "IndVal.g") {
@@ -668,11 +669,13 @@ ft <- dm
 if (verbose)
 	cat("\n  calculate Fisher test ...")
 
-X <- as.binary(obj)	
+X <- as.binary(obj)
+	
 for (i in 1:nsps) {
 #	warning! changed from two.sided to greater
 	ft[i,] <- fidelity.method(X[,i], cluster, "Fisher", alternative = "greater")
 }
+rownames(ft) <- names(obj) # Latex method need rownames for indexing
 
 #	perform bootstrap of diagnostic values
 if (nboot > 0) {
@@ -736,7 +739,6 @@ res <- new("VegsoupDataPartitionFidelity",
 	species = obj@species,
 	sites = obj@sites,
 	species.long = obj@species.long,
-#	had sites.long = obj@sites.long,
 	taxonomy = obj@taxonomy,
 	scale = obj@scale,
 	layers= obj@layers,

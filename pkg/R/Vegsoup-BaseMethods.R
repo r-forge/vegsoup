@@ -145,11 +145,12 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				}
 				if (scale[[1]] == "Braun-Blanquet 2") {
 					scale <- list(
-						scale = "Braun-Blanquet", 
+						scale = "Braun-Blanquet 2", 
 						codes = c("r", "+", as.character(1:5)),
 						lims = c(1, 2, 3, 13, 38, 68, 88))
 					stopifnot(!any(is.na(factor(x$cov,
 						levels = scale$codes, labels = scale$lims))))
+					print(scale)	
 				}
 				if (scale[[1]] == "Domin") {
 					scale <- list(
@@ -257,12 +258,13 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				#	to do use plsx and plsy	
 					pg <- coordinates(GridTopology(
 						cents[i,] - 0.00005 / 2, c(0.00005, 0.00005), c(2,2)))
-					pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
+					pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2), ], pg[1, ]))), i)
 					pgs[[i]] <- pg
 				}
 
 				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
-						data = data.frame(plot = sp.points$plot))				
+						data = data.frame(plot = sp.points$plot))
+				sp.polygons <- spChFIDs(sp.polygons, x = as.character(sp.polygons$plot))						
 			} else {		
 				warning("\n ... not a complete coordinates list",
 					"use random pattern instead", call. = FALSE)
@@ -308,7 +310,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		direction = "wide",
 		timevar = "variable",
 		idvar = "plot")   
-
+	
+	y[is.na(y)] <- 0
+	
 	#	change column mode to numeric if possible
 	#	supress warning messages caused by as.numeric(x) 
 	#	needs a work around because longitude is coreced to numeric
@@ -386,12 +390,20 @@ setGeneric("hist",
 	standardGeneric("hist"))
 #}	
 #	ploting method hist
-setMethod("hist"),
-	signature(obj = "Vegsoup"),
-	function (x, ...) {
-	   res <- x@species.long$cov 
-	}
-)
+#setMethod("hist",
+#	signature(obj = "Vegsoup"),
+#	function (x, ...) {
+#	   res <- 
+#	   factor(x@species.long$cov,
+#	   	levels = AbundancsScale(x)$codes,
+#	   	lables = AbundancsScale(x)$lims)
+#
+#	   fig <- hist(x,
+#	   main = "Histogram of abundance values",
+#	   xlab = "mean abundance")
+#	   fig
+#	}
+#)
 
 #	get or set layers
 setGeneric("Layers",
