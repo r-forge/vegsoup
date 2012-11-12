@@ -374,6 +374,7 @@ setMethod("Rectangles",
 	res <- t(sapply(sort(p), function (x) dim(obj[Partitioning(obj) == x, ])))
 	options(op)	
 	
+	res <- cbind(res, p)
 	if (plot) {
 	
 	#	order
@@ -386,7 +387,7 @@ setMethod("Rectangles",
 		))
 	rect(0, 0, r[,1], r[, 2], ...)
 	points(r[,1] , r[,2], pch = 16, col =" white", cex = 3)
-	text(r[,1] , r[,2], labels = 1:nrow(r), cex = 1, font = 2)
+	text(r[,1] , r[,2], labels = r[, 3], cex = 1, font = 2)
 	rug(1, side = 1, lwd = 1)
 	}
 	
