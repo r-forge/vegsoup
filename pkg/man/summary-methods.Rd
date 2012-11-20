@@ -12,7 +12,7 @@
 \describe{
 
 \item{\code{signature(object = "VegsoupData")}}{
-%%  ~~describe this method here~~
+If object has only one plot a species list is plotted.
 }
 
 \item{\code{signature(object = "VegsoupDataPartition")}}{

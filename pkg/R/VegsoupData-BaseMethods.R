@@ -488,26 +488,28 @@ setMethod("[",
     function (x, i, j, ..., drop = TRUE)
     {
 	    #	debug
-	    #	x = dta; i = c(2,3,1); j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
+	    #	x = dta; i = 1; j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
 		#	x <- prt; i = Partitioning(x) == 2
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
 	    #	change to as.binary(x)[i, j, ...]
 		#	when slot species is dropped
-		tmp <- as.character(x)[i, j, ...] 
-			
+		tmp <- as.character(x)[i, j, ...]
+		#	validity
 		if (all(unlist(tmp) == 0)) {
 			stop(call. = FALSE, "subset does not contain any species!")
 		}
-		
+		#	if single plot "[" method will return class character
+		if (class(tmp) == "character") {
+			tmp <- t(matrix(tmp, dimnames = list(names(tmp), rownames(x)[i])))
+		}	
 		#	remove empty plots
 		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
 		#	remove empty species
 		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
 		#	assign slot species
 		res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
-
         #	melt to long format
 		cov <- array(t(tmp))
 		plot <- rep(dimnames(tmp)[[1]], each = dim(tmp)[2])
@@ -843,11 +845,16 @@ setGeneric("MatrixFill",
 setMethod("MatrixFill",
     signature(obj = "VegsoupData"),
     function (obj) {
-	x <- nrow(obj)
-	y <- sum(dim(obj))
-	res <- x/y * 100
-	return(res)	
-})
+		x <- nrow(obj)
+		y <- sum(dim(obj))
+		res <- x/y * 100
+		#	single plot object
+		if (x == 1) {
+			res <- 100
+		}
+		return(res)
+	}
+)
 
 #	summary method
 #	to do: documenation
@@ -878,10 +885,11 @@ setMethod("summary",
 	)
 	if (dim(object)[1] == 1) {
 		species.list <- SpeciesLong(object)
-		species.list$taxon <- Taxonomy(obj)$taxon[match(species.list$abbr, Taxonomy(obj)$abbr)]
+		species.list$taxon <-
+			Taxonomy(object)$taxon[match(species.list$abbr, Taxonomy(object)$abbr)]
 		species.list <- species.list[, c(1,5,3,4)]
 		species.list <- apply(species.list[, -1], 1,
-			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = ""))
+			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ","))
 	}		
 
 			#species.list <- paste(species.list, collapse = ", ")
