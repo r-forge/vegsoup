@@ -3,7 +3,7 @@
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
-	#	x = species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
+	#	x = taxonomy$species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
 	if (missing(col.names)) {
 		col.names <- list(
 			x = c("plot", "abbr", "layer", "cov"),
@@ -28,15 +28,32 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	} else {
 		#	for safety and to ensure validity
 		x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)[col.names$x]
+		if (!ncol(x) == 4) {
+			stop("unable to select colums: ",
+				paste(col.names$x, collapse = " "),
+				" from x")
+		}
 		names(x) <- c("plot", "abbr", "layer", "cov")
-		stopifnot(ncol(x) == 4)
 		
 		if (any(regexpr("[[:alpha:]]", x$plot) < 1)) {
 				warning("... plot identifier in x contains only numbers, ",
 					"\nbut will be coded as character!", call. = FALSE)	
 			x$plot <- as.character(as.numeric(species$plot))
 		}	
+		#	order
 		x <- x[order(x$plot, x$layer, x$abbr), ]
+		#	test for duplicated species
+		#	robust test
+		if (nrow(x[,c(1,2,3)]) != nrow(unique(x[,c(1,2,3)]))) {
+			warning("\n found duplicated species for plots: ",
+			"\n... ", paste(x[duplicated(x[, c(1,2,3)]), ]$plot, collapse = " "),
+			"\n... ", paste(x[duplicated(x[, c(1,2,3)]), ]$abbr, collapse = " "),
+			"\n drop all duplicates in x!",
+			"\n they will confuse me otherwise?",
+			"\n please review your data!", call. = FALSE)
+			x <- x[!duplicated(x[, c(1,2,3)]), ]
+		}
+		#	further test
 		if (dim(unique(unique(x)))[1] != dim(x)[1]) {
 			warning("\n found duplicated species abundances for plots:\n... ",
 				paste(x[duplicated(x), ]$plot, collapse = ", "),
@@ -418,9 +435,15 @@ setMethod("Layers",
 setReplaceMethod("Layers",
 	signature(obj = "Vegsoup", value = "ANY"),
 	function (obj, value) {
+		if (length(value) != length(Layers(obj))) {
+			stop("length of value does not match length layers of object")
+		}
+		if (any(!Layers(obj) %in% value)) {
+			stop("items of value do not match layers of object",
+				"\n use Layers(obj, collapse = value),",
+				" where layers to be dropped are coded as NA") 
+		}
 		obj@layers <- value
-		obj@species.long$layer <- value
-		#	to do: needs aggregation of cov
 		return(obj)		
 	}
 )

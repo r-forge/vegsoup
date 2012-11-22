@@ -7,7 +7,7 @@
 #	generic is set by VegsoupDataPartition-*Methods.R
 
 .latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(object)); verbose = TRUE
+#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(object)); verbose = TRUE; filename = paste("FidelityTable")
 if (class(object) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
@@ -109,11 +109,20 @@ if (length(grep(" ", filename, fixed = TRUE)) > 0) {
 
 ###	init steps for mode 1 and 2
 #	significance symbols
+test <- apply(ft, 2, function (x) any(x <= 0.05))
+
+if (!all(test)) {
+	warning(paste("Not a single species beeing significant for cluster",
+		as.vector(which(!test))), call. = FALSE)
+}
+
 symb <- ft
 symb[ft > 0.05] <- ""
 symb[ft <= 0.05] <- "*"
 symb[ft <= 0.01] <- "**"
 symb[ft <= 0.001] <- "***"
+
+
 
 #	combine frequency table with significance symbols
 frq.ft <- matrix(paste(cnst, symb, sep = ""), 
@@ -182,19 +191,27 @@ names(typ) <- colnames(cnst)
 
 tmp <- list(tab = tmp, typical = typ)
 
-#	sort layers
+#	top and bottom of table
 if (length(dia) > 0) {
 	#	top of table, diagnostic/typical species
 	txn <- DecomposeNames(object, verbose = FALSE)
 	txn <- txn[match(rownames(tmp$tab), txn$abbr.layer), ]
 	rownames(txn) <- txn$abbr.layer
 	txn.top <- txn[rownames(diag), ]
-	txn.top <- txn.top[order(txn.top$layer),]
+	tmp.i <- c()
+	for (i in Layers(object)) {
+		tmp.i <- rbind(tmp.i, txn.top[txn.top$layer == i, ])
+	}
+	txn.top <- tmp.i
 	top <- tmp$tab[rownames(txn.top), ]
 	
 	#	bottom of table, remaining species
 	txn.bottom <- txn[-match(rownames(diag), rownames(tmp$tab)), ]
-	txn.bottom <- txn.bottom[order(txn.bottom$layer),]
+	tmp.i <- c()
+	for (i in Layers(object)) {
+		tmp.i <- rbind(tmp.i, txn.bottom[txn.bottom$layer == i, ])
+	}
+	txn.bottom <- tmp.i
 	bottom <- tmp$tab[rownames(txn.bottom), ]
 	tmp$tab <- rbind(top, bottom)
 } else {
@@ -373,10 +390,13 @@ if (mode == 1) {
 	cellTexCmds <- matrix(rep("", NROW(tex) * NCOL(tex)), nrow = NROW(tex))
 
 	for (i in c(1:nc) + lab.cols) {
-		#	i = 2
+		#	i = 5
 		sel <- match(typ[[i - lab.cols]], rownames(tex))
-		cellTexCmds[sel, i] <- "\\multicolumn{1}{|l|}"
+		#	if no species is significant 
+		if (!any(is.na(sel))) {
+			cellTexCmds[sel, i] <- "\\multicolumn{1}{|l|}"
 		tex[sel, i]  <- paste(cellTexCmds[sel, i], "{", tex[sel, i], "}", sep = "")
+		}
 	}
 	tex.out <- tex
 	footer.species <- footer

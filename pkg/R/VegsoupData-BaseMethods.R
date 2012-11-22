@@ -193,6 +193,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 
 ### inherited methods based on 'generic functions'
 #	function to cast species matrix
+#	mode = 2 binary
+#	mode = 1 charcter, or numeric
 .cast <- function (obj, mode, ...) {
 	#	obj = dta; mode = 2
 			
@@ -207,16 +209,29 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	
 	#	matrix dimensions
 	plots <- unique(plot)
-	species.layer <- paste(abbr, layer, sep = "@")	
-	species <- unique(species.layer)
-		
+	species.layer <- paste(abbr, layer, sep = "@")
+
+	#	resort to layer
+	if (length(Layers(obj)) > 1) {	
+	#	slow, but ensures order
+		species <- unique(as.vector(unlist(
+			sapply(Layers(obj),
+				function (x) {
+					species.layer[layer == x]
+				}
+			))))
+	} else {
+	#	fast	
+		species <- unique(species.layer)	
+	}
+			
 	#	cover transformation
 	if (mode == 1 & scale$scale != "frequency") {
 		cov <- factor(cov, levels = scale$codes, labels = scale$lims)
 		if (any(is.na(cov))) stop("scale codes do not perfectly match data" )
 	}
 #	})
-#	cat("\n init time objects", cpu.time[3], "sec")
+#	cat("\n time to init objects", cpu.time[3], "sec")
 	if (mode == 1) {
 		cpu.time <- system.time({	
 		m <- t(vapply(plots,
@@ -224,7 +239,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 			FUN.VALUE = numeric(length(species)),
 			FUN = function (x) {
 				r <- numeric(length(species))
-				r[species %in% species.layer[plot == x]] <- cov[plot == x]
+				r[match(species.layer[plot == x], species)] <- cov[plot == x]
+				#	was r[species %in% species.layer[plot == x]] <- cov[plot == x]
 				r
 			}))
 		dimnames(m) <- list(plots, species)		
@@ -241,7 +257,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 				#	change to ""
 				#	there are several function that look for 0!
 				r[] <- "0"
-				r[species %in% species.layer[plot == x]] <- cov[plot == x]
+				r[match(species.layer[plot == x], species)] <- cov[plot == x]
+				#	was	r[species %in% species.layer[plot == x]] <- cov[plot == x]
 				r
 			}))
 		dimnames(m) <- list(plots, species)		
@@ -302,12 +319,23 @@ setMethod("as.binary",
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) {
-		unique(paste(
-			slot(x, "species.long")$abbr,
-			slot(x, "species.long")$layer, sep = "@"))
-	#	was rownames(x@species)
+	#	adapted from .cast()
+	abbr <- slot(x, "species.long")$abbr
+	layer <- slot(x, "species.long")$layer
+	species.layer <- paste(abbr, layer, sep = "@")
+	res <- unique(as.vector(unlist(
+			sapply(Layers(x),
+				function (x) {
+					species.layer[layer == x]
+				}
+			))))
+	#	was
+	#	unique(paste(
+	#		slot(x, "species.long")$abbr,
+	#		slot(x, "species.long")$layer, sep = "@"))
 	}
 )
+
 
 ###	inherited
 #	methods based on functions in 'base'
@@ -523,11 +551,15 @@ setMethod("[",
 		res@species.long <- data.frame(plot, abbr, layer, cov,
 			stringsAsFactors = FALSE)
        	res@species.long <- res@species.long[res@species.long$cov != 0, ]
+       	#	new layer order
+       	layer <- as.character(unique(res@species.long$layer))
+       	layer <- layer[match(Layers(x), layer)]
+       	layer <- layer[!is.na(layer)]
 		#	subset sites
 		res@sites <- res@sites[match(rownames(tmp),	rownames(Sites(res))), ]
-
-		if (any(sapply(res@sites, is.na))) stop("Error")
-	   
+		if (any(sapply(res@sites, is.na))) {
+			stop("NAs introduced in Sites(obj)")
+		}	   
 		if (length(res@group) != 0) {
 		res@group <-
 			res@group[names(res@group) %in%
@@ -538,7 +570,7 @@ setMethod("[",
 		   function (x) x[1])
  		#	subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
-		res@layers <- as.character(unique(res@species.long$layer)) 
+		res@layers <- layer 
 		res@sp.points <- res@sp.points[match(rownames(tmp), res@sp.points$plot), ]
 		res@sp.polygons <- res@sp.polygons[match(rownames(tmp), res@sp.points$plot), ]
 
@@ -811,10 +843,10 @@ setMethod("Richness",
 		}	
 		
 		switch(choice, "dataset" = {
-			res <- length(unique(DecomposeNames(obj))$abbr)
+			res <- length(unique(DecomposeNames(obj)$abbr))
 		}, "sample" = {
-			res <- as.binary(Layers(obj, aggregate = "layer", verbose = FALSE))
-			res <- rowSums(res)
+		#	slow but reliable	
+			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
 		})		
 
 		return(res)
@@ -872,7 +904,7 @@ setMethod("summary",
 	}
 	cat("object of class", class(object), "\n")
 	species.summary <- paste(
-		"\n species: ", Richness(object),
+		"\n species (including layer duplictes): ", Richness(object),
 		"\n sites (sample plots): ", dim(object)[1],
 		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
 		"\n layers: ", length(Layers(object)),
