@@ -216,6 +216,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 			if (verbose) {		 
 				cat("\n found variables longitude and latitude!\n")
 			}
+		#	warning!
+		#	check length of coordinates againts number of plots
+		#	rn <- rownames(prt)
+		#	pt <- prt@sp.points$plot
+		#	rn[-match(pt, rn)]
 			lng <- y[grep("longitude", y$variable), ]
 			lat <- y[grep("latitude", y$variable), ]
 			lnglat.test <- nrow(lng) == nrow(lat)

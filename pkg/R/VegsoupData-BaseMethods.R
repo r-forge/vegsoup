@@ -821,7 +821,7 @@ setMethod("summary",
 	}
 	cat("object of class", class(object), "\n")
 	species.summary <- paste(
-		"\n species (including layer duplictes): ", Richness(object),
+		"\n species (discarding layer duplicates): ", Richness(object),
 		"\n sites (sample plots): ", dim(object)[1],
 		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
 		"\n layers: ", length(Layers(object)),
@@ -993,7 +993,7 @@ setGeneric("DecomposeNames",
 )
 #}
 
-#	getter method Abbrviation DecomposeNames
+#	getter method Abbreviation DecomposeNames
 #	convert abbr to taxon names from species matrix slot(obj, "species")
 #	to do: documentation
 setMethod("DecomposeNames",

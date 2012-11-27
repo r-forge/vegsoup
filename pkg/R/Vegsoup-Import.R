@@ -104,11 +104,11 @@ test2 <- dim(species)[1] - dim(unique(species[,c(1:4)]))[1]
 if (test2 > 0) {
 	warning("\nspecies data not unique for ", test2, " sample(s)")
 	if (verbose) {
+		cat("\n")
 		print(species[duplicated(species[ ,c(1:4)]), ])
 	}
 	species <- species[!duplicated(species[, c(1:4)]), ]
-	warning("\nremoved duplicted species:\n\n")	
-	cat(duplicated(species[, c(1:4)]))
+	warning("\nremoved duplicted species:\n\n")
 } else {
 	if (verbose) {
 		cat("\nno duplicates found")
@@ -117,11 +117,12 @@ if (test2 > 0) {
 
 res <- taxonomy[as.character(unique(species$abbr)), ]
 if (any(is.na(res[, 1]))) {
-	test3 <- as.character(unique(species$abbr))[is.na(res[,1])]
+	test3 <- as.character(unique(species$abbr))[is.na(res[, 1])]
 	cat("\nnot found the following abbrevation(s) in supplied reference list\n")
 	print(test3)
 	#	to do!
 	#	implement pmatch as above
+	return(test1.pmatch)
 	stop("Please review your reference list, you might need to include some new taxa")
 }
 

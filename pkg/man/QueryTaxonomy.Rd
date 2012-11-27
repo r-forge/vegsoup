@@ -2,7 +2,7 @@
 \alias{QueryTaxonomy}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Compare species abbreviations to taxonomic reference list
+Compare Species Abbreviations to Taxonomic Reference List
 }
 \description{
 Given an \code{R} object resulting from \code{SpeciesWide2SpeciesLong} or a csv-file valid for input for \code{SpeciesWide2SpeciesLong}, query the used abbreviation (column \code{abbr}) against a taxonomic reference list (column \code{abbr}).  
@@ -22,7 +22,7 @@ QueryTaxonomy(x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE
 \item{verbose}{ print some messages.}
 }
 \details{
-All unique abbreviations found in \code{x} respectively \code{file.x} are matched against \code{y} respectively \code{file.y}. All possible combinations are supported. If \code{verbose = TRUE} the function prints all non-matching strings on the screen. If an abbreviation in the species data frame is not found in the reference list the function stops. If argument \code{pmatch = TRUE} partial matches are treated as correct (see \link{patch}). Proceed with finger crossed! It is advisable, however, to review the data make corrections in the raw data where necessary. If you are happy with what patch found and want this to override your raw data, you need to save \code{QueryTaxonomy(...)$species to disk.}
+All unique abbreviations found in \code{x} respectively \code{file.x} are matched against \code{y} respectively \code{file.y}. All possible combinations are supported. If \code{verbose = TRUE} the function prints all non-matching strings on the screen. If an abbreviation in the species data frame is not found in the reference list the function stops. If argument \code{pmatch = TRUE} partial matches are treated as correct (see \link{patch}). Proceed with finger crossed! It is advisable, however, to review the data make corrections in the raw data where necessary. If you are happy with what patch found and want this to override your raw data, you need to save \code{QueryTaxonomy(...)$species to disk.}. If it's nessacary to replace several abbreviations use \code{write.table(taxonomy, "foo.txt", quote = FALSE, row.names = FALSE)} to create an object suitable for replacement.
 }
 \value{
 \item{\code{taxonomy }}{a two-column \code{data.frame}; the first columns has taxon abbreviations ('abbr'), the second the corresponding scientific names as supplied by the taxonomic reference list.}
@@ -35,7 +35,7 @@ All unique abbreviations found in \code{x} respectively \code{file.x} are matche
 Roland Kaiser (\email{kardinal.eros@gmail.com})
 }
 \note{
-%%  ~~further notes~~
+
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

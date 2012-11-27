@@ -128,8 +128,8 @@ switch(part.meth,
 	}, isopam = {
 		if (verbose) cat("\nrun isopam, ignoring k=", k)
 		if (verbose) cat("\nplease supply c.fix to restict to a specific number of partitions\n")
-		if (binary) tmp <- as.binary(obj) else tmp <- as.numeric(obj)
-		part <- isopam(tmp, distance = dist,
+		#	if (binary) tmp <- as.binary(obj) else tmp <- as.numeric(obj)
+		part <- isopam(X, distance = dist,
 			...)
 	}, optpart = {
 		if (verbose) cat("\nrun optpart from random starts ...")
@@ -138,7 +138,7 @@ switch(part.meth,
 			...)
 	}, kmeans = {
 		if (verbose) cat("kmeans doesn't use distance matrices, ignore", dist)
-		part <- kmeans(as.binary(obj), centers = k,
+		part <- kmeans(X, centers = k,
 			...)		
 	}, wards = {
 		part <- hclust(dis, method = "ward",

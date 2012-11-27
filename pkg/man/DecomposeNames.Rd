@@ -2,7 +2,7 @@
 \alias{DecomposeNames}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Deparse Taxanames for Objects of Class VegsoupData*
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -13,14 +13,14 @@ DecomposeNames(obj, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object inheriting from class \code{VegsoupData}.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Not implemented yet.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Splits the names into components abbr, layer and taxon.
 }
 \value{
 %%  ~Describe the value returned
