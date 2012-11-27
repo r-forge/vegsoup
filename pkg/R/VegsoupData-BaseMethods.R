@@ -1,197 +1,3 @@
-#	generating function
-#	to do: documentation, high priority!
-
-VegsoupData <- function (obj, verbose = FALSE) {
-	require(stats)
-	#	obj <- qry; verbose = TRUE	
-	if (!inherits(obj, "Vegsoup")) {
-		stop("Need object of class Vegsoup")
-	}
-	
-	scale <- AbundanceScale(obj)
-	lay <- Layers(obj)
-	txa <- Taxonomy(obj)
-	species.long <- SpeciesLong(obj)
-	
-	#	 cats species matrix for Braun-Blanquet scales	
-	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
-		if (!is.character(species.long$cov)) {
-			stop("Abundance scale should be of mode charcter")
-		}
-		if (length(lay) == 1) {
-			if (verbose) cat("\ndata is structered in only one layer")
-		} else {
-			if (verbose) cat("\ndata is structered in layers: ", lay)
-		}
-		
-		cpu.time <- system.time({
-		#	change coverscale to numeric using scale$lims
-		#	xtabs does not support non-integer values
-		cov.factor <- as.factor(species.long$cov)
-		cov.levels <- levels(cov.factor)
-		species.long$cov <- as.numeric(cov.factor)
-		stopifnot(any(is.na(species.long)) == FALSE)
-		
-		xt  <- xtabs(cov ~ plot + abbr + layer, data = species.long)
-		#	initialise species matrix	
-		if (dim(xt)[3] > 1) {
-			res <- matrix(0,
-				ncol = dim(xt)[2] * dim(xt)[3],
-				nrow = dim(xt)[1],
-				dimnames = list(
-					plot = dimnames(xt)$plot, 
-					abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
-						rep(dimnames(xt)$layer,
-						each = dim(xt)[2]), sep = "@")))
-		} else {
-			res <- matrix(0,
-			ncol = dim(xt)[2],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(dimnames(xt)$abbr,
-						dimnames(xt)$layer, sep = "@")))
-		}
-		
-		#	fill species matrix
-		for (i in 1:dim(xt)[3]) {
-			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
-				dimnames(res)$abbr, fixed = TRUE)
-			res[, sel] <- xt[ , , i]
-		}
-		
-		#	remove layers were species are absent
-		res <- res[, colSums(res) > 0]
-		mode(res) <- "character"
-
-		#	restore abundance scale
-		res[] <- as.character(factor(as.vector(res), labels = c("0", cov.levels)))
-		species <- as.data.frame(res, stringsAsFactors = FALSE)
-		}) # end system.time
-		
-	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
-
-	#	cast species matrix for Domin scale
-	#	this is Braun-Blanquet scale 
-	if (scale$scale == "Domin") {
-		if (!is.character(species.long$cov)) {
-			if (is.integer(species.long$cov)) {
-				warning("\n Codes for Domin scale supplied as integer, ",
-					"attempt to change mode to charcter", call. = FALSE)
-				species.long$cov <- as.character(species.long$cov)
-			} else {
-				stop("Abundance code must be either of mode charcter ",
-					"or integer for Domin scale")
-			}
-		}
-		if (length(lay) == 1) {
-			if (verbose) cat("\ndata is structered in only one layer")
-		} else {
-			if (verbose) cat("\ndata is structered in layers: ", lay)
-		}
-		
-		cpu.time <- system.time({
-		#	xtabs does not support non-integer values!			
-		#	workaround: change coverscale to numeric using scale$lims
-		cov.factor <- as.factor(species.long$cov)
-		cov.levels <- levels(cov.factor)
-		species.long$cov <- as.numeric(cov.factor)
-		stopifnot(any(is.na(species.long)) == FALSE)
-		
-		xt  <- xtabs(cov ~ plot + abbr + layer, data = species.long)
-		#	initialise species matrix	
-		if (dim(xt)[3] > 1) {
-			res <- matrix(0,
-			ncol = dim(xt)[2] * dim(xt)[3],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
-					rep(dimnames(xt)$layer,
-					each = dim(xt)[2]), sep = "@")))
-		} else {
-			res <- matrix(0,
-			ncol = dim(xt)[2],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(dimnames(xt)$abbr,
-						dimnames(xt)$layer, sep = "@")))
-		}
-		
-		#	fill species matrix
-		for (i in 1:dim(xt)[3]) {
-			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
-				dimnames(res)$abbr, fixed = TRUE)
-			res[, sel] <- xt[ , , i]
-		}
-		
-		#	remove layers were species are absent
-		res <- res[, colSums(res) > 0]
-		mode(res) <- "character"
-		#	workaround
-		#	restore abundance scale to character using scale$codes
-		for (i in cov.levels) {
-			res[res == i] <- scale$codes[scale$codes == i]
-		}
-		species <- as.data.frame(res, stringsAsFactors = FALSE)
-		}) # end system.time
-	} # end if "Domin"
-	
-	cpu.time <- system.time({	
-	if (scale$scale == "frequency" | scale$scale == "binary") {
-
-		if (!is.numeric(species.long$cov)) {
-			#	warning("changed mode to numeric", str(species.long$cov))
-			mode(species.long$cov) <- "numeric"
-		}	
-		xt  <- xtabs(cov ~ plot + abbr + layer,
-			data = species.long)
-	
-		if (dim(xt)[3] > 1) {
-			res <- matrix(0,
-			ncol = dim(xt)[2] * dim(xt)[3],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
-					rep(dimnames(xt)$layer,
-					each = dim(xt)[2]), sep = "@")))
-		} else {
-			res <- matrix(0,
-			ncol = dim(xt)[2],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(dimnames(xt)$abbr,
-						dimnames(xt)$layer, sep = "@")))
-		}
-		for (i in 1:dim(xt)[3]) {
-			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
-				dimnames(res)$abbr, fixed = TRUE)
-			res[,sel] <- xt[,,i]	
-		}
-		res <- res[, colSums(res) > 0]
-		species <- as.data.frame(res)
-	} # end if "frequency"	
-	}) # end system.time
-	
-	if (verbose) {
-		cat("\ntime to cast species matrix",
-		"of", prod(dim(res)), "cells:",
-		cpu.time[3], "sec\n")
-	}
-	
-	#	develop class VegsoupData from class Vegsoup
-	res <- new("VegsoupData", obj)
-	#	assign class slot
-	res@species = species
-#	res@sites = sites			
-
-	return(res)
-}
-
-### inherited methods based on 'generic functions'
 #	function to cast species matrix
 #	mode = 2 binary
 #	mode = 1 charcter, or numeric
@@ -283,6 +89,117 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	return(invisible(m))
 }
 
+#	generating function
+#	to do: documentation, high priority!
+
+VegsoupData <- function (obj, verbose = FALSE) {
+	require(stats)
+	#	obj <- qry; verbose = TRUE	
+	if (!inherits(obj, "Vegsoup")) {
+		stop("Need object of class Vegsoup")
+	}
+	
+	scale <- AbundanceScale(obj)
+	lay <- Layers(obj)
+	txa <- Taxonomy(obj)
+	species.long <- SpeciesLong(obj)
+	
+	#	 cats species matrix for Braun-Blanquet scales	
+	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
+		if (!is.character(species.long$cov)) {
+			stop("Abundance scale should be of mode charcter")
+		}
+		if (length(lay) == 1) {
+			if (verbose) cat("\ndata is structered in only one layer")
+		} else {
+			if (verbose) cat("\ndata is structered in layers: ", lay)
+		}
+		
+		species <- as.data.frame(.cast(obj, mode = 2), stringsAsFactors = FALSE)
+			
+	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
+
+	#	cast species matrix for Domin scale
+	#	this is Braun-Blanquet scale
+	
+	#	rewrite to use .cast() 
+	if (scale$scale == "Domin") {
+		if (!is.character(species.long$cov)) {
+			if (is.integer(species.long$cov)) {
+				warning("\n Codes for Domin scale supplied as integer, ",
+					"attempt to change mode to charcter", call. = FALSE)
+				species.long$cov <- as.character(species.long$cov)
+			} else {
+				stop("Abundance code must be either of mode charcter ",
+					"or integer for Domin scale")
+			}
+		}
+		if (length(lay) == 1) {
+			if (verbose) cat("\ndata is structered in only one layer")
+		} else {
+			if (verbose) cat("\ndata is structered in layers: ", lay)
+		}
+		
+		species <- .cast(obj, mode = 2)
+		species <- as.data.frame(res, stringsAsFactors = FALSE)
+	} # end if "Domin"
+	
+	#	rewrite to use .cast() 
+			
+	cpu.time <- system.time({	
+	if (scale$scale == "frequency" | scale$scale == "binary") {
+
+		if (!is.numeric(species.long$cov)) {
+			#	warning("changed mode to numeric", str(species.long$cov))
+			mode(species.long$cov) <- "numeric"
+		}	
+		xt  <- xtabs(cov ~ plot + abbr + layer,
+			data = species.long)
+	
+		if (dim(xt)[3] > 1) {
+			res <- matrix(0,
+			ncol = dim(xt)[2] * dim(xt)[3],
+			nrow = dim(xt)[1],
+			dimnames = list(
+				plot = dimnames(xt)$plot, 
+				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
+					rep(dimnames(xt)$layer,
+					each = dim(xt)[2]), sep = "@")))
+		} else {
+			res <- matrix(0,
+			ncol = dim(xt)[2],
+			nrow = dim(xt)[1],
+			dimnames = list(
+				plot = dimnames(xt)$plot, 
+				abbr = paste(dimnames(xt)$abbr,
+						dimnames(xt)$layer, sep = "@")))
+		}
+		for (i in 1:dim(xt)[3]) {
+			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
+				dimnames(res)$abbr, fixed = TRUE)
+			res[,sel] <- xt[,,i]	
+		}
+		res <- res[, colSums(res) > 0]
+		species <- as.data.frame(res)
+	} # end if "frequency"	
+	}) # end system.time
+	
+	if (verbose) {
+		cat("\ntime to cast species matrix",
+		"of", prod(dim(res)), "cells:",
+		cpu.time[3], "sec\n")
+	}
+	
+	#	develop class VegsoupData from class Vegsoup
+	res <- new("VegsoupData", obj)
+	#	assign class slot
+	res@species = species
+#	res@sites = sites			
+
+	return(res)
+}
+
+### inherited methods based on 'generic functions'
 #	as.character and as.numeric are already generic functions
 #if(!isGeneric("as.binary"))
 setGeneric("as.binary",

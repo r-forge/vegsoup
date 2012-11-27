@@ -1,4 +1,4 @@
-QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = FALSE) {
+QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = TRUE) {
 
 #	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
@@ -103,11 +103,12 @@ test2 <- dim(species)[1] - dim(unique(species[,c(1:4)]))[1]
 
 if (test2 > 0) {
 	warning("\nspecies data not unique for ", test2, " sample(s)")
-	warning("\nremoved duplicted species:\n\n")
 	if (verbose) {
 		print(species[duplicated(species[ ,c(1:4)]), ])
 	}
 	species <- species[!duplicated(species[, c(1:4)]), ]
+	warning("\nremoved duplicted species:\n\n")	
+	cat(duplicated(species[, c(1:4)]))
 } else {
 	if (verbose) {
 		cat("\nno duplicates found")
