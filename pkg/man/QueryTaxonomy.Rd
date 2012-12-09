@@ -81,7 +81,7 @@ taxonomy <- data.frame(abbr = unique(species$abbr), taxon)
 taxonomy <- QueryTaxonomy(x = species, y = taxonomy)
 
 #	leave one out will rise an error!
-taxonomy  <- QueryTaxonomy(x = species, y = taxonomy[- 2])
+#	taxonomy  <- QueryTaxonomy(x = species, y = taxonomy[-2])
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
