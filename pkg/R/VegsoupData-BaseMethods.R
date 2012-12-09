@@ -794,11 +794,14 @@ setGeneric("MatrixFill",
 setMethod("MatrixFill",
     signature(obj = "VegsoupData"),
     function (obj) {
-		x <- nrow(obj)
-		y <- sum(dim(obj))
-		res <- x/y * 100
+		#x <- nrow(obj)
+		#y <- sum(dim(obj))
+		#res <- x/y * 100
+		#	zeros <- 
+		res <- sum(as.binary(obj) == 0) / prod(dim(obj))
+		res <- (1 - res) * 100
 		#	single plot object
-		if (x == 1) {
+		if (nrow(obj) == 1) {
 			res <- 100
 		}
 		return(res)
