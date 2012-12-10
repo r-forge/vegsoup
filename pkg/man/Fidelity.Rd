@@ -15,8 +15,27 @@ Fidelity(obj, ...)
   \item{obj}{
 %%     ~~Describe \code{obj} here~~
 }
-  \item{\dots}{
+  \item{method}{
 %%     ~~Describe \code{\dots} here~~
+}
+  \item{group}{
+%%     ~~Describe \code{\dots} here~~
+}
+  \item{nboot}{
+%%     ~~Describe \code{\dots} here~~
+}
+  \item{alpha}{
+%%     ~~Describe \code{\dots} here~~
+}
+  \item{c}{
+%%     ~~Describe \code{\dots} here~~
+}
+  \item{fast}{
+Accelerate computations. Needs package \code{multicore}.
+}
+
+  \item{\dots}{
+Additional arguments when method is "fisher.s" 
 }
 }
 \details{
@@ -82,7 +101,7 @@ De Caceres, M., Legendre, P., and Moretti, M. (2010). Improving indicator specie
 Bruelheide, H. (2000). A new measure of fidelity and its application to defining species groups. Journal of Vegetation Science, 11(2):167–178.
 }
 \author{
-Roland Kaiser
+Roland Kaiser, based on code from Miquel De Cáceres Ainsa taken from function strassoc.R in package \code{indicspecies}.
 }
 \note{
 %%  ~~further notes~~

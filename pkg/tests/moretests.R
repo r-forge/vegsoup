@@ -39,6 +39,7 @@ Richness(dta, "dataset")
 Richness(dta, "sample")
 t(as.character(dta))
 as.data.frame(t(as.character(Arrange(dta, "packed"))))
+Sites(dta)
 Sites(Arrange(dta))
 SampleVegsoup(dta)
 MatrixFill(dta)
@@ -46,8 +47,8 @@ Abbreviation(dta)
 AbundanceScale(dta)
 class(BraunBlanquetReduce(dta))
 
-Sites(dta)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy, group = c(rep(1, 3), rep(2, 3)),
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	group = c(rep(1, 3), rep(2, 3)),
 	scale = list(scale = "Braun-Blanquet")))
 AprioriGrouping(dta)
 
@@ -57,6 +58,9 @@ qry2 <- Vegsoup(species.big, sites.big, taxonomy.big,
 	scale = list(scale = "Braun-Blanquet"))
 dta2 <- VegsoupData(qry2)
 	
-prt <- VegsoupDataPartition(dta, k = 10, polish = FALSE)
+prt <- VegsoupDataPartition(dta2, k = 3, polish = FALSE)
 Rectangles(prt, plot = TRUE, col = NA)
 
+fid <- Fidelity(prt, "TCR", group = 4, verbose = T)
+head(fid@stat)
+head(fid@fisher.test)

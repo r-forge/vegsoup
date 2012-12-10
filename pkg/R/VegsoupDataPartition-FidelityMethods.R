@@ -1,4 +1,4 @@
-#	adapted and extended from strassoc.R by Miquel De Cáceres Ainsa package(indicspecies)
+#	adapted and extended from strassoc.R by Miquel De Cáceres in package(indicspecies)
 
 #	Fidelity measures
 #	gmv group membership vector (clusters)
@@ -11,27 +11,35 @@
 #	optionally calculates bootstrap
 
 #	to do: add column for indicator value, high priority!
-.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, verbose = TRUE, ...) {
+.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
 #	debug
 #	binary = FALSE; obj = prt; group = NULL; method = "r.g"	
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
 }
-
 	
 if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
-	if (verbose)
-		print("individual based index")
+	if (verbose) {
+		cat("\n individual based index\n")
+	}
+	r.ind <- TRUE #	Fisher test needs binary matrix
 	X <- as.numeric(obj)
 } else {
+	if (verbose) {
+		cat("\n presence/absence based index\n")
+	}
 	X <- as.binary(obj)
-		if (verbose)
-		print("presence/absence based index")
+	r.ind <- FALSE # Fisher can use matrix X
 }
 
-cluster <- Partitioning(obj)
-cluster <- as.factor(cluster)
+cluster <- as.factor(Partitioning(obj))
+
+if (!is.null(group)) {
+	if (group > getK(obj)) {
+		stop("group must be within getK(obj)")
+	}
+}
 
 #	functions that compute diagnostic values by row
 IndVal1 <- function (sav, gmv, group = NULL) {
@@ -82,16 +90,16 @@ IndVal2 <- function(sav, gmv, group = NULL) {
 		row.names(indvals) <- levels(gmv)
 	   
 		for (i in 1:nlevels(gmv)) {
-			indvals[i,1] <- ifelse(sum(sums) > 0,
+			indvals[i, 1] <- ifelse(sum(sums) > 0,
 				sums[i] / sum(sums), 0)
-			indvals[i,2] <- ifelse(sum(gmv == levels(gmv)[i]) > 0,
+			indvals[i, 2] <- ifelse(sum(gmv == levels(gmv)[i]) > 0,
 				sum((gmv == levels(gmv)[i]) & (sav > 0)) / sum(gmv == levels(gmv)[i]), 0)
-			indvals[i,3] <- sqrt(indvals[i, 1] * indvals[i, 2])
+			indvals[i, 3] <- sqrt(indvals[i, 1] * indvals[i, 2])
 		}
 	} else {  # indval2 for one group
 		indvals <- data.frame(matrix(0, nrow = 1, ncol = 3))
 		row.names(indvals) <- c(group)
-		sg <- sum(sav[gmv==group])
+		sg <- sum(sav[gmv == group])
 		indvals[1, 1] <- ifelse(sum(sums) > 0,
 			sg / sum(sums), 0)
 		indvals[1, 2] <- ifelse(sum(gmv == group) > 0,
@@ -134,7 +142,7 @@ r.g <- function (sav, gmv, group = NULL) {
 		n2p <- sum((sav^2) * (gmv == levels(gmv)[i]))
 		npm[i] <- (np / Np) * (N * C)
 		if (Np == 0) npm[i] <- 0
-		nm <- nm+npm[i]
+		nm <- nm + npm[i]
 		a <- (n2p  /Np) * (N * C)
 		if (Np == 0) a <- 0
 		l2m <- l2m + a	   
@@ -431,10 +439,10 @@ chi.s <- function (sav, gmv, group = NULL) {
 }
 
 #	Fisher Test
-Fisher.s <-  function (sav, gmv, group = NULL, alternative = "greater") {
-
 #	apapted from isotab.R (package 'isopam')
 #	which borrowed by itself from fisher.test
+
+Fisher.s <-  function (sav, gmv, group = NULL, alternative = "greater") {
 
 	alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
 
@@ -547,13 +555,12 @@ cr.s <- function (sav, gmv, group = NULL) {
 #	total cover ratio as defined in Willner et al. 2009
 tcr.ind.s <- function (sav, gmv, group = NULL) {
 	#	avoid ratios greater than 100
-#	cnst[cnst > 0 & cnst < 1] <- 1
-		r <- vector("numeric", nlevels(gmv))
+	#	cnst[cnst > 0 & cnst < 1] <- 1
 		#	avoid high values for species with low cover
-		if (!max(sav) < 1) {		
-			for (i in 1:nlevels(gmv)) {
-				r[i] <- mean(sav[gmv == levels(gmv)[i]]) / max(sav)
-			}
+		if (!max(sav) < 1) {
+			r <- vapply(1:nlevels(gmv),
+				FUN = function (x) mean(sav[gmv == levels(gmv)[x]]) / max(sav),
+				FUN.VALUE = numeric(1))		
 		}
 	if (!is.null(group)) r <- r[group]		
 	return(r)
@@ -612,70 +619,94 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 if (sum(is.na(cluster)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
 if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
   
-cluster <- as.factor(cluster)
+#	create result object for fidelity measure
+nsps <- dim(X)[2]	# dim(obj)[2] 
+nsts <- dim(X)[1]	# dim(obj)[1] 
 
-if (is.matrix(X) | is.data.frame(X)) {
-	nsps <- dim(X)[2]
-	nsites <- dim(X)[1]
-} else {
-	nsps <- 1
-	nsites <- length(X)
+ngps <- nlevels(cluster)
+if (!is.null(group)) {
+	ngps <- 1
 }
 
-ngroups <- nlevels(cluster)
-if (!is.null(group)) ngroups <- 1
-dm <- matrix(0,nsps,ngroups)  
-  
-if (is.matrix(X) | is.data.frame(X)) {
-	dm <- data.frame(dm)
-	if (!is.null(names(X))) row.names(dm) <- names(X)
-	if (is.null(group)) {
-		names(dm) <- levels(cluster)
-	} else {
-		names(dm) <- group
-	}
-}
-	
-#	compute test diagnostic values
-X <- as.matrix(X)
+cpu.time.dm <- system.time({	
 
 if (verbose) {
-	pb <- txtProgressBar(min = 0, max = nsps,
-	char = '.', width = 45, style = 3)
+	require(pbapply)
+	pboptions(char = ".")
+	dm <- t(pbapply(X, 2,
+		function (x, ...) fidelity.method(x, cluster, method, group, ...))
+		)
+} else {
+	dm <- t(apply(X, 2,
+		function (x, ...) fidelity.method(x, cluster, method, group, ...))
+		)	
 }
 
-cpu.time <- system.time({	
-for (i in 1:nsps) {
-	#	i = 1
-	if (verbose) {
-		setTxtProgressBar(pb, i)
-	}
-	dm[i,] <- fidelity.method(X[,i], cluster, method, group, ...)
+if (is.null(group)) {
+	colnames(dm) <- levels(cluster)
+} else {
+	dm <- t(dm)
+	colnames(dm) <- group
 }
-rownames(dm) <- names(obj) 	# Latex method need rownames for indexing
+
+#	warning! shoud not happen
+
+dm[is.na(dm)] <- 0
+
+# Latex method needs rownames for indexing
+#	all.equal(rownames(dm), names(obj)) 	
 
 #	IndVal.g returns the square root of indval (package(labdsv))!
 if (method == "IndVal.g") {
 	dm <- dm ^ 2
 }
+
 })
-if (verbose) {
-	close(pb)
-	cat("\n  computed diagnostic values in", cpu.time[3], "sec")
-}	
 
 #	compute Fisher test
-ft <- dm
-if (verbose)
-	cat("\n  calculate Fisher test ...")
 
-X <- as.binary(obj)
-	
-for (i in 1:nsps) {
+#	get binary matrix if fidelity measure is based on abundances
+if (r.ind) {
+	X <- as.binary(obj)
+}	
+
+#	debug
+#	fast = T; verbose = T
+cpu.time.ft <- system.time({
 #	warning! changed from two.sided to greater
-	ft[i,] <- fidelity.method(X[,i], cluster, "Fisher", alternative = "greater")
+if (verbose) {
+	require(pbapply)
+	pboptions(char = ".")
+	ft <- t(pbapply(X, 2,
+		function (x, ...) fidelity.method(x, cluster, "Fisher", group, alternative = "greater"))
+		)
+} else {
+	if (fast) {
+		require(multicore)
+		ft <- mclapply(as.data.frame(X),
+			function (x, ...) fidelity.method(x, cluster, "Fisher", group, alternative = "greater"))
+		ft <- matrix(unlist(ft), ncol = nlevels(cluster), nrow = length(ft),
+			dimnames = list(names(ft), levels(cluster)), byrow = TRUE)
+	} else {
+	ft <- t(apply(X, 2,
+		function (x, ...) fidelity.method(x, cluster, "Fisher", , group, alternative = "greater"))
+		)		
+	}
 }
-rownames(ft) <- names(obj) # Latex method need rownames for indexing
+
+if (is.null(group)) {
+	colnames(ft) <- levels(cluster)
+} else {
+	ft <- t(ft)
+	colnames(ft) <- group
+}
+
+})
+
+if (verbose) {
+	cat("\n computed fidelity measure", method, "in", cpu.time.dm[3], "sec")
+	cat("\n computed Fisher test in", cpu.time.ft[3], "sec")
+}
 
 #	perform bootstrap of diagnostic values
 if (nboot > 0) {
@@ -684,13 +715,13 @@ if (nboot > 0) {
 		pb <- txtProgressBar(min = 0, max = nboot,
 		char = '.', width = 45, style = 3)
 	}		
-	dmb <- array(0, dim = c(nboot, nsps, ngroups))
-	dmlower <- matrix(0, nsps, ngroups)
-	dmupper <- matrix(0, nsps, ngroups)
+	dmb <- array(0, dim = c(nboot, nsps, ngps))
+	dmlower <- matrix(0, nsps, ngps)
+	dmupper <- matrix(0, nsps, ngps)
 	
 	for (b in 1:nboot) {
 		if (verbose) setTxtProgressBar(pb, b)
-		bi <- sample(nsites, replace = TRUE)
+		bi <- sample(nsts, replace = TRUE)
 		clusterb <- cluster[bi]
 		for (i in 1:nsps) {
 			savb <- X[bi, i]
@@ -699,7 +730,7 @@ if (nboot > 0) {
 	}
 
 	for (i in 1:nsps) {	
-		for (k in 1:ngroups) {	
+		for (k in 1:ngps) {	
 			   sdmb <- sort(dmb[,i,k])
 			   dmlower[i, k] <- sdmb[(alpha / 2.0) * nboot]
 			   dmupper[i, k] <- sdmb[(1 - (alpha / 2.0)) * nboot]
