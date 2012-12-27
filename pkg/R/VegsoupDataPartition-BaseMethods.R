@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, decostand.method = "wisconsin", MARGIN, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
+VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
 #	obj = dta; binary = TRUE; k = 3;
@@ -9,13 +9,14 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 #	nitr = 99; polish = TRUE
 #	method = "external"
 #	clustering = "syntaxon"
-
+	
+	
+	#METHODS <- c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external")
+	#method <- match.arg(method, METHODS, several.ok = TRUE)
+			
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
 	}
-#	if (missing(k)) {
-#		dist = "bray"
-#	}
 	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {
 		k = 1
 		warning(" argument k missing, set to ", k, call. = FALSE)
@@ -25,15 +26,11 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		#	k = as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
 	}
 	if (missing(binary)) {
-		if (verbose) cat("... Set to binary")
-		binary = TRUE
+		if (verbose) {
+			cat("... Set to binary")
+			binary = TRUE
+		}	
 	}	
-#	if (missing(decostand.method)) {
-#		decostand.method = NULL
-#	}
-	
-	decostand.method <- obj@decostand.method
-	
 	if (missing(k) && missing(clustering)) {
 		stop("Need a value of k or optional clustering vetcor")
 	}	
@@ -53,10 +50,11 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		if (length(clustering) == 1) {
 			sel <- pmatch(clustering, names(Sites(obj)))
 			if (!is.na(sel)) {			
-				clustering = as.vector(Sites(obj)[, sel])
-				
+				clustering = as.vector(Sites(obj)[, sel]) 			
 			} else {
-				stop("if length of clustering is 1 the argument has to match a column name of Sites(obj)")
+				stop("if length of clustering is 1",
+				" the argument has to match",
+				" a column name of Sites(obj)")
 			}				
 		}
 		if (length(clustering) == nrow(obj)) {
@@ -66,51 +64,25 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 					ifelse(is.integer(k), k, as.integer(k)))
 			}	
 		} else {
-			stop("... length of clustering vector and nrow(obj) have to match",
+			stop("... length of clustering vector",
+				" and nrow(obj) have to match",
 				dim(obj), length(clustering))
 		}
 	}		
+	#	retrieve species matrix
 	if (binary) {
 		X <- as.binary(obj)
 	} else {
 		X <- as.numeric(obj)
-	}
-	if (!is.null(decostand.method)) {
-#		if (binary) {
-#		sanity check here? is method appropiate for binary mode?
-#		}	
-		if (decostand.method == "wisconsin" | decostand.method == "domin2.6") {
-			if (decostand.method == "wisconsin") {
-			    X <- decostand(X, "max", 2)
-    			X <- decostand(X, "tot", 1)
-    		}	
-    		if (decostand.method == "domin2.6" & !binary) {
-				X <- X^2.6 / 4
-			}
-    		if (decostand.method == "domin2.6" & binary) {
-				warning(" Domin 2.6 transformation is only allowed for non binary data",
-					"\nyou forced me to use binary=", binary, call. = FALSE)
-			}
-    	} else {
-    		if (missing(MARGIN)) {
-    			X <- decostand(X, decostand.method)
-    		} else {
-    			X <- decostand(X, decostand.method, MARGIN)
-    		}
-    	}
-	}
-
-	
+	}	
 	#	print settings before run
 	if (verbose) {
-		cat("\n... run with settings",
-			"\n    use binary data:", binary,
-			"\n    distance:", dist,
-			"\n    decostand method:",
-				ifelse(is.null(decostand.method), "not active", decostand.method),
-			"\n    partitioning method:", part.meth, "\n", ...)	
+		cat("\n run with settings",
+			"\n use binary data:", binary,
+			"\n disimilarity measure:", dist,
+			"\n decostand method:", decostand(obj),
+			"\n partitioning method:", part.meth, "\n", ...)	
 	}
-
 if (part.meth != "external") {	
 	dis <- vegdist(X, dist)
 }
