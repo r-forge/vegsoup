@@ -101,4 +101,6 @@ exportClasses(
      "VegsoupDataPartition",
      "VegsoupDataPartitionFidelity",
      "VegsoupDataOptimstride"
+#    "Decostand"
+#    "AbundanceScale"	
 )

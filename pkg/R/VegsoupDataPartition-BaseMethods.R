@@ -28,9 +28,12 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		if (verbose) cat("... Set to binary")
 		binary = TRUE
 	}	
-	if (missing(decostand.method)) {
-		decostand.method = NULL
-	}
+#	if (missing(decostand.method)) {
+#		decostand.method = NULL
+#	}
+	
+	decostand.method <- obj@decostand.method
+	
 	if (missing(k) && missing(clustering)) {
 		stop("Need a value of k or optional clustering vetcor")
 	}	
@@ -73,6 +76,9 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		X <- as.numeric(obj)
 	}
 	if (!is.null(decostand.method)) {
+#		if (binary) {
+#		sanity check here? is method appropiate for binary mode?
+#		}	
 		if (decostand.method == "wisconsin" | decostand.method == "domin2.6") {
 			if (decostand.method == "wisconsin") {
 			    X <- decostand(X, "max", 2)
@@ -525,11 +531,6 @@ setMethod("summary",
 )
 
 #	contingency table
-#	to do: documentation
-setGeneric("Contingency",
-	function (obj)
-		standardGeneric("Contingency")
-)
 setMethod("Contingency",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {

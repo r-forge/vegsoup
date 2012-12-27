@@ -2,10 +2,10 @@
 #	mode = 2 binary
 #	mode = 1 charcter, or numeric
 .cast <- function (obj, mode, ...) {
-	#	obj = dta; mode = 2
+	#	obj = dta; mode = 1
 			
 #	cpu.time <- system.time({
-
+    		
 	#	slots
 	plot <- slot(obj, "species.long")$plot
 	abbr <- slot(obj, "species.long")$abbr
@@ -33,8 +33,12 @@
 			
 	#	cover transformation
 	if (mode == 1 & scale$scale != "frequency") {
-		cov <- factor(cov, levels = scale$codes, labels = scale$lims)
-		if (any(is.na(cov))) stop("scale codes do not perfectly match data" )
+		cov <- as.numeric(as.character(
+			factor(cov, levels = scale$codes, labels = scale$lims)
+			))
+		if (any(is.na(cov))) {
+			stop("scale codes do not match data" )
+		}	
 	}
 #	})
 #	cat("\n time to init objects", cpu.time[3], "sec")
@@ -46,7 +50,6 @@
 			FUN = function (x) {
 				r <- numeric(length(species))
 				r[match(species.layer[plot == x], species)] <- cov[plot == x]
-				#	was r[species %in% species.layer[plot == x]] <- cov[plot == x]
 				r
 			}))
 		dimnames(m) <- list(plots, species)		
@@ -64,7 +67,6 @@
 				#	there are several function that look for 0!
 				r[] <- "0"
 				r[match(species.layer[plot == x], species)] <- cov[plot == x]
-				#	was	r[species %in% species.layer[plot == x]] <- cov[plot == x]
 				r
 			}))
 		dimnames(m) <- list(plots, species)		
@@ -85,20 +87,26 @@
 		})		
 	}
 	#	cat("\n time to cast matrix", cpu.time[3], "sec")		
-
+	
 	return(invisible(m))
 }
 
 #	generating function
 #	to do: documentation, high priority!
 
-VegsoupData <- function (obj, verbose = FALSE) {
+VegsoupData <- function (obj, decostand, verbose = FALSE) {
 	require(stats)
 	#	obj <- qry; verbose = TRUE	
 	if (!inherits(obj, "Vegsoup")) {
 		stop("Need object of class Vegsoup")
 	}
-	
+
+	if (missing(decostand)) {
+		decostand = new("decostand", method = NULL)
+	} else {
+		decostand = new("decostand", method = decostand)
+	}
+		
 	scale <- AbundanceScale(obj)
 	lay <- Layers(obj)
 	txa <- Taxonomy(obj)
@@ -107,7 +115,7 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	#	 cats species matrix for Braun-Blanquet scales	
 	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
 		if (!is.character(species.long$cov)) {
-			stop("Abundance scale should be of mode charcter")
+			stop("Abundance scale should be of mode character")
 		}
 		if (length(lay) == 1) {
 			if (verbose) cat("\ndata is structered in only one layer")
@@ -115,7 +123,8 @@ VegsoupData <- function (obj, verbose = FALSE) {
 			if (verbose) cat("\ndata is structered in layers: ", lay)
 		}
 		
-		species <- as.data.frame(.cast(obj, mode = 2), stringsAsFactors = FALSE)
+		species <- as.data.frame(.cast(obj, mode = 2),
+			stringsAsFactors = FALSE)
 			
 	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
 
@@ -192,9 +201,10 @@ VegsoupData <- function (obj, verbose = FALSE) {
 	
 	#	develop class VegsoupData from class Vegsoup
 	res <- new("VegsoupData", obj)
-	#	assign class slot
+
+	#	assign class slots
 	res@species = species
-#	res@sites = sites			
+	res@decostand = decostand
 
 	return(res)
 }
@@ -220,8 +230,22 @@ setMethod("as.character",
 setMethod("as.numeric",
     signature(x = "VegsoupData"),
     function (x) {
-    	return(invisible(.cast(x, mode = 1)))		    
-    }
+    	m <- .cast(x, mode = 1)
+		stand <- slot(slot(x, "decostand"), "method")
+
+		#	standardization
+		if (!is.null(stand)) {
+			if (length(m) < 2) {
+				m <- vegan::decostand(m, stand)
+			} else {
+				for (i in stand) {
+					m <- vegan::decostand(m, i)	
+				}
+				attributes(m)$decostand <- stand 
+			}
+		}
+    	return(invisible(m))
+    	}
 )
 	
 setMethod("as.binary",
@@ -233,6 +257,7 @@ setMethod("as.binary",
 
 #	'names' is a primitive function
 #	rename to colnames for consitency
+#	names(obj) is used in $ method!
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) {
@@ -246,10 +271,6 @@ setMethod("names",
 					species.layer[layer == x]
 				}
 			))))
-	#	was
-	#	unique(paste(
-	#		slot(x, "species.long")$abbr,
-	#		slot(x, "species.long")$layer, sep = "@"))
 	}
 )
 
@@ -290,7 +311,7 @@ setMethod("nrow",
 	}
 )
 #if (!isGeneric("dim")) {
-setGeneric("ncol", function(x)
+setGeneric("ncol", function (x)
 	standardGeneric("ncol"))
 #}
 #	to do: documentation
@@ -324,6 +345,41 @@ setMethod("colSums",
     }
 )
 
+
+setGeneric("decostand", function (obj)
+	standardGeneric("decostand"))
+
+setMethod("decostand",
+		signature(obj = "VegsoupData"),
+	    	function (obj) {
+				slot(slot(obj, "decostand"), "method")
+			}
+)
+
+setGeneric("decostand<-",
+	function (obj, value, ...)
+		standardGeneric("decostand<-")
+)
+setReplaceMethod("decostand",
+	signature(obj = "VegsoupData", value = "character"),
+	function (obj, value) {
+		#	taken from vegan
+	    METHODS <- c("total", "max", "frequency", "normalize", "range", 
+            "standardize", "pa", "chi.square", "hellinger", "log")
+        value <- match.arg(value, METHODS, several.ok = TRUE)		
+		value <- new("decostand", method = value)
+		obj@decostand <- value		
+		return(obj)		
+	}
+)
+
+setReplaceMethod("decostand",
+	signature(obj = "VegsoupData", value = "NULL"),
+ 	function (obj, value) {
+		obj@decostand <- new("decostand", method = NULL)
+		return(obj)
+	}
+)	   
 #	inherited methods based on functions in 'utils'
 #if (!isGeneric("head")) {
 setGeneric("head", function(x)
@@ -381,7 +437,6 @@ setAs("VegsoupData", "list",
 	def = function (from) {
 		list(
 		species = as.character(from)@species,
-#	was	species = from@species,
 		sites = from@sites)
 	}
 )
@@ -415,10 +470,21 @@ setReplaceMethod("Sites",
 #	indexing method
 setMethod("$", "VegsoupData", 
 	function(x, name) {
-		if (!("sites" %in% slotNames(x)))
+		if (!("sites" %in% slotNames(x))) {
 			stop("no $ method for object without slot sites")
-		x@sites[[name]]
+		}
+		return(x@sites[[name]])
 		#do.call("$", list = (Sites(x), name))
+	}
+)
+
+setReplaceMethod("$",
+	signature(x = "VegsoupData"),
+	function (x, name, value) {
+		if (!("sites" %in% slotNames(x)))
+			stop("no $<- method for object without attributes")		
+ 			x@sites[[name]] = value 	
+		return(x)		
 	}
 )
 
@@ -827,9 +893,10 @@ setMethod("summary",
 		"\n species (discarding layer duplicates): ", Richness(object),
 		"\n sites (sample plots): ", dim(object)[1],
 		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
-		"\n layers: ", length(Layers(object)),
+		"\n layers: ", length(Layers(object)), 
 		" (", paste(Layers(object), collapse = ", "), ")",
 		"\n abundance scale: ", AbundanceScale(object)$scale,
+		"\n decostand method: ", decostand(object),	   		
 		ifelse(length(object@taxonomy) > 0,
 			"\n taxomomy lookup table: supplied ",
 			"\n taxomomy lookup table: has non matching taxa!"),
@@ -1084,6 +1151,17 @@ setMethod("Indspc",
     }
 )
 
+#	to do: documentation
+setGeneric("Contingency",
+	function (obj)
+		standardGeneric("Contingency")
+)
+
+setMethod("Contingency",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj) {	
+	}
+)	
 #	create several clusterings along a vector
 #	suitable for plotting
 #	return a list

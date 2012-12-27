@@ -1,12 +1,20 @@
+#	private class not exposed to the user
+#	used manly to allow slot 'decostand' to contain NULL 
+setClassUnion("decostand.method", c("character", "NULL"))
+
+setClass("decostand", representation(method = "decostand.method"))
+
+#	add slot decostand
+#	and method for slot decostand
+#	decostand(obj)
+
+
 #	class definition
 setClass("VegsoupData",
 	representation(
-	species = "data.frame"),	# matrix, rename to species
-#	had	sites = "data.frame"),	# rename to sites
+	species = "data.frame",
+	decostand = "decostand"),
 	contains = "Vegsoup")#,
 #	validity = function (object)#
 #	{
-#	any(is.na(rownames(object@sites.raw) %in%
-#		rownames(object@species.raw)))
-#	cat("Species and plot order incorrect")		
 #	})

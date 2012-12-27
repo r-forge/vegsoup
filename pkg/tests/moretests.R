@@ -1,13 +1,20 @@
 library(vegsoup)
-data(testdata)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
+data(testdata)        
+qry <- Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet"))
+dta <- VegsoupData(qry)
 
 summary(dta)
 
 as.binary(dta)
 as.numeric(dta)
 as.character(dta)
+
+decostand(dta)  <- c("hellinger")
+as.numeric(dta)
+decostand(dta)  <- c("hellinger", "standardize")
+as.numeric(dta)
+
 
 dta[1:3,]
 dim(dta[1:3,2:3])

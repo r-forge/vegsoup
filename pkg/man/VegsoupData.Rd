@@ -8,19 +8,22 @@ Create an Object of Class VegsoupData
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-VegsoupData(obj, verbose = FALSE)
+VegsoupData(obj, decostand = NULL, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+	An object of class \code{Vegsoup}.
+}
+  \item{decostand}{
+	A character vector giving a standardisation method as in \code{\link[vegan:decostand]{decostand}}, can be missing.
 }
   \item{verbose}{
-%%     ~~Describe \code{verbose} here~~
+	diagnostic output.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Creates an object of class \code{VegsoupData}. 
 }
 \value{
 %%  ~Describe the value returned
@@ -42,7 +45,7 @@ VegsoupData(obj, verbose = FALSE)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{as.numeric}}, \code{\link{as.binary}}, \code{\link{as.character}} 
 }
 \examples{
 

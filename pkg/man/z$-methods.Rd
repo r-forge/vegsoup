@@ -1,17 +1,40 @@
-\name{$-methods}
-\docType{methods}
+\name{Extract}
+%% was $-methods
+%%\docType{methods}
+\alias{Extract}
 \alias{$-methods}
 \alias{$,VegsoupData-method}
-\title{Methods for Function $}
+\title{Extract or Replace Parts of the Sites Data Slot of Objects inheriting VegsoupData}
 \description{
- ~~ Methods for function \code{$}  ~~
+Extract or replace parts of the sites data.
 }
-\section{Methods}{
-\describe{
 
-\item{\code{signature(x = "VegsoupData")}}{
-%%  ~~describe this method here~~
+\usage{
+x$name
+x$i <– value
 }
-}}
+\arguments{
+
+\item{i}{
+indices specifying elements to extract or replace.
+}                                                 
+\item{name}{
+A character string or a name.
+}
+}
+\details{
+The "$" operator can be used to access columns of the sites slot which is of class \code{data.frame} and has also functions to get or set the names of the object. Indexing of the species matrix can be done using indices specifying elements to extract. See examples.
+}
+\examples{
+	qry <- Vegsoup(species, sites, taxonomy,
+		scale = list(scale = "Braun-Blanquet"))
+	dta <- VegsoupData(qry)
+	dta$rock
+	
+	(dta$rock <- sqrt(dta$rock))
+#	do.call("$", list(dta, "variable"))   
+} 
+
+%%}}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+
