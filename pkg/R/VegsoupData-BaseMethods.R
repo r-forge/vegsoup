@@ -232,14 +232,20 @@ setMethod("as.numeric",
     function (x) {
     	m <- .cast(x, mode = 1)
 		stand <- slot(slot(x, "decostand"), "method")
-
+    	
 		#	standardization
 		if (!is.null(stand)) {
 			if (length(m) < 2) {
 				m <- vegan::decostand(m, stand)
 			} else {
-				for (i in stand) {
-					m <- vegan::decostand(m, i)	
+				if (stand == "wisconsin") {
+					stand <- c("max", "total")
+					m <- vegan::decostand(m, "max", 2)
+					m <- vegan::decostand(m, "total", 1)
+				} else {
+					for (i in stand) {
+						m <- vegan::decostand(m, i)	
+					}
 				}
 				attributes(m)$decostand <- stand 
 			}
@@ -360,12 +366,14 @@ setGeneric("decostand<-",
 	function (obj, value, ...)
 		standardGeneric("decostand<-")
 )
+
 setReplaceMethod("decostand",
 	signature(obj = "VegsoupData", value = "character"),
 	function (obj, value) {
 		#	taken from vegan
 	    METHODS <- c("total", "max", "frequency", "normalize", "range", 
-            "standardize", "pa", "chi.square", "hellinger", "log")
+            "standardize", "pa", "chi.square", "hellinger", "log", "wisconsin")
+            
         value <- match.arg(value, METHODS, several.ok = TRUE)		
 		value <- new("decostand", method = value)
 		obj@decostand <- value		

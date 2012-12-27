@@ -25,7 +25,9 @@ decostand(obj) <- value
 }
 }
 \details{
-Standardization is often nessecary before the species matrix is subject to analysis by a multivariate method. This can easyly be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are applied in sequence to the data (order matters). Currently only the \code{'method'} argument of \code{vegan::decostand} is implemented.
+Standardization is often nessecary before the species matrix is subject to analysis by a multivariate method. This can easyly be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are applied in sequence to the data (order matters). In fact, method \code{'wisconsion'} invokes a dauble standardization (\code{'max'} followed by \code{'total'}).
+
+Currently only the \code{'method'} argument of \code{vegan::decostand} is implemented. Whereas argument \code{MARGIN} is not.
 }
 \value{
 \code{decostand(obj)} returns a character vector depending on the number of methods.
