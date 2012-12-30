@@ -31,7 +31,7 @@ exportMethods(
     "Accuracy",
     "Arrange",
     "Association",
-    "as.binary",
+    "as.logical",
     "as.character",
     "as.numeric",
     "coerce",

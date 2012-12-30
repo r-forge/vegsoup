@@ -168,6 +168,7 @@ for(i in 1:getK(object)) {
 	
 	i.tex <- t(as.character(i.part))
 	i.tex <- gsub("0", ".", i.tex, fixed = TRUE)
+
 	i.tex <- cbind(DecomposeNames(i.part)[c("taxon", "layer")], i.tex)
 	#	tex valid filenames
 	filename <- paste(path, "species", i, ".tex", sep = "")

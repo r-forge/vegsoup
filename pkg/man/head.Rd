@@ -22,7 +22,7 @@ An object inheriting from class \code{VegsoupData}.
 Display first row of species matrix (the default) or sites data frame.
 }
   \item{mode}{
-If choice is \dQuote{species} of which mode should the returned matrix be reported. If missing the presence/absence mode of the species matrix is printed. See \code{\link{as.binary}}, \code{\link{as.numeric}}, and \code{\link{as.character}}, respectively.
+If choice is \dQuote{species} of which mode should the returned matrix be reported. If missing the presence/absence mode of the species matrix is printed. See \code{\link{as.logical}}, \code{\link{as.numeric}}, and \code{\link{as.character}}, respectively.
 }
   \item{\dots}{
 not used

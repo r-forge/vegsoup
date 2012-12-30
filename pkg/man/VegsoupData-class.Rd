@@ -6,7 +6,7 @@
 \alias{$,VegsoupData-method}
 \alias{Abbreviation,VegsoupData-method}
 \alias{Arrange,VegsoupData-method}
-\alias{as.binary,VegsoupData-method}
+\alias{as.logical,VegsoupData-method}
 \alias{as.character,VegsoupData-method}
 \alias{as.numeric,VegsoupData-method}
 \alias{coerce,VegsoupData,list-method}
@@ -64,7 +64,7 @@ Class \code{"\linkS4class{Vegsoup}"}, directly.
     \item{$}{\code{signature(x = "VegsoupData")}: ... }
     \item{Abbreviation}{\code{signature(obj = "VegsoupData")}: ... }
     \item{Arrange}{\code{signature(object = "VegsoupData")}: ... }
-    \item{as.binary}{\code{signature(obj = "VegsoupData")}: ... }
+    \item{as.logical}{\code{signature(obj = "VegsoupData")}: ... }
     \item{as.character}{\code{signature(x = "VegsoupData")}: ... }
     \item{as.numeric}{\code{signature(x = "VegsoupData")}: ... }
     \item{coerce}{\code{signature(from = "VegsoupData", to = "list")}: ... }

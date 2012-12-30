@@ -55,7 +55,7 @@ setMethod("EllipsoidHull",
 if (!inherits(x, "VegsoupDataPartition"))
 	stop("supply an object of class VegsoupDataPartition")
 #	x = prt
-k1 <- as.binary(x)
+k1 <- as.logical(x)
 x <- x@spread	
 k <- sort(unique(sapply(x, max)))
 
@@ -110,7 +110,7 @@ return(invisible(res))
 if (!inherits(x, "VegsoupDataPartition"))
 	stop("supply an object of class VegsoupDataPartition")
 
-k1 <- as.binary(x)
+k1 <- as.logical(x)
 x <- Spread(x)	
 k <- sort(unique(sapply(x, max)))
 

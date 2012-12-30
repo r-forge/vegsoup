@@ -63,7 +63,7 @@
 			FUN.VALUE = character(length(species)),
 			FUN = function (x) {
 				r <- character(length(species))
-				#	change to ""
+				#	change to "."
 				#	there are several function that look for 0!
 				r[] <- "0"
 				r[match(species.layer[plot == x], species)] <- cov[plot == x]
@@ -210,16 +210,10 @@ VegsoupData <- function (obj, decostand, verbose = FALSE) {
 }
 
 ### inherited methods based on 'generic functions'
-#	as.character and as.numeric are already generic functions
-#if(!isGeneric("as.binary"))
-setGeneric("as.binary",
-	function (x, ...)
-		standardGeneric("as.binary")
-)
-#}
+#	as.character, as.numeric and as.logical are already generic functions
 
 #	print mode uses invisible()?
-#	use e.g. head(as.numeric(obj))?
+#	use e.g. head(as.numeric(obj))
 setMethod("as.character",
     signature(x = "VegsoupData"),
     function (x) {
@@ -235,31 +229,57 @@ setMethod("as.numeric",
     	
 		#	standardization
 		if (!is.null(stand)) {
-			if (length(m) < 2) {
-				m <- vegan::decostand(m, stand)
-			} else {
+			if (length(stand) < 2) {
 				if (stand == "wisconsin") {
 					stand <- c("max", "total")
 					m <- vegan::decostand(m, "max", 2)
 					m <- vegan::decostand(m, "total", 1)
 				} else {
-					for (i in stand) {
+					m <- vegan::decostand(m, stand)
+				}
+			} else {
+				for (i in stand) {
 						m <- vegan::decostand(m, i)	
 					}
-				}
-				attributes(m)$decostand <- stand 
 			}
+			attributes(m)$decostand <- stand 
 		}
-    	return(invisible(m))
-    	}
+   	return(invisible(m))
+	}
+
 )
 	
-setMethod("as.binary",
+setMethod("as.logical",
     signature(x = "VegsoupData"),
     function (x) {
     	return(invisible(.cast(x, mode = 3)))	    
     }
 )	
+
+#if (!isGeneric("as.matrix")) {
+#	setGeneric("as.logical")
+#}
+
+setMethod("as.matrix",
+    signature(x = "VegsoupData"),
+    function (x, mode) {
+    	if (missing(mode)) {
+    		mode <- "numeric"	
+    	}
+    	MODE <- c("character", "numeric", "logical")
+    	mode <- match.arg(mode, MODE)
+
+    	if (mode == "character") {
+    		return(as.character(x))
+    	}
+    	if (mode == "numeric") {
+    		return(as.numeric(x))
+    	}
+    	if (mode == "logical") {
+    		return(as.logical(x))
+    	}
+    }    	    
+)
 
 #	'names' is a primitive function
 #	rename to colnames for consitency
@@ -280,8 +300,6 @@ setMethod("names",
 	}
 )
 
-
-###	inherited
 #	methods based on functions in 'base'
 #if (!isGeneric("rownames")) {
 setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
@@ -336,7 +354,7 @@ setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
 setMethod("rowSums",
 	signature(x = "VegsoupData"),
 	function (x, na.rm = FALSE, dims = 1) {
-    	rowSums(as.binary(x))
+    	rowSums(as.logical(x))
     }
 )
 #if (!isGeneric("colSums")) {
@@ -347,10 +365,9 @@ setGeneric("colSums", function (x, na.rm = FALSE, dims = 1)
 setMethod("colSums",
 	signature(x = "VegsoupData"),
 	function (x, na.rm = FALSE, dims = 1) {
-    	colSums(as.binary(x))
+    	colSums(as.logical(x))
     }
 )
-
 
 setGeneric("decostand", function (obj)
 	standardGeneric("decostand"))
@@ -388,7 +405,8 @@ setReplaceMethod("decostand",
 		return(obj)
 	}
 )	   
-#	inherited methods based on functions in 'utils'
+
+#	 methods based on functions in 'utils'
 #if (!isGeneric("head")) {
 setGeneric("head", function(x)
 	standardGeneric("head"))
@@ -404,7 +422,7 @@ setMethod("head",
 	    if (missing(n))
 		    n = 6L
     	if (choice == "species")
-			res <- head(as.binary(x), n, ...)
+			res <- head(as.logical(x), n, ...)
     		#	was res <- head(x@species)
     	if (choice == "sites")
     		res <- head(Sites(x), n, ...)
@@ -426,7 +444,7 @@ setMethod("tail",
 	    if (missing(n))
 			n = 6L
 		if (choice == "species")
-			res <- tail(as.binary(x), n, ...)
+			res <- tail(as.logical(x), n, ...)
     		#	res <- tail(x@species, ...)
     	if (choice == "sites")
     		res <- tail(Sites(x), n, ...)
@@ -512,9 +530,9 @@ setMethod("[",
 	    res <- x
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
-	    #	change to as.binary(x)[i, j, ...]
+	    #	change to as.logical(x)[i, j, ...]
 		#	when slot species is dropped
-		tmp <- as.character(x)[i, j, ...]
+		tmp <- as.character(x)[i, j, drop = FALSE]
 		#	validity
 		if (all(unlist(tmp) == 0)) {
 			stop(call. = FALSE, "subset does not contain any species!")
@@ -562,8 +580,10 @@ setMethod("[",
  		#	subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
 		res@layers <- layer 
-		res@sp.points <- res@sp.points[match(rownames(tmp), res@sp.points$plot), ]
-		res@sp.polygons <- res@sp.polygons[match(rownames(tmp), res@sp.points$plot), ]
+		res@sp.points <- res@sp.points[match(rownames(tmp),
+			SpatialPolygonsVegsoup(res)$plot), ]
+		res@sp.polygons <- res@sp.polygons[match(rownames(tmp),
+			SpatialPolygonsVegsoup(res)$plot), ]
 
 	    return(res)
     }
@@ -572,21 +592,27 @@ setMethod("[",
 #	rbind like method to fuse objects
 .rbind.VegsoupData <- function (..., deparse.level = 1) {
 	allargs <- list(...)
-	#	allargs <- list(dta1, dta2)
-	#	test scale
-	test <- length(unique((sapply(allargs, function (x) AbundanceScale(x)$scale))))
+	#	allargs <- list(s1, s2, s3)
+	#	test if all objects have the same abundance scale
+	test <- length(unique((sapply(allargs,
+			function (x) AbundanceScale(x)$scale))))
 	if (test != 1) {
 		stop("\n scale is not the same for all objects")
 	}  else {
 		scale <- sapply(allargs[1], AbundanceScale, simplify = FALSE)[[1]]
 	}
-	#	species	
-	rows <- vapply(allargs,
+	#	test for overlapping plot ids
+	test <- c(sapply(allargs, rownames))
+	test <- length(test) == length(unique(test))
+	if (!test) {
+		stop("\n there seem to be overlapping plot names")
+	}
+	#	species 'x'	
+	j <- vapply(allargs,
 		FUN = function (x) nrow(slot(x, "species.long")),
 		FUN.VALUE = integer(1))
-	
-    x <- as.data.frame(matrix("", nrow = sum(rows), ncol = 4),
-    	rownames = 1:sum(rows), stringsAsFactors = FALSE)
+    x <- as.data.frame(matrix("", nrow = sum(j), ncol = 4),
+    	rownames = 1:sum(j), stringsAsFactors = FALSE)
     names(x) <- c("plot", "abbr", "layer", "cov")
     x$plot <- unlist(sapply(allargs,
     	FUN = function (x) slot(x, "species.long")$plot))
@@ -596,12 +622,9 @@ setMethod("[",
     	FUN = function (x) slot(x, "species.long")$layer))        
     x$cov <- unlist(sapply(allargs,
     	FUN = function (x) slot(x, "species.long")$cov))
-	
-	#x <- x[order(x$plot, x$abbr, x$layer), ]
-	#	sites
+	#	sites 'y'
 	y <- do.call("rbind", sapply(allargs, SitesLong, simplify = FALSE))
-  	
-	#	copied from Vegsoup
+	#	copied from Vegsoup()
 	y <- reshape(y[, 1:3],
 		direction = "wide",
 		timevar = "variable",
@@ -627,7 +650,7 @@ setMethod("[",
 	y <- y[, -grep("plot", names(y))]
 	#	set NAs
 	y[is.na(y)] <- 0
-	#	order to x
+	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
 	sel <- grep("longitude", names(y))
@@ -636,15 +659,23 @@ setMethod("[",
 	z <- do.call("rbind", sapply(allargs, Taxonomy, simplify = FALSE))
 	z <- unique(z)
 	z <- z[order(z$abbr), ]
-	#	spatial
+	#	spatial points
 	pts <- do.call("rbind",
 		sapply(allargs, SpatialPointsVegsoup, simplify = FALSE))
-#	cbind(unique(x$plot), pts$plot)
-#	check validity of polygon IDs		
-	pgs <- sapply(allargs, function (x) as(x@sp.polygons, "SpatialPolygons"), simplify = FALSE)
-	pgs <- do.call("rbind", pgs)
+	#	order pts to x
+	pts <- pts[match(unique(x$plot), pts$plot), ] 
+	#	stopifnot(all.equal(unique(x$plot), pts$plot))
+	#	spatial polygons
+	pgs <- do.call("rbind",
+		sapply(allargs, SpatialPolygonsVegsoup, simplify = FALSE))	
+	#	polygon IDs
+	#ids <- unlist(sapply(allargs, function (x) { 
+	#	sapply(slot(SpatialPolygonsVegsoup(x), "polygons"),
+	#		function (x) slot(x, "ID")) # "Polygons"
+	#}, simplify = FALSE))		
 	pgs <- SpatialPolygonsDataFrame(pgs, data = pts@data, match.ID = FALSE)	
-
+	#	order pgs to x
+	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	res <- new("Vegsoup",
 		species.long = x,
 		sites = y, 
@@ -872,7 +903,7 @@ setMethod("MatrixFill",
 		#y <- sum(dim(obj))
 		#res <- x/y * 100
 		#	zeros <- 
-		res <- sum(as.binary(obj) == 0) / prod(dim(obj))
+		res <- sum(as.logical(obj) == 0) / prod(dim(obj))
 		res <- (1 - res) * 100
 		#	single plot object
 		if (nrow(obj) == 1) {
@@ -1010,11 +1041,11 @@ setMethod("Arrange",
 		method <- match.arg(method)			
 	}
 
-	si.dis <- vegdist(as.binary(object), method = dist)
-	sp.dis <- vegdist(t(as.binary(object)), method = dist)
+	si.dis <- vegdist(as.logical(object), method = dist)
+	sp.dis <- vegdist(t(as.logical(object)), method = dist)
 	
 	switch(method, dca = {
-		use <- try(decorana(as.binary(object)), silent = TRUE, ...)
+		use <- try(decorana(as.logical(object)), silent = TRUE, ...)
 		if (inherits(use, "try-error")) {
 			use  <- NULL
 		}	
@@ -1028,8 +1059,8 @@ setMethod("Arrange",
 				sp.ind <- order(wascores(tmp, object))
 			}
 		} else {
-			si.ind <- 1:dim(as.binary(object))[1]
-			sp.ind <- 1:dim(as.binary(object))[2]
+			si.ind <- 1:dim(as.logical(object))[1]
+			sp.ind <- 1:dim(as.logical(object))[2]
 		}
 		}, hclust = {
 			si.ind <- hclust(si.dis,
@@ -1052,8 +1083,8 @@ setMethod("Arrange",
 			si.ind <- pam(si.dis, diss = TRUE)$order
 			sp.ind <- pam(sp.dis, diss = TRUE)$order	
 		}, packed = {
-			si.ind <- order(apply(as.binary(object), 1, sum), decreasing = TRUE)
-			sp.ind  <- order(apply(as.binary(object), 2, sum), decreasing = TRUE)
+			si.ind <- order(apply(as.logical(object), 1, sum), decreasing = TRUE)
+			sp.ind  <- order(apply(as.logical(object), 2, sum), decreasing = TRUE)
 		}
 	)
 	
@@ -1125,7 +1156,7 @@ setGeneric("Indpower",
 setMethod("Indpower",
     signature(obj = "VegsoupData"),
     function (obj, ...) {
-    	res <- indpower(as.binary(obj), ...)
+    	res <- indpower(as.logical(obj), ...)
     	diag(res)  <- NA
     	if (type == 0)
 			res <- rowMeans(res, na.rm = TRUE)
@@ -1146,15 +1177,15 @@ setMethod("Indspc",
     signature(obj = "VegsoupData"),
     function (obj, method, ...) {
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- vegdist(as.binary(obj), obj@dist)
+    		dis <- vegdist(as.logical(obj), obj@dist)
     	} else {
    			if (missing(method)) {    			
-				dis <- vegdist(as.binary(obj), "bray")
+				dis <- vegdist(as.logical(obj), "bray")
     		} else {
-    			dis <- vegdist(as.binary(obj), ...)
+    			dis <- vegdist(as.logical(obj), ...)
     		}    		
   	 	}
-    	res <- indspc(as.binary(obj), dis = dis, ...)
+    	res <- indspc(as.logical(obj), dis = dis, ...)
 		return(res)    	
     }
 )

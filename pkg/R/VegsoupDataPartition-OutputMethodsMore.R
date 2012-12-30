@@ -22,7 +22,7 @@ sp <- ncol(object) # number of species
 
 ft <- object@fisher.test
 N <- nrow(object) # number of plots
-frq <- colSums(as.binary(object))
+frq <- colSums(as.logical(object))
 siz <- table(Partitioning(object))
 
 if (missing(filename) & mode == 1) {

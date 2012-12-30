@@ -15,8 +15,12 @@ x$i <– value
 }
 \arguments{
 
+\item{x}{
+An object ingeriting from class \code{VegsoupData}.
+}                                                 
+
 \item{i}{
-indices specifying elements to extract or replace.
+Indices specifying elements to extract or replace.
 }                                                 
 \item{name}{
 A character string or a name.

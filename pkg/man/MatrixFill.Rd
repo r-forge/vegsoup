@@ -38,7 +38,7 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 MatrixFill(dta)
 
 #	use object of class VegsoupData in vegan
-nestedbetajac(as.binary(dta))
+nestedbetajac(as.logical(dta))
 }
 \keyword{methods}
 

@@ -24,7 +24,7 @@ Em <- function (N, Np, n, np) {
 obj = prt
 
 N <- nrow(obj)						# number of plots
-n.i <- colSums(as.binary(obj))			# species frequencies
+n.i <- colSums(as.logical(obj))			# species frequencies
 Npi <- table(Partitioning(obj))	# number of plots in partition
 npi <- Contingency(obj)			# number of occurences in partition
 

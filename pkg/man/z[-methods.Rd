@@ -1,25 +1,52 @@
-\name{[-methods}
-\docType{methods}
+\name{Subset} 
+
+\docType{methods} 
+
+\alias{Subset}
 \alias{[-methods}
-\alias{[,VegsoupData,ANY,ANY,missing-method}
-\alias{[,VegsoupDataPartition,ANY,ANY,missing-method}
-\title{Methods for Function [}
+\alias{[,VegsoupData-method}
+\alias{[,VegsoupDataPartition-method}
+
+\title{Subsetting Objects}
+
 \description{
 Method to subset an object by indexing the species matrix.
 }
-%\details{
 
-%}
+\usage{
+\S4method{aggregate}{Raster}(x, fact=2, fun=mean, expand=TRUE, na.rm=TRUE, filename='', ...)
+}
+
+\arguments{
+  \item{x}{VegsoupData* object}    
+}
+
+\details{
+Argument \code{drop} is internaly set to \code{TRUE}. This ensures that no dimensions will be dropped a matrix is returned (see \code{\link{drop}}). 
+}
 \section{Methods}{
 \describe{
-Method to subset the object by indexing the species matrix. 
-\item{\code{signature(x = "VegsoupData", i = "ANY", j = "ANY", drop = "missing")}}{
-
+This method allways subset all slot of the object. The order implied by the indices are retained in the objects internal order.
+}
 }
 
-\item{\code{signature(x = "VegsoupDataPartition", i = "ANY", j = "ANY", drop = "missing")}}{
-The method will raise a waring each time the subset operation data will loose a partion. Values of \code{getK(obj)} will be set to the next lowest number.
+\seealso{ \code{\link{rbind}, \code{\link{VegsoupData}} and \code{\link{as.matrix}}}}
+
+
+\author{Roland Kaiser}
+
+\examples{
+	qry <- Vegsoup(species, sites, taxonomy,
+		scale = list(scale = "Braun-Blanquet"))
+	dta <- VegsoupData(qry)
+	
+	s1 <- dta[1:2, ]
+	s2 <- dta[3:4, ]
+	s3 <- dta[5:6, ]
+
+#	rbind
+	res <- rbind(s3, s1, s2)
+	
 }
-}}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+

@@ -45,7 +45,7 @@ Creates an object of class \code{VegsoupData}.
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{as.numeric}}, \code{\link{as.binary}}, \code{\link{as.character}} 
+\code{\link{as.numeric}}, \code{\link{as.logical}}, \code{\link{as.character}} 
 }
 \examples{
 

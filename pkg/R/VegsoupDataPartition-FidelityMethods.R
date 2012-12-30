@@ -29,7 +29,7 @@ if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
 	if (verbose) {
 		cat("\n presence/absence based index\n")
 	}
-	X <- as.binary(obj)
+	X <- as.logical(obj)
 	r.ind <- FALSE # Fisher can use matrix X
 }
 
@@ -667,7 +667,7 @@ if (method == "IndVal.g") {
 
 #	get binary matrix if fidelity measure is based on abundances
 if (r.ind) {
-	X <- as.binary(obj)
+	X <- as.logical(obj)
 }	
 
 #	debug
@@ -803,7 +803,7 @@ mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
 
 if (binary) {
-	X <- as.matrix(as.binary(obj))
+	X <- as.matrix(as.logical(obj))
 } else {
 	X <- as.matrix(as.numeric(obj))
 }

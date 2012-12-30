@@ -1,7 +1,7 @@
-\name{as.binary-methods}
+\name{as.logical-methods}
 \docType{methods}
-\alias{as.binary-methods}
-\alias{as.binary,VegsoupData-method}
+\alias{as.logical-methods}
+\alias{as.logical,VegsoupData-method}
 \alias{as.character-methods}
 \alias{as.character,VegsoupData-method}
 \alias{as.numeric-methods}
@@ -12,7 +12,8 @@ The function creates a matrix of mode according the methods name.
 }
 \section{Methods}{
 \describe{
-See \code{\link{as.binary}}, \code{\link{as.numeric}}, or \code{\link{as.character}} for more details.
+See \code{\link{as.logical}}, \code{\link{as.numeric}}, \code{\link{as.character}},
+or \code{\link{as.matrix}} for more details.
 }
 }
 \keyword{methods}

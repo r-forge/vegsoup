@@ -285,8 +285,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				}
 
 				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
-						data = data.frame(plot = sp.points$plot))
-				sp.polygons <- spChFIDs(sp.polygons, x = as.character(sp.polygons$plot))						
+						data = data.frame(plot = as.character(ids),
+							stringsAsFactors = FALSE))
+				sp.polygons <- spChFIDs(sp.polygons, x = ids)						
 			} else {		
 				warning("\n ... not a complete coordinates list",
 					"use random pattern instead", call. = FALSE)

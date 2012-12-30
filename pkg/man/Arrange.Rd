@@ -40,7 +40,7 @@ A object of class depending of the input class.
 Roland Kaiser
 }
 \note{
-Currently only presence/absencse data is used (\code{as.binary(obj)}) and default options of all methods apply.
+Currently only presence/absencse data is used (\code{as.logical(obj)}) and default options of all methods apply.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

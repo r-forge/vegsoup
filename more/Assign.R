@@ -20,10 +20,10 @@ dta.n <- dta[dta$abbr == "0", ]
 
 class <- as.factor(dta.c$abbr)
 
-vc <- as.vegclust(as.binary(dta.c),
+vc <- as.vegclust(as.logical(dta.c),
 	cluster = as.numeric(class))
 
-cls <- vegclass(vc, as.binary(dta.n))
+cls <- vegclass(vc, as.logical(dta.n))
 res1 <- cls$memb
 names(res1) <- levels(class)
 
@@ -32,13 +32,13 @@ res1 <- t(sapply(1:nrow(res1), function (x) {
 }))
 
 #	based on distances
-vc <- as.vegclust(vegdist(as.binary(dta.c)),
+vc <- as.vegclust(vegdist(as.logical(dta.c)),
 	cluster = as.numeric(class))
 
 #	a data frame containing the distances between the new sites in rows
 #	and the old (classified) sites in columns
 
-n <- as.data.frame(as.matrix(vegdist(as.binary(dta))))
+n <- as.data.frame(as.matrix(vegdist(as.logical(dta))))
 n <- n[rownames(n) %in% rownames(dta.n), ]
 n <- n[, colnames(n) %in% rownames(dta.c)]
 

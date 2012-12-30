@@ -44,7 +44,7 @@ Use the extract and replace operators \code{\link[=Extract]{"$"}} to midify colu
 }
 
 \seealso{
-\code{\link{as.numeric}} and \code{\link{as.binary}}
+\code{\link{as.numeric}} and \code{\link{as.logical}}
 }
 \examples{
 library(vegsoup)

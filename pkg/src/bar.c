@@ -13,7 +13,7 @@
 
 /*	as.numeric return int */
 /*	as.character char */
-/*	as.binary bool */
+/*	as.logical bool */
 
 /* void SP_PREFIX(vegssoup)(char* plot, char abbr, char layer, char cov) { */
 

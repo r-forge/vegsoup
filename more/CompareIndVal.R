@@ -1,5 +1,5 @@
 #	test to compare nummerical stability of implementation
-is <- strassoc(as.binary(i.prt),
+is <- strassoc(as.logical(i.prt),
 	Partitioning(i.prt),
 	func = "IndVal.g")
 head(is)

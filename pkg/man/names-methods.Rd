@@ -4,7 +4,7 @@
 \alias{names,VegsoupData-method}
 \title{Methods for Function names}
 \description{
-%all.equal(dimnames(as.binary(dta))[[2]], names(dta))
+%all.equal(dimnames(as.logical(dta))[[2]], names(dta))
 }
 \section{Methods}{
 \describe{

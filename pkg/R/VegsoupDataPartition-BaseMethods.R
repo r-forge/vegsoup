@@ -71,7 +71,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	}		
 	#	retrieve species matrix
 	if (binary) {
-		X <- as.binary(obj)
+		X <- as.logical(obj)
 	} else {
 		X <- as.numeric(obj)
 	}	
@@ -106,7 +106,7 @@ switch(part.meth,
 	}, isopam = {
 		if (verbose) cat("\nrun isopam, ignoring k=", k)
 		if (verbose) cat("\nplease supply c.fix to restict to a specific number of partitions\n")
-		#	if (binary) tmp <- as.binary(obj) else tmp <- as.numeric(obj)
+		#	if (binary) tmp <- as.logical(obj) else tmp <- as.numeric(obj)
 		part <- isopam(X, distance = dist,
 			...)
 	}, optpart = {
@@ -248,7 +248,7 @@ setMethod("[",
 	#	capscale has difficulties when using community matrix in the formula
 #	tmp <- 
 	#cat(class(tmp))
-	ord <- capscale(as.binary(x) ~ 1, data = Sites(x))
+	ord <- capscale(as.logical(x) ~ 1, data = Sites(x))
 	#	number of axes shown in plot, default to frist 3
 	axs <- matrix(c(1,2,1,3,2,3), 3,2, byrow = TRUE)
 	
@@ -424,7 +424,7 @@ setMethod("getDist",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
 		if (obj@binary) {
-			m <- as.binary(obj)	
+			m <- as.logical(obj)	
 		} else {
 			m <- as.numeric(obj)
 		}
@@ -462,7 +462,7 @@ setMethod("Spread",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
 		part  <- Partitioning(obj)
-		com <- as.binary(obj)
+		com <- as.logical(obj)
 		if (length(unique(part)) == 1)
 			warning(" only a single partition present", call. = FALSE)
 		res <- apply(com, 2, function (y) {
@@ -506,7 +506,7 @@ setMethod("summary",
 setMethod("Contingency",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
-		res <- t(aggregate(as.binary(obj),
+		res <- t(aggregate(as.logical(obj),
 			by = list(Partitioning(obj)), FUN = sum))[-1,]
 		colnames(res) <- unique(Partitioning(obj))
 		rownames(res) <- names(obj)
@@ -699,7 +699,7 @@ setMethod("FisherTest",
 	}
 
 	N <- nrow(obj)						# number of plots
-	n_i <- colSums(as.binary(obj))			# species frequencies
+	n_i <- colSums(as.logical(obj))			# species frequencies
 	N_pi <- table(Partitioning(obj))	# number of plots in partition
 	n_pi <- Contingency(obj)			# number of occurences in partition
 
@@ -773,7 +773,7 @@ setGeneric("Indval",
 setMethod("Indval",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj, ...) {
-		res <- indval(as.binary(obj), Partitioning(obj), ...)$indval
+		res <- indval(as.logical(obj), Partitioning(obj), ...)$indval
 		return(res)
 	}
 )
@@ -789,7 +789,7 @@ setMethod("Indval",
 #		if (getK(obj) == 1) {
 #			stop("meaningless with k = ", getK(obj))
 #		}	
-#		res <- multipatt(as.binary(obj), Partitioning(obj),
+#		res <- multipatt(as.logical(obj), Partitioning(obj),
 #			...)
 #		return(res)
 #	}
@@ -824,7 +824,7 @@ setMethod("Tabdev",
 		if (getK(obj) == 1) {
 			stop("meaningless with k = ", getK(obj))
 		}	
-		res <- tabdev(as.binary(obj),
+		res <- tabdev(as.logical(obj),
 			Partitioning(obj), ...)$spcdev
 		return(res)
 	}
@@ -882,7 +882,7 @@ setMethod("Optindval",
 		res <- obj
 		cat("run optimisation")
 		cpu.time <- system.time({
-		res@part <- as.integer(optindval(as.binary(obj),
+		res@part <- as.integer(optindval(as.logical(obj),
 			Partitioning(obj), ...)$clustering)
 		})
 		
@@ -918,7 +918,7 @@ setMethod("Murdoch",
 		res.ls <- vector("list", length = ks)
 		names(res.ls) <- 1:ks
 		for (i in 1:ks) {
-			res.ls[[i]] <- murdoch(as.binary(obj),
+			res.ls[[i]] <- murdoch(as.logical(obj),
 				part == i, minplt = minplt)
 			res[,i] <- res.ls[[i]]$murdoch
 			pval[,i] <- round(res.ls[[i]]$pval, 3)
@@ -943,9 +943,9 @@ setMethod("Partana",
     		dis <- getDist(obj)
     	} else {    	
 			if (missing(method)) {    			
-				dis <- vegdist(as.binary(obj), "bray")
+				dis <- vegdist(as.logical(obj), "bray")
     		} else {
-    			dis <- vegdist(as.binary(obj), ...)
+    			dis <- vegdist(as.logical(obj), ...)
     		}
     	}	    	
 		res <- partana(Partitioning(obj), dis)
@@ -969,9 +969,9 @@ setMethod("Silhouette",
     		dis <- getDist(obj)
     	} else {    	
 			if (missing(method)) {    			
-				dis <- vegdist(as.binary(obj), "bray")
+				dis <- vegdist(as.logical(obj), "bray")
     		} else {
-    			dis <- vegdist(as.binary(obj), ...)
+    			dis <- vegdist(as.logical(obj), ...)
     		}
     	}	    	
 		res <- silhouette(Partitioning(obj), dis)
@@ -1040,9 +1040,9 @@ setMethod("Disdiam",
     		dis <- getDist(obj)
     	} else {    	
 			if (missing(method)) {    			
-				dis <- vegdist(as.binary(obj), "bray")
+				dis <- vegdist(as.logical(obj), "bray")
     		} else {
-    			dis <- vegdist(as.binary(obj), ...)
+    			dis <- vegdist(as.logical(obj), ...)
     		}
     	}	    	
 		res <- disdiam(Partitioning(obj), dis)
@@ -1124,7 +1124,7 @@ setMethod("Spread",
 	function (object) {
 		
 	part  <- Partitioning(object)
-	X <- as.binary(object)
+	X <- as.logical(object)
 
 	res <- apply(X, 2, function (y) {
 		if (getK(object) > 1) {
