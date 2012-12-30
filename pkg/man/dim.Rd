@@ -1,10 +1,16 @@
-\name{ncell}
+\name{dim}
 
 \docType{methods}
 
 \alias{ncol}
 \alias{ncol-methods}
 \alias{ncol,VegsoupData-method}
+\alias{ncol}
+\alias{nrow-methods}
+\alias{nrow,VegsoupData-method}
+\alias{dim}
+\alias{dim-methods}
+\alias{dim,VegsoupData-method}
 
 \title{Number or rows, columns, and cells of a VegsoupData* object}   
 
@@ -34,7 +40,7 @@ dim(x)
 An integer giving number of rows (plots) and species (each occurrence of a species in layer).
 }
 
-\seealso{ \code{\link{VegsoupData}, \code{\link{Richness}} }
+\seealso{ \code{\link{VegsoupData}}, \code{\link{Richness}} }
 
 \author{ Roland Kaiser }
 
