@@ -1,0 +1,73 @@
+\documentclass[a4paper]{article}
+%\VignetteIndexEntry{vegsoup: Classes and methods for phytosociologyAn R}
+%\VignetteDepends{methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, vegclust, spatstat, rgdal, googleVis}
+%\VignetteKeyword{vegetation}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[sort&compress]{natbib}
+\usepackage[german, english]{babel}
+\usepackage{hyperref}
+\usepackage{graphics}
+\usepackage[english=american]{csquotes}
+%\usepackage[left=25mm,right=20mm,top=35mm,bottom=35mm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\author{Roland Kaiser}
+\title{Classes and methods for phytosociology \\
+Version 0.1-4}
+
+% \renewcommand{\Sinput}[1]{\small{\color{#1}{rgb}{0,0,0.56}}}
+% \definecolor{Sinput}{rgb}{0,0,0.56}
+% \definecolor{Scode}{rgb}{0,0,0.56}
+% \definecolor{Soutput}{rgb}{0.56,0,0}
+% \usepackage{Sweave}
+\usepackage{SweaveC}
+
+\begin{document}
+%\setkeys{Gin}{width=\textwidth}
+<<prep, echo=FALSE>>=
+options(width=100,digits=2)
+@
+%Sys.setlocale("LC_TIME", "de_DE.iso8859")
+
+\maketitle
+
+\begin{abstract}
+
+\noindent
+An example session to show functionality and usage of R library \texttt{vegsoup}. \\
+After installation of  \texttt{vegsoup} you can invoke this PDF with
+<<eval=FALSE>>=
+vignette('vegsoup')
+@
+\end{abstract}
+
+\section{Preparations}
+
+The best way to introduce the functionalities of the package is a session with example code.
+
+We load the library as usual into our R environment.
+<<load, results=hide>>=
+library(vegdata)
+@
+
+<<eval=TRUE>>=
+Vegsoup()
+@
+
+If you want to change this use:
+<<eval=FALSE>>=
+Vegsoup()
+@
+
+<<echo=FALSE>>=
+options(tv_home=file.path(.path.package("vegdata"),'tvdata'))
+@
+
+
+\bibliographystyle{ecol_let}
+\bibliography{vegdata}
+
+\end{document}
