@@ -1,0 +1,156 @@
+abbr	taxon
+care curv curv	Carex curvula subsp. curvula
+fest hall	Festuca halleri
+aven vers	Avenula versicolor
+junc jacq	Juncus jacquinii
+pote aure	Potentilla aurea
+andr obtu	Androsace obtusifolia
+vero bell bell	Veronica bellidioides
+kobr myos	Kobresia myosuroides
+sile acau slat	Silene acaulis s.lat.
+fest pumi	Festuca pumila
+pach mute	Pachypleurum mutellinoides
+ante carp	Antennaria carpatica
+gent vern vern	Gentiana verna subsp. verna
+pers vivi	Persicaria vivipara
+poa alpi	Poa alpina
+bart alpi	Bartsia alpina
+homo alpi	Homogyne alpina
+sali retu	Salix retusa s.str.
+camp sche	Campanula scheuchzeri
+ranu mont	Ranunculus montanus s.str.
+sali herb	Salix herbacea
+agro alpi	Agrostis alpina s.str.
+gnap supi	Gnaphalium supinum
+scor helv	Scorzoneroides helvetica
+luzu spic slat	Luzula spicata s.lat.
+gent acau	Gentiana acaulis
+puls vern	Pulsatilla vernalis
+sold mini	Soldanella minima
+care cary	Carex caryophyllea
+sesl caer	Sesleria caerulea s.str.
+anem bald	Anemone baldensis
+sold alpi	Soldanella alpina
+anth vuln alpi	Anthyllis vulneraria subsp. alpicola
+achi oxyl	Achillea oxyloba
+phyt hemi	Phyteuma hemisphaericum
+heli alpe	Helianthemum alpestre s.str.
+minu gera	Minuartia gerardii
+care semp semp	Carex sempervirens subsp. sempervirens
+leon hisp slat	Leontodon hispidus s.lat.
+euph mini	Euphrasia minima s.str.
+care atra	Carex atrata
+anth alpi	Anthoxanthum alpinum
+gali anis	Galium anisophyllon
+sali reti	Salix reticulata
+bisc laev slat	Biscutella laevigata s.lat.
+gent niva	Gentiana nivalis
+sela sela	Selaginella selaginoides
+thym prae poly	Thymus praecox subsp. polytrichus
+junc mona	Juncus monanthos
+minu sedo	Minuartia sedoides
+drya octo	Dryas octopetala
+aren cili	Arenaria ciliata
+sali serp	Salix serpyllifolia
+geum mont	Geum montanum
+care firm	Carex firma
+hier vill	Hieracium villosum
+pote brau	Potentilla brauneana
+nard stri	Nardus stricta
+fest nori	Festuca norica
+achi clav	Achillea clavennae
+trol euro	Trollius europaeus
+gent rhae	Gentianella rhaetica
+saxi caes	Saxifraga caesia
+desc cesp	Deschampsia cespitosa
+care pauc	Carex pauciflora
+bell mich	Bellidiastrum michelii
+care ferr	Carex ferruginea s.str.
+junc trif	Juncus trifidus s.str.
+myos alpe	Myosotis alpestris
+crep aure aure	Crepis aurea subsp. aurea
+gnap hopp	Gnaphalium hoppeanum
+horm pyre	Horminum pyrenaicum
+care rupe	Carex rupestris
+unde bryo	undetermined bryophyte(s)
+arme alpi	Armeria alpina
+pedi rost tata	Pedicularis rostratocapitata subsp. rostratocapitata
+solo bisp slat	Solorina bispora s.lat
+erig unif	Erigeron uniflorus
+cetr isla isla	Cetraria islandica subsp. islandica
+vacc gaul	Vaccinium gaultherioides
+card defl slat	Cardfuss defloratus s.lat.
+arni mont	Arnica montana
+prim mini	Primula minima
+clad symp	Cladonia symphycarpa 
+hedy hedy hedy	Hedysarum hedysaroides subsp. hedysaroides
+agro rupe rupe	Agrostis rupestris
+vero alpi	Veronica alpina
+prim glut	Primula glutinosa
+pedi vert	Pedicularis verticillata
+phyt glob	Phyteuma globulariifolium
+gent bava	Gentiana bavarica s.str.
+luzu alpi losa	Luzula alpinopilosa s.str.
+tara sect alpi	Taraxacum sect. Alpina
+cirs spin	Cirsium spinosissimum
+gent brac	Gentiana brachyphylla
+sold pusi alpi	Soldanella pusilla subsp. alpicola
+saxi andr	Saxifraga androsacea
+saxi mosc	Saxifraga moschata
+horn alpi alpi	Hornungia alpina subsp. alpina
+sibb proc	Sibbaldia procumbens
+lois proc	Loiseleuria procumbens
+hier alpi	Hieracium alpinum
+lotu corn alpi	Lotus corniculatus var. alpicola s.lat.
+prim elat	Primula elatior s.str.
+oreo dist	Oreochloa disticha
+clad arbu slat	Cladonia arbuscula s.lat.
+tham verm verm	Thamnolia vermicularis var. vermicularis
+puls alpi apii	Pulsatilla alpina subsp. apiifolia
+ranu alpe	Ranunculus alpestris s.str.
+saxi oppo oppo	Saxifraga oppositifolia subsp. oppositifolia
+oxyt camp slat	Oxytropis campestris s.lat.
+clad pyxi	Cladonia pyxidata
+ster alpi slat	Stereocaulon alpinum s.lat.
+cera unif	Cerastium uniflorum
+doro glac glac	Doronicum glaciale subsp. glaciale
+luzu lute	Luzula lutea
+pedi oede	Pedicularis oederi
+flav cucu	Flavocetraria cucullata
+flav niva	Flavocetraria nivalis
+fest pseu dura	Festuca pseudodura
+lloy sero	Lloydia serotina
+drab aizo aizo	Draba aizoides subsp. aizoides
+clad rang	Cladonia rangiferina
+clad grac	Cladonia gracilis 
+drab flad	Draba fladnizensis
+sapo pumi	Saponaria pumila
+saxi pani	Saxifraga paniculata
+saus alpi	Saussurea alpina
+saxi bryo	Saxifraga bryoides
+solo sacc	Solorina saccata
+care ater	Carex aterrima
+alec ochr	Alectoria ochroleuca
+dian glac	Dianthus glacialis
+oxyt trif	Oxytropis triflora
+gent punc	Gentiana punctata
+oxyt spec ies	Oxytropis species
+phyt orbi	Phyteuma orbiculare s.str.
+ante dioi	Antennaria dioica
+care capi	Carex capillaris
+doro clus slat	Doronicum clusii s.lat
+nigr nigr aust	Nigritella nigra subsp. austriaca
+parn palu	Parnassia palustris
+ping alpi	Pinguicula alpina
+viol bifl	Viola biflora
+sene carn	Senecio carniolicus
+leuc alpi	Leucanthemopsis alpina
+unde lich	undetermined lichen(s)
+aste alpi	Aster alpinus
+pelt cani	Peltigera canina
+prim fari	Primula farinosa
+call cori	Callianthemum coriandrifolium
+sedu atra slat	Sedum atratum s.lat.
+alch pent	Alchemilla pentaphylla
+plan alpi	Plantago alpina
+trif alpi	Trifolium alpinum

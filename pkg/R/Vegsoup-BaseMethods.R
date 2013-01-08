@@ -3,7 +3,7 @@
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
 Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
-	#	x = taxonomy$species; y = sites; z = taxonomy; scale = list(scale = "Braun-Blanquet")
+	#	x = x; y = y; z = z; scale = list(scale = "Braun-Blanquet")
 	if (missing(col.names)) {
 		col.names <- list(
 			x = c("plot", "abbr", "layer", "cov"),
@@ -23,7 +23,6 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	}
 	
 	if (missing(x)) {
-		x <- data.frame(NULL)
 		stop("query on species is empty!\n")	
 	} else {
 		#	for safety and to ensure validity
@@ -36,9 +35,9 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		names(x) <- c("plot", "abbr", "layer", "cov")
 		
 		if (any(regexpr("[[:alpha:]]", x$plot) < 1)) {
-				warning("... plot identifier in x contains only numbers, ",
-					"\nbut will be coded as character!", call. = FALSE)	
-			x$plot <- as.character(as.numeric(species$plot))
+				warning("\n ... plot identifier in x contains only numbers, ",
+					"\nbut will be coerced to character!", call. = FALSE)	
+			x$plot <- as.character(as.numeric(x$plot))
 		}	
 		#	order
 		x <- x[order(x$plot, x$layer, x$abbr), ]
@@ -53,7 +52,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 			"\n please review your data!", call. = FALSE)
 			x <- x[!duplicated(x[, c(1,2,3)]), ]
 		}
-		#	further test
+		#	additional test
 		if (dim(unique(unique(x)))[1] != dim(x)[1]) {
 			warning("\n found duplicated species abundances for plots:\n... ",
 				paste(x[duplicated(x), ]$plot, collapse = ", "),
@@ -78,7 +77,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 				
 		if (any(regexpr("[[:alpha:]]", y$plot) < 1)) {
 				warning("\n ... plot identifier in sites contains only numbers, ", 
-					"\nbut will be coded as character!", call. = FALSE)	
+					"\nbut will be coerced to character!", call. = FALSE)	
 			y$plot <- as.character(as.numeric(y$plot))
 		}
 		y <- y[order(y$plot, y$variable), ]
@@ -340,6 +339,11 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	#	supress warning messages caused by as.numeric(x) 
 	#	needs a work around because longitude is coreced to numeric
 	#	because of similiarity to scientifiuc notion (13.075533E)
+	
+	
+	#	use type.convert!
+	#y[] <- lapply(y, type.convert)
+
 	options(warn = -1)
 	y <- as.data.frame(
 		sapply(y,

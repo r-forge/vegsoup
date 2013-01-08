@@ -44,13 +44,15 @@ vignette('vegsoup')
 @
 \end{abstract}
 
-\section{Preparations}
+\section{Introduction}
+
+Many data sets do not easily fit into a single data frame; data sets in ecology with a so-called fourth-corner problem provide important examples. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows. 
 
 The best way to introduce the functionalities of the package is a session with example code.
 
 We load the library as usual into our R environment.
 <<load, results=hide>>=
-library(vegdata)
+library(vegsoup)
 @
 
 <<eval=TRUE>>=

@@ -816,14 +816,14 @@ cdm = matrix(1, nrow = n.species, ncol = k)
 ddm = matrix(1, nrow = n.species, ncol = k)
   
 if (mode == 0) {
-	dm = t(X) %*% U # matrix multiplication
+	dm = t(X) %*% U
 } else {
-	aisp <- t(X)%*%U
-	ni <- diag(t(U)%*%U)
-	aispni <- sweep(aisp,2,ni,"/")
+	aisp <- t(X) %*% U
+	ni <- diag(t(U) %*% U)
+	aispni <- sweep(aisp, 2, ni, "/")
 	aispni[is.na(aispni)] <- 0 # check for division by zero
-	s <- apply(aispni,1,"sum")
-	dm <- sweep(aispni,1,s,"/")
+	s <- apply(aispni, 1, "sum")
+	dm <- sweep(aispni, 1, s, "/")
 	dm[is.na(dm)] <- 0 # check for division by zero
 }
 	 	
@@ -881,8 +881,8 @@ if (verbose) {
 p.Sidak = vector(mode = "numeric", length = n.species)
 best = vector(mode = "numeric", length = n.species)
 for (i in 1:n.species) {
-	best[i] = which(cdm[i,] == min(cdm[i,]))[1]
-	p.Sidak[i] = (1 - (1 - min(cdm[i,])) ^ k)
+	best[i] = which(cdm[i, ] == min(cdm[i, ]))[1]
+	p.Sidak[i] = (1 - (1 - min(cdm[i, ])) ^ k)
 }
 
 res <- list(stat = cdm, sidak = data.frame(best, p.Sidak))

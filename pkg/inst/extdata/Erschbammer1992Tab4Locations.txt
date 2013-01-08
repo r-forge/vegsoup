@@ -1,0 +1,30 @@
+nr	date	location	geology	longitude	latitude	precision
+69	1987-07-29	Latemar, Col Cornon	fehlend	11.59158E	46.38010N	500m
+73	1987-08-06	Latemar, gegen Karerpaß	Vulkanit/Kalk	11.60614E	46.38068N	1000m
+74	1987-08-06	Latemar, gegen Karerpaß	Vulkanit/Kalk	11.60614E	46.38068N	1000m
+51	1987-07-28	Latemar, oberhalb Erzlahnscharte, Valsoreda	Vulkanit	11.55763E	46.36798N	500m
+52	1987-07-28	Latemar, Valsorda (Cima di Valsorda)	Vulkanit/Kalkgeröll	11.56112E	46.36791N	500m
+53	1987-07-28	Latemar, Valsorda (Cima di Valsorda)	Vulkanit	11.56112E	46.36791N	500m
+54	1987-07-28	Latemar, Valsorda (Cima di Valsorda)	Vulkanit/Kalkgeröll	11.56203E	46.36765N	500m
+22	1990-08-06	Edelweißspitze, Richtung Kendlkopf	Dolomit/Marmor?	12.83830E	47.12656N	500m
+23	1990-08-06	Edelweißspitze, Richtung Kendlkopf	Dolomit/Marmor?	12.83830E	47.12656N	500m
+26	1990-08-07	Trögeralmen, Richtung Süddl. Pfandlschartenkees	Schiefer/Prasinit?	12.77570E	47.07837N	250m
+28	1990-08-09	unterh. Pezid-Gipfel vom Arrezjoch aus	Bündner Schiefer	10.513015E	47.01964N	100m
+108	1990-07-09	Marislwand	Kalkschiefer	 13.489087E	47.120008N	250m
+109	1990-07-10	Riedingscharte, Richtung Weißeck	Kalkschiefer	 13.37090E	47.15912N	250m
+110	1990-07-10	Riedingscharte, Richtung Weißeck	Kalkschiefer	 13.37090E	47.15912N	250m
+78	1987-08-18	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+79	1987-08-18	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+80	1987-08-18	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+91	1998-08-17	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+92	1998-08-17	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+93	1998-08-17	Rosengarten, zwischen Principe (Grasleitenpasshütte)- und Vajoletthütte (2243m)	Dolomit	11.63287E	46.46864N	500m
+98	1989-08-21	Mormolada, unterh. Forcella Pasché, Richtung Contrin Hütte	Kalk	11.83181E	46.43313n	250m
+100	1989-08-22	Val die Fassa, Punta d. Vallaccia	Kalk	 11.70806E	46.39554N	150m
+103	1989-08-10	unterh. Passo le Selle	Kalk/Vulkanit	11.76413E	46.39418N	250m
+1	1990-07-23	unterh. Hühnerspiel-Gipfel, rechts vom Lift	Kalkglimmerschiefer	11.49890E	46.94445N	150m
+5	1990-07-23	unterh. Hühnerspiel-Gipfel/Richtung Weißspitze	Kalkglimmerschiefer	11.50226E	46.94185N	400m
+107	1990-07-09	zwischen Grießenspitze und Balonspitze	Kalkschiefer	13.47589E	47.125892N	100m
+131	1991-07-20	oberhalb des Passes Pt. St. Bernhard	fehlend	7.171669E	45.868975N	500m
+132	1991-08-05	oberha. Motta d'Alp Richtung Piz Malmurainza	Bündner Schiefer	10.418816E	46.903516N	250m
+133	1991-08-06	Bidmer (Furkapaß)	fehlend	8.29442E	46.528162N	250m

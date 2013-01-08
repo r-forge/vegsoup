@@ -2,38 +2,30 @@
 \alias{Sites}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Return the Sites Slot of an object
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Accessor method for the \sQuote{sites} slot.
 }
 \usage{
-Sites(obj, ...)
+Sites(obj)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+A object of class \code{Vegsoup*}
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+a data.frame}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~

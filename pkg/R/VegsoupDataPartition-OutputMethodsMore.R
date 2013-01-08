@@ -122,8 +122,6 @@ symb[ft <= 0.05] <- "*"
 symb[ft <= 0.01] <- "**"
 symb[ft <= 0.001] <- "***"
 
-
-
 #	combine frequency table with significance symbols
 frq.ft <- matrix(paste(cnst, symb, sep = ""), 
 	nrow = nrow(cnst), ncol = ncol(cnst))
