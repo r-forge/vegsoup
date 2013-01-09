@@ -30,7 +30,7 @@ A single integer. If positive, size for the resulting object. If negative, all b
 Display first row of species matrix (the default) or sites data frame.
 }
   \item{mode}{
-If choice is \dQuote{species} of which mode should the returned matrix be reported. If missing the presence/absence mode of the species matrix is printed. See \code{\link{as.logical}}, \code{\link{as.numeric}}, and \code{\link{as.character}}, respectively.
+If choice is \dQuote{species} of which mode should the returned matrix be reported (see \code{\link{as.matrix}}). If missing a presence/absence species matrix is printed (\code{mode == "logical"}).
 }
   \item{\dots}{
 not used
@@ -41,18 +41,21 @@ not used
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-An object like \code{as.character(x)} but generally smaller.
+An object like \code{as.matrix(x)} but generally smaller.
 \author{
 Roland Kaiser
 }
 
 \seealso{
-See \code{\link{head}} and \code{\link{tail}} in package \pkg{utils}.
+\code{\link{head}} and \code{\link{tail}} in package \pkg{utils}. \code{\link{as.matrix}}
 }
 \examples{
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 		scale = list(scale = "Braun-Blanquet")))
 head(dta)
+
+head(dta, "sp") # choice can abbreviated
+head(dta, "sp", "numeric") # choice can abbreviated
 }
 \keyword{methods}
 

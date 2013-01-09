@@ -411,19 +411,20 @@ setReplaceMethod("decostand",
 setGeneric("head", function(x)
 	standardGeneric("head"))
 #}
-#	to do: documentation
+
 setMethod("head",
     signature(x = "VegsoupData"),
-    function (x, n = 6L, choice, mode, ...) {
+    function (x, choice, mode, n = 6L, ...) {
+    	CHOICE <- c("species", "sites")
+    	choice <- CHOICE[pmatch(choice, CHOICE)]
 	    if (missing(choice))
 	    	choice = "species"	
 	    if (missing(mode))
-		    mode = 3 # binary
+		    mode = "logical"
 	    if (missing(n))
 		    n = 6L
     	if (choice == "species")
-			res <- head(as.logical(x), n, ...)
-    		#	was res <- head(x@species)
+			res <- head(as.matrix(x, mode), n, ...)
     	if (choice == "sites")
     		res <- head(Sites(x), n, ...)
     	return(res)

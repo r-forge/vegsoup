@@ -1,4 +1,4 @@
-\name{as.logical}
+\name{as.matrix}
 \alias{as.logical}
 \alias{as.numeric}
 \alias{as.character}
