@@ -40,13 +40,15 @@ For any object inheriting from class \code{VegsoupData} the methods return an ob
 
 Note, \code{as.logical} and \code{as.matrix(obj, "logical")} do not return a boolean or logical matrix composed of \code{TRUE} and \code{FALSE} but use ones to code presences (\code{TRUE}) and zeros (\code{FALSE}) for absences. The mode of the returned matrix is of type numeric.
 
-If the object has non \code{NULL} values in its data standardization slot the method defined by \code{decostand(obj)} will automatically be applied.
 }
 \value{
 A matrix of mode \code{"numeric"} or \code{"character"} (see \sQuote{details}).
 }
 \author{
 Roland Kaiser
+}
+\note{
+If the object has non \code{NULL} values in its data standardization slot the method defined by \code{decostand(obj)} will automatically be applied!
 }
 \seealso{
 \code{\link{Vegsoup}}, \code{\link{VegsoupData}}, \code{\link{decostand}} and \code{\link{AbundanceScale}}

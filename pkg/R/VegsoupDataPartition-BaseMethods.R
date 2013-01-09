@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), dist = "bray", binary = TRUE, clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
+VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), binary = TRUE, clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
 #	obj = dta; binary = TRUE; k = 3;
@@ -79,7 +79,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 	if (verbose) {
 		cat("\n run with settings",
 			"\n use binary data:", binary,
-			"\n disimilarity measure:", dist,
+			"\n disimilarity measure:", obj@dist,
 			"\n decostand method:", decostand(obj),
 			"\n partitioning method:", part.meth, "\n", ...)	
 	}
@@ -199,7 +199,7 @@ res@part <- grp
 res@method <- part.meth	
 res@k <- length(unique(grp))
 res@binary = binary
-res@dist <- dist
+#res@dist <- dist
 
 return(res)
 }
@@ -413,34 +413,6 @@ setReplaceMethod("Partitioning",
 	}
 )
 
-#	getter method
-#	retrieve distance matrix
-#	to do: documentation
-setGeneric("getDist",
-	function (obj)
-		standardGeneric("getDist")
-)
-setMethod("getDist",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj) {
-		if (obj@binary) {
-			m <- as.logical(obj)	
-		} else {
-			m <- as.numeric(obj)
-		}
-		res <- vegdist(m, obj@dist)
-		res
-	}
-)
-
-#	connectedness of dissimilarities
-#	method for class VegsoupDataPartition, check inheritance should be absolete!
-#	to do: documentation
-setMethod("getDistconnected",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj, ...) distconnected(getDist(obj), ...)
-)
-
 #	number of partitions/clusters
 #	to do: documentation
 setGeneric("getK",
@@ -503,6 +475,13 @@ setMethod("summary",
 )
 
 #	contingency table
+
+#	to do: documentation
+setGeneric("Contingency",
+	function (obj)
+		standardGeneric("Contingency")
+)
+
 setMethod("Contingency",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
@@ -928,7 +907,7 @@ setMethod("Murdoch",
 )
 
 #	Partition Analysis
-#	to do: documentation
+#	to do: documentation, check dist slot
 setGeneric("Partana",
 	function (obj, ...)
 		standardGeneric("Partana")

@@ -1,22 +1,34 @@
-\name{rownames-methods}
+\name{row+colnames}
 \docType{methods}
+\alias{rownames}
 \alias{rownames-methods}
-\alias{rownames,ANY,ANY,ANY-method}
-\alias{rownames,VegsoupData,missing,missing-method}
-\title{Methods for Function rownames}
+\alias{colnames}
+\alias{colnames-methods}
+\alias{names}
+\alias{names-methods}
+
+\title{Row and Column Names of a VegsoupData* object}
 \description{
- ~~ Methods for function \code{rownames}  ~~
+Retrieve the row or column names of the species \code{matrix} and the names of the sites \code{data.frame}.
 }
-\section{Methods}{
-\describe{
+\usage{
+	rownames(obj)
 
-\item{\code{signature(x = "ANY", do.NULL = "ANY", prefix = "ANY")}}{
-%%  ~~describe this method here~~
+	colnames(obj)
+	
+	names(obj)	 
+	names(obj) <- value	 
 }
-
-\item{\code{signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing")}}{
-%%  ~~describe this method here~~
+\arguments{
+  \item{obj}{
+an object from class \code{VegsoupData*} 
 }
-}}
+  \item{value}{
+a character vector of the same length as \code{names(obj)), or NULL.
+}
+}
+\details{
+Function \code{colnames} returns \code{dimnames(as.matrix(obj))[[2]]}. This applies only to the species matrix which is of class \code{matrix}. Note, \code{names} when called on an object of class \code{matrix} will return \code{NULL} in base R. Therefor the \code{names} method is only defined for the sites slot and equals \code{names(Sites(obj))}). As both the species matrix and the sites data have the same number of rows (plots) in exactly the same order, the \code{rownames} method will return the same for both data partitions.
+}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+

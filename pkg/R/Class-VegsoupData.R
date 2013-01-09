@@ -13,7 +13,8 @@ setClass("decostand", representation(method = "decostand.method"))
 setClass("VegsoupData",
 	representation(
 	species = "data.frame",
-	decostand = "decostand"),
+	decostand = "decostand",
+	dist = "character"),
 	contains = "Vegsoup")#,
 #	validity = function (object)#
 #	{

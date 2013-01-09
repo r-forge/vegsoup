@@ -18,6 +18,10 @@ VegsoupData(obj, decostand = NULL, verbose = FALSE)
   \item{decostand}{
 	A character vector giving a standardisation method as in \code{\link[vegan:decostand]{decostand}}, can be missing.
 }
+  \item{dist}{
+	A character vector giving a distance method as in \code{\link[vegan:vegdist]{vegdist}} in pkg{vegan}. Defaults to \code{"euclidean"}.
+}
+
   \item{verbose}{
 	diagnostic output.
 }

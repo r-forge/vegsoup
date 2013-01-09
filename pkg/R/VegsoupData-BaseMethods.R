@@ -94,7 +94,7 @@
 #	generating function
 #	to do: documentation, high priority!
 
-VegsoupData <- function (obj, decostand, verbose = FALSE) {
+VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	require(stats)
 	#	obj <- qry; verbose = TRUE	
 	if (!inherits(obj, "Vegsoup")) {
@@ -105,6 +105,10 @@ VegsoupData <- function (obj, decostand, verbose = FALSE) {
 		decostand = new("decostand", method = NULL)
 	} else {
 		decostand = new("decostand", method = decostand)
+	}
+	
+	if (missing(dist)) {
+		dist = "euclidean"
 	}
 		
 	scale <- AbundanceScale(obj)
@@ -205,6 +209,7 @@ VegsoupData <- function (obj, decostand, verbose = FALSE) {
 	#	assign class slots
 	res@species = species
 	res@decostand = decostand
+	res@dist = dist
 
 	return(res)
 }
@@ -281,6 +286,29 @@ setMethod("as.matrix",
     }    	    
 )
 
+#	for species matrix implemented colnames (it's a 'matrix')
+#	leave names for sites (it's a 'data.frame')
+#if (!isGeneric("colnames")) {
+setGeneric("colnames", function (x, do.NULL = TRUE, prefix = "col")
+	standardGeneric("colnames"))
+#}
+setMethod("colnames",
+    signature(x = "VegsoupData"),
+    function (x) {
+	#	adapted from .cast()
+	abbr <- slot(x, "species.long")$abbr
+	layer <- slot(x, "species.long")$layer
+	species.layer <- paste(abbr, layer, sep = "@")
+	res <- unique(as.vector(unlist(
+			sapply(Layers(x),
+				function (x) {
+					species.layer[layer == x]
+				}
+			))))
+    res
+    }
+)    	
+	
 #	'names' is a primitive function
 #	rename to colnames for consitency
 #	names(obj) is used in $ method!
@@ -297,6 +325,7 @@ setMethod("names",
 					species.layer[layer == x]
 				}
 			))))
+	res
 	}
 )
 
@@ -308,8 +337,8 @@ setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 setMethod("rownames",
     signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing"),
     function (x) {
+    #	warning! order?	
 		unique(slot(x, "species.long")$plot)	
-		#	was rownames(x@species)
 	}
 )
 
@@ -406,6 +435,42 @@ setReplaceMethod("decostand",
 	}
 )	   
 
+#	retrieve distance matrix
+#	to do: documentation
+setGeneric("getDist",
+	function (obj, ...)
+		standardGeneric("getDist")
+)
+setMethod("getDist",
+	signature(obj = "VegsoupData"),
+	function (obj, binary, ...) {
+		#	as.mumeric and as.logical
+		#	automatically apply decostand method!
+		if (missing(binary)) {
+			m <- as.numeric(obj)
+		} else {
+			m <- as.logical(obj)	
+		}
+		res <- vegdist(m, obj@dist)	
+		res
+	}
+)
+
+#	connectedness of dissimilarities
+#	method for class VegsoupDataPartition, check inheritance should be absolete!
+#	to do: documentation
+setGeneric("getDistconnected",
+	function (obj, ...)
+		standardGeneric("getDistconnected")
+)
+
+setMethod("getDistconnected",
+	signature(obj = "VegsoupData"),
+	function (obj, ...) {
+		distconnected(getDist(obj), ...)
+	}
+)
+
 #	 methods based on functions in 'utils'
 #if (!isGeneric("head")) {
 setGeneric("head", function(x)
@@ -415,10 +480,10 @@ setGeneric("head", function(x)
 setMethod("head",
     signature(x = "VegsoupData"),
     function (x, choice, mode, n = 6L, ...) {
+	    if (missing(choice))
+	    	choice = "species"
     	CHOICE <- c("species", "sites")
     	choice <- CHOICE[pmatch(choice, CHOICE)]
-	    if (missing(choice))
-	    	choice = "species"	
 	    if (missing(mode))
 		    mode = "logical"
 	    if (missing(n))
@@ -880,19 +945,6 @@ setMethod("Richness",
 	}
 )
 
-#	connectedness of dissimilarities
-#	to do: documenation
-setGeneric("getDistconnected",
-	function (obj, ...)
-		standardGeneric("getDistconnected")
-)
-setMethod("getDistconnected",
-	signature(obj = "VegsoupData"),
-	function (obj, dis = "bray", ...) {
-		distconnected(vegdist(as.numeric(obj), dis), ...)
-	}
-)
-
 #	matrix fill
 #	used in summary
 if (!isGeneric("MatrixFill")) {
@@ -940,10 +992,14 @@ setMethod("summary",
 		"\n layers: ", length(Layers(object)), 
 		" (", paste(Layers(object), collapse = ", "), ")",
 		"\n abundance scale: ", AbundanceScale(object)$scale,
-		"\n decostand method: ", decostand(object),	   		
+		ifelse(is.null(decostand(object)),
+			paste("\n decostand method: undefined (NULL)"),
+			paste("\n decostand method: ", decostand(object))
+		),		
+		"\n dissimilarity: ", object@dist,	   				
 		ifelse(length(object@taxonomy) > 0,
-			"\n taxomomy lookup table: supplied ",
-			"\n taxomomy lookup table: has non matching taxa!"),
+			"\n taxomomic reference: valid ",
+			"\n taxomomic reference: has non matching taxa!"),
 		sep = ""
 	)
 	if (dim(object)[1] == 1) {
@@ -1195,17 +1251,7 @@ setMethod("Indspc",
     }
 )
 
-#	to do: documentation
-setGeneric("Contingency",
-	function (obj)
-		standardGeneric("Contingency")
-)
 
-setMethod("Contingency",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj) {	
-	}
-)	
 #	create several clusterings along a vector
 #	suitable for plotting
 #	return a list

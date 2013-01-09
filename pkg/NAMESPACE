@@ -31,6 +31,7 @@ exportMethods(
     "Accuracy",
     "Arrange",
     "Association",
+    "as.matrix",
     "as.logical",
     "as.character",
     "as.numeric",
