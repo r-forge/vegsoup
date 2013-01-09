@@ -1,15 +1,20 @@
 \name{head}
 \alias{head}
+\alias{head-methods}
+\alias{head,VegsoupData-method}
+\alias{head,VegsoupDataPartition-method}
 \alias{tail}
+\alias{tail-methods}
+\alias{tail,VegsoupData-method}
 
 \title{
 Return the First or Last Part of the Species Matrix
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Returns the first or last parts of the species matrix.
 }
 \usage{
-head(x, choice, mode, ...) 
+head(x, n, choice, mode, ...) 
 tail(x, ...)
 }
 % n = 6L
@@ -17,6 +22,9 @@ tail(x, ...)
 \arguments{
   \item{x}{
 An object inheriting from class \code{VegsoupData}.
+}
+  \item{n}{
+A single integer. If positive, size for the resulting object. If negative, all but the n last/first number of elements of x.
 }
   \item{choice}{
 Display first row of species matrix (the default) or sites data frame.
@@ -33,15 +41,7 @@ not used
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
+An object like \code{as.character(x)} but generally smaller.
 \author{
 Roland Kaiser
 }
