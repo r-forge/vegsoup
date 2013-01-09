@@ -27,7 +27,7 @@ A character string or a name.
 }
 }
 \details{
-The "$" operator can be used to access columns of the sites slot which is of class \code{data.frame} and has also functions to get or set the names of the object. Indexing of the species matrix can be done using indices specifying elements to extract. See examples.
+The "$" operator can be used to access columns of the sites slot which is of class \code{data.frame} and has also functions to get or set the names of the object. Indexing of the species matrix can be done using indices specifying elements to extract. See \sQuote{Examples}.
 }
 \examples{
 	qry <- Vegsoup(species, sites, taxonomy,
