@@ -3,7 +3,12 @@
 \docType{methods}
 \alias{ncol}
 \alias{ncol-methods}
-\alias{ncol,VegsoupData-method}
+\alias{nrow}
+\alias{nrow-methods}
+\alias{dim}
+\alias{dim-methods}
+\alias{ncell}
+\alias{ncell-methods}
 
 \title{Number or rows, columns, and cells of a VegsoupData* object}   
 
@@ -15,22 +20,21 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 ncol(x)
 nrow(x)
 dim(x)
-
-%% ncell(x)
+ncell(x)
 %% ncol(x) <- value
 %% nrow(x) <- value
 }
 
 \details{
-\code{nrow(x)} allways equal the number of rows in the sites slot. \code{ncol(x)} gives the number of species including layer dulicates. For species richness see \code{\link{Richness}}. \code{dim} retrieves the dimension of the species matrix of an object.
+\code{nrow(x)} allways equal the number of rows in the sites slot. \code{ncol(x)} gives the number of species including layer dulicates. For species richness see \code{\link{Richness}}. \code{dim} retrieves the dimension of the species matrix of an object and \code{ncell} the number of cells in that matrix.
 }
 
 \arguments{
-\item{x}{a VegsoupData object}
+\item{x}{ a VegsoupData* object }
 }
 
 \value{
-An integer giving number of rows (plots) and species (each occurrence of a species in layer).
+An integer giving number of rows (plots) and species (each occurrence of a species in layer), or the dimension of that matrix, respectively the product of this two-dimensional matrix.
 }
 
 \seealso{
@@ -45,5 +49,6 @@ Roland Kaiser
 	data(testdata)
 	dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 		scale = list(scale = "Braun-Blanquet")))
-	dim(dta)	  
+	dim(dta)
+	all.equal(prod(dim(dta)), ncell(dta))	  
 }	

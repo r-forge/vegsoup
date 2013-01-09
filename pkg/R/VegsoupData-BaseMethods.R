@@ -342,15 +342,6 @@ setMethod("rownames",
 	}
 )
 
-#	'dim' is a primitive function
-setMethod("dim",
-    signature(x = "VegsoupData"),
-	    function (x) {
-			c(nrow(x), ncol(x))
-		#	was dim(x@species)
-		}
-)
-
 #if (!isGeneric("nrow")) {
 setGeneric("nrow", function(x)
 	standardGeneric("nrow"))
@@ -375,6 +366,37 @@ setMethod("ncol",
 	#	was ncol(x@species)
 	}
 )
+#	'dim' is a primitive function
+setMethod("dim",
+    signature(x = "VegsoupData"),
+	    function (x) {
+			c(nrow(x), ncol(x))
+		#	was dim(x@species)
+		}
+)
+#if (!isGeneric("rowSums")) {
+setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
+	standardGeneric("rowSums"))
+#}
+#	to do: documentation
+setMethod("rowSums",
+	signature(x = "VegsoupData"),
+	function (x, na.rm = FALSE, dims = 1) {
+    	rowSums(as.logical(x))
+    }
+)
+#if (!isGeneric("ncell")) {
+setGeneric("ncell",
+	function (x, ...)
+	standardGeneric("ncell"))
+#}
+#	to do: documentation
+setMethod("ncell",
+	signature(x = "VegsoupData"),
+	function (x, ...) {
+    	prod(dim(x))
+    }
+)
 #if (!isGeneric("rowSums")) {
 setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
 	standardGeneric("rowSums"))
@@ -398,35 +420,36 @@ setMethod("colSums",
     }
 )
 
+#	standardisation
+#if (!isGeneric("decostand")) {
 setGeneric("decostand", function (obj)
 	standardGeneric("decostand"))
-
+#}
+#if (!isGeneric("decostand<-")) {
+setGeneric("decostand<-",
+	function (obj, value, ...)
+		standardGeneric("decostand<-")
+)
+#}
 setMethod("decostand",
 		signature(obj = "VegsoupData"),
 	    	function (obj) {
 				slot(slot(obj, "decostand"), "method")
 			}
 )
-
-setGeneric("decostand<-",
-	function (obj, value, ...)
-		standardGeneric("decostand<-")
-)
-
 setReplaceMethod("decostand",
 	signature(obj = "VegsoupData", value = "character"),
 	function (obj, value) {
 		#	taken from vegan
 	    METHODS <- c("total", "max", "frequency", "normalize", "range", 
-            "standardize", "pa", "chi.square", "hellinger", "log", "wisconsin")
-            
+            "standardize", "pa", "chi.square", "hellinger", "log",
+            "wisconsin")            
         value <- match.arg(value, METHODS, several.ok = TRUE)		
 		value <- new("decostand", method = value)
 		obj@decostand <- value		
 		return(obj)		
 	}
 )
-
 setReplaceMethod("decostand",
 	signature(obj = "VegsoupData", value = "NULL"),
  	function (obj, value) {
@@ -434,7 +457,37 @@ setReplaceMethod("decostand",
 		return(obj)
 	}
 )	   
-
+#	dissimilarity
+#if (!isGeneric("decostand<-")) {
+setGeneric("vegdist",
+	function (x, ...)
+		standardGeneric("vegdist")
+)
+#}
+#if (!isGeneric("decostand<-")) {
+setGeneric("vegdist<-",
+	function (x, value, ...)
+		standardGeneric("vegdist<-")
+)
+#}
+setMethod("vegdist",
+	signature(x = "VegsoupData"),
+	function (x, ...) {
+		x@dist
+	}
+)
+setReplaceMethod("vegdist",
+	signature(x = "VegsoupData", value = "character"),
+	function (x, value) {
+		#	from vegan::vegdist
+		METHODS <- c("manhattan", "euclidean", "canberra", "bray",
+		"kulczynski", "gower", "morisita", "horn", "mountford",
+		"jaccard", "raup", "binomial", "chao", "altGower", "cao")
+		method <- METHODS[pmatch(value, METHODS)]
+		x@dist <- method
+		x	
+	}
+)	
 #	retrieve distance matrix
 #	to do: documentation
 setGeneric("getDist",
