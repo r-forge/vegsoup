@@ -1,4 +1,5 @@
 \name{head}
+
 \alias{head}
 \alias{head-methods}
 \alias{head,VegsoupData-method}
@@ -14,17 +15,17 @@ Return the First or Last Part of the Species Matrix
 Returns the first or last parts of the species matrix.
 }
 \usage{
-head(x, n, choice, mode, ...) 
+head(x, n, choice, mode, ...)
+
 tail(x, ...)
 }
-% n = 6L
-%- maybe also 'usage' for other objects documented here.
 \arguments{
+
   \item{x}{
 An object inheriting from class \code{VegsoupData}.
 }
   \item{n}{
-A single integer. If positive, size for the resulting object. If negative, all but the n last/first number of elements of x.
+A single integer. If positive, size for the resulting object. If negative, all but the n last/first number of elements of x. defaults to \code{n = 6L}.
 }
   \item{choice}{
 Display first row of species matrix (the default) or sites data frame.
@@ -35,19 +36,17 @@ If choice is \dQuote{species} of which mode should the returned matrix be report
   \item{\dots}{
 not used
 }
-}
 
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 An object like \code{as.matrix(x)} but generally smaller.
+}
 \author{
 Roland Kaiser
 }
-
 \seealso{
-\code{\link{head}} and \code{\link{tail}} in package \pkg{utils}. \code{\link{as.matrix}}
+\code{\link{head}} and \code{\link{tail}} in package \pkg{utils}.
+\code{\link{as.matrix}}.
 }
 \examples{
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
@@ -58,4 +57,5 @@ head(dta, "sp") # choice can abbreviated
 head(dta, "sp", "numeric") # choice can abbreviated
 }
 \keyword{methods}
+
 

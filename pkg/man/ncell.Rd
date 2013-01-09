@@ -1,7 +1,6 @@
 \name{ncell}
 
 \docType{methods}
-
 \alias{ncol}
 \alias{ncol-methods}
 \alias{ncol,VegsoupData-method}
@@ -34,9 +33,13 @@ dim(x)
 An integer giving number of rows (plots) and species (each occurrence of a species in layer).
 }
 
-\seealso{ \code{\link{VegsoupData}, \code{\link{Richness}} }
-
-\author{ Roland Kaiser }
+\seealso{
+\code{\link{VegsoupData}, \code{\link{Richness}}
+}
+}
+\author{
+Roland Kaiser
+}
 
 \examples{
 	data(testdata)
