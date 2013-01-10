@@ -22,6 +22,7 @@ Collate: AAA.R
          Class-VegsoupData.R
          VegsoupData-BaseMethods.R
          VegsoupData-OutputMethods.R
+         VegsoupData-VisualisationMethods.R
          Class-VegsoupDataPartition.R
          VegsoupDataPartition-BaseMethods.R
          VegsoupDataPartition-AssociationMethods.R

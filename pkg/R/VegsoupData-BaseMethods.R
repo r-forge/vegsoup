@@ -500,12 +500,14 @@ setMethod("getDist",
 		#	as.mumeric and as.logical
 		#	automatically apply decostand method!
 		if (missing(binary)) {
-			m <- as.numeric(obj)
+			D <- as.numeric(obj)
 		} else {
-			m <- as.logical(obj)	
+			D <- as.logical(obj)	
 		}
-		res <- vegdist(m, obj@dist)	
-		res
+		D <- vegan::vegdist(D, method = obj@dist, ...)
+		
+		if (max(D) > 1) D <- D / max(D)	
+		D
 	}
 )
 

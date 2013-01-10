@@ -52,6 +52,7 @@ exportMethods(
     "getStat",
     "QuickMap",	
     "head",
+    "heatmap",
     "Indpower",
     "Indspc",
     "Indval",

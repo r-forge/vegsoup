@@ -1,48 +1,42 @@
 \name{getDist}
+\docType{methods}
 \alias{getDist}
+\alias{getDist-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Return a Distance Matrix from Objects of Class VegsoupData*
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Compute a distance matrix as specified by the \code{dist} slot of an object by calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
 }
 \usage{
 getDist(obj)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object of class \code{VegsoupData*}.
+}
+  \item{binary}{
+Compute the distance matrix based on presence/absence data.
+}
+  \item{\dots}{
+Additional arguments passed to \code{vegan::vegdist}, except argument \code{method} which is supplied by the \pkg{vegsoup} object.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+If the resulting \code{"dist"} object is not a dissimilarity matrix (\code{max > 1}), it will be divided by \code{max(D)} to obtain dissimilarities. Note, the method returned by \code{decostand(obj)} will be applied before calculation of the distance matrix. Use \code{vegdist(obj)} to query which method is set for an object. Note, also the \code{print} and \code{show} methods will report this value. 
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+Returns an object of class \code{"dist"}.
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
-
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[vegsoup:vegdist]{vegdist}}
 }
+\keyword{methods}
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
