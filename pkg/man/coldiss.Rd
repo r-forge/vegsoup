@@ -1,6 +1,7 @@
-\name{heatmap}
+\name{coldiss}
 
-\alias{heatmap}
+\alias{coldiss}
+\alias{coldiss-method}
 
 \title{
 Color Plots of a Dissimilarity Matrix
@@ -46,13 +47,13 @@ data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 		scale = list(scale = "Braun-Blanquet")))
 
-heatmap(dta, 4)
+coldiss(dta, 4)
 
 require(RColorBrewer)
 
 
 cols <- colorRampPalette(brewer.pal(11, "Spectral"))
 
-heatmap(dta, cols(20), byrank = FALSE, diag = TRUE)
+coldiss(dta, cols(20), byrank = FALSE, diag = TRUE)
 }
 \keyword{datasets}

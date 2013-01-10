@@ -715,7 +715,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 )
 
 #	rbind like method to fuse objects
-.rbind.VegsoupData <- function (..., deparse.level = 1) {
+".rbind.VegsoupData" <- function (..., deparse.level = 1) {
 	allargs <- list(...)
 	#	allargs <- list(s1, s2, s3)
 	#	test if all objects have the same abundance scale

@@ -1,4 +1,4 @@
-".heatmap" <- function (obj, colors, byrank = TRUE, diag = FALSE, ...) {
+".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, ...) {
 # adapted for vegsoup from function coldiss()
 # Color plots of a dissimilarity matrix, without and with ordering
 #
@@ -47,12 +47,12 @@
 }
 
 #if (!isGeneric("heatmap")) {
-setGeneric("heatmap",
+setGeneric("coldiss",
 	function (obj, ...)
-		standardGeneric("heatmap")
+		standardGeneric("coldiss")
 )
 #}
-setMethod("heatmap",
+setMethod("coldiss",
     signature(obj = "VegsoupData"),
-    function (obj, ...) .heatmap(obj, ...)
+    function (obj, ...) .coldiss(obj, ...)
 )

@@ -15,7 +15,6 @@ importFrom("Hmisc", latex)
 importFrom("rgdal", spTransform)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 importFrom("cluster", agnes, pam, silhouette)
-
 #importFrom("googleVis", gvisMap)
 
 #exportPattern("^[^\\.]")
@@ -52,7 +51,7 @@ exportMethods(
     "getStat",
     "QuickMap",	
     "head",
-    "heatmap",
+    "coldiss",
     "Indpower",
     "Indspc",
     "Indval",
