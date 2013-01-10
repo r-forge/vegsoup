@@ -1,51 +1,51 @@
-\name{Richness}
-\alias{Richness}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-function to do
-}
+\name{richness}
+\alias{richness}
+\alias{richness-method}
+
+\title{ Dataset or Sample Richness of an Object of Class VegsoupData* }
 \description{
 Retrieve dataset or sample richness.
 }
 \usage{
-%%  ~~ Richness(obj, choices = c("dataset", sample"), ...) ~~
+richness(obj, choice = c("dataset", "sample"), ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
-an object inheriting from \code{class(VegsoupData)}.
+an object of class \code{VegsoupData*}.
 }
   \item{choice}{
-return either dataset, or sample richness.
+Return either dataset or sample richness, defaults to \code{"dataset"}. Partial matches are allowed.
+}
+  \item{\dots}{
+Not implemented.
 }
 }
 \details{
-In order to calculate richness all occurences of a particualr species in different layers if any are collapsed.
+Dataset richness is defined as the number of species (discarding layer duplicates) found in the data set. Sample richness is the number of species per sample (plot). In order to calculate correct species richness, when the object has more than one layer, all occurences of a particular species in different layers are collapsed to one.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A numeric vector of suitable size with names taken from the object if \code{choice = "sample"}.
 }
 \author{
-Roladn Kaiser
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[vegsoup:rowSums]{rowSums}},\code{\link[vegsoup:colSums]{colSums}}
 }
+\examples{
+library(vegsoup)
+data(testdata)        
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+	
+richness(dta) # default choice = "dataset"
+richness(dta, "sa") # partial match
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+# rowSums counts each occurence an layers.
+# Because there are 3 layers the numbers are different
+# compared to richness(dta, "sample")!
+rowSums(dta)
+}
+\keyword{ methods }
+

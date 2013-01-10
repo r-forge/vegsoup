@@ -6,6 +6,19 @@ dta <- VegsoupData(qry)
 
 summary(dta)
 
+dim(dta)
+ncol(dta)
+nrow(dta)
+ncell(dta)
+
+rowSums(dta)
+rowSums(dta, mode = "numeric")
+
+colSums(dta)
+colSums(dta, mode = "numeric")
+
+
+
 as.logical(dta)
 as.numeric(dta)
 as.character(dta)

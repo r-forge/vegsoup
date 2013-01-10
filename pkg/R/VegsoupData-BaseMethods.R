@@ -374,17 +374,6 @@ setMethod("dim",
 		#	was dim(x@species)
 		}
 )
-#if (!isGeneric("rowSums")) {
-setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
-	standardGeneric("rowSums"))
-#}
-#	to do: documentation
-setMethod("rowSums",
-	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1) {
-    	rowSums(as.logical(x))
-    }
-)
 #if (!isGeneric("ncell")) {
 setGeneric("ncell",
 	function (x, ...)
@@ -398,28 +387,73 @@ setMethod("ncell",
     }
 )
 #if (!isGeneric("rowSums")) {
-setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1)
+setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("rowSums"))
 #}
-#	to do: documentation
 setMethod("rowSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1) {
-    	rowSums(as.logical(x))
+	function (x, na.rm = FALSE, dims = 1, mode, ...) {
+		if (missing(mode)) {
+			mode <- "logical"
+		} else {
+			if (mode == "character") {
+				stop("\n no way to calculate sums based on characters")
+			}	
+		}	
+    	rowSums(as.matrix(x, mode = mode), ...)
     }
 )
 #if (!isGeneric("colSums")) {
 setGeneric("colSums", function (x, na.rm = FALSE, dims = 1)
 	standardGeneric("colSums"))
 #}
-#	to do: documentation
 setMethod("colSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1) {
-    	colSums(as.logical(x))
+	function (x, na.rm = FALSE, dims = 1, mode, ...) {
+		if (missing(mode)) {
+			mode <- "logical"
+		} else {
+			if (mode == "character") {
+				stop("\n no way to calculate sums based on characters")
+			}	
+		}		
+    	colSums(as.matrix(x, mode = mode), ...)
     }
 )
-
+#if (!isGeneric("rowMeans")) {
+setGeneric("rowMeans", function (x, na.rm = FALSE, dims = 1, ...)
+	standardGeneric("rowMeans"))
+#}
+setMethod("rowMeans",
+	signature(x = "VegsoupData"),
+	function (x, na.rm = FALSE, dims = 1, mode, ...) {
+		if (missing(mode)) {
+			mode <- "numeric"
+		} else {
+			if (mode == "character") {
+				stop("\n no way to calculate sums based on characters")
+			}	
+		}	
+    	rowMeans(as.matrix(x, mode = mode), ...)
+    }
+)
+#if (!isGeneric("rowSums")) {
+setGeneric("colMeans", function (x, na.rm = FALSE, dims = 1, ...)
+	standardGeneric("colMeans"))
+#}
+setMethod("colMeans",
+	signature(x = "VegsoupData"),
+	function (x, na.rm = FALSE, dims = 1, mode, ...) {
+		if (missing(mode)) {
+			mode <- "numeric"
+		} else {
+			if (mode == "character") {
+				stop("\n no way to calculate sums based on characters")
+			}	
+		}	
+    	colMeans(as.matrix(x, mode = mode), ...)
+    }
+)
 #	standardisation
 #if (!isGeneric("decostand")) {
 setGeneric("decostand", function (obj)
@@ -972,23 +1006,20 @@ setMethod("Layers",
 )
 
 #	Species richness of data set
-setGeneric("Richness",
+setGeneric("richness",
 	function (obj, ...)
-		standardGeneric("Richness")
+		standardGeneric("richness")
 )
-setMethod("Richness",
+setMethod("richness",
     signature(obj = "VegsoupData"),
 	function (obj, choice = c("dataset", "sample"), ...) {
 		#	obj = sub
-		choices <- c("dataset", "sample")
-		if (missing(choice)) {
-			choice <- "dataset"
-		}
-		choice <- choices[pmatch(choice, choices)]
+		CHOICE <- c("dataset", "sample")
+		if (missing(choice)) choice <- "dataset"
+		choice <- CHOICE[pmatch(choice, CHOICE)]
 		if (is.na(choice)) {
 			choice <- "dataset"
-		}	
-		
+		}		
 		switch(choice, "dataset" = {
 			res <- length(unique(DecomposeNames(obj)$abbr))
 		}, "sample" = {

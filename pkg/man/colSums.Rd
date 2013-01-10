@@ -1,77 +1,69 @@
-\name{colSums-methods}
+\name{colSums}
 \docType{methods}
+\alias{colSums}
 \alias{colSums-methods}
-\alias{colSums,ANY-method}
-\alias{colSums,CsparseMatrix-method}
-\alias{colSums,ddenseMatrix-method}
-\alias{colSums,denseMatrix-method}
-\alias{colSums,dgCMatrix-method}
-\alias{colSums,dgeMatrix-method}
-\alias{colSums,diagonalMatrix-method}
-\alias{colSums,igCMatrix-method}
-\alias{colSums,lgCMatrix-method}
-\alias{colSums,ngCMatrix-method}
-\alias{colSums,RsparseMatrix-method}
-\alias{colSums,TsparseMatrix-method}
-\alias{colSums,VegsoupData-method}
-\title{Methods for Function colSums}
+\alias{rowSums}
+\alias{rowSums-methods}
+\alias{rowSums}
+\alias{rowSums-methods}
+\alias{rowMeans}
+\alias{rowMeans-methods}
+\alias{colMeans}
+\alias{colMeans-methods}
+
+\title{ Row and Column Sums for Objects of Class VegsoupData* }
 \description{
- ~~ Methods for function \code{colSums}  ~~
+Form row and column sums for the the species matrix based on presence/absence.
 }
-\section{Methods}{
-\describe{
+\usage{
+colSums(x, mode, ...)
+rowSums(x, mode, ...)
+}
+\arguments{
+  \item{x}{
+An object of class VegsoupData*.
+}
+  \item{mode}{
+The mode of the species matrix to compute values from, defaults to \code{"logical"} for \code{rowSums} and \code{colSums}. See \code{\link{as.matrix}} for details about argument \code{"mode"}. The \code{rowMeans} and \code{colMeans} methods use \code{mode = "numeric"} as the default and \code{mode = "character"} is not supported by neither of the functions. 
+}
+  \item{\dots}{
+Not implemented.
+%%Arguments passed to \code{\link[base:rowSums]{rowSums}} and \code{\link[base:colSums]{colSums}}, respectively.
+}
+}
+\details{
+Note, the default behaviour (argument \code{mode} is missing) operates on a presence/absence version of the species matrix as can be obtained by \code{as.logical(obj)} or \code{as.matrix(obj, mode = "logical")}. On this basis \code{colSums} returns the number of occurences of a species in the data set. The \code{rowSums} method returns the number of species with duplicated occurences of species on different layers if there is more than one layer and at least a single species occuring in more than one layer! In this case correct species richness can be obtained with method \code{richness(obj, "sample")}.
 
-\item{\code{signature(x = "ANY")}}{
-%%  ~~describe this method here~~
+The \code{colSums}
 }
+\value{
+A numeric vector of suitable size with names taken from the object.
+}
+\seealso{
+\code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}
+}
+\examples{
+library(vegsoup)
+data(testdata)        
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
 
-\item{\code{signature(x = "CsparseMatrix")}}{
-%%  ~~describe this method here~~
-}
+#	number of species including layer duplicates	
+rowSums(dta)
+#	sums of abundances 
+rowSums(dta, mode = "numeric")
+#	Layers(dta) tells that there is more than one layers
+#	some species occur in two layers
+Layers(dta)
+#	true species richness
+richness(dta, "sample")
 
-\item{\code{signature(x = "ddenseMatrix")}}{
-%%  ~~describe this method here~~
+#	number of occurences for each species
+colSums(dta)
+#	sums of abundances
+colSums(dta, mode = "numeric")
 }
+\author{ Roladn Kaiser }
 
-\item{\code{signature(x = "denseMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "dgCMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "dgeMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "diagonalMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "igCMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "lgCMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "ngCMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "RsparseMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "TsparseMatrix")}}{
-%%  ~~describe this method here~~
-}
-
-\item{\code{signature(x = "VegsoupData")}}{
-%%  ~~describe this method here~~
-}
-}}
 \keyword{methods}
-\keyword{ ~~ other possible keyword(s) ~~ }
+
