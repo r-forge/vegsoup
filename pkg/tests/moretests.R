@@ -11,38 +11,6 @@ ncol(dta)
 nrow(dta)
 ncell(dta)
 
-rowSums(dta)
-rowSums(dta, mode = "numeric")
-
-colSums(dta)
-colSums(dta, mode = "numeric")
-
-
-
-as.logical(dta)
-as.numeric(dta)
-as.character(dta)
-
-decostand(dta)  <- c("hellinger")
-as.numeric(dta)
-decostand(dta)  <- c("hellinger", "standardize")
-as.numeric(dta)
-decostand(dta)  <- c("wisconsin")
-as.numeric(dta)                  
-
-dta[1:3,]
-dim(dta[1:3,2:3])
-
-s1 <- dta[1:2, ]
-s2 <- dta[3:4, ]
-s3 <- dta[5:6, ]
-
-res <- rbind(s3, s1, s2)
-rownames(res)
-SpatialPointsVegsoup(res)
-
-Layers(dta[, grep("@sl", names(dta))])
-
 head(dta)
 head(dta, mode = "logical")
 head(dta, mode = "numeric")
@@ -61,9 +29,43 @@ colSums(dta)
 Layers(dta)
 dim(Layers(dta, collapse = c("hl", "sl", NA)))
 
-Richness(dta, "dataset")
-Richness(dta, "sample")
+rowSums(dta)
+rowSums(dta, mode = "numeric")
+
+colSums(dta)
+colSums(dta, mode = "numeric")
+
+as.logical(dta)
+as.numeric(dta)
+as.character(dta)
+
+decostand(dta)  <- c("hellinger")
+as.numeric(dta)
+decostand(dta)  <- c("hellinger", "standardize")
+as.numeric(dta)
+decostand(dta)  <- c("wisconsin")
+as.numeric(dta)                  
+
+dta[1:3,]
+dta[1,]
+dim(dta[1:3,2:3])
+
+s1 <- dta[1:2, ]
+s2 <- dta[3:4, ]
+s3 <- dta[5:6, ]
+
+res <- rbind(s3, s1, s2)
+rownames(res)
+SpatialPointsVegsoup(res)
+SpatialPolygonsVegsoup(res)
+
+Layers(dta[, grep("@sl", colnames(dta))])
+
+richness(dta, "da")
+richness(dta, "sa")
 t(as.character(dta))
+
+Arrange(dta)
 as.data.frame(t(as.character(Arrange(dta, "packed"))))
 Sites(dta)
 Sites(Arrange(dta))

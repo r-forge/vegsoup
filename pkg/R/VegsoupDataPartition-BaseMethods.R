@@ -22,6 +22,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		warning(" argument k missing, set to ", k, call. = FALSE)
 	}	
 	if (missing(k) & inherits(obj, "VegsoupDataOptimstride")) {
+		#	warning! no sensible results so far!
 		k = summary(opt)$best.optimclass1
 		#	k = as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
 	}
@@ -47,8 +48,8 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 			warning(" selected method external but did not define clustering", call. = FALSE)
 		}
 		part.meth <- method <- "external"
-		if (length(clustering) == 1) {
-			sel <- pmatch(clustering, names(Sites(obj)))
+		if (length(clustering) == 1) {		
+			sel <- pmatch(clustering, names(Sites(obj))) # rename to: names(sites)
 			if (!is.na(sel)) {			
 				clustering = as.vector(Sites(obj)[, sel]) 			
 			} else {
@@ -152,7 +153,8 @@ if (inherits(part, "partana")) {
 }
 if (is.vector(part)) { # method external
 	grp <- as.numeric(factor(part))
-	names(grp) <- rownames(obj) # prone to error if clustering is not selected from sites!
+	# warning: prone to error if clustering is not selected from sites!
+	names(grp) <- rownames(obj)
 	if (verbose) {
 		print(data.frame(clustering = levels(factor(clustering)),
 			assigned = as.numeric(factor(levels(factor(clustering)))) )
@@ -219,16 +221,16 @@ setMethod("[",
 	    tmp <- as(x, "VegsoupData")
 	    tmp <- tmp[i, j, ...]
         
-		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
-			warning(" Partitioning vector was subsetted!",
-				" k was changed accordingly", call. = FALSE)
-		}
+#		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
+#			warning(" Partitioning vector was subsetted!",
+#				" k was changed accordingly", call. = FALSE)
+#		}
 
 		#	develop class VegsoupDataPartition from class VegsoupData
 		res <- new("VegsoupDataPartition", tmp)
 		res@part = part[names(part) %in% rownames(tmp)]
 		res@method = x@method
-		res@dist = x@dist
+		# was res@dist = x@dist # now slot of class VegsoupData
 		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
 		res@group = res@group[names(part) %in% rownames(tmp)]
 
@@ -399,13 +401,18 @@ setGeneric("Partitioning<-",
 setReplaceMethod("Partitioning",
 	signature(obj = "VegsoupDataPartition", value = "numeric"),
 	function (obj, value) {
-		#	warning!
-		#	to do: possibliy needs more validity checks?
 		if (length(value) != length(Partitioning(obj))) {
-			stop("replacement does not match in length: ")
+			stop("\n replacement does not match in length")
 		}
-				
-		names(value) <- rownames(obj)
+		if (is.null(names(value))) {		
+			names(value) <- rownames(obj)
+		} else {
+			if (length(intersect(names(value), rownames(obj))) != nrow(obj)) {
+				stop("\n if value has names, these have to match rownames(obj)")
+			} else {
+				value <- value[match(rownames(obj), names(value))]
+			}
+		}
 		obj@part <- value
 		obj@k <- length(unique(value))
 		
@@ -430,6 +437,7 @@ setGeneric("Spread",
 	function (obj)
 		standardGeneric("Spread")
 )
+#	to do: speed up?
 setMethod("Spread",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
@@ -486,9 +494,9 @@ setMethod("Contingency",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj) {
 		res <- t(aggregate(as.logical(obj),
-			by = list(Partitioning(obj)), FUN = sum))[-1,]
+			by = list(Partitioning(obj)), FUN = sum))[-1, ]
 		colnames(res) <- unique(Partitioning(obj))
-		rownames(res) <- names(obj)
+		rownames(res) <- colnames(obj)
 		return(res)
 	}
 )
@@ -832,7 +840,7 @@ setMethod("Optsil",
 		}	
 		res <- obj	
 		cpu.time <- system.time({
-			res@part <- as.integer(optsil(
+			res@part <- as.integer(optpart::optsil(
 			x = Partitioning(obj),
 			dist = getDist(obj), ...)$clustering)
 		})
@@ -1040,8 +1048,10 @@ setMethod("PartitioningMatrix",
     signature(obj = "VegsoupDataPartition"),
 	function (obj) {
 		res <- t(sapply(Partitioning(obj),
-			function(x) as.numeric(x == levels(factor(Partitioning(obj))))))
-		dimnames(res)[2] = list(levels(factor(Partitioning(obj))))
+			function (x) {
+				as.numeric(x == levels(factor(Partitioning(obj))))
+			} ))
+		dimnames(res)[2] <- list(levels(factor(Partitioning(obj))))
     return(res)                                                                                                                              
 	}
 )
@@ -1088,8 +1098,6 @@ setMethod("PartitioningCombinations",
 	signature(obj = "VegsoupDataPartition"),
 	.PartitioningCombinations
 )
-
-
 
 #	List occurences of species in partitions
 #	to do: documentation

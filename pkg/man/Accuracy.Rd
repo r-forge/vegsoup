@@ -1,8 +1,6 @@
 \name{Accuracy}
 \alias{Accuracy}
-\title{
-  Calculate prediction accuracy statistics for two partitionings
-}
+\title{ Accuracy Statistics for Objects of class VegsoupDataPartition }
 \description{
   \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupDataPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. compoarison (predicted) class memberships (\code{obj2}), and calculates a range of statistics about prediction accuracy.
 }
@@ -33,12 +31,12 @@ A list with the following components:
   Oaks: Sage Publications. 
 }
 \author{
-  Antti Arppe
+Adopted by Roland Kaiser for vegsoup from code by  Antti Arppe
 }
 \seealso{
-  See also \code{\link{model.statistics}}.
+\code{\link{model.statistics}}.
 }
 \examples{
-%%
+
 }
 \keyword{ ~kwd }

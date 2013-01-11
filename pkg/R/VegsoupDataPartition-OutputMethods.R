@@ -1,9 +1,9 @@
 #	to do: add column for indicator value, high priority!
 
-.latexVegsoupDataPartitionSites <- function (object, col.width, filename, verbose = FALSE, ...) {
-#	object  <- prt
+.latexVegsoupDataPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {
+#	obj  <- prt
 
-sites <- object@sites
+sites <- obj@sites
 
 #	variables to drop for summary table	
 drop <- grep("date", names(sites), fixed = TRUE)
@@ -15,7 +15,7 @@ if (missing(filename)) {
 }
 if (length(drop) > 0) {
 	if (verbose) {
-		cat("droped variables ",
+		cat("dropped variables ",
 		paste(names(sites)[drop], collapse = ", "),
 		". not meaningful for summary")
 	}	
@@ -28,18 +28,18 @@ if (missing(col.width)) {
 	}
 }
 
-part <- Partitioning(object)
+part <- Partitioning(obj)
 
 num.cols <- sapply(sites, is.numeric)
 char.cols <- sapply(sites, is.character)
 
 num.cols.agg <- matrix(NA,
 	ncol = length(which(num.cols)),
-	nrow = getK(object))
+	nrow = getK(obj))
 	
 for (i in seq(along = which(num.cols))) {
-	i.median <- aggregate(sites[, which(num.cols)[i]], by = list(part), median)[,2]
-	i.mad <- aggregate(sites[, which(num.cols)[i]], by = list(part), mad)[,2]
+	i.median <- aggregate(sites[, which(num.cols)[i]], by = list(part), median)[ ,2]
+	i.mad <- aggregate(sites[, which(num.cols)[i]], by = list(part), mad)[ ,2]
 	num.cols.agg[,i] <- paste(i.median, " (", round(i.mad, 3), ")", sep = "")
 }
 
@@ -48,13 +48,13 @@ names(num.cols.agg) <- names(sites)[num.cols]
 
 char.cols.agg <- matrix(NA,
 	ncol = length(which(char.cols)),
-	nrow = getK(object))
+	nrow = getK(obj))
 	
 for (i in seq(along = which(char.cols))) {
 	#	i = 1
 	i.table <- data.frame(variable = sites[,which(char.cols)[i]], part)
 	j.res <- c()
-	for (j in 1:getK(object)) {
+	for (j in 1:getK(obj)) {
 		j.tmp <- table(i.table[i.table$part == j,]$variable)
 		j.tmp <- sort(j.tmp[j.tmp > 0], decreasing = TRUE)
 		j.res <- c(j.res, paste(names(j.tmp), j.tmp, sep = ":", collapse = ", "))
@@ -82,12 +82,12 @@ tex <- res <- data.frame(
 	stringsAsFactors = FALSE)
 	
 caption <- paste("Summary table for sites variables grouped in",
-		getK(object),
+		getK(obj),
 		"partitions.",
 		"Median and median absolute deviation in parentheses.",
 		"Relevees per partition: ",
-		paste(names(table(Partitioning(object))),
-			table(Partitioning(object)), sep = ":", collapse = ", ")
+		paste(names(table(Partitioning(obj))),
+			table(Partitioning(obj)), sep = ":", collapse = ", ")
 		)
 p.col <- paste("|p{", col.width, "}", sep = "")
 col.just <- c(rep(p.col, ncol(tex)))
@@ -127,9 +127,9 @@ return(invisible(res))
 }
 
 #	\dots passed to Arrange()
-.latexVegsoupDataPartitionSpeciesRecursive <- function (object, path, col.width, taxa.width, caption.text, verbose, ...) {
+.latexVegsoupDataPartitionSpeciesRecursive <- function (obj, path, col.width, taxa.width, caption.text, verbose, ...) {
 	
-#	object  <- prt
+#	obj  <- prt
 if (missing(path)) {
 	warning("no path supplied for LaTex files")
 }	
@@ -155,13 +155,14 @@ if (missing(caption.text)) {
 	}	
 }
 
-res <- vector("list", length = getK(object))
+res <- vector("list", length = getK(obj))
 filenames <- c()
-for(i in 1:getK(object)) {
-	#	object = prt; i = 2
-	i.part <- object[Partitioning(object) == i, ]
+
+for (i in 1:getK(obj)) {
+	#	obj = prt; i = 2
+	i.part <- obj[Partitioning(obj) == i, ]
 	i.part <- Arrange(i.part, ...)
-	#	table will be order according to Layers(object)
+	#	table will be order according to Layers(obj)
 	#	was i.part <- i.part[, order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
 	
 	res[[i]] <- i.part
@@ -203,18 +204,18 @@ close(con)
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSitesRecursive <- function (object, path, ...) {
+.latexVegsoupDataPartitionSitesRecursive <- function (obj, path, ...) {
 	#	to do!	
 }
 
 setGeneric("Latex",
-	function (object, ...)
+	function (obj, ...)
 		standardGeneric("Latex")
 )
 
 setMethod("Latex",
-	signature(object = "VegsoupDataPartition"),
-	function (object, choice, recursive, ...) {
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, choice, recursive, ...) {
 			if (missing(choice)) {
 				choice <- "species"	
 			}
@@ -222,16 +223,16 @@ setMethod("Latex",
 				recursive <- FALSE
 			}			
 			if (choice == "sites" & !recursive) {
-				res <- .latexVegsoupDataPartitionSites(object, ...)
+				res <- .latexVegsoupDataPartitionSites(obj, ...)
 			}
 			if (choice == "species" & !recursive) {
-				res <- .latexVegsoupDataPartitionSpecies(object, ...)
+				res <- .latexVegsoupDataPartitionSpecies(obj, ...)
 			}
 			if (choice == "sites" & recursive) {
-				res <- .latexVegsoupDataPartitionSitesRecursive(object, ...)
+				res <- .latexVegsoupDataPartitionSitesRecursive(obj, ...)
 			}
 			if (choice == "species" & recursive) {
-				res <- .latexVegsoupDataPartitionSpeciesRecursive(object, ...)
+				res <- .latexVegsoupDataPartitionSpeciesRecursive(obj, ...)
 			}			
 	return(invisible(res))
 	}

@@ -6,24 +6,24 @@
 #	internal
 #	generic is set by VegsoupDataPartition-*Methods.R
 
-.latexVegsoupDataPartitionSpecies <- function (object, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-#	object = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(object)); verbose = TRUE; filename = paste("FidelityTable")
-if (class(object) != "VegsoupDataPartitionFidelity") {
+.latexVegsoupDataPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(obj)); verbose = TRUE; filename = paste("FidelityTable")
+if (class(obj) != "VegsoupDataPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
 	}
-	object <- Fidelity(object, ...)
+	obj <- Fidelity(obj, ...)
 }
 
-cntn <- Contingency(object)
-cnst <- Constancy(object)
+cntn <- Contingency(obj)
+cnst <- Constancy(obj)
 nc <- ncol(cnst) # number of clusters
-sp <- ncol(object) # number of species
+sp <- ncol(obj) # number of species
 
-ft <- object@fisher.test
-N <- nrow(object) # number of plots
-frq <- colSums(as.logical(object))
-siz <- table(Partitioning(object))
+ft <- obj@fisher.test
+N <- nrow(obj) # number of plots
+frq <- colSums(as.logical(obj))
+siz <- table(Partitioning(obj))
 
 if (missing(filename) & mode == 1) {
 	filename = paste("FidelityTable")
@@ -61,10 +61,10 @@ if (missing(molticols.footer)) {
 		cat("\n molticols footer missing, set to ", molticols.footer)
 	}	
 }
-if (missing(use.letters) & getK(object) > 10) {
+if (missing(use.letters) & getK(obj) > 10) {
 	use.letters = TRUE
 }
-if (missing(stat.min) & object@method == "r.g") {
+if (missing(stat.min) & obj@method == "r.g") {
 	#	automatic guess adapted from isopam()
 	stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
 } else {
@@ -78,7 +78,7 @@ if (missing(fivenum.select)) {
 	fivenum.select = c("min", "median", "max")
 }
 if (missing(sites.columns)) {
-	sites.columns = names(Sites(object))
+	sites.columns = names(Sites(obj)) # names(obj)
 	#	drop coordiantes
 	drp <- c(
 		grep("longitude", sites.columns),
@@ -86,7 +86,7 @@ if (missing(sites.columns)) {
 		grep("precision", sites.columns)
 	)
 	#	drop all columns constant at zero
-	drp.zeros <- which(apply(Sites(object)[, sapply(Sites(object), is.numeric)], 2, sum) == 0)
+	drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric)], 2, sum) == 0)
 	drp <- c(drp, drp.zeros)
 	sites.columns <- sites.columns[ -drp ]
 }
@@ -126,11 +126,11 @@ symb[ft <= 0.001] <- "***"
 frq.ft <- matrix(paste(cnst, symb, sep = ""), 
 	nrow = nrow(cnst), ncol = ncol(cnst))
 frq.ft <- data.frame(frq.ft)
-colnames(frq.ft) <- 1:getK(object)
-rownames(frq.ft) <- names(object)
+colnames(frq.ft) <- 1:getK(obj)
+rownames(frq.ft) <- colnames(obj)
   
 #	fidelity measure
-stat <- object@stat
+stat <- obj@stat
 
 #	sort table
 # 	which cluster has highest fidelity measure
@@ -174,7 +174,7 @@ if (length(dia) > 0) {
 }
 
 #	info about diagnostic species
-dig1 <- stat.idx[names(stat.idx) %in% names (dia)]
+dig1 <- stat.idx[names(stat.idx) %in% names(dia)]
 dig2 <- dig1[rownames(diag)]
 typ <- list ()
 
@@ -192,12 +192,12 @@ tmp <- list(tab = tmp, typical = typ)
 #	top and bottom of table
 if (length(dia) > 0) {
 	#	top of table, diagnostic/typical species
-	txn <- DecomposeNames(object, verbose = FALSE)
+	txn <- DecomposeNames(obj, verbose = FALSE)
 	txn <- txn[match(rownames(tmp$tab), txn$abbr.layer), ]
 	rownames(txn) <- txn$abbr.layer
 	txn.top <- txn[rownames(diag), ]
 	tmp.i <- c()
-	for (i in Layers(object)) {
+	for (i in Layers(obj)) {
 		tmp.i <- rbind(tmp.i, txn.top[txn.top$layer == i, ])
 	}
 	txn.top <- tmp.i
@@ -206,14 +206,14 @@ if (length(dia) > 0) {
 	#	bottom of table, remaining species
 	txn.bottom <- txn[-match(rownames(diag), rownames(tmp$tab)), ]
 	tmp.i <- c()
-	for (i in Layers(object)) {
+	for (i in Layers(obj)) {
 		tmp.i <- rbind(tmp.i, txn.bottom[txn.bottom$layer == i, ])
 	}
 	txn.bottom <- tmp.i
 	bottom <- tmp$tab[rownames(txn.bottom), ]
 	tmp$tab <- rbind(top, bottom)
 } else {
-	txn <- DecomposeNames(object, verbose = FALSE)
+	txn <- DecomposeNames(obj, verbose = FALSE)
 	txn <- txn[match(rownames(tmp$tab), txn$abbr.layer), ]
 	rownames(txn) <- txn$abbr.layer
 	txn <- txn[order(txn$layer), ]
@@ -224,7 +224,7 @@ if (length(dia) > 0) {
 tex <- as.data.frame(as.matrix(tmp$tab),
 	stringsAsFactors = FALSE)
 
-txn <- DecomposeNames(object, verbose = FALSE) 
+txn <- DecomposeNames(obj, verbose = FALSE) 
 txn <- txn[match(rownames(tex), txn$abbr.layer), ]
 
 tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
@@ -283,17 +283,17 @@ if (mode == 1) {
 	#	column widths and column names
 	p.col <- paste("p{", col.width, "}", sep = "")
 	col.just <- c(paste("p{", taxa.width, "}", sep = ""), "p{10mm}",
-		rep(p.col, getK(object)))
-	col.names <- c("Taxon", "Layer", 1:getK(object))
+		rep(p.col, getK(obj)))
+	col.names <- c("Taxon", "Layer", 1:getK(obj))
 
-	if (length(Layers(object)) < 2) {
+	if (length(Layers(obj)) < 2) {
 		tex <- tex[, -2]
 		col.just <- col.just[-2]
 		col.names <- col.names[-2]
 		add2caption  <- paste("All species in the same layer ",
-			Layers(object),
+			Layers(obj),
 			". ",
-			"Fidelity measure: ", object@method, ". ",
+			"Fidelity measure: ", obj@method, ". ",
 			sep = "")
 	} else {
 		add2caption  <- ""
@@ -301,13 +301,13 @@ if (mode == 1) {
 
 	#	table caption
 	caption <- paste("Fidelity table for ",
-		getK(object),
+		getK(obj),
 		" partitions. ",
 		add2caption,
 		"Statistics threshold: ", stat.min, ". ",
 		"Relevees per partition: ",
-		paste(names(table(Partitioning(object))),
-			table(Partitioning(object)), sep = ":", collapse = ", "),
+		paste(names(table(Partitioning(obj))),
+			table(Partitioning(obj)), sep = ":", collapse = ", "),
 		". ",
 		sep = "")
 		caption <- paste(caption, caption.text, collapse = " ")	# additional user supplied text	
@@ -339,7 +339,7 @@ if (mode == 1) {
 		tex <- tex[-match(footer.species, row.names(tex)), ]
 		footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
 
-		txn <- DecomposeNames(object, verbose = FALSE)
+		txn <- DecomposeNames(obj, verbose = FALSE)
 
 		txn <- txn[match(rownames(footer), txn$abbr.layer), ]
 		footer <- as.data.frame(footer, stringsAsFactors = FALSE)
@@ -410,7 +410,7 @@ if (mode == 2) {
 	if (verbose) cat("\n run mode", mode)
 	
 	#	species summary
-	fn <- Fivenum(object, na.rm = TRUE, recode = recode)
+	fn <- Fivenum(obj, na.rm = TRUE, recode = recode)
 	fn <- fn[match(rownames(tex), rownames(fn)), ,]
 
 	fn.df <- t(apply(fn, c(2, 1),
@@ -421,21 +421,22 @@ if (mode == 2) {
 		}))
 
 	#	sites summary	
-	sts <- Sites(object)
-	sts$part <- Partitioning(object)
+	sts <- Sites(obj)
+	sts$part <- Partitioning(obj)
 	sts <- sts[, c("part", sites.columns)]
 
 	#	resort to match order of intermediate result table 
-	fn.df <- fn.df[match(rownames(tex), rownames(fn.df)), ]
-	cnst <- cnst[match(rownames(tex), rownames(cnst)), ]
-	cntn <- cntn[match(rownames(tex), rownames(cntn)), ]
-	stat <- stat[match(rownames(tex), rownames(stat)), ]
-	sprd <- Spread(object) # speed issue, method is slow
+	ord <- match(rownames(tex), rownames(fn.df)) 
+	fn.df <- fn.df[ord, ]
+	cnst <- cnst[ord, ]
+	cntn <- cntn[ord, ]
+	stat <- stat[ord, ]
+	sprd <- Spread(obj) # speed issue, method is slow!
 
-	tex <- footer.sites <- footer.species <- vector("list", length = getK(object))
-	names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(object)
+	tex <- footer.sites <- footer.species <- vector("list", length = getK(obj))
+	names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(obj)
 	
-	for (i in 1:getK(object)) {
+	for (i in 1:getK(obj)) {
 		#	i = 1
 		sel <- which(cnst[, i] > 0)
 		
@@ -515,9 +516,9 @@ if (mode == 1) {
 	tex <- gsub("×", "$\\times$", tex, fixed = TRUE)
 	
 	if (use.letters) {
-		sel <- match(sort(unique(Partitioning(object))), dimnames(tex)[[2]])
+		sel <- match(sort(unique(Partitioning(obj))), dimnames(tex)[[2]])
 		dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
-			" (", LETTERS[sort(unique(Partitioning(object)))], ")", sep = "")
+			" (", LETTERS[sort(unique(Partitioning(obj)))], ")", sep = "")
 	}
 	if (verbose) {
 		cat("\nprint LaTex table to", filename)	
@@ -561,7 +562,7 @@ if (mode == 2) {
 		writeLines("%start", con)
 	close(con)	
 
-	for (i in 1:getK(object)) {
+	for (i in 1:getK(obj)) {
 		latex(as.matrix(tex.out[[i]]),
 			file = filename,
 			append = TRUE,

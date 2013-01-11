@@ -95,7 +95,7 @@ mode(res) <- "numeric"
 cols <- c("grey80", "grey20")
 ind <- heatmap(res,# col = cols,
  	hclustfun = function (x) hclust(x, method = "ward"),
-	distfun = function (x) vegdist(wisconsin(x), "bray"),
+	distfun = function (x) vegan::vegdist(wisconsin(x), "bray"),
 	cexRow = 0.5,
 	scale = "none")
 	

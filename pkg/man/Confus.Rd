@@ -34,6 +34,8 @@ Roland Kaiser
 \seealso{
 \code{\link{VegsoupDataPartition}},\code{\link{confus}} in package \pkg{optpart} and \code{\link{crosstable.statistics}} and \code{\link{associations}} in package \pkg{polytomous}, \code{\link{Association}}, \code{\link{Accuracy}} and \code{\link{Confus}} in package 'Vegsoup'. 
 }
+\examples{
 
+}
 \keyword{ methods }
 

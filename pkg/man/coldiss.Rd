@@ -52,6 +52,10 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 
 coldiss(dta, 4)
 
+#	setting other dissimilarity rather than the default
+vegdist(dta) <- "bray"
+coldiss(dta, 4)
+
 require(RColorBrewer)
 
 

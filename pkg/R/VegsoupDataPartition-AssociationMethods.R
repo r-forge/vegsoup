@@ -68,12 +68,15 @@ setMethod("Accuracy",
 			"and obj2 (", getK(obj1), ")!", sep = "")
 	}
 	#	this is a slightly modified copy of function crosstable.statistics in package polytomous
-		#	(C) Antti Arppe 2007-2011
+
+	#	original author
+	#	(C) Antti Arppe 2007-2011	
 	#	E-mail: antti.arppe@helsinki.fi
 
 	#	Menard, S. (1995). Applied Logistic Regression Analysis.
 	#	Sage University Paper Series on Quantitative Applications in the Social Sciences 07-106.
 	#	Thousand Oaks: Sage Publications.
+	
 	#	reference (observed) as row margins, comparison (predicted) as column margins
 	# 	according to Menard (1995: 24-32)
 	

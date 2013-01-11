@@ -1076,7 +1076,7 @@ setMethod("summary",
 	}
 	cat("object of class", class(object), "\n")
 	species.summary <- paste(
-		"\n species (discarding layer duplicates): ", Richness(object),
+		"\n species (discarding layer duplicates): ", richness(object),
 		"\n sites (sample plots): ", dim(object)[1],
 		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
 		"\n layers: ", length(Layers(object)), 
@@ -1099,9 +1099,7 @@ setMethod("summary",
 		species.list <- species.list[, c(1,5,3,4)]
 		species.list <- apply(species.list[, -1], 1,
 			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ","))
-	}		
-
-			#species.list <- paste(species.list, collapse = ", ")
+	}			
 	switch(choice, "all" = {
 		cat(species.summary)
 		if (dim(object)[1] == 1) cat("\n species list\n", species.list)
@@ -1145,7 +1143,7 @@ setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL)
 #	warning: does not behave as expected for the user
 #	StablePartition() relies on this method
 #	to do: documentation
-#	think about a method for class (VegsoupDataPartition) to sample conditional on Partitiong(obj)
+#	think about a method for class (VegsoupDataPartition) to sample conditional on Partitioning(obj)
 setMethod("SampleVegsoup",
     signature(x = "VegsoupData"),
     function (x, size, replace = FALSE, prob = NULL) {
