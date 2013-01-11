@@ -131,7 +131,7 @@ rownames(df.attr) <- colnames(x)
 # reorder by plot
 df.attr <- df.attr[match(rownames(dta), rownames(df.attr)), ] 
 
-#	give name and assign
+# give name and assign
 dta$block <- df.attr$Block
 dta$altitude <- df.attr$Seehöhe
 dta$expo <- df.attr$Exposition
@@ -139,6 +139,9 @@ dta$cov <- df.attr$"Deckung...."
 dta$ph <- df.attr$"ph...10.2."
 
 names(Sites(dta))
+
+#	plot of the dissimilarity matrix
+coldiss(dta, diag = T)
 
 # see if we can reproduce the grouping in the original table
 prt.flx <- VegsoupDataPartition(dta, 3, "wards")

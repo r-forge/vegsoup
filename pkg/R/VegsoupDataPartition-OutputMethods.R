@@ -126,7 +126,7 @@ latex(tex,
 return(invisible(res))
 }
 
-#	\dots passed to Arrange()
+#	\dots passed to seriation()
 .latexVegsoupDataPartitionSpeciesRecursive <- function (obj, path, col.width, taxa.width, caption.text, verbose, ...) {
 	
 #	obj  <- prt
@@ -161,7 +161,7 @@ filenames <- c()
 for (i in 1:getK(obj)) {
 	#	obj = prt; i = 2
 	i.part <- obj[Partitioning(obj) == i, ]
-	i.part <- Arrange(i.part, ...)
+	i.part <- seriation(i.part, ...)
 	#	table will be order according to Layers(obj)
 	#	was i.part <- i.part[, order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
 	

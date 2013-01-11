@@ -66,7 +66,7 @@ richness(dta, "da")
 richness(dta, "sa")
 
 
-Arrange(dta)
+seriation(dta)
 as.data.frame(t(as.character(Arrange(dta, "packed"))))
 Sites(dta)
 Sites(Arrange(dta))

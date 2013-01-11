@@ -4,6 +4,8 @@
 \alias{Extract}
 \alias{$-methods}
 \alias{$,VegsoupData-method}
+\alias{[-methods}
+\alias{[,VegsoupData-method}
 \title{Extract or Replace Parts of the Sites Data Slot of Objects inheriting VegsoupData}
 \description{
 Extract or replace parts of the sites data.
@@ -37,14 +39,14 @@ If only one plot is requested for indexing (e.g. \code{obj[1,]}) the \code{summa
 When objects of class \code{"VegsoupDataPartition"} are subsetted it is likely that the partitioning vector (\code{Partitioning(obj)}) has to be subsetted too. If this is the case, the number of partitions \code{"k"} (\code{getK(obj)}) is changed (lowered) accordingly.
 }
 \examples{
-	qry <- Vegsoup(species, sites, taxonomy,
-		scale = list(scale = "Braun-Blanquet"))
-	dta <- VegsoupData(qry)
-	dta$rock
+qry <- Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet"))
+dta <- VegsoupData(qry)
+dta$rock
     
-	#	summary returns a species list
-	dta[1,]
-	(dta$rock <- sqrt(dta$rock))
+# summary returns a species list
+dta[1,]
+(dta$rock <- sqrt(dta$rock))
 #	do.call("$", list(dta, "variable"))   
 } 
 

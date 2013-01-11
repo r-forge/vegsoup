@@ -1,4 +1,5 @@
 \name{decostand}
+\docType{methods}
 \alias{decostand}
 \alias{decostand<-}
 \alias{decostand-methods}
@@ -21,7 +22,7 @@ decostand(obj) <- value
 	An object inheriting from class \code{VegsoupData}.
 }
   \item{value}{
-	a vector of characters giving methods as accepted by  \code{vegan::decostand} or \code{NULL}.
+	A vector of characters giving methods as accepted by  \code{vegan::decostand} or \code{NULL}.
 }
 }
 \details{

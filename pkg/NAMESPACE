@@ -13,6 +13,7 @@ importFrom("graphics", plot, hist)
 importFrom("utils", head, tail)
 importFrom("Hmisc", latex)
 importFrom("rgdal", spTransform)
+#importFrom("vegan", vegdist, decostand)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 importFrom("cluster", agnes, pam, silhouette)
 #importFrom("googleVis", gvisMap)
@@ -28,7 +29,6 @@ exportMethods(
     "AbundanceScale<-",
     "AprioriGrouping",
     "Accuracy",
-    "Arrange",
     "Association",
     "as.matrix",
     "as.logical",
@@ -46,7 +46,7 @@ exportMethods(
     "Disdiam",
     "Fidelity",
     "FisherTest",
-    "getDist",
+    "getdist",
     "getDistconnected",
     "getK",
     "getStat",
@@ -76,6 +76,7 @@ exportMethods(
     "rowSums",
     "rowMeans",
     "SampleVegsoup",
+    "seriation",
     "SigFidelity",
     "Silhouette",
     "Sites",

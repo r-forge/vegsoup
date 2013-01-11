@@ -1,7 +1,10 @@
-\name{getDist}
+\name{getdist}
 \docType{methods}
-\alias{getDist}
-\alias{getDist-method}
+\alias{getdist}
+\alias{getdist-methods}
+\alias{vegdist}
+\alias{vegdist-methods}
+\alias{vegdist<--methods}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Return a Distance Matrix from Objects of Class VegsoupData*
@@ -10,7 +13,10 @@ Return a Distance Matrix from Objects of Class VegsoupData*
 Compute a distance matrix as specified by the \code{dist} slot of an object of class \code{Vegsoupdata} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
 }
 \usage{
-getDist(obj, ...)
+getdist(obj, ...)
+
+vegdist(obj, ...)
+vegdist(obj) <- value  
 }
 \arguments{
   \item{ obj }{
@@ -21,6 +27,9 @@ Compute the distance matrix based on presence/absence data.
 }
   \item{ mode }{
 Compute distances in \emph{Q} or \emph{R} mode. See \code{\link{as.matrix}}.
+}
+  \item{ value }{
+A single character vaild as argument \code{method} to function \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
 }
   \item{ \dots }{
 Additional arguments passed to \code{vegan::vegdist}, except argument \code{method} which is supplied by the \pkg{vegsoup} object.
@@ -46,9 +55,12 @@ data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
 # query disssimlilarity measure set for the object
-vegdist(dta) # the default is euclidean
+# change the default distance 'euclidean'
+vegdist(dta) 
 
-d.q <- getDist(dta)
+vegdist(dta) <- "bray"
+
+d.q <- getdist(dta, "numeric")
 class(d.q)
 attributes(d.q)
 attr(d.q, "mode")
@@ -59,7 +71,7 @@ attr(d.q, "mode")
 # see ?vegan::vegdist 
 decostand(dta)  <- "chi.square"
 
-d.r <- getDist(dta, mode = "R")              
+d.r <- getdist(dta, mode = "R")              
 class(d.r)
 attr(d.r, "mode")	
 }

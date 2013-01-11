@@ -538,11 +538,11 @@ setReplaceMethod("vegdist",
 )	
 #	retrieve distance matrix
 #	to do: documentation
-setGeneric("getDist",
+setGeneric("getdist",
 	function (obj, ...)
-		standardGeneric("getDist")
+		standardGeneric("getdist")
 )
-setMethod("getDist",
+setMethod("getdist",
 	signature(obj = "VegsoupData"),
 	function (obj, binary, mode, ...) {
 		#	as.mumeric and as.logical
@@ -578,7 +578,7 @@ setGeneric("getDistconnected",
 setMethod("getDistconnected",
 	signature(obj = "VegsoupData"),
 	function (obj, ...) {
-		distconnected(getDist(obj), ...)
+		distconnected(getdist(obj), ...)
 	}
 )
 
@@ -1180,25 +1180,16 @@ setMethod("SampleVegsoup",
     }
 )
 
-#	Function to rearrange object (species and sites data frames)
-#	by various reordering methods as option.
-#	Currently only presence/absencse data is used,
-#	and default options of methods apply.
-#	Currently there is no way to pass down arguments
-#	to functions?
-#	
-
 #	arrange und unpartitioned data set
-#	to do: documentation
 #	rewrite to accept argument binary = FALSE, high priority
 #	or use VegsoupDataPartition
 
 #	rename to seriation
-setGeneric("Arrange",
+setGeneric("seriation",
 	function (object, ...)
-		standardGeneric("Arrange")
+		standardGeneric("seriation")
 )
-setMethod("Arrange",
+setMethod("seriation",
     signature(obj = "VegsoupData"),
 	function (object, method, ...) {
 	#	obj = dta
@@ -1210,14 +1201,14 @@ setMethod("Arrange",
 		method <- match.arg(method, METHODS)
 	}
 	
-	si.dis <- getDist(object)
-	sp.dis <- vegdist(t(as.logical(object)), method = dist)
+	si.dis <- getdist(obj, "logical")
+	sp.dis <- getdist(obj, "logical", mode = "R")
 	
-	#si.dis <- vegdist(as.logical(object), method = dist)
-	#sp.dis <- vegdist(t(as.logical(object)), method = dist)
+	#si.dis <- vegdist(as.logical(obj), method = dist)
+	#sp.dis <- vegdist(t(as.logical(obj)), method = dist)
 	
 	switch(method, dca = {
-		use <- try(decorana(as.logical(object)), silent = TRUE, ...)
+		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
 		if (inherits(use, "try-error")) {
 			use  <- NULL
 		}	
@@ -1228,11 +1219,11 @@ setMethod("Arrange",
 			sp.ind <- try(order(scores(use, choices = 1, 
                   display = "species")))
 			if (inherits(sp.ind, "try-error")) {
-				sp.ind <- order(wascores(tmp, object))
+				sp.ind <- order(wascores(tmp, obj))
 			}
 		} else {
-			si.ind <- 1:dim(as.logical(object))[1]
-			sp.ind <- 1:dim(as.logical(object))[2]
+			si.ind <- 1:dim(obj)[1]
+			sp.ind <- 1:dim(obj)[2]
 		}
 		}, hclust = {
 			si.ind <- hclust(si.dis,
@@ -1255,12 +1246,12 @@ setMethod("Arrange",
 			si.ind <- pam(si.dis, diss = TRUE)$order
 			sp.ind <- pam(sp.dis, diss = TRUE)$order	
 		}, packed = {
-			si.ind <- order(apply(as.logical(object), 1, sum), decreasing = TRUE)
-			sp.ind  <- order(apply(as.logical(object), 2, sum), decreasing = TRUE)
+			si.ind <- order(rowSums(dta, "logical"), decreasing = TRUE)
+			sp.ind  <- order(colSums(dta, "logical"), decreasing = TRUE)
 		}
 	)
 	
-	res <- object[si.ind, sp.ind]
+	res <- obj[si.ind, sp.ind]
 
 	return(res)
 

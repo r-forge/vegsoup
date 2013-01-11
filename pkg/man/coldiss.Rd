@@ -32,7 +32,7 @@ Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
 Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE} and only applies if additional argument \code{mode} is supplied and it's value is \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
 }
   \item{\dots}{
-Arguments passed to \code{getDist}. See \sQuote{Examples}.
+Arguments passed to \code{getdist}. See \sQuote{Examples}.
 }                          
 
 }
@@ -59,27 +59,31 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 
 coldiss(dta) # default
 
+
 # other dissimilarity
 vegdist(dta) <- "bray"
 coldiss(dta, 4)
 
+# more colors
 require(RColorBrewer)
-
 
 cols <- colorRampPalette(brewer.pal(11, "Spectral"))
 
-coldiss(dta, cols(20), byrank = FALSE, diag = TRUE)
+coldiss(dta, cols(4), byrank = FALSE, diag = TRUE)
 
-# R-mode analysis, see ?getDist
+# R-mode analysis, see ?getdist
 # first collapse layers
 dta.ol <- Layers(dta, aggregate = "layer",
 	collapse = "ol", verbose = TRUE)
 decostand(dta.ol) <- "chi.square"
 vegdist(dta.ol)	
-coldiss(dta.ol, mode = "R", ordered.only = TRUE, translate = TRUE)
 
-# more options
-coldiss(dta.ol, cols(20), mode = "R",
+# annotate scientific species names
+# label only the diagonal to avoid cluttered display   
+coldiss(dta.ol, rev(cols(20)), mode = "R",
 	ordered.only = TRUE, translate = TRUE, diag = TRUE)
 }
+
+
+
 \keyword{datasets}

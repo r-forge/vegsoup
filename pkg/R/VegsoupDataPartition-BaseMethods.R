@@ -842,7 +842,7 @@ setMethod("Optsil",
 		cpu.time <- system.time({
 			res@part <- as.integer(optpart::optsil(
 			x = Partitioning(obj),
-			dist = getDist(obj), ...)$clustering)
+			dist = getdist(obj), ...)$clustering)
 		})
 	
 		cat("\ntime to optimise species matrix",
@@ -927,7 +927,7 @@ setMethod("Partana",
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getDist(obj)
+    		dis <- getdist(obj)
     	} else {    	
 			if (missing(method)) {    			
 				dis <- vegdist(as.logical(obj), "bray")
@@ -953,7 +953,7 @@ setMethod("Silhouette",
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getDist(obj)
+    		dis <- getdist(obj)
     	} else {    	
 			if (missing(method)) {    			
 				dis <- vegdist(as.logical(obj), "bray")
@@ -979,7 +979,7 @@ setMethod("Typal",
 			warning(" results are meaningless with k = ", getK(obj), call. = FALSE)
 			return(invisible(obj))
 		} else {
-   			res <- typal(Partitioning(obj), getDist(obj))
+   			res <- typal(Partitioning(obj), getdist(obj))
 	   		return(invisible(res))
    		}
     }
@@ -1024,7 +1024,7 @@ setMethod("Disdiam",
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getDist(obj)
+    		dis <- getdist(obj)
     	} else {    	
 			if (missing(method)) {    			
 				dis <- vegdist(as.logical(obj), "bray")

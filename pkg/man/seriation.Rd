@@ -1,14 +1,15 @@
-\name{Arrange}
+\name{seriation}
 \docType{methods}
-\alias{Arrange-methods}
-\alias{Arrange}
+\alias{seriation}
+\alias{seriation-methods}
+
 
 \title{ Modify an Objects Internal Order as to Reflect a Vegetation Table }
 \description{
-The method arranges the species matrix according to an ordination or cluster analysis. The method will perform reordering on all slots of the supplied object to reflect the order of plots and/or species as returned by the selected method. Currently there is no way to pass down arguments to functions.
+The method arranges the species matrix according to an ordination, cluster analysis or by species frequencies. The method modifies the supplied object as  to reflect the order of plots and/or species as returned by the selected method. Currently there is no way to pass down arguments to functions.
 }
 \usage{
-Arrange(object, methods = c("dca", "hclust", "ward", "flexible", "pam", "packed"))
+seriation(object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,7 +27,7 @@ Not implemented yet. See \sQuote{Note}.
 }
 }
 \details{
-The default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} without any additional arguments. Method \code{\dQuote{hclust}} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{\dQuote{hclust}} calls \code{\link{agnes}} with argument \code{method = "ward"}, and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. \code{"pam"} applies \code{\link{pam}}. Finally, method \code{"packed"} simply performs ordering by row and col sums. Argument \code{dist} accepts all methods supported by \code{\link{vegdist}}.
+The default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} without any additional arguments. Method \code{\dQuote{hclust}} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{\dQuote{hclust}}, \code{"ward"} calls \code{\link{agnes}} with argument \code{method = "ward"}, and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. \code{"pam"} applies \code{\link{pam}}. Finally, method \code{"packed"} simply performs ordering by row and col sums.
 
 Ordering by explicit indexing is available by using the extract method \code{\link{'['}} for obejcts of class \code{Vegsoup}.
 }
@@ -53,9 +54,8 @@ Currently only presence/absencse data is used (\code{as.logical(obj)}) and defau
 data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))	
-Arrange(dta)
-Arrange(dta, "packed")
-as.data.frame(t(as.character()))	
+seriation(dta)
+seriation(dta, "packed")	
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
