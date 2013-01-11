@@ -10,7 +10,7 @@ Plots of the Dissimilarity Matrix of an Object of class VegsoupData*
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-heatmap(obj, colors, byrank = TRUE, diag = FALSE, ...)
+heatmap(obj, colors, byrank = TRUE, diag = FALSE, ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
   \item{obj}{
@@ -25,13 +25,20 @@ Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equa
   \item{diag}{
 Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
 }                          
+  \item{ordered.only}{
+Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
+}
+  \item{translate}{
+Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE} and only applies if additional argument \code{mode} is supplied and it's value is \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
+}
   \item{\dots}{
-Not implemented.
+Arguments passed to \code{getDist}. See \sQuote{Examples}.
 }                          
 
 }
 \details{
-If \code{colors} is a single integer, the argument determines the number of colors to be used with \code{\link{cm.colors}}. If \code{colors} is vector of colors longer than 1 those colors will be used. The function uses \code{\link{dmat.color}} and \code{\link{order.single}} in package \pkg{gclus}. 
+If \code{colors} is a single integer, the argument determines the number of colors to be used with \code{\link{cm.colors}}. If \code{colors} is vector of colors longer than 1 those colors will be used. The function uses \code{\link{dmat.color}} and \code{\link{order.single}} in package \pkg{gclus}.
+%Combinig \code{translate = TRUE} and \code{diag = TRUE} will result in over-plotting.
 }
 \author{
 Implemented from Roland Kaiser for vegsoup from code in \code{colldiss.R} by Francois Gillet supplied with the Book Numerical Ecology with Rm (Borcard et al. 2011)
@@ -50,9 +57,9 @@ data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 		scale = list(scale = "Braun-Blanquet")))
 
-coldiss(dta, 4)
+coldiss(dta) # default
 
-#	setting other dissimilarity rather than the default
+# other dissimilarity
 vegdist(dta) <- "bray"
 coldiss(dta, 4)
 
@@ -62,5 +69,17 @@ require(RColorBrewer)
 cols <- colorRampPalette(brewer.pal(11, "Spectral"))
 
 coldiss(dta, cols(20), byrank = FALSE, diag = TRUE)
+
+# R-mode analysis, see ?getDist
+# first collapse layers
+dta.ol <- Layers(dta, aggregate = "layer",
+	collapse = "ol", verbose = TRUE)
+decostand(dta.ol) <- "chi.square"
+vegdist(dta.ol)	
+coldiss(dta.ol, mode = "R", ordered.only = TRUE, translate = TRUE)
+
+# more options
+coldiss(dta.ol, cols(20), mode = "R",
+	ordered.only = TRUE, translate = TRUE, diag = TRUE)
 }
 \keyword{datasets}

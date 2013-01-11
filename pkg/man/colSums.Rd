@@ -13,18 +13,18 @@
 
 \title{ Row and Column Sums for Objects of Class VegsoupData* }
 \description{
-Form row and column sums for the the species matrix based on presence/absence.
+Form row and column sums for the the species matrix based on presence/absence and numeric matrices.
 }
 \usage{
-colSums(x, mode, ...)
-rowSums(x, mode, ...)
+colSums(x, typeof, ...)
+rowSums(x, typeof, ...)
 }
 \arguments{
-  \item{x}{
+  \item{ x }{
 An object of class VegsoupData*.
 }
-  \item{mode}{
-The mode of the species matrix to compute values from, defaults to \code{"logical"} for \code{rowSums} and \code{colSums}. See \code{\link{as.matrix}} for details about argument \code{"mode"}. The \code{rowMeans} and \code{colMeans} methods use \code{mode = "numeric"} as the default and \code{mode = "character"} is not supported by neither of the functions. 
+  \item{ typeof }{
+The mode of the species matrix to compute values from, defaults to \code{"logical"} for \code{rowSums} and \code{colSums}. See \code{\link{as.matrix}} for details about argument \code{"typeof"}. The \code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"} as the default and \code{typeof = "character"} is not supported by neither of the functions. 
 }
   \item{\dots}{
 Not implemented.
@@ -32,7 +32,7 @@ Not implemented.
 }
 }
 \details{
-Note, the default behaviour (argument \code{mode} is missing) operates on a presence/absence version of the species matrix as can be obtained by \code{as.logical(obj)} or \code{as.matrix(obj, mode = "logical")}. On this basis \code{colSums} returns the number of occurences of a species in the data set. The \code{rowSums} method returns the number of species with duplicated occurences of species on different layers if there is more than one layer and at least a single species occuring in more than one layer! In this case correct species richness can be obtained with method \code{richness(obj, "sample")}.
+Note, the default behaviour (argument \code{typeof} is missing) operates on a presence/absence version of the species matrix as can be obtained by \code{as.logical(x)} or \code{as.matrix(x, typeof = "logical")}. On this basis \code{colSums} returns the number of occurences of a species in the data set. The \code{rowSums} method returns the number of species with duplicated occurences of species on different layers if there is more than one layer and at least a single species occuring in more than one layer! In this case correct species richness can be obtained with method \code{richness(obj, "sample")}.
 
 The \code{colSums}
 }
@@ -51,7 +51,7 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 #	number of species including layer duplicates	
 rowSums(dta)
 #	sums of abundances 
-rowSums(dta, mode = "numeric")
+rowSums(dta, typeof = "numeric")
 #	Layers(dta) tells that there is more than one layers
 #	some species occur in two layers
 Layers(dta)
@@ -61,7 +61,7 @@ richness(dta, "sample")
 #	number of occurences for each species
 colSums(dta)
 #	sums of abundances
-colSums(dta, mode = "numeric")
+colSums(dta, typeof = "numeric")
 }
 \author{ Roladn Kaiser }
 

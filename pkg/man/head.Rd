@@ -15,25 +15,25 @@ Return the First or Last Part of the Species Matrix
 Returns the first or last parts of the species matrix.
 }
 \usage{
-head(x, n, choice, mode, ...)
+head(x, n, choice, typeof, ...)
 
 tail(x, ...)
 }
 \arguments{
 
-  \item{x}{
+  \item{ x }{
 An object inheriting from class \code{VegsoupData}.
 }
-  \item{n}{
+  \item{ n }{
 A single integer. If positive, size for the resulting object. If negative, all but the n last/first number of elements of x. defaults to \code{n = 6L}.
 }
-  \item{choice}{
+  \item{ choice }{
 Display first row of species matrix (the default) or sites data frame.
 }
-  \item{mode}{
-If choice is \dQuote{species} of which mode should the returned matrix be reported (see \code{\link{as.matrix}}). If missing a presence/absence species matrix is printed (\code{mode == "logical"}).
+  \item{ typeof }{
+If choice is \dQuote{species} of which mode should the returned matrix be reported (see \code{\link{as.matrix}}). If missing a presence/absence species matrix is printed (\code{typeof = "logical"}).
 }
-  \item{\dots}{
+  \item{ \dots }{
 not used
 }
 

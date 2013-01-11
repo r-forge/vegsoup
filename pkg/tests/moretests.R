@@ -5,16 +5,17 @@ qry <- Vegsoup(species, sites, taxonomy,
 dta <- VegsoupData(qry)
 
 summary(dta)
-
+head(DecomposeNames(dta))
+Abbreviation(dta)
 dim(dta)
 ncol(dta)
 nrow(dta)
 ncell(dta)
 
 head(dta)
-head(dta, mode = "logical")
-head(dta, mode = "numeric")
-head(dta, mode = "character")
+head(dta, typeof = "logical")
+head(dta, typeof = "numeric")
+head(dta, typeof = "character")
 head(dta, "si")
 tail(dta, n=3)
 colnames(dta)
@@ -23,21 +24,21 @@ ncol(dta)
 nrow(dta)
 dim(dta)
 
-rowSums(dta)
-colSums(dta)
-
 Layers(dta)
 dim(Layers(dta, collapse = c("hl", "sl", NA)))
 
 rowSums(dta)
-rowSums(dta, mode = "numeric")
+rowSums(dta, typeof = "numeric")
 
 colSums(dta)
-colSums(dta, mode = "numeric")
+colSums(dta, typeof = "numeric")
 
 as.logical(dta)
 as.numeric(dta)
 as.character(dta)
+as.character(dta, mode = "R")
+head(as.matrix(dta, "character", "r"))
+head(t(as.character(dta)))
 
 decostand(dta)  <- c("hellinger")
 as.numeric(dta)
@@ -63,7 +64,7 @@ Layers(dta[, grep("@sl", colnames(dta))])
 
 richness(dta, "da")
 richness(dta, "sa")
-t(as.character(dta))
+
 
 Arrange(dta)
 as.data.frame(t(as.character(Arrange(dta, "packed"))))

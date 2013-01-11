@@ -21,10 +21,14 @@ Additional output.
 
 }
 \details{
-The function parses the \code{colnames} of the species matrix into four components. The first giving the compound taxon key (\code{"abbr.layer"}), the second the taxon abbreviation only (\code{"abbr"}), the third the layer code (\code{"layer"}) and the last component corresponds to the full taxon name \code{"taxon"} queryied from \code{Taxonomy(obj)}. \code{\link{VegsoupData}} constructs these \dQuote{compound taxon abbreviations} by pasting \code{make.names(x)} and \code{layer} seperated with \code{"@"}. To deparse the abbreviation and layer string \code{DecomposeNames} should be used.
+The function parses the \code{colnames} of the species matrix into three components. The first giving the taxon abbreviation only (\code{"abbr"}), the second the layer code (\code{"layer"}) and the last component corresponds to the full taxon name \code{"taxon"} queryied from \code{Taxonomy(obj)}.
+
+The compound taxon key (\code{"abbr.layer"}) can be accessed from the \code{rownames} of the resulting object. This is advantegous as it provides an easy means of subsetting with \code{colnames(obj)}.
+
+\code{\link{VegsoupData}} constructs these \dQuote{compound taxon abbreviations} by pasting \code{make.names(x)} and \code{layer} seperated with \code{"@"}. To deparse the abbreviation and layer string \code{DecomposeNames} should be used.
 }
 \value{
-A data.frame with as many rows and in the same order as there are columns in the species matrix. Note, the method uses \code{invisible} when returning it's results.
+A \code{"data.frame"} with as many rows and in the same order as there are columns in the species matrix. Note, the method uses \code{invisible} when returning it's results.
 }
 \author{
 Roland Kaiser

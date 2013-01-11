@@ -7,28 +7,30 @@
 Return a Distance Matrix from Objects of Class VegsoupData*
 }
 \description{
-Compute a distance matrix as specified by the \code{dist} slot of an object by calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
+Compute a distance matrix as specified by the \code{dist} slot of an object of class \code{Vegsoupdata} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
 }
 \usage{
-getDist(obj)
+getDist(obj, ...)
 }
 \arguments{
-  \item{obj}{
+  \item{ obj }{
 An object of class \code{VegsoupData*}.
 }
-  \item{binary}{
+  \item{ binary }{
 Compute the distance matrix based on presence/absence data.
 }
-  \item{\dots}{
+  \item{ mode }{
+Compute distances in \emph{Q} or \emph{R} mode. See \code{\link{as.matrix}}.
+}
+  \item{ \dots }{
 Additional arguments passed to \code{vegan::vegdist}, except argument \code{method} which is supplied by the \pkg{vegsoup} object.
 }
 }
 \details{
-If the resulting \code{"dist"} object is not a dissimilarity matrix (\code{max > 1}), it will be divided by \code{max(D)} to obtain dissimilarities. Note, the method returned by \code{decostand(obj)} will be applied before calculation of the distance matrix. Use \code{vegdist(obj)} to query which method is set for an object. Note, also the \code{print} and \code{show} methods will report this value. 
-
+If the resulting \code{"dist"} object is not a dissimilarity matrix (\code{max > 1}), it will be divided by \code{max(D)} to obtain dissimilarities. Note, the method returned by \code{decostand(obj)} will be applied before calculation of the distance matrix. Use \code{vegdist(obj)} to query which method is active for an object. Note, also the \code{print} and \code{show} methods will report this value. The argument \code{mode} controls if the disatnces are pbtained for objects, the plots (\emph{Q mode}) or variables, the species (\emph{R mode}).
 }
 \value{
-Returns an object of class \code{"dist"}.
+Returns an object of class \code{"dist"} with an additional attribute \code{"mode"} one of \code{"Q"} or \code{"R"}.
 }
 \author{
 Roland Kaiser
@@ -36,7 +38,30 @@ Roland Kaiser
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link[vegsoup:vegdist]{vegdist}}
+\code{\link[vegan:vegdist]{vegdist}}
+}
+\examples{
+library(vegsoup)
+data(testdata)        
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+# query disssimlilarity measure set for the object
+vegdist(dta) # the default is euclidean
+
+d.q <- getDist(dta)
+class(d.q)
+attributes(d.q)
+attr(d.q, "mode")
+
+# R-mode analysis
+# chi square distances can be obtained
+# by computing euclidean distances on standardized data
+# see ?vegan::vegdist 
+decostand(dta)  <- "chi.square"
+
+d.r <- getDist(dta, mode = "R")              
+class(d.r)
+attr(d.r, "mode")	
 }
 \keyword{methods}
 

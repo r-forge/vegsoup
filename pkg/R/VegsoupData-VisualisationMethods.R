@@ -1,4 +1,4 @@
-".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, ...) {
+".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, ordered.only = FALSE, translate = FALSE, ...) {
 # adapted for vegsoup from function coldiss()
 # Color plots of a dissimilarity matrix, without and with ordering
 #
@@ -8,6 +8,8 @@
 #	argument nc renamed to colors with extended meaning	
 	require(gclus)
 
+	cl <- match.call()
+	
 	if (missing(colors)) {
 		cr <- cm.colors(4)
 	} else {
@@ -17,38 +19,59 @@
 			cr <- colors
 		}
 	}
+			
+	D <- getDist(obj, ...)
+	D.labels <- attributes(D)$Labels
+	
+	if (translate & any(names(cl) == "mode")) {
+		D.labels <- DecomposeNames(obj)[D.labels, ]$taxon
+		op <- par(xpd = NA)
+	}
 
-	print(class(obj))		
-	D <- getDist(obj)
-
-	D.cr = dmat.color(1 - D,
+	D.cr <- dmat.color(1 - D,
 		byrank = ifelse(byrank, TRUE, FALSE),
 		colors = cr)
 
-	D.order = order.single(1 - D)
-	D.cr.order = D.cr[D.order, D.order]
+	D.order <- order.single(1 - D)
+	D.cr.order <- D.cr[D.order, D.order]
+	
+	if (!ordered.only) op <- par(mfrow = c(1,2), pty = "s")	
 
-	op = par(mfrow = c(1,2), pty = "s")	
-
+	#	sub title
+	sub <- paste("vegdist:", vegdist(obj), "\n",
+		"decostand:",decostand(obj))
+	
 	if (diag) {
-		plotcolors(D.cr, rlabels = attributes(D)$Labels, 
-			main = "Dissimilarity Matrix", 
-			dlabels = attributes(D)$Labels)
-		title(sub = vegdist(obj))	
-		plotcolors(D.cr.order, rlabels = attributes(D)$Labels[D.order], 
-			main = "Ordered Dissimilarity Matrix", 
-			dlabels = attributes(D)$Labels[D.order])
-		title(sub = vegdist(obj))				
+		if (!ordered.only) {
+			plotcolors(D.cr,
+				rlabels = D.labels, dlabels = D.labels,
+				main = "Dissimilarity Matrix")
+			title(sub = sub)
+		}
+		if (translate) {
+			plotcolors(D.cr.order,
+				#rlabels = NULL,
+				dlabels = D.labels[D.order],
+				main = "Ordered Dissimilarity Matrix")			
+		} else {
+			plotcolors(D.cr.order,
+				rlabels = D.labels[D.order], dlabels = D.labels[D.order],
+				main = "Ordered Dissimilarity Matrix")			
+		}	
+		title(sub = sub)				
 	} else {
-		plotcolors(D.cr, rlabels = attributes(D)$Labels, 
-			main = "Dissimilarity Matrix")
-		title(sub = vegdist(obj))			
-		plotcolors(D.cr.order, rlabels = attributes(D)$Labels[D.order], 
+		if (!ordered.only) {
+			plotcolors(D.cr, rlabels = D.labels, 
+				main = "Dissimilarity Matrix")
+			title(sub = sub)
+		}				
+		plotcolors(D.cr.order, rlabels = D.labels[D.order], 
 			main = "Ordered Dissimilarity Matrix")
-		title(sub = vegdist(obj))			
+		title(sub = sub)			
 	}
 
-	par(op)
+	if (!ordered.only) par(op)
+	if (translate & any(names(cl) == "mode")) par(op)
 }
 
 #if (!isGeneric("heatmap")) {

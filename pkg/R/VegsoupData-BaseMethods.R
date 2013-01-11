@@ -1,6 +1,6 @@
 #	function to cast species matrix
 #	mode = 2 binary
-#	mode = 1 charcter, or numeric
+#	mode = 1 character, or numeric
 .cast <- function (obj, mode, ...) {
 	#	obj = dta; mode = 1
 			
@@ -19,7 +19,7 @@
 
 	#	resort to layer
 	if (length(Layers(obj)) > 1) {	
-	#	slow, but ensures order
+	#	rather slow, but ensures order
 		species <- unique(as.vector(unlist(
 			sapply(Layers(obj),
 				function (x) {
@@ -405,15 +405,15 @@ setGeneric("rowSums",
 #}
 setMethod("rowSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, mode, ...) {
-		if (missing(mode)) {
-			mode <- "logical"
+	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
+		if (missing(typeof)) {
+			typeof <- "logical"
 		} else {
-			if (mode == "character") {
+			if (typeof == "character") {
 				stop("\n no way to calculate sums based on characters")
 			}	
 		}	
-    	rowSums(as.matrix(x, mode = mode), ...)
+    	rowSums(as.matrix(x, typeof = typeof), ...)
     }
 )
 #if (!isGeneric("colSums")) {
@@ -423,15 +423,15 @@ setGeneric("colSums",
 #}
 setMethod("colSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, mode, ...) {
-		if (missing(mode)) {
-			mode <- "logical"
+	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
+		if (missing(typeof)) {
+			typeof <- "logical"
 		} else {
-			if (mode == "character") {
+			if (typeof == "character") {
 				stop("\n no way to calculate sums based on characters")
 			}	
 		}		
-    	colSums(as.matrix(x, mode = mode), ...)
+    	colSums(as.matrix(x, typeof = typeof), ...)
     }
 )
 #if (!isGeneric("rowMeans")) {
@@ -440,15 +440,15 @@ setGeneric("rowMeans", function (x, na.rm = FALSE, dims = 1, ...)
 #}
 setMethod("rowMeans",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, mode, ...) {
-		if (missing(mode)) {
+	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
+		if (missing(typeof)) {
 			mode <- "numeric"
 		} else {
-			if (mode == "character") {
+			if (typeof == "character") {
 				stop("\n no way to calculate sums based on characters")
 			}	
 		}	
-    	rowMeans(as.matrix(x, mode = mode), ...)
+    	rowMeans(as.matrix(x, typeof = typeof), ...)
     }
 )
 #if (!isGeneric("rowSums")) {
@@ -457,15 +457,15 @@ setGeneric("colMeans", function (x, na.rm = FALSE, dims = 1, ...)
 #}
 setMethod("colMeans",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, mode, ...) {
-		if (missing(mode)) {
-			mode <- "numeric"
+	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
+		if (missing(typeof)) {
+			typeof <- "numeric"
 		} else {
-			if (mode == "character") {
+			if (typeof == "character") {
 				stop("\n no way to calculate sums based on characters")
 			}	
 		}	
-    	colMeans(as.matrix(x, mode = mode), ...)
+    	colMeans(as.matrix(x, typeof = typeof), ...)
     }
 )
 #	standardisation
@@ -544,18 +544,26 @@ setGeneric("getDist",
 )
 setMethod("getDist",
 	signature(obj = "VegsoupData"),
-	function (obj, binary, ...) {
+	function (obj, binary, mode, ...) {
 		#	as.mumeric and as.logical
 		#	automatically apply decostand method!
+		#	argument mode controls transpostion before
+		#	caluclation of distances
+		if (missing(mode)) mode = "Q"
 		if (missing(binary)) {
-			D <- as.numeric(obj)
+			X <- as.numeric(obj, mode = mode)
 		} else {
-			D <- as.logical(obj)	
+			X <- as.logical(obj, mode = mode)	
 		}
-		D <- vegan::vegdist(D, method = obj@dist, ...)
+		d <- vegan::vegdist(X, method = obj@dist, ...)
 		
-		if (max(D) > 1) D <- D / max(D)	
-		D
+		#	ensure dissimilarities
+		if (max(d) > 1) d <- d / max(d)	
+		
+		#	assign attribute
+		attributes(d) <- c(attributes(d), mode = toupper(mode))
+		
+		d
 	}
 )
 
@@ -582,17 +590,17 @@ setGeneric("head", function(x)
 
 setMethod("head",
     signature(x = "VegsoupData"),
-    function (x, choice, mode, n = 6L, ...) {
+    function (x, choice, typeof, n = 6L, ...) {
 	    if (missing(choice))
 	    	choice = "species"
     	CHOICE <- c("species", "sites")
     	choice <- CHOICE[pmatch(choice, CHOICE)]
-	    if (missing(mode))
-		    mode = "logical"
+	    if (missing(typeof))
+		    typeof = "logical"
 	    if (missing(n))
 		    n = 6L
     	if (choice == "species")
-			res <- head(as.matrix(x, mode), n, ...)
+			res <- head(as.matrix(x, typeof), n, ...)
     	if (choice == "sites")
     		res <- head(Sites(x), n, ...)
     	return(res)
@@ -605,15 +613,15 @@ setGeneric("tail", function (x)
 #	to do: documentation
 setMethod("tail",
     signature(x = "VegsoupData"),
-    function (x, n = 6L, choice, mode, ...) {
+    function (x, n = 6L, choice, typeof, ...) {
 	    if (missing(choice))
-	    	choice ="species"
-		if (missing(mode))
-		    mode = 3 # binary
+	    	choice = "species"
+		if (missing(typeof))
+		    typeof = "logical"
 	    if (missing(n))
 			n = 6L
 		if (choice == "species")
-			res <- tail(as.logical(x), n, ...)
+			res <- tail(as.matrix(x, typeof), n, ...)
     		#	res <- tail(x@species, ...)
     	if (choice == "sites")
     		res <- tail(Sites(x), n, ...)
@@ -1185,19 +1193,21 @@ setMethod("SampleVegsoup",
 #	rewrite to accept argument binary = FALSE, high priority
 #	or use VegsoupDataPartition
 
+#	rename to seriation
 setGeneric("Arrange",
 	function (object, ...)
 		standardGeneric("Arrange")
 )
 setMethod("Arrange",
     signature(obj = "VegsoupData"),
-	function (object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), ...) {
-	#	object = dta
+	function (object, method, ...) {
+	#	obj = dta
 	
 	if (missing(method)) {
 		method  <- "dca"
 	} else {
-		method <- match.arg(method)			
+		METHODS <- c("dca", "hclust", "ward", "flexible", "pam", "packed")
+		method <- match.arg(method, METHODS)
 	}
 	
 	si.dis <- getDist(object)
@@ -1280,7 +1290,8 @@ setMethod("DecomposeNames",
 	layer <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 2))
 	taxon <- Taxonomy(obj)$taxon[match(abbr, Taxonomy(obj)$abbr)]
 	
-	res <- data.frame(abbr.layer, abbr, layer, taxon, stringsAsFactors = FALSE)
+	res <- data.frame(abbr, layer, taxon, stringsAsFactors = FALSE)
+	rownames(res) <- abbr.layer
 
 	if (any(is.na(res$layer)) | any(is.na(res$taxon))) {
 		stop("\n unable to deparse layer string,",
