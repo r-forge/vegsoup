@@ -136,7 +136,9 @@ setMethod("plot",
 			lines(1:k, oc2[i, ], lty = i)
 		}
 	}
-	legend("bottomright", lty = 1:length(tmp$args$method), legend = rownames(oc1), bty = "n")
+	legend("bottomright",
+		lty = 1:length(tmp$args$method),
+		legend = rownames(oc1), bty = "n")
 }
 
 )	

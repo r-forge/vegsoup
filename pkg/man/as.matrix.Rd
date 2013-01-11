@@ -8,7 +8,7 @@
 Retrieve Species Matrix with Specified Storage Mode
 }
 \description{
-The functions retrieve a species matrix of mode according the methods name and \code{as.matrix} returns corresponding types of matrix but specified by its argument \code{mode}.
+The functions retrieve a species matrix of mode according the methods name and \code{as.matrix} returns corresponding types of matrices but specified by its argument \code{mode}.
 }
 \usage{
 as.logical(x)
@@ -30,7 +30,7 @@ A character string giving the desired mode or type of the object. Can be one of 
 
 }
 \details{
-For any object inheriting from class \code{VegsoupData} the methods return an object of class \code{'matrix'} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (see \code{\link{Taxonomy}}). The returned object is suitable for input of functions in other packages that require an object of class \code{matrix}. 
+For any object inheriting from class \code{VegsoupData} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (see \code{\link{Taxonomy}}). The returned object is suitable for input of functions in other packages that require an object of class \code{matrix}. 
 
 \code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{AbundanceScale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(obj, mode = "numeric")}.
 

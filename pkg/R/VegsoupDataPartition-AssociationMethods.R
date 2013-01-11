@@ -193,7 +193,7 @@ setMethod("Association",
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")
 	}
-	#	reference (observed) as row margins, compoarison (predicted) as column margins
+	#	reference (observed) as row margins, comporison (predicted) as column margins
 	N <- length(Partitioning(obj1))
 				
 	X <- table(Partitioning(obj1), Partitioning(obj2))

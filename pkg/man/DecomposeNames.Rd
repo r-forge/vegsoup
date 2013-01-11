@@ -2,50 +2,45 @@
 \alias{DecomposeNames}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Deparse Taxanames for Objects of Class VegsoupData*
+Deparse Taxa names for Objects of Class VegsoupData*
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Parses the \code{colnames} of the species matrix of an object into four components.
 }
 \usage{
-DecomposeNames(obj, ...)
+DecomposeNames(obj, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
 An object inheriting from class \code{VegsoupData}.
 }
-  \item{\dots}{
-Not implemented yet.
+  \item{verbose}{
+Additional output.
 }
+
 }
 \details{
-Splits the names into components abbr, layer and taxon.
+The function parses the \code{colnames} of the species matrix into four components. The first giving the compound taxon key (\code{"abbr.layer"}), the second the taxon abbreviation only (\code{"abbr"}), the third the layer code (\code{"layer"}) and the last component corresponds to the full taxon name \code{"taxon"} queryied from \code{Taxonomy(obj)}. \code{\link{VegsoupData}} constructs these \dQuote{compound taxon abbreviations} by pasting \code{make.names(x)} and \code{layer} seperated with \code{"@"}. To deparse the abbreviation and layer string \code{DecomposeNames} should be used.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A data.frame with as many rows and in the same order as there are columns in the species matrix. Note, the method uses \code{invisible} when returning it's results.
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{VegsoupData}},\code{\link{Taxonomy}}
+}
+\examples{
+library(vegsoup)
+data(testdata)
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+txa <- DecomposeNames(dta)
+head(txa)
+all.equal(txa$abbr.layer, colnames(dta))		
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
+

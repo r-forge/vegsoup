@@ -3,7 +3,9 @@
 # Color plots of a dissimilarity matrix, without and with ordering
 #
 # License: GPL-2 
-# Author: Francois Gillet, August 2009	
+# Author: Francois Gillet, August 2009
+#
+#	argument nc renamed to colors with extended meaning	
 	require(gclus)
 
 	if (missing(colors)) {
@@ -26,21 +28,24 @@
 	D.order = order.single(1 - D)
 	D.cr.order = D.cr[D.order, D.order]
 
-	op = par(mfrow = c(1,2), pty = "s")
-	
+	op = par(mfrow = c(1,2), pty = "s")	
 
 	if (diag) {
 		plotcolors(D.cr, rlabels = attributes(D)$Labels, 
 			main = "Dissimilarity Matrix", 
 			dlabels = attributes(D)$Labels)
+		title(sub = vegdist(obj))	
 		plotcolors(D.cr.order, rlabels = attributes(D)$Labels[D.order], 
 			main = "Ordered Dissimilarity Matrix", 
 			dlabels = attributes(D)$Labels[D.order])
+		title(sub = vegdist(obj))				
 	} else {
 		plotcolors(D.cr, rlabels = attributes(D)$Labels, 
 			main = "Dissimilarity Matrix")
+		title(sub = vegdist(obj))			
 		plotcolors(D.cr.order, rlabels = attributes(D)$Labels[D.order], 
 			main = "Ordered Dissimilarity Matrix")
+		title(sub = vegdist(obj))			
 	}
 
 	par(op)

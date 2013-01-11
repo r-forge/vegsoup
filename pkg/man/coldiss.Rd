@@ -4,10 +4,10 @@
 \alias{coldiss-method}
 
 \title{
-Color Plots of a Dissimilarity Matrix
+Plots of the Dissimilarity Matrix of an Object of class VegsoupData*
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
 heatmap(obj, colors, byrank = TRUE, diag = FALSE, ...)
@@ -38,6 +38,9 @@ Implemented from Roland Kaiser for vegsoup from code in \code{colldiss.R} by Fra
 }
 \references{
 Borcard, D., Gillet, F., and Legendre, P. (2011). Numerical Ecology with R. Springer.
+}
+\seealso{
+\code{\link{dmat.color}} in package \pkg{gclus}
 }
 \examples{
 

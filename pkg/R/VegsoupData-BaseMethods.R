@@ -264,7 +264,11 @@ setMethod("as.logical",
 #if (!isGeneric("as.matrix")) {
 #	setGeneric("as.logical")
 #}
-
+#if (!isGeneric("rowSums")) {
+setGeneric("as.matrix",
+	function (x, ...)
+	standardGeneric("as.matrix"))
+#}
 setMethod("as.matrix",
     signature(x = "VegsoupData"),
     function (x, mode) {
@@ -286,8 +290,17 @@ setMethod("as.matrix",
     }    	    
 )
 
-#	for species matrix implemented colnames (it's a 'matrix')
-#	leave names for sites (it's a 'data.frame')
+#if (!isGeneric("rownames")) {
+setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
+	standardGeneric("rownames"))
+#}	
+setMethod("rownames",
+    signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing"),
+    function (x) {
+    #	warning! order?	
+		unique(slot(x, "species.long")$plot)	
+	}
+)
 #if (!isGeneric("colnames")) {
 setGeneric("colnames", function (x, do.NULL = TRUE, prefix = "col")
 	standardGeneric("colnames"))
@@ -307,63 +320,54 @@ setMethod("colnames",
 			))))
     res
     }
-)    	
-	
+)
+setMethod("dimnames",
+    signature(x = "VegsoupData"),
+    function (x) {
+		list(rownames(x), colnames(x))
+	}
+)    		
 #	'names' is a primitive function
-#	rename to colnames for consitency
-#	names(obj) is used in $ method!
+#setMethod("names",
+#    signature(x = "VegsoupData"),
+#    function (x) {
+	#	adapted from .cast()
+#	abbr <- slot(x, "species.long")$abbr
+#	layer <- slot(x, "species.long")$layer
+#	species.layer <- paste(abbr, layer, sep = "@")
+#	res <- unique(as.vector(unlist(
+#			sapply(Layers(x),
+#				function (x) {
+#					species.layer[layer == x]
+#				}
+#			))))
+#	res
+#	}
+#)
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) {
-	#	adapted from .cast()
-	abbr <- slot(x, "species.long")$abbr
-	layer <- slot(x, "species.long")$layer
-	species.layer <- paste(abbr, layer, sep = "@")
-	res <- unique(as.vector(unlist(
-			sapply(Layers(x),
-				function (x) {
-					species.layer[layer == x]
-				}
-			))))
-	res
-	}
-)
-
-#	methods based on functions in 'base'
-#if (!isGeneric("rownames")) {
-setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
-	standardGeneric("rownames"))
-#}	
-setMethod("rownames",
-    signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing"),
-    function (x) {
-    #	warning! order?	
-		unique(slot(x, "species.long")$plot)	
-	}
-)
-
+    	names(Sites(x))
+    }
+)    	
 #if (!isGeneric("nrow")) {
 setGeneric("nrow", function(x)
 	standardGeneric("nrow"))
 #}
-#	to do: documentation
 setMethod("nrow",
     signature(x = "VegsoupData"),
     function (x) {
 		length(rownames(x))
-	#	was nrow(x@species)
 	}
 )
 #if (!isGeneric("dim")) {
 setGeneric("ncol", function (x)
 	standardGeneric("ncol"))
 #}
-#	to do: documentation
 setMethod("ncol",
     signature(x = "VegsoupData"),
     function (x) {
-		length(names(x))
-	#	was ncol(x@species)
+		length(colnames(x))
 	}
 )
 #	'dim' is a primitive function
@@ -371,7 +375,6 @@ setMethod("dim",
     signature(x = "VegsoupData"),
 	    function (x) {
 			c(nrow(x), ncol(x))
-		#	was dim(x@species)
 		}
 )
 #if (!isGeneric("ncell")) {
@@ -379,7 +382,6 @@ setGeneric("ncell",
 	function (x, ...)
 	standardGeneric("ncell"))
 #}
-#	to do: documentation
 setMethod("ncell",
 	signature(x = "VegsoupData"),
 	function (x, ...) {
@@ -387,7 +389,8 @@ setMethod("ncell",
     }
 )
 #if (!isGeneric("rowSums")) {
-setGeneric("rowSums", function (x, na.rm = FALSE, dims = 1, ...)
+setGeneric("rowSums",
+	function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("rowSums"))
 #}
 setMethod("rowSums",
@@ -404,7 +407,8 @@ setMethod("rowSums",
     }
 )
 #if (!isGeneric("colSums")) {
-setGeneric("colSums", function (x, na.rm = FALSE, dims = 1)
+setGeneric("colSums",
+	function (x, na.rm = FALSE, dims = 1)
 	standardGeneric("colSums"))
 #}
 setMethod("colSums",
@@ -693,7 +697,7 @@ setMethod("[",
 		}
 		#	if single plot "[" method will return class character
 		if (class(tmp) == "character") {
-			tmp <- t(matrix(tmp, dimnames = list(names(tmp), rownames(x)[i])))
+			tmp <- t(matrix(tmp, dimnames = list(colnames(tmp), rownames(x)[i])))
 		}	
 		#	remove empty plots
 		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
@@ -722,11 +726,10 @@ setMethod("[",
 			stop("NAs introduced in Sites(obj)")
 		}	   
 		if (length(res@group) != 0) {
-		res@group <- res@group[names(res@group) %in% rownames(tmp)]
+			res@group <- res@group[names(res@group) %in% rownames(tmp)]
 		}
 		#	method Abbreviation relies on already subsetted taxonomy!
-		abbr <- sapply(strsplit(names(res), "@", fixed = TRUE),
-		   function (x) x[1])
+		abbr <- unlist(lapply(strsplit(colnames(res), "@", fixed = TRUE), "[[", 1))
  		#	finaly subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
 		res@layers <- layer 
@@ -849,7 +852,8 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 }
 
 #if (!isGeneric("rbind")) {
-	setGeneric("rbind", function(..., deparse.level = 1)
+setGeneric("rbind",
+		function (..., deparse.level = 1)
 		standardGeneric("rbind"),
 		signature = "...")
 #}
@@ -1257,28 +1261,19 @@ setMethod("DecomposeNames",
 	function (obj, verbose = FALSE) {
 	#	obj <- dta; type = "nospace"
 	if (verbose) {
-		cat("\n use Vegsoup standard pattern taxa coding, blanks are dots")
+		cat("\n Vegsoup standard pattern taxa coding:")
+		cat("\n blanks are dots, '@' speperates abbreviations and layer")
 	}
-
-	#	VegsoupData(obj) constructs abbreviated taxa names
-	#	pasting make.names and layer seperated with '@' 
-	
-	#	deparse compound taxon abbreviation and layer string
-	#	seperator is '@'
-
-	abbr <- sapply(strsplit(names(obj), "@", fixed = TRUE),
-		   function (x) x[1])
-	layer <- sapply(strsplit(names(obj), "@", fixed = TRUE),
-		   function (x) x[2])
-
+	abbr.layer <- colnames(obj)	
+	abbr <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 1))
+	layer <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 2))
 	taxon <- Taxonomy(obj)$taxon[match(abbr, Taxonomy(obj)$abbr)]
-	res <- data.frame(abbr.layer = names(obj), abbr, layer, taxon, stringsAsFactors = FALSE)
+	
+	res <- data.frame(abbr.layer, abbr, layer, taxon, stringsAsFactors = FALSE)
 
-	if (all(is.na(res$layer))) {
-		warning("\n unable to deparse layer string, consider setting type to nospace", call. = FALSE)
-	}
-	if (all(is.na(res$taxon))) {
-		warning("\n unable to deparse taxon string, consider setting type to nospace", call. = FALSE)
+	if (any(is.na(res$layer)) | any(is.na(res$taxon))) {
+		stop("\n unable to deparse layer string,",
+			" consider setting type to nospace", call. = FALSE)
 	}
 	return(invisible(res))
 	}
@@ -1467,11 +1462,3 @@ plotStride <- function (x) {
 #			xpd = T, srt = 90)
 #	}
 }
-
-
-#	spatial methods
-#	to do: rewrite?
-#setMethod("coordinates",
-#  signature(obj = "VegsoupData"),
-#  function (obj) coordinates(obj@sp.points)
-#)
