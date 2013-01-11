@@ -214,25 +214,17 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	return(res)
 }
 
-### inherited methods based on 'generic functions'
-#	as.character, as.numeric and as.logical are already generic functions
-
-#	print mode uses invisible()?
-#	use e.g. head(as.numeric(obj))
-setMethod("as.character",
-    signature(x = "VegsoupData"),
-    function (x) {
-    	return(invisible(.cast(x, mode = 2)))
-    }
-)
-
+#	return species matrix
 setMethod("as.numeric",
     signature(x = "VegsoupData"),
-    function (x) {
+    function (x, mode) {
+    	if (missing(mode)) mode <- "Q"
+    	MODE <- c("Q", "R")
+    	mode <- match.arg(toupper(mode), MODE)
     	m <- .cast(x, mode = 1)
+		#	standardization as definded by decostand(x)		
 		stand <- slot(slot(x, "decostand"), "method")
     	
-		#	standardization
 		if (!is.null(stand)) {
 			if (length(stand) < 2) {
 				if (stand == "wisconsin") {
@@ -249,15 +241,34 @@ setMethod("as.numeric",
 			}
 			attributes(m)$decostand <- stand 
 		}
+   	if (mode == "R") m <- t(m)
    	return(invisible(m))
 	}
 
 )
+
+setMethod("as.character",
+    signature(x = "VegsoupData"),
+    function (x, mode) {
+    	if (missing(mode)) mode <- "Q"
+    	MODE <- c("Q", "R")
+    	mode <- match.arg(toupper(mode), MODE)
+    	m <- .cast(x, mode = 2)
+   		if (mode == "R") m <- t(m)
+   		return(invisible(m))
+    }
+)
 	
 setMethod("as.logical",
     signature(x = "VegsoupData"),
-    function (x) {
-    	return(invisible(.cast(x, mode = 3)))	    
+    function (x, mode) {
+    	if (missing(mode)) mode <- "Q"
+    	MODE <- c("Q", "R")
+    	mode <- match.arg(toupper(mode), MODE)
+    	m <- .cast(x, mode = 3)
+   		if (mode == "R") m <- t(m)
+   		storage.mode(m) <- "integer"
+   		return(invisible(m))    	
     }
 )	
 
@@ -271,22 +282,21 @@ setGeneric("as.matrix",
 #}
 setMethod("as.matrix",
     signature(x = "VegsoupData"),
-    function (x, mode) {
-    	if (missing(mode)) {
-    		mode <- "numeric"	
-    	}
-    	MODE <- c("character", "numeric", "logical")
-    	mode <- match.arg(mode, MODE)
+    function (x, typeof, ...) {
+    	if (missing(typeof)) typeof <- "numeric"    		
+    	TYPEOF <- c("character", "numeric", "logical")
+    	typeof <- match.arg(typeof, TYPEOF)
 
-    	if (mode == "character") {
-    		return(as.character(x))
+    	if (typeof == "character") {
+    		m <- as.character(x, ...)
     	}
-    	if (mode == "numeric") {
-    		return(as.numeric(x))
+    	if (typeof == "numeric") {
+    		m <- as.numeric(x, ...)
     	}
-    	if (mode == "logical") {
-    		return(as.logical(x))
+    	if (typeof == "logical") {
+    		m <- as.logical(x, ...)
     	}
+    	return(m)
     }    	    
 )
 
@@ -1181,7 +1191,7 @@ setGeneric("Arrange",
 )
 setMethod("Arrange",
     signature(obj = "VegsoupData"),
-	function (object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), dist = "bray", ...) {
+	function (object, method = c("dca", "hclust", "ward", "flexible", "pam", "packed"), ...) {
 	#	object = dta
 	
 	if (missing(method)) {
@@ -1189,9 +1199,12 @@ setMethod("Arrange",
 	} else {
 		method <- match.arg(method)			
 	}
-
-	si.dis <- vegdist(as.logical(object), method = dist)
+	
+	si.dis <- getDist(object)
 	sp.dis <- vegdist(t(as.logical(object)), method = dist)
+	
+	#si.dis <- vegdist(as.logical(object), method = dist)
+	#sp.dis <- vegdist(t(as.logical(object)), method = dist)
 	
 	switch(method, dca = {
 		use <- try(decorana(as.logical(object)), silent = TRUE, ...)

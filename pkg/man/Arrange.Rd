@@ -1,9 +1,9 @@
 \name{Arrange}
+\docType{methods}
+\alias{Arrange-methods}
 \alias{Arrange}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Modify an Objects Internal Order as to Reflect a Vegetation Table
-}
+
+\title{ Modify an Objects Internal Order as to Reflect a Vegetation Table }
 \description{
 The method arranges the species matrix according to an ordination or cluster analysis. The method will perform reordering on all slots of the supplied object to reflect the order of plots and/or species as returned by the selected method. Currently there is no way to pass down arguments to functions.
 }
