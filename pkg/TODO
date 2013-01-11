@@ -1,0 +1,2 @@
+rename getdist() to as.dist()
+man files for coordiantes, bbox, proj4string

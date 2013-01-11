@@ -1,5 +1,5 @@
-\name{Rectangles}
-\alias{Rectangles}
+\name{rectangles}
+\alias{rectangles}
 
 \title{
 Create a Plot of Matrix Dimensions for Each Partition
@@ -8,15 +8,14 @@ Create a Plot of Matrix Dimensions for Each Partition
 Retrieves the number of species and sites for each partition and plots a box according to its dimension.
 }
 \usage{
-Rectangles(obj, plot = TRUE, )
+rectangles(obj, plot = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
 \item{obj}{
-an object inherting from class \code{VegsoupDataPartiton}
+An object inherting from class \code{VegsoupDataPartiton}
 }
 \item{plot}{
-if \code{TRUE} create a plot, otherwise just return matrix of partitions dimensons used to create boxes
+If \code{TRUE} create a plot, otherwise just return a matrix of partition dimensons used to create boxes.
 }
 \item{\dots}{
 graphical parameters, see details
@@ -49,11 +48,11 @@ dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
 	scale = list(scale = "Braun-Blanquet")))
 
 prt <- VegsoupDataPartition(dta, k = 10)
-Rectangles(prt)
+rectangles(prt)
 #	add color to the boxes
-Rectangles(prt, col = rgb(0,0,0,0.2))
+rectangles(prt, col = rgb(0,0,0,0.2))
 #	returned matrix only
-res <- Rectangles(prt, plot = FALSE)
+res <- rectangles(prt, plot = FALSE)
 res
 
 #	use polish = TRUE
@@ -61,10 +60,12 @@ prt <- VegsoupDataPartition(dta, k = 10, polish = TRUE)
 
 #	add fancy colors to the boxes
 require(RColorBrewer)
-Rectangles(prt, plot = TRUE,
+rectangles(prt, plot = TRUE,
 	col = rgb(0,0,0,0.2),
 	border = brewer.pal(getK(prt), "Spectral"),
 	lwd = 2)
 }
-\keyword{methods}
+\keyword{ methods }
+\keyword{ hplot }
+
 

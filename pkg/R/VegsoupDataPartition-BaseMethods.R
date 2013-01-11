@@ -9,10 +9,6 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 #	nitr = 99; polish = TRUE
 #	method = "external"
 #	clustering = "syntaxon"
-	
-	
-	#METHODS <- c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external")
-	#method <- match.arg(method, METHODS, several.ok = TRUE)
 			
 	if (!inherits(obj, "VegsoupData")) {
 		stop("Need object of class VegsoupData")
@@ -41,7 +37,8 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 			cat("... Set default option", part.meth)
 		}	
 	} else {
-			part.meth <- match.arg(method)
+		METHODS <- c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external")
+		part.meth <- match.arg(method, METHODS)
 	}
 	if (!missing(clustering) | match.arg(method) == "external") {
 		if (missing(clustering)) {
@@ -70,57 +67,58 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 				dim(obj), length(clustering))
 		}
 	}		
-	#	retrieve species matrix
+	#	species and distnce matrices
 	if (binary) {
 		X <- as.logical(obj)
 	} else {
 		X <- as.numeric(obj)
 	}	
+	if (part.meth != "external") {	
+		Xd <- getdist(obj)
+	}
+
 	#	print settings before run
 	if (verbose) {
 		cat("\n run with settings",
 			"\n use binary data:", binary,
-			"\n disimilarity measure:", obj@dist,
+			"\n disimilarity measure:", vegdist(obj),
 			"\n decostand method:", decostand(obj),
-			"\n partitioning method:", part.meth, "\n", ...)	
+			"\n partitioning method:", part.meth, "\n")	
 	}
-if (part.meth != "external") {	
-	dis <- vegdist(X, dist)
-}
 #	set seed
 	set.seed(seed)		
 #	partitioning methods
 switch(part.meth,
 	   ward = {
-	   	part <- agnes(dis, method = "ward",
+	   	part <- agnes(Xd, method = "ward",
 	   		...)	   
 	 }, flexible = {
 	   	alpha <- 0.625
 	   	beta = 1 - 2 * alpha
-	   	part <- agnes(dis, method = "flexible",
+	   	part <- agnes(Xd, method = "flexible",
 	   		par.meth = c(alpha, alpha, beta, 0),
 	   		...)
 	}, pam = {
 		if (verbose) cat("\nrun pam")
-		part <- pam(dis, k = k, diss = TRUE,
+		part <- pam(Xd, k = k, diss = TRUE,
 			...)
 	}, isopam = {
 		if (verbose) cat("\nrun isopam, ignoring k=", k)
 		if (verbose) cat("\nplease supply c.fix to restict to a specific number of partitions\n")
 		#	if (binary) tmp <- as.logical(obj) else tmp <- as.numeric(obj)
-		part <- isopam(X, distance = dist,
+		part <- isopam(X, distance = vegdist(obj),
 			...)
 	}, optpart = {
 		if (verbose) cat("\nrun optpart from random starts ...")
 		if (verbose) cat("\nset to", k, "partitions\n")
-		part <- .VegsoupDataPartitionOptpartBestopt(dis, k, numitr = 100,
+		part <- .VegsoupDataPartitionOptpartBestopt(Xd, k, numitr = 100,
 			...)
 	}, kmeans = {
-		if (verbose) cat("kmeans doesn't use distance matrices, ignore", dist)
+		if (verbose) cat("kmeans doesn't use distance matrices, ignore", vegdist(obj))
 		part <- kmeans(X, centers = k,
 			...)		
 	}, wards = {
-		part <- hclust(dis, method = "ward",
+		part <- hclust(Xd, method = "ward",
 			...)
 	}, external = {
 		part <- clustering
@@ -179,7 +177,7 @@ if (out.grp) {
 #	fundamental change! 
 if (out.grp && polish) { # was ||
 	if (verbose) cat("\n... try to resolve using function optsil")
-	grp.opt <- optsil(grp, dis, k^2)$clustering
+	grp.opt <- optsil(grp, Xd, k^2)$clustering
 	names(grp.opt) <- rownames(obj)
 	if (any(as.vector(table(grp.opt)) == 1)) {
 		warning(" did not succeed in reallocation", call. = FALSE)
@@ -201,7 +199,6 @@ res@part <- grp
 res@method <- part.meth	
 res@k <- length(unique(grp))
 res@binary = binary
-#res@dist <- dist
 
 return(res)
 }
@@ -326,55 +323,6 @@ setMethod("plot",
 	signature(x = "VegsoupDataPartition", y = "missing"),
 	.plotVegsoupPartition
 )
-
-#	alternative plotting methof
-#	not a generic for plot
-
-if (!isGeneric("Rectangles")) {
-setGeneric("Rectangles",
-	function (obj, plot, ...)
-	standardGeneric("Rectangles"))
-}
-
-setMethod("Rectangles",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj, plot, ...) {
-	#	obj <- prt
-	
-	if (missing(plot)) {
-		plot = TRUE	
-	}
-	p <- unique(Partitioning(obj))
-	d <- dim(obj)
-	
-	#	subsetting will issue a warning
-	#	this harmless and not of interessent at this point
-	op <- options()
-	options("warn" = -1)
-	res <- t(sapply(sort(p), function (x) dim(obj[Partitioning(obj) == x, ])))
-	options(op)	
-	
-	res <- cbind(res, p)
-	if (plot) {
-	
-	#	order
-	r <- res[order(res[, 1], res[,2]), ]		
-	plot(max(r[, 1]), max(r[, 2]),
-		xlim = c(0, max(r[, 1])), ylim = c(0, max(r[, 2])),
-		type = "n", bty = "n",
-		xlab = "number of sites", ylab = "number of species",
-		sub = paste("total number of sites and species:" , d[1], d[2]
-		))
-	rect(0, 0, r[,1], r[, 2], ...)
-	points(r[,1] , r[,2], pch = 16, col =" white", cex = 3)
-	text(r[,1] , r[,2], labels = r[, 3], cex = 1, font = 2)
-	rug(1, side = 1, lwd = 1)
-	}
-	
-	return(res)
-	}
-)
-
 
 #	getter method
 #	running partition vector

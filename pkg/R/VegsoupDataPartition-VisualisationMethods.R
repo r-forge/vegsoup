@@ -1,11 +1,13 @@
-#	ellipsoidhull around partitions
-.EllipsoidHull <- function (x, add = FALSE, col = "red", ...) {
+#	ellipsoidellipsoidhull around partitions
+".ellipsoidhull" <- function (x, ...) {
 #	x <- prt
+cl <- match.call()
+
 res <- vector("list", length = getK(x))
 for (i in 1:getK(x)) {
 	xy <- as.matrix(coordinates(x)[Partitioning(x) == i,])
 	if (nrow(xy) >= 3) {
-		res[[i]] <- ellipsoidhull(xy)#, ...)
+		res[[i]] <- cluster::ellipsoidhull(xy)
 	} else {
 		if (ncol(xy) > 1) {
 			res[[i]] <- xy.coords(x = xy[, 1], y = xy[, 2])
@@ -15,39 +17,86 @@ for (i in 1:getK(x)) {
 	}
 }
 
-if (!add) {
-	plot(x@sp.points)
-} else {
-	points(x@sp.points)
-}
+points(SpatialPointsVegsoup(x))
+
+if (any(names(cl) == "col")) {
+	#stopifnot()
+} 
+#
 sapply(res, function (x) {
 	if (class(x) == "ellipsoid") {
-		lines(predict(x), col = col)
+		lines(predict(x), ...) # col = col)
 	} else {
-		points(x, col = col, cex = 2)
+		points(x, ...) # col = col, cex = 2)
 	}
 	})
 
-return(invisible(res))
+return(invisible(cl))
 }
 
-#if (!isGeneric("EllipsoidHull")) {
-setGeneric("EllipsoidHull",
+#if (!isGeneric("ellipsoidhull")) {
+setGeneric("ellipsoidhull",
 	function (x, ...)
-		standardGeneric("EllipsoidHull")
+		standardGeneric("ellipsoidhull")
 )
 #}
 
-setMethod("EllipsoidHull",
+setMethod("ellipsoidhull",
 	signature(x = "VegsoupDataPartition"),
-	.EllipsoidHull
+	function (x, ...)
+	.ellipsoidhull(x, ...)
 )
 
-#EllipsoidHull(prt)
+#	alternative plotting methof
+#	not a generic for plot
 
-#plot(pg)
-#points(prt@sp.points, pch = "+")
-#sapply(eh.prt, function (x) lines(predict(x), col = "red"))
+if (!isGeneric("rectangles")) {
+setGeneric("rectangles",
+	function (obj, plot, ...)
+	standardGeneric("rectangles"))
+}
+
+setMethod("rectangles",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, plot, ...) {
+	#	obj <- prt
+	
+	if (missing(plot)) {
+		plot = TRUE	
+	}
+	p <- unique(Partitioning(obj))
+	d <- dim(obj)
+	
+	#	subsetting will issue a warning
+	#	this is harmless and not of interessent at this point
+	op <- options()
+	options("warn" = -1)
+	res <- t(sapply(sort(p), function (x) {
+		dim(obj[Partitioning(obj) == x, ])
+		}))
+	options(op)	
+	
+	res <- cbind(res, p)
+	if (plot) {
+	
+	#	order
+	r <- res[order(res[, 1], res[,2]), ]		
+	plot(max(r[, 1]), max(r[, 2]),
+		xlim = c(0, max(r[, 1])), ylim = c(0, max(r[, 2])),
+		type = "n", bty = "n",
+		xlab = "number of sites", ylab = "number of species",
+		sub = paste("total number of sites and species:",
+			d[1], d[2]
+		))
+	rect(0, 0, r[,1], r[, 2], ...)
+	points(r[,1] , r[,2], pch = 16, col =" white", cex = 3)
+	text(r[,1] , r[,2], labels = r[, 3], cex = 1, font = 2)
+	rug(1, side = 1, lwd = 1)
+	}
+	
+	return(res)
+	}
+)
 
 
 .VegsoupPartitionConstancyHeatmap <- function (x, ...) {
