@@ -3,9 +3,7 @@
 \alias{Spread}
 \alias{Spread-methods}
 \alias{Spread,VegsoupDataPartition-method}
-\title{Methods for Function Spread}
 
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 List Occurences of Species in Partitions
 }

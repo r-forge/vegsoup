@@ -32,7 +32,7 @@ Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
 Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE} and only applies if additional argument \code{mode} is supplied and it's value is \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
 }
   \item{\dots}{
-Arguments passed to \code{getdist}. See \sQuote{Examples}.
+Arguments passed to \code{as.dist}. See \sQuote{Examples}.
 }                          
 
 }
@@ -71,7 +71,7 @@ cols <- colorRampPalette(brewer.pal(11, "Spectral"))
 
 coldiss(dta, cols(4), byrank = FALSE, diag = TRUE)
 
-# R-mode analysis, see ?getdist
+# R-mode analysis, see ?as.dist
 # first collapse layers
 dta.ol <- Layers(dta, aggregate = "layer",
 	collapse = "ol", verbose = TRUE)

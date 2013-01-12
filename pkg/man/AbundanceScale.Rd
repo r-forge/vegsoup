@@ -55,7 +55,7 @@ library(vegsoup)
 data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
-AbundanceScale(dta)}
+AbundanceScale(dta)
 
 }
 \keyword{ methods }

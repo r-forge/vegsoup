@@ -20,7 +20,7 @@
 		}
 	}
 			
-	D <- getdist(obj, ...)
+	D <- as.dist(obj, ...)
 	D.labels <- attributes(D)$Labels
 	
 	if (translate & any(names(cl) == "mode")) {

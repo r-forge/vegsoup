@@ -10,6 +10,7 @@ useDynLib(vegsoup)
 
 import(methods)
 importFrom("graphics", plot, hist)
+importFrom("stats", as.dist)
 importFrom("utils", head, tail)
 importFrom("Hmisc", latex)
 importFrom("rgdal", spTransform)
@@ -31,9 +32,10 @@ exportMethods(
     "Accuracy",
     "Association",
     "as.matrix",
-    "as.logical",
     "as.character",
+    "as.logical",
     "as.numeric",
+    "as.dist",
     "coerce",
     "colSums",
     "colMeans",
@@ -46,7 +48,6 @@ exportMethods(
     "Disdiam",
     "Fidelity",
     "FisherTest",
-    "getdist",
     "getDistconnected",
     "getK",
     "getStat",

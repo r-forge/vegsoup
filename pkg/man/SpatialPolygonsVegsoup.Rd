@@ -3,7 +3,6 @@
 \alias{SpatialPolygonsVegsoup}
 \alias{SpatialPolygonsVegsoup-methods}
 \alias{SpatialPolygonsVegsoup,Vegsoup-method}
-\title{Methods for Function SpatialPolygonsVegsoup}
 \alias{SpatialPolygonsVegsoup<-}
 \alias{SpatialPolygonsVegsoup<--methods}
 \alias{SpatialPolygonsVegsoup<-,Vegsoup,SpatialPolygonsDataFrame-method}

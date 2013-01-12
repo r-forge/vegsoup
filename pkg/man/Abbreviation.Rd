@@ -6,7 +6,7 @@
 \alias{Abbreviation,VegsoupData-method}
 \alias{Abbreviation<-}
 \alias{Abbreviation<--methods}
-\alias{Abbreviation<-,Vegsoup,character-method
+\alias{Abbreviation<-,Vegsoup,character-method}
 
 \title{
 Get Abbreviations used to Encode Species
@@ -45,12 +45,12 @@ library(vegsoup)
 data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
-Abbreviation(dta)}
+Abbreviation(dta)
+}
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{method}
 \keyword{classes}% __ONLY ONE__ keyword per line

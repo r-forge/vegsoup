@@ -59,7 +59,7 @@
 
 #McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.
 #obj <- prt
-#dis <- getdist(obj)
+#dis <- as.dist(obj)
 
 #greater <- mean(dis) + sd(dis) * 2
 #lower <- mean(dis) + sd(dis) * 2

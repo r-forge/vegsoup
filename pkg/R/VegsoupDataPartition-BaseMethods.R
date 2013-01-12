@@ -74,7 +74,7 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 		X <- as.numeric(obj)
 	}	
 	if (part.meth != "external") {	
-		Xd <- getdist(obj)
+		Xd <- as.dist(obj)
 	}
 
 	#	print settings before run
@@ -789,7 +789,7 @@ setMethod("Optsil",
     		
 		cpu.time <- system.time({
 			tmp <- optpart::optsil(
-					x = Partitioning(obj), dist = getdist(obj, ...),
+					x = Partitioning(obj), dist = as.dist(obj, ...),
 					maxitr = maxitr)
 			obj@part <- as.integer(tmp$clustering)
 			numitr <- tmp$numitr			
@@ -859,7 +859,7 @@ setMethod("Partana",
     function (obj, verbose = FALSE, ...) {
 		
 		if (getK(obj) == 1)	stop("meaningless with k = ", getK(obj))
-    	Xd <- getdist(obj, ...)   	
+    	Xd <- as.dist(obj, ...)   	
 
 		cpu.time <- system.time({		
 			res <- partana(c = Partitioning(obj), dist = Xd)
@@ -915,7 +915,7 @@ setMethod("Silhouette",
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getdist(obj)
+    		dis <- as.dist(obj)
     	} else {    	
 			if (missing(method)) {    			
 				dis <- vegdist(as.logical(obj), "bray")
@@ -949,7 +949,7 @@ setMethod("typal",
 		}
 		else {
    			res <- optpart::typal(Partitioning(obj),
-   				getdist(obj, ...), k = k)
+   				as.dist(obj, ...), k = k)
 	   		return(res)
    		}
     }
@@ -994,7 +994,7 @@ setMethod("Disdiam",
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getdist(obj)
+    		dis <- as.dist(obj)
     	} else {    	
 			if (missing(method)) {    			
 				dis <- vegdist(as.logical(obj), "bray")

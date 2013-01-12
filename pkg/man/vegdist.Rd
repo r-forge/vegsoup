@@ -1,7 +1,7 @@
-\name{getdist}
+\name{vegdist}
 \docType{methods}
-\alias{getdist}
-\alias{getdist-methods}
+\alias{as.dist}
+\alias{as.dist-methods}
 \alias{vegdist}
 \alias{vegdist-methods}
 \alias{vegdist<--methods}
@@ -13,7 +13,7 @@ Return a Distance Matrix from Objects of Class VegsoupData*
 Compute a distance matrix as specified by the \code{dist} slot of an object of class \code{Vegsoupdata} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
 }
 \usage{
-getdist(obj, ...)
+as.dist(obj, ...)
 
 vegdist(obj, ...)
 vegdist(obj) <- value  
@@ -60,7 +60,7 @@ vegdist(dta)
 
 vegdist(dta) <- "bray"
 
-d.q <- getdist(dta, "numeric")
+d.q <- as.dist(dta, "numeric")
 class(d.q)
 attributes(d.q)
 attr(d.q, "mode")
@@ -71,7 +71,7 @@ attr(d.q, "mode")
 # see ?vegan::vegdist 
 decostand(dta)  <- "chi.square"
 
-d.r <- getdist(dta, mode = "R")              
+d.r <- as.dist(dta, mode = "R")              
 class(d.r)
 attr(d.r, "mode")	
 }

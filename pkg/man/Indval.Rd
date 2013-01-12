@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{Indval}
 \alias{Indval-methods}
-\alias{Indval,VegsoupDataPartition-method
+\alias{Indval,VegsoupDataPartition-method}
 
 \title{
 function to do

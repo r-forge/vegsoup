@@ -7,11 +7,8 @@
 \alias{Layers<-}
 \alias{Layers<--methods}
 \alias{Layers<-,Vegsoup-method}
-\title{Methods for Function Layers<-}
 
-\title{
-Modify the Layer Structure of Objects of Class VegsoupData*
-}
+\title{ Modify the Layer Structure of Objects of Class VegsoupData* }
 \description{
 Modify an object's layer structure by suppling a layer combination vector as a character argument \code{collapse}. A layer that is intended to be collpased with one or more layers is simply given the same value of collapse. Different aggregation modes are provided.
 }

@@ -526,13 +526,13 @@ setReplaceMethod("vegdist",
 )	
 #	retrieve distance matrix
 #	to do: documentation
-setGeneric("getdist",
-	function (obj, ...)
-		standardGeneric("getdist")
+setGeneric("as.dist",
+	function (m, diag = FALSE, upper = FALSE, ...)
+		standardGeneric("as.dist")
 )
-setMethod("getdist",
-	signature(obj = "VegsoupData"),
-	function (obj, binary, mode, ...) {
+setMethod("as.dist",
+	signature(m = "VegsoupData"),
+	function (m, binary, mode, ...) {
 		#	as.mumeric and as.logical
 		#	automatically apply decostand method!
 		#	argument mode controls transpostion before
@@ -543,15 +543,15 @@ setMethod("getdist",
 		} else {
 			X <- as.logical(obj, mode = mode)	
 		}
-		d <- vegan::vegdist(X, method = obj@dist, ...)
+		Xd <- vegan::vegdist(X, method = obj@dist, ...)
 		
 		#	ensure dissimilarities
-		if (max(d) > 1) d <- d / max(d)	
+		if (max(Xd) > 1) Xd <- Xd / max(Xd)	
 		
 		#	assign attribute
-		attributes(d) <- c(attributes(d), mode = toupper(mode))
+		attributes(Xd) <- c(attributes(Xd), mode = toupper(mode))
 		
-		d
+		return(Xd)
 	}
 )
 
@@ -566,7 +566,7 @@ setGeneric("getDistconnected",
 setMethod("getDistconnected",
 	signature(obj = "VegsoupData"),
 	function (obj, ...) {
-		distconnected(getdist(obj), ...)
+		distconnected(as.dist(obj), ...)
 	}
 )
 
@@ -1178,8 +1178,8 @@ setMethod("seriation",
 		method <- match.arg(method, METHODS)
 	}
 	
-	si.dis <- getdist(obj, "logical")
-	sp.dis <- getdist(obj, "logical", mode = "R")
+	si.dis <- as.dist(obj, "logical")
+	sp.dis <- as.dist(obj, "logical", mode = "R")
 	
 	switch(method, dca = {
 		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
