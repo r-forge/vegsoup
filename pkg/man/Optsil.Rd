@@ -1,51 +1,78 @@
-\name{Optsil}
+\name{optimize}
+\docType{methods}
 \alias{Optsil}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Optsil-methods}
+\alias{Optsil,VegsoupDataPartition-method}
+\alias{Optindval}
+\alias{Optindval-methods}
+\alias{Optindval,VegsoupDataPartition-method} 
 \title{
-function to do
+Optimise Partitioning of an Object of Class VegsoupDataPartition
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Modify the partitioning of an object as to optimze silhouette widths or Dufrene and Legendre's indicator value.
 }
 \usage{
-Optsil(obj, ...)
+Optsil(obj, maxitr = 100, verbose = FALSE, ...)
+
+Optindval(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) 
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object of class \code{"VegsoupDataPartition"}.
+}
+  \item{ maxitr }{
+The maximum number of iterations to perform.
+}
+  \item{ verbose }{
+Print cpu time used.
+}
+
+  \item{ minsiz }{
+The minimum size of the partition to consider reassigning a sample out of.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Arguments passed to \code{link{as.dist}} (\code{optsil}) or \code{link{as.matrix}} (\code{Optindval}).
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+\code{Optsil} is a simple wrapper for function \code{\link[optpart:optsil]{optsil}} in package \pkg{optpart} to polish an existing clustering. Argument \code{maxitr} is set to one by default to speed up calculations, but should be set to a higher value.
+
+\code{Optindval} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximises the Dufrene and Legendre's indicator value (Indval).
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+Returns a modified object of class \code{"VegsoupDataPartition"}} with possibly changed partitioning vector.
 \references{
-%% ~put references to the literature/web site here ~
+Dufrene, M. and Legendre, P. (1997). Species assemblages and indicator species: The need for a flexible asymmetrical approach. Ecological Monographs, 67(3):345–366.
+
+Rousseeuw, P. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. Journal of Computational and Applied Mathematics, 53:53–65.
 }
 \author{
-%%  ~~who you are~~
+Implemented for vegsoup using Dave Roberts \code{optsil} and \code{optindval} procedures.
 }
 \note{
-%%  ~~further notes~~
+Both methods can be very slow when applied to big data sets! \code{Optsil} is usually faster.
 }
+\examples{
+library(vegsoup)
+data(bigtestdata)
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
+	scale = list(scale = "Braun-Blanquet")))
+prt <- VegsoupDataPartition(dta, k = 4)
 
+prt.sil <- Optsil(prt, verbose = TRUE)
+prt.ind <- Optindval(prt, verbose = TRUE)
+
+Confus(prt, prt.opt)
+Confus(prt, prt.ind)	
+}
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[labdsv:indval]{indval}},
+\code{\link[cluster:silhouette]{silhouette}}
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ methods }
+\keyword{ cluster }

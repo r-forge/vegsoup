@@ -1,48 +1,66 @@
-\name{Tabdev}
+\name{validate}
+\docType{methods}
 \alias{Tabdev}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Tabdev-methods}
+\alias{Tabdev,VegsoupDataPartition-method}
+\alias{Partana}
+\alias{Partana-methods}
+\alias{Partana,VegsoupDataPartition-method}
+
 \title{
-function to do
+Partition Quality/Validity Assessment of Objects of Class VegsoupDataPartition
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+by Table Deviance
 }
 \usage{
-Tabdev(obj, ...)
+Tabdev(obj, numitr = 999, verbose = FALSE, ...)
+Partana(obj, verbose = FALSE, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object of class \code{"VegsoupDataPartition"}
 }
+  \item{ numitr }{
+Number of iterations to perform in calculating the probability of obtaining as effective a classification as observed.
+}
+  \item{ verbose }{
+} 
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Arguments passed to \code{\link{as.dist}} (\code{Partana}) or \code{link{as.matrix}} (\code{Tabdev}).
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+\code{Partana} (\emph{partition analysis}) evaluates the within-cluster to among-cluster similarity of partitions as a measure of cluster validity. See \code{\link[optpart:partana]{partana}} for details.
+
+As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a method to assess the quality of partitions with respect to the original data, and not its distance matrix representation. See \code{\link[optpart:tabdev]{tabdev}} for details.
+
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\code{Partana} returns an S3 object of class \code{"partana"}.
+
+\code{Tabdev} returns a \code{data.frame} with four columns giving
+the species (\code{"numocc"}),
+the number of occurences of a species in the data set (\code{"numocc"}),
+estimated deviance \code{"deviance"},
+and probability (\code{pval}).
+
+%% \item{ spcdev }{
+%% }
+%% \item{ totdev }{
+%% }
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Implemented for vegsoup using Dave Roberts \code{tabdev} and \code{partana} algorithms.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{Optsil}},
+\code{\link{Optindval}}
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

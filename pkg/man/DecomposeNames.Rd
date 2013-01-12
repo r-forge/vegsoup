@@ -1,8 +1,11 @@
 \name{DecomposeNames}
+\docType{methods}
 \alias{DecomposeNames}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{DecomposeNames-methods}
+\alias{DecomposeNames,VegsoupData-method}
+
 \title{
-Deparse Taxa names for Objects of Class VegsoupData*
+Deparse Taxa names of Objects of Class VegsoupData*
 }
 \description{
 Parses the \code{colnames} of the species matrix of an object into four components.

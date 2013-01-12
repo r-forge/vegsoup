@@ -1,5 +1,8 @@
 \name{Partitioning}
+\docType{methods}
 \alias{Partitioning}
+\alias{Partitioning-methods}
+\alias{Partitioning,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

@@ -1,11 +1,18 @@
-\name{SpeciesLong}
-\alias{SpeciesLong}
+\name{Species}
+\docType{methods} 
+\alias{Species}
+\alias{Species-methods}
+\alias{Species,Vegsoup-method}
+\alias{Species<-}
+\alias{Species<--methods}
+\alias{Species<-,Vegsoup,data.frame-method}
+ 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Methods to Retrieve or Manipulate the Species Slot of an Object of Class Vegsoup*
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Accessor method to retrieve the \emph{species matrix}.
 }
 \usage{
 SpeciesLong(obj)
@@ -42,7 +49,5 @@ SpeciesLong(obj)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
+

@@ -1,5 +1,8 @@
 \name{Disdiam}
+\docType{methods}
 \alias{Disdiam}
+\alias{Disdiam-methods}
+\alias{Disdiam,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

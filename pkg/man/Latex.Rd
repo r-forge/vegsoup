@@ -1,16 +1,20 @@
 \name{Latex}
+\docType{methods}
 \alias{Latex}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Latex-methods}
+\alias{Latex,VegsoupDataPartition-method}
+\alias{Latex,VegsoupDataPartitionFidelity-method}
+
 \title{
-function to do
+Craete a Summary of an Object of Class VegsoupDataPartition for Typesetting Table in LaTex
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Saves LaTex files to disk.
 }
 \usage{
 Latex(object, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{object}{An object inheriting from class \code{"VegsoupDataPartition"}}
   \item{col.width}{Latex tag to set column width.}
@@ -44,7 +48,7 @@ To prevent the latex file from being displayed on screen store the result of lat
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
 %%  ~~further notes~~

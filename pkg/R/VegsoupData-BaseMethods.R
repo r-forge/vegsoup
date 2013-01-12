@@ -1,6 +1,4 @@
-#	function to cast species matrix
-#	mode = 2 binary
-#	mode = 1 character, or numeric
+#	internal function to cast species matrix
 .cast <- function (obj, mode, ...) {
 	#	obj = dta; mode = 1
 			
@@ -89,6 +87,29 @@
 	#	cat("\n time to cast matrix", cpu.time[3], "sec")		
 	
 	return(invisible(m))
+}
+
+#	internal function to melt sites data.frame
+.melt <- function (obj) {
+	#	obj = dta
+	res <- stack(
+			data.frame(plot = rownames(slot(obj, "sites")),
+				slot(obj, "sites"), stringsAsFactors = FALSE),
+		stringsAsFactors = FALSE) 
+
+	plot <- res[res$ind == "plot", ]$values
+	plot <- rep(plot, (nrow(res) / length(plot)) - 1)
+	res <- res[!res$ind == "plot", ]
+	res <- data.frame(
+		plot = as.character(plot),
+		variable = as.character(res[, 2]),
+		value = as.character(res[, 1]),
+		stringsAsFactors = FALSE)
+	res <- res[order(res$plot), ]
+	res[is.na(res)] <- ""
+
+	rownames(res) <- 1:nrow(res)
+	res	
 }
 
 #	generating function
@@ -769,7 +790,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
     x$cov <- unlist(sapply(allargs,
     	FUN = function (x) Species(x)$cov))
 	#	sites 'y'
-	y <- do.call("rbind", sapply(allargs, SitesLong, simplify = FALSE))
+	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
 	#	copied from Vegsoup()
 	y <- reshape(y[, 1:3],
 		direction = "wide",
@@ -914,12 +935,7 @@ if (missing(collapse) & missing(aggregate)) {
 			res@sites <- res@sites[res@sites$plot %in% species$plot, ]
 		}		
 		
-		#	also need to subset spatial objects!
-		
-#		if (length(unique(SitesLong(res)$plot)) > length(unique(species$plot))) {
-#			warning("also some plots will be dropped", call. = FALSE)
-#			res@sites.long <- SitesLong(res)[SitesLong(res)$plot %in% species$plot, ]
-#		}		
+		#	warning! also need to subset spatial objects!
 	}	
 
 	species$layer <- factor(species$layer)

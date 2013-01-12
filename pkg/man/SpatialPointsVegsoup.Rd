@@ -1,5 +1,11 @@
 \name{SpatialPointsVegsoup}
+\docType{methods} 
 \alias{SpatialPointsVegsoup}
+\alias{SpatialPointsVegsoup-methods}
+\alias{SpatialPointsVegsoup,Vegsoup-method}
+\alias{SpatialPointsVegsoup<-}
+\alias{SpatialPointsVegsoup<--methods}
+\alias{SpatialPointsVegsoup<-,Vegsoup,SpatialPointsDataFrame-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do
@@ -9,6 +15,7 @@ function to do
 }
 \usage{
 SpatialPointsVegsoup(obj)
+SpatialPointsVegsoup(obj) <- value
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,6 +26,14 @@ SpatialPointsVegsoup(obj)
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
+%%\section{Methods}{
+%%\describe{
+
+%%\item{\code{signature(obj = "Vegsoup", value = "SpatialPointsDataFrame")}}{
+%%  ~~describe this method here~~
+%%}
+%%}}
+
 \value{
 %%  ~Describe the value returned
 %%  If it is a LIST, use

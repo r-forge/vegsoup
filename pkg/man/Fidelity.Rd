@@ -1,5 +1,8 @@
 \name{Fidelity}
+\docType{methods}
 \alias{Fidelity}
+\alias{Fidelity-methods}
+\alias{Fidelity,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

@@ -1,6 +1,9 @@
 \name{Indval}
+\docType{methods}
 \alias{Indval}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Indval-methods}
+\alias{Indval,VegsoupDataPartition-method
+
 \title{
 function to do
 }

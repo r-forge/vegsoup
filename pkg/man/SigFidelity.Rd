@@ -1,5 +1,8 @@
 \name{SigFidelity}
+\docType{methods}
 \alias{SigFidelity}
+\alias{SigFidelity-methods}
+\alias{SigFidelity,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do
@@ -15,25 +18,26 @@ SigFidelity(obj, ...)
   \item{obj}{
 %%     ~~Describe \code{obj} here~~
 }
+  \item{ mode }{
+type of analysis. See \sQuote{Details}.
+}
+
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+
+\code{mode = 0} looks for species whose abundance is significantly higher in one of the groups. \code{mode = 0} looks for species whose abundance is significantly higher in sites belonging to one group as opposed to sites not belonging to it.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+%An object of class \code{"VegsoupDataPartitionFidelity"}
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Adapted from function \code{signassoc()} of package \pkg{indicspecies} by Miquel De Cáceres Ainsa.
 }
 \note{
 %%  ~~further notes~~

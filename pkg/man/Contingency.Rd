@@ -1,14 +1,21 @@
 \name{Contingency}
+\docType{methods}
 \alias{Contingency}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Contingency-methods}
+\alias{Contingency,VegsoupDataPartition-method}
+\alias{Constancy}
+\alias{Constancy-methods}
+\alias{Constancy,VegsoupDataPartition-method}
+
 \title{
-function to do
+Contingency and Constancy Tables for Objects of Class VegsoupDataPartition
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
 Contingency(obj)
+Constancy(obj, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,7 +37,7 @@ Contingency(obj)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Roladn Kaiser
 }
 \note{
 %%  ~~further notes~~
@@ -42,7 +49,5 @@ Contingency(obj)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

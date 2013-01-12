@@ -1,6 +1,13 @@
 \name{Abbreviation}
+\docType{methods}
 \alias{Abbreviation}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Abbreviation-methods}
+\alias{Abbreviation,Vegsoup-method}
+\alias{Abbreviation,VegsoupData-method}
+\alias{Abbreviation<-}
+\alias{Abbreviation<--methods}
+\alias{Abbreviation<-,Vegsoup,character-method
+
 \title{
 Get Abbreviations used to Encode Species
 }
@@ -9,6 +16,7 @@ Get the abbreviations used in species matrix and corresponding taxonomy data.fra
 }
 \usage{
 Abbreviation(obj, ...)
+Abbreviation(obj) <- value
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

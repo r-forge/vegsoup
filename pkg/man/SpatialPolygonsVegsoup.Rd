@@ -1,5 +1,13 @@
 \name{SpatialPolygonsVegsoup}
+\docType{methods}
 \alias{SpatialPolygonsVegsoup}
+\alias{SpatialPolygonsVegsoup-methods}
+\alias{SpatialPolygonsVegsoup,Vegsoup-method}
+\title{Methods for Function SpatialPolygonsVegsoup}
+\alias{SpatialPolygonsVegsoup<-}
+\alias{SpatialPolygonsVegsoup<--methods}
+\alias{SpatialPolygonsVegsoup<-,Vegsoup,SpatialPolygonsDataFrame-method}
+ 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do
@@ -42,7 +50,5 @@ SpatialPolygonsVegsoup(obj)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
+

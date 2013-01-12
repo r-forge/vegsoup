@@ -1,5 +1,8 @@
 \name{FisherTest}
+\docType{methods}
 \alias{FisherTest}
+\alias{FisherTest-methods}
+\alias{FisherTest,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

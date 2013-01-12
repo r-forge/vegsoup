@@ -1,5 +1,8 @@
 \name{getK}
+\docType{methods}
 \alias{getK}
+\alias{getK-methods}
+\alias{getK,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

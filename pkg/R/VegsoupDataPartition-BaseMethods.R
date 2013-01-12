@@ -729,93 +729,9 @@ setMethod("Isamic",
 	function (obj) { 	
 	   	tmp <- Constancy(obj) / 100
     	res <- apply(tmp, 1, function (x) {
-    			2*sum(abs(as.numeric(x)- 0.5)) / ncol(tmp)
+    			2 * sum(abs(as.numeric(x)- 0.5)) / ncol(tmp)
     		})
     	return(res)
-    }
-)
-
-#	table deviance
-#	to do: documentation
-setGeneric("Tabdev",
-	function (obj, ...)
-		standardGeneric("Tabdev")
-)
-
-setMethod("Tabdev",
-	signature(obj = "VegsoupDataPartition"),
-	function (obj, ...) {
-		if (getK(obj) == 1) {
-			stop("meaningless with k = ", getK(obj))
-		}	
-		res <- tabdev(as.logical(obj),
-			Partitioning(obj), ...)$spcdev
-		return(res)
-	}
-)
-
-#	Optimise partitioning using Dave Roberts optsil procedure
-#	to do: documentation
-#	maxitr is set to one by default.
-#	see \code{\link{optsil}} in package 'optpart' for details.
-setGeneric("Optsil",
-	function (obj, ...)
-		standardGeneric("Optsil")
-)
-setMethod("Optsil",
-    signature(obj = "VegsoupDataPartition"),
-    function (obj, maxit, ...) {
-	#	obj  <- prt
-		if (!inherits(obj, "VegsoupDataPartition"))
-			stop("Need object of class VegsoupDataPartition")
-		if (missing(maxit)) {
-			maxit <- 1
-			cat("set maxit to", maxit)
-		}
-		if (getK(obj) == 1) {
-			stop("meaningless with k = ", getK(obj))
-		}	
-		res <- obj	
-		cpu.time <- system.time({
-			res@part <- as.integer(optpart::optsil(
-			x = Partitioning(obj),
-			dist = getdist(obj), ...)$clustering)
-		})
-	
-		cat("\ntime to optimise species matrix",
-		"in", getK(obj), "partitions:",
-		cpu.time[3], "sec\n")
-		
-		names(res@part) <- names(obj@part)
-		return(invisible(res))
-	}
-)
-
-#	Optimise partitioning by Dufrene & Legendre's indicator value
-#	to do: documentation
-setGeneric("Optindval",
-	function (obj, ...)
-		standardGeneric("Optindval")
-)
-setMethod("Optindval",
-    signature(obj = "VegsoupDataPartition"),
-    function (obj, ...) {
-    	if (getK(obj) == 1) {
-			stop("meaningless with k = ", getK(obj))
-		}	
-		res <- obj
-		cat("run optimisation")
-		cpu.time <- system.time({
-		res@part <- as.integer(optindval(as.logical(obj),
-			Partitioning(obj), ...)$clustering)
-		})
-		
-		cat("\ntime to optimise species matrix",
-		"in", getK(obj), "partitions:",
-		cpu.time[3], "sec\n")
-					
-		names(res@part) <- names(obj@part)
-		return(invisible(res))
     }
 )
 
@@ -851,8 +767,88 @@ setMethod("Murdoch",
     }
 )
 
+#	optimise partitioning using Dave Roberts optsil procedure
+setGeneric("Optsil",
+	function (obj, ...)
+		standardGeneric("Optsil")
+)
+setMethod("Optsil",
+    signature(obj = "VegsoupDataPartition"),
+    function (obj, maxitr = 100, verbose = FALSE, ...) {
+
+		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
+    	
+    	nam <- names(obj@part) # save names    	
+    	cl <- match.call()
+    	    	
+    	if (any(names(cl) == "mode")) {
+    		if (cl$mode == "R") {
+    			stop("\n method not defined for R mode", call. = FALSE)
+    		}
+    	}   	  	
+    		
+		cpu.time <- system.time({
+			tmp <- optpart::optsil(
+					x = Partitioning(obj), dist = getdist(obj, ...),
+					maxitr = maxitr)
+			obj@part <- as.integer(tmp$clustering)
+			numitr <- tmp$numitr			
+		})
+
+		if (verbose) {
+			cat("\n time to optimise species matrix of", ncell(obj), "cells",
+				"and", getK(obj), "partitions:",
+				cpu.time[3], "sec")
+			cat("\n number of iterations performed:", numitr)	
+		}	
+	
+		names(obj@part) <- nam
+		return(obj)
+	}
+)
+
+#	optimise partitioning using Dave Roberts optindval procedure
+setGeneric("Optindval",
+	function (obj, ...)
+		standardGeneric("Optindval")
+)
+setMethod("Optindval",
+    signature(obj = "VegsoupDataPartition"),
+    function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
+
+    	if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
+
+    	nam <- names(obj@part) # save names		
+		cl <- match.call()
+		
+    	if (any(names(cl) == "mode")) {
+    		if (cl$mode == "R") {
+    			stop("\n method not defined for R mode", call. = FALSE)
+    		}
+    	}
+
+		cpu.time <- system.time({
+			tmp <- optpart::optindval(
+					as.matrix(obj, ...), Partitioning(obj),
+					maxitr = maxitr,
+					minsiz = minsiz)
+			obj@part <- as.integer(tmp$clustering)		
+			numitr <- tmp$numitr		
+		})
+		if (verbose) {
+			cat("\n time to optimise species matrix of", ncell(obj), "cells",
+				"and", getK(obj), "partitions:",
+				cpu.time[3], "sec")
+			cat("\n number of iterations performed:", numitr)	
+		}					
+		names(obj@part) <- nam
+		return(obj)
+    }
+)
+
 #	Partition Analysis
-#	to do: documentation, check dist slot
+#	to do: check dist slot
+#	to do: implement ?testpart()
 setGeneric("Partana",
 	function (obj, ...)
 		standardGeneric("Partana")
@@ -860,21 +856,50 @@ setGeneric("Partana",
 
 setMethod("Partana",
     signature(obj = "VegsoupDataPartition"),
-    function (obj, method , ...) {
-		if (getK(obj) == 1)
-			stop("meaningless with k = ", getK(obj))
-    	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- getdist(obj)
-    	} else {    	
-			if (missing(method)) {    			
-				dis <- vegdist(as.logical(obj), "bray")
-    		} else {
-    			dis <- vegdist(as.logical(obj), ...)
-    		}
-    	}	    	
-		res <- partana(Partitioning(obj), dis)
-		return(res)    	
+    function (obj, verbose = FALSE, ...) {
+		
+		if (getK(obj) == 1)	stop("meaningless with k = ", getK(obj))
+    	Xd <- getdist(obj, ...)   	
+
+		cpu.time <- system.time({		
+			res <- partana(c = Partitioning(obj), dist = Xd)
+		})
+		if (verbose) {
+			cat("\n time to permute species matrix of", ncell(obj), "cells",
+				"and", getK(obj), "partitions:",
+				cpu.time[3], "sec")
+			cat("\n within-cluster to among-cluster similarity ratio:",
+				round(res$ratio, 1))		
+		}					
+		return(invisible(res))    	
     }
+)
+
+#	table deviance
+setGeneric("Tabdev",
+	function (obj, ...)
+		standardGeneric("Tabdev")
+)
+
+setMethod("Tabdev",
+	signature(obj = "VegsoupDataPartition"),
+	function (obj, numitr = 99, verbose = FALSE, ...) {
+
+		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
+
+		cpu.time <- system.time({
+			res <- optpart::tabdev(as.matrix(obj, ...),
+				Partitioning(obj), nitr = numitr, ...)
+		})
+		if (verbose) {
+			cat("\n time to permute species matrix of", ncell(obj), "cells",
+				"and", getK(obj), "partitions:",
+				cpu.time[3], "sec")
+			cat("\n total deviance:", res$totdev)	
+			cat("\n number of iterations performed:", numitr)	
+		}			
+		return(invisible(res$spcdev))
+	}
 )
 
 #	Silhouette Analysis
@@ -983,7 +1008,6 @@ setMethod("Disdiam",
 )
 
 #	tabulate partition vector to matrix
-#	to do: documentation
 setGeneric("PartitioningMatrix",
 	function (obj)
 		standardGeneric("PartitioningMatrix")

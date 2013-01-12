@@ -1,8 +1,11 @@
 \name{Stride}
+\docType{methods}
 \alias{Stride}
+\alias{Stride-methods}
+\alias{Stride,VegsoupData-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Create a Series of Partitionings for Objects of Class VegsoupData*
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
@@ -45,7 +48,5 @@ Stride(obj, ...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
+

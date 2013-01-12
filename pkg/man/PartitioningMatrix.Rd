@@ -1,11 +1,14 @@
 \name{PartitioningMatrix}
+\docType{methods} 
 \alias{PartitioningMatrix}
+\alias{PartitioningMatrix-methods}
+\alias{PartitioningMatrix,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Tabulate Partitioning Vector of an Object of Class VegsoupDataPartition to a Matrix
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Create a matrix of memberships of plots to partitions.
 }
 \usage{
 PartitioningMatrix(obj)
@@ -13,36 +16,21 @@ PartitioningMatrix(obj)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object of class \code{"VegsoupDataPartition"}.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+Returns a \code{matrix} of zeros and ones where rows are plots and columns are partitons. One indicate to which partition a plot belongs.
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{Partitioning}}, ~~~
 }
+\keyword{ methods }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

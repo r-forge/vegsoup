@@ -791,12 +791,6 @@ setMethod("Fidelity",
 )
 
 .SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE, binary = TRUE) {
-#	adapted from signassoc.R in package(indicspecies)
-#	Miquel De Cáceres Ainsa
-#	mode 1: look for species whose abundance is significantly higher
-#	in one of groups
-#	mode 0: look for species whose abundance is significantly higher
-#	in sites belonging to one group as opposed to sites not belonging to it.
 
 mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))

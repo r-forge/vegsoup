@@ -1,5 +1,8 @@
 \name{getStat}
+\docType{methods}
 \alias{getStat}
+\alias{getStat-methods}
+\alias{getStat,VegsoupDataPartitionFidelity-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

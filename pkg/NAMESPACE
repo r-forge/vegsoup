@@ -81,8 +81,6 @@ exportMethods(
     "Silhouette",
     "Sites",
     "Sites<-",
-    "SitesLong",
-    "SitesLong<-",
     "SpatialPointsVegsoup",
     "SpatialPointsVegsoup<-",
     "SpatialPolygonsVegsoup",

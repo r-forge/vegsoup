@@ -1,14 +1,21 @@
 \name{Sites}
+\docType{methods}
 \alias{Sites}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\alias{Sites-methods}
+\alias{Sites,VegsoupData-method}
+\alias{Sites<-}  
+\alias{Sites<--methods}
+\alias{Sites<-,VegsoupData,data.frame-method}
+
 \title{
-Return the Sites Slot of an object
+Methods to Retrieve or Manipulate the Sites Slot of an Object of Class Vegsoup*
 }
 \description{
-Accessor method for the \sQuote{sites} slot.
+Accessor method to retrieve the \emph{sites data frame}.
 }
 \usage{
 Sites(obj)
+Sites(obj) <- value
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -1,5 +1,8 @@
 \name{Indspc}
+\docType{methods}
 \alias{Indspc}
+\alias{Indspc-methods}
+\alias{Indspc,VegsoupData-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

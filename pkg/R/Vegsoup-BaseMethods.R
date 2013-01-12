@@ -585,27 +585,6 @@ setReplaceMethod("Species",
 	res	
 }
 
-setGeneric("SitesLong",
-	function (obj)
-		standardGeneric("SitesLong")
-)
-setGeneric("SitesLong<-",
-	function (obj, value)
-		standardGeneric("SitesLong<-")
-)
-setMethod("SitesLong",
-    signature(obj = "Vegsoup"),
-    function (obj) .melt(obj)
-)
-setReplaceMethod("SitesLong",
-	signature(obj = "Vegsoup", value = "data.frame"),
-	function (obj, value) {
-		#	to do: needs checking of plot names
-		obj@sites <- value
-		return(obj)		
-	}
-)
-
 #	get predefined grouping vector
 setGeneric("AprioriGrouping",
 	function (obj)

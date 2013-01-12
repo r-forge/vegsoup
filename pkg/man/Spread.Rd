@@ -1,8 +1,13 @@
 \name{Spread}
+\docType{methods}
 \alias{Spread}
+\alias{Spread-methods}
+\alias{Spread,VegsoupDataPartition-method}
+\title{Methods for Function Spread}
+
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+List Occurences of Species in Partitions
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

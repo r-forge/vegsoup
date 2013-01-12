@@ -1,5 +1,9 @@
 \name{getDistconnected}
+\docType{methods}
 \alias{getDistconnected}
+\alias{getDistconnected-methods}
+\alias{getDistconnected,VegsoupData-method}
+\alias{getDistconnected,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

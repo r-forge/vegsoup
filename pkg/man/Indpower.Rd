@@ -1,5 +1,8 @@
 \name{Indpower}
+\docType{methods}
 \alias{Indpower}
+\alias{Indpower-methods}
+\alias{Indpower,VegsoupData-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

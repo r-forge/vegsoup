@@ -1,5 +1,12 @@
 \name{AbundanceScale}
+\docType{methods}
 \alias{AbundanceScale}
+\alias{AbundanceScale-methods}
+\alias{AbundanceScale,Vegsoup-method}
+\alias{AbundanceScale<-}
+\alias{AbundanceScale<--methods}
+\alias{AbundanceScale<-,Vegsoup,list-method}
+
 \title{
 Retrieves the Abundance Scale
 }
@@ -8,6 +15,7 @@ Retrieves abundance scale from \code{slot(obj, "scale")} of object. A list with 
 }
 \usage{
 AbundanceScale(obj)
+AbundanceScale(obj) <- value
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -49,7 +57,6 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
 AbundanceScale(dta)}
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{methods}
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+}
+\keyword{ methods }
+

@@ -1,8 +1,11 @@
 \name{Murdoch}
+\docType{methods} 
 \alias{Murdoch}
+\alias{Murdoch-methods}
+\alias{Murdoch,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Indicator Species Analysis by Murdoch Preference Function
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~

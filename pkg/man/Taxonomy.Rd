@@ -1,5 +1,11 @@
 \name{Taxonomy}
+\docType{methods} 
 \alias{Taxonomy}
+\alias{Taxonomy-methods}
+\alias{Taxonomy,Vegsoup-method}
+\alias{Taxonomy<-}
+\alias{Taxonomy<--methods}
+\alias{Taxonomy<-,Vegsoup,data.frame-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do
@@ -9,6 +15,7 @@ function to do
 }
 \usage{
 Taxonomy(obj)
+Taxonomy(obj) <- value 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

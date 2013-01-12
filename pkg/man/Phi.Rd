@@ -1,48 +1,39 @@
 \name{Phi}
+\docType{methods} 
 \alias{Phi}
+\alias{Phi-methods}
+\alias{Phi,VegsoupDataPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-function to do
+Calculate the phi Statistic for Objects if Class VegsoupDataPartition
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Calculates the \emph{phi} statistic based on the partitioning of the object.
 }
 \usage{
 Phi(obj)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+An object of class \code{"VegsoupDataPartition"}.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+\emph{phi} is a statistic of agreement between two vectors. See \code{\link[optpart:phi]{phi}} in package \pkg{optpart} for details.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+A \code{matrix} of \emph{phi} values with species as rows and partitions as columns}
 \references{
-%% ~put references to the literature/web site here ~
+Tichy, L. and M. Chytry. 2006. Statistical determination of diagnostic species for site groups of unequal size. Journal of Vegetation Science 17:809-818.
 }
 \author{
-%%  ~~who you are~~
+Roland Kaiser
 }
 \note{
-%%  ~~further notes~~
+This is a slightly faster compared to \code{\link{Fidelity}}, but does not return an \code{Vegsoup*} object.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link[optpart:phi]{phi}}
 }
+\keyword{ methods }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
