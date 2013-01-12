@@ -87,8 +87,8 @@ exportMethods(
     "SpatialPointsVegsoup<-",
     "SpatialPolygonsVegsoup",
     "SpatialPolygonsVegsoup<-",
-    "SpeciesLong",
-    "SpeciesLong<-",
+    "Species",
+    "Species<-",
 #    "Specieslist",	
     "Spread",
     "Stride",
@@ -97,7 +97,7 @@ exportMethods(
     "tail",
     "Taxonomy",
     "Taxonomy<-",
-    "Typal" 
+    "typal" 
 )
 exportClasses(
      "Vegsoup",

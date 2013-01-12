@@ -109,7 +109,7 @@ end.kml <- c(
 	"</kml>")
 		
 #obj = dta
-species.list <- SpeciesLong(obj)
+species.list <- Species(obj)
 species.list$taxon <- Taxonomy(obj)$taxon[match(species.list$abbr, Taxonomy(obj)$abbr)]
 species.list <- species.list[, c(1,5,3,4)]
 species.list <- split(species.list, species.list$plot)

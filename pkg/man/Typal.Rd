@@ -1,48 +1,57 @@
-\name{Typal}
-\alias{Typal}
-%- Also NEED an '\alias' for EACH other topic documented here.
+\name{typal}
+\alias{typal}
+\alias{typal-methods}
+\alias{typal-VegsoupDataPartition-method}
+
 \title{
-Typical Releves of an Object of Class VegsoupData*
+Typical Samples of an Object of Class VegsoupData*
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Identifies samples (plots) that typify clusters in a partition based on dissimilarity.
 }
 \usage{
-Typal(obj)
+typal(obj, k=1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
+  \item{ obj }{
+An object inheriting from class \code{VegsoupDataPartition}. 
+}
+  \item{ \dots }{
+Arguments passed to \code{\link{as.dist}}.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Silhouette analysis returns \code{k} samples with the largest positive silhouette width for each partition. Partana analysis returns the \code{k} samples with the highest mean similarity to the partition. See \code{\link[optpart:typal]{typal}} in package \pkg{optpart} for further ditails.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns a \code{list} with two components
+\item{ partana }{
+A \code{data.frame} with the clusters as rows and typal samples as columns.
 }
-\references{
-%% ~put references to the literature/web site here ~
+\item{ silhouette }{
+A \code{data.frame} as above.
+}
+
 }
 \author{
-%%  ~~who you are~~
+A wrapper for function \code{typal} by David W. Roberts in \pkg{optpart}.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{as.dist}}
 }
+\examples{
+library(vegsoup)
+data(testdata)
+        
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+	scale = list(scale = "Braun-Blanquet")))
+prt <- VegsoupDataPartition(dta, k = 2)
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+typal(prt)
+typal(prt, typeof = "logical")
+
+typal(prt, typeof = "logical", mode = "R")	
+}
+\keyword{ methods }
+\keyword{ cluster }% __ONLY ONE__ keyword per line

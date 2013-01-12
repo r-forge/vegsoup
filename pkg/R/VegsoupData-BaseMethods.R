@@ -7,11 +7,11 @@
 #	cpu.time <- system.time({
     		
 	#	slots
-	plot <- slot(obj, "species.long")$plot
-	abbr <- slot(obj, "species.long")$abbr
-	layer <- slot(obj, "species.long")$layer
-	cov <- slot(obj, "species.long")$cov
-	scale <- slot(obj, "scale")
+	plot <- Species(obj)$plot
+	abbr <- Species(obj)$abbr
+	layer <- Species(obj)$layer	
+	cov <- Species(obj)$cov
+	scale <- AbundanceScale(obj)
 	
 	#	matrix dimensions
 	plots <- unique(plot)
@@ -114,11 +114,11 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	scale <- AbundanceScale(obj)
 	lay <- Layers(obj)
 	txa <- Taxonomy(obj)
-	species.long <- SpeciesLong(obj)
+	species <- Species(obj)
 	
-	#	 cats species matrix for Braun-Blanquet scales	
+	#	 casts species matrix for Braun-Blanquet scales	
 	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
-		if (!is.character(species.long$cov)) {
+		if (!is.character(species$cov)) {
 			stop("Abundance scale should be of mode character")
 		}
 		if (length(lay) == 1) {
@@ -127,8 +127,8 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 			if (verbose) cat("\ndata is structered in layers: ", lay)
 		}
 		
-		species <- as.data.frame(.cast(obj, mode = 2),
-			stringsAsFactors = FALSE)
+	#	species <- as.data.frame(.cast(obj, mode = 2),
+	#		stringsAsFactors = FALSE)
 			
 	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
 
@@ -137,11 +137,11 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	
 	#	rewrite to use .cast() 
 	if (scale$scale == "Domin") {
-		if (!is.character(species.long$cov)) {
-			if (is.integer(species.long$cov)) {
+		if (!is.character(species$cov)) {
+			if (is.integer(species$cov)) {
 				warning("\n Codes for Domin scale supplied as integer, ",
 					"attempt to change mode to charcter", call. = FALSE)
-				species.long$cov <- as.character(species.long$cov)
+				species$cov <- as.character(species$cov)
 			} else {
 				stop("Abundance code must be either of mode charcter ",
 					"or integer for Domin scale")
@@ -162,12 +162,12 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	cpu.time <- system.time({	
 	if (scale$scale == "frequency" | scale$scale == "binary") {
 
-		if (!is.numeric(species.long$cov)) {
-			#	warning("changed mode to numeric", str(species.long$cov))
-			mode(species.long$cov) <- "numeric"
+		if (!is.numeric(species$cov)) {
+			#	warning("changed mode to numeric", str(species$cov))
+			mode(species$cov) <- "numeric"
 		}	
 		xt  <- xtabs(cov ~ plot + abbr + layer,
-			data = species.long)
+			data = species)
 	
 		if (dim(xt)[3] > 1) {
 			res <- matrix(0,
@@ -207,7 +207,6 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	res <- new("VegsoupData", obj)
 
 	#	assign class slots
-	res@species = species
 	res@decostand = decostand
 	res@dist = dist
 
@@ -308,7 +307,7 @@ setMethod("rownames",
     signature(x = "VegsoupData", do.NULL = "missing", prefix = "missing"),
     function (x) {
     #	warning! order?	
-		unique(slot(x, "species.long")$plot)	
+		unique(Species(x)$plot)	
 	}
 )
 #if (!isGeneric("colnames")) {
@@ -319,8 +318,8 @@ setMethod("colnames",
     signature(x = "VegsoupData"),
     function (x) {
 	#	adapted from .cast()
-	abbr <- slot(x, "species.long")$abbr
-	layer <- slot(x, "species.long")$layer
+	abbr <- Species(x)$abbr
+	layer <- Species(x)$layer
 	species.layer <- paste(abbr, layer, sep = "@")
 	res <- unique(as.vector(unlist(
 			sapply(Layers(x),
@@ -337,23 +336,7 @@ setMethod("dimnames",
 		list(rownames(x), colnames(x))
 	}
 )    		
-#	'names' is a primitive function
-#setMethod("names",
-#    signature(x = "VegsoupData"),
-#    function (x) {
-	#	adapted from .cast()
-#	abbr <- slot(x, "species.long")$abbr
-#	layer <- slot(x, "species.long")$layer
-#	species.layer <- paste(abbr, layer, sep = "@")
-#	res <- unique(as.vector(unlist(
-#			sapply(Layers(x),
-#				function (x) {
-#					species.layer[layer == x]
-#				}
-#			))))
-#	res
-#	}
-#)
+
 setMethod("names",
     signature(x = "VegsoupData"),
     function (x) {
@@ -405,13 +388,9 @@ setGeneric("rowSums",
 #}
 setMethod("rowSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
-		if (missing(typeof)) {
-			typeof <- "logical"
-		} else {
-			if (typeof == "character") {
-				stop("\n no way to calculate sums based on characters")
-			}	
+	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
+		if (typeof == "character") {
+			stop("\n no way to calculate sums based on characters")
 		}	
     	rowSums(as.matrix(x, typeof = typeof), ...)
     }
@@ -423,14 +402,10 @@ setGeneric("colSums",
 #}
 setMethod("colSums",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
-		if (missing(typeof)) {
-			typeof <- "logical"
-		} else {
-			if (typeof == "character") {
-				stop("\n no way to calculate sums based on characters")
-			}	
-		}		
+	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
+		if (typeof == "character") {
+			stop("\n no way to calculate sums based on characters")
+		}
     	colSums(as.matrix(x, typeof = typeof), ...)
     }
 )
@@ -440,14 +415,10 @@ setGeneric("rowMeans", function (x, na.rm = FALSE, dims = 1, ...)
 #}
 setMethod("rowMeans",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
-		if (missing(typeof)) {
-			mode <- "numeric"
-		} else {
-			if (typeof == "character") {
-				stop("\n no way to calculate sums based on characters")
-			}	
-		}	
+	function (x, na.rm = FALSE, dims = 1, typeof = "numeric", ...) {
+		if (typeof == "character") {
+			stop("\n no way to calculate sums based on characters")
+		}
     	rowMeans(as.matrix(x, typeof = typeof), ...)
     }
 )
@@ -457,14 +428,10 @@ setGeneric("colMeans", function (x, na.rm = FALSE, dims = 1, ...)
 #}
 setMethod("colMeans",
 	signature(x = "VegsoupData"),
-	function (x, na.rm = FALSE, dims = 1, typeof, ...) {
-		if (missing(typeof)) {
-			typeof <- "numeric"
-		} else {
-			if (typeof == "character") {
-				stop("\n no way to calculate sums based on characters")
-			}	
-		}	
+	function (x, na.rm = FALSE, dims = 1, typeof = "numeric", ...) {
+		if (typeof == "character") {
+			stop("\n no way to calculate sums based on characters")
+		}
     	colMeans(as.matrix(x, typeof = typeof), ...)
     }
 )
@@ -622,7 +589,6 @@ setMethod("tail",
 			n = 6L
 		if (choice == "species")
 			res <- tail(as.matrix(x, typeof), n, ...)
-    		#	res <- tail(x@species, ...)
     	if (choice == "sites")
     		res <- tail(Sites(x), n, ...)
     	return(res)
@@ -639,7 +605,7 @@ setMethod("tail",
 setAs("VegsoupData", "list",
 	def = function (from) {
 		list(
-		species = as.character(from)@species,
+		species = as.matrix(from, typeof = "character", mode = "Q"),
 		sites = from@sites)
 	}
 )
@@ -722,7 +688,7 @@ setMethod("[",
 		#	remove empty species
 		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
 		#	assign slot species
-		res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
+		#	res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
         #	melt to long format
 		cov <- array(t(tmp))
 		plot <- rep(dimnames(tmp)[[1]], each = dim(tmp)[2])
@@ -731,11 +697,11 @@ setMethod("[",
 		abbr <- unlist(lapply(abbr.layer, "[[", 1))
 		layer <- unlist(lapply(abbr.layer, "[[", 2))
 		#	class 'species'				
-		res@species.long <- data.frame(plot, abbr, layer, cov,
+		res@species <- data.frame(plot, abbr, layer, cov,
 			stringsAsFactors = FALSE)
-       	res@species.long <- res@species.long[res@species.long$cov != 0, ]
+       	res@species <- res@species[res@species$cov != 0, ]
        	#	new layer order
-       	layer <- as.character(unique(res@species.long$layer))
+       	layer <- as.character(unique(res@species$layer))
        	layer <- layer[match(Layers(x), layer)]
        	layer <- layer[!is.na(layer)]
 		#	subset sites
@@ -789,19 +755,19 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 	}
 	#	species 'x'	
 	j <- vapply(allargs,
-		FUN = function (x) nrow(slot(x, "species.long")),
+		FUN = function (x) nrow(Species(x)),
 		FUN.VALUE = integer(1))
     x <- as.data.frame(matrix("", nrow = sum(j), ncol = 4),
     	rownames = 1:sum(j), stringsAsFactors = FALSE)
     names(x) <- c("plot", "abbr", "layer", "cov")
     x$plot <- unlist(sapply(allargs,
-    	FUN = function (x) slot(x, "species.long")$plot))
+    	FUN = function (x) Species(x)$plot))
     x$abbr <- unlist(sapply(allargs,
-    	FUN = function (x) slot(x, "species.long")$abbr))    
+    	FUN = function (x) Species(x)$abbr))    
     x$layer <- unlist(sapply(allargs,
-    	FUN = function (x) slot(x, "species.long")$layer))        
+    	FUN = function (x) Species(x)$layer))        
     x$cov <- unlist(sapply(allargs,
-    	FUN = function (x) slot(x, "species.long")$cov))
+    	FUN = function (x) Species(x)$cov))
 	#	sites 'y'
 	y <- do.call("rbind", sapply(allargs, SitesLong, simplify = FALSE))
 	#	copied from Vegsoup()
@@ -857,7 +823,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 	#	order pgs to x
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	res <- new("Vegsoup",
-		species.long = x,
+		species = x,
 		sites = y, 
 		taxonomy = z,
 		scale = as.list(scale),
@@ -922,7 +888,7 @@ if (missing(collapse) & missing(aggregate)) {
 		res <- obj
 	}
 
-	species <- SpeciesLong(res)
+	species <- Species(res)
 	scale <- AbundanceScale(res)
 
 	collapse <- matrix(c(res@layers, collapse),
@@ -1012,7 +978,7 @@ if (missing(collapse) & missing(aggregate)) {
 		species$cov <- as.character(cut(species$cov, breaks = c(0, scale$lims), labels = scale$codes))
 	}
 	
-	res@species.long <- species
+	res@species <- species
 	res@layers <- unique(collapse[, 2])
 	res <- VegsoupData(res)
 	
@@ -1111,7 +1077,7 @@ setMethod("summary",
 		sep = ""
 	)
 	if (dim(object)[1] == 1) {
-		species.list <- SpeciesLong(object)
+		species.list <- Species(object)
 		species.list$taxon <-
 			Taxonomy(object)$taxon[match(species.list$abbr, Taxonomy(object)$abbr)]
 		species.list <- species.list[, c(1,5,3,4)]
@@ -1180,39 +1146,30 @@ setMethod("SampleVegsoup",
     }
 )
 
-#	arrange und unpartitioned data set
-#	rewrite to accept argument binary = FALSE, high priority
-#	or use VegsoupDataPartition
-
-#	rename to seriation
+#	arrange an unpartitioned data set
 setGeneric("seriation",
-	function (object, ...)
+	function (obj, ...)
 		standardGeneric("seriation")
 )
 setMethod("seriation",
     signature(obj = "VegsoupData"),
-	function (object, method, ...) {
-	#	obj = dta
+	function (obj, method, ...) {
 	
 	if (missing(method)) {
 		method  <- "dca"
 	} else {
-		METHODS <- c("dca", "hclust", "ward", "flexible", "pam", "packed")
+		METHODS <- c("dca", "hclust", "ward", "flexible", "packed")
 		method <- match.arg(method, METHODS)
 	}
 	
 	si.dis <- getdist(obj, "logical")
 	sp.dis <- getdist(obj, "logical", mode = "R")
 	
-	#si.dis <- vegdist(as.logical(obj), method = dist)
-	#sp.dis <- vegdist(t(as.logical(obj)), method = dist)
-	
 	switch(method, dca = {
 		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
 		if (inherits(use, "try-error")) {
-			use  <- NULL
+			use <- NULL
 		}	
-
 		if (is.list(use)) {	
 			tmp <- scores(use, choices = 1, display = "sites")
 			si.ind <- order(tmp)
@@ -1221,7 +1178,8 @@ setMethod("seriation",
 			if (inherits(sp.ind, "try-error")) {
 				sp.ind <- order(wascores(tmp, obj))
 			}
-		} else {
+		}
+		else {
 			si.ind <- 1:dim(obj)[1]
 			sp.ind <- 1:dim(obj)[2]
 		}
@@ -1242,17 +1200,13 @@ setMethod("seriation",
 		   		par.meth = c(alpha, alpha, beta, 0))$order
 	   		sp.ind <- agnes(sp.dis, method = "flexible",
 	   			par.meth = c(alpha, alpha, beta, 0))$order
-		}, pam = {
-			si.ind <- pam(si.dis, diss = TRUE)$order
-			sp.ind <- pam(sp.dis, diss = TRUE)$order	
 		}, packed = {
 			si.ind <- order(rowSums(dta, "logical"), decreasing = TRUE)
 			sp.ind  <- order(colSums(dta, "logical"), decreasing = TRUE)
 		}
 	)
-	
-	res <- obj[si.ind, sp.ind]
 
+	res <- obj[si.ind, sp.ind]
 	return(res)
 
 	}

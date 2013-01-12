@@ -4,9 +4,8 @@
 
 setClass("Vegsoup",
 	representation(
-	species.long = "data.frame", # in long format, casting by method
+	species = "data.frame", # in long format, casting by method
 	sites = "data.frame", # melt method
-#	was sites.long = "data.frame", # in long format, casting by VegsoupData
 	taxonomy = "data.frame", # in long format
 	scale = "list",
 	layers = "character",
@@ -18,18 +17,17 @@ setClass("Vegsoup",
 	validity = function (object) {
 		if (length(object@taxonomy) > 0) {
 			valid.abbr <-
-				all(object@species.long$abbr %in% object@taxonomy$abbr)
+				all(object@species$abbr %in% object@taxonomy$abbr)
 			valid.sites <-
-#				all(object@species.long$plot %in% object@sites.long$plot)
-				all(sort(unique(object@species.long$plot)) == sort(rownames(object@sites)))
-
+				all(sort(unique(object@species$plot)) == sort(rownames(object@sites)))
 			if (valid.abbr && valid.sites) {
 #				cat("\ntaxomomy lookup table matching",
 #					"\nspecies and sites matching",
 #					"\nslots: species, sites and taxonomy",
 #					"assigned")
 				TRUE
-			} else {
+			}
+			else {
 				if (!valid.abbr) {
 					warning("taxomomy lookup table has",
 						"non matching taxa!")
@@ -41,8 +39,9 @@ setClass("Vegsoup",
 					FALSE
 				}
 			}
-		} else {
+	}
+	else {
 			warning("no taxonomy lookup table supplied!\n")
-		}
+		 }
 	}
 )

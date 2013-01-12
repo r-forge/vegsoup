@@ -1,2 +1,11 @@
 rename getdist() to as.dist()
 man files for coordiantes, bbox, proj4string
+
+# minor
+rename
+layer to stratum
+cov to abu(dance)
+
+# ideas
+rle() can be usefull
+

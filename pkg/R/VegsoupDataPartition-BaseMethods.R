@@ -487,9 +487,6 @@ setMethod("Shared",
 
 
 #	summary statistics
-
-
-
 #	Tukey Five-Number Summary
 setGeneric("Fivenum",
 	function (obj, ...)
@@ -515,14 +512,6 @@ setMethod("Fivenum",
 				res[j, , i] <- sapply(tmp[, j], function (x) x[i])
 			}
 		}
-		
-		#if (recode) {
-		#	for (i in 1:dim(res)[3]) {
-		#		for (j in AbundanceScale(obj)$lims) {
-		#			res[, , i][res[, , i] == j] <- AbundanceScale(obj)$codes[AbundanceScale(obj)$lims == j]
-		#		}
-		#	}			
-		#}
 		if (recode) {
 			for (i in 1:dim(res)[3]) {
 				tmp <- res[, , i]
@@ -634,7 +623,7 @@ setMethod("FisherTest",
 	}
 
 	N <- nrow(obj)						# number of plots
-	n_i <- colSums(as.logical(obj))			# species frequencies
+	n_i <- colSums(as.logical(obj))		# species frequencies
 	N_pi <- table(Partitioning(obj))	# number of plots in partition
 	n_pi <- Contingency(obj)			# number of occurences in partition
 
@@ -655,7 +644,7 @@ return(res)
 )
 	
 #	standardised Phi statistic
-#	depreciated, maybe usefull to speed up thimngs where Fidelity() is too slow
+#	depreciated, maybe usefull to speed up things where Fidelity() is too slow
 #	preferred method is Fidelity(obj, func = "r.g")
 #	to do: documentation
 #	See also \code{\link{Fidelity}}, \code{\link{Indval}} and \code{\link{FisherTest}}
@@ -847,9 +836,9 @@ setMethod("Murdoch",
 			part <- Partitioning(obj)
 		ks <- getK(obj)
 		res <- matrix(0, nrow = dim(obj)[2], ncol = ks)
-		dimnames(res) <- list(names(obj), 1:ks)
+		dimnames(res) <- list(colnames(obj), 1:ks)
 		pval <- matrix(0, nrow = dim(obj)[2], ncol = ks)
-		dimnames(pval) <- list(names(obj), 1:ks)
+		dimnames(pval) <- list(colnames(obj), 1:ks)
 		res.ls <- vector("list", length = ks)
 		names(res.ls) <- 1:ks
 		for (i in 1:ks) {
@@ -914,28 +903,36 @@ setMethod("Silhouette",
     }
 )
 
-#	Identification of typal samples in a partition
-#	to do: documentation
-setGeneric("Typal",
-	function (obj)
-		standardGeneric("Typal")
+#	typal samples in a partition
+setGeneric("typal",
+	function (obj, ...)
+		standardGeneric("typal")
 )
-setMethod("Typal",
+setMethod("typal",
     signature(obj = "VegsoupDataPartition"),
-    function (obj) {
+    function (obj, k=1, ...) {    	
+    	cl <- match.call()    	
+    	if (any(names(cl) == "mode")) {
+    		if (cl$mode == "R") {
+    			stop("\n method not defined for R mode", call. = FALSE)
+    		}
+    	}
 		if (getK(obj) == 1) {
-			warning(" results are meaningless with k = ", getK(obj), call. = FALSE)
-			return(invisible(obj))
-		} else {
-   			res <- typal(Partitioning(obj), getdist(obj))
-	   		return(invisible(res))
+			warning(" results are meaningless with k = ",
+				getK(obj), call. = FALSE)
+			return(NULL)
+		}
+		else {
+   			res <- optpart::typal(Partitioning(obj),
+   				getdist(obj, ...), k = k)
+	   		return(res)
    		}
     }
 )
 
 #	'head' like print function based on identification of
 #	typal samples in a partition
-#	to do: documentation
+
 #	head is a primitive function
 setMethod("head",
     signature(x = "VegsoupDataPartition"),
@@ -943,7 +940,7 @@ setMethod("head",
     	if (missing(choice))
 	    	choice <- "species"
 	    if (n != 6L) {
-	    	sel <- match(c(as.matrix(Typal(x)$silhouette)),
+	    	sel <- match(c(as.matrix(typal(x, ...)$silhouette)),
 	    		rownames(x))
 	    	if (choice == "species")
     			res <- as.character(x)[sel,]

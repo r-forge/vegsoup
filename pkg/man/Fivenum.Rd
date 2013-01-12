@@ -2,7 +2,7 @@
 \alias{Fivenum}
 
 \title{
-Tukey Five-Number Summaries for Community Matrix
+Tukeys Five-Number Summaries for a Community Matrix
 }
 
 \description{

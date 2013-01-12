@@ -49,16 +49,15 @@ Plot identifiers can be assigned using one of the attributes on the resulting ob
 
 It is often the case that rare species are only given in table footer but not in the main table. The function \code{verbatim.append()} takes an object created by calls to \code{verbatim()} and adds species given in argument \code{file}.
 
-The function \code{verbatim.append()} requires a simple text file, where each row corresponds to a unique species, follwod by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and seperated with commas   (\sQuote{,}). All spaces found after the colon will be discared. See \sQuote{Examples} for a valid input file.
+The function \code{verbatim.append()} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and seperated with commas   (\sQuote{,}). All spaces found after the colon will be discared. See \sQuote{Examples} for a valid input file.
 }
 
 \value{
 An S3 object of class \code{VegsoupVerbatim}. Basically a matrix of mode \code{character} with attributes giving the data in the header section of the input file. Species are rownames. If argument \code{colnames} is supplied the returned matrix will hold meaningful \code{colnames}.
 }
 
-\note{
-
-The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output
+\note{ 
+The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
 }
 \author{
 Roland Kaiser
@@ -68,7 +67,7 @@ The demonstration data set used in the example is taken from:
 
 Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (Carex curvula ssp. rosae, Carex curvula ssp. curvula) aus den Alpen - ein Beitrag zur Klärung eines alten ökologischen Rätsels. Phytocoenologia, 21:91–116.
 
-The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main table. Species names were taxonomically interpretetd to a match a reference list.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequnency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the appendix in the data source.
+The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main table. Species names were taxonomically interpretetd to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequnency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the appendix in the data source.
 }
 \examples{
 library(vegsoup)

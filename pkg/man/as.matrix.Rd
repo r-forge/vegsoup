@@ -21,16 +21,16 @@ as.matrix(x, typeof, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
+  \item{ x }{
 An object inheriting from class \code{VegsoupData}.
 }
-  \item{\dots}{
+  \item{ mode }{
 If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"}, no transposition. See \sQuote{Details}. 
 }
-  \item{typeof}{
+  \item{ typeof }{
 A character string giving the desired storage mode or type of the object. Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
 }
-  \item{\dots}{
+  \item{ \dots }{
 Arguments passed to \code{as.logical} etc. to supply a value for the argument \code{mode}.
 }
 }
@@ -58,7 +58,7 @@ If the object has non \code{NULL} values in its data standardization slot the me
 Roland Kaiser
 }
 \references{
-Legendre, P. and Legendre, L. (2012). Numerical ecology. Developments in environmental modelling, 24.
+Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
 }
 \seealso{
 \code{\link{Vegsoup}}, \code{\link{VegsoupData}}, \code{\link{decostand}} and \code{\link{AbundanceScale}}

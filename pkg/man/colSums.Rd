@@ -16,8 +16,11 @@
 Form row and column sums for the the species matrix based on presence/absence and numeric matrices.
 }
 \usage{
-colSums(x, typeof, ...)
-rowSums(x, typeof, ...)
+colSums(x, typeof = "logical", ...)
+rowSums(x, typeof = "logical", ...)
+
+colMeans(x, na.rm = FALSE, dims = 1, typeof = "numeric", ...)
+rowMeans(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
 }
 \arguments{
   \item{ x }{
@@ -27,8 +30,7 @@ An object of class VegsoupData*.
 The mode of the species matrix to compute values from, defaults to \code{"logical"} for \code{rowSums} and \code{colSums}. See \code{\link{as.matrix}} for details about argument \code{"typeof"}. The \code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"} as the default and \code{typeof = "character"} is not supported by neither of the functions. 
 }
   \item{\dots}{
-Not implemented.
-%%Arguments passed to \code{\link[base:rowSums]{rowSums}} and \code{\link[base:colSums]{colSums}}, respectively.
+Arguments passed to \code{\link[base:rowSums]{rowSums}}, \code{\link[base:rowSums]{rowSums}}, \code{\link[base:colSums]{colSums}} and \code{\link[base:colMeans]{colMeans}}, respectively.
 }
 }
 \details{

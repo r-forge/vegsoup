@@ -369,7 +369,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
 	
 	res <- new("Vegsoup",
-		species.long = x,
+		species = x,
 		sites = y, 
 		taxonomy = z,
 		scale = as.list(scale),
@@ -421,7 +421,7 @@ setGeneric("hist",
 #	signature(obj = "Vegsoup"),
 #	function (x, ...) {
 #	   res <- 
-#	   factor(x@species.long$cov,
+#	   factor(x@species$cov,
 #	   	levels = AbundancsScale(x)$codes,
 #	   	lables = AbundancsScale(x)$lims)
 #
@@ -458,13 +458,13 @@ setReplaceMethod("Layers",
 	}
 )
 
-#	method to return the layer columns from SpeciesLong(obj)
+#	method to return the layer columns from Species(obj)
 setGeneric("Layer",
 	function (obj, ...)
 		standardGeneric("Layer"))
 setMethod("Layer",
    signature(obj = "Vegsoup"),
-	function (obj, ...) SpeciesLong(obj)$layer
+	function (obj, ...) Species(obj)$layer
 )
 	
 #	get or set taxonomy (traits) data frame
@@ -502,14 +502,14 @@ setGeneric("Abbreviation<-",
 
 setMethod("Abbreviation",
     signature(obj = "Vegsoup"),
-    function (obj) sort(unique(obj@species.long$abbr))
+    function (obj) sort(unique(Species(obj)$abbr))
 )
 
 setReplaceMethod("Abbreviation",
 	signature(obj = "Vegsoup", value = "character"),
 	function (obj, value) {
 		#	to do: needs security for all slots!
-		obj@species.long$abbr <- value		
+		obj@species$abbr <- value		
 		return(obj)		
 	}
 )
@@ -536,32 +536,28 @@ setReplaceMethod("AbundanceScale",
 		#	to do: needs checking of list structure!
 		#	to do: needs checking of species slots!
 		obj@scale <- value
-		#	obj@species
-		#	obj@species.long
 		return(obj)		
 	}
 )
 
 #	get species query in long format
-setGeneric("SpeciesLong",
+setGeneric("Species",
 	function (obj)
-		standardGeneric("SpeciesLong")
+		standardGeneric("Species")
 )
-setGeneric("SpeciesLong<-",
-	function (obj, value)
-		standardGeneric("SpeciesLong<-")
-)
-setMethod("SpeciesLong",
+setMethod("Species",
     signature(obj = "Vegsoup"),
-    function (obj) obj@species.long
+    function (obj) obj@species
 )
-setReplaceMethod("SpeciesLong",
+setGeneric("Species<-",
+	function (obj, value)
+		standardGeneric("Species<-")
+)
+setReplaceMethod("Species",
 	signature(obj = "Vegsoup", value = "data.frame"),
 	function (obj, value) {
-		#	to do: needs checking of species slots!
-		obj@species.long <- value
-		#	obj@species
-		#	obj@species.long
+		#	to do: craete class species and set value = "VegsoupSpecies"
+		obj@species <- value
 		return(obj)		
 	}
 )
@@ -719,21 +715,21 @@ setReplaceMethod("SpatialPolygonsVegsoup",
 #	revert abunace scale for Braun-Blanquet scale
 .BraunBlanquetReduce <-  function (obj) {
 
-res <- SpeciesLong(obj)
-for (i in c("2m", "2a", "2b")) {
-	if (i == "2m")
-		res$cov[res$cov == i]  <- "1"
-	if (i == "2a")
-		res$cov[res$cov == i]  <- "2"
-	if (i == "2b")
-		res$cov[res$cov == i]  <- "2"
-}
+	res <- Species(obj)
+	for (i in c("2m", "2a", "2b")) {
+		if (i == "2m")
+			res$cov[res$cov == i]  <- "1"
+		if (i == "2a")
+			res$cov[res$cov == i]  <- "2"
+		if (i == "2b")
+			res$cov[res$cov == i]  <- "2"
+	}
 	
-obj@species.long <- res
-obj@scale <- list(scale = "Braun-Blanquet 2",
-	codes = c("r", "+", "1", "2", "3", "4", "5"),
-	lims = c(1, 2, 3, 13, 38, 68, 88))
-return(invisible(obj))
+	obj@species <- res
+	obj@scale <- list(scale = "Braun-Blanquet 2",
+		codes = c("r", "+", "1", "2", "3", "4", "5"),
+		lims = c(1, 2, 3, 13, 38, 68, 88))
+	return(invisible(obj))
 }
 
 #if (!isGeneric("SpatialPolygons"))
@@ -759,7 +755,7 @@ setMethod("SpeciesList",
     		layered <- FALSE
     	}
     	if (layered) {
-	    	res <- SpeciesLong(obj)
+	    	res <- Species(obj)
     		res <- unique(res[c("abbr", "layer")])
     		res$taxon <- Taxonomy(obj)[res$abbr, ]$taxon
 	    	res <- res[order(res$layer, res$taxon), ]
@@ -786,12 +782,12 @@ setMethod("plot",
 	opar <- par(mfrow = c(1,2))
 	on.exit(par(opar))
 	
-	plt <- SpeciesLong(x)$plot		
+	plt <- Species(x)$plot		
 	richness <- aggregate(rep(1, length(plt)),
 		by = list(plt), sum)$x
 	hist(richness, xlab = "Species richness", ...)
     
-	spc <- x@species.long$abbr
+	spc <- Species(x)$abbr
 	occurences <- aggregate(rep(1, length(spc)),
 		by = list(spc), sum)$x
     
