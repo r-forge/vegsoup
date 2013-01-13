@@ -17,7 +17,7 @@ Accessor method to retrieve the \emph{sites data frame}.
 Sites(obj)
 Sites(obj) <- value
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
 A object of class \code{Vegsoup*}

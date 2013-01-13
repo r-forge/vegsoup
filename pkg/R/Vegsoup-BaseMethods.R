@@ -641,55 +641,55 @@ setMethod("spTransform",
 	}
 	
 )
-#	get or set spatial points
-
+#	get spatial points
 setGeneric("SpatialPointsVegsoup",
 	function (obj)
 		standardGeneric("SpatialPointsVegsoup")
 )
-
-#if (!isGeneric("SpatialPoints<-")) {
-setGeneric("SpatialPointsVegsoup<-",
-	function (obj, value)
-		standardGeneric("SpatialPointsVegsoup<-")
-)
-#}
 setMethod("SpatialPointsVegsoup",
     signature(obj = "Vegsoup"),
     function (obj) obj@sp.points
 )
-setReplaceMethod("SpatialPointsVegsoup",
-	signature(obj = "Vegsoup", value = "SpatialPointsDataFrame"),
-	function (obj, value) {
-		#	to do: needs checking of plot names
-		obj@sp.points <- value
-		return(obj)		
-	}
-)
+#if (!isGeneric("SpatialPoints<-")) {
+#setGeneric("SpatialPointsVegsoup<-",
+#	function (obj, value)
+#		standardGeneric("SpatialPointsVegsoup<-")
+#)
+#}
+#setReplaceMethod("SpatialPointsVegsoup",
+#	signature(obj = "Vegsoup", value = "SpatialPointsDataFrame"),
+#	function (obj, value) {
+#		#	to do: needs checking of plot names
+#		obj@sp.points <- value
+#		return(obj)		
+#	}
+#)
 
 #	get spatial polygons
-#if (!isGeneric("SpatialPolygons"))
+#if (!isGeneric("SpatialPolygons")) {
 setGeneric("SpatialPolygonsVegsoup",
 	function (obj)
 		standardGeneric("SpatialPolygonsVegsoup")
 )
-#if (!isGeneric("SpatialPolygons"))
-setGeneric("SpatialPolygonsVegsoup<-",
-	function (obj, value)
-		standardGeneric("SpatialPolygonsVegsoup<-")
-)
+#}
 setMethod("SpatialPolygonsVegsoup",
     signature(obj = "Vegsoup"),
     function (obj) obj@sp.polygons
 )
-setReplaceMethod("SpatialPolygonsVegsoup",
-	signature(obj = "Vegsoup", value = "SpatialPolygonsDataFrame"),
-	function (obj, value) {
-		#	to do: needs checking of plot names
-		obj@sp.polygons <- value
-		return(obj)		
-	}
-)
+#if (!isGeneric("SpatialPolygons"))
+#setGeneric("SpatialPolygonsVegsoup<-",
+#	function (obj, value)
+#		standardGeneric("SpatialPolygonsVegsoup<-")
+#)
+
+#setReplaceMethod("SpatialPolygonsVegsoup",
+#	signature(obj = "Vegsoup", value = "SpatialPolygonsDataFrame"),
+#	function (obj, value) {
+#		#	to do: needs checking of plot names
+#		obj@sp.polygons <- value
+#		return(obj)		
+#	}
+#)
 
 #	revert abunace scale for Braun-Blanquet scale
 .BraunBlanquetReduce <-  function (obj) {

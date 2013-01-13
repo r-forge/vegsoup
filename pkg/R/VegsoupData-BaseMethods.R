@@ -539,11 +539,11 @@ setMethod("as.dist",
 		#	caluclation of distances
 		if (missing(mode)) mode = "Q"
 		if (missing(binary)) {
-			X <- as.numeric(obj, mode = mode)
+			X <- as.numeric(m, mode = mode)
 		} else {
-			X <- as.logical(obj, mode = mode)	
+			X <- as.logical(m, mode = mode)	
 		}
-		Xd <- vegan::vegdist(X, method = obj@dist, ...)
+		Xd <- vegan::vegdist(X, method = m@dist, ...)
 		
 		#	ensure dissimilarities
 		if (max(Xd) > 1) Xd <- Xd / max(Xd)	

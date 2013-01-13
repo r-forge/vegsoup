@@ -11,7 +11,7 @@
 Partition Quality/Validity Assessment of Objects of Class VegsoupDataPartition
 }
 \description{
-by Table Deviance
+Partition analysis (\code{partana}) evaluates the within-cluster to among-cluster similarity as a measure of cluster validity (distance based method). Table Deviance (\code{Tabdev}) assess the clarity of the partitioning by permuting the columns (species) of the community matrix (original data) and calculates the probability of observing as low a deviance as observed.
 }
 \usage{
 Tabdev(obj, numitr = 999, verbose = FALSE, ...)

@@ -10,7 +10,7 @@
 Optimise Partitioning of an Object of Class VegsoupDataPartition
 }
 \description{
-Modify the partitioning of an object as to optimze silhouette widths or Dufrene and Legendre's indicator value.
+Modify the partitioning of an object as to optimze silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
 }
 \usage{
 Optsil(obj, maxitr = 100, verbose = FALSE, ...)
@@ -32,12 +32,13 @@ Print cpu time used.
 The minimum size of the partition to consider reassigning a sample out of.
   }
   \item{\dots}{
-Arguments passed to \code{link{as.dist}} (\code{optsil}) or \code{link{as.matrix}} (\code{Optindval}).
+Arguments passed to \code{\link{as.dist}} (\code{optsil}) or \code{link{as.matrix}} (\code{Optindval}).
   }
 }
 
 \details{
-\code{Optsil} is a simple wrapper for function \code{\link[optpart:optsil]{optsil}} in package \pkg{optpart} to polish an existing clustering. Argument \code{maxitr} is set to one by default to speed up calculations, but should be set to a higher value.
+\code{Optsil} is a simple wrapper for function \code{\link[optpart:optsil]{optsil}} in package \pkg{optpart} to polish an existing clustering.
+%% Argument \code{maxitr} can be set to a lower value to speed up calculations, but should be set to a higher value.
 
 \code{Optindval} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximises the Dufrene and Legendre's indicator value (Indval).
 }
