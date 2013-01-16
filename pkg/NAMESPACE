@@ -105,3 +105,8 @@ exportClasses(
 #    "Decostand"
 #    "AbundanceScale"	
 )
+
+# ensure that dispatch also works inside base functions
+S3method(as.matrix, VegsoupData)
+S3method(as.array, VegsoupData)
+S3method(as.vector, VegsoupData)

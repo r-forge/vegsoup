@@ -319,7 +319,28 @@ setMethod("as.matrix",
     	return(m)
     }    	    
 )
+setAs(from = "VegsoupData", to = "matrix",
+	def = function (from) {
+		as.matrix(from)
+		# typeof = "character", mode = "Q"
+	}
+)
+#	ensure that also base functions dispatch properly
+as.array.VegsoupData <- as.matrix.VegsoupData <-
+	function (x, ...) as.matrix(x, ...) # as(x, "matrix")
 
+setMethod("as.vector",
+	signature(x = "VegsoupData", mode = "missing"), # 
+	  function (x, mode) {
+	  	if (missing(mode)) mode = "numeric"
+	  	as.vector(as.matrix(x, typeof = mode))
+})
+#	ensure that base functions calling as.vector() work
+as.vector.VegsoupData <- function (x, mode) {
+	if (missing(mode)) mode = "numeric"
+	as.vector(as.matrix(x, typeof = mode))
+}	
+	  	
 #if (!isGeneric("rownames")) {
 setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 	standardGeneric("rownames"))
