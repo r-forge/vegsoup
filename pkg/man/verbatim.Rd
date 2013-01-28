@@ -10,7 +10,7 @@ This function tries to read data from text files as frequntly encountered in pub
 }
 
 \usage{
-  verbatim(file, colnames)
+  verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"), species.only = FALSE, verbose = TRUE)
   
   verbatim.append(x, file, abundance = "+")
 }
@@ -21,6 +21,15 @@ A character string. A path to a text file.
 }
 \item{colnames}{
 A character string to be searched for in the header section and used to assign plot names. See \sQuote{Details}.
+}
+\item{layres} {
+A named list giving start and end indices of to assign a layer to each species, or a vector of characters of length according to the number of species in the data set. See \sQuote{Examples}.
+}
+\item{replace}{
+A vector of characters to be replaced by blanks. Note, both the hypen and dash charcters are defined in default set. See \sQuote{Details}.
+}
+\item{species.only}{
+Just return a vector of species extrated from the data set.
 }
 \item{x}{
 An object of class \code{VegsoupVerbatim} as created by calls to function \code{verbatim}
@@ -33,9 +42,11 @@ A vector to be coerced to \code{as.character}. Defaults to \code{"+"} and applie
 \details{
 The data format of the input file equals in its fundamentals the output format of traditional software such as \sQuote{TWINSPAN} and users are assumed to be familiar with such data structeres. Also editing plain text files where matrix like data structures are achieved using monospaced fonts is presupposed. In order to create a fully valid input file a text editor allowing hidden characters to be displayed is essential. At least the editor must be capable of displaying line end special characters (see below).
 
-In general, the data layout consits of species abundances measured on plots where species performance is coded nothing but as a single character. Species or varibales are in rows and plots are columns. As a consequence, using a monospaced font each observation on a plot aligns to a column composed of single characters. Only in the header section (see 1. below) values of width longer than one are supported. Adopting the previous logic, these figures have to be aligned vertically. For example, a value of \sQuote{1000} needs for lines, one line for each digit. See \sQuote{Examples} for a valid input file.
+In general, the data layout consits of species abundances measured on plots where species performance is coded nothing but as a single character. Species or varibales are in rows and plots are columns. As a consequence, using a monospaced font each observation on a plot aligns to a column composed of single characters. Only in the header section (see 1. below) values of width longer than one are supported. Adopting the previous logic, these figures have to be aligned vertically. For example, a value of \sQuote{1000} needs for lines, one line for each digit. See \sQuote{Examples} for a valid input file. 
 
-The function \code{verbatim()} makes the following additional assumptions about the input file format.
+Horizontal and vertical table rules are often found in printed tables. When digitizing such a table the it is often handy to use some special characters to align with the original table strokes. Because of their non informative properties these characters are discarded when parsing the input file and all characters supplied with \code{replace} are replaced with blanks. Care has to be taken with hypens and dashes (see defaults of \code{replace}). R treats the minus sign as a dash (\code{"\uad"}). Warning, problems might arise on non UTF-8 plattforms.
+
+The function \code{verbatim()} makes the following additional assumptions about the input file format (not a file format in the strict sense, but a set of conventions).
 
 \enumerate{
 \item The table header and table body must be enclosed within a pair of keywords. Lines giving the keywords \sQuote{BEGIN HEAD} and \sQuote{END HEAD} must be present at the beginning and end, respectively, of the table header. This block of data has to followd by \sQuote{'BEGIN TABLE'} and \sQuote{END TABLE} to identify the main table structure.
@@ -44,6 +55,7 @@ The function \code{verbatim()} makes the following additional assumptions about 
 \item All species absences have to be coded with a dot (\sQuote{.}). This is the de-facto standard in published tables.
 \item Given that absences are given as \sQuote{.} each cell of the community table has a value. This ensures that the left margin of the community table can be filtered automatically.
 \item The width (number of characters) of the header and the table body data blocks has to perfectly match. The values found in the header (possibly of length longer than one and aligned vertically) exactly corresponds the species abundances on the same plot. In other words, they align to the same column in a monospaced font layout.
+\item Tab characters (\code{"\t"}) are not allowed in the input file!
 }
 Plot identifiers can be assigned using one of the attributes on the resulting object or by supplying an argument \code{colnames}.
 
@@ -59,6 +71,10 @@ An S3 object of class \code{VegsoupVerbatim}. Basically a matrix of mode \code{c
 \note{ 
 The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
 }
+
+%\warning{
+%It is hard to avoid any typos when editing mono spaced table structes, especially, when the are a lot of rows and columns. The human eye easily gets impaired by the overwhelming number of values. The \code{verbatim} function will report any instance that is not valid and diagnsotic messages are printed to the console to aid the user in correcting the input file. The probability of typos increases if there are columns of spaces seperating columns of data.
+%}
 \author{
 Roland Kaiser
 }
