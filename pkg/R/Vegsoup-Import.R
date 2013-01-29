@@ -482,7 +482,7 @@ return(invisible(res))
 }
 
 #	function to import monospaced commuity tables
-verbatim <- function (file, colnames, layers, replace = c("|", "-", "–", "_"), verbose = TRUE, species.only = FALSE) {
+read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "–", "_"), verbose = TRUE, species.only = FALSE) {
 
 require(stringr)
 
@@ -491,17 +491,20 @@ if (missing(file)) {
 }
 
 if (!missing(layers)) {
-	if (!is.list(layers)) {
-		stop("supplied argument layers must be a list")
+	if (!is.list(layers) | !is.vector(layers)) {
+		stop("layers must be a list or character vector")
 	} else {
-		stopifnot(length(names(layres)) == length(layres))
-		has.layers <- TRUE
-		l <- rep(names(layres), lapply(layres, function (x) diff(x) + 1))	
+		if (is.list(layers)) {
+			stopifnot(length(names(layers)) == length(layers))
+			l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))	
+		} else {
+			l <- layers
+		}
+		has.layers <- TRUE		
 	}
 } else {
 	has.layers <- FALSE	
 }
-#	file <- "~/Dropbox/starzengruber1999/StarzengruberTab1.txt"
 
 #	read file
 txt <- readLines(file.path(file))
@@ -743,7 +746,7 @@ print.VegsoupVerbatim <- function (x) {
 }
 
 #	function to append to class VegsoupVerbatim
-verbatim.append <- function (x, file, abundance = "+") {
+read.verbatim.append <- function (x, file, abundance = "+") {
 
 if (!inherits(x, "VegsoupVerbatim")) {
 	stop("plaese supply an object of class VegsoupVerbatim")	

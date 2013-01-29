@@ -45,8 +45,13 @@ data(testdata)
 dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
 txa <- DecomposeNames(dta)
+
 head(txa)
-all.equal(txa$abbr.layer, colnames(dta))		
+all.equal(txa$abbr.layer, colnames(dta))
+
+#	get scientific taxa names
+m <- as.matrix(dta, typeof = "character", mode = "R")
+txa[rownames(m), ]			
 }
 
 \keyword{ methods }

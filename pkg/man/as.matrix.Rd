@@ -1,8 +1,12 @@
 \name{as.matrix}
 \alias{as.logical}
+\alias{as.logical-method}
 \alias{as.numeric}
+\alias{as.numeric-method}
 \alias{as.character}
+\alias{as.character-method}
 \alias{as.matrix}
+\alias{as.matrix-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Retrieve Species Matrix with Specified Storage Mode

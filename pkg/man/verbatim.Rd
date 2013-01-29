@@ -1,28 +1,37 @@
 \name{verbatim}
 \alias{verbatim}
-\alias{verbatim.append}
-\alias{verbatim.append}
+\alias{read.verbatim}
+\alias{read.verbatim.append}
+\alias{write.verbatim}
+\alias{write.verbatim-method}
+
+
 \title{
-Read Monospaced Community Tables From Text Files
+Read or Write Monospaced Community Tables From or To Plain Text Files
 }
 \description{
-This function tries to read data from text files as frequntly encountered in published tables typesetted with monospaced fonts. It's main purpose is to help digitizing literture data.
+The base S3 function \code{read.verbatim(file)} reads data from text files as frequntly encountered in published tables typesetted with monospaced fonts. It's main purpose is to help digitizing literture data. The corresponding \code{write.verbatim(obj)} S4-method performs the reverse on objects inheriting from class \code{VegsoupData}.
 }
 
 \usage{
-  verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"), species.only = FALSE, verbose = TRUE)
+  read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
+           species.only = FALSE, verbose = TRUE)
   
-  verbatim.append(x, file, abundance = "+")
+  read.verbatim.append(x, file, abundance = "+")
+
+  write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
+           abbreviate = TRUE, short.names = FALSE, add.lines = FALSE)
 }
 
 \arguments{
+## Arguments for S3 function \code{read.verbatim}
 \item{file}{
 A character string. A path to a text file.
 }
 \item{colnames}{
 A character string to be searched for in the header section and used to assign plot names. See \sQuote{Details}.
 }
-\item{layres} {
+\item{layers}{
 A named list giving start and end indices of to assign a layer to each species, or a vector of characters of length according to the number of species in the data set. See \sQuote{Examples}.
 }
 \item{replace}{
@@ -31,11 +40,42 @@ A vector of characters to be replaced by blanks. Note, both the hypen and dash c
 \item{species.only}{
 Just return a vector of species extrated from the data set.
 }
+\cr
+## Arguments for S3 function \code{read.verbatim.append}
 \item{x}{
-An object of class \code{VegsoupVerbatim} as created by calls to function \code{verbatim}
+An object of class \code{VegsoupVerbatim} as created by calls to function \code{read.verbatim}
 }
 \item{abundance}{
 A vector to be coerced to \code{as.character}. Defaults to \code{"+"} and applied to all observations.
+}
+\cr
+## Arguments for S4 method \code{write.verbatim}
+\item{obj}{
+An object of class \code{VegsoupData}.
+}
+\item{file}{
+A file name to output results.
+}
+\item{select}{
+Indices to columns in Sites(obj) to be incorporated in the header section. Beware, this only makes sense for numeric or short string variables (e.g. slope aspect)!
+}
+\item{absence}{
+Character to code absences, defaults to \code{"."}.
+}
+\item{collapse}{
+Character to be used as seperator in columns of abundances (plots).
+}
+\item{pad}{
+Integer specifing the number of blanks to add to taxon names (right side) and layers string (both sides), defaults to 1.
+}
+\item{abbreviate}{
+Truncate abundance values to width 1 using abbreviate(x, minlength = 1, strict = TRUE).
+}
+\item{short.names}{
+Use taxon abbreviation instead of long scientific names. Dots are converted to blanks.
+}
+\item{add.lines}{
+Add blank lines sperating header section.
 }
 }
 
@@ -46,7 +86,7 @@ In general, the data layout consits of species abundances measured on plots wher
 
 Horizontal and vertical table rules are often found in printed tables. When digitizing such a table the it is often handy to use some special characters to align with the original table strokes. Because of their non informative properties these characters are discarded when parsing the input file and all characters supplied with \code{replace} are replaced with blanks. Care has to be taken with hypens and dashes (see defaults of \code{replace}). R treats the minus sign as a dash (\code{"\uad"}). Warning, problems might arise on non UTF-8 plattforms.
 
-The function \code{verbatim()} makes the following additional assumptions about the input file format (not a file format in the strict sense, but a set of conventions).
+The S3 function \code{read.verbatim()} makes the following additional assumptions about the input file format (not a file format in the strict sense, but a set of conventions).
 
 \enumerate{
 \item The table header and table body must be enclosed within a pair of keywords. Lines giving the keywords \sQuote{BEGIN HEAD} and \sQuote{END HEAD} must be present at the beginning and end, respectively, of the table header. This block of data has to followd by \sQuote{'BEGIN TABLE'} and \sQuote{END TABLE} to identify the main table structure.
@@ -57,24 +97,28 @@ The function \code{verbatim()} makes the following additional assumptions about 
 \item The width (number of characters) of the header and the table body data blocks has to perfectly match. The values found in the header (possibly of length longer than one and aligned vertically) exactly corresponds the species abundances on the same plot. In other words, they align to the same column in a monospaced font layout.
 \item Tab characters (\code{"\t"}) are not allowed in the input file!
 }
+
 Plot identifiers can be assigned using one of the attributes on the resulting object or by supplying an argument \code{colnames}.
 
-It is often the case that rare species are only given in table footer but not in the main table. The function \code{verbatim.append()} takes an object created by calls to \code{verbatim()} and adds species given in argument \code{file}.
+It is often the case that rare species are only given in table footer but not in the main table. The function \code{read.verbatim.append()} takes an object created by calls to \code{read.verbatim()} and adds species given in argument \code{file}.
 
-The function \code{verbatim.append()} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and seperated with commas   (\sQuote{,}). All spaces found after the colon will be discared. See \sQuote{Examples} for a valid input file.
+The function \code{read.verbatim.append()} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and seperated with commas   (\sQuote{,}). All spaces found after the colon will be discared. See \sQuote{Examples} for a valid input file.
+
+Finally the S4 method \code{write.verbatim()} creates output honorig the set of definitions given above. See \sQuote{Arguments} for possible customization of the output file. Changes of the order
 }
 
 \value{
-An S3 object of class \code{VegsoupVerbatim}. Basically a matrix of mode \code{character} with attributes giving the data in the header section of the input file. Species are rownames. If argument \code{colnames} is supplied the returned matrix will hold meaningful \code{colnames}.
+\code{read.verbatim} and \code{read.verbatim.append} return an S3 object of class \code{VegsoupVerbatim}. Basically a matrix of mode \code{character} with attributes giving the data in the header section of the input file. Species are rownames. If argument \code{colnames} is supplied the returned matrix will hold meaningful \code{colnames}.
+
+\code{write.verbatim} writes a file to disk and invisibly returns the vector of characters written to the file.
 }
 
-\note{ 
+\note{
+It is hard to avoid typos when editing mono spaced table structes, especially, when the are a lot of rows and columns. The human eye easily gets impaired by the overwhelming number of values. The \code{read.verbatim} function will report any instance that is not valid and diagnsotic messages are printed to the console to aid the user in correcting the input file. The probability of typos increases if there are columns of spaces seperating columns of data.
+
 The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
 }
 
-%\warning{
-%It is hard to avoid any typos when editing mono spaced table structes, especially, when the are a lot of rows and columns. The human eye easily gets impaired by the overwhelming number of values. The \code{verbatim} function will report any instance that is not valid and diagnsotic messages are printed to the console to aid the user in correcting the input file. The probability of typos increases if there are columns of spaces seperating columns of data.
-%}
 \author{
 Roland Kaiser
 }
@@ -91,7 +135,7 @@ require(stringr)
 
 file <- system.file("extdata", "Erschbammer1992Tab4.txt",
 	package = "vegsoup")
-x <- verbatim(file)
+x <- read.verbatim(file)
 class(x)
 head(x)
 
@@ -101,13 +145,13 @@ head(x)
 dim(x)
 
 # or in one step
-x <- verbatim(file, "Aufnahme Nr.")
+x <- read.verbatim(file, "Aufnahme Nr.")
 head(x)
 
 # add species from table footer
 file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
 package = "vegsoup")
-x <- verbatim.append(x, file)
+x <- read.verbatim.append(x, file)
 tail(x)
 # 68 species were added
 dim(x)
@@ -164,6 +208,10 @@ prt.org <- VegsoupDataPartition(dta, 3, clustering = "block")
 
 # block/group 3 is ambigously assigned
 Confus(prt.flx, prt.org)
+
+# write object of class VegsoupData
+foo <- write.verbatim(seriation(dta), file = tempfile(), select = c(10,7,8,9,11))
+foo[1:30] # resize console window
 }
 
 \seealso{
