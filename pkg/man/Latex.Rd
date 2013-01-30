@@ -6,7 +6,7 @@
 \alias{Latex,VegsoupDataPartitionFidelity-method}
 
 \title{
-Craete a Summary of an Object of Class VegsoupDataPartition for Typesetting Table in LaTex
+Create Files for Typesetting Tables in LaTex
 }
 \description{
 Saves LaTex files to disk.

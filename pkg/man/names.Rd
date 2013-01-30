@@ -43,7 +43,9 @@ dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
 colnames(dta)
 rownames(dta)
 dimnames(dta)
+names(dta)
 
+names(dta)[1] <- "bar"
 names(dta)
 }
 \keyword{methods}

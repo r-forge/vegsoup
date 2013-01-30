@@ -77,6 +77,9 @@ Use taxon abbreviation instead of long scientific names. Dots are converted to b
 \item{add.lines}{
 Add blank lines sperating header section.
 }
+\item{latex.input}{
+Warp output in LaTex verbatim environment.
+}
 }
 
 \details{

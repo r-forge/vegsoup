@@ -384,7 +384,32 @@ setMethod("names",
     function (x) {
     	names(Sites(x))
     }
-)    	
+)
+
+#if (!isGeneric("names<-")) {
+#setGeneric("names <-",
+#	function (x, value, ...)
+#		standardGeneric("Sites<-")
+#)
+#}
+#	replacement method for names
+
+#	equivalent	
+#setMethod('names<-', signature(x='VegsoupData'), 
+#	function(x, value)  {
+#		x@sites@names <- value
+#		x
+#	}
+#)
+setReplaceMethod("names",
+	signature(x = "VegsoupData", value = "character"),
+	function (x, value) {
+		x@sites@names <- value
+		x
+	}
+)
+
+    	
 #if (!isGeneric("nrow")) {
 setGeneric("nrow", function(x)
 	standardGeneric("nrow"))
@@ -777,6 +802,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 	}
 )
 
+###	warning layers must be equal!!!
 #	rbind like method to fuse objects
 ".rbind.VegsoupData" <- function (..., deparse.level = 1) {
 	allargs <- list(...)
@@ -1203,7 +1229,7 @@ setMethod("seriation",
 	sp.dis <- as.dist(obj, "logical", mode = "R")
 	
 	switch(method, dca = {
-		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
+		use <- try(decorana(as.matrix(obj)), silent = TRUE, ...)
 		if (inherits(use, "try-error")) {
 			use <- NULL
 		}	

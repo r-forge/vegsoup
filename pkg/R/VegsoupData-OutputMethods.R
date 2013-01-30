@@ -1,5 +1,5 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoupData <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, add.lines = FALSE) {
+.write.verbatimVegsoupData <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, add.lines = FALSE, latex.input = FALSE) {
 	
 if (class(obj) != "VegsoupData") {
 	stop("verbatim is currently only implemented for class VegsoupData?")
@@ -91,12 +91,14 @@ y <- cbind(
 
 #	promote table column names
 tmp <- dimnames(x)[[2]]
-width <- max(sapply(tmp, nchar))
+width <- max(sapply(tmp[-c(1,2)], nchar)) # omit the first and second column
 z <- matrix(" ",
 	nrow = width, ifelse(add.lines, 1, 0),
 	ncol = length(tmp))
 for (i in 1:width) {
-	z[i,] <- sapply(tmp[i], function (x) substring(tmp, i, i))
+	xx <- substring(tmp, i, i)
+	if (any(xx == "")) xx[xx == ""] <-  " "
+	z[i,] <- xx				
 }
 #	clean first two columns
 z[, 1] <- format("", width = nchar(taxon[1]))
@@ -116,13 +118,20 @@ res <- cbind(
 		
 res <- apply(res, 1, function (x) paste0(x, collapse = ""))
 
+apply(z, 1, function (x) paste(x, collapse = ""))
 #	add keywords
 zy <- 1:(nrow(z) + nrow(y))
 x <- (max(zy) + 1):(nrow(x) + max(zy))
 
-res <- c("BEGIN HEAD", res[zy], "END HEAD",
-	"BEGIN TABLE", res[x], "END TABLE")
-
+if (latex.input) {
+	res <- c("\\begin{verbatim}",
+		"BEGIN HEAD", res[zy], "END HEAD",
+		"BEGIN TABLE", res[x], "END TABLE",
+		"\\end{verbatim}")
+} else {
+	res <- c("BEGIN HEAD", res[zy], "END HEAD",
+		"BEGIN TABLE", res[x], "END TABLE")
+}
 if (!no.save) writeLines(res, file)
 
 return(invisible(res))	
