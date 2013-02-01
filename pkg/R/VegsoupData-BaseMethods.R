@@ -9,7 +9,7 @@
 	abbr <- Species(obj)$abbr
 	layer <- Species(obj)$layer	
 	cov <- Species(obj)$cov
-	scale <- AbundanceScale(obj)
+	scale <- coverscale(obj) # rename local object scale to ?
 	
 	#	matrix dimensions
 	plots <- unique(plot)
@@ -30,12 +30,12 @@
 	}
 			
 	#	cover transformation
-	if (mode == 1 & scale$scale != "frequency") {
+	if (mode == 1 & !is.null(scale@codes)) {
 		cov <- as.numeric(as.character(
-			factor(cov, levels = scale$codes, labels = scale$lims)
+			factor(cov, levels = scale@codes, labels = scale@lims)
 			))
 		if (any(is.na(cov))) {
-			stop("scale codes do not match data" )
+			stop("cover scale codes do not match data" )
 		}	
 	}
 #	})
@@ -132,11 +132,15 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 		dist = "euclidean"
 	}
 		
-	scale <- AbundanceScale(obj)
+	scale <- coverscale(obj)
 	lay <- Layers(obj)
 	txa <- Taxonomy(obj)
 	species <- Species(obj)
-	
+
+	#	rewrite to use .cast()
+	#	silenced, if ok delete
+
+	if (FALSE) { 	
 	#	 casts species matrix for Braun-Blanquet scales	
 	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
 		if (!is.character(species$cov)) {
@@ -156,7 +160,7 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 	#	cast species matrix for Domin scale
 	#	this is Braun-Blanquet scale
 	
-	#	rewrite to use .cast() 
+
 	if (scale$scale == "Domin") {
 		if (!is.character(species$cov)) {
 			if (is.integer(species$cov)) {
@@ -222,6 +226,7 @@ VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
 		cat("\ntime to cast species matrix",
 		"of", prod(dim(res)), "cells:",
 		cpu.time[3], "sec\n")
+	}
 	}
 	
 	#	develop class VegsoupData from class Vegsoup
@@ -809,11 +814,12 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 	#	allargs <- list(s1, s2, s3)
 	#	test if all objects have the same abundance scale
 	test <- length(unique((sapply(allargs,
-			function (x) AbundanceScale(x)$scale))))
+			function (x) coverscale(x)@name))))
 	if (test != 1) {
-		stop("\n scale is not the same for all objects")
+		stop("\n cover scale is not the same for all objects")
 	}  else {
-		scale <- sapply(allargs[1], AbundanceScale, simplify = FALSE)[[1]]
+		#	fails!
+		scale <- sapply(allargs[1], coverscale, simplify = FALSE)
 	}
 	#	test for overlapping plot ids
 	test <- c(sapply(allargs, rownames))
@@ -894,7 +900,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 		species = x,
 		sites = y, 
 		taxonomy = z,
-		scale = as.list(scale),
+		coverscale = scale,
 		layers = as.character(unique(x$layer)),
 		group = rep(integer(1), nrow(y)),
 		sp.points = pts,
@@ -957,7 +963,7 @@ if (missing(collapse) & missing(aggregate)) {
 	}
 
 	species <- Species(res)
-	scale <- AbundanceScale(res)
+	scale <- coverscale(res)
 
 	collapse <- matrix(c(res@layers, collapse),
 		ncol = 2, nrow = length(res@layers),
@@ -994,7 +1000,7 @@ if (missing(collapse) & missing(aggregate)) {
 	#	convert original abundance scale to numeric to allow calculations
 	if (scale.is.character) {
 		species$cov <- as.factor(species$cov)
-		levels(species$cov) <- scale$lims[match(levels(species$cov), scale$codes)]
+		levels(species$cov) <- scale@lims[match(levels(species$cov), scale@codes)]
 		species$cov <- as.numeric(as.character(species$cov))
 	}
 	
@@ -1012,10 +1018,10 @@ if (missing(collapse) & missing(aggregate)) {
 		aggregate(cov ~ plot + abbr + layer, data = species,
 			FUN = sum)
 	}, layer = {
-		if (scale$scale != "frequency") {
+		if (!is.null(scale@codes)) {
 		aggregate(cov ~ plot + abbr + layer, data = species,
 				FUN = function (x) {
-					round((1 - prod(1 - x / max(scale$lims))) * max(scale$lims), dec)
+					round((1 - prod(1 - x / max(scale@lims))) * max(scale@lims), dec)
 				})
 		} else {
 			aggregate(cov ~ plot + abbr + layer, data = species,
@@ -1027,18 +1033,18 @@ if (missing(collapse) & missing(aggregate)) {
 	
 	species <- species[order(species$plot, species$layer, species$abbr), ]
 	
-	if (scale$scale != "frequency") {
-		if (any(max(species$cov) > max(scale$lims))) {
+	if (!is.null(scale@codes)) {
+		if (any(max(species$cov) > max(scale@lims))) {
 			warning("\n reduced maximum aggregated abundance value to fit into limits: ",
-				min(scale$lims)[1], " to ", max(scale$lims), call. = FALSE)
-			species$cov[species$cov >  max(scale$lims)] <- max(scale$lims)
+				min(scale@lims)[1], " to ", max(scale@lims), call. = FALSE)
+			species$cov[species$cov >  max(scale@lims)] <- max(scale@lims)
 		}
 	}
 	species$cov <- ceiling(species$cov)
 	
 	#	back convert to original abundance scale if it was character
 	if (scale.is.character) {
-		species$cov <- as.character(cut(species$cov, breaks = c(0, scale$lims), labels = scale$codes))
+		species$cov <- as.character(cut(species$cov, breaks = c(0, scale@lims), labels = scale@codes))
 	}
 	
 	res@species <- species
@@ -1128,7 +1134,7 @@ setMethod("summary",
 		"\n matrix fill: ", round(MatrixFill(object), 0), " %",
 		"\n layers: ", length(Layers(object)), 
 		" (", paste(Layers(object), collapse = ", "), ")",
-		"\n abundance scale: ", AbundanceScale(object)$scale,
+		"\n abundance scale: ", coverscale(object)@name,
 		ifelse(is.null(decostand(object)),
 			paste("\n decostand method: undefined (NULL)"),
 			paste("\n decostand method: ", decostand(object))

@@ -756,6 +756,7 @@ if (nboot > 0) {
 	dmupper = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 }	# end nboot
 
+#	change: develop form VegsoupDataPartition object"
 res <- new("VegsoupDataPartitionFidelity",
 	stat = as.matrix(dm),
 	fisher.test = as.matrix(ft),
@@ -770,7 +771,7 @@ res <- new("VegsoupDataPartitionFidelity",
 	sites = obj@sites,
 	species = obj@species,
 	taxonomy = obj@taxonomy,
-	scale = obj@scale,
+	coverscale = obj@coverscale,
 	layers= obj@layers,
 	group = obj@group,
 	sp.points = obj@sp.points,

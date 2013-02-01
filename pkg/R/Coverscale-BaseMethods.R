@@ -1,5 +1,9 @@
 #	Vegsoup validity check
 #	!any(is.na(factor(x$cov, levels = scale$codes, labels = scale$lims)))
+#x$cov <- as.numeric(x$cov)
+#if (any(is.na(x$cov))) {
+#str(x$cov)
+#stop("there seems to be digits mixed with characters?")
 
 Coverscale <- function (name, codes, lims) {
 	if (missing(name)) {
@@ -32,32 +36,50 @@ Coverscale <- function (name, codes, lims) {
 setGeneric("coverscale", function(obj, ...)
 	standardGeneric("coverscale"))
 #}
+#if (!isGeneric("decostand<-")) {
+setGeneric("coverscale<-",
+	function (obj, value, ...)
+		standardGeneric("coverscale<-")
+)
+#}
 setMethod("coverscale",
     signature(obj = "Vegsoup"),
     function (obj) {
- 		obj@scale # rename to coverscale   	
+ 		obj@coverscale # rename to coverscale   	
     }
 )
 
-#setReplaceMethod("coverscale",
-#	signature(obj = "Vegsoup", value = "Coverscale"),
-#	function (obj, value) {
-#		obj@coverscale <- value		
-#		return(obj)		
-#	}
-#)
+#	needs cover scale conversion 
+setReplaceMethod("coverscale",
+	signature(obj = "Vegsoup", value = "Coverscale"),
+	function (obj, value) {		
+		obj@coverscale <- value
+		test <- !any(is.na(factor(Species(obj)$cov,
+			levels = coverscale(obj)@codes,
+			labels = coverscale(obj)@lims)))
+		if (test) {
+			stop("coverscale does not match data")
+		}		
+		return(obj)		
+	}
+)
 
-#setReplaceMethod("coverscale",
-#	signature(obj = "Vegsoup", value = "character"),
-#	function (obj, value) {
-#		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
-#       value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
-#		value <- as(.COVERSCALES[[match.arg(name, names(.COVERSCALES))]], "Coverscale")
-#		new("decostand", method = value)
-#		obj@coverscale <- value		
-#		return(obj)		
-#	}
-#)
+setReplaceMethod("coverscale",
+	signature(obj = "Vegsoup", value = "character"),
+	function (obj, value) {
+		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
+       	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
+		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
+		obj@coverscale <- value
+		test <- !any(is.na(factor(Species(obj)$cov,
+			levels = coverscale(obj)@codes,
+			labels = coverscale(obj)@lims)))
+		if (test) {
+			stop("coverscale does not match data")
+		}		
+		return(obj)		
+	}
+)
   
 setAs("list", "Coverscale", def = function (from) {
 	#	ordinal

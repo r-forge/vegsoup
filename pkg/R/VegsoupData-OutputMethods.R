@@ -48,7 +48,7 @@ x <- cbind(taxon, layer, m)
 
 #	truncate abundance value
 if (abbreviate) {
-	width <- max(sapply(AbundanceScale(obj)$codes, nchar))
+	width <- max(sapply(coverscale(obj)@codes, nchar))
 	if (width > 1) {
 		x[, -c(1,2)] <- apply(x[, -c(1,2)], 2,
 			function (x) abbreviate(x, minlength = 1, strict = TRUE)

@@ -17,6 +17,7 @@ LazyData: yes
 Collate: AAA.R
          Vegsoup-Import.R
          Vegsoup-Internal.R
+         Class-Coverscale.R
          Class-Vegsoup.R
          Vegsoup-BaseMethods.R
          Class-VegsoupData.R
@@ -35,7 +36,6 @@ Collate: AAA.R
          VegsoupDataPartitionFidelity-BaseMethods.R
          Class-VegsoupDataOptimstride.R
          VegsoupDataOptimstride-BaseMethods.R
-         Class-Coverscale.R
          Coverscale-BaseMethods.R
          ZZZ.R
 Respository: R-Forge

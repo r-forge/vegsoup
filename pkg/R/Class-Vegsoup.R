@@ -7,7 +7,7 @@ setClass("Vegsoup",
 	species = "data.frame", # in long format, casting by method
 	sites = "data.frame", # melt method
 	taxonomy = "data.frame", # in long format
-	scale = "list", #rename to coverscale an class "Coverscale"
+	coverscale = "Coverscale", #renamed
 	layers = "character",
 	group = "integer",
 #	sp.raster = "raster",

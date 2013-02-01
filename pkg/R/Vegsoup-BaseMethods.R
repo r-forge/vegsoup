@@ -2,8 +2,8 @@
 #	to do: improve documentation, rewrite AbundanceScale interface
 #	create a class AbundanceScale to handle more scales and allow user defined scales, high priority
 
-Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "Barkman", "frequency", "binary"), group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
-	#	x = x; y = y; z = z; scale = list(scale = "Braun-Blanquet")
+Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
+	#	x = x; y = y; z = z; coverscale = "braun.blanquet"
 	if (missing(col.names)) {
 		col.names <- list(
 			x = c("plot", "abbr", "layer", "cov"),
@@ -118,72 +118,36 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 			"\n some plots were dropped!", call. = FALSE)		
 	}
 		
-	if (missing(scale)) {
-		warning("\n no cover scale provided", call. = FALSE)
+	if (missing(coverscale)) {
+		warning(" no cover scale provided", call. = FALSE)
 		if (is.character(x$cov)) {
 			warning("\n interpret abundance values as character",
 			"\n set cover scale to default 9 point Braun-Blanquet scale")
-			scale <- list(
-				scale = "Braun-Blanquet", 
-				codes = c("r", "+", "1",
-					"2m", "2a", "2b", "3", "4", "5"),
-				lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
-			cat("\n", scale$codes)	
+			xs <- Coverscale("braun.blanquet")
 		} else {
 			cat("\n cover seems to be numeric")
-			cat("\n set abundance scale to frequency")
-			scale <- c(scale = "frequency", list(codes = NULL), list(lims = NULL))
+			cat("\n set abundance scale to percentage")
+			xs <- Coverscale("percentage")
 		}	
 	} else {
-		if (is.list(scale)) {
-			if (length(scale) == 1)	{
-				if (scale[[1]] == "frequency") {
-					scale <- c(scale, list(codes = NULL), list(lims = NULL))
-					x$cov <- as.numeric(x$cov)
-					if (any(is.na(x$cov))) {
-						str(x$cov)
-						stop("there seems to be digits mixed with characters?")
-				} 				
-				#	stopifnot(is.numeric(x$cov))
-				}
-				if (scale[[1]] == "binary") {
-					scale <- c(scale, list(codes = NULL), list(lims = NULL))
-				stopifnot(dim(table(x$cov)) < 3)
-				}
-				if (scale[[1]] == "Braun-Blanquet") {
-					scale <- list(
-						scale = "Braun-Blanquet", 
-						codes = c("r", "+", "1",
-							"2m", "2a", "2b", "3", "4", "5"),
-						lims = c(1, 2, 3, 4, 8, 18, 38, 68, 88))
-					stopifnot(!any(is.na(factor(x$cov,
-						levels = scale$codes, labels = scale$lims))))
-				}
-				if (scale[[1]] == "Braun-Blanquet 2") {
-					scale <- list(
-						scale = "Braun-Blanquet 2", 
-						codes = c("r", "+", as.character(1:5)),
-						lims = c(1, 2, 3, 13, 38, 68, 88))
-					stopifnot(!any(is.na(factor(x$cov,
-						levels = scale$codes, labels = scale$lims))))
-					print(scale)	
-				}
-				if (scale[[1]] == "Domin") {
-					scale <- list(
-						scale = "Domin",
-						codes = c("+", as.character(1:9), "X"),
-        				lims = c(0.01, 0.1, 1, 5, 10, 25, 33, 50, 75, 90, 100))
-					stopifnot(!any(is.na(factor(x$cov,
-						levels = scale$codes, labels = scale$lims))))
-				}	
+		if (is.character(coverscale) & length(coverscale) == 1) {
+			xs <- Coverscale(coverscale)
+		} else { 
+			if (inherits(coverscale, "Coverscale")) {
+				xs <- coverscale
+			} else {
+				if (is.list(coverscale)) {
+					#	problems with coerce methods will arise
+					#	if setAs("list", "Coverscale") is defined
+					#	currently not planned
+					xs <- as(coverscale, "Coverscale")
+				} else {
+					stop("please supply a character, list or object of class Coverscale")					
+				}				
 			}
-		} else {
-			stop("please supply a list for argument scale")
-		}	
+		}
 	}
 	
-	#	stoifnot(factor(cov, levels = scale$codes, labels = scale$lims))
-
 	if (missing(group))	{
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
@@ -372,7 +336,7 @@ Vegsoup <- function (x, y, z, scale = c("Braun-Blanquet", "Braun-Blanquet 2", "B
 		species = x,
 		sites = y, 
 		taxonomy = z,
-		scale = as.list(scale),
+		coverscale = xs,
 		layers = as.character(unique(x$layer)),
 		group = group,
 		sp.points = sp.points,
@@ -422,8 +386,8 @@ setGeneric("hist",
 #	function (x, ...) {
 #	   res <- 
 #	   factor(x@species$cov,
-#	   	levels = AbundancsScale(x)$codes,
-#	   	lables = AbundancsScale(x)$lims)
+#	   	levels = coverscale(x)@codes,
+#	   	lables = coverscale(x)@lims)
 #
 #	   fig <- hist(x,
 #	   main = "Histogram of abundance values",
@@ -514,8 +478,7 @@ setReplaceMethod("Abbreviation",
 	}
 )
 
-#	delete and replace mit coverscale
-#	get or cover scale
+#	start delete
 setGeneric("AbundanceScale",
 	function (obj)
 		standardGeneric("AbundanceScale")
@@ -528,7 +491,7 @@ setGeneric("AbundanceScale<-",
 
 setMethod("AbundanceScale",
     signature(obj = "Vegsoup"),
-    function (obj) obj@scale
+    function (obj) obj@coverscale
 )
 
 setReplaceMethod("AbundanceScale",
@@ -540,6 +503,7 @@ setReplaceMethod("AbundanceScale",
 		return(obj)		
 	}
 )
+#	end delete
 
 #	get species query in long format
 setGeneric("Species",
@@ -706,9 +670,8 @@ setMethod("SpatialPolygonsVegsoup",
 	}
 	
 	obj@species <- res
-	obj@scale <- list(scale = "Braun-Blanquet 2",
-		codes = c("r", "+", "1", "2", "3", "4", "5"),
-		lims = c(1, 2, 3, 13, 38, 68, 88))
+	obj@coverscale <- Coverscale("braun.blanquet2")
+
 	return(invisible(obj))
 }
 

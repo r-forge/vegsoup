@@ -517,8 +517,8 @@ setMethod("Fivenum",
 				tmp <- res[, , i]
 				mode(tmp) <- "numeric"
 				vals <- as.character(cut(tmp,
-					breaks = c(0, AbundanceScale(obj)$lims),
-					labels = AbundanceScale(obj)$codes))
+					breaks = c(0, coverscale(obj)@lims),
+					labels = coverscale(obj)@codes))
 				tmp.i <- tmp
 				mode(tmp.i) <- "character"
 				tmp.i[] <- vals

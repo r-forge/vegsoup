@@ -22,8 +22,8 @@ Sites data.frame.
   \item{z}{
 Taxonomy data.frame.
 }
-  \item{scale}{
-Abundance scale, Possible choices are "Braun-Blanquet" "frequency" "binary"
+  \item{coverscale}{
+Abundance scale, possible choices include all definitions given by \code{\link{Coverscale}}.
 }
   \item{group}{
 Apriori grouping, if any and can be missing.

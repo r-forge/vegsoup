@@ -1,8 +1,10 @@
 library(vegsoup)
 data(testdata)        
-qry <- Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet"))
+qry <- Vegsoup(species, sites, taxonomy)
+qry <- Vegsoup(species, sites, taxonomy, coverscale = "braun.blanquet")
+qry <- Vegsoup(species, sites, taxonomy, coverscale = Coverscale("braun.blanquet"))
 dta <- VegsoupData(qry)
+coverscale(dta)
 
 #	accessor methods for inherited class slots
 #	from class VegsoupData
@@ -43,9 +45,15 @@ head(DecomposeNames(dta))
 Abbreviation(dta)
 
 #	abundance scale
-AbundanceScale(dta) # delete
+
 class(BraunBlanquetReduce(dta))
+coverscale((BraunBlanquetReduce(dta)))
 coverscale(dta)
+#	both should fail!
+#	coverscale(dta) <- "braun.blanquet2"
+#	coverscale(dta) <- Coverscale("braun.blanquet")
+#	assign what is already assigned
+#	coverscale(dta) <- "braun.blanquet"
 
 #	Layers
 Layers(dta)
