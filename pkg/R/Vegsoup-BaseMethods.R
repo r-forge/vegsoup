@@ -514,6 +514,7 @@ setReplaceMethod("Abbreviation",
 	}
 )
 
+#	delete and replace mit coverscale
 #	get or cover scale
 setGeneric("AbundanceScale",
 	function (obj)

@@ -13,7 +13,7 @@
 	
 	#	matrix dimensions
 	plots <- unique(plot)
-	species.layer <- paste(abbr, layer, sep = "@")
+	species.layer <- file.path(abbr, layer, fsep = "@") # faster than paste
 
 	#	resort to layer
 	if (length(Layers(obj)) > 1) {	
@@ -25,7 +25,7 @@
 				}
 			))))
 	} else {
-	#	fast	
+	#	simple and faster if there is only one layer	
 		species <- unique(species.layer)	
 	}
 			
@@ -61,7 +61,7 @@
 			FUN.VALUE = character(length(species)),
 			FUN = function (x) {
 				r <- character(length(species))
-				#	change to "."
+				#	maybe change to "."
 				#	there are several function that look for 0!
 				r[] <- "0"
 				r[match(species.layer[plot == x], species)] <- cov[plot == x]

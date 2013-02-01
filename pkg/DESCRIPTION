@@ -35,5 +35,7 @@ Collate: AAA.R
          VegsoupDataPartitionFidelity-BaseMethods.R
          Class-VegsoupDataOptimstride.R
          VegsoupDataOptimstride-BaseMethods.R
+         Class-Coverscale.R
+         Coverscale-BaseMethods.R
          ZZZ.R
 Respository: R-Forge

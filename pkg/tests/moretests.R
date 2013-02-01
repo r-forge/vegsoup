@@ -14,7 +14,6 @@ AprioriGrouping(dta)
 Taxonomy(dta)
 SpatialPointsVegsoup(dta)
 SpatialPolygonsVegsoup(dta)
-AbundanceScale(dta)
 Layers(dta)
 
 #	matrix dimensions
@@ -38,15 +37,15 @@ show(dta)
 colnames(dta)
 rownames(dta)
 names(dta)
-Abbreviation(dta)
 
 #	taxon abbreviations
 head(DecomposeNames(dta))
 Abbreviation(dta)
 
 #	abundance scale
-AbundanceScale(dta)
+AbundanceScale(dta) # delete
 class(BraunBlanquetReduce(dta))
+coverscale(dta)
 
 #	Layers
 Layers(dta)
@@ -82,11 +81,11 @@ richness(dta, "sa")
 
 #	standardization
 decostand(dta)  <- c("hellinger")
-as.numeric(dta)
+foo <- as.numeric(dta)
 decostand(dta)  <- c("hellinger", "standardize")
-as.numeric(dta)
+foo <- as.numeric(dta)
 decostand(dta)  <- c("wisconsin")
-as.numeric(dta)                  
+foo <- as.numeric(dta)                  
 
 #	subsetting
 dta[1:3,]

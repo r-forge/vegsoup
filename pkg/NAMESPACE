@@ -41,8 +41,10 @@ exportMethods(
     "Confus",
     "Constancy",
     "Contingency",
+    "coverscale",
     "coordinates",
     "DecomposeNames",
+    "decostand",
     "dim",
     "Disdiam",
     "Fidelity",
@@ -93,16 +95,16 @@ exportMethods(
     "tail",
     "Taxonomy",
     "Taxonomy<-",
-    "typal" 
+    "typal",
+    "vegdist" 
 )
 exportClasses(
      "Vegsoup",
      "VegsoupData",
      "VegsoupDataPartition",
      "VegsoupDataPartitionFidelity",
-     "VegsoupDataOptimstride"
-#    "Decostand"
-#    "AbundanceScale"	
+     "VegsoupDataOptimstride",
+     "Coverscale"
 )
 
 # ensure that dispatch also works inside base functions
