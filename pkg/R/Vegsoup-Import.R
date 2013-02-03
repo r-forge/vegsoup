@@ -404,7 +404,7 @@ MakeAbbr <- function (x)  {
 }
 
 #	convert between matrix formats for import
-stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absence = ".", verbose = FALSE) {
+stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences = ".", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
@@ -416,7 +416,7 @@ if (!missing(file)) {
 			x <- read.csv2(file,
 				colClasses = "character", check.names = FALSE)				
 		} else {
-			x <- read.csv2(file,
+			x <- read.csv(file,
 				colClasses = "character", check.names = FALSE)				
 		}
 	}
@@ -427,13 +427,13 @@ if (!missing(file)) {
 			stop("please supply a data.frame")	
 	}
 }
-#	x <- x.df
+
 x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 
 #	check schema
-abbr <- grep("abbr", names(x))
-layer <- grep("layer", names(x))
-comment <- grep("comment", names(x))
+abbr <- grep(schema[1], names(x)) #"abbr"
+layer <- grep(schema[2], names(x)) # "layer"
+comment <- grep(schema[3], names(x)) # "comment"
 
 #	test schema
 test <- length(abbr) > 0 & length(layer) > 0 & length(comment) > 0
@@ -451,8 +451,6 @@ if (!test) {
 	stop("can't coerce object")
 }
 
-#	x <- x.df
-
 abbr <- grep("abbr", names(x))
 layer <- grep("layer", names(x))
 comment <- grep("comment", names(x))
@@ -466,13 +464,13 @@ abbr <- rep(as.character(x$abbr), ncol(xx))
 layer <- rep(as.character(x$layer), ncol(xx))
 cov <- as.vector(as.matrix(xx))
 
-#	test absence
+#	test absences
 tmp <- unique(cov)
-test <- match(absence, tmp)
+test <- match(absences, tmp)
 if (any(is.na(test))) {
-	stop("character \"", absence, "\" to code absences not found, but have: ", tmp)
+	stop("character \"", absences, "\" to code absences not found, but have: ", tmp)
 } else {	
-	ij <- cov != absence
+	ij <- cov != absences
 }
 
 res <- data.frame(
@@ -507,11 +505,16 @@ if (verbose) {
 				if (class(test) == "numeric" & dim(table(test)) > 2) {
 					cat("\n... cover seems to be continous: ")
 					cat("\n    Tukey's five number summary:", fivenum(test))
+				} else {
+					if (class(test) == "integer" & dim(table(test)) > 2) {
+						cat("\n... cover seems to be ordinal, coded with integers: ")
+						cat(names(table(test)))		
+					}			
 				}	
 			}			
 		}
 	}
-	cat("\n... data has", length(unique(res$layer)), "layer (s):", unique(res$layer))
+	cat("\n... data has", length(unique(res$layer)), "layer(s):", unique(res$layer))
 }	
 
 return(invisible(res))
