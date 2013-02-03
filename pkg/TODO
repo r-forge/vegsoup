@@ -4,6 +4,8 @@ noquote for print method (e.g. as.matrix)
 Richness by Partiton
 #	aggregate(as.logical(prt), by = list(Partitiong(prt), sum)
 
+extend slot parttiton to contain class dendrogram
+
 # minor
 rename
 layer to stratum

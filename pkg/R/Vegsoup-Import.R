@@ -3,8 +3,7 @@ QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, re
 #	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
 cmb <- test <- test[, c(1, 3, 4, 6)]
-tmp <- c(
-	x = !missing(x), y = !missing(y),
+tmp <- c(x = !missing(x), y = !missing(y),
 	file.x = !missing(file.x), file.y = !missing(file.y))
 
 for (i in seq(along = tmp)) {
@@ -14,7 +13,9 @@ for (i in seq(along = tmp)) {
 mode(test) <- "logical"
 
 sel <- apply(test, 2, all)
-if (all(sel == FALSE)) stop("please supply x respectively file.x and y respectively file.y")
+if (all(sel == FALSE)) {
+	stop("please supply x respectively file.x and y respectively file.y")
+}	
 if (sum(as.numeric(sel)) > 1) {
 	cat("supplied", paste(cmb[, sel], collapse = " and "), "\n")
 	stop("\ni don't know what to choose?")
@@ -56,21 +57,25 @@ if (which(sel) == 4) {
 #	for safety if x is supplied as data.frame
 species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
 #	check names and bring to order
-species.mandatory.columns <- c("plot", "abbr", "layer", "cov")
+species.mandatory <- c("plot", "abbr", "layer", "cov")
 
-if (!all(species.mandatory.columns %in% names(species))) {
+if (!all(species.mandatory %in% names(species))) {
 	stop("\n need mandatory columns ",
-		paste(species.mandatory.columns, collapse = ", "),
+		paste(species.mandatory, collapse = ", "),
 		" in species data")	
 } else {
-	species <- species[species.mandatory.columns]	
+	species <- species[species.mandatory]	
 }	
 
 #	keep only two columns
 taxonomy <- taxonomy[c("abbr", "taxon")]
 
 #	check unique abbrevations
-rownames(taxonomy) <- taxonomy$abbr
+if (length(unique(taxonomy$abbr)) != nrow(taxonomy)) {
+	stop("abbr has to be unique")
+} else {
+	rownames(taxonomy) <- taxonomy$abbr	
+}
 	
 test1 <- match(unique(species$abbr), taxonomy$abbr)
 
@@ -399,7 +404,7 @@ MakeAbbr <- function (x)  {
 }
 
 #	convert between matrix formats for import
-SpeciesWide2SpeciesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
+stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absence = ".", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
@@ -422,52 +427,18 @@ if (!missing(file)) {
 			stop("please supply a data.frame")	
 	}
 }
+#	x <- x.df
+x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 
 #	check schema
 abbr <- grep("abbr", names(x))
 layer <- grep("layer", names(x))
 comment <- grep("comment", names(x))
 
-if (length(abbr) > 0 & length(layer) > 0 & length(comment) > 0) {
+#	test schema
+test <- length(abbr) > 0 & length(layer) > 0 & length(comment) > 0
 
-res <- c()
-
-for (i in c(max(c(abbr, layer, comment)) + 1):ncol(x)) {
-	tmp <- data.frame(plot = names(x)[i],
-		abbr = as.character(x$abbr),
-		layer = as.character(x$layer),
-		cov = as.character(x[,i]),
-		comment = as.character(x$comment),
-		stringsAsFactors = FALSE)
-	
-	res <- rbind(res, tmp)
-}
-res <- res[res$cov != "0",]
-res <- res[res$cov != "",]
-res <- res[res$cov != ".",]
-
-if (length(grep(",", res$cov)) > 0) {
-	res$cov <- gsub(",", ".", res$cov)
-	if (verbose) {
-		"\n... groomed decimals, replaced colons with dots"
-	}
-
-}
-if (verbose) {
-	test <- try(as.numeric(res$cov))
-	if (class(test) != "try-error") {
-		cat("\n... cover seems to be numeric")
-		cat("\n    Tukey's five number summary:", fivenum(test))
-	} else {
-		cat("\n... cover seems to be categorical")
-		print(table(res$cov))
-	}
-	
-	cat("\n... data seems to have", length(unique(res$layer)), "layer:", unique(res$layer))
-#	print(table(res$layer))
-}
-return(invisible(res))
-} else {
+if (!test) {
 	if (length(abbr) < 1) {
 		warning("did not find column abbr")		
 	}
@@ -479,6 +450,71 @@ return(invisible(res))
 	}
 	stop("can't coerce object")
 }
+
+#	x <- x.df
+
+abbr <- grep("abbr", names(x))
+layer <- grep("layer", names(x))
+comment <- grep("comment", names(x))
+
+#	only species abundances
+sel <- c(max(c(abbr, layer, comment)) + 1):ncol(x)
+xx <- x[, sel]
+
+plot <- rep(names(xx), each = nrow(xx))
+abbr <- rep(as.character(x$abbr), ncol(xx))
+layer <- rep(as.character(x$layer), ncol(xx))
+cov <- as.vector(as.matrix(xx))
+
+#	test absence
+tmp <- unique(cov)
+test <- match(absence, tmp)
+if (any(is.na(test))) {
+	stop("character \"", absence, "\" to code absences not found, but have: ", tmp)
+} else {	
+	ij <- cov != absence
+}
+
+res <- data.frame(
+		plot = as.character(plot)[ij],
+		abbr = as.character(abbr)[ij],
+		layer = as.character(layer)[ij],
+		cov = as.character(cov)[ij],
+		comment = "",
+		stringsAsFactors = FALSE)
+
+if (length(grep(",", res$cov)) > 0) {
+	res$cov <- gsub(",", ".", res$cov)
+	if (verbose) {
+		"\n... groomed decimals, replaced colons with dots"
+	}
+
+}
+#res$cov <- as.character(sample(c(0,1), nrow(res), replace = TRUE))
+
+if (verbose) {
+	test <- type.convert(res$cov)
+	if (class(test) == "factor" | class(test) == "character") {
+		cat("\n... cover seems to be ordinal: ")
+		cat(names(table(test)))
+
+	} else {
+		if (class(test) == "numeric" | class(test) == "integer") {
+			if (class(test) == "integer" & dim(table(test)) == 2) {
+				cat("\n... cover seems to be logical (presence/absence)")
+				cat(names(table(test)))			
+			} else {
+				if (class(test) == "numeric" & dim(table(test)) > 2) {
+					cat("\n... cover seems to be continous: ")
+					cat("\n    Tukey's five number summary:", fivenum(test))
+				}	
+			}			
+		}
+	}
+	cat("\n... data has", length(unique(res$layer)), "layer (s):", unique(res$layer))
+}	
+
+return(invisible(res))
 }
 
 #	function to import monospaced commuity tables
