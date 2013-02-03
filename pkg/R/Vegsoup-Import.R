@@ -1,4 +1,4 @@
-QueryTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = TRUE) {
+taxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = TRUE) {
 
 #	input formats
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
