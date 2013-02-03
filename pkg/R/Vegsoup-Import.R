@@ -318,7 +318,7 @@ return(invisible(res))
 
 #	stack sites data frame to match database structure
 
-SitesWide2SitesLong <- function (x, file, csv2 = TRUE, verbose = FALSE) {
+stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE) {
 #	file = "~/Documents/vegsoup-data/windsfeld dta/sites wide.csv"
 
 if (missing(x) & missing(file)) {
@@ -330,14 +330,10 @@ if (!missing(file)) {
 		if (csv2) {
 			x <- read.csv2(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
-#			x <- read.csv2(file,
-#				colClasses = "character", check.names = FALSE)
 
 		} else {
 			x <- read.csv(file,
 				stringsAsFactors = FALSE, check.names = FALSE)
-#			x <- read.csv2(file,
-#				colClasses = "character", check.names = FALSE)
 		}
 	}
 } else {
@@ -348,18 +344,26 @@ if (!missing(file)) {
 	}
 }
 
+if (length(schema) > 1) {
+	schema <- schema[1]
+	warning("use only first argument of schema", schema)	
+}
+
+stopifnot(!is.na(match(schema, names(x))))	
 
 #	all columns must be of mode character to  use stack()
-res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE, colClasses = "character")
+res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
+	colClasses = "character")
+	
 res.stack <- stack(res, stringsAsFactors = FALSE)
 
-plot <- res.stack[res.stack$ind == "plot",]$values
-plot <- rep(plot, (nrow(res.stack)/length(plot))- 1)
-res.stack <- res.stack[!res.stack$ind == "plot",]
+plot <- res.stack[res.stack$ind == schema,]$values
+plot <- rep(plot, (nrow(res.stack)/length(plot)) - 1)
+res.stack <- res.stack[!res.stack$ind == schema,]
 res.stack <- data.frame(
 	plot = as.character(plot),
-	variable = as.character(res.stack[,2]),
-	value = as.character(res.stack[,1]),
+	variable = as.character(res.stack[, 2]),
+	value = as.character(res.stack[, 1]),
 	stringsAsFactors = FALSE)
 res.stack <- res.stack[order(res.stack$plot),]
 res.stack[is.na(res.stack)] <- ""
@@ -372,39 +376,14 @@ rownames(res.stack) <- 1:nrow(res.stack)
 res <- res.stack
 
 if (verbose) {
-	print(unique(res$variable))
+	cat("found variables:", unique(res$variable))
 }	
 
 return(invisible(res))
 }
 
-SRTM <- function (x) {
-	if (!inherits(obj, "VegsoupData")) stop("Need object inheriting from class VegsoupData")
-	require(geonames)
-	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
-}
-
-MakeAbbr <- function (x)  {
-	 x = tb$taxon
-    names <- make.names(x, unique = FALSE)
-    names <- lapply(strsplit(names, "\\."),
-    function(x) if (length(x) > 1)
-        substring(x, 1, 4)
-    else x)
-    names <- unlist(lapply(names,
-    	function (x) if (length(x) > 1) 
-        paste(x[seq(1, length(x))], collapse = " ")
-    else x))
-    names <- gsub("ssp  ", "", names, fixed = TRUE)
-    names <- gsub("var  ", "", names, fixed = TRUE)
-    names <- gsub("  ", " ", names, fixed = TRUE)
-    names <- abbreviate(names, 8)
-   	names <- make.names(names, unique = TRUE)
-    names
-}
-
 #	convert between matrix formats for import
-stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences = ".", verbose = FALSE) {
+stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
@@ -465,11 +444,17 @@ layer <- rep(as.character(x$layer), ncol(xx))
 cov <- as.vector(as.matrix(xx))
 
 #	test absences
-tmp <- unique(cov)
-test <- match(absences, tmp)
+#	trust on matrix fill lower than 50%!
+if (missing(absences)) {
+	absences <- table(cov)
+	absences <- names(absences)[which.max(absences)]
+}
+
+test <- match(absences, unique(cov))
 if (any(is.na(test))) {
-	stop("character \"", absences, "\" to code absences not found, but have: ", tmp)
-} else {	
+	stop("character \"", absences, "\" to code absences not found, but have: ", unique(cov))
+} else {
+	cat("\n... absences are", absences)	
 	ij <- cov != absences
 }
 
@@ -488,35 +473,48 @@ if (length(grep(",", res$cov)) > 0) {
 	}
 
 }
-#res$cov <- as.character(sample(c(0,1), nrow(res), replace = TRUE))
 
-if (verbose) {
-	test <- type.convert(res$cov)
-	if (class(test) == "factor" | class(test) == "character") {
-		cat("\n... cover seems to be ordinal: ")
-		cat(names(table(test)))
+#	check data type of abundances
+#	can become private function used in other places
+#	useless as long obj@species only supports characters
+test <- type.convert(res$cov)
 
-	} else {
-		if (class(test) == "numeric" | class(test) == "integer") {
-			if (class(test) == "integer" & dim(table(test)) == 2) {
-				cat("\n... cover seems to be logical (presence/absence)")
-				cat(names(table(test)))			
+if (class(test) == "factor" | class(test) == "character") {
+	convert <- TRUE
+	cat("\n... cover seems to be ordinal: ")
+	cat(names(table(test)))
+} else {
+	if (class(test) == "numeric" | class(test) == "integer") {
+		if (class(test) == "integer" & dim(table(test)) == 2) {
+			cat("\n... cover seems to be logical (presence/absence)")
+			cat(names(table(test)))
+			convert <- TRUE			
+		} else {
+			if (class(test) == "numeric" & dim(table(test)) > 2) {
+				convert <- TRUE
+				cat("\n... cover seems to be continous: ")
+				cat("\n    Tukey's five number summary:", fivenum(test))
 			} else {
-				if (class(test) == "numeric" & dim(table(test)) > 2) {
-					cat("\n... cover seems to be continous: ")
-					cat("\n    Tukey's five number summary:", fivenum(test))
-				} else {
-					if (class(test) == "integer" & dim(table(test)) > 2) {
-						cat("\n... cover seems to be ordinal, coded with integers: ")
-						cat(names(table(test)))		
-					}			
-				}	
-			}			
-		}
+				if (class(test) == "integer" & dim(table(test)) > 2) {
+					convert <- TRUE
+					cat("\n... cover seems to be ordinal, coded with integers: ")
+					cat(names(table(test)))		
+				}			
+			}	
+		}			
 	}
-	cat("\n... data has", length(unique(res$layer)), "layer(s):", unique(res$layer))
+}
+
+if (convert) {
+	res$cov <- test
+} else {
+	warning("unable to determine data type of species abundances", .call = FALSE)
 }	
 
+if (verbose) {
+	cat("\n... data has", length(unique(res$layer)),
+		"layer(s):", unique(res$layer))
+	}
 return(invisible(res))
 }
 
@@ -841,3 +839,27 @@ return(x)
 
 #	reverse geocoding
 #	readLines(url("http://maps.google.com/maps/geo?q=1600+Straßham+Wilhering+CA&output=csv&key=abcdefg"), n=1, warn=FALSE)
+
+SRTM <- function (x) {
+	if (!inherits(obj, "VegsoupData")) stop("Need object inheriting from class VegsoupData")
+	require(geonames)
+	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
+}
+
+.make.names <- function (x)  {
+    x <- make.names(x, unique = FALSE)
+    x <- lapply(strsplit(x, "\\."),
+    function(x) if (length(x) > 1)
+        substring(x, 1, 4)
+    else x)
+    x <- unlist(lapply(x,
+    	function (x) if (length(x) > 1) 
+        paste(x[seq(1, length(x))], collapse = " ")
+    else x))
+    x <- gsub("ssp  ", "", x, fixed = TRUE)
+    x <- gsub("var  ", "", x, fixed = TRUE)
+    x <- gsub("  ", " ", x, fixed = TRUE)
+    x <- abbreviate(x, 8)
+   	x <- make.names(x, unique = TRUE)
+    x
+}
