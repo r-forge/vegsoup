@@ -143,244 +143,6 @@ if (return.species == FALSE) {
 return(list(taxonomy = res, species = species))
 }
 
-#	reshape tables where layers are in seperate columns
-
-ReshapeMultiCoverColumns <- function (x, file, layers, csv2 = TRUE, verbose = TRUE) {
-
-if (missing(x) & missing(file)) {
-	stop("please supply either a data frmae or a csv file")	
-}
-
-if (!missing(file)) {
-	if (is.character(file)) {
-		if (csv2) {
-			x <- read.csv2(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		} else {
-			x <- read.csv(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		}
-	}
-} else {
-	if (is.data.frame(x) & missing(file)) {
-			#	for safety
-			x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
-		} else {
-			stop("please supply a data.frame or use file argument")	
-	}
-}
-
-if (missing(layers)) {
-	layers <- as.character(layers)
-	plot.abbr <- match(c("plot", "abbr"), names(x))
-	layers <- names(x)[-plot.abbr]
-	if (verbose) {
-		cat("attempt to use columns:", layers, "as layer")	
-	}
-}
-
-res <- x
-
-layers <- data.frame(layers, index = match(layers, names(x)),
-	stringsAsFactors = FALSE)
-
-res <- c()
-for (i in 1:nrow(layers)) {
-	res <- rbind(res,
-	cbind(layers[i, 1], as.matrix(x[, c(plot.abbr, as.integer(layers[i, 2]))])))
-}
-
-res <- as.data.frame(res,
-	stringsAsFactors = FALSE)
-res <- res[,c(2,3,1,4)]
-names(res) <- c("plot", "abbr", "layer", "cov")
-
-res <- res[res$cov != "0",]
-res <- res[res$cov != "",]
-
-res <- res[order(res$plot, res$abbr, res$layer),]
-
-}
-
-#	rename!
-#	Shp2SitesLong to ReadOGR2SitesLong	
-Shp2SitesLong <- function (dsn, layer, plot.column, elevation.column, round = TRUE, verbose = TRUE) {
-
-if (missing(plot.column)) {
-	stop ("please supply a column name in OGR data source indicating plot ids")
-}
-
-require(rgdal)
-
-#if (missing(elevation.column)) {
-#	elevation.column <- ""
-#	if (verbose) {
-#		cat("no column for elevations supplied")		
-#	}
-#}
-
-#dsn = "/Users/roli/Dropbox/traunsee/dta/shp/pt_ts_plots"
-#layer = "pt_ts_plots_epsg4326"
-#plot.column = "NAME"
-#elevation.column = "GPS_HEIGHT"
-#	first check column names aigeinst ogrInfo
-pt <- ogrInfo(dsn, layer)
-
-pt.names <- pt$iteminfo$name
-test <- match(c(plot.column, ifelse(missing(elevation.column), "", elevation.column)), pt.names)
-if (any(is.na(test)) & verbose) {
-	cat("\nogrinfo returns\n")
-	print(pt)
-	cat("you supplied: ", c(plot.column, ifelse(missing(elevation.column), "", elevation.column)))
-	cat("\nI found only:",
-		ifelse(length(pt.names[test[!is.na(test)]]) == 0,
-			"... nothing?",
-			pt.names[test[!is.na(test)]]))
-}
-
-pt <- readOGR(dsn, layer)
-
-#	to do!
-#	make CRS an argument to the function
-
-pt <- spTransform(pt, CRS("+init=epsg:4326"))
-
-if (missing(elevation.column)) {
-	if (verbose) {
-		cat("\nno column for elevations supplied")		
-	}
-	df <- data.frame(coordinates(pt),
-		plot = as.character(pt@data[,names(pt) == plot.column]),
-		stringsAsFactors = FALSE)
-} else {
-	df <- data.frame(coordinates(pt),
-		altitude = as.numeric(as.character(pt@data[,names(pt) == elevation.column])),
-		plot = as.character(pt@data[,names(pt) == plot.column]),
-		stringsAsFactors = FALSE)
-}
-
-names(df)[1:2] <- c("longitude", "latitude")	
-
-if (dim(coordinates(pt))[2] == 2 & missing(elevation.column)) {	
-	res <- data.frame(as.character(df$plot),
-		stack(df, select = 1:2),
-		stringsAsFactors = FALSE)
-	res	 <- res[, c(1,3,2)]
-	names(res) <- c("plot", "variable", "value")
-	if (round) {
-		res$value[res$variable == "longitude"] <-
-			round(res$value[res$variable == "longitude"], 6)
-		res$value[res$variable == "latitude"] <-
-			round(res$value[res$variable == "latitude"], 6)
-	}	
-}
-
-if (dim(coordinates(pt))[2] == 2 & !missing(elevation.column)) {
-	res <- data.frame(as.character(df$plot),
-		stack(df, select = 1:3),
-		stringsAsFactors = FALSE)
-	res	 <- res[, c(1,3,2)]
-	#	for safety
-	res[,3] <- as.numeric(as.character(res[,3]))
-	names(res) <- c("plot", "variable", "value")
-	if (round) {
-		res$value[res$variable == "longitude"] <-
-			round(res$value[res$variable == "longitude"], 6)
-		res$value[res$variable == "latitude"] <-
-			round(res$value[res$variable == "latitude"], 6)
-		res$value[res$variable == "altitude"] <-
-			round(res$value[res$variable == "altitude"], 0)
-	}	
-}
-
-if (dim(coordinates(pt))[2] == 3) {
-	#	buggy!
-	if (verbose) {
-		cat("attempt to use z-dimension from OGR data source")
-	}
-	res <- data.frame(as.character(df$plot), stack(df, select = 1:3),
-		stringsAsFactors = FALSE)
-	res	 <- res[, c(1,3,2)]
-	names(res) <- c("plot", "variable", "value")
-	if (round) {
-		res$value[res$variable == "longitude"] <-
-			round(res$value[res$variable == "longitude"], 6)
-		res$value[res$variable == "latitude"] <-
-			round(res$value[res$variable == "latitude"], 6)
-		res$value[res$variable == "altitude"] <-
-			round(res$value[res$variable == "altitude"], 0)
-	}
-}
-
-return(invisible(res))
-
-}
-
-#	stack sites data frame to match database structure
-
-stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE) {
-#	file = "~/Documents/vegsoup-data/windsfeld dta/sites wide.csv"
-
-if (missing(x) & missing(file)) {
-	stop("please supply either a data frame or a csv file")	
-}
-
-if (!missing(file)) {
-	if (is.character(file)) {
-		if (csv2) {
-			x <- read.csv2(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-
-		} else {
-			x <- read.csv(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		}
-	}
-} else {
-	if (is.data.frame(x) & missing(file)) {
-		x <- x
-		} else {
-			stop("please supply a data.frame or use file argument")	
-	}
-}
-
-if (length(schema) > 1) {
-	schema <- schema[1]
-	warning("use only first argument of schema", schema)	
-}
-
-stopifnot(!is.na(match(schema, names(x))))	
-
-#	all columns must be of mode character to  use stack()
-res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
-	colClasses = "character")
-	
-res.stack <- stack(res, stringsAsFactors = FALSE)
-
-plot <- res.stack[res.stack$ind == schema,]$values
-plot <- rep(plot, (nrow(res.stack)/length(plot)) - 1)
-res.stack <- res.stack[!res.stack$ind == schema,]
-res.stack <- data.frame(
-	plot = as.character(plot),
-	variable = as.character(res.stack[, 2]),
-	value = as.character(res.stack[, 1]),
-	stringsAsFactors = FALSE)
-res.stack <- res.stack[order(res.stack$plot),]
-res.stack[is.na(res.stack)] <- ""
-
-if (any(res.stack$plot == "")) {
-	stop("please review your data")
-}
-	
-rownames(res.stack) <- 1:nrow(res.stack)
-res <- res.stack
-
-if (verbose) {
-	cat("found variables:", unique(res$variable))
-}	
-
-return(invisible(res))
-}
 
 #	convert between matrix formats for import
 stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
@@ -516,6 +278,237 @@ if (verbose) {
 		"layer(s):", unique(res$layer))
 	}
 return(invisible(res))
+}
+
+#	reshape tables where layers are in seperate columns
+reshape.species <- function (x, file, schema, csv2 = TRUE, verbose = TRUE) {
+
+if (missing(x) & missing(file)) {
+	stop("please supply either a data frmae or a csv file")	
+}
+
+if (!missing(file)) {
+	if (is.character(file)) {
+		if (csv2) {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		} else {
+			x <- read.csv(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		}
+	}
+} else {
+	if (is.data.frame(x) & missing(file)) {
+			#	for safety
+			x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
+		} else {
+			stop("please supply a data.frame or use file argument")	
+	}
+}
+
+if (!missing(schema)) {
+	layers <- schema[3:length(schema)]
+	plot.abbr <- match(schema[1:2], names(x))
+	layers <- names(x)[-plot.abbr]
+	if (verbose) {
+		cat("attempt to use columns:", layers, "as layer")	
+	}
+} else {
+	stop("please supply schema")
+}
+
+res <- x
+
+layers <- data.frame(layers, index = match(layers, names(x)),
+	stringsAsFactors = FALSE)
+
+res <- c()
+for (i in 1:nrow(layers)) {
+	res <- rbind(res,
+	cbind(layers[i, 1], as.matrix(x[, c(plot.abbr, as.integer(layers[i, 2]))])))
+}
+
+res <- as.data.frame(res,
+	stringsAsFactors = FALSE)
+res <- res[,c(2,3,1,4)]
+names(res) <- c("plot", "abbr", "layer", "cov")
+
+res <- res[res$cov != "0",]
+res <- res[res$cov != "",]
+
+res <- res[order(res$plot, res$abbr, res$layer),]
+
+}
+
+#	stack sites data frame to match database structure
+stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE) {
+
+if (missing(x) & missing(file)) {
+	stop("please supply either a data frame or a csv file")	
+}
+
+if (!missing(file)) {
+	if (is.character(file)) {
+		if (csv2) {
+			x <- read.csv2(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+
+		} else {
+			x <- read.csv(file,
+				stringsAsFactors = FALSE, check.names = FALSE)
+		}
+	}
+} else {
+	if (is.data.frame(x) & missing(file)) {
+		x <- x
+		} else {
+			stop("please supply a data.frame or use file argument")	
+	}
+}
+
+if (length(schema) > 1) {
+	schema <- schema[1]
+	warning("use only first argument of schema", schema)	
+}
+
+stopifnot(!is.na(match(schema, names(x))))	
+
+#	all columns must be of mode character to  use stack()
+res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
+	colClasses = "character")
+	
+res.stack <- stack(res, stringsAsFactors = FALSE)
+
+plot <- res.stack[res.stack$ind == schema,]$values
+plot <- rep(plot, (nrow(res.stack)/length(plot)) - 1)
+res.stack <- res.stack[!res.stack$ind == schema,]
+res.stack <- data.frame(
+	plot = as.character(plot),
+	variable = as.character(res.stack[, 2]),
+	value = as.character(res.stack[, 1]),
+	stringsAsFactors = FALSE)
+res.stack <- res.stack[order(res.stack$plot),]
+res.stack[is.na(res.stack)] <- ""
+
+if (any(res.stack$plot == "")) {
+	stop("please review your data")
+}
+	
+rownames(res.stack) <- 1:nrow(res.stack)
+res <- res.stack
+
+if (verbose) {
+	cat("found variables:", unique(res$variable))
+}	
+
+return(invisible(res))
+}
+
+#	read OGR data source
+stack.coordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
+
+require(rgdal)
+
+pt <- ogrInfo(dsn, layer)
+withz <- pt$with_z
+
+if (missing(schema)) {
+	print(pt)
+	stop("please supply a column name in OGR data source indicating plot ids")
+
+}
+	
+#	check column names with ogrInfo
+pt <- ogrInfo(dsn, layer)
+withz <- ifelse(pt$with_z == 0, FALSE, TRUE)
+
+pt.names <- pt$iteminfo$name
+
+test <- match(schema, pt.names)
+
+print(test)
+
+if (any(is.na(test))) {
+	cat("\nogrinfo returns\n")
+	print(pt)
+	cat("you supplied schema: ", schema)
+	cat("\nfound:",
+		ifelse(length(pt.names[test[!is.na(test)]]) == 0,
+			"... nothing?",
+			paste0(pt.names[test[!is.na(test)]], collapse = " ")))
+	cat("\n")
+	stop("\nif specified both elements have to match")		
+}
+
+pt <- readOGR(dsn, layer, ...)
+
+
+pt <- spTransform(pt, CRS("+init=epsg:4326"))
+
+#	can be simplified!
+if (!withz & length(schema) == 1) {
+	df <- data.frame(
+		coordinates(pt),
+		plot = as.character(pt@data[, names(pt) == schema[1]]),
+		stringsAsFactors = FALSE)
+} else {
+	if (!withz & length(schema) == 2) {
+		df <- data.frame(
+			coordinates(pt),
+			elevation = as.numeric(as.character(pt@data[,names(pt) == schema[2]])),
+			plot = as.character(pt@data[, names(pt) == schema[1]]),
+			stringsAsFactors = FALSE)
+	} else {
+		if (withz & length(schema) == 1) {
+			df <- data.frame(
+				coordinates(pt)[, 1:2],
+				elevation = coordinates(pt)[, 3],
+				plot = as.character(pt@data[, names(pt) == schema[1]]),
+				stringsAsFactors = FALSE)		
+		} else { # withz & length(schema) == 2
+			warning("OGR data source supports 3D",
+				" but use attribute \"", schema[2], "\" to obtain heights from attributes") 
+			df <- data.frame(
+				coordinates(pt),
+				elevation = as.numeric(as.character(pt@data[,names(pt) == schema[2]])),
+				plot = as.character(pt@data[, names(pt) == schema[1]]),
+				stringsAsFactors = FALSE)		
+		}		
+	}	
+}
+
+names(df)[1:2] <- c("longitude", "latitude")
+
+if (!withz) {	
+	res <- data.frame(
+		as.character(df$plot),
+		stack(df, select = 1:2),
+		stringsAsFactors = FALSE)
+	res	 <- res[, c(1,3,2)]
+
+}
+
+if ((!withz & length(schema) == 2) | withz) {
+	res <- data.frame(
+		as.character(df$plot),
+		stack(df, select = 1:3),
+		stringsAsFactors = FALSE)
+	res	 <- res[, c(1,3,2)]
+	res[, 3] <- as.numeric(as.character(res[,3])) #	for safety
+}
+
+names(res) <- c("plot", "variable", "value")
+	if (round) {
+		res$value[res$variable == "longitude"] <-
+			round(res$value[res$variable == "longitude"], 6)
+		res$value[res$variable == "latitude"] <-
+			round(res$value[res$variable == "latitude"], 6)
+		res$value[res$variable == "altitude"] <-
+			round(res$value[res$variable == "altitude"], 0)
+	}
+	
+return(invisible(res))
+
 }
 
 #	function to import monospaced commuity tables
