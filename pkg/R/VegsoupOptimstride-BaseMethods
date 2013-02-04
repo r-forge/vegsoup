@@ -5,7 +5,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 	if (missing(k)) stop("please supply k for stride")
 	#	obj = dta; k = 3; alternative = "greater"
 	cycle <- function (obj, k, ...) {
-		prt <- VegsoupDataPartition(obj, k = k, ...)
+		prt <- VegsoupPartition(obj, k = k, ...)
 		ft <- FisherTest(prt, alternative = alternative)
 		res <- apply(ft < ft.treshold, 2, sum)
 		return(res)
@@ -35,8 +35,8 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 	}	
 	
 #	very slow from here?
-	#	develop class VegsoupDataOptimstride
-	res <- new("VegsoupDataOptimstride", obj)
+	#	develop class VegsoupOptimstride
+	res <- new("VegsoupOptimstride", obj)
 	
 	os <- list(
 		indicators = res.i,
@@ -51,14 +51,14 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 }
 
 setMethod("show",
-    signature(object = "VegsoupDataOptimstride"),
+    signature(object = "VegsoupOptimstride"),
     function (object) {
 			print(object@optimstride)
     }
 )
 
 setMethod("summary",
-	signature(object = "VegsoupDataOptimstride"),
+	signature(object = "VegsoupOptimstride"),
 		function (object, oc.treshold = 2, silent = FALSE) {
 			#	object <- opt; oc.treshold = 2
 		obj <- object@optimstride
@@ -100,7 +100,7 @@ setMethod("summary",
 
 #	plot method
 setMethod("plot",
-	signature(x = "VegsoupDataOptimstride", y = "missing"),
+	signature(x = "VegsoupOptimstride", y = "missing"),
 	function (x, mode = 1, oc.treshold = 2, silent = TRUE, ...) {
 	#	x <- dta.os
 	

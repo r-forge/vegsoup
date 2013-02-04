@@ -756,8 +756,8 @@ if (nboot > 0) {
 	dmupper = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 }	# end nboot
 
-#	change: develop form VegsoupDataPartition object"
-res <- new("VegsoupDataPartitionFidelity",
+#	change: develop form VegsoupPartition object"
+res <- new("VegsoupPartitionFidelity",
 	stat = as.matrix(dm),
 	fisher.test = as.matrix(ft),
 	lowerCI = as.matrix(dmlower),
@@ -787,7 +787,7 @@ setGeneric("Fidelity",
 		standardGeneric("Fidelity")
 )
 setMethod("Fidelity",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	.FidelityVegsoupPartition	
 )
 
@@ -888,6 +888,6 @@ setGeneric("SigFidelity",
 		standardGeneric("SigFidelity")
 )
 setMethod("SigFidelity",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	.SigFidelityVegsoupPartition	
 )

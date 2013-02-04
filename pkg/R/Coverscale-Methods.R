@@ -43,7 +43,7 @@ setGeneric("coverscale<-",
 )
 #}
 setMethod("coverscale",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     function (obj) {
  		obj@coverscale # rename to coverscale   	
     }
@@ -51,7 +51,7 @@ setMethod("coverscale",
 
 #	needs cover scale conversion 
 setReplaceMethod("coverscale",
-	signature(obj = "VegsoupData", value = "Coverscale"),
+	signature(obj = "Vegsoup", value = "Coverscale"),
 	function (obj, value) {		
 		obj@coverscale <- value
 		test <- !any(is.na(factor(Species(obj)$cov,
@@ -65,7 +65,7 @@ setReplaceMethod("coverscale",
 )
 
 setReplaceMethod("coverscale",
-	signature(obj = "VegsoupData", value = "character"),
+	signature(obj = "Vegsoup", value = "character"),
 	function (obj, value) {
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
@@ -126,7 +126,7 @@ setGeneric("BraunBlanquetReduce",
 		standardGeneric("BraunBlanquetReduce")
 )
 setMethod("BraunBlanquetReduce",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     .BraunBlanquetReduce
 )
 

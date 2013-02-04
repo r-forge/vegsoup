@@ -9,12 +9,12 @@ setGeneric("Confus",
 #}
 
 setMethod("Confus",
-    signature(obj1 = "VegsoupDataPartition",
-    	obj2 = "VegsoupDataPartition"),
+    signature(obj1 = "VegsoupPartition",
+    	obj2 = "VegsoupPartition"),
 	function (obj1, obj2) {
 
-	#	obj1 = VegsoupDataPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
-	#	obj2 = VegsoupDataPartition(dta, k = 5, binary = TRUE)
+	#	obj1 = VegsoupPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
+	#	obj2 = VegsoupPartition(dta, k = 5, binary = TRUE)
 	if (getK(obj1) != getK(obj2)) {
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")
@@ -58,11 +58,11 @@ setGeneric("Accuracy",
 #}
 
 setMethod("Accuracy",
-    signature(obj1 = "VegsoupDataPartition",
-    	obj2 = "VegsoupDataPartition"),
+    signature(obj1 = "VegsoupPartition",
+    	obj2 = "VegsoupPartition"),
     function (obj1, obj2) {
-	#	obj1 = VegsoupDataPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
-	#	obj2 = VegsoupDataPartition(dta, k = 5, binary = TRUE)
+	#	obj1 = VegsoupPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
+	#	obj2 = VegsoupPartition(dta, k = 5, binary = TRUE)
 	if (getK(obj1) != getK(obj2)) {
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")
@@ -127,8 +127,8 @@ setGeneric("Association",
 #}
 
 setMethod("Association",
-    signature(obj1 = "VegsoupDataPartition",
-    	obj2 = "VegsoupDataPartition"),
+    signature(obj1 = "VegsoupPartition",
+    	obj2 = "VegsoupPartition"),
 	function(obj1, obj2, alpha = 0.05, p.zero.correction) {
 
 	#	This is a slightly modified copy of function associations in package polytomous

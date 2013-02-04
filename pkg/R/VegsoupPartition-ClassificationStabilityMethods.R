@@ -1,6 +1,6 @@
 #	adopted for vegsoup from script Function Classification Stability supplied for JUICE
 #	nitr: number of iterations
-#	...: arguments passed to VegsoupDataPartition
+#	...: arguments passed to VegsoupPartition
 StablePartition <- function (obj, nitr = 200, nitr.lambda = 10, ...)	{
 #obj <- prt
 #nitr = 20
@@ -12,7 +12,7 @@ pb <- txtProgressBar (min = 1, max = nitr, char = '.',
 
 #setTxtProgressBar (pb, 1)
    
-prt <- VegsoupDataPartition(obj, k = k)
+prt <- VegsoupPartition(obj, k = k)
 
 rnd.lambda <- 0
 lambda <- vector(mode = 'numeric', length = nitr)
@@ -28,7 +28,7 @@ for (i in 1:nitr) {
 	sub <- suppressWarnings(SampleVegsoup(obj, replace = TRUE))
 		
 #	Subset classification
-	prt.sub <- VegsoupDataPartition(sub, k = k, ...)
+	prt.sub <- VegsoupPartition(sub, k = k, ...)
 	prt.tmp <- prt[rownames(prt) %in% rownames(prt.sub),]
 		
 #	Raw lambda calculation

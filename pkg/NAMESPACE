@@ -112,14 +112,13 @@ exportClasses(
      "Taxonomy",
      "SpeciesTaxonomy",
      "Vegsoup",
-     "VegsoupData",
-     "VegsoupDataPartition",
-     "VegsoupDataPartitionFidelity",
-     "VegsoupDataOptimstride"
+     "VegsoupPartition",
+     "VegsoupPartitionFidelity",
+     "VegsoupOptimstride"
 )
 
 # ensure that dispatch also works inside base functions
-S3method(as.matrix, VegsoupData)
-S3method(as.array, VegsoupData)
-S3method(as.vector, VegsoupData)
-S3method(as.dist, VegsoupData)
+S3method(as.matrix, Vegsoup)
+S3method(as.array, Vegsoup)
+S3method(as.vector, Vegsoup)
+S3method(as.dist, Vegsoup)

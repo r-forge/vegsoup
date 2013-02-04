@@ -42,7 +42,7 @@ setGeneric("ellipsoidhull",
 #}
 
 setMethod("ellipsoidhull",
-	signature(x = "VegsoupDataPartition"),
+	signature(x = "VegsoupPartition"),
 	function (x, ...)
 	.ellipsoidhull(x, ...)
 )
@@ -57,7 +57,7 @@ setGeneric("rectangles",
 }
 
 setMethod("rectangles",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, plot, ...) {
 	#	obj <- prt
 	
@@ -101,8 +101,8 @@ setMethod("rectangles",
 
 .VegsoupPartitionConstancyHeatmap <- function (x, ...) {
 #	x <- prt
-if (!inherits(x, "VegsoupDataPartition"))
-	stop("supply an object of class VegsoupDataPartition")
+if (!inherits(x, "VegsoupPartition"))
+	stop("supply an object of class VegsoupPartition")
 #	x = prt
 k1 <- as.logical(x)
 x <- x@spread	
@@ -156,8 +156,8 @@ return(invisible(res))
 .VegsoupPartitionSpreadHeatmap <- function (x, ...)
 {
 #	x <- prt
-if (!inherits(x, "VegsoupDataPartition"))
-	stop("supply an object of class VegsoupDataPartition")
+if (!inherits(x, "VegsoupPartition"))
+	stop("supply an object of class VegsoupPartition")
 
 k1 <- as.logical(x)
 x <- Spread(x)	

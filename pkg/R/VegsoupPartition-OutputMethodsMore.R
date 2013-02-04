@@ -4,11 +4,11 @@
 #	adapted from Sebastian Schmidtlein's isotab()
 
 #	internal
-#	generic is set by VegsoupDataPartition-*Methods.R
+#	generic is set by VegsoupPartition-*Methods.R
 
-.latexVegsoupDataPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
 #	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(obj)); verbose = TRUE; filename = paste("FidelityTable")
-if (class(obj) != "VegsoupDataPartitionFidelity") {
+if (class(obj) != "VegsoupPartitionFidelity") {
 	if (verbose) {
 		cat("\n apply default indicator species statistic")
 	}

@@ -1,8 +1,8 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoupData <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, add.lines = FALSE, latex.input = FALSE) {
+.write.verbatimVegsoup <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, add.lines = FALSE, latex.input = FALSE) {
 	
-if (class(obj) != "VegsoupData") {
-	stop("verbatim is currently only implemented for class VegsoupData?")
+if (class(obj) != "Vegsoup") {
+	stop("verbatim is currently only implemented for class Vegsoup?")
 }
 
 if (missing(file)) {
@@ -143,8 +143,8 @@ setGeneric("write.verbatim",
 )
 
 setMethod("write.verbatim",
-    signature(obj = "VegsoupData"),
-    .write.verbatimVegsoupData
+    signature(obj = "Vegsoup"),
+    .write.verbatimVegsoup
 )
 
 #	function to format cdata tag in kml
@@ -234,7 +234,7 @@ res <- c(
 res	
 }
 
-.KMLVegsoupData <- function (obj, file, thumbnail.url.path, website.url.path, ...) {
+.KMLVegsoup <- function (obj, file, thumbnail.url.path, website.url.path, ...) {
 
 if (missing(file)) {
 	file <- paste(getwd(), "/vegsoup.kml", sep = "")
@@ -283,6 +283,6 @@ setGeneric("KML",
 )
 
 setMethod("KML",
-    signature(obj = "VegsoupData"),
-    .KMLVegsoupData
+    signature(obj = "Vegsoup"),
+    .KMLVegsoup
 )

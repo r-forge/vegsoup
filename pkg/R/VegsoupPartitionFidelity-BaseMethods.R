@@ -1,5 +1,5 @@
 setMethod("summary",
-    signature(object = "VegsoupDataPartitionFidelity"),
+    signature(object = "VegsoupPartitionFidelity"),
 	function (object, ...) {
 	cat("method", object@method)
 	if (all(is.na(object@lowerCI))) {
@@ -15,13 +15,13 @@ setGeneric("getStat",
 		standardGeneric("getStat")
 )
 setMethod("getStat",
-	signature(obj = "VegsoupDataPartitionFidelity"),
+	signature(obj = "VegsoupPartitionFidelity"),
 	function (obj) obj@stat	
 )
 
 #	plotting method hist
 setMethod("hist",
-	signature(x = "VegsoupDataPartitionFidelity"),
+	signature(x = "VegsoupPartitionFidelity"),
 	function (x, ...) {
 		fig <- hist(x@stat, xlab = x@method, ...)
 		return(invisible(fig))

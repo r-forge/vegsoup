@@ -3,30 +3,30 @@
 #	bbox method
 #	warning: returns bbox only for SpatialPoints!
 setMethod("bbox",
-	signature(obj = "VegsoupData"),
+	signature(obj = "Vegsoup"),
     function (obj) bbox(obj@sp.points)
 )
 
 #	coordinates method
 setMethod("coordinates",
-	signature(obj = "VegsoupData"),
+	signature(obj = "Vegsoup"),
     function (obj) coordinates(obj@sp.points)
 )
 
 setReplaceMethod("coordinates",
-	signature(object = "VegsoupData", value = "ANY"),
+	signature(object = "Vegsoup", value = "ANY"),
 	function (object, value) 
 		stop("setting coordinates cannot be done on Spatial objects, where they have already been set")
 )
 		
 #	proj4string method
 setMethod("proj4string",
-	signature(obj = "VegsoupData"),
+	signature(obj = "Vegsoup"),
 	function (obj) proj4string(obj@sp.points)
 )
 
 setReplaceMethod("proj4string",
-	signature(obj = "VegsoupData", value = "character"),
+	signature(obj = "Vegsoup", value = "character"),
 	function (obj, value) {
 		value <- CRS(value)
 		proj4string(obj@sp.points) <- value
@@ -35,7 +35,7 @@ setReplaceMethod("proj4string",
 )
 
 setMethod("spTransform",
-	signature(x = "VegsoupData", "CRS"),
+	signature(x = "Vegsoup", "CRS"),
 	function (x, CRSobj, ...) {
 		require(rgdal)
 		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
@@ -50,7 +50,7 @@ setGeneric("SpatialPointsVegsoup",
 		standardGeneric("SpatialPointsVegsoup")
 )
 setMethod("SpatialPointsVegsoup",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     function (obj) obj@sp.points
 )
 #if (!isGeneric("SpatialPoints<-")) {
@@ -60,7 +60,7 @@ setMethod("SpatialPointsVegsoup",
 #)
 #}
 #setReplaceMethod("SpatialPointsVegsoup",
-#	signature(obj = "VegsoupData", value = "SpatialPointsDataFrame"),
+#	signature(obj = "Vegsoup", value = "SpatialPointsDataFrame"),
 #	function (obj, value) {
 #		#	to do: needs checking of plot names
 #		obj@sp.points <- value
@@ -76,7 +76,7 @@ setGeneric("SpatialPolygonsVegsoup",
 )
 #}
 setMethod("SpatialPolygonsVegsoup",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     function (obj) obj@sp.polygons
 )
 #if (!isGeneric("SpatialPolygons"))
@@ -86,7 +86,7 @@ setMethod("SpatialPolygonsVegsoup",
 #)
 
 #setReplaceMethod("SpatialPolygonsVegsoup",
-#	signature(obj = "VegsoupData", value = "SpatialPolygonsDataFrame"),
+#	signature(obj = "Vegsoup", value = "SpatialPolygonsDataFrame"),
 #	function (obj, value) {
 #		#	to do: needs checking of plot names
 #		obj@sp.polygons <- value

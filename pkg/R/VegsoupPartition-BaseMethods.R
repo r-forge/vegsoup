@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), binary = TRUE, clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), binary = TRUE, clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
 #	obj = dta; binary = TRUE; k = 3;
@@ -10,14 +10,14 @@ VegsoupDataPartition <- function (obj, k, method = c("ward", "flexible", "pam", 
 #	method = "external"
 #	clustering = "syntaxon"
 			
-	if (!inherits(obj, "VegsoupData")) {
-		stop("Need object of class VegsoupData")
+	if (!inherits(obj, "Vegsoup")) {
+		stop("Need object of class Vegsoup")
 	}
-	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupDataOptimstride")) {
+	if (missing(k) & missing(clustering) & !inherits(obj, "VegsoupOptimstride")) {
 		k = 1
 		warning(" argument k missing, set to ", k, call. = FALSE)
 	}	
-	if (missing(k) & inherits(obj, "VegsoupDataOptimstride")) {
+	if (missing(k) & inherits(obj, "VegsoupOptimstride")) {
 		#	warning! no sensible results so far!
 		k = summary(opt)$best.optimclass1
 		#	k = as.numeric(strsplit(names(k[which.max(k)]), ".", fixed = TRUE)[[1]][2])
@@ -111,7 +111,7 @@ switch(part.meth,
 	}, optpart = {
 		if (verbose) cat("\nrun optpart from random starts ...")
 		if (verbose) cat("\nset to", k, "partitions\n")
-		part <- .VegsoupDataPartitionOptpartBestopt(Xd, k, numitr = 100,
+		part <- .VegsoupPartitionOptpartBestopt(Xd, k, numitr = 100,
 			...)
 	}, kmeans = {
 		if (verbose) cat("kmeans doesn't use distance matrices, ignore", vegdist(obj))
@@ -192,8 +192,8 @@ if (out.grp && polish) { # was ||
 	}	
 }
 
-#	develop class VegsoupDataPartition from class VegsoupData
-res <- new("VegsoupDataPartition", obj)
+#	develop class VegsoupPartition from class Vegsoup
+res <- new("VegsoupPartition", obj)
 #	assign class slots
 res@part <- grp
 res@method <- part.meth	
@@ -206,7 +206,7 @@ return(res)
 #	subsetting method
 #	to do: documentation
 setMethod("[",
-    signature(x = "VegsoupDataPartition",
+    signature(x = "VegsoupPartition",
     i = "ANY", j = "ANY", drop = "missing"),
 	function (x, i, j, ..., drop = TRUE) {
 		#	x <- prt; i = Partitioning(x) == 2
@@ -215,7 +215,7 @@ setMethod("[",
 	    if (missing(i)) i <- rep(TRUE, nrow(x))
 	    if (missing(j)) j <- rep(TRUE, ncol(x))
 	    
-	    tmp <- as(x, "VegsoupData")
+	    tmp <- as(x, "Vegsoup")
 	    tmp <- tmp[i, j, ...]
         
 #		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
@@ -223,11 +223,11 @@ setMethod("[",
 #				" k was changed accordingly", call. = FALSE)
 #		}
 
-		#	develop class VegsoupDataPartition from class VegsoupData
-		res <- new("VegsoupDataPartition", tmp)
+		#	develop class VegsoupPartition from class Vegsoup
+		res <- new("VegsoupPartition", tmp)
 		res@part = part[names(part) %in% rownames(tmp)]
 		res@method = x@method
-		# was res@dist = x@dist # now slot of class VegsoupData
+		# was res@dist = x@dist # now slot of class Vegsoup
 		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
 		res@group = res@group[names(part) %in% rownames(tmp)]
 
@@ -240,7 +240,7 @@ setMethod("[",
 #	op <- par()
 #	on.exit(par(op))
 	
-	if (!inherits(x, "VegsoupDataPartition")) stop
+	if (!inherits(x, "VegsoupPartition")) stop
 	cat("\nLet me calculate capscale first ...")
 	cat("\nuse distance:", x@dist)
 
@@ -320,7 +320,7 @@ setMethod("[",
 
 #	plot method
 setMethod("plot",
-	signature(x = "VegsoupDataPartition", y = "missing"),
+	signature(x = "VegsoupPartition", y = "missing"),
 	.plotVegsoupPartition
 )
 
@@ -335,7 +335,7 @@ setGeneric("Partitioning",
 
 #	retrieve or set slot part
 setMethod("Partitioning",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) obj@part
 )
 
@@ -347,7 +347,7 @@ setGeneric("Partitioning<-",
 )
 }
 setReplaceMethod("Partitioning",
-	signature(obj = "VegsoupDataPartition", value = "numeric"),
+	signature(obj = "VegsoupPartition", value = "numeric"),
 	function (obj, value) {
 		if (length(value) != length(Partitioning(obj))) {
 			stop("\n replacement does not match in length")
@@ -375,7 +375,7 @@ setGeneric("getK",
 		standardGeneric("getK")
 )
 setMethod("getK",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) obj@k
 )
 
@@ -387,7 +387,7 @@ setGeneric("Spread",
 )
 #	to do: speed up?
 setMethod("Spread",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) {
 		part  <- Partitioning(obj)
 		com <- as.logical(obj)
@@ -405,7 +405,7 @@ setMethod("Spread",
 #	summary funection
 #	to do: documentation
 setMethod("summary",
-    signature(object = "VegsoupDataPartition"),
+    signature(object = "VegsoupPartition"),
 	function (object, choice = c("all", "species", "sites", "partition"), ...) {
 		if (missing(choice)) {
 			choice <- "all"
@@ -416,13 +416,13 @@ setMethod("summary",
 			choice <- "all"
 		}
 		switch(choice, "all" = {
-			summary(as(object, "VegsoupData"), choice = "all")
+			summary(as(object, "Vegsoup"), choice = "all")
 			cat("\ntable of partition contingencies")
 			print(table(Partitioning(object)))
 		}, "species" = {
-			summary(as(object, "VegsoupData"), choice = "species")
+			summary(as(object, "Vegsoup"), choice = "species")
 		}, "sites" = {
-			summary(as(object, "VegsoupData"), choice = "sites")
+			summary(as(object, "Vegsoup"), choice = "sites")
 		}, "partition" = {
 			cat("\ntable of partition contingencies")
 			print(table(Partitioning(object)))	
@@ -439,7 +439,7 @@ setGeneric("Contingency",
 )
 
 setMethod("Contingency",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) {
 		res <- t(aggregate(as.logical(obj),
 			by = list(Partitioning(obj)), FUN = sum))[-1, ]
@@ -456,7 +456,7 @@ setGeneric("Constancy",
 		standardGeneric("Constancy")
 )
 setMethod("Constancy",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, percentage = TRUE, ...) {
 		tmp <- t(as.matrix(table(Partitioning(obj))))
 		res <- Contingency(obj) / tmp[rep(1, nrow(Contingency(obj))),]
@@ -474,7 +474,7 @@ setGeneric("Shared",
 )
 
 setMethod("Shared",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		X <- Constancy(obj) > 0
 		mode(X) <- "numeric"
@@ -494,7 +494,7 @@ setGeneric("Fivenum",
 )
 
 setMethod("Fivenum",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, na.rm = TRUE, recode = FALSE) {
 		tmp <- as.numeric(obj)
 		if (!na.rm) tmp[tmp == 0] <- NA
@@ -540,7 +540,7 @@ setGeneric("FisherTest",
 		standardGeneric("FisherTest")
 )
 setMethod("FisherTest",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, alternative = "two.sided") {
 
 #	apapted from isotab.R (package 'isopam')
@@ -654,7 +654,7 @@ setGeneric("Phi",
 		standardGeneric("Phi")
 )
 setMethod("Phi",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) {
 	
 	cnti <- Contingency(obj)
@@ -695,7 +695,7 @@ setGeneric("Indval",
 		standardGeneric("Indval")
 ) 
 setMethod("Indval",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		res <- indval(as.logical(obj), Partitioning(obj), ...)$indval
 		return(res)
@@ -708,7 +708,7 @@ setMethod("Indval",
 #		standardGeneric("Multipatt")
 #) 
 #setMethod("Multipatt",
-#	signature(obj = "VegsoupDataPartition"),
+#	signature(obj = "VegsoupPartition"),
 #	function (obj, ...) {
 #		if (getK(obj) == 1) {
 #			stop("meaningless with k = ", getK(obj))
@@ -725,7 +725,7 @@ setGeneric("Isamic",
 		standardGeneric("Isamic")
 )
 setMethod("Isamic",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj) { 	
 	   	tmp <- Constancy(obj) / 100
     	res <- apply(tmp, 1, function (x) {
@@ -742,7 +742,7 @@ setGeneric("Murdoch",
 		standardGeneric("Murdoch")
 )
 setMethod("Murdoch",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, minplt, type, ...) {
     	require(optpart)
     	if (getK(obj) == 1)
@@ -774,7 +774,7 @@ setGeneric("Optsil",
 		standardGeneric("Optsil")
 )
 setMethod("Optsil",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, maxitr = 100, verbose = FALSE, ...) {
 		require(optpart)
 		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
@@ -814,7 +814,7 @@ setGeneric("Optindval",
 		standardGeneric("Optindval")
 )
 setMethod("Optindval",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
 		require(optpart)
 		
@@ -857,7 +857,7 @@ setGeneric("Partana",
 )
 
 setMethod("Partana",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, verbose = FALSE, ...) {
 		require(optpart)
 		if (getK(obj) == 1)	stop("meaningless with k = ", getK(obj))
@@ -884,7 +884,7 @@ setGeneric("Tabdev",
 )
 
 setMethod("Tabdev",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, numitr = 99, verbose = FALSE, ...) {
 		require(optpart)
 
@@ -914,7 +914,7 @@ setGeneric("Silhouette",
 )
 
 setMethod("Silhouette",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, method , ...) {
     	require(cluster)
 		if (getK(obj) == 1)
@@ -932,7 +932,7 @@ setGeneric("Typal",
 		standardGeneric("Typal")
 )
 setMethod("Typal",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, k = 2, ...) {
     	
 "TYPAL" <- function (clustering, dist, k = 1) 
@@ -995,7 +995,7 @@ setMethod("Typal",
 
 #	head is a primitive function
 setMethod("head",
-    signature(x = "VegsoupDataPartition"),
+    signature(x = "VegsoupPartition"),
     function (x, n = 6L, choice = "species", ...) {
     	if (missing(choice))
 	    	choice <- "species"
@@ -1024,7 +1024,7 @@ setGeneric("Disdiam",
 )
 
 setMethod("Disdiam",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
     function (obj, method, ...) {
     	require(optpart)
 		if (getK(obj) == 1)
@@ -1041,7 +1041,7 @@ setGeneric("PartitioningMatrix",
 )
 
 setMethod("PartitioningMatrix",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
 	function (obj) {
 		res <- t(sapply(Partitioning(obj),
 			function (x) {
@@ -1091,7 +1091,7 @@ setGeneric("PartitioningCombinations",
 		standardGeneric("PartitioningCombinations")
 )
 setMethod("PartitioningCombinations",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	.PartitioningCombinations
 )
 
@@ -1103,7 +1103,7 @@ setGeneric("Spread",
 )
 
 setMethod("Spread",
-    signature(obj = "VegsoupDataPartition"),
+    signature(obj = "VegsoupPartition"),
 	function (object) {
 		
 	part  <- Partitioning(object)

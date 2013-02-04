@@ -1,4 +1,4 @@
-setClass("VegsoupDataPartitionFidelity",
+setClass("VegsoupPartitionFidelity",
 	representation(
 	stat = "matrix",
 	fisher.test = "matrix",
@@ -6,7 +6,7 @@ setClass("VegsoupDataPartitionFidelity",
 	upperCI = "matrix",
 	nboot = "integer",
 	method = "character"),
-	contains = "VegsoupDataPartition"
+	contains = "VegsoupPartition"
 	)
 
-#	showClass("VegsoupDataPartitionFidelity")
+#	showClass("VegsoupPartitionFidelity")

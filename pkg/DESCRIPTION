@@ -25,23 +25,21 @@ Collate: AAA.R
          Class-Coverscale.R
          Class-Vegsoup.R
          Vegsoup-BaseMethods.R
-         Class-VegsoupData.R
-         VegsoupData-BaseMethods.R
-         VegsoupData-SpatialMethods.R
-         VegsoupData-OutputMethods.R
-         VegsoupData-VisualisationMethods.R
-         Class-VegsoupDataPartition.R
-         VegsoupDataPartition-BaseMethods.R
-         VegsoupDataPartition-AssociationMethods.R
-         VegsoupDataPartition-FidelityMethods.R
-         VegsoupDataPartition-ClassificationStabilityMethods.R
-         VegsoupDataPartition-OutputMethods.R
-         VegsoupDataPartition-OutputMethodsMore.R
-         VegsoupDataPartition-VisualisationMethods.R
-         Class-VegsoupDataPartitionFidelity.R
-         VegsoupDataPartitionFidelity-BaseMethods.R
-         Class-VegsoupDataOptimstride.R
-         VegsoupDataOptimstride-BaseMethods.R
+         Vegsoup-SpatialMethods.R
+         Vegsoup-OutputMethods.R
+         Vegsoup-VisualisationMethods.R
+         Class-VegsoupPartition.R
+         VegsoupPartition-BaseMethods.R
+         VegsoupPartition-AssociationMethods.R
+         VegsoupPartition-FidelityMethods.R
+         VegsoupPartition-ClassificationStabilityMethods.R
+         VegsoupPartition-OutputMethods.R
+         VegsoupPartition-OutputMethodsMore.R
+         VegsoupPartition-VisualisationMethods.R
+         Class-VegsoupPartitionFidelity.R
+         VegsoupPartitionFidelity-BaseMethods.R
+         Class-VegsoupOptimstride.R
+         VegsoupOptimstride-BaseMethods.R
          Coverscale-Methods.R
          ZZZ.R
 Respository: R-Forge

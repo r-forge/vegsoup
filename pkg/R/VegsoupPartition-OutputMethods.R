@@ -1,6 +1,6 @@
 #	to do: add column for indicator value, high priority!
 
-.latexVegsoupDataPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {
+.latexVegsoupPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {
 #	obj  <- prt
 
 sites <- obj@sites
@@ -93,7 +93,7 @@ p.col <- paste("|p{", col.width, "}", sep = "")
 col.just <- c(rep(p.col, ncol(tex)))
 #col.just[ncol(num.cols.agg) + 1] <- paste("|", col.just[ncol(num.cols.agg) + 1], sep = "")
 #	tex valid filenames
-#	to do! see .latexVegsoupDataPartitionFidelity
+#	to do! see .latexVegsoupPartitionFidelity
 #	more tests on filename
 if (length(grep(".", "_", filename, fixed = TRUE))) {
 		
@@ -127,7 +127,7 @@ return(invisible(res))
 }
 
 #	\dots passed to seriation()
-.latexVegsoupDataPartitionSpeciesRecursive <- function (obj, path, col.width, taxa.width, caption.text, verbose, ...) {
+.latexVegsoupPartitionSpeciesRecursive <- function (obj, path, col.width, taxa.width, caption.text, verbose, ...) {
 	
 #	obj  <- prt
 if (missing(path)) {
@@ -204,7 +204,7 @@ close(con)
 return(invisible(res))
 }
 
-.latexVegsoupDataPartitionSitesRecursive <- function (obj, path, ...) {
+.latexVegsoupPartitionSitesRecursive <- function (obj, path, ...) {
 	#	to do!	
 }
 
@@ -214,7 +214,7 @@ setGeneric("Latex",
 )
 
 setMethod("Latex",
-	signature(obj = "VegsoupDataPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, choice, recursive, ...) {
 			if (missing(choice)) {
 				choice <- "species"	
@@ -223,23 +223,23 @@ setMethod("Latex",
 				recursive <- FALSE
 			}			
 			if (choice == "sites" & !recursive) {
-				res <- .latexVegsoupDataPartitionSites(obj, ...)
+				res <- .latexVegsoupPartitionSites(obj, ...)
 			}
 			if (choice == "species" & !recursive) {
-				res <- .latexVegsoupDataPartitionSpecies(obj, ...)
+				res <- .latexVegsoupPartitionSpecies(obj, ...)
 			}
 			if (choice == "sites" & recursive) {
-				res <- .latexVegsoupDataPartitionSitesRecursive(obj, ...)
+				res <- .latexVegsoupPartitionSitesRecursive(obj, ...)
 			}
 			if (choice == "species" & recursive) {
-				res <- .latexVegsoupDataPartitionSpeciesRecursive(obj, ...)
+				res <- .latexVegsoupPartitionSpeciesRecursive(obj, ...)
 			}			
 	return(invisible(res))
 	}
 )
 
 #	KML output
-.KMLVegsoupDataPartition <- function (obj, path, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
+.KMLVegsoupPartition <- function (obj, path, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
 if (missing(path)) {
 	path <- getwd()	
 }
@@ -397,6 +397,6 @@ return(invisible(res))
 }
 
 setMethod("KML",
-   signature(obj = "VegsoupDataPartition"),
-    .KMLVegsoupDataPartition
+   signature(obj = "VegsoupPartition"),
+    .KMLVegsoupPartition
 )

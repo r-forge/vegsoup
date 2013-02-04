@@ -5,7 +5,7 @@ setClassUnion("decostand.method", c("character", "NULL"))
 setClass("decostand", representation(method = "decostand.method"))
 
 #	class definition
-setClass("VegsoupData",
+setClass("Vegsoup",
 	representation(
 	species = "data.frame", # in long format, casting by method
 	sites = "data.frame", # melt method

@@ -5,15 +5,15 @@ head(species(new("Species", data = spc)))
 head(sites(new("Sites", data = sts)))
 head(taxonomy(new("Taxonomy", data = txa)))
 
-dta <- VegsoupData(spc, sts, txa)
-dta <- VegsoupData(spc, sts, txa, coverscale = "braun.blanquet")
-dta <- VegsoupData(spc, sts, txa, coverscale = Coverscale("braun.blanquet"))
-dta <- VegsoupData(spc, sts, txa,
+dta <- Vegsoup(spc, sts, txa)
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+dta <- Vegsoup(spc, sts, txa, coverscale = Coverscale("braun.blanquet"))
+dta <- Vegsoup(spc, sts, txa,
 	group = c(rep(1, 3), rep(2, 3)),
 	coverscale = "braun.blanquet")
 
 #	accessor methods for class slots
-#	from class VegsoupData
+#	from class Vegsoup
 Sites(dta)
 Species(dta)
 decostand(dta)
@@ -132,7 +132,7 @@ seriation(dta, "packed")
 as.data.frame(as.matrix(seriation(dta, "packed"), "character", mode = "r"))
 
 #	partitioning methods
-prt <- VegsoupDataPartition(dta, k = 2)
+prt <- VegsoupPartition(dta, k = 2)
 
 fid <- Fidelity(prt, verbose = TRUE)
 #	inherited methods
@@ -166,5 +166,5 @@ Indval(prt)
 
 data(bigtestdata)
 
-dta <- VegsoupData(spc.big, sts.big, txa.big,
+dta <- Vegsoup(spc.big, sts.big, txa.big,
 	coverscale = "braun.blanquet")

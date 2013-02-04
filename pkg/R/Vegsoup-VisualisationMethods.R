@@ -7,7 +7,7 @@
 #}	
 #	ploting method hist
 #setMethod("hist",
-#	signature(obj = "VegsoupData"),
+#	signature(obj = "Vegsoup"),
 #	function (x, ...) {
 #	   res <- 
 #	   factor(x@species$cov,
@@ -32,7 +32,7 @@ setGeneric("plot", function(x, y, ...)
 #}	
   
 setMethod("plot",
-    signature(x = "VegsoupData", y = "missing"),
+    signature(x = "Vegsoup", y = "missing"),
 	function (x, ...) {
 
 	opar <- par(mfrow = c(1,2))
@@ -136,7 +136,7 @@ setGeneric("coldiss",
 )
 #}
 setMethod("coldiss",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     function (obj, ...) .coldiss(obj, ...)
 )
 
@@ -163,7 +163,7 @@ setGeneric("map",
 #}
 
 setMethod("map",
-	signature(obj = "VegsoupData"),
+	signature(obj = "Vegsoup"),
 	function (obj, ...) {
 		.map(obj, ...)
 	}
@@ -180,7 +180,7 @@ setGeneric("QuickMap",
 
 #	gvisMap package
 setMethod("QuickMap",
-    signature(obj = "VegsoupData"),
+    signature(obj = "Vegsoup"),
     function (obj) {
 		require(googleVis)
 		pt <- SpatialPointsVegsoup(obj)

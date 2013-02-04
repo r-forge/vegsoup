@@ -112,9 +112,9 @@
 	res	
 }
 
-#	helper function for VegsoupDataPartition
+#	helper function for VegsoupPartition
 
-.VegsoupDataPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) 
+.VegsoupPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) 
 {
     if (class(dist) != "dist") {
         stop("bestopt is only defined for objects of class dist")
