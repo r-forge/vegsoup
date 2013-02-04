@@ -1,9 +1,9 @@
 \name{Abbreviation}
 \docType{methods}
+\alias{abbr.layer}
+\alias{abbr.layer-methods}
 \alias{Abbreviation}
 \alias{Abbreviation-methods}
-\alias{Abbreviation,Vegsoup-method}
-\alias{Abbreviation,VegsoupData-method}
 \alias{Abbreviation<-}
 \alias{Abbreviation<--methods}
 \alias{Abbreviation<-,Vegsoup,character-method}
@@ -16,7 +16,10 @@ Get the abbreviations used in species matrix and corresponding taxonomy data.fra
 }
 \usage{
 Abbreviation(obj, ...)
+
 Abbreviation(obj) <- value
+
+abbr.layer(obj)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

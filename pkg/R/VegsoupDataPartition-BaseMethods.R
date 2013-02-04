@@ -815,7 +815,8 @@ setGeneric("Optindval",
 setMethod("Optindval",
     signature(obj = "VegsoupDataPartition"),
     function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
-
+		require(optpart)
+		
     	if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
 
     	nam <- names(obj@part) # save names		
@@ -857,12 +858,12 @@ setGeneric("Partana",
 setMethod("Partana",
     signature(obj = "VegsoupDataPartition"),
     function (obj, verbose = FALSE, ...) {
-		
+		require(optpart)
 		if (getK(obj) == 1)	stop("meaningless with k = ", getK(obj))
     	Xd <- as.dist(obj, ...)   	
 
 		cpu.time <- system.time({		
-			res <- partana(c = Partitioning(obj), dist = Xd)
+			res <- optpart::partana(c = Partitioning(obj), dist = Xd)
 		})
 		if (verbose) {
 			cat("\n time to permute species matrix of", ncell(obj), "cells",
@@ -884,6 +885,7 @@ setGeneric("Tabdev",
 setMethod("Tabdev",
 	signature(obj = "VegsoupDataPartition"),
 	function (obj, numitr = 99, verbose = FALSE, ...) {
+		require(optpart)
 
 		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
 
@@ -923,7 +925,7 @@ setMethod("Silhouette",
     			dis <- vegdist(as.logical(obj), ...)
     		}
     	}	    	
-		res <- silhouette(Partitioning(obj), dis)
+		res <- cluster::silhouette(Partitioning(obj), dis)
 		return(res)    	
     }
 )
@@ -935,7 +937,8 @@ setGeneric("typal",
 )
 setMethod("typal",
     signature(obj = "VegsoupDataPartition"),
-    function (obj, k=1, ...) {    	
+    function (obj, k = 1, ...) {
+    	require(optpart)    	
     	cl <- match.call()    	
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {

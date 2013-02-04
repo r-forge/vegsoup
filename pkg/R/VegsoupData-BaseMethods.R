@@ -345,7 +345,65 @@ as.vector.VegsoupData <- function (x, mode) {
 	if (missing(mode)) mode = "numeric"
 	as.vector(as.matrix(x, typeof = mode))
 }	
-	  	
+
+#	locations and values of nonzero entries
+#if (!isGeneric("indices")) {
+
+setGeneric("indices",
+	function (x, ...)
+	standardGeneric("indices"))	
+#}	
+setMethod("indices",
+	signature(x = "VegsoupData"), # 
+	  function (x, typeof) {
+    	if (missing(typeof)) typeof <- "numeric"    		
+    	TYPEOF <- c("character", "numeric", "logical")
+    	typeof <- match.arg(typeof, TYPEOF)
+    	
+		sc <- coverscale(x)
+		al <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@")
+		ual <- unique(al)
+		pl <- Species(x)$plot
+		upl <- unique(pl)
+		if (typeof == "numeric" & !is.null(sc@codes)) {
+			cv <- as.numeric(as.character(
+				factor(Species(x)$cov, levels = sc@codes, labels = sc@lims)
+				))
+		}
+		if (typeof == "character") {
+			cv <- Species(x)$cov
+		}
+		if (typeof == "logical") {
+			cv <- rep(1, nrow(Species(x)))
+		}
+		i <- match(al, ual)
+		j <- as.integer(ordered(pl, levels = upl))
+		list(i = i, j = j, x = cv, dimnames = list(ual, upl))
+		}
+)
+
+#	coerce to sparse matrix
+#	very basic!
+setAs(from = "VegsoupData", to = "sparseMatrix",
+	def = function (from) {
+		require(Matrix)
+		ij <- indices(from)
+		res <- sparseMatrix(ij$i, ij$j, x = as.integer(ij$x),
+			dimnames = ij$dimnames)
+		res
+	}
+)
+
+setAs(from = "VegsoupData", to = "dsparseMatrix",
+	def = function (from) {
+		require(Matrix)
+		ij <- indices(from)
+		res <- sparseMatrix(ij$i, ij$j, x = ij$x,
+			dimnames = ij$dimnames)
+		res
+	}
+)
+
 #if (!isGeneric("rownames")) {
 setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 	standardGeneric("rownames"))
@@ -1319,7 +1377,21 @@ setMethod("DecomposeNames",
 #	to do: documentation
 setMethod("Abbreviation",
     signature(obj = "VegsoupData"),
-    function (obj, ...) DecomposeNames(dta)$abbr
+    function (obj, ...) DecomposeNames(obj)$abbr
+)
+
+#if (!isGeneric("DecomposeNames")) {
+setGeneric("abbr.layer",
+	function (obj, ...)
+		standardGeneric("abbr.layer")
+)
+#}
+
+setMethod("abbr.layer",
+    signature(obj = "VegsoupData"),
+    function (obj, ...) {
+    	file.path(obj$abbr, obj$layer, fsep = "@")
+    }
 )
 
 #	congruence between indicator and target species.

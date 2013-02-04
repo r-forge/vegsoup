@@ -1,28 +1,30 @@
 useDynLib(vegsoup)
 
-#package 'isopam' does not have a name space
-#importFrom("isopam", isopam)
 #package 'optpart' does not have a name space
 #importFrom(optpart, optpart, partana, tabdev, disdiam)
 
 #useDynLib()
 
+importClassesFrom(Matrix, sparseMatrix)
 import(methods)
 importFrom("graphics", plot, hist)
 importFrom("stats", as.dist)
 importFrom("utils", head, tail)
-importFrom("Hmisc", latex)
-importFrom("rgdal", spTransform)
-importFrom("vegan", vegdist, decostand)
+importFrom("vegan", coverscale, vegdist, decostand)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
-importFrom("cluster", agnes, pam, silhouette)
+importFrom("rgdal", spTransform)
+importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
+
+#importFrom("Hmisc", latex)
 #importFrom("googleVis", gvisMap)
+#importFrom("isopam", isopam)
 
 #exportPattern("^[^\\.]")
 exportPattern("^[[:alpha:]]+")
 exportMethods(
     "[",
     "$",
+    "abbr.layer",
     "Abbreviation",
     "Abbreviation<-",
     "AbundanceScale",
@@ -30,6 +32,7 @@ exportMethods(
     "AprioriGrouping",
     "Accuracy",
     "Association",
+    "as.vector",
     "as.matrix",
     "as.character",
     "as.logical",
@@ -55,6 +58,7 @@ exportMethods(
     "QuickMap",	
     "head",
     "coldiss",
+    "indices",
     "Indpower",
     "Indspc",
     "Indval",

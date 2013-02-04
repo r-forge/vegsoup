@@ -13,6 +13,7 @@ Retrieve Species Matrix with Specified Storage Mode
 }
 \description{
 The functions retrieve a species matrix of mode according the methods name and \code{as.matrix} returns corresponding types of matrices but specified by its argument \code{mode}.
+%cross-classifying factors
 }
 \usage{
 as.logical(x, mode)
@@ -22,6 +23,12 @@ as.numeric(x, mode)
 as.character(x, mode)
 
 as.matrix(x, typeof, ...)
+
+indices(x, typeof)
+
+# not documented
+as(x, "sparseMatrix")
+as(x, "dsparseMatrix") 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,6 +58,7 @@ Note, \code{as.logical} and \code{as.matrix(x, "logical")} do not return a boole
 
 As defined above, the some how misleading named argument \code{mode} refers to the type of analysis intended on the returned object (recall, \code{"typeof"} determines \code{mode} (\code{storage.mode}) of the returned matrix). The argument \code{mode} can be passed to all methods and has two possible values. If \code{mode = "Q"} pairs of objects are compared and the analysis is said to be in \emph{Q mode}. This is what users usally expect. When pairs of descriptors are compared, the analysis is said to be in \emph{Q mode} (Legendre & Legendre 2012). For example, \code{as.matrix(x, "logical", "R")} returns a transposed presence/absence matrix. Of cource, this can also be written as \code{t(as.matrix(x, "logical"))}.
 
+Function \code{indices} returns the locations (row and column pointers) and values of nonzero entries in a matrix. Those indices can be used to construct a \code{\link{sparseMatrix}}. Coercion method \code{as(x, "sparseMatrix")} helps in doing so.
 }
 \value{
 A matrix of mode \code{"numeric"} or \code{"character"}. See \sQuote{Details}.
@@ -70,8 +78,7 @@ Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Development
 \examples{
 library(vegsoup)
 data(testdata)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
+dta <- VegsoupData(Vegsoup(species, sites, taxonomy, "braun.blanquet"))
 
 # presence/absence representation
 dta.pa <- as.logical(dta)
@@ -99,7 +106,20 @@ pro <- procrustes(as.logical(dta), as.numeric(dta))
 decostand(dta) <- "hellinger"
 decorana(dta)
 decostand(dta) <- "pa"
-decorana(dta)        
+decorana(dta)
+
+# sparse matrix and alike representations
+# and their associated memory demands
+
+# class matrix
+object.size(as.matrix(dta)) # most efficient
+# indices only
+object.size(indices(dta)) # almost equal 
+# clas sparseMatrix based on indices()
+object.size(as(dta, "sparseMatrix")) # efficient
+#  internal Vegsoup data structure
+object.size(Species(dta)) # less efficent, but less restrictions        
+
 }
 \keyword{ methods }
 \keyword{ manip }
