@@ -744,6 +744,7 @@ setGeneric("Murdoch",
 setMethod("Murdoch",
     signature(obj = "VegsoupDataPartition"),
     function (obj, minplt, type, ...) {
+    	require(optpart)
     	if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
     	if (missing(minplt))
@@ -758,7 +759,7 @@ setMethod("Murdoch",
 		res.ls <- vector("list", length = ks)
 		names(res.ls) <- 1:ks
 		for (i in 1:ks) {
-			res.ls[[i]] <- murdoch(as.logical(obj),
+			res.ls[[i]] <- optpart::murdoch(as.logical(obj),
 				part == i, minplt = minplt)
 			res[,i] <- res.ls[[i]]$murdoch
 			pval[,i] <- round(res.ls[[i]]$pval, 3)
@@ -775,7 +776,7 @@ setGeneric("Optsil",
 setMethod("Optsil",
     signature(obj = "VegsoupDataPartition"),
     function (obj, maxitr = 100, verbose = FALSE, ...) {
-
+		require(optpart)
 		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
     	
     	nam <- names(obj@part) # save names    	
@@ -906,6 +907,7 @@ setMethod("Tabdev",
 
 #	Silhouette Analysis
 #	to do: documentation
+#	dots argument does not work with cluster::silhouette
 setGeneric("Silhouette",
 	function (obj, ...)
 		standardGeneric("Silhouette")
@@ -914,30 +916,57 @@ setGeneric("Silhouette",
 setMethod("Silhouette",
     signature(obj = "VegsoupDataPartition"),
     function (obj, method , ...) {
+    	require(cluster)
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))
-    	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- as.dist(obj)
-    	} else {    	
-			if (missing(method)) {    			
-				dis <- vegdist(as.logical(obj), "bray")
-    		} else {
-    			dis <- vegdist(as.logical(obj), ...)
-    		}
-    	}	    	
-		res <- cluster::silhouette(Partitioning(obj), dis)
+    	
+		res <- cluster::silhouette(Partitioning(obj), dist = obj)
 		return(res)    	
     }
 )
 
+###	broken!
 #	typal samples in a partition
-setGeneric("typal",
+setGeneric("Typal",
 	function (obj, ...)
-		standardGeneric("typal")
+		standardGeneric("Typal")
 )
-setMethod("typal",
+setMethod("Typal",
     signature(obj = "VegsoupDataPartition"),
-    function (obj, k = 1, ...) {
+    function (obj, k = 2, ...) {
+    	
+"TYPAL" <- function (clustering, dist, k = 1) 
+{
+	require(optpart)
+    clustering <- as.numeric(clustering)
+    print(class(dist))
+    if (class(dist) != "dist") {
+        stop("typal is not defined for classes other than dist")
+    }
+    classes <- 1:length(table(clustering))
+    part <- optpart::partana(clustering, dist)
+    sil <- cluster::silhouette(clustering, dist)
+    part.out <- matrix(NA, nrow = max(classes), ncol = k)
+    for (i in classes) {
+        tmp <- clustering == i
+        names <- part$names[tmp]
+        vals <- part$ptc[tmp, i]
+        part.out[i, ] <- names[rev(order(vals))][1:k]
+    }
+    part.out <- data.frame(part.out)
+    names(part.out) <- as.character(seq(1:k))
+    sil.out <- matrix(NA, nrow = max(classes), ncol = k)
+    for (i in classes) {
+        tmp <- clustering == i
+        names <- attr(dist, "Labels")[tmp]
+        vals <- sil[tmp, 3]
+        sil.out[i, ] <- names[rev(order(vals))][1:k]
+    }
+    sil.out <- data.frame(sil.out)
+    names(sil.out) <- as.character(seq(1:k))
+    out <- list(partana = part.out, silhouette = sil.out)
+    out
+}
     	require(optpart)    	
     	cl <- match.call()    	
     	if (any(names(cl) == "mode")) {
@@ -951,8 +980,11 @@ setMethod("typal",
 			return(NULL)
 		}
 		else {
-   			res <- optpart::typal(Partitioning(obj),
-   				as.dist(obj, ...), k = k)
+			#d <- as.dist(obj, ...)
+			p <- Partitioning(obj)
+			d <- vegan::vegdist(as.matrix(obj))
+			print(class(d))
+   			res <- TYPAL(clustering = p, dist = d, k = k)
 	   		return(res)
    		}
     }
@@ -994,18 +1026,10 @@ setGeneric("Disdiam",
 setMethod("Disdiam",
     signature(obj = "VegsoupDataPartition"),
     function (obj, method, ...) {
+    	require(optpart)
 		if (getK(obj) == 1)
-			stop("meaningless with k = ", getK(obj))
-    	if (inherits(obj, "VegsoupDataPartition")) {
-    		dis <- as.dist(obj)
-    	} else {    	
-			if (missing(method)) {    			
-				dis <- vegdist(as.logical(obj), "bray")
-    		} else {
-    			dis <- vegdist(as.logical(obj), ...)
-    		}
-    	}	    	
-		res <- disdiam(Partitioning(obj), dis)
+			stop("meaningless with k = ", getK(obj))    	
+		res <- optpart::disdiam(Partitioning(obj), as.dist(obj))
 		return(res)    	
     }
 )

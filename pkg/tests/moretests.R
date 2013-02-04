@@ -152,9 +152,10 @@ prt[,1:10]
 Optsil(prt)
 Optindval(prt)
 Partana(prt)
-try(Silhouette(prt))	#	broken
-try(typal(prt))	#	broken
-try(Murdoch(prt))	#	broken
+Silhouette(prt)
+Disdiam(prt)
+try(Typal(prt))	#	broken due to namespace conflict? as.dist
+Murdoch(prt)
 Isamic(prt)
 Tabdev(prt)
 
@@ -162,8 +163,6 @@ Tabdev(prt)
 FisherTest(prt)
 Phi(prt)
 Indval(prt)
-
-
 
 data(bigtestdata)
 

@@ -839,6 +839,8 @@ setMethod("as.dist",
 	}
 )
 
+as.dist.VegsoupData <- function (m, ...) as.dist(m, ...) # as(x, "matrix")
+	
 #	connectedness of dissimilarities
 #	method for class VegsoupDataPartition, check inheritance should be absolete!
 #	to do: documentation

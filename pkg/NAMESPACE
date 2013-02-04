@@ -13,7 +13,7 @@ importFrom("utils", head, tail)
 importFrom("vegan", coverscale, vegdist, decostand)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 importFrom("rgdal", spTransform)
-importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
+importFrom("cluster", ellipsoidhull, agnes, pam) #silhouette
 
 #importFrom("Hmisc", latex)
 #importFrom("googleVis", gvisMap)
@@ -102,7 +102,7 @@ exportMethods(
     "taxonomy",
     "Taxonomy",
     "Taxonomy<-",
-    "typal",
+    "Typal",
     "vegdist" 
 )
 exportClasses(
@@ -122,3 +122,4 @@ exportClasses(
 S3method(as.matrix, VegsoupData)
 S3method(as.array, VegsoupData)
 S3method(as.vector, VegsoupData)
+S3method(as.dist, VegsoupData)
