@@ -1,4 +1,4 @@
-species <-
+"spc" <-
 structure(list(plot = c("bs01", "bs01", "bs01", "bs01", "bs01", 
 "bs01", "bs01", "bs01", "bs01", "bs01", "bs02", "bs02", "bs02", 
 "bs02", "bs02", "bs02", "bs02", "bs02", "bs02", "bs02", "bs02", 
@@ -77,7 +77,7 @@ structure(list(plot = c("bs01", "bs01", "bs01", "bs01", "bs01",
 -146L))
 
 
-"sites" <-
+"sts" <-
 structure(list(plot = c("bs01", "bs01", "bs01", "bs01", "bs01", 
 "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", 
 "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", "bs01", 
@@ -142,7 +142,7 @@ structure(list(plot = c("bs01", "bs01", "bs01", "bs01", "bs01",
 "", "", "", "", "13.076115E", "47.690381N")), .Names = c("plot", 
 "variable", "value"), row.names = c(NA, 156L), class = "data.frame")
 
-"taxonomy" <-
+"txa" <-
 structure(list(abbr = c("achn cala", "pote caul", "amel oval", 
 "teuc cham", "leon inca", "aspl ruta", "berb vulg", "glob cord", 
 "care mucr", "ligu vulg", "rham cath", "popu trem", "sorb aria aggr", 

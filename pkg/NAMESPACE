@@ -85,7 +85,9 @@ exportMethods(
     "seriation",
     "SigFidelity",
     "Silhouette",
+    "species",
     "Sites",
+    "sites",
     "Sites<-",
     "SpatialPointsVegsoup",
     "SpatialPolygonsVegsoup",
@@ -97,18 +99,23 @@ exportMethods(
     "summary",
     "Tabdev",
     "tail",
+    "taxonomy",
     "Taxonomy",
     "Taxonomy<-",
     "typal",
     "vegdist" 
 )
 exportClasses(
+     "Coverscale",
+     "Species",
+     "Sites",
+     "Taxonomy",
+     "SpeciesTaxonomy",
      "Vegsoup",
      "VegsoupData",
      "VegsoupDataPartition",
      "VegsoupDataPartitionFidelity",
-     "VegsoupDataOptimstride",
-     "Coverscale"
+     "VegsoupDataOptimstride"
 )
 
 # ensure that dispatch also works inside base functions

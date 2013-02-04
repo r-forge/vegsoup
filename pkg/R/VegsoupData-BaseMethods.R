@@ -1570,3 +1570,9 @@ plotStride <- function (x) {
 #			xpd = T, srt = 90)
 #	}
 }
+
+#SRTM <- function (x) {
+#	if (!inherits(obj, "VegsoupData")) stop("Need object inheriting from class VegsoupData")
+#	require(geonames)
+#	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
+#}

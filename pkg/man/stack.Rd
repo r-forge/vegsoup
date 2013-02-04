@@ -48,9 +48,9 @@ For \code{stack.readOGR} the first element of schema defines the name of the col
 }
 
 \value{
-\code{stack.species} returns a five-column data frame; the first column has the plot names (\code{'plot'}), the second species abbreviations (\code{'abbr'}), the third the respective layer (\code{'layer'}), the fourth the abundance values (\code{'cov'}) and the last columns represents a comment field (\code{'comment'}).
+\code{stack.species} returns an object of class \code{"Species"} with slot \code{data}: a five-column data frame; the first column has the plot names (\code{'plot'}), the second species abbreviations (\code{'abbr'}), the third the respective layer (\code{'layer'}), the fourth the abundance values (\code{'cov'}) and the last columns represents a comment field (\code{'comment'}).
 \cr
-\code{stack.sites} returns a three-column data frame; the first column has the plot names (\code{'plot'}), the second the measured variable (\code{'variable'}), and the last the respective value (\code{'value'}) for each variable measured on each plot. Colomn 'value' is coerced to \code{as.character}.
+\code{stack.sites} returns an object of class \code{"Sites"} with slot \code{data}: a three-column data frame; the first column has the plot names (\code{'plot'}), the second the measured variable (\code{'variable'}), and the last the respective value (\code{'value'}) for each variable measured on each plot. Colomn 'value' is coerced to \code{as.character}.
 }
 
 \author{
@@ -83,12 +83,11 @@ sts <- stack.sites(x, verbose = TRUE)
 }
 
 \seealso{
-\code{\link{}}
+\code{\link{Species-class}},
+\code{\link{Sites-class}},
 \code{\link{reshape.species}},
 \code{\link{read.csv}},
-\code{\link{readOGR}}
-\code{\link{Vegsoup-class}}
-
+\code{\link{readOGR}} in package \pkg{rgdal}
 }
 
 \keyword{import}

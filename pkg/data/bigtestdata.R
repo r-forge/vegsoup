@@ -1,4 +1,4 @@
-"species.big" <-
+"spc.big" <-
 structure(list(plot = c("lf01", "lf01", "lf01", "lf01", "lf01", 
 "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", 
 "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", 
@@ -2190,7 +2190,7 @@ structure(list(plot = c("lf01", "lf01", "lf01", "lf01", "lf01",
 "+", "1", "2b", "1", "1")), .Names = c("plot", "abbr", "layer", 
 "cov"), class = "data.frame", row.names = c(NA, -4303L))
 
-"sites.big" <-
+"sts.big" <-
 structure(list(plot = c("lf01", "lf01", "lf01", "lf01", "lf01", 
 "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", 
 "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", "lf01", 
@@ -3543,7 +3543,7 @@ structure(list(plot = c("lf01", "lf01", "lf01", "lf01", "lf01",
 "13.465725E")), .Names = c("plot", "variable", "value"), row.names = c(NA, 
 3333L), class = "data.frame")
 
-"taxonomy.big" <-
+"tax.big" <-
 structure(list(abbr = c("achi mill aggr", "agro capi", "alch sect alch", 
 "anth vuln alpi", "briz medi", "camp sche", "care cary", "care lepo", 
 "care nigr", "care pall", "caru carv", "cera holo", "coel viri", 

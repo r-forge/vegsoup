@@ -1,10 +1,15 @@
+rename Species to species
+and Sites to sites
+
+#	delete AbundanceScale.*
+
 improve Spread()
 man files for coordiantes, bbox, proj4string
 noquote for print method (e.g. as.matrix)
 Richness by Partiton
 #	aggregate(as.logical(prt), by = list(Partitiong(prt), sum)
 
-extend slot parttiton to contain class dendrogram
+extend slot partition to contain class dendrogram
 
 # minor
 rename

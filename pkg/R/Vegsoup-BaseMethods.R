@@ -505,6 +505,8 @@ setReplaceMethod("AbundanceScale",
 )
 #	end delete
 
+#	rename
+#	class Species defines setGeneric("species")
 #	get species query in long format
 setGeneric("Species",
 	function (obj)

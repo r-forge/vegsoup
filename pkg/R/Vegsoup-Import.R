@@ -1,13 +1,18 @@
-taxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = TRUE) {
+SpeciesTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = TRUE) {
 
-#	input formats
+#	x = spc
+#	y = txa
+#	tmp <- c(x = F, y = T, file.x = T, file.y = F)
+
+#	test inputs
 test <- combn(c("x", "y", "file.x", "file.y"), 2)
 cmb <- test <- test[, c(1, 3, 4, 6)]
-tmp <- c(x = !missing(x), y = !missing(y),
+
+mis <- c(x = !missing(x), y = !missing(y),
 	file.x = !missing(file.x), file.y = !missing(file.y))
 
-for (i in seq(along = tmp)) {
-	test[test == names(tmp[i])] <- tmp[i]
+for (i in seq(along = mis)) {
+	test[test == names(mis[i])] <- mis[i]
 }
 
 mode(test) <- "logical"
@@ -22,41 +27,57 @@ if (sum(as.numeric(sel)) > 1) {
 }
 
 if (which(sel) == 1) {
-	species <- x
-	taxonomy <- y		
+	if (inherits(x, "Species")) {
+		species <- species(x)
+	} else {
+		species <- species(new("Species", data = x)) # ensures validity
+	}
+	if (inherits(y, "Taxonomy")) {	
+		taxonomy <- taxonomy(y)
+	} else {
+		taxonomy <- taxonomy(new("Taxonomy", data = y)) # ensures validity
+	}		
 }
 
 if (which(sel) == 2) {
-	species <- x
-	if (csv2) {
-		taxonomy <- read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE)
+	if (inherits(x, "Species")) {
+		species <- species(x)
 	} else {
-		taxonomy <- read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE)
-	}
+		species <- species(new("Species", data = x))
+	}	
+	y <- read.csv2(file.y,
+		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+		stringsAsFactors = FALSE, check.names = FALSE)	
+	taxonomy <- taxonomy(new("Taxonomy", data = y))
 }
 
 if (which(sel) == 3) {
-	if (csv2) {
-		species <- read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE)
-	} else {	
-		species <- read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
-	}
-	taxonomy <- y
+	x <- read.csv2(file.x,
+		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+		stringsAsFactors = FALSE, check.names = FALSE)
+	species <- species(new("Species", data = x))	
+	if (inherits(y, "Taxonomy")) {	
+		taxonomy <- taxonomy(y)
+	} else {
+		taxonomy <- taxonomy(new("Taxonomy", data = y))
+	}		
 }
 
 if (which(sel) == 4) {
-	if (csv2) {
-		species <- 	read.csv2(file.x, stringsAsFactors = FALSE, check.names = FALSE)
-		taxonomy <- read.csv2(file.y, stringsAsFactors = FALSE, check.names = FALSE)
-	} else {
-		species <- 	read.csv(file.x, stringsAsFactors = FALSE, check.names = FALSE)
-		taxonomy <- read.csv(file.y, stringsAsFactors = FALSE, check.names = FALSE)
-	}
+	x <- read.csv2(file.x,
+		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+		stringsAsFactors = FALSE, check.names = FALSE)	
+	y <- read.csv2(file.y,
+		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+		stringsAsFactors = FALSE, check.names = FALSE)
+	species <- species(new("Species", data = x))
+	taxonomy <- taxonomy(new("Taxonomy", data = y))
 }
 
 #	for safety if x is supplied as data.frame
 species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
 #	check names and bring to order
+
 species.mandatory <- c("plot", "abbr", "layer", "cov")
 
 if (!all(species.mandatory %in% names(species))) {
@@ -120,9 +141,10 @@ if (test2 > 0) {
 	}
 }
 
-res <- taxonomy[as.character(unique(species$abbr)), ]
-if (any(is.na(res[, 1]))) {
-	test3 <- as.character(unique(species$abbr))[is.na(res[, 1])]
+taxonomy <- taxonomy[as.character(unique(species$abbr)), ]
+
+if (any(is.na(taxonomy[, 1]))) {
+	test3 <- as.character(unique(species$abbr))[is.na(taxonomy[, 1])]
 	cat("\nnot found the following abbrevation(s) in supplied reference list\n")
 	print(test3)
 	#	to do!
@@ -136,15 +158,16 @@ if (any(is.na(species))) {
 	cat(apply(species, 2, function (x) any(is.na(x))) )
 }
 
-if (return.species == FALSE) {
-	species <- NULL
-}	
+res <- new("SpeciesTaxonomy",
+	species = new("Species", data = species),
+	taxonomy = new("Taxonomy", data = taxonomy))
 
-return(list(taxonomy = res, species = species))
+return(invisible(res))
 }
 
 
 #	convert between matrix formats for import
+#	rename to Species
 stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
@@ -277,6 +300,8 @@ if (verbose) {
 	cat("\n... data has", length(unique(res$layer)),
 		"layer(s):", unique(res$layer))
 	}
+	
+res <- new("Species", data = res)	
 return(invisible(res))
 }
 
@@ -338,9 +363,12 @@ res <- res[res$cov != "",]
 
 res <- res[order(res$plot, res$abbr, res$layer),]
 
+res <- new("Species", data = res)
+return(invisible(res))
 }
 
 #	stack sites data frame to match database structure
+#	rename to Sites
 stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
@@ -401,6 +429,7 @@ if (verbose) {
 	cat("found variables:", unique(res$variable))
 }	
 
+res <- new("Sites", data = res)	
 return(invisible(res))
 }
 
@@ -506,9 +535,9 @@ names(res) <- c("plot", "variable", "value")
 		res$value[res$variable == "altitude"] <-
 			round(res$value[res$variable == "altitude"], 0)
 	}
-	
-return(invisible(res))
 
+res <- new("Sites", data = res)	
+return(invisible(res))
 }
 
 #	function to import monospaced commuity tables
@@ -832,12 +861,6 @@ return(x)
 
 #	reverse geocoding
 #	readLines(url("http://maps.google.com/maps/geo?q=1600+Straßham+Wilhering+CA&output=csv&key=abcdefg"), n=1, warn=FALSE)
-
-SRTM <- function (x) {
-	if (!inherits(obj, "VegsoupData")) stop("Need object inheriting from class VegsoupData")
-	require(geonames)
-	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
-}
 
 .make.names <- function (x)  {
     x <- make.names(x, unique = FALSE)
