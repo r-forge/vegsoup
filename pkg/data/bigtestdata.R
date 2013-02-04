@@ -3543,7 +3543,7 @@ structure(list(plot = c("lf01", "lf01", "lf01", "lf01", "lf01",
 "13.465725E")), .Names = c("plot", "variable", "value"), row.names = c(NA, 
 3333L), class = "data.frame")
 
-"tax.big" <-
+"txa.big" <-
 structure(list(abbr = c("achi mill aggr", "agro capi", "alch sect alch", 
 "anth vuln alpi", "briz medi", "camp sche", "care cary", "care lepo", 
 "care nigr", "care pall", "caru carv", "cera holo", "coel viri", 

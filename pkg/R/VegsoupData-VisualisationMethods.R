@@ -1,3 +1,58 @@
+
+#	histogram mehtod
+#if (!isGeneric("hist")) {
+#setGeneric("hist",
+#	function (x, ...)
+#	standardGeneric("hist"))
+#}	
+#	ploting method hist
+#setMethod("hist",
+#	signature(obj = "VegsoupData"),
+#	function (x, ...) {
+#	   res <- 
+#	   factor(x@species$cov,
+#	   	levels = coverscale(x)@codes,
+#	   	lables = coverscale(x)@lims)
+#
+#	   fig <- hist(x,
+#	   main = "Histogram of abundance values",
+#	   xlab = "mean abundance")
+#	   fig
+#	}
+#)
+
+#	plot method
+#if (!isGeneric("plot")) {
+setGeneric("plot", function(x, y, ...)
+	standardGeneric("plot"))
+#}	
+#if (!isGeneric("plot")) {
+setGeneric("plot", function(x, y, ...)
+	standardGeneric("plot"))
+#}	
+  
+setMethod("plot",
+    signature(x = "VegsoupData", y = "missing"),
+	function (x, ...) {
+
+	opar <- par(mfrow = c(1,2))
+	on.exit(par(opar))
+	
+	plt <- Species(x)$plot		
+	richness <- aggregate(rep(1, length(plt)),
+		by = list(plt), sum)$x
+	hist(richness, xlab = "Species richness", ...)
+    
+	spc <- Species(x)$abbr
+	occurences <- aggregate(rep(1, length(spc)),
+		by = list(spc), sum)$x
+    
+	hist(occurences, xlab = "Species occurences", ...)
+	res <- list(richness, occurences)
+	return(invisible(res))
+}
+)
+
 ".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, ordered.only = FALSE, translate = FALSE, ...) {
 # adapted for vegsoup from function coldiss()
 # Color plots of a dissimilarity matrix, without and with ordering
@@ -114,3 +169,31 @@ setMethod("map",
 	}
 )
 #	map(dta, database = "worldHires", myborder = rep(0.1, 2))
+
+#	inherited visulalisation method
+#if (!isGeneric("gvisMap")) {
+setGeneric("QuickMap",
+	function (obj)
+		standardGeneric("QuickMap")
+)
+#}
+
+#	gvisMap package
+setMethod("QuickMap",
+    signature(obj = "VegsoupData"),
+    function (obj) {
+		require(googleVis)
+		pt <- SpatialPointsVegsoup(obj)
+		if (nrow(pt) > 1) {
+			df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1,
+				function (x) paste(x, collapse = ":")),
+			Tip = pt$plot)
+		} else {
+			df <- data.frame(LatLong = paste(coordinates(pt)[, c(2,1)], collapse = ":"),
+			Tip = pt$plot)
+		}
+		m <- gvisMap(df, "LatLong" , "Tip")
+		plot(m)
+		return(invisible(m))
+	}
+)

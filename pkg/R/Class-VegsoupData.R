@@ -9,7 +9,4 @@ setClass("VegsoupData",
 	representation(
 	decostand = "decostand",
 	dist = "character"),
-	contains = "Vegsoup")#,
-#	validity = function (object)#
-#	{
-#	})
+	contains = "Vegsoup")

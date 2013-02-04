@@ -1,244 +1,419 @@
-#	internal function to cast species matrix
-.cast <- function (obj, mode, ...) {
-	#	obj = dta; mode = 1
-			
-#	cpu.time <- system.time({
-    		
-	#	slots
-	plot <- Species(obj)$plot
-	abbr <- Species(obj)$abbr
-	layer <- Species(obj)$layer	
-	cov <- Species(obj)$cov
-	scale <- coverscale(obj) # rename local object scale to ?
-	
-	#	matrix dimensions
-	plots <- unique(plot)
-	species.layer <- file.path(abbr, layer, fsep = "@") # faster than paste
+###	generating function
+#	to do: improve documentation
 
-	#	resort to layer
-	if (length(Layers(obj)) > 1) {	
-	#	rather slow, but ensures order
-		species <- unique(as.vector(unlist(
-			sapply(Layers(obj),
-				function (x) {
-					species.layer[layer == x]
-				}
-			))))
+VegsoupData <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
+	
+	if (missing(x)) {
+		stop("\nspecies are missing!")	
 	} else {
-	#	simple and faster if there is only one layer	
-		species <- unique(species.layer)	
-	}
-			
-	#	cover transformation
-	if (mode == 1 & !is.null(scale@codes)) {
-		cov <- as.numeric(as.character(
-			factor(cov, levels = scale@codes, labels = scale@lims)
-			))
-		if (any(is.na(cov))) {
-			stop("cover scale codes do not match data" )
+		if (inherits(x, "Species")) {
+			x <- species(x)
+		} else {
+			x <- species(new("Species", data = x))
 		}	
 	}
-#	})
-#	cat("\n time to init objects", cpu.time[3], "sec")
-	if (mode == 1) {
-		cpu.time <- system.time({	
-		m <- t(vapply(plots,
-			USE.NAMES = FALSE,
-			FUN.VALUE = numeric(length(species)),
-			FUN = function (x) {
-				r <- numeric(length(species))
-				r[match(species.layer[plot == x], species)] <- cov[plot == x]
-				r
-			}))
-		dimnames(m) <- list(plots, species)		
-		})
+	if (missing(y)) {
+		stop("\nsites are missing!")	
+	} else {
+		if (inherits(x, "Sites")) {
+			y <- sites(y)
+		} else {
+			y <- sites(new("Sites", data = y))
+		}	
+	}	
+	if (missing(z)) {
+		if (class(x) == "SpeciesTaxonomy") {
+			z <- taxonomy(x)	
+		} else {
+			stop("\ntaxonomy is missing and x is not of class SpeciesTaxonomy!")
+		}
+	} else {
+		if (class(x) == "Taxonomy" | class(x) == "SpeciesTaxonomy") {
+			z <- taxonomy(x)	
+		} else {
+			z <- taxonomy(new("Taxonomy", data = z))
+		}			
 	}
-
-	if (mode == 2) {
-		cpu.time <- system.time({	
-		m <- t(vapply(plots,
-			USE.NAMES = FALSE,
-			FUN.VALUE = character(length(species)),
-			FUN = function (x) {
-				r <- character(length(species))
-				#	maybe change to "."
-				#	there are several function that look for 0!
-				r[] <- "0"
-				r[match(species.layer[plot == x], species)] <- cov[plot == x]
-				r
-			}))
-		dimnames(m) <- list(plots, species)		
-		})
-	}
-		
-	if (mode == 3) {
-		cpu.time <- system.time({			
-		m <- t(vapply(plots,
-			USE.NAMES = FALSE,
-			FUN.VALUE = integer(length(species)),
-			FUN = function (x) {
-				r <- integer(length(species))
-				r[species %in% species.layer[plot == x]] <- as.integer(1)
-				r
-			}))
-		dimnames(m) <- list(plots, species)
-		})		
-	}
-	#	cat("\n time to cast matrix", cpu.time[3], "sec")		
-	
-	return(invisible(m))
-}
-
-#	internal function to melt sites data.frame
-.melt <- function (obj) {
-	#	obj = dta
-	res <- stack(
-			data.frame(plot = rownames(slot(obj, "sites")),
-				slot(obj, "sites"), stringsAsFactors = FALSE),
-		stringsAsFactors = FALSE) 
-
-	plot <- res[res$ind == "plot", ]$values
-	plot <- rep(plot, (nrow(res) / length(plot)) - 1)
-	res <- res[!res$ind == "plot", ]
-	res <- data.frame(
-		plot = as.character(plot),
-		variable = as.character(res[, 2]),
-		value = as.character(res[, 1]),
-		stringsAsFactors = FALSE)
-	res <- res[order(res$plot), ]
-	res[is.na(res)] <- ""
-
-	rownames(res) <- 1:nrow(res)
-	res	
-}
-
-#	generating function
-#	to do: documentation, high priority!
-
-VegsoupData <- function (obj, decostand, dist, verbose = FALSE) {
-	require(stats)
-	#	obj <- qry; verbose = TRUE	
-	if (!inherits(obj, "Vegsoup")) {
-		stop("Need object of class Vegsoup")
-	}
-
 	if (missing(decostand)) {
 		decostand = new("decostand", method = NULL)
 	} else {
 		decostand = new("decostand", method = decostand)
-	}
-	
+	}	
 	if (missing(dist)) {
 		dist = "euclidean"
+	}	
+	if	(!inherits(proj4string, "character")) {
+		stop("\n... argument proj4string does not inhertit from class 'character'")
 	}
 		
-	scale <- coverscale(obj)
-	lay <- Layers(obj)
-	txa <- Taxonomy(obj)
-	species <- Species(obj)
-
-	#	rewrite to use .cast()
-	#	silenced, if ok delete
-
-	if (FALSE) { 	
-	#	 casts species matrix for Braun-Blanquet scales	
-	if (scale$scale == "Braun-Blanquet" | scale$scale == "Braun-Blanquet 2") {
-		if (!is.character(species$cov)) {
-			stop("Abundance scale should be of mode character")
-		}
-		if (length(lay) == 1) {
-			if (verbose) cat("\ndata is structered in only one layer")
-		} else {
-			if (verbose) cat("\ndata is structered in layers: ", lay)
-		}
+	#	make valid names
+	#	now in initialize method	
 		
-	#	species <- as.data.frame(.cast(obj, mode = 2),
-	#		stringsAsFactors = FALSE)
-			
-	} # end if "Braun Blanquet" | "Braun-Blanquet 2"
-
-	#	cast species matrix for Domin scale
-	#	this is Braun-Blanquet scale
-	
-
-	if (scale$scale == "Domin") {
-		if (!is.character(species$cov)) {
-			if (is.integer(species$cov)) {
-				warning("\n Codes for Domin scale supplied as integer, ",
-					"attempt to change mode to charcter", call. = FALSE)
-				species$cov <- as.character(species$cov)
+	#	intersect x, y and z
+	if (length(unique(x$plot)) != length(unique(y$plot))) {
+		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
+		x <- x[which(x$plot %in% sel), ]
+		y <- y[which(y$plot %in% sel), ]
+		z <- z[match(unique(x$abbr), z$abbr), ]
+		warning("\n... unique(x$plot) and unique(y$plot) do not match in length, ",
+			"\n some plots were dropped!", call. = FALSE)		
+	}
+		
+	if (missing(coverscale)) {
+		warning(" no cover scale provided", call. = FALSE)
+		if (is.character(x$cov)) {
+			warning("\n interpret abundance values as character",
+			"\n set cover scale to default 9 point Braun-Blanquet scale")
+			xs <- Coverscale("braun.blanquet")
+		} else {
+			cat("\n cover seems to be numeric")
+			cat("\n set abundance scale to percentage")
+			xs <- Coverscale("percentage")
+		}	
+	} else {
+		if (is.character(coverscale) & length(coverscale) == 1) {
+			xs <- Coverscale(coverscale)
+		} else { 
+			if (inherits(coverscale, "Coverscale")) {
+				xs <- coverscale
 			} else {
-				stop("Abundance code must be either of mode charcter ",
-					"or integer for Domin scale")
+				if (is.list(coverscale)) {
+					#	problems with coerce methods will arise
+					#	if setAs("list", "Coverscale") is defined
+					#	currently not planned
+					xs <- as(coverscale, "Coverscale")
+				} else {
+					stop("please supply a character, list or object of class Coverscale")					
+				}				
 			}
 		}
-		if (length(lay) == 1) {
-			if (verbose) cat("\ndata is structered in only one layer")
-		} else {
-			if (verbose) cat("\ndata is structered in layers: ", lay)
-		}
-		
-		species <- .cast(obj, mode = 2)
-		species <- as.data.frame(res, stringsAsFactors = FALSE)
-	} # end if "Domin"
+	}
 	
-	#	rewrite to use .cast() 
+	if (missing(group))	{
+		group <- as.integer(rep(1, length(unique(x$plot))))
+		names(group) <- unique(x$plot)
+		if (verbose) {
+			cat("\n no grouping factor supplied,",
+				"use single partition")
+		}
+	} else {
+		#	stopifnot(!is.null(names(group)))
+		if (inherits(group, "numeric")) {
+		#	group.names <- names(group)
+			group <- as.integer(group)
+			names(group) <- unique(x$plot)
+		} else {
+			stop("argument group must be of mode integer", call. = FALSE)	
+		}
+	}
+	
+	if (missing(sp.points) & missing(sp.polygons))	{
+		#	try to find coordinates, otherwise generate random points
+	
+		lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
+		#	may raise errors in subset operations!
+		if (verbose) {
+			cat("\n attempt to retrieve coordinates from sites data ...\n")
+		}
+
+		if (lnglat.test) {
+			if (verbose) {		 
+				cat("\n found variables longitude and latitude!\n")
+			}
+		#	warning!
+		#	check length of coordinates againts number of plots
+		#	rn <- rownames(prt)
+		#	pt <- prt@sp.points$plot
+		#	rn[-match(pt, rn)]
+			lng <- y[grep("longitude", y$variable), ]
+			lat <- y[grep("latitude", y$variable), ]
+			lnglat.test <- nrow(lng) == nrow(lat)
 			
-	cpu.time <- system.time({	
-	if (scale$scale == "frequency" | scale$scale == "binary") {
+			if (lnglat.test) {
+				lat <- lat[match(lng$plot, lat$plot), ]
+				latlng <- data.frame(plot = lat$plot,
+					latitude = lat$value, longitude = lng$value,
+					stringsAsFactors = FALSE)
+				latlng <- latlng[order(latlng$plot),]
+				
+				#	to do! implemnt char2dms				
+				#	strip of N and E
+				latlng[, 2] <- gsub("[[:alpha:]]", "", latlng[, 2])
+				latlng[, 3] <- gsub("[[:alpha:]]", "", latlng[, 3])				
+				#	strip of blanks
+				latlng[, 2] <- gsub("[[:blank:]]", "", latlng[, 2])
+				latlng[, 3] <- gsub("[[:blank:]]", "", latlng[, 3])				
+				#	check decimal and change mode
+				latlng[, 2] <- as.numeric(gsub(",", ".", latlng[, 2], fixed = TRUE))
+				latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
+				
+				sp.points <- latlng
+				sp.points <- sp.points[order(sp.points$plot), ]
 
-		if (!is.numeric(species$cov)) {
-			#	warning("changed mode to numeric", str(species$cov))
-			mode(species$cov) <- "numeric"
-		}	
-		xt  <- xtabs(cov ~ plot + abbr + layer,
-			data = species)
-	
-		if (dim(xt)[3] > 1) {
-			res <- matrix(0,
-			ncol = dim(xt)[2] * dim(xt)[3],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(rep(dimnames(xt)$abbr, dim(xt)[3]),
-					rep(dimnames(xt)$layer,
-					each = dim(xt)[2]), sep = "@")))
+				if (!any(table(sp.points$plot) > 1)) {				
+					coordinates(sp.points) <- ~ longitude + latitude
+					lnglat.sim <- FALSE					
+				} else {
+					lnglat.test <- FALSE
+					lnglat.sim <- TRUE					
+					warning("\n did not succeed!",
+						" Some coordinates seem to be doubled.",
+						"\n problematic plots: ",
+						paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]),
+							collapse = " "),
+						call. = FALSE)
+#					if (verbose) {
+#						print(table(sp.points$plot)[table(sp.points$plot) > 1])
+#					}	
+				}		
+			} else {
+				lnglat.test <- FALSE
+				lnglat.sim <- TRUE					
+				warning("\n did not succeed!",
+					"\n longitude and latitude do not match in length", call. = FALSE)
+			}
+			
+			if (lnglat.test) {
+				cents <- coordinates(sp.points)
+				ids <- sp.points$plot
+			
+				#	plot polygons around centers
+				#	to do! use plsx and plsy
+				pgs <- vector("list", nrow(cents))
+				for (i in 1:nrow(cents)) {
+				#	to do use plsx and plsy	
+					pg <- coordinates(GridTopology(
+						cents[i,] - 0.00005 / 2, c(0.00005, 0.00005), c(2,2)))
+					pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2), ], pg[1, ]))), i)
+					pgs[[i]] <- pg
+				}
+
+				sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
+						data = data.frame(plot = as.character(ids),
+							stringsAsFactors = FALSE))
+				sp.polygons <- spChFIDs(sp.polygons, x = ids)						
+			} else {		
+				warning("\n ... not a complete coordinates list",
+					"use random pattern instead", call. = FALSE)
+				tmp <- .rpoisppSites(x)	
+				sp.points <- tmp[[1]]
+				sp.polygons <- tmp[[2]] 
+			}	
 		} else {
-			res <- matrix(0,
-			ncol = dim(xt)[2],
-			nrow = dim(xt)[1],
-			dimnames = list(
-				plot = dimnames(xt)$plot, 
-				abbr = paste(dimnames(xt)$abbr,
-						dimnames(xt)$layer, sep = "@")))
-		}
-		for (i in 1:dim(xt)[3]) {
-			sel <- grep(paste("", dimnames(xt)$layer[i], sep = "@"),
-				dimnames(res)$abbr, fixed = TRUE)
-			res[,sel] <- xt[,,i]	
-		}
-		res <- res[, colSums(res) > 0]
-		species <- as.data.frame(res)
-	} # end if "frequency"	
-	}) # end system.time
-	
-	if (verbose) {
-		cat("\ntime to cast species matrix",
-		"of", prod(dim(res)), "cells:",
-		cpu.time[3], "sec\n")
-	}
+			warning(paste("\n SpatialPoints and SpatialPolygons missing",
+				"use random pattern"), call. = FALSE)
+			lnglat.sim <- TRUE
+			tmp <- .rpoisppSites(x)	
+			sp.points <- tmp[[1]]
+			sp.polygons <- tmp[[2]]
+		}	
 	}
 	
-	#	develop class VegsoupData from class Vegsoup
-	res <- new("VegsoupData", obj)
+	if (!lnglat.sim) {
+		proj4string(sp.points) <- CRS(proj4string)
+		proj4string(sp.polygons) <- CRS(proj4string)	
+	}	
+	
+	if (any(sapply(y, is.factor))) {
+		y <- as.data.frame(as.matrix(y),
+			stringsAsFactors = FALSE)
+	}
+	
+	#	order sites
+	#y <- y[order(y$plot, y$variable), ]
+	
+	#	cast sites data	
+	#	replace missing values
+	if (any(y[, 3] == "") | any(is.na(y[, 3]))) {
+		y[y[, 3] == "", 3] <- 0
+		y[is.na(y[, 3]), 3] <- 0
+		if (verbose) {
+		cat("\n NAs and empty fields (\"\") in supplied sites data",
+			" filled with zeros", call. = FALSE)
+		}
+	}
+   	
+	y <- reshape(y[, 1:3],
+		direction = "wide",
+		timevar = "variable",
+		idvar = "plot")   
+	
+	y[is.na(y)] <- 0
+	
+	#	change column mode to numeric if possible
+	#	supress warning messages caused by as.numeric(x) 
+	#	needs a work around because longitude is coreced to numeric
+	#	because of similiarity to scientifiuc notion (13.075533E)
+	
+	
+	#	use type.convert!
+	#y[] <- lapply(y, type.convert)
 
-	#	assign class slots
-	res@decostand = decostand
-	res@dist = dist
+	options(warn = -1)
+	y <- as.data.frame(
+		sapply(y,
+		function (x) {
+			if (!any(is.na(as.numeric(x)))) {
+				x <- as.numeric(x)
+			} else {
+				x <- as.character(x)	
+			}
+		}, simplify = FALSE),
+		stringsAsFactors = FALSE)
+	options(warn = 0)
 
-	return(res)
-}
+ 	#	groome names
+ 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+    #	assign row names
+	rownames(y) <- y$plot
+	y <- y[, -grep("plot", names(y))]
+	#	order to x
+	y <- y[match(unique(x$plot), rownames(y)), ]
+	#	change longitude column!
+	sel <- grep("longitude", names(y))
+	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
+	
+	res <- new("VegsoupData",
+		species = x,
+		sites = y, 
+		taxonomy = z,
+		coverscale = xs,
+		layers = as.character(unique(x$layer)),
+		decostand = decostand,
+		dist = dist,		
+		group = group,
+		sp.points = sp.points,
+		sp.polygons = sp.polygons
+		)		
+	res
+}	
 
+
+#	rename
+#	class Species defines setGeneric("species")
+#	get species in long format
+setGeneric("Species",
+	function (obj)
+		standardGeneric("Species")
+)
+setMethod("Species",
+    signature(obj = "VegsoupData"),
+    function (obj) obj@species
+)
+setGeneric("Species<-",
+	function (obj, value)
+		standardGeneric("Species<-")
+)
+setReplaceMethod("Species",
+	signature(obj = "VegsoupData", value = "SpeciesTaxonomy"),
+	function (obj, value) {
+		warning("not implemented yet")
+		return(obj)		
+	}
+)
+#if (!isGeneric("SpeciesList")) {
+setGeneric("SpeciesList",
+	function (obj, layered)
+		standardGeneric("SpeciesList")
+)
+#}
+setMethod("SpeciesList",
+    signature(obj = "VegsoupData"),
+    function (obj, layered = FALSE) {
+    	if (missing(layered)) {
+    		layered <- FALSE
+    	}
+    	if (layered) {
+	    	res <- Species(obj)
+    		res <- unique(res[c("abbr", "layer")])
+    		res$taxon <- Taxonomy(obj)[res$abbr, ]$taxon
+	    	res <- res[order(res$layer, res$taxon), ]
+	    	res <- res[, c("abbr", "taxon", "layer")]	    				
+    	} else {
+    		res <- Taxonomy(obj)[]	
+    	}
+    	return(invisible(res))	
+	}
+)
+
+#	get or set taxonomy (traits) data frame
+setGeneric("Taxonomy",
+	function (obj)
+		standardGeneric("Taxonomy")
+)
+setGeneric("Taxonomy<-", function (obj, value)
+	standardGeneric("Taxonomy<-")
+)	
+setMethod("Taxonomy",
+    signature(obj = "VegsoupData"),
+    function (obj) obj@taxonomy
+)
+setReplaceMethod("Taxonomy",
+	signature(obj = "VegsoupData", value = "SpeciesTaxonomy"),
+	function (obj, value) {
+		#	to do: needs checking against Sites(obj) and Spatial*(obj)
+#		obj@taxonomy <- value
+		warning("method not implemented yet")		
+		return(obj)		
+	}
+)
+
+#	get or set taxon abbreviation
+setGeneric("Abbreviation",
+	function (obj, ...)
+		standardGeneric("Abbreviation")
+)
+setGeneric("Abbreviation<-",
+	function (obj, value, ...)
+		standardGeneric("Abbreviation<-")
+)
+setMethod("Abbreviation",
+    signature(obj = "VegsoupData"),
+    function (obj) sort(unique(Species(obj)$abbr))
+)
+setReplaceMethod("Abbreviation",
+	signature(obj = "VegsoupData", value = "character"),
+	function (obj, value) {
+		#	to do: needs security for all slots!
+		obj@species$abbr <- value		
+		return(obj)		
+	}
+)
+### start delete
+setGeneric("AbundanceScale",
+	function (obj)
+		standardGeneric("AbundanceScale")
+)
+
+setGeneric("AbundanceScale<-",
+	function (obj, value)
+		standardGeneric("AbundanceScale<-")
+)
+
+setMethod("AbundanceScale",
+    signature(obj = "VegsoupData"),
+    function (obj) obj@coverscale
+)
+
+setReplaceMethod("AbundanceScale",
+	signature(obj = "VegsoupData", value = "list"),
+	function (obj, value) {
+		#	to do: needs checking of list structure!
+		#	to do: needs checking of species slots!
+		warning("use coverscale")
+		return(obj)		
+	}
+)
+### end delete
+#	get predefined grouping vector
+setGeneric("AprioriGrouping",
+	function (obj)
+		standardGeneric("AprioriGrouping")
+)
+setMethod("AprioriGrouping",
+    signature(obj = "VegsoupData"),
+    function (obj) obj@group
+)
 #	return species matrix
 setMethod("as.numeric",
     signature(x = "VegsoupData"),
@@ -877,7 +1052,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 		stop("\n cover scale is not the same for all objects")
 	}  else {
 		#	fails!
-		scale <- sapply(allargs[1], coverscale, simplify = FALSE)
+		scale <- sapply(allargs, coverscale, simplify = FALSE)[[1]]
 	}
 	#	test for overlapping plot ids
 	test <- c(sapply(allargs, rownames))
@@ -954,7 +1129,7 @@ setReplaceMethod("[", c("VegsoupData", "ANY", "missing", "ANY"),
 	pgs <- SpatialPolygonsDataFrame(pgs, data = pts@data, match.ID = FALSE)	
 	#	order pgs to x
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
-	res <- new("Vegsoup",
+	res <- new("VegsoupData",
 		species = x,
 		sites = y, 
 		taxonomy = z,
@@ -980,7 +1155,7 @@ setMethod("rbind",
 )
 
 #	Layers method
-"LayersVegsoupData" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
+".layers.VegsoupData" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
 } else {
@@ -1014,11 +1189,12 @@ if (missing(collapse) & missing(aggregate)) {
 	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c(NA, NA, "sl", "tl", "tl")
 	
 	#	revert to class Vegsoup and cast again
-	if (inherits(obj, "VegsoupData")) {
-		res <- as(obj, "Vegsoup")
-	} else {
+	#	not needed any more
+	#if (inherits(obj, "VegsoupData")) {
+	#	res <- as(obj, "Vegsoup")
+	#} else {
 		res <- obj
-	}
+	#}
 
 	species <- Species(res)
 	scale <- coverscale(res)
@@ -1107,7 +1283,7 @@ if (missing(collapse) & missing(aggregate)) {
 	
 	res@species <- species
 	res@layers <- unique(collapse[, 2])
-	res <- VegsoupData(res)
+	#res <- VegsoupData(res)
 	
 	return(invisible(res))
 
@@ -1115,9 +1291,24 @@ if (missing(collapse) & missing(aggregate)) {
 	}
 }
 
+setGeneric("Layers",
+	function (obj, ...)
+	standardGeneric("Layers")
+)
+setGeneric("Layers<-", function (obj, value)
+	standardGeneric("Layers<-")
+)
 setMethod("Layers",
    signature(obj = "VegsoupData"),
-    LayersVegsoupData
+    .layers.VegsoupData
+)
+#	return just the layer columns from Species(obj)
+setGeneric("Layer",
+	function (obj, ...)
+		standardGeneric("Layer"))
+setMethod("Layer",
+   signature(obj = "VegsoupData"),
+	function (obj, ...) Species(obj)$layer
 )
 
 #	Species richness of data set
@@ -1172,7 +1363,18 @@ setMethod("MatrixFill",
 )
 
 #	summary method
-#	to do: documenation
+setMethod("show",
+    signature(object = "VegsoupData"),
+    function (object) {
+			do.call("summary", list(object))
+    }
+)
+
+#if (!isGeneric("summary")) {
+setGeneric("summary", function(object, ...)
+	standardGeneric("summary"))
+#}
+
 setMethod("summary",
     signature(object = "VegsoupData"),
     function (object, choice = c("all", "species", "sites"), ...) {
@@ -1226,24 +1428,6 @@ setMethod("summary",
 	cat("\n    proj4string:\n", proj4string(object))
 	cat("\n    bbox:\n"); bbox(object)		
 }
-)
-
-#	Vegsoup inherits show method
-#	to do: check summary method for class VegsoupDataPartitionFidelity
-#setMethod("show",
-#   signature(object = "VegsoupData"),
-#    function (object) {
-#			summary(object)
-#    }
-#)
-
-#	plot method
-setMethod("plot",
-	signature(x = "VegsoupData", y = "missing"),
-	function (x, ...) {
-		print(summary(x))
-		stop("plot method not implemented yet")	
-	}	
 )
 
 #	sample data, usally without replacement
@@ -1390,7 +1574,7 @@ setGeneric("abbr.layer",
 setMethod("abbr.layer",
     signature(obj = "VegsoupData"),
     function (obj, ...) {
-    	file.path(obj$abbr, obj$layer, fsep = "@")
+    	file.path(Species(obj)$abbr, Species(obj)$layer, fsep = "@")
     }
 )
 

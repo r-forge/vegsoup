@@ -75,7 +75,7 @@ if (which(sel) == 4) {
 }
 
 #	for safety if x is supplied as data.frame
-species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
+#	species <- as.data.frame(as.matrix(species), stringsAsFactors = FALSE)
 #	check names and bring to order
 
 species.mandatory <- c("plot", "abbr", "layer", "cov")

@@ -43,7 +43,7 @@ setGeneric("coverscale<-",
 )
 #}
 setMethod("coverscale",
-    signature(obj = "Vegsoup"),
+    signature(obj = "VegsoupData"),
     function (obj) {
  		obj@coverscale # rename to coverscale   	
     }
@@ -51,7 +51,7 @@ setMethod("coverscale",
 
 #	needs cover scale conversion 
 setReplaceMethod("coverscale",
-	signature(obj = "Vegsoup", value = "Coverscale"),
+	signature(obj = "VegsoupData", value = "Coverscale"),
 	function (obj, value) {		
 		obj@coverscale <- value
 		test <- !any(is.na(factor(Species(obj)$cov,
@@ -65,7 +65,7 @@ setReplaceMethod("coverscale",
 )
 
 setReplaceMethod("coverscale",
-	signature(obj = "Vegsoup", value = "character"),
+	signature(obj = "VegsoupData", value = "character"),
 	function (obj, value) {
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
@@ -101,6 +101,34 @@ setAs("list", "Coverscale", def = function (from) {
 	return(res)
 })
 
+#	revert abunace scale for Braun-Blanquet scale
+".BraunBlanquetReduce" <-  function (obj) {
+
+	res <- Species(obj)
+	for (i in c("2m", "2a", "2b")) {
+		if (i == "2m")
+			res$cov[res$cov == i]  <- "1"
+		if (i == "2a")
+			res$cov[res$cov == i]  <- "2"
+		if (i == "2b")
+			res$cov[res$cov == i]  <- "2"
+	}
+	
+	obj@species <- res
+	obj@coverscale <- Coverscale("braun.blanquet2")
+
+	return(invisible(obj))
+}
+
+#if (!isGeneric("BraunBlanquetReduce"))
+setGeneric("BraunBlanquetReduce",
+	function (obj)
+		standardGeneric("BraunBlanquetReduce")
+)
+setMethod("BraunBlanquetReduce",
+    signature(obj = "VegsoupData"),
+    .BraunBlanquetReduce
+)
 
 #setMethod("show",
 #  signature(object = "Coverscale"),

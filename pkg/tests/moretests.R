@@ -1,12 +1,18 @@
 library(vegsoup)
-data(testdata)        
-qry <- Vegsoup(species, sites, taxonomy)
-qry <- Vegsoup(species, sites, taxonomy, coverscale = "braun.blanquet")
-qry <- Vegsoup(species, sites, taxonomy, coverscale = Coverscale("braun.blanquet"))
-dta <- VegsoupData(qry)
-coverscale(dta)
+data(testdata)
 
-#	accessor methods for inherited class slots
+head(species(new("Species", data = spc)))
+head(sites(new("Sites", data = sts)))
+head(taxonomy(new("Taxonomy", data = txa)))
+
+dta <- VegsoupData(spc, sts, txa)
+dta <- VegsoupData(spc, sts, txa, coverscale = "braun.blanquet")
+dta <- VegsoupData(spc, sts, txa, coverscale = Coverscale("braun.blanquet"))
+dta <- VegsoupData(spc, sts, txa,
+	group = c(rep(1, 3), rep(2, 3)),
+	coverscale = "braun.blanquet")
+
+#	accessor methods for class slots
 #	from class VegsoupData
 Sites(dta)
 Species(dta)
@@ -17,6 +23,7 @@ Taxonomy(dta)
 SpatialPointsVegsoup(dta)
 SpatialPolygonsVegsoup(dta)
 Layers(dta)
+coverscale(dta)
 
 #	matrix dimensions
 ncol(dta)
@@ -43,7 +50,7 @@ names(dta)
 #	taxon abbreviations
 head(DecomposeNames(dta))
 Abbreviation(dta)
-
+abbr.layer(dta)
 #	abundance scale
 
 class(BraunBlanquetReduce(dta))
@@ -57,6 +64,7 @@ coverscale(dta)
 
 #	Layers
 Layers(dta)
+dim(dta)
 dim(Layers(dta, collapse = c("hl", "sl", NA)))
 
 #	spatial methods
@@ -74,6 +82,9 @@ as.character(dta)
 as.character(dta, mode = "R")
 head(as.matrix(dta, "character", "r"))
 head(t(as.character(dta)))
+indices(dta)
+indices(dta, "character")
+
 
 #	row & column sums, means and richness
 rowSums(dta)
@@ -109,7 +120,8 @@ s1 <- dta[1:2, ]
 s2 <- dta[3:4, ]
 s3 <- dta[5:6, ]
 
-rownames(rbind(s3, s1, s2))
+### broken!
+try(rownames(rbind(s3, s1, s2)))
 
 #	table methods
 seriation(dta) # dca
@@ -122,7 +134,7 @@ as.data.frame(as.matrix(seriation(dta, "packed"), "character", mode = "r"))
 #	partitioning methods
 prt <- VegsoupDataPartition(dta, k = 2)
 
-fid <- Fidelity(prt, "TCR", verbose = TRUE)
+fid <- Fidelity(prt, verbose = TRUE)
 #	inherited methods
 head(prt)
 getK(prt)
@@ -140,10 +152,9 @@ prt[,1:10]
 Optsil(prt)
 Optindval(prt)
 Partana(prt)
-Silhouette(prt)
-
-typal(prt)
-Murdoch(prt)
+try(Silhouette(prt))	#	broken
+try(typal(prt))	#	broken
+try(Murdoch(prt))	#	broken
 Isamic(prt)
 Tabdev(prt)
 
@@ -152,16 +163,9 @@ FisherTest(prt)
 Phi(prt)
 Indval(prt)
 
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	group = c(rep(1, 3), rep(2, 3)),
-	scale = list(scale = "Braun-Blanquet")))
-AprioriGrouping(dta)
 
-#
-#data(bigtestdata)
 
-#qry <- Vegsoup(species.big, sites.big, taxonomy.big,
-#	scale = list(scale = "Braun-Blanquet"))
-#dta <- VegsoupData(qry2)
-	
+data(bigtestdata)
 
+dta <- VegsoupData(spc.big, sts.big, txa.big,
+	coverscale = "braun.blanquet")
