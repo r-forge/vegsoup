@@ -20,7 +20,13 @@ Objects can be created by calls of the form \code{new("Sites", ...)}.
 \section{Methods}{
   \describe{
     \item{sites}{\code{signature(obj = "Sites")}: accessor function for slot \code{obj@data} } 
-	 }
+		\item{\code{signature(obj = "data.frame")}}{
+	Method to create object from class \code{data.frame}
+		}
+		\item{\code{signature(obj = "matrix")}}{
+	Method to create object from class \code{matrix}. \code{obj} does not need to have \code{dimnames}.
+		} 
+	}
 }
 \author{
 Roland Kaiser

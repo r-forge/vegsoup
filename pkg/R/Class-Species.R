@@ -73,9 +73,33 @@ setGeneric("species",
 )
 setMethod("species",
     signature(obj = "Species"),
-    function (obj) obj@data
+    function (obj) {
+    	obj@data
+    }	
 )
-
+setMethod("species",
+    signature(obj = "data.frame"),
+    function (obj) {
+    	new("Species", data = obj)
+    }
+    
+)
+setMethod("species",
+    signature(obj = "matrix"),
+    function (obj) {
+    	new("Species",
+    	data = as.data.frame(obj, stringsAsFactors = FALSE))
+    }
+    
+)
+setMethod("show",
+    signature(object = "Species"),
+    function (object) {
+		cat("object of class", class(object))
+		cat("\nshow only frist 10 rows\n\n")
+		print(head(object@data, n = 10L))
+    }
+)
 #setReplaceMethod("Layers",
 #	signature(obj = "Species", value = "ANY"),
 #	function (obj, value) {

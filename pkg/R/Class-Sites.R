@@ -49,3 +49,26 @@ setMethod("sites",
     signature(obj = "Sites"),
     function (obj) obj@data
 )
+setMethod("sites",
+    signature(obj = "data.frame"),
+    function (obj) {
+    	new("Sites", data = obj)
+    }
+    
+)
+setMethod("sites",
+    signature(obj = "matrix"),
+    function (obj) {
+    	new("Sites",
+    	data = as.data.frame(obj, stringsAsFactors = FALSE))
+    }
+    
+)
+setMethod("show",
+    signature(object = "Sites"),
+    function (object) {
+		cat("object of class", class(object))
+		cat("\nshow only frist 10 rows\n\n")
+		print(head(object@data, n = 10L))
+    }
+)

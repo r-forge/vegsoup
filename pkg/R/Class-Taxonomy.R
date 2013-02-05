@@ -45,3 +45,18 @@ setMethod("taxonomy",
     signature(obj = "Taxonomy"),
     function (obj) obj@data
 )
+setMethod("taxonomy",
+    signature(obj = "data.frame"),
+    function (obj) {
+    	new("Taxonomy", data = obj)
+    }
+    
+)
+setMethod("taxonomy",
+    signature(obj = "matrix"),
+    function (obj) {
+    	new("Taxonomy",
+    	data = as.data.frame(obj, stringsAsFactors = FALSE))
+    }
+    
+)
