@@ -1,4 +1,4 @@
-SpeciesTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, return.species = TRUE, verbose = FALSE) {
+SpeciesTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, skip = TRUE, verbose = FALSE) {
 
 #	x = spc
 #	y = txa
@@ -133,7 +133,7 @@ if (any(is.na(taxonomy[, 1]))) {
 	stop("Please review your reference list, you might need to include some new taxa")
 }
 
-if (any(is.na(species))) {
+if (any(is.na(species[, 1:4]))) {
 	warning("\n... NAs introduced")
 	cat(apply(species, 2, function (x) any(is.na(x))) )
 }
@@ -142,5 +142,9 @@ res <- new("SpeciesTaxonomy",
 	species = new("Species", data = species),
 	taxonomy = new("Taxonomy", data = taxonomy))
 
+if (skip) {
+	species(res) <- species(res)[, 1:4]
+	taxonomy(res) <- taxonomy(res)[, 1:2]
+}
 return(invisible(res))
 }

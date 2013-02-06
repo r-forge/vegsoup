@@ -23,9 +23,9 @@ setMethod("initialize",
 	"Species",
 	function(.Object, data) {
 		#	depreciated
-		#	for safety and to ensure validity
-		#data <- as.data.frame(
-		#	as.matrix(data), stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]				
+		#	for safety and to get rid of factors
+		data <- as.data.frame(
+			as.matrix(data), stringsAsFactors = FALSE)				
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
@@ -35,17 +35,20 @@ setMethod("initialize",
 		if (any(regexpr("[[:alpha:]]", data$plot) < 1)) {
 				warning("\n ... plot identifier contains only numbers, ",
 					"\nbut will be coerced to character!", call. = FALSE)	
-			data$plot <- as.character(data$plot)
+			#	data$plot <- as.character(data$plot)
 		}			
 		#	test for duplicated species
-		#	robust test            
-		if (nrow(data[,c(1,2,3)]) != nrow(unique(data[,c(1,2,3)]))) {
-			warning("\n found duplicated species for plots: ",
-				"\n... ", paste(data[duplicated(data[, c(1,2,3)]), ]$plot, collapse = " "),
-				"\n... ", paste(data[duplicated(data[, c(1,2,3)]), ]$abbr, collapse = " "),
-				"\n drop all duplicates in x!",
-				"\n they will confuse me otherwise?",
-				"\n please review your data!", call. = FALSE)
+		#	robust test, disregard 'cov'
+		input <- data[ ,c(1,2,3)]
+		unique.input <- unique(input)            
+		if (nrow(input) != nrow(unique.input)) {
+			tmp <- data[duplicated(input), ][c("plot", "abbr")]
+			tmp <- paste(paste(tmp[,1], tmp[,2]), collapse = "\n")
+
+			warning("found duplicated species and dropped all duplicates",
+				"\nplease review your data for observations:\n",
+				tmp, call. = FALSE)
+			
 			data <- data[!duplicated(data[, c(1,2,3)]), ]
 		}
 		#	additional test
@@ -53,7 +56,6 @@ setMethod("initialize",
 			warning("\n found duplicated species abundances for plots:\n... ",
 				paste(data[duplicated(data), ]$plot, collapse = ", "),
 				"\n apply unique(..., fromLast = FALSE) to get rid of duplicates!",
-				"\n they will confuse me otherwise?",
 				"\n please review your data!", call. = FALSE)
 			data <- unique(data, fromLast = FALSE)
 		}
@@ -96,10 +98,29 @@ setMethod("show",
     signature(object = "Species"),
     function (object) {
 		cat("object of class", class(object))
-		cat("\nshow only frist 10 rows\n\n")
-		print(head(object@data, n = 10L))
+		cat("\nnumber of species", length(unique(species(object)$abbr)))
+		cat("\nnumber of sites", length(unique(species(object)$plot)))		
+		cat("\nshow only first",
+			ifelse(nrow(object@data) <= 6, nrow(object@data), 6),
+			"rows\n\n")
+		print(head(object@data, n = 6L))
     }
 )
+setMethod("[",
+    signature(x = "Species",
+    i = "ANY", j = "ANY", drop = "missing"),
+    function (x, i, j, ..., drop = FALSE) {
+    	species(x@data[i, j, ...])
+    }
+)
+setMethod("$", "Species", 
+	function(x, name) {
+		if (!("data" %in% slotNames(x))) {
+			stop("no $ method for object without slot data")
+		}
+		return(x@data[[name]])
+	}
+)     	
 #setReplaceMethod("Layers",
 #	signature(obj = "Species", value = "ANY"),
 #	function (obj, value) {

@@ -25,6 +25,7 @@ Collate: AAA.R
          SpeciesTaxonomy-Methods.R
          Class-Coverscale.R
          Class-Vegsoup.R
+         Vegsoup.R
          Vegsoup-BaseMethods.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R

@@ -2,9 +2,11 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{Taxonomy-class}
+\alias{[,Taxonomy-method}
 \alias{taxonomy,Taxonomy-method}
 \alias{taxonomy,data.frame-method}
 \alias{taxonomy,matrix-method}
+
 
 \title{Class \code{"Taxonomy"}}
 \description{
@@ -29,7 +31,28 @@ Data representation of taxonomic reference list.
   }
 }
 \section{Methods}{
+  \describe{
+    \item{ taxonomy }{
+      \code{signature(obj = "Taxonomy")}:
+        Accessor function (slot \code{obj@data}).
+      
+      \code{signature(obj = "SpeciesTaxonomy")}:
+        Accessor function for objects of class \code{SpeciesTaxonomy}.
+      
+      \code{signature(obj = "data.frame")}:
+        Promote \code{data.frame} to object of class \code{"Taxomomy"}.
 
+      \code{signature(obj = "matrix")}:
+        Promote \code{matrix} to object of class \code{"Taxomomy"}.
+        Note, \code{obj} does not need to have \code{dimnames}.
+    }
+    \item{ [ }{
+      \code{signature(x = "Taxonomy")}:
+        Subset parts of an object. Note, indexing that will
+        evaluate to an object with less than two columns will fail,
+        due to the class inherent data model (see \sQuote{Slots}).
+    }
+  }
 }
 \author{
 Roland Kaiser

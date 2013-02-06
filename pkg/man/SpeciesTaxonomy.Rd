@@ -7,7 +7,7 @@
 Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} respectively \code{file.x}) or csv-files (\code{y} respectively \code{file.y}). All meaningfull combinations are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initilaized as class \code{"Species"} and \code{y} as class \code{"Taxonomy"}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
 }
 \usage{
-  SpeciesTaxonomy(x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, verbose = FALSE)
+  SpeciesTaxonomy(x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, skip = TRUE, verbose = FALSE)
 }
 
 \arguments{
@@ -34,6 +34,9 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
     use \code{pmatch} to match abbreviation in \code{x} respectively
     \code{file.x} against the reference. See \sQuote{Details}.
   }
+  \item{ skip }{
+    Retain only mandatory columns, defaults to \code{TRUE}.
+  }
   \item{ verbose }{
     Prints Diagnostic messages.
   }
@@ -43,6 +46,12 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
   Of course the column \code{'abbr'} in the taxonomic reference has to be
   unique. Not only because it is used as rownames, but also as to reference a
   scientific name to only one abbreviation.
+
+  Classes \code{\linkS4class{Species}} and \code{\linkS4class{Taxonomy}}
+  allow more columns than the default and mandatory ones. If argument
+  \code{skip = TRUE} all non nessecary columns will be skipped and the
+  minimal set of columns is retained. Set \code{skip} to \code{TRUE} if you
+  wish to keep the information of additional columns.
 
   If an abbreviation used in the object representing species observations
   (class \code{"Species"}) is not found in the reference (class
@@ -72,9 +81,9 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
   Roland Kaiser
 }
 \seealso{
-  \link{Species-class},
-  \link{stack.species},
-  \link{Taxonomy-class}
+\code{\linkS4class{Species}},
+\code{\link{stack.species}},
+\code{\linkS4class{Taxonomy}}
 }
 \examples{
 library(vegsoup)

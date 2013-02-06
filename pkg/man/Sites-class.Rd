@@ -9,7 +9,7 @@
 \description{
   Data representation of sites data in \emph{long format} where
   each observation on a particular plot (environmental variables,
-  stand paarameters) is represented by one row.
+  stand parameters) is represented by one row.
 }
 
 \section{Objects from the Class}{
@@ -44,10 +44,10 @@
       Accessor function (slot \code{obj@data}).
 
       \code{signature(obj = "data.frame")}:
-      Method to create object from class \code{data.frame}.
+      Promote \code{data.frame} to object of class \code{"Sites"}
 
       \code{signature(obj = "matrix")}:
-      Method to create object from class \code{matrix}.
+      Promote \code{matrix} to object of class \code{"Sites"}
       Note, \code{obj} does not need to have \code{dimnames}.
     }
   }

@@ -3,9 +3,11 @@
 \docType{class}
 \alias{Species-class}
 \alias{species}
+\alias{[,Species-method}
 \alias{species,Species-method}
 \alias{species,data.frame-method}
 \alias{species,matrix-method}
+
 
 \title{Class \code{"Species"}}
 
@@ -27,20 +29,21 @@
 
   \itemize{
     \item \code{plot} contains the plot identifier associated with each
-      species observation. \item \code{abbr} typically contains unique
-      abbreviations of a scientific latin name, however, any character
-      string of potentially unlimited length can be used. In more detail,
-      a standard procedure to abbreviate scientific names is to use
-      four first letters of the generic name and four first letters
-      of the specific epithet (see\code{\link{make.cepnames}}).
-      Depending on the number of taxa that need to be encoded, another block
-      of four letters might be necessary, in order to reference lower
-      taxonomic ranks, or to make non unique abbreviations unique.
+      species observation.
+    \item \code{abbr} typically contains unique abbreviations of a scientific
+      latin name, however, any character string of potentially unlimited
+      length can be used. Syntactic valid names are automatically created
+      using \code{\link{make.names}} (e.g. blanks will be dots).
     \item \code{layer} assigns a layer to each observation.
     \item \code{cov} contains an estimate of species cover (abundance or
       performance) coerced to as character, regardless if it is ordinal
       or continuous.
   }
+
+  Besides these mandatory columns and their rigid order it is possible
+  for an object of class \code{"Species"} to contain more columns with
+  data. Imagine, for example, you have additional information
+  (grazed/not grazed) on an observed species in a plot.
 }
 
 \section{Slots}{
@@ -55,17 +58,20 @@
   \describe{
     \item{ species }{
       \code{signature(obj = "Species")}:
-      Accessor function (slot \code{obj@data}).
-
-      \code{signature(obj = "SpeciesTaxonomy")}:
-      Accessor function for objects of class \code{SpeciesTaxonomy}.
+        Accessor method (slot \code{obj@data}).
 
       \code{signature(obj = "data.frame")}:
-      Method to create object from class \code{data.frame}.
+        Promote \code{data.frame} to object of class \code{"Species"}.
 
       \code{signature(obj = "matrix")}:
-      Method to create object from class \code{matrix}.
-      Note, \code{obj} does not need to have \code{dimnames}.
+        Promote \code{matrix} to object of class \code{"Species"}.
+        Note, \code{obj} does not need to have \code{dimnames}.
+    }
+    \item{ [ }{
+      \code{signature(x = "Species")}:
+        Subset parts of an object. Note, indexing that will
+        evaluate to an object with less than four columns will fail,
+        due to the class inherent data model (see \sQuote{Slots}).
     }
   }
 }
@@ -75,6 +81,20 @@
   warning is issued and duplicates are dropped automatically. The same applies
   to duplicated species abundances for plots. Finally an ordering of the form
   and \code{order(plot, layer, data)} is performed.
+}
+\section{Note}{
+  The design of the class, especially the initialization method, allows data
+  that have not been checked for data integrity. Such data might arise when
+  field data was entered in spread sheet software. The default behavior is to
+  discard all ambiguities in the data (e.g. duplicated observations of species
+  in the same plot and the same layer, if there are more than one.).
+
+  A standard procedure to abbreviate scientific names is to use four first
+  letters of the generic name and four first letters of the specific epithet
+  (see\code{\link{make.cepnames}}). Depending on the number of taxa that need
+  to be encoded, another block of four letters might be necessary, in order to
+  reference lower taxonomic ranks, or to make non unique abbreviations unique.
+
 }
 \author{
 Roland Kaiser

@@ -68,7 +68,8 @@ setMethod("show",
     signature(object = "Sites"),
     function (object) {
 		cat("object of class", class(object))
-		cat("\nshow only frist 10 rows\n\n")
-		print(head(object@data, n = 10L))
+		cat("\nnumber of variables: ", length(unique(sites(object)$variable)))
+		cat("\nshow only frist 6 rows\n\n")
+		print(head(object@data, n = 6L))
     }
 )
