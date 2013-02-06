@@ -1,9 +1,11 @@
 library(vegsoup)
 data(testdata)
 
-head(species(new("Species", data = spc)))
-head(sites(new("Sites", data = sts)))
-head(taxonomy(new("Taxonomy", data = txa)))
+new("Species", data = spc)
+new("Sites", data = sts)
+new("Taxonomy", data = txa)
+new("SpeciesTaxonomy", species = species(spc), taxonomy = taxonomy(txa))
+SpeciesTaxonomy(spc, txa)
 
 dta <- Vegsoup(spc, sts, txa)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")

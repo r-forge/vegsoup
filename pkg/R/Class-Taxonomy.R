@@ -26,7 +26,9 @@ setMethod("initialize",
 		#	for safety and to ensure validity		
 		#data <- as.data.frame(
 		#	as.matrix(data), stringsAsFactors = FALSE)[c("abbr", "taxon")]
-		names(data)[1:2] <- c("abbr", "taxon")	
+		names(data)[1:2] <- c("abbr", "taxon")
+		#	valid strings
+		data$abbr <- make.names(data$abbr)
 		#	alphabetic order
 		data <- data[order(data$abbr), ]		
 		#	ensure valid namesand promote rownames
@@ -57,6 +59,5 @@ setMethod("taxonomy",
     function (obj) {
     	new("Taxonomy",
     	data = as.data.frame(obj, stringsAsFactors = FALSE))
-    }
-    
+    }    
 )

@@ -10,11 +10,11 @@ setMethod("species",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) species(slot(obj, "species"))
 )
-
 setMethod("taxonomy",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) taxonomy(slot(obj, "taxonomy"))
 )
+#	initialize method is wrapped in function SpeciesTaxonomy
 #A virtual class is a class for which it is not possible to create objects!
 # but methods can be defined
 

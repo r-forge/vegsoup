@@ -25,10 +25,10 @@ setMethod("initialize",
 		#	depreciated
 		#	for safety and to ensure validity
 		#data <- as.data.frame(
-		#	as.matrix(data), stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]
-					
+		#	as.matrix(data), stringsAsFactors = FALSE)[c("plot", "abbr", "layer", "cov")]				
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
-		
+		#	valid strings
+		data$abbr <- make.names(data$abbr)
 		#	order
 		data <- data[order(data$plot, data$layer, data$abbr), ]
 		

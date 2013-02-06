@@ -21,6 +21,7 @@ Collate: AAA.R
          Class-Sites.R
          Class-Taxonomy.R
          Class-SpeciesTaxonomy.R
+         SpeciesTaxonomy.R
          SpeciesTaxonomy-Methods.R
          Class-Coverscale.R
          Class-Vegsoup.R
