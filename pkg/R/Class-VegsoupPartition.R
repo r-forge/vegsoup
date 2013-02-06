@@ -1,3 +1,6 @@
+#	drop slot binary?
+#	instead use decostand(obj) = "pa"
+
 #	class definition
 setClass("VegsoupPartition",
 	representation(

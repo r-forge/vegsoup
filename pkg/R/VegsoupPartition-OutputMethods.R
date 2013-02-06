@@ -216,6 +216,7 @@ setGeneric("Latex",
 setMethod("Latex",
 	signature(obj = "VegsoupPartition"),
 	function (obj, choice, recursive, ...) {
+			require(Hmisc)
 			if (missing(choice)) {
 				choice <- "species"	
 			}

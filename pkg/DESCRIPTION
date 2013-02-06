@@ -31,6 +31,7 @@ Collate: AAA.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R
          Class-VegsoupPartition.R
+         VegsoupPartition.R
          VegsoupPartition-BaseMethods.R
          VegsoupPartition-AssociationMethods.R
          VegsoupPartition-FidelityMethods.R
@@ -41,6 +42,7 @@ Collate: AAA.R
          Class-VegsoupPartitionFidelity.R
          VegsoupPartitionFidelity-BaseMethods.R
          Class-VegsoupOptimstride.R
+         OptimStride.R
          VegsoupOptimstride-BaseMethods.R
          Coverscale-Methods.R
          ZZZ.R
