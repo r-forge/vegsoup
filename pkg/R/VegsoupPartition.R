@@ -15,12 +15,12 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		stop("Need object of class Vegsoup")
 	}
 	#	check second and thrid unnamed arguments
-	if (!is.numeric(CALL$k)) {
-		stop("second unnamed argument is not numeric")
-	}
-	if (!is.character(CALL$method)) {
-		stop("third unnamed argument is not a character")
-	}
+#	if (!is.numeric(CALL$k)) {
+#		stop("second unnamed argument is not numeric")
+#	}
+#	if (!is.character(CALL$method)) {
+#		stop("third unnamed argument is not a character")
+#	}
 	#	for class(obj) VegsoupOptimstride
 	if ((missing(k) & missing(clustering)) & !inherits(obj, "VegsoupOptimstride")) {
 		k = 1

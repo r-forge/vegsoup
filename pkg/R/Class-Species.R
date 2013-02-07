@@ -10,11 +10,10 @@ setValidity("Species",
 		} else {
 			TRUE
 		}
-		if (identical(names(object@data)[1:4],
-			c("plot", "abbr", "layer", "cov"))) {
-			TRUE	
-		} else {
+		if (any(is.na(object@data[, 1:4]))) {
 			FALSE
+		} else {
+			TRUE
 		}				
 	}
 )
@@ -22,7 +21,6 @@ setValidity("Species",
 setMethod("initialize",
 	"Species",
 	function(.Object, data) {
-		#	depreciated
 		#	for safety and to get rid of factors
 		data <- as.data.frame(
 			as.matrix(data), stringsAsFactors = FALSE)				
@@ -32,11 +30,11 @@ setMethod("initialize",
 		#	order
 		data <- data[order(data$plot, data$layer, data$abbr), ]
 		
-		if (any(regexpr("[[:alpha:]]", data$plot) < 1)) {
-				warning("\n ... plot identifier contains only numbers, ",
-					"\nbut will be coerced to character!", call. = FALSE)	
-			#	data$plot <- as.character(data$plot)
-		}			
+#		if (any(regexpr("[[:alpha:]]", data$plot) < 1)) {
+#				warning("\n ... plot identifier contains only numbers, ",
+#					"\nbut will be coerced to character!", call. = FALSE)	
+#				data$plot <- as.character(data$plot)
+#		}			
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
 		input <- data[ ,c(1,2,3)]
@@ -120,7 +118,15 @@ setMethod("$", "Species",
 		}
 		return(x@data[[name]])
 	}
-)     	
+)
+setReplaceMethod("$",
+	signature(x = "Species"),
+	function (x, name, value) {
+ 		x@data[[name]] <- value 	
+		return(x)		
+	}
+)
+     	
 #setReplaceMethod("Layers",
 #	signature(obj = "Species", value = "ANY"),
 #	function (obj, value) {

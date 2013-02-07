@@ -60,8 +60,8 @@ setClass("Coverscale",
 	lims =  c(0.5,  0.5, 0.5, 2.5, 7,  17,  28.5,41,  62,  84.5, 97.5)) 
 
 #	North-Carolina
-.north.carolina <- list(
-	name = "North-Carolina",
+.carolina <- list(
+	name = "Carolina",
 	codes = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"),
 	lims =  c( 0.1, 0.5, 1.5, 3.5, 7.5,17.5,37.5,62.5,85,   97.5)) 
 
@@ -123,7 +123,7 @@ setClass("Coverscale",
 	hult = .hult,
 	ordinal = .ordinal,
 	domin = .domin,
-	north.carolina = .north.carolina,
+	carolina = .carolina,
 	doing = .doing,
 	doing2 = .doing2,
 	londo = .londo,

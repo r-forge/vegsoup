@@ -7,10 +7,9 @@
 
 Coverscale <- function (name, codes, lims) {
 	if (missing(name)) {
-		warning("buitin coverscales are:\n",
-		paste(names(.COVERSCALES), collapse = "\n"),
-		call. = FALSE)
-	}
+		cat("buitin coverscales are:\n",
+		paste(names(.COVERSCALES), collapse = "\n"))
+	} else {
 	if (missing(codes) & missing(lims)) {
 		res <- .COVERSCALES[[match.arg(name, names(.COVERSCALES))]]
 	} else {
@@ -30,6 +29,7 @@ Coverscale <- function (name, codes, lims) {
 	}
 	res <- as(res, "Coverscale")
 	return(res)
+	}
 }
 
 #if (!isGeneric("coverscale")) {
@@ -45,7 +45,7 @@ setGeneric("coverscale<-",
 setMethod("coverscale",
     signature(obj = "Vegsoup"),
     function (obj) {
- 		obj@coverscale # rename to coverscale   	
+  		obj@coverscale   	
     }
 )
 

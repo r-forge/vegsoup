@@ -73,6 +73,11 @@
         evaluate to an object with less than four columns will fail,
         due to the class inherent data model (see \sQuote{Slots}).
     }
+    \item{ $ }{
+      \code{signature(x = "Species")}:
+        Retreive column by name, or perform replacement.
+        See \code{\link{Extract.data.frame}}.
+    }
   }
 }
 \section{Details}{
@@ -80,7 +85,8 @@
   integrity. If duplicated species are identified for a specific plot a
   warning is issued and duplicates are dropped automatically. The same applies
   to duplicated species abundances for plots. Finally an ordering of the form
-  and \code{order(plot, layer, data)} is performed.
+  and \code{order(plot, layer, data)} is performed. None of the first four columns
+  can contain \code{NA}, as this will not allow a valid object of the class to be built. 
 }
 \section{Note}{
   The design of the class, especially the initialization method, allows data

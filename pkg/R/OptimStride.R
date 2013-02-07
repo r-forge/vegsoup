@@ -26,7 +26,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 			char = '.', width = 45, style = 3)		
 		for (j in 2:k) {
 			setTxtProgressBar(pb.j, j)
-			res.j[[j]] <- cycle(obj, method = method[i], k = j, ...)
+			res.j[[j]] <- cycle(obj, k = j, method = method[i], ...)
 		}
 		res.i[[i]] <- res.j
 		close(pb.j)

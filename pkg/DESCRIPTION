@@ -27,6 +27,7 @@ Collate: AAA.R
          Class-Vegsoup.R
          Vegsoup.R
          Vegsoup-BaseMethods.R
+         rbind.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R
