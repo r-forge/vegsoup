@@ -163,6 +163,24 @@ setReplaceMethod("Partitioning",
 	}
 )
 
+#	extended getter method
+#if(!isGeneric("Partition")) {
+setGeneric("Partition",
+	function (obj, value, ...)
+		standardGeneric("Partition")
+)
+#}
+
+#	retrieve or set slot part
+setMethod("Partition",
+	signature(obj = "VegsoupPartition"),
+	function (obj, value) {	
+		obj[obj@part == value, ]
+	}		
+)
+
+
+
 #	number of partitions/clusters
 #	to do: documentation
 setGeneric("getK",

@@ -92,12 +92,23 @@ setMethod("species",
     }
     
 )
+setMethod("species",
+    signature(obj = "character"),
+    function (obj, ...) {
+    	new("Species",
+    	data = read.csv(obj, ...))
+    }
+    
+)
 setMethod("show",
     signature(object = "Species"),
     function (object) {
-		cat("object of class", class(object))
-		cat("\nnumber of species", length(unique(species(object)$abbr)))
-		cat("\nnumber of sites", length(unique(species(object)$plot)))		
+		cat("object of class   :",
+			class(object))
+		cat("\nnumber of species :",
+			length(unique(species(object)$abbr)))
+		cat("\nnumber of sites   :",
+			length(unique(species(object)$plot)))		
 		cat("\nshow only first",
 			ifelse(nrow(object@data) <= 6, nrow(object@data), 6),
 			"rows\n\n")

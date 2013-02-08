@@ -62,11 +62,22 @@ setMethod("sites",
     }
     
 )
+setMethod("$", "Sites", 
+	function(x, name) {
+		if (!("data" %in% slotNames(x))) {
+			stop("no $ method for object without slot data")
+		}
+		return(x@data[[name]])
+	}
+)
 setMethod("show",
     signature(object = "Sites"),
     function (object) {
-		cat("object of class", class(object))
-		cat("\nnumber of variables: ", length(unique(sites(object)$variable)))
+		cat("object of class     :", class(object))
+		cat("\nnumber of variables : ",
+			length(unique(object$variable)))
+		cat("\nnumber of sites     :",
+			length(unique(object$plot)))
 		cat("\nshow only frist 6 rows\n\n")
 		print(head(object@data, n = 6L))
     }
