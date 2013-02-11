@@ -5,7 +5,7 @@ useDynLib(vegsoup)
 
 #useDynLib()
 
-importClassesFrom(Matrix, sparseMatrix)
+#importClassesFrom(Matrix, sparseMatrix)
 import(methods)
 importFrom("graphics", plot, hist)
 importFrom("stats", as.dist)
