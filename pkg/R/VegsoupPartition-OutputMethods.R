@@ -252,7 +252,7 @@ if (missing(thumbnail.url.path)) {
 	thumbnail.url.path <-
 		"http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
 }
-
+	
 #	obj = prt
 
 #	to do!
@@ -370,7 +370,10 @@ stylemap <- c(sapply(paddle.file, .stylemap.numbers))
 #	to do! order folders!
 
 points <- data.frame(partitioning = paddle.identifier,
-	coordinates(obj), plot = names(Partitioning(obj)))
+	coordinates(obj), plot = names(Partitioning(obj)), stringsAsFactors = FALSE)
+
+points$website.url <- paste(website.url.path, points$plot, sep = "")
+points$thumbnail.url <- paste(thumbnail.url.path, points$plot, sep = "")
 
 folder <- unlist(sapply(unique(points$partitioning), FUN = function (x) {
 	res <- c(
@@ -380,6 +383,7 @@ folder <- unlist(sapply(unique(points$partitioning), FUN = function (x) {
 	"</Folder>")
 	}
 ))
+	
 res <- c(
 	begin.kml,
 	styles.normal,

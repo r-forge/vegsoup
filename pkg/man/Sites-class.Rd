@@ -1,6 +1,7 @@
 \name{Sites-class}
 \Rdversion{1.1}
 \docType{class}
+\alias{sites}
 \alias{Sites-class}
 \alias{sites,Sites-method}
 

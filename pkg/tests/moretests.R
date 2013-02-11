@@ -122,7 +122,6 @@ s1 <- dta[1:2, ]
 s2 <- dta[3:4, ]
 s3 <- dta[5:6, ]
 
-### broken!
 try(rownames(rbind(s3, s1, s2)))
 
 #	table methods

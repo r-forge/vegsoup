@@ -27,8 +27,6 @@ exportMethods(
     "abbr.layer",
     "Abbreviation",
     "Abbreviation<-",
-    "AbundanceScale",
-    "AbundanceScale<-",
     "AprioriGrouping",
     "Accuracy",
     "Association",

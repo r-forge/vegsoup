@@ -25,7 +25,24 @@ Collate: AAA.R
          SpeciesTaxonomy-Methods.R
          Class-Coverscale.R
          Class-Vegsoup.R
+         names.R
          Vegsoup.R
+         species.R
+         sites.R
+         taxonomy.R
+         grouping.R
+         dim.R
+         as.matrix.R
+         rowSums.R
+         decostand.R
+         vegdist.R
+         show.R
+         extract.R
+         layers.R
+         sample.R
+         seriation.R
+         richness.R
+         stride.R
          Vegsoup-BaseMethods.R
          rbind.R
          Vegsoup-SpatialMethods.R

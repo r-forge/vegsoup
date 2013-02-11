@@ -1,6 +1,7 @@
 \name{Taxonomy-class}
 \Rdversion{1.1}
 \docType{class}
+\alias{taxonomy}
 \alias{Taxonomy-class}
 \alias{[,Taxonomy-method}
 \alias{taxonomy,Taxonomy-method}
