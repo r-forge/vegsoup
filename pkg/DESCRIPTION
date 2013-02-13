@@ -44,7 +44,7 @@ Collate: AAA.R
          richness.R
          stride.R
          Vegsoup-BaseMethods.R
-         rbind.R
+         merge.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R
