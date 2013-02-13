@@ -1,8 +1,6 @@
-#	rename to merge!!
-
-
+###	warning layers must be equal!!!
 #	rbind like method to fuse objects
-".merge.Vegsoup" <- function (...) {
+".rbind.Vegsoup" <- function (..., deparse.level = 1) {
 	allargs <- list(...)
 	#	allargs <- list(gk, rx)
 	
@@ -111,14 +109,14 @@
 	return(res)	    
 }
 
-#if (!isGeneric("merge")) {
-#setGeneric("merge",
-#		function (x, y, ..., )
-#		standardGeneric("merge"),
-#		signature = "...")
+#if (!isGeneric("rbind")) {
+setGeneric("rbind",
+		function (..., deparse.level = 1)
+		standardGeneric("rbind"),
+		signature = "...")
 #}
 
-setMethod("merge",
+setMethod("rbind",
     signature(... = "Vegsoup"),
-	.merge.Vegsoup
+	.rbind.Vegsoup
 )
