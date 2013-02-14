@@ -61,6 +61,8 @@ exportMethods(
     "Indspc",
     "Indval",
     "Isamic",
+    "is.continuous",
+    "is.ordinal",
     "Latex",
     "Layers",
     "Layers<-",

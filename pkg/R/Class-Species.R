@@ -57,6 +57,11 @@ setMethod("initialize",
 				"\n please review your data!", call. = FALSE)
 			data <- unique(data, fromLast = FALSE)
 		}
+		#	test for missing cover
+		if (any(data$cov == "") | any(is.na(data$cov)) ) {
+			stop("missing cover for plots",
+				"\nplease review your data!")
+		}
 		#	ensure valid names	
 		data$abbr <- make.names(data$abbr)			
 		rownames(data) <- 1:nrow(data)

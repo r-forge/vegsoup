@@ -17,7 +17,7 @@ Coverscale <- function (name, codes, lims) {
 			stop("need both codes and lims", call. = FALSE)
 		} else {
 			if (length(codes) != length(lims)) {
-				stop("length of codes and lims must", call. = FALSE)
+				stop("length of codes and lims are not the same", call. = FALSE)
 			} else {
 				res <- list(
 					name = as.character(name),
@@ -36,11 +36,19 @@ Coverscale <- function (name, codes, lims) {
 setGeneric("coverscale", function(obj, ...)
 	standardGeneric("coverscale"))
 #}
-#if (!isGeneric("decostand<-")) {
+#if (!isGeneric("coverscale <-")) {
 setGeneric("coverscale<-",
 	function (obj, value, ...)
 		standardGeneric("coverscale<-")
 )
+#}
+#if (!isGeneric("coverscale")) {
+setGeneric("is.ordinal", function(obj, ...)
+	standardGeneric("is.ordinal"))
+#}
+#if (!isGeneric("coverscale")) {
+setGeneric("is.continuous", function(obj, ...)
+	standardGeneric("is.continuous"))
 #}
 setMethod("coverscale",
     signature(obj = "Vegsoup"),
@@ -48,30 +56,56 @@ setMethod("coverscale",
   		obj@coverscale   	
     }
 )
-
+setMethod("is.ordinal",
+    signature(obj = "Coverscale"),
+    function (obj) {
+  		!is.null(obj@codes) & !is.null(obj@codes)
+    }
+)
+setMethod("is.continuous",
+    signature(obj = "Coverscale"),
+    function (obj) {
+  		is.null(obj@codes) & is.null(obj@codes)
+    }
+)
 #	needs cover scale conversion 
 setReplaceMethod("coverscale",
 	signature(obj = "Vegsoup", value = "Coverscale"),
-	function (obj, value) {		
-		obj@coverscale <- value
-		test <- !any(is.na(factor(Species(obj)$cov,
+	function (obj, value) {	
+		transform <- is.continuous(coverscale(obj)) & is.ordinal(value)
+		obj@coverscale <- value			
+		if (transform) {
+			obj@species$cov <- as.character(
+				cut(Species(obj)$cov,
+					breaks = c(coverscale(obj)@lims, 100),
+					labels = coverscale(obj)@codes))
+			warning("transformed cover values")					
+		}		
+		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
 		if (test) {
-			stop("coverscale does not match data")
+			stop("coverscale does not match data", .call = FALSE)
 		}		
 		return(obj)		
 	}
 )
-
 setReplaceMethod("coverscale",
 	signature(obj = "Vegsoup", value = "character"),
 	function (obj, value) {
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
 		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
-		obj@coverscale <- value
-		test <- !any(is.na(factor(Species(obj)$cov,
+		transform <- is.continuous(coverscale(obj)) & is.ordinal(value)
+		obj@coverscale <- value			
+		if (transform) {
+			obj@species$cov <- as.character(
+				cut(Species(obj)$cov,
+					breaks = c(coverscale(obj)@lims, 100),
+					labels = coverscale(obj)@codes))
+			warning("transformed cover values", .call = FALSE)					
+		}
+		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
 		if (test) {

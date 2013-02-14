@@ -73,8 +73,8 @@ setMethod("taxonomy",
 setMethod("show",
     signature(object = "Taxonomy"),
     function (object) {
-		cat("object of class", class(object))
-		cat("\nnumber of taxa", nrow(object@data))
+		cat("object of class :", class(object))
+		cat("\nnumber of taxa  :", nrow(object@data))
 		cat("\nshow only first",
 			ifelse(nrow(object@data) <= 6, nrow(object@data), 6),
 			"rows\n\n")

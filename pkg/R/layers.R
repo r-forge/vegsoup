@@ -33,13 +33,7 @@ if (missing(collapse) & missing(aggregate)) {
 	#	debug
 	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = c(NA, NA, "sl", "tl", "tl")
 	
-	#	revert to class Vegsoup and cast again
-	#	not needed any more
-	#if (inherits(obj, "Vegsoup")) {
-	#	res <- as(obj, "Vegsoup")
-	#} else {
-		res <- obj
-	#}
+	res <- obj
 
 	species <- Species(res)
 	scale <- coverscale(res)
@@ -74,13 +68,15 @@ if (missing(collapse) & missing(aggregate)) {
 	levels(species$layer) <- collapse[match(levels(species$layer), collapse[, 1]), 2]
 	species$layer <- as.character(species$layer)
 
-	scale.is.character <- is.character(species$cov)
+	scale.is.ordinal <- !is.null(scale@codes)
 	
 	#	convert original abundance scale to numeric to allow calculations
-	if (scale.is.character) {
+	if (scale.is.ordinal) {
 		species$cov <- as.factor(species$cov)
 		levels(species$cov) <- scale@lims[match(levels(species$cov), scale@codes)]
 		species$cov <- as.numeric(as.character(species$cov))
+	} else {
+		species$cov <- as.numeric(species$cov)
 	}
 	
 	#	aggregate layers
@@ -122,7 +118,7 @@ if (missing(collapse) & missing(aggregate)) {
 	species$cov <- ceiling(species$cov)
 	
 	#	back convert to original abundance scale if it was character
-	if (scale.is.character) {
+	if (scale.is.ordinal) {
 		species$cov <- as.character(cut(species$cov, breaks = c(0, scale@lims), labels = scale@codes))
 	}
 	
@@ -147,6 +143,22 @@ setMethod("Layers",
    signature(obj = "Vegsoup"),
     .layers.Vegsoup
 )
+setReplaceMethod("Layers",
+	signature(obj = "Vegsoup", value = "ANY"),
+	function (obj, value) {
+		if (length(value) != length(Layers(obj))) {
+			stop("length of value does not match length layers of object")
+		}
+		if (any(!Layers(obj) %in% value)) {
+			stop("items of value do not match layers of object",
+				"\n use Layers(obj, collapse = value),",
+				" where layers to be dropped are coded as NA") 
+		}
+		obj@layers <- value
+		return(obj)		
+	}
+)
+
 #	return just the layer columns from Species(obj)
 setGeneric("Layer",
 	function (obj, ...)
