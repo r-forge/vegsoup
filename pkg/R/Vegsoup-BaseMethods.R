@@ -46,11 +46,7 @@ setMethod("Indspc",
 
 
 
-#SRTM <- function (x) {
-#	if (!inherits(obj, "Vegsoup")) stop("Need object inheriting from class Vegsoup")
-#	require(geonames)
-#	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
-#}
+
 
 ### start delete
 #setGeneric("AbundanceScale",

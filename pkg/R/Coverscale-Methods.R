@@ -79,7 +79,7 @@ setReplaceMethod("coverscale",
 				cut(Species(obj)$cov,
 					breaks = c(coverscale(obj)@lims, 100),
 					labels = coverscale(obj)@codes))
-			warning("transformed cover values")					
+			warning("transformed cover values", .call = FALSE)					
 		}		
 		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,

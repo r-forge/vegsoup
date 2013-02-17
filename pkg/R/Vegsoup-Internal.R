@@ -284,6 +284,13 @@
 	}
 	return(list(sp.points, sp.polygons))		
 }
+
+"SRTM" <- function (obj) {
+	if (!inherits(obj, "Vegsoup")) stop("Need object inheriting from class Vegsoup")
+	require(geonames)
+	cat("request heights for", nrow(obj), "coordinates")
+	res <- unlist(apply(coordinates(obj), 1, function (x) GNsrtm3(lat = x[2], lng = x[1])[1]))
+}
 #Average Bray-Curtis dissimilarity of an outlier plot to other plots is greater than two standard deviations from the mean inter-plot dissimilarity (McCune & Grace 2002)
 
 #McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.

@@ -59,7 +59,7 @@ if (abbreviate) {
 x[duplicated(x[,2]), 2] <- format("", width = nchar(layer[1]))
 
 #	sites ('attributes') data block
-y <- t(Sites(obj)[, select]) #names(obj)[select]
+y <- t(Sites(obj)[, select, drop = FALSE]) #names(obj)[select]
 labels <- rownames(y)
 m <- vector("list", length(labels))
 names(m) <- labels
@@ -119,10 +119,12 @@ res <- cbind(
 res <- apply(res, 1, function (x) paste0(x, collapse = ""))
 
 apply(z, 1, function (x) paste(x, collapse = ""))
+
 #	add keywords
 zy <- 1:(nrow(z) + nrow(y))
 x <- (max(zy) + 1):(nrow(x) + max(zy))
 
+#	warp around latex environment
 if (latex.input) {
 	res <- c("\\begin{verbatim}",
 		"BEGIN HEAD", res[zy], "END HEAD",
