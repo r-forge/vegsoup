@@ -38,7 +38,7 @@ options(width=100,digits=2)
 
 \noindent
 An example session to show functionality and usage of R library \texttt{vegsoup}. \\
-After installation of  \texttt{vegsoup} you can invoke this PDF with
+After installation of \texttt{vegsoup} you can invoke this PDF with
 <<eval=FALSE>>=
 vignette('vegsoup')
 @
@@ -48,8 +48,6 @@ vignette('vegsoup')
 
 Many data sets do not easily fit into a single data frame. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows.
 
-simple inheritance 
-
 The best way to introduce the functionalities of the package is a session with example code.
 
 We load the library as usual into our R environment.
@@ -57,7 +55,7 @@ We load the library as usual into our R environment.
 library(vegsoup)
 @
 
-<<eval=TRUE>>=
+<<eval=FALSE>>=
 Vegsoup()
 @
 
@@ -65,11 +63,6 @@ If you want to change this use:
 <<eval=FALSE>>=
 Vegsoup()
 @
-
-<<echo=FALSE>>=
-options(tv_home=file.path(.path.package("vegdata"),'tvdata'))
-@
-
 
 \bibliographystyle{ecol_let}
 \bibliography{vegdata}
