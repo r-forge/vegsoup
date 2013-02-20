@@ -62,6 +62,14 @@ setMethod("sites",
     }
     
 )
+setMethod("sites",
+    signature(obj = "character"),
+    function (obj, ...) {
+    	new("Sites",
+    	data = read.csv(obj, ...))
+    }
+    
+)
 setMethod("$", "Sites", 
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {

@@ -60,7 +60,7 @@ setMethod("initialize",
 		#	test for missing cover
 		if (any(data$cov == "") | any(is.na(data$cov)) ) {
 			stop("missing cover for plots",
-				"\nplease review your data!")
+				"\nplease review your data!", call. = FALSE)
 		}
 		#	ensure valid names	
 		data$abbr <- make.names(data$abbr)			
