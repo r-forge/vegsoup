@@ -16,6 +16,7 @@ LazyLoad: yes
 LazyData: yes
 Collate: AAA.R
          Vegsoup-Import.R
+         googletiles.R
          stack.species.R
          reshape.species.R
          stack.sites.R
