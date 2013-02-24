@@ -8,7 +8,7 @@ useDynLib(vegsoup)
 #importClassesFrom(Matrix, sparseMatrix)
 import(methods)
 importFrom("graphics", plot, hist)
-importFrom("stats", as.dist)
+importFrom("stats", dist, as.dist)
 importFrom("utils", head, tail)
 importFrom("vegan", coverscale, vegdist, decostand)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
@@ -56,6 +56,7 @@ exportMethods(
     "QuickMap",	
     "head",
     "coldiss",
+    "Importance",
     "indices",
     "Indpower",
     "Indspc",

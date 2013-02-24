@@ -226,8 +226,11 @@ setMethod("summary",
 		choices <- c("all", "species", "sites", "partition")
 		choice <- choices[pmatch(choice, choices)]
 		if (is.na(choice)) {
-			choice <- "all"
-		}
+			stop("invalid choice")
+		}       	
+    	if (choice == -1) 
+        	stop("ambiguous choice")
+        	
 		switch(choice, "all" = {
 			summary(as(object, "Vegsoup"), choice = "all")
 			cat("\ntable of partition contingencies")
@@ -244,104 +247,6 @@ setMethod("summary",
 )
 
 #	contingency table
-
-#	to do: documentation
-setGeneric("Contingency",
-	function (obj)
-		standardGeneric("Contingency")
-)
-
-setMethod("Contingency",
-	signature(obj = "VegsoupPartition"),
-	function (obj) {
-		res <- t(aggregate(as.logical(obj),
-			by = list(Partitioning(obj)), FUN = sum))[-1, ]
-		colnames(res) <- unique(Partitioning(obj))
-		rownames(res) <- colnames(obj)
-		return(res)
-	}
-)
-
-#	frequency (constancy) table	
-#	to do: documentation
-setGeneric("Constancy",
-	function (obj, ...)
-		standardGeneric("Constancy")
-)
-setMethod("Constancy",
-	signature(obj = "VegsoupPartition"),
-	function (obj, percentage = TRUE, ...) {
-		tmp <- t(as.matrix(table(Partitioning(obj))))
-		res <- Contingency(obj) / tmp[rep(1, nrow(Contingency(obj))),]
-		if (percentage) {
-			res <- round (res * 100, 0)
-		}		
-		return(res)
-	}
-)
-
-#	shared species
-setGeneric("Shared",
-	function (obj, ...)
-		standardGeneric("Shared")
-)
-
-setMethod("Shared",
-	signature(obj = "VegsoupPartition"),
-	function (obj, ...) {
-		X <- Constancy(obj) > 0
-		mode(X) <- "numeric"
-		
-		res <- designdist(t(X), method = "J/(A+B)*100", terms = "binary")
-
-	return(res)
-	}
-)
-
-
-#	summary statistics
-#	Tukey Five-Number Summary
-setGeneric("Fivenum",
-	function (obj, ...)
-		standardGeneric("Fivenum")
-)
-
-setMethod("Fivenum",
-	signature(obj = "VegsoupPartition"),
-	function (obj, na.rm = TRUE, recode = FALSE) {
-		tmp <- as.numeric(obj)
-		if (!na.rm) tmp[tmp == 0] <- NA
-		tmp <- aggregate(tmp,
-			by = list(Partitioning(obj)),
-			FUN = function (x) fivenum(x, na.rm = TRUE), simplify = FALSE)
-		part <- tmp[, 1]
-		tmp <- tmp[, -1]
-		res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], 5),
-			dimnames = list(names(tmp), part,
-			c("min", "lower", "median", "upper", "max")))
-		for (i in 1:5) {
-			for (j in 1:nrow(res)) {
-				#	j = 1; i = 1
-				res[j, , i] <- sapply(tmp[, j], function (x) x[i])
-			}
-		}
-		if (recode) {
-			for (i in 1:dim(res)[3]) {
-				tmp <- res[, , i]
-				mode(tmp) <- "numeric"
-				vals <- as.character(cut(tmp,
-					breaks = c(0, coverscale(obj)@lims),
-					labels = coverscale(obj)@codes))
-				tmp.i <- tmp
-				mode(tmp.i) <- "character"
-				tmp.i[] <- vals
-				res[, , i] <- tmp.i
-			}			
-		res[is.na(res)] <- "."
-		}
-		return(invisible(res))	
-	}
-)
 
 #	Fisher Test
 #	depreciated

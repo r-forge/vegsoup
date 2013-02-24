@@ -1,54 +1,63 @@
 \name{dim}
-
 \docType{methods}
-
 \alias{ncol}
 \alias{ncol-methods}
-\alias{ncol,VegsoupData-method}
+\alias{ncol,Vegsoup-method}
 \alias{ncol}
 \alias{nrow-methods}
-\alias{nrow,VegsoupData-method}
+\alias{nrow,Vegsoup-method}
 \alias{dim}
 \alias{dim-methods}
-\alias{dim,VegsoupData-method}
+\alias{dim,Vegsoup-method}
 
-\title{Number or rows, columns, and cells of a VegsoupData* object}   
+\title{Number or Rows, Columns, and Cells of a Vegsoup* object}   
 
 \description{
-Get the number of rows, columns, or cells of the species matrix contained in a VegsoupData* object.  
+Get the number of rows, columns, or cells of the species matrix contained in a Vegsoup* object.
 }
 
 \usage{
-ncol(x)
-nrow(x)
-dim(x)
+  ## S4 method for signature 'Vegsoup*'
+  ncol(x)
+  ## S4 method for signature 'Vegsoup*'
+  nrow(x)
+  ## S4 method for signature 'Vegsoup*'
+  dim(x)
+  ## S4 method for signature 'Vegsoup*'
+  ncell(x)
 
-%% ncell(x)
-%% ncol(x) <- value
-%% nrow(x) <- value
+  ## not yet implemented
+  ## ncol(x) <- value
+  ## nrow(x) <- value
+  ## ncell(x) <- value
 }
-
 \details{
-\code{nrow(x)} allways equal the number of rows in the sites slot. \code{ncol(x)} gives the number of species including layer dulicates. For species richness see \code{\link{Richness}}. \code{dim} retrieves the dimension of the species matrix of an object.
+\code{nrow(x)} allways equals the number of rows in the sites slot. \code{ncol(x)} gives the number of species including layer duplicates. For species richness see \code{\link{Richness}}. \code{dim} retrieves the dimension of the species matrix of an object and \code{ncell} the numbder of cells in the species matrix.
 }
-
 \arguments{
-\item{x}{a VegsoupData object}
+  \item{ x }{
+    A Vegsoup* object
+  }
 }
 
 \value{
 An integer giving number of rows (plots) and species (each occurrence of a species in layer).
 }
-
-\seealso{ \code{\link{VegsoupData}}, \code{\link{Richness}} }
+\seealso{
+\code{\link{Vegsoup}},
+\code{\link{Richness}}
+}
 
 \author{ Roland Kaiser }
 
 \examples{
-	data(testdata)
-	dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-		scale = list(scale = "Braun-Blanquet")))
-	dim(dta)	  
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+
+dim(dta)
+nrow(dta)  # number of plots
+ncol(dta)  # number of (pseudo-)species
+ncell(dta) # number of cells, short hand for prod(dim(dta))
 }	
 \keyword{methods}
 

@@ -47,8 +47,7 @@ A numeric vector of suitable size with names taken from the object.
 \examples{
 library(vegsoup)
 data(testdata)        
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 #	number of species including layer duplicates	
 rowSums(dta)

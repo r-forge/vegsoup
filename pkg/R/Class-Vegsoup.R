@@ -19,14 +19,3 @@ setClass("Vegsoup",
 	sp.points = "SpatialPointsDataFrame",
 	sp.polygons = "SpatialPolygonsDataFrame")
 )
-
-#	coercion method
-#	coercion to class Vegsoup is automatic as defined by the contains= argument
-#	to do: documenation
-setAs("Vegsoup", "list",
-	def = function (from) {
-		list(
-		species = as.matrix(from, typeof = "character", mode = "Q"),
-		sites = from@sites)
-	}
-)

@@ -16,19 +16,20 @@ The functions retrieve a species matrix of mode according the methods name and \
 %cross-classifying factors
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 as.logical(x, mode)
 
+## S4 method for signature 'Vegsoup*'
 as.numeric(x, mode)
 
+## S4 method for signature 'Vegsoup*'
 as.character(x, mode)
 
+## S4 method for signature 'Vegsoup*'
 as.matrix(x, typeof, ...)
 
-indices(x, typeof)
-
-# not documented
-as(x, "sparseMatrix")
-as(x, "dsparseMatrix") 
+## S4 method for signature 'Vegsoup*'
+indices(x, typeof) 
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -78,7 +79,7 @@ Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Development
 \examples{
 library(vegsoup)
 data(testdata)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy, "braun.blanquet"))
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 # presence/absence representation
 dta.pa <- as.logical(dta)

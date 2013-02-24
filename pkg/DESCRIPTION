@@ -55,6 +55,9 @@ Collate: AAA.R
          rbind.R
          indpower.R
          indspc.R
+         table.R
+         fivenum.R
+         shared.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R

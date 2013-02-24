@@ -2,36 +2,42 @@
 \docType{methods}
 \alias{map}
 \alias{map-methods}
+\alias{QuickMap}
+\alias{QuickMap-methods}
 \alias{ellipsoidhull}
 \alias{ellipsoidhull-methods}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Draw Map of Plot Locations
-%%Compute the Ellipsoid Hull of Plot Locations Grouped by Partitions
-}
+
+\title{ Draw Map of Plot Locations }
+
 \description{
 \code{map} draws a simple vector background map and plot locations. \code{ellipsoidhull} computes the \emph{ellipsoid hull} or \emph{spanning ellipsoid} such that all given points lie just inside or on the boundary of the ellipsoid and adds it to a map.
+
+\code{QuickMap} opens a browser window and plots pushpins of plot centers on top of "Google Maps"
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 map(obj, ...)
+## S4 method for signature 'VegsoupPartition*'
 ellipsoidhull(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{
-    an object inhertiting from class \code{"VegsoupDataPartition"}
-}
-  \item{col}{
-    color of the lines
-}
-  \item{...}{
-    arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps}, or \code{ellipsoidhull} in package \pkg{cluster}.
+  \item{ obj }{
+    An object inhertiting from class \code{"VegsoupPartition"}
+  }
+  \item{ col }{
+    Color of the lines
+   }
+  \item{ \dots }{
+    Arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps}, or \code{\link[ellipsoidhull:cluster]{ellipsoidhull}} in package \pkg{cluster}.
 }  
 }
 \details{
 method \code{map} is intended to provide a quick and dirty map background to dispaly plot locations.
 
 \code{ellipsoidhull} is a simple wrapper for function \code{\link{ellipsoidhull}} in package cluster. The main purpose of the function is to visualize partitions on a map.
+
+Open browser window and plot pushpins of plot centers on "Google Maps" 
 }
 \value{
 \code{map} creates a map plot.
@@ -48,16 +54,13 @@ Roland Kaiser
 \note{
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-\code{\link{help}}, ~~~
+\code{\link{gvisMap}} in package \pkg{googleVis},
+\code{\link{ellipsoidhull}} in package \pkg{cluster}
 }
 \examples{
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ methods }
 \keyword{ hplot }
+

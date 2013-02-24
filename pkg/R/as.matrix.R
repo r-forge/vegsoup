@@ -163,3 +163,13 @@ setAs(from = "Vegsoup", to = "dsparseMatrix",
 		res
 	}
 )
+
+setAs("Vegsoup", "list",
+	def = function (from) {
+		list(
+		species = as.matrix(from, typeof = "character", mode = "Q"),
+		sites = from@sites,
+		taxonomy = from@taxonomy
+		)
+	}
+)

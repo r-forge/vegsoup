@@ -179,3 +179,6 @@ structure(list(abbr = c("achn cala", "pote caul", "amel oval",
 "corn sang sang", "rosa cani", "juni comm comm", "saxi pani", 
 "care alba", "pleu schr", "pinu sylv", "vinc hiru", "buph sali", 
 "kern saxa"), class = "data.frame")
+
+#library(vegsoup)
+#dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")

@@ -4,14 +4,14 @@
   Measures of association for two partitonings
 }
 \description{
-  \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupDataPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. comparison (predicted) class memberships (\code{obj2}), and calculates a range of measures of association between the two cluster memeberships.
+  \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. comparison (predicted) class memberships (\code{obj2}), and calculates a range of measures of association between the two cluster memeberships.
 }
 \usage{
   Association(obj1, obj2, alpha = 0.05, p.zero.correction)
 }
 \arguments{
-  \item{obj1}{an object of class \code{\link{VegsoupDataPartition}}. }
-  \item{obj2}{a second object of class \code{\link{VegsoupDataPartition}} to compare to \code{obj1}. }
+  \item{obj1}{an object of class \code{\link{VegsoupPartition}}. }
+  \item{obj2}{a second object of class \code{\link{VegsoupPartition}} to compare to \code{obj1}. }
   \item{alpha}{the significance threshold (P-value) to be used in certain
 calculations; defaults to \code{alpha = 0.05}. }
   \item{p.zero.correction}{a (very) small value to be substituted when \code{P=0} for the meaningful calculation of certain statistics based on logarithmic functions; if missing specified according to the sum frequency of the cross tabulation of \code{1 / sum(table(Partitioning(obj1), Partitioning(obj1))^2}.}

@@ -10,7 +10,9 @@ setMethod("[",
 	    #	debug
 	    #	x = dta; i = 1; j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
 		#	x <- prt; i = Partitioning(x) == 2
+	    
 	    res <- x
+	    
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
 	    #	change to as.logical(x)[i, j, ...]

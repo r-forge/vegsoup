@@ -78,8 +78,8 @@ setMethod("DecomposeNames",
 	function (obj, verbose = FALSE) {
 	#	obj <- dta; type = "nospace"
 	if (verbose) {
-		cat("\n Vegsoup standard pattern taxa coding:")
-		cat("\n blanks are dots, '@' speperates abbreviations and layer")
+		cat("Vegsoup standard pattern taxa coding:")
+		cat("blanks are dots, '@' seperates abbreviations and layer")
 	}
 	abbr.layer <- colnames(obj)	
 	abbr <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 1))

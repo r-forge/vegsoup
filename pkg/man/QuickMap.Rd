@@ -1,8 +1,7 @@
-\name{QuickMap}
-\alias{QuickMap}
-\title{
-Open browser window and plot pushpins of plot centers on "Google Maps" 
-}
+\name{foo}
+\alias{foo}
+\title{foo}
+
 \description{
 Creates a "Google Maps" stand-alone web page using Google Visualisation API supplied from package googleVis in function.
 }

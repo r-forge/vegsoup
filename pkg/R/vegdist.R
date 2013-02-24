@@ -25,6 +25,10 @@ setReplaceMethod("vegdist",
 		"kulczynski", "gower", "morisita", "horn", "mountford",
 		"jaccard", "raup", "binomial", "chao", "altGower", "cao")
 		method <- METHODS[pmatch(value, METHODS)]
+    	if (is.na(method)) 
+        	stop("invalid distance method")
+    	if (method == -1) 
+        	stop("ambiguous distance method")
 		x@dist <- method
 		x	
 	}
@@ -59,7 +63,11 @@ setMethod("as.dist",
 		return(Xd)
 	}
 )
-
+setAs(from = "Vegsoup", to = "dist",
+	def = function (from) {
+		vegsoup::as.dist(from)
+	}
+)
 as.dist.Vegsoup <- function (m, ...) {
 	vegsoup::as.dist(m, ...)
 }

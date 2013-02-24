@@ -65,8 +65,8 @@ setMethod("summary",
 	if (missing(choice)) {
 		choice <- "all"
 	}
-	choices <- c("all", "species", "sites")
-	choice <- choices[pmatch(choice, choices)]
+	CHOICES <- c("all", "species", "sites")
+	choice <- CHOICES[pmatch(choice, CHOICES)]
 	if (is.na(choice)) {
 		choice <- "all"
 	}

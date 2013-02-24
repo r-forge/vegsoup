@@ -1,53 +1,79 @@
-\name{Contingency}
+\name{table}
 \docType{methods}
 \alias{Contingency}
 \alias{Contingency-methods}
-\alias{Contingency,VegsoupDataPartition-method}
 \alias{Constancy}
 \alias{Constancy-methods}
-\alias{Constancy,VegsoupDataPartition-method}
+\alias{Importance}
+\alias{Importance-methods}
 
 \title{
-Contingency and Constancy Tables for Objects of Class VegsoupDataPartition
+Contingency and Constancy Tables for \sQuote{VegsoupPartition} Objects
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Function \code{Constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs in; \code{Contingency} lists just the number of occurrences. The latter are based on presence/absence of a species, whereas method \code{Importance} divides the sum of species abundances by the number of plots in which it occurs.
 }
 \usage{
-Contingency(obj)
-Constancy(obj, ...)
+## S4 method for signature 'VegsoupPartition'
+Contingency(obj, ...)
+## S4 method for signature 'VegsoupPartition'
+Constancy(obj, percentage = TRUE, ...)
+## S4 method for signature 'VegsoupPartition'
+Importance(obj, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
+  \item{ obj }{
+An object inheriting from class \code{'VegsoupPartition'}
+}
+  \item{ percentage }{
+Return results of \code{Constancy} as percentages, the default.
+}
+  \item{ \dots }{
+For \code{Contingency} and \code{Importance} \dots expand to arguments passed to matrix methods \code{as.logical} and \code{as.matrix} respectively (see \sQuote{Details}).  Additional arguments to \code{Constancy} are passed to \code{\link{round}} and are only applicable if \code{percentage = TRUE}, the default.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+An importance table lists for each species the average (mean) abundance of each species in each partition. Sensible results are only to be obtained if the object has either a semi-quantitative or quantitative cover cover scale defined. Note, if only presence/absence data is available \code{Importance} returns the same results as \code{Contingency(obj) / Contingency(obj)}, which bears no information as the summed abundance is just the number of occurrences. See method \code{\link{Fivenum}} for descriptive summaries of species abundances in partitions.
+
+Specifing \code{mode = "R"} in \code{Contingency} and \code{Importance} allows for a kind of \emph{R-mode} analyis where the grouping is defined by the layer structure (\code{\link{Layers}}). Note, this rarely makes sense if there is only one layer. For multi layer objects a call to \code{Importance} in \emph{R-mode} implies that all species abundances in a layer are summed up and devided by layer contingencies (\code{Contingency(obj, mode = "R")}), in this case the number of species found in a respective layer for each plot.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+A \code{"matrix"} with as many columns as there are partitions (layers if \code{mode = "R"}) and as many rows as species (or plots). If mode is not specified layer pseudo-species are treated sperately.
 }
 \author{
-Roladn Kaiser
+Roland Kaiser
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{const}} and \code{\link{importance}} in \pkg{labdsv},
+\code{\link{Fivenum}} for Tukeys five-number summaries for each partition
 }
+\examples{
+library(vegsoup)
+data(testdata)
+prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+# constancy table for two partitions
+head(Constancy(prt))
+
+# equivalent
+head(Contingency(prt) / as.vector(table(Partitioning(prt)))) * 100
+
+# impaortance table based on class midpoints of braun blanquet scale
+Importance(prt)
+
+# adust to mimic presence/absence data
+decostand(prt) <- "pa"
+
+Importance(prt)
+
+# R-mode analysis
+# remove presence/absence standardisation
+decostand(prt) <- NULL
+
+Contingency(prt, mode = "R")
+
+Importance(prt, mode = "R")
+}
+\keyword{methods }
+

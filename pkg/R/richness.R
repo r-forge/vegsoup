@@ -8,11 +8,14 @@ setMethod("richness",
 	function (obj, choice = c("dataset", "sample"), ...) {
 		#	obj = sub
 		CHOICES <- c("dataset", "sample")
-		if (missing(choice)) choice <- "dataset"
-		choice <- CHOICES[pmatch(choice, CHOICES)]
-		if (is.na(choice)) {
+		if (missing(choice)) {
 			choice <- "dataset"
-		}		
+		}
+		choice <- CHOICES[pmatch(choice, CHOICES)]
+    	if (is.na(choice)) 
+        	stop("invalid choice")
+		if (choice == -1) 
+        	stop("ambiguous choice")
 		switch(choice, "dataset" = {
 			res <- length(unique(DecomposeNames(obj)$abbr))
 		}, "sample" = {

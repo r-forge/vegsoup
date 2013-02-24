@@ -15,16 +15,16 @@ Define or Change an Abundance Scale for Objects of Class Vegsoup*
 Constructs an object of class \code{\link[vegsoup:Coverscale-class]{Coverscale}} containing a definition for an ordinal scale, or alternatively setting up a \code{Coverscale} object representing species abundances on a continuous scale (counts, frequencies or percentages). Objects of this class are mandatory for all classes extending \code{Vegsoup}.
 }
 \usage{
-## S3 function to construct an object of class \code{Coverscale}
+## S3 function to construct an object of class 'Coverscale'
 Coverscale(name, codes, lims)
 
-## S4 method for \code{Vegsoup*} objects
+## S4 getter method for 'Vegsoup*' objects
 coverscale(obj)
 
-## S4 replacement method for \code{Vegsoup*} objects
+## S4 replacement method for 'Vegsoup*' objects
 coverscale(obj) <- value
 
-## S4 methods for \code{Coverscale} objects
+## S4 methods for 'Vegsoup*' objects
 is.ordinal(obj)
 
 is.continuous(obj)
@@ -97,10 +97,6 @@ Coverscale("counts", NULL, NULL)
 as(list("myscale", LETTERS[1:5], seq(20, 100, 20)), "Coverscale")
 
 data(testdata)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }

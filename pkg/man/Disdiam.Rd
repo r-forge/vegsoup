@@ -2,53 +2,32 @@
 \docType{methods}
 \alias{Disdiam}
 \alias{Disdiam-methods}
-\alias{Disdiam,VegsoupDataPartition-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-function to do
-}
+\title{ Dissimilarity Diameters of a Partition }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Calculates the diameter (maximum within-cluster dissimilarity) of all partitions, as well as the average diameter across all partitions using function \code{\link[optpart:disdiam]{disdiam}} of package \pkg{optpart}.
 }
 \usage{
 Disdiam(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
+  \item{ obj }{
+    An object inherting from class \code{'VegsoupPartition'}.
+  }
+  \item{ \dots }{
+    Arguments passed to optpart::disdiam.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\code{Disdiam} is a cluster validation routine. See \code{\link[optpart:disdiam]{disdiam}} for details.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Interface for vegsoup to function \code{disdiam} by Dave Roberts provided with package optpart.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{Silhouette}}
 }
+\keyword{ methods }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

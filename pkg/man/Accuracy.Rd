@@ -1,15 +1,15 @@
 \name{Accuracy}
 \alias{Accuracy}
-\title{ Accuracy Statistics for Objects of class VegsoupDataPartition }
+\title{ Accuracy Statistics for Objects of class VegsoupPartition }
 \description{
-  \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupDataPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. compoarison (predicted) class memberships (\code{obj2}), and calculates a range of statistics about prediction accuracy.
+  \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. compoarison (predicted) class memberships (\code{obj2}), and calculates a range of statistics about prediction accuracy.
 }
 \usage{
   Accuracy(obj1, obj2)
 }
 \arguments{
-    \item{obj1}{an object of class \code{\link{VegsoupDataPartition}}. }
-    \item{obj2}{a second object of class \code{\link{VegsoupDataPartition}} to compare to \code{obj1}. }
+    \item{obj1}{an object of class \code{\link{VegsoupPartition}}. }
+    \item{obj2}{a second object of class \code{\link{VegsoupPartition}} to compare to \code{obj1}. }
 }
 \value{
 A list with the following components:

@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{Confus}
 \alias{Confus-methods}
-\title{ Confusion Matrix for Objects of class VegsoupDataPartition }
+\title{ Confusion Matrix for Objects of class VegsoupPartition }
 \description{
 Cross-classifies each partitioning vector by actual class membership and predicted membership, computing overall accuracy, and the Kappa statistic of agreement.
 }
@@ -10,11 +10,11 @@ Cross-classifies each partitioning vector by actual class membership and predict
   Confus(obj1, obj2)
 }
 \arguments{
-    \item{obj1}{an object of class \code{\link{VegsoupDataPartition}}. }
-    \item{obj2}{a second object of class \code{\link{VegsoupDataPartition}} to compare to \code{obj1}. }
+    \item{obj1}{an object of class \code{\link{VegsoupPartition}}. }
+    \item{obj2}{a second object of class \code{\link{VegsoupPartition}} to compare to \code{obj1}. }
 }
 \details{
-Method \code{Confus} takes two objects inheriting from class \code{\link{VegsoupDataPartition}} (\code{obj1} and \code{obj2}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. comparison (predicted) class memberships (\code{obj2}), and calculates the Kappa and Goodman-Kruskal lambda statistics.
+Method \code{Confus} takes two objects inheriting from class \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj2}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. comparison (predicted) class memberships (\code{obj2}), and calculates the Kappa and Goodman-Kruskal lambda statistics.
 }
 \value{
 A list with the following components:
@@ -32,7 +32,7 @@ Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classi
 Roland Kaiser
 }
 \seealso{
-\code{\link{VegsoupDataPartition}},\code{\link{confus}} in package \pkg{optpart} and \code{\link{crosstable.statistics}} and \code{\link{associations}} in package \pkg{polytomous}, \code{\link{Association}}, \code{\link{Accuracy}} and \code{\link{Confus}} in package 'Vegsoup'. 
+\code{\link{VegsoupPartition}},\code{\link{confus}} in package \pkg{optpart} and \code{\link{crosstable.statistics}} and \code{\link{associations}} in package \pkg{polytomous}, \code{\link{Association}}, \code{\link{Accuracy}} and \code{\link{Confus}} in package 'Vegsoup'. 
 }
 \examples{
 

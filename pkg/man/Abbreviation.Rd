@@ -45,15 +45,11 @@ Roland Kaiser
 \examples{
 library(vegsoup)
 
-data(testdata)
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 Abbreviation(dta)
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\keyword{ method }
 
-
-\keyword{method}
-\keyword{classes}% __ONLY ONE__ keyword per line
