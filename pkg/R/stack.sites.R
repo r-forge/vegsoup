@@ -5,7 +5,6 @@ stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE)
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
 }
-
 if (!missing(file)) {
 	if (is.character(file)) {
 		if (csv2) {
@@ -24,7 +23,6 @@ if (!missing(file)) {
 			stop("please supply a data.frame or use file argument")	
 	}
 }
-
 if (length(schema) > 1) {
 	schema <- schema[1]
 	warning("use only first argument of schema", schema)	
@@ -32,9 +30,13 @@ if (length(schema) > 1) {
 
 stopifnot(!is.na(match(schema, names(x))))	
 
-#	all columns must be of mode character to  use stack()
+if (!length(unique(x$plot)) == nrow(x))	{
+	stop("schema column is not unique")
+}
+#	all columns must be of mode character to use stack()
 res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
 	colClasses = "character")
+res[,1] <- type.convert(res[,1]) #	leading zeros!
 	
 res.stack <- stack(res, stringsAsFactors = FALSE)
 
@@ -49,10 +51,11 @@ res.stack <- data.frame(
 res.stack <- res.stack[order(res.stack$plot),]
 res.stack[is.na(res.stack)] <- ""
 
+res.stack[,1]
+
 if (any(res.stack$plot == "")) {
 	stop("please review your data")
 }
-	
 rownames(res.stack) <- 1:nrow(res.stack)
 res <- res.stack
 

@@ -7,9 +7,9 @@ setMethod("richness",
     signature(obj = "Vegsoup"),
 	function (obj, choice = c("dataset", "sample"), ...) {
 		#	obj = sub
-		CHOICE <- c("dataset", "sample")
+		CHOICES <- c("dataset", "sample")
 		if (missing(choice)) choice <- "dataset"
-		choice <- CHOICE[pmatch(choice, CHOICE)]
+		choice <- CHOICES[pmatch(choice, CHOICES)]
 		if (is.na(choice)) {
 			choice <- "dataset"
 		}		
@@ -18,6 +18,37 @@ setMethod("richness",
 		}, "sample" = {
 		#	slow but reliable	
 			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
+		})		
+
+		return(res)
+	}
+)
+
+setMethod("richness",
+    signature(obj = "VegsoupPartition"),
+	function (obj, choice = c("dataset", "sample", "partition"), ...) {
+		#	obj = sub
+		CHOICES <- c("dataset", "sample", "partition")
+		if (missing(choice)) choice <- "dataset"
+		choice <- CHOICES[pmatch(choice, CHOICES)]
+		if (is.na(choice)) {
+			choice <- "dataset"
+		}		
+		switch(choice, "dataset" = {
+			res <- length(unique(DecomposeNames(obj)$abbr))
+		}, "sample" = {
+		#	slow but reliable	
+			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
+		}, "partition" = {
+		#	also not very fast?	
+			res <- as.logical(Layers(obj, aggregate = "layer", verbose = FALSE))
+			res <- sapply(1:getK(obj),
+				function (x) {
+					tmp <- res[Partitioning(obj) == x, ]
+					sum(colSums(tmp) > 0)
+				}
+			)
+			names(res) <- 1:getK(obj)
 		})		
 
 		return(res)

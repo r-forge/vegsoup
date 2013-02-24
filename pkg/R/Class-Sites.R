@@ -26,13 +26,12 @@ setMethod("initialize",
 		data <- as.data.frame(
 			as.matrix(data), stringsAsFactors = FALSE)		
 		names(data)[1:3] <- c("plot", "variable", "value")
-		data <- data[order(data$plot, data$variable), ]
 		
-#		if (any(regexpr("[[:alpha:]]", data$plot) < 1)) {
-#				warning("\n ... plot identifier contains only numbers, ", 
-#					"\nbut will be coerced to character!", call. = FALSE)	
-			data$plot <- as.character(data$plot)
-#		}
+		###	order		
+		#	was: data <- data[order(data$plot, data$variable), ]
+		
+		data$plot <- as.character(data$plot)
+
 		.Object@data <- data	
 	return(invisible(.Object))
 	}

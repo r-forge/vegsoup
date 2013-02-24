@@ -27,14 +27,12 @@ setMethod("initialize",
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
-		#	order
-		data <- data[order(data$plot, data$layer, data$abbr), ]
 		
-#		if (any(regexpr("[[:alpha:]]", data$plot) < 1)) {
-#				warning("\n ... plot identifier contains only numbers, ",
-#					"\nbut will be coerced to character!", call. = FALSE)	
-#				data$plot <- as.character(data$plot)
-#		}			
+		###	order
+		#	was: data <- data[order(data$plot, data$layer, data$abbr), ]
+		
+		data$plot <- as.character(data$plot)
+				
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
 		input <- data[ ,c(1,2,3)]

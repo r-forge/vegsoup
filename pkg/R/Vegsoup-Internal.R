@@ -147,7 +147,7 @@
 ".rpoisppSites" <- function (x) {
 	require(spatstat)
 	require(maptools)
-	n <- length(unique(x$plot))
+	n <- length(unique(x$plot)) # must be unique!
 	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
 	pts <- as.SpatialPoints.ppp(pts)
 	pts <- SpatialPointsDataFrame(pts,
@@ -172,6 +172,12 @@
 
 #	try to find coordinates, otherwise generate random points
 
+#	y <- Y@data
+#	foo <- reshape(y[, 1:3],
+#		direction = "wide",
+#		timevar = "variable",
+#		idvar = "plot")
+	
 ".find.coordinates" <- function (y, proj4string, ...) {
 	verbose = FALSE	
 	lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
@@ -226,7 +232,7 @@
 			} else {
 				lnglat.test <- FALSE
 				lnglat.sim <- TRUE			
-				warning("\n did not succeed!",
+				warning("did not succeed!",
 					" Some coordinates seem to be doubled.",
 					"\n problematic plots: ",
 					paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]),
@@ -237,7 +243,7 @@
 			#	set falgs
 			lnglat.test <- FALSE
 			lnglat.sim <- TRUE			
-			warning("\n did not succeed!",
+			warning("did not succeed!",
 				"\n longitude and latitude do not match in length", call. = FALSE)
 		}
 
@@ -262,18 +268,18 @@
 						stringsAsFactors = FALSE))
 			sp.polygons <- spChFIDs(sp.polygons, x = ids)				
 		} else {		
-			warning("\n ... not a complete coordinates list",
-				"use random pattern instead", call. = FALSE)
-			tmp <- .rpoisppSites(x)	
+			warning("not a complete coordinates list",
+				" use random pattern instead", call. = FALSE)
+			tmp <- .rpoisppSites(y)	
 			sp.points <- tmp[[1]]
 			sp.polygons <- tmp[[2]] 
 		}	
 	} else {
 	#	or simulate	
-		warning(paste("\n SpatialPoints and SpatialPolygons missing",
-			"use random pattern"), call. = FALSE)
+		warning("spatialPoints and SpatialPolygons missing",
+			" use random pattern", call. = FALSE)
 			lnglat.sim <- TRUE
-			tmp <- .rpoisppSites(x)	
+			tmp <- .rpoisppSites(y)	
 			sp.points <- tmp[[1]]
 			sp.polygons <- tmp[[2]]
 	}

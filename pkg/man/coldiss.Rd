@@ -4,31 +4,35 @@
 \alias{coldiss-method}
 
 \title{
-Plots of the Dissimilarity Matrix of an Object of class VegsoupData*
+Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
 }
 \description{
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-heatmap(obj, colors, byrank = TRUE, diag = FALSE, ordered.only = FALSE, translate = FALSE, ...)
+heatmap(obj, colors, byrank = TRUE, diag = FALSE, seriation,
+        ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
-  \item{obj}{
-An object of class \code{VegsoupData*}.
+  \item{ obj }{
+An object of class \code{Vegsoup*}.
 }
-  \item{colors}{
+  \item{ colors }{
 The number of colors, or a vector of colors. See \sQuote{Details}.
 }                          
-  \item{byrank}{
+  \item{ byrank }{
 Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equal-length intervals.
 }                          
-  \item{diag}{
+  \item{ diag }{
 Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
 }                          
-  \item{ordered.only}{
+  \item{ method }{
+Method argument passed to \code{\link{seriation}}.
+}                          
+  \item{ ordered.only }{
 Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
 }
-  \item{translate}{
+  \item{ translate }{
 Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE} and only applies if additional argument \code{mode} is supplied and it's value is \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
 }
   \item{\dots}{
@@ -54,8 +58,8 @@ Borcard, D., Gillet, F., and Legendre, P. (2011). Numerical Ecology with R. Spri
 library(vegsoup)
 data(testdata)
 
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
-		scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc, sts, txa,
+		coverscale = "braun.blanquet")
 
 coldiss(dta) # default
 

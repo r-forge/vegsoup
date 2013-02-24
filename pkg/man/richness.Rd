@@ -2,30 +2,36 @@
 \alias{richness}
 \alias{richness-method}
 
-\title{ Dataset or Sample Richness of an Object of Class VegsoupData* }
+\title{ Species Richness of an Object of Class Vegsoup* }
 \description{
-Retrieve dataset or sample richness.
+Retrieve dataset, sample or grouped species richness.
 }
 \usage{
+
+## S4 method for class Vegsoup
 richness(obj, choice = c("dataset", "sample"), ...)
+
+## S4 method for class VegsoupPartition
+richness(obj, choice = c("dataset", "sample", "partition"), ...)
+
 }
 
 \arguments{
   \item{obj}{
-an object of class \code{VegsoupData*}.
+A \code{Vegsoup*} object.
 }
   \item{choice}{
-Return either dataset or sample richness, defaults to \code{"dataset"}. Partial matches are allowed.
+Return either dataset or sample richness, defaults to \code{"dataset"}. Partial matches are allowed. Objects of class \code{"VegsoupPartition"} accept  an additional option \code{choice = "partition"}. This returns .
 }
   \item{\dots}{
 Not implemented.
 }
 }
 \details{
-Dataset richness is defined as the number of species (discarding layer duplicates) found in the data set. Sample richness is the number of species per sample (plot). In order to calculate correct species richness, when the object has more than one layer, all occurences of a particular species in different layers are collapsed to one.
+Dataset richness is defined as the number of species (discarding layer duplicates) found in the data set. Sample richness is the number of species per sample (plot) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed to one.
 }
 \value{
-A numeric vector of suitable size with names taken from the object if \code{choice = "sample"}.
+A numeric vector of suitable size with names taken from the object, except \code{choice = "dataset"}, where names are meaningless
 }
 \author{
 Roland Kaiser
@@ -36,7 +42,7 @@ Roland Kaiser
 \examples{
 library(vegsoup)
 data(testdata)        
-dta <- VegsoupData(Vegsoup(species, sites, taxonomy,
+dta <- VegsoupDataVegsoup(species, sites, taxonomy,
 	scale = list(scale = "Braun-Blanquet")))
 	
 richness(dta) # default choice = "dataset"

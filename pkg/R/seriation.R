@@ -5,7 +5,7 @@ setGeneric("seriation",
 )
 setMethod("seriation",
     signature(obj = "Vegsoup"),
-	function (obj, method, ...) {
+	function (obj, method, mode, ...) {
 	
 	if (missing(method)) {
 		method  <- "dca"
@@ -13,12 +13,16 @@ setMethod("seriation",
 		METHODS <- c("dca", "hclust", "ward", "flexible", "packed")
 		method <- match.arg(method, METHODS)
 	}
+	if (!missing(mode)) {
+		MODES <- c("R", "Q")
+		mode <- match.arg(toupper(mode), MODES)
+	}
 	
 	si.dis <- as.dist(obj, "logical")
-	sp.dis <- as.dist(obj, "logical", mode = "R")
+	sp.dis <- as.dist(obj, "logical", mode = "R")	
 	
 	switch(method, dca = {
-		use <- try(decorana(as.matrix(obj)), silent = TRUE, ...)
+		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
 		if (inherits(use, "try-error")) {
 			use <- NULL
 		}	
@@ -53,13 +57,45 @@ setMethod("seriation",
 	   		sp.ind <- agnes(sp.dis, method = "flexible",
 	   			par.meth = c(alpha, alpha, beta, 0))$order
 		}, packed = {
-			si.ind <- order(rowSums(dta, "logical"), decreasing = TRUE)
-			sp.ind  <- order(colSums(dta, "logical"), decreasing = TRUE)
+			si.ind <- order(rowSums(obj), decreasing = TRUE)
+			sp.ind  <- order(colSums(obj), decreasing = TRUE)
 		}
 	)
 
-	res <- obj[si.ind, sp.ind]
+	if (!missing(mode)) {
+		if (mode == "R") {
+			res <- obj[, sp.ind]	
+		}
+		if (mode == "Q") {
+			res <- obj[si.ind, ]
+		}
+	} else {	
+		res <- obj[si.ind, sp.ind]
+	}
+	
 	return(res)
 
 	}
 )
+
+setMethod("seriation",
+    signature(obj = "VegsoupPartition"),
+	function (obj, method, mode, ...) {
+		tmp <- lapply(1:getK(obj), function (x) obj[Partitioning(obj) == x, ])
+		tmp <- sapply(tmp, function (x) seriation(as(x, "Vegsoup"), ...)) 
+		res <- new("VegsoupPartition", do.call("rbind", tmp))
+		res@k <- getK(obj)
+		# this seems to be save based on lapply(1:getK(obj), ...)
+		res@part <- sort(Partitioning(obj)) 		
+		return(res)
+	}
+)
+
+
+
+
+
+
+
+
+		

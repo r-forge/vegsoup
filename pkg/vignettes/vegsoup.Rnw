@@ -13,24 +13,20 @@
 %\usepackage[left=25mm,right=20mm,top=35mm,bottom=35mm]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{shapes}
+\usepackage{Sweave}
 
 \author{Roland Kaiser}
 \title{Classes and methods for phytosociology \\
-Version 0.1-4}
+Version 0.1-7}
 
-% \renewcommand{\Sinput}[1]{\small{\color{#1}{rgb}{0,0,0.56}}}
-% \definecolor{Sinput}{rgb}{0,0,0.56}
-% \definecolor{Scode}{rgb}{0,0,0.56}
-% \definecolor{Soutput}{rgb}{0.56,0,0}
-% \usepackage{Sweave}
-\usepackage{SweaveC}
+
 
 \begin{document}
 %\setkeys{Gin}{width=\textwidth}
 <<prep, echo=FALSE>>=
 options(width=100,digits=2)
 @
-%Sys.setlocale("LC_TIME", "de_DE.iso8859")
+%Sys.setlocale("LC_TIME", "de_AT.UTF-8")
 
 \maketitle
 
@@ -46,7 +42,7 @@ vignette('vegsoup')
 
 \section{Introduction}
 
-Many data sets do not easily fit into a single data frame. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows.
+%Many data sets do not easily fit into a single data frame. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows.
 
 The best way to introduce the functionalities of the package is a session with example code.
 
@@ -64,7 +60,7 @@ If you want to change this use:
 Vegsoup()
 @
 
-\bibliographystyle{ecol_let}
-\bibliography{vegdata}
+%\bibliographystyle{ecol_let}
+%\bibliography{vegdata}
 
 \end{document}

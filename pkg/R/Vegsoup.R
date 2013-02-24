@@ -21,7 +21,7 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		stop("\nsites are missing!")	
 	} else {
 		if (class(y) == "Sites") {
-			y <- sites(y)
+			y <- sites(y) # formats numbers? 
 		} else {
 			y <- sites(new("Sites", data = y))
 		}	
@@ -48,13 +48,19 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 	}
 		
 	#	intersect x, y and z
-	if (length(unique(x$plot)) != length(unique(y$plot))) {
-		sel <- intersect(sort(unique(x$plot)), sort(unique(y$plot)))
+	#	equal length
+	xx <- sort(unique(x$plot))
+	yy <- sort(unique(y$plot))
+	test <- !isTRUE(identical(xx, yy))	
+	
+	if (test) {
+		sel <- xx[xx == yy]
 		x <- x[which(x$plot %in% sel), ]
 		y <- y[which(y$plot %in% sel), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
-		warning("\n... unique(x$plot) and unique(y$plot) do not match in length, ",
-			"\n some plots were dropped!", call. = FALSE)		
+		warning("unique(x$plot) and unique(y$plot) do not match, ",
+			"had to drop plots: \n",
+			paste(xx[xx != yy], collapse = ", "), call. = FALSE)
 	}
 		
 	if (missing(coverscale)) {
@@ -62,8 +68,8 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 			("\nno cover scale provided")	
 		}
 		if (is.character(x$cov)) {
-			warning("\n interpret abundance values as character",
-			"\n set cover scale to default 9 point Braun-Blanquet scale")
+			warning("interpret abundance values as character",
+			"\n set cover scale to default 9 point Braun-Blanquet scale", call. = FALSE)
 			xs <- Coverscale("braun.blanquet")
 		} else {
 			cat("\n cover seems to be numeric")
@@ -99,7 +105,6 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 	} else {
 		#	stopifnot(!is.null(names(group)))
 		if (inherits(group, "numeric")) {
-		#	group.names <- names(group)
 			group <- as.integer(group)
 			names(group) <- unique(x$plot)
 		} else {
@@ -117,18 +122,15 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		y <- as.data.frame(as.matrix(y),
 			stringsAsFactors = FALSE)
 	}
-	
-	#	order sites
-	#y <- y[order(y$plot, y$variable), ]
-	
+
 	#	cast sites data	
 	#	replace missing values
 	if (any(y[, 3] == "") | any(is.na(y[, 3]))) {
 		y[y[, 3] == "", 3] <- 0
 		y[is.na(y[, 3]), 3] <- 0
 		if (verbose) {
-		cat("\n NAs and empty fields (\"\") in supplied sites data",
-			" filled with zeros", call. = FALSE)
+			cat("\n NAs and empty fields (\"\") in supplied sites data",
+			"filled with zeros")
 		}
 	}
    	
@@ -137,17 +139,9 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		timevar = "variable",
 		idvar = "plot")   
 	
-	y[is.na(y)] <- 0
+	y[is.na(y)] <- 0 # needed?
 	
 	#	change column mode to numeric if possible
-	#	supress warning messages caused by as.numeric(x) 
-	#	needs a work around because longitude is coreced to numeric
-	#	because of similiarity to scientifiuc notion (13.075533E)
-	
-	
-	#	use type.convert!
-	#y[] <- lapply(y, type.convert)
-
 	options(warn = -1)
 	y <- as.data.frame(
 		sapply(y,
@@ -161,7 +155,7 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		stringsAsFactors = FALSE)
 	options(warn = 0)
 
- 	#	groome names
+ 	#	groome names from reshape
  	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
     #	assign row names
 	rownames(y) <- y$plot
@@ -169,6 +163,8 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 	#	order to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
+	#	needs a work around because longitude is coreced to numeric
+	#	because of similiarity to scientifiuc notion (13.075533E)	
 	sel <- grep("longitude", names(y))
 	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
 	

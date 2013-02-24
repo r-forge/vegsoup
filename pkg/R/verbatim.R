@@ -1,4 +1,3 @@
-
 #	function to import monospaced commuity tables
 read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "–", "_"), verbose = TRUE, species.only = FALSE) {
 
@@ -57,14 +56,14 @@ if (length(replace) > 0) {
 el <- sapply(txt, nchar, USE.NAMES = FALSE)
 
 #	find also uncomplete lines not representing data
-#	for example, lines consiting of only spaces
+#	for example, lines consisting of only spaces
 ul <- el < median(el) & el != 0
 #	hook keywords
 ul[hks] <- FALSE
 el <- el == 0
 el[ul] <- TRUE
 
-#	over long lines
+#	trim over long lines
 txt <- str_trim(txt, side = "right")
 
 #	select elements with species abundances
@@ -83,9 +82,19 @@ t.txt <- txt[sel1]
 a.txt <- txt[sel2]
 
 #	test
-if (length(unique(sapply(t.txt, nchar))) > 1) {
+test <- sapply(t.txt, nchar)
+if (length(unique(test)) > 1) {
 	stop("length of characters",
-		" is not the same for all lines!")
+		" is not the same for all lines!",
+		call. = FALSE)
+}
+test <- sapply(a.txt, nchar)
+if (length(unique(test)) > 1) {
+	stop("length of characters",
+		" is not the same for all lines!",
+		"\n please inspect line(s) ", which(test != median(test)),
+		" in HEADER",
+		call. = FALSE)
 }
 
 #	a mono spaced type matrix
@@ -122,7 +131,7 @@ if (verbose) {
 }
 	
 if (length(test) > 0) {
-	warning("some mono type character columns deviate from expected pattern\n")
+	warning("some mono type character columns deviate from the expected pattern\n")
 	for (i in test) {
 		#	missing dot
 		if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
@@ -136,15 +145,16 @@ if (length(test) > 0) {
 				"in species",
 				txa[which(val[,i] != " ")],
 				"in column", i + (first.dot - 1))			
-		}
-		
+		}		
 	}
-	stop("\nplease review your data and apply changes")
+	stop("\nplease review your data and apply necessary changes")
 } else {
 	if (verbose) {
 		cat("\nfound no obvious errors in species data block",
-			"\nskip", table(n.space)[2], "columns of blanks",
-			"and retain", dim(val[, n.space == 0])[2], "columns of data")	
+			"\nskip",
+			 ifelse(is.na(table(n.space)[2]), 0, table(n.space)[2]),
+			 "columns of blanks",
+			 "and retain", dim(val[, n.space == 0])[2], "columns of data")	
 	}
 }
 
@@ -217,9 +227,8 @@ for (i in par) {
 		apply(y[y[, 1] == i, -1], 2, function (x) {
 			paste(x, collapse = "")			
 		}))
-	attr[[i]] <- type.convert(tmp)	
+	attr[[i]] <- type.convert(tmp) # this will drop leading zeros!	
 }
-
 
 #	finally assign abbr to rownames and turn into matrix
 #	test if rownames can be assigned
@@ -227,7 +236,7 @@ if (length(unique(x[, 1])) != nrow(x) & !has.layers & !species.only) {
 	warning("\nspecies are not unique.",
 		" is the data structured in layers?",
 		"\nreturn vector of species instead of matrix")
-	x <- (txa)	
+	x <- txa	
 } else {
 	if (species.only) {
 		x <- (txa)		
@@ -264,56 +273,114 @@ print.VegsoupVerbatim <- function (x) {
 }
 
 #	function to append to class VegsoupVerbatim
-read.verbatim.append <- function (x, file, abundance = "+") {
+read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"), collapse = ",", abundance) {
+
+require(stringr)
 
 if (!inherits(x, "VegsoupVerbatim")) {
 	stop("plaese supply an object of class VegsoupVerbatim")	
 }
 if (missing(file)) {
-	stop("plaese supply a path to a file")
+	stop("please supply a path to a file")
+}
+if (missing(mode)) {
+	mode = "plots"
+	warning("missing mode, but set mode to", mode, call. = FALSE)	
+} else {
+	MODES <- c("plots", "species", "layers")
+	mode <- match.arg(mode, MODES)
+	if (mode == "layers") {
+		stop("mode \"layers\" not yet implemented!", call. = FALSE)
+	}
 }
 if (!missing(abundance)) {
 	stopifnot(length(abundance) == 1)
-	abundance <- as.character(abundance)
+	if (mode == 1) {
+		abundance <- as.character(abundance)	
+	}
+	if (mode == 2) {
+		abundance <- as.logical(abundance)	
+	}
+} else {
+	if (mode == 1) {
+		abundance = "+"
+	}
+	if (mode == 2) {
+		if (abundance == FALSE) {
+			abundance = "+"
+		}
+	}			
 }
 
 #	save attributes
 attr <- attributes(x)
 
-con <- file(file)
-	txt <- readLines(con)
-close(con)
+txt <- readLines(file.path(file))
 
 txt <- sapply(txt, function (x) {
-	strsplit(x, ":", fixed = TRUE)
-}, USE.NAMES = FALSE)	
+		strsplit(x, ":", fixed = TRUE)
+	}, USE.NAMES = FALSE)
 
+#	plain and simple uses dummy abundance
+if (mode == "species") {
+	rn <- str_trim(unlist(lapply(txt, "[[", 1)))
+	xx <- gsub("[[:blank:]]", "", unlist(lapply(txt, "[[", 2)))
+	xx <- strsplit(xx, collapse, fixed = TRUE)
+	names(xx) <- rn	
+	y <- matrix(".", nrow = length(xx), ncol = ncol(x))
+	colnames(y) <- colnames(x)
+	rownames(y) <- rn
 
-rn <- str_trim(unlist(lapply(txt, "[[", 1)))
-xx <- gsub("[[:blank:]]", "", unlist(lapply(txt, "[[", 2)))
-xx <- strsplit(xx, ",")
-names(xx) <- rn
+	for (i in 1:length(xx)) {
+		#	i = 1
+		ii <- match(names(xx)[i], rownames(y))
+		stopifnot(length(ii) == 1)
+		jj <- match(xx[[i]], colnames(y))
 
-y <- matrix(".", nrow = length(xx), ncol = ncol(x))
-colnames(y) <- colnames(x)
-rownames(y) <- rn
-
-for (i in 1:length(xx)) {
-	#	i = 1
-	ii <- match(names(xx)[i], rownames(y))
-	stopifnot(length(ii) == 1)
-	jj <- match(xx[[i]], colnames(y))
-
-	y[ii, jj] <- "+"
+		y[ii, jj] <- abundance
+	}
 }
+
+#	more structred, uses given abundance, but no layers
+if (mode == "plots") {
+	cn <- str_trim(unlist(lapply(txt, "[[", 1)))
+	xx <- str_trim(unlist(lapply(txt, "[[", 2)))
+	xx <- sapply(strsplit(xx, collapse, fixed = TRUE), str_trim)
+	tmp <- vector("list", length = length(xx))
+	names(tmp) <- type.convert(cn) # handle leading zeros as in read.verbatim!
+
+	for (i in 1:length(xx)) {
+		#	i = 26
+		ll <- sapply(xx[[i]], nchar)
+		tmp[[i]] <- list(
+			str_trim(substring(xx[[i]], 1, ll - 1)),
+			substring(xx[[i]], ll, ll))
+	}
+	
+	rn <- unique(unlist(lapply(tmp, "[[", 1)))
+	y <- matrix(".", nrow = length(rn), ncol = ncol(x))
+	colnames(y) <- colnames(x)
+	rownames(y) <- rn
+	
+	for (i in 1:length(tmp)) {
+		#	i = 27
+		for (j in seq(along = tmp[[ i ]][[1]])) {
+			#	j = 1
+			ii <- match(tmp[[ i ]][[1]][ j ], rownames(y))
+			jj <- match(names(tmp)[[ i ]], colnames(y))
+			y[ii, jj] <- ifelse(abundance == TRUE, tmp[[ i ]][[2]][j], abundance)
+		} 
+	}		
+}	
 
 test <- intersect(rownames(x), rownames(y))
 if (length(test) != 0) {
-	stop("some species in file are already prsent in object x: ", test)
+	stop("some species in file are already present in object x: ", test)
 }
 x <- rbind(x, y)
 
 class(x) <- c("matrix", "VegsoupVerbatim")
 attributes(x) <- c(attributes(x), attr[-c(1:2)])
+
 return(x)	
 }

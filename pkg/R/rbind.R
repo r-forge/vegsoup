@@ -1,7 +1,9 @@
 ###	warning layers must be equal!!!
 #	rbind like method to fuse objects
 ".rbind.Vegsoup" <- function (..., deparse.level = 1) {
+
 	allargs <- list(...)
+	
 	#	allargs <- list(gk, rx)
 	
 	#	test if all objects have the same abundance scale

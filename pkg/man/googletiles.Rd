@@ -45,11 +45,13 @@ URL protocol style. Currently only google maps API (\code{'google'}) or OpenStre
 }
 }
 \details{
-All current tile server expect tiles to be served up at URLs following a specific schema and any software that request such tiles selects the relevant ones for display to be within a spatial bounding box. It follows that the unique specifier of a particular tile must hold information of the spatial extent of that tile. The idea about the here provided functions is to use the world wide unique tile specifier used by popular map providers (google maps, OpenStreetMap) and any other interfaces to their services, to obtain coordinates for objects that need to be geo-referenced. Such needs arise when herbarium vouchers are vegetation plots are referenced. Often the textual description of a location is vague and coordinates can only be determined with uncertainty. Reporting such uncertainties is essential and should always be done. Nevertheless this requires an estimate of uncertainty which by itself can't be determined objectively and is associated with additional labour.
+All current tile server expect tiles to be served up at URLs following a specific schema and any software that request such tiles selects the relevant ones for display to be within a spatial bounding box. It follows that the unique specifier of a particular tile has intrinsic information of the spatial extent of that tile.
 
-Using a web development tool such as firebug it is intuitive and convenient to inspect all the URLs (each tile equals a single request to be sent to the tile server) that are constructed when map scene is displayed. From the development tool console each URL request for each tile can be highlighted by moving the mouse pointer over the map (click firebug's inspect button). It then needs just copy and paste of the relevant part of the url specifying the highlighted tile. The relevant part looks like \code{"x=35144&s=&y=22834&z=16"} and may have an additional argument \code{&s=} which is usually empty. OpenStreetMap encodes the same tile as \code{"src="http://a.tile.openstreetmap.org/16/35144/22834.png""} where the essential part is \code{"16/35144/22834"}. Getting back to the discussion about coordinate uncertainty, it is convienient to use the zoom level to get a value for the coordinate precision. This is straight forward, as each zoom level is associated with a specific scale.
+The idea about the here provided functions is to use the world wide unique tile specifier used by popular map providers (google maps, OpenStreetMap) and direct interfaces to their services, to obtain coordinates for objects that need to be geo-referenced. Such needs arise when herbarium vouchers or vegetation plots are referenced. Often the textual description of a location is vague and coordinates can only be determined with uncertainty. Reporting such uncertainties is essential and should always be done. Nevertheless this requires an estimate of uncertainty which by itself can't be determined objectively and is associated with additional labour (measuring tool).
 
-Function \code{str2latlng} accepts such a string and returns the corner, or center coordinates (see argument \code{offset} and below). If argument \code{xyz} contains more than one URL request of the protocol exemplified above in a single character element (a series of copy and paste), and each separated with a user defined special character (see argument \code{sep}), the function will return the centroid coordinates of all tiles involved. The same applies if \code{xyz} is a character vector of length longer than 1 and where each element is a valid argument to \code{xyz}.
+Using a web development tool such as firebug it is intuitive and convenient to inspect all the URLs (each tile equals a single request to be sent to the tile server) that are constructed when map scene is displayed on scrren. From the development tool console each URL request for each tile can be highlighted by moving the mouse pointer over the map (click firebug's inspect button). It then needs just copy and paste of the relevant part of the url specifying the highlighted tile. The relevant part looks like \code{"x=35144&s=&y=22834&z=16"} and may have an additional argument \code{&s=} which is usually empty. OpenStreetMap encodes the same tile as \code{"src="http://a.tile.openstreetmap.org/16/35144/22834.png""} where the essential part is \code{"16/35144/22834"}. Getting back to the discussion about coordinate uncertainty, it is convienient to use the zoom level to obtain a surrogate of coordinate precision. This is straight forward, as each zoom level is associated with a specific scale following a power law.
+
+Function \code{str2latlng} accepts parts of an URL as outlined above and returns the corner or center coordinates of the specified tile (see argument \code{offset} and below). If argument \code{xyz} contains more than one URL request of the protocol exemplified above in a single character element (a series of copy and paste), and each separated with a user defined special character (see argument \code{sep}), the function will return the centroid coordinates of all tiles involved. The same applies if \code{xyz} is a character vector of length longer than 1, where each element is a valid single argument to \code{xyz}.
 
 Function \code{tile2latlng} provides an interface where \code{x}, \code{y} and \code{z} can be specified separately and \code{latlng2tile} performs the reverse operation.
 
@@ -60,12 +62,12 @@ A numeric vector having latitude and longitude at first, respectively, second po
 }
 \references{
 
-See the open street map wiki for all details about the tile protocol.
+See the open street map wiki for all details about tile protocols.
 
 \url{http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames}
 }
 \author{
-Roladn Kaiser
+Roland Kaiser
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~

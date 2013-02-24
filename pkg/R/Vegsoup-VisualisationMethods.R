@@ -53,7 +53,7 @@ setMethod("plot",
 }
 )
 
-".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, ordered.only = FALSE, translate = FALSE, ...) {
+".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) { 
 # adapted for vegsoup from function coldiss()
 # Color plots of a dissimilarity matrix, without and with ordering
 #
@@ -73,8 +73,13 @@ setMethod("plot",
 		} else {
 			cr <- colors
 		}
+	}	
+	if (missing(method)) {
+		use.seriation = FALSE
+	} else {
+		use.seriation = TRUE
 	}
-			
+	
 	D <- as.dist(obj, ...)
 	D.labels <- attributes(D)$Labels
 	
@@ -86,8 +91,13 @@ setMethod("plot",
 	D.cr <- dmat.color(1 - D,
 		byrank = ifelse(byrank, TRUE, FALSE),
 		colors = cr)
-
-	D.order <- order.single(1 - D)
+	
+	if (use.seriation) {
+		D.order <- match(rownames(seriation(obj, method = method)), rownames(obj))
+	} else {
+		D.order <- order.single(1 - D)	
+	}
+	
 	D.cr.order <- D.cr[D.order, D.order]
 	
 	if (!ordered.only) op <- par(mfrow = c(1,2), pty = "s")	

@@ -1,3 +1,8 @@
+setMethod("write.verbatim",
+   signature(obj = "VegsoupPartition"),
+		.write.verbatimVegsoup
+)
+
 #	to do: add column for indicator value, high priority!
 
 .latexVegsoupPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {

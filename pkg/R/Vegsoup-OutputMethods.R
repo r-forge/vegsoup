@@ -1,8 +1,12 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoup <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, add.lines = FALSE, latex.input = FALSE) {
+.write.verbatimVegsoup <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE) {
+
+require(stringr)
 	
-if (class(obj) != "Vegsoup") {
-	stop("verbatim is currently only implemented for class Vegsoup?")
+if (class(obj) == "Vegsoup" | class(obj) == "VegsoupPartition") {
+	
+} else {
+	stop("verbatim is currently only implemented for class Vegsoup and VegsoupPartition?")
 }
 
 if (missing(file)) {
@@ -18,11 +22,32 @@ if (missing(select)) {
 	select <- apply(as.matrix(Sites(obj)), 2,
 		function (x) is.numeric(type.convert(x, as.is = FALSE)))
 } else {
-	if (any(is.na(names(obj)[select]))) {
-		stop("select must match columns in Sites(obj)")
+	if (is.numeric(select)) {
+		if (any(is.na(names(obj)[select]))) {
+			stop("select must match columns in Sites(obj)")
+		}
+	}
+	if (is.character(select)) {
+		select <- match(select, names(obj))
+		if (any(is.na(select))) {
+			stop("select must match columns in Sites(obj)")
+		}
 	}
 }
-require(stringr)
+if (missing(rule) & class(obj) != "VegsoupPartition") {
+	rule <- FALSE
+} else {
+	if (class(obj) == "Vegsoup") {
+		stopifnot(length(rule) == nrow(obj))
+		rule.col <- cumsum(rle(rule)$lengths)
+		rule <- TRUE
+	}	
+	if (class(obj) == "VegsoupPartition" & missing(rule)) {
+		rule.col <- cumsum(rle(Partitioning(obj))$lengths)
+		rule <- TRUE
+	}	
+}
+
 #	width of layer codes
 nchar.layer <- max(sapply(Layers(obj), nchar))
 
@@ -109,16 +134,21 @@ z[1,1] <- format("plot", width = nchar(taxon[1]))
 #	combine parts
 res <- rbind(z, y, x)
 
+#	add vertical rule
+if (isTRUE(rule)) {
+	#	rule.ind
+	newcol <- rule.col + (ncol(res) - nrow(obj)) # left most colums
+	res <- res[, sort(c(1:ncol(res), newcol))]
+	res[, newcol + 1:getK(obj)] <- "|"	
+}
+
 #	paste columns to lines
 res <- cbind(
 	as.vector(apply(res[, c(1,2)], 1,
 		function (x) paste0(x, collapse = ""))),
 	as.vector(apply(res[, -c(1,2)], 1,
-		function (x) paste0(x, collapse = collapse))))
-		
+		function (x) paste0(x, collapse = collapse))))		
 res <- apply(res, 1, function (x) paste0(x, collapse = ""))
-
-apply(z, 1, function (x) paste(x, collapse = ""))
 
 #	add keywords
 zy <- 1:(nrow(z) + nrow(y))

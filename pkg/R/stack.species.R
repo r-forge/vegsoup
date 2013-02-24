@@ -55,6 +55,11 @@ comment <- grep("comment", names(x))
 sel <- c(max(c(abbr, layer, comment)) + 1):ncol(x)
 xx <- x[, sel]
 
+#	check unique column labels
+if (!length(unique(names(xx)) == ncol(xx)))	{
+	stop("plot columns are not unique")
+}
+
 plot <- rep(names(xx), each = nrow(xx))
 abbr <- rep(as.character(x$abbr), ncol(xx))
 layer <- rep(as.character(x$layer), ncol(xx))

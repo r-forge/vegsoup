@@ -15,14 +15,14 @@ URL: http://vegsoup.r-forge.r-project.org/
 LazyLoad: yes
 LazyData: yes
 Collate: AAA.R
+         Vegsoup-Internal.R
          Vegsoup-Import.R
          googletiles.R
          stack.species.R
          reshape.species.R
          stack.sites.R
          stack.coordinates.R
-         read.verbatim.R
-         Vegsoup-Internal.R
+         verbatim.R
          Class-Species.R
          Class-Sites.R
          Class-Taxonomy.R
@@ -31,8 +31,11 @@ Collate: AAA.R
          SpeciesTaxonomy-Methods.R
          Class-Coverscale.R
          Class-Vegsoup.R
-         names.R
+         Class-VegsoupPartition.R
+         Class-VegsoupOptimstride.R
+         Class-VegsoupPartitionFidelity.R
          Vegsoup.R
+         names.R
          species.R
          sites.R
          taxonomy.R
@@ -49,12 +52,12 @@ Collate: AAA.R
          seriation.R
          richness.R
          stride.R
-         Vegsoup-BaseMethods.R
          rbind.R
+         indpower.R
+         indspc.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R
-         Class-VegsoupPartition.R
          VegsoupPartition.R
          VegsoupPartition-BaseMethods.R
          VegsoupPartition-AssociationMethods.R
@@ -63,9 +66,7 @@ Collate: AAA.R
          VegsoupPartition-OutputMethods.R
          VegsoupPartition-OutputMethodsMore.R
          VegsoupPartition-VisualisationMethods.R
-         Class-VegsoupPartitionFidelity.R
          VegsoupPartitionFidelity-BaseMethods.R
-         Class-VegsoupOptimstride.R
          OptimStride.R
          VegsoupOptimstride-BaseMethods.R
          Coverscale-Methods.R

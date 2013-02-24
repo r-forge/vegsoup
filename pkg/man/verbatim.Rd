@@ -21,67 +21,86 @@ Read or Write Monospaced Community Tables From or To Plain Text Files
   read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
            species.only = FALSE, verbose = TRUE)
   
-  read.verbatim.append(x, file, abundance = "+")
+  read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
+           collapse = ",", abundance)
 
   write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
-           abbreviate = TRUE, short.names = FALSE, add.lines = FALSE)
+           abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE,
+           latex.input = FALSE)
 }
 
 \arguments{
 ## Arguments to function \code{read.verbatim}
-\item{file}{
+\item{ file }{
 A character string. A path to a text file.
 }
-\item{colnames}{
+\item{ colnames }{
 A character string to be searched for in the header section and used to assign plot names. See \sQuote{Details}.
 }
-\item{layers}{
+\item{ layers }{
 A named list giving start and end indices of to assign a layer to each species, or a vector of characters of length according to the number of species in the data set. See \sQuote{Examples}.
 }
-\item{replace}{
+\item{ replace }{
 A vector of characters to be replaced by blanks. Note, both the hyphen and dash characters are defined in default set. See \sQuote{Details}.
 }
-\item{species.only}{
+\item{ species.only }{
 Just return a vector of species extracted from the data set.
 }
 \cr
 ## Arguments to function \code{read.verbatim.append}
-\item{x}{
+\item{ x }{
 An object of class \code{VegsoupVerbatim} as created by calls to function \code{read.verbatim}
 }
-\item{abundance}{
-A vector to be coerced to \code{as.character}. Defaults to \code{"+"} and applied to all observations.
+\item{ file }{
+A character string. A path to a text file.
+}
+\item{ file }{
+An integer specifying how the input file is organized. If missing defaults to \code{mode = 1}. See \sQuote{Details}.
+}
+\item{ collapse }{
+Character used as separator between successive species. Defaults to \code{","}.
+}
+\item{ mode }{
+Mode defining how the species occurrences in rows are organized. See \sQuote{Details}.
+}
+\item{ abundance }{
+For \code{mode = "species"} a single \code{character} to be applied to all observations giving an dummy cover value. Defaults to \code{"+"}.
+For \code{mode = "plots"} either \code{TRUE} or \code{FALSE} and specifying if the character found after the species name should be treated as a cover value. See \sQuote{Details}. If \code{abundance = FALSE} the defaults of \code{mode = "species"} apply with no option to override it, but setting \code{abundance} to any value (e.g. \code{"+"}) will use that value.
 }
 \cr
-## Arguments for S4 method \code{write.verbatim}
-\item{obj}{
+## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
+\item{ obj }{
 An object of class \code{VegsoupData}.
 }
-\item{file}{
+\item{ file }{
 A file name to output results.
 }
-\item{select}{
-Indices to columns in Sites(obj) to be incorporated in the header section. Beware, this only makes sense for numeric or short string variables (e.g. slope aspect)!
+\item{ select }{
+Character vector matching \code{names(obj)} or indices to columns in Sites(obj) to select information to be incorporated in the header section. Beware, this only makes sense for numeric (e.g. elevation) or short string variables (e.g. slope aspect)!
 }
-\item{absence}{
+\item{ absence }{
 Character to code absences, defaults to \code{"."}.
 }
-\item{collapse}{
+\item{ collapse }{
 Character to be used as separator in columns of abundances (plots).
 }
-\item{pad}{
+\item{ pad }{
 Integer specifying the number of blanks to add to taxon names (right side) and layers string (both sides), defaults to 1.
 }
-\item{abbreviate}{
+\item{ abbreviate }{
 Truncate abundance values to width 1 using abbreviate(x, minlength = 1, strict = TRUE).
 }
-\item{short.names}{
+\item{ rule }{
+Integer vector of length equal to the number of plots \code{nrow(obj)}.
+The lengths of runs of equal values in this vector are used to insert vertical rule mimicked by the pipe gylph (\code{'|'}).
+}
+\item{ short.names }{
 Use taxon abbreviation instead of long scientific names. Dots are converted to blanks.
 }
-\item{add.lines}{
+\item{ add.lines }{
 Add blank lines separating header section.
 }
-\item{latex.input}{
+\item{ latex.input }{
 Warp output in LaTex verbatim environment.
 }
 }
@@ -107,9 +126,11 @@ The S3 function \code{read.verbatim()} makes the following additional assumption
 
 Plot identifiers can be assigned using one of the attributes on the resulting object or by supplying an argument \code{colnames}.
 
-It is often the case that rare species are only given in the table footer but not in the main table. The function \code{read.verbatim.append()} takes an object created by calls to \code{read.verbatim()} and adds species given in argument \code{file}. It requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and separated with commas   (\sQuote{,}). All spaces found after the colon will be discarded. See \sQuote{Examples} for a valid input file.
+It is often the case that rare species are only given in the table footer but not in the main table. The function \code{read.verbatim.append()} takes an object created by calls to \code{read.verbatim()} and adds species given in argument \code{file}. The function currently accepts two formats specified by argument \code{mode}. Input files in \code{mode = "species"} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and separated with commas (see argument \code{collapse}). All spaces found after the colon will be discarded. See \sQuote{Examples} for a valid input file in species mode. Files applicable to \code{mode = "plots"} have plots (must match \code{colnames(x)}) in each row, followed by a colon. Note, if the plot identifier can be interpreted as numeric leading zeros are stripped of. This is also the behavior of \code{read.verbatim}. The part after the colon has to be an enumeration of taxa for a respective plot; again separated by argument \code{collapse}. If argument \code{abundance} is \code{TRUE} the single last character after the species name is treated as an abundance value. \code{mode = "layers"} allows also a layer to be parsed.
 
-Finally the S4 method \code{write.verbatim()} creates output honoring the set of definitions given above. See \sQuote{Arguments} for possible customization of the output file. Changes of the order
+Finally the S4 method \code{write.verbatim()} creates output honoring the set of definitions given above. See \sQuote{Arguments} for possible customization of the output file. If called on an object of class \code{"VegsoupPartition"} argument \code{rule} is taken form \code{Partitioning(obj)}. To get partition aligned properly it might be necessary to apply \code{seriation(obj)} beforehand.
+
+The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
 }
 
 \value{
@@ -121,7 +142,7 @@ Finally the S4 method \code{write.verbatim()} creates output honoring the set of
 \note{
 It is hard to avoid typos when editing mono spaced table structures, especially, when the are a lot of rows and columns. The human eye easily gets impaired by the overwhelming number of values. The \code{read.verbatim} function will report any instance that is not valid and diagnostic messages are printed to the console to aid the user in correcting the input file. The probability of typos increases if there are columns of spaces separating columns of data.
 
-The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
+Leading zeros in \code{ colnames } if it can be coerced to \code{as.numeric}, as well as in the header block as a whole, are not preserved but are subject to a call to \code{\link{type.convert}}!
 }
 
 \author{
@@ -130,98 +151,97 @@ Roland Kaiser
 \references{
 The demonstration data set used in the example is taken from:
 
-Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (Carex curvula ssp. rosae, Carex curvula ssp. curvula) aus den Alpen - ein Beitrag zur Klärung eines alten ökologischen Rätsels. Phytocoenologia, 21:91–116.
+Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen – ein Beitrag zur Klärung eines alten ökologischen Rätsels. Phytocoenologia, 21:91–116.
 
-The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main table. Species names were taxonomically interpretetd to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequnency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the appendix in the data source.
+The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
 }
 \examples{
-	library(vegsoup)
-	require(stringr)
+library(vegsoup)
+require(stringr)
 
-	file <- system.file("extdata", "Erschbammer1992Tab4.txt",
-		package = "vegsoup")
-	x <- read.verbatim(file)
-	class(x)
-	head(x)
-
-	# assign plot ids using attributes
-	colnames(x) <- attributes(x)$"Aufnahme Nr." #German for relevee number
-	head(x)  
-	dim(x)
-
-	# or in one step
-	x <- read.verbatim(file, "Aufnahme Nr.")
-	head(x)
-
-	# add species from table footer
-	file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
+file <- system.file("extdata", "Erschbammer1992Tab4.txt",
 	package = "vegsoup")
-	x <- read.verbatim.append(x, file)
-	tail(x)
-	# 68 species were added
-	dim(x)
+x <- read.verbatim(file)
+class(x)
+head(x)
 
-	# turn into long format
-	x.df <- data.frame(abbr = rownames(x), layer = "hl", comment = NA, x,
-		check.names = FALSE)
-	# promote to class "Species"
-	X <- stack.species(x.df)
+# assign plot ids using attributes
+colnames(x) <- attributes(x)$"Aufnahme Nr." #German for relevee number
+head(x)  
+dim(x)
 
-	#	sites data including coordinates
-	file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
-	package = "vegsoup")
-	Y <- read.delim(file, colClasses = "character")
-	names(Y)[1] <- "plot"
-	# promote to class "Sites"
-	Y <- stack.sites(Y)
+# or in one step
+x <- read.verbatim(file, "Aufnahme Nr.")
+head(x)
 
-	# taxonomy reference list
-	file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
-	package = "vegsoup")
-	Z <- read.delim(file, colClasses = "character")
-	#	promote to class Taxonomy
-	Z <- taxonomy(Z)
+# add species from table footer
+file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
+                    package = "vegsoup")
+x <- read.verbatim.append(x, file)
+tail(x)
+# 68 species were added
+dim(x)
 
-	# groome abundance scale codes to fit the standard
-	X$cov <- gsub("m", "2m", X$cov)
-	X$cov <- gsub("a", "2a", X$cov)
-	X$cov <- gsub("b", "2b", X$cov)
+# turn into long format
+x.df <- data.frame(abbr = rownames(x), layer = "hl", comment = NA, x,
+                   check.names = FALSE)
+# promote to class "Species"
+X <- stack.species(x.df)
 
-	dta <- Vegsoup(X, Y, Z)
+#	sites data including coordinates
+file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
+                    package = "vegsoup")
+Y <- read.delim(file, colClasses = "character")
+names(Y)[1] <- "plot"
+# promote to class "Sites"
+Y <- stack.sites(Y)
 
-	# assign header data stored as attributes in
-	# imported original community table
-	# omit dimnames, class and plot id
-	df.attr <- as.data.frame(attributes(x)[-c(1:4)])
-	rownames(df.attr) <- colnames(x)
-	# reorder by plot
-	df.attr <- df.attr[match(rownames(dta), rownames(df.attr)), ] 
+# taxonomy reference list
+file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
+                    package = "vegsoup")
+Z <- read.delim(file, colClasses = "character")
+#	promote to class Taxonomy
+Z <- taxonomy(Z)
 
-	# give names and assign
-	dta$block <- df.attr$Block
-	dta$altitude <- df.attr$Seehöhe
-	dta$expo <- df.attr$Exposition
-	dta$cov <- df.attr$"Deckung...."
-	dta$ph <- df.attr$"ph...10.2."
+# groome abundance scale codes to fit the standard
+X$cov <- gsub("m", "2m", X$cov)
+X$cov <- gsub("a", "2a", X$cov)
+X$cov <- gsub("b", "2b", X$cov)
 
-	names(Sites(dta))
+dta <- Vegsoup(X, Y, Z)
 
-	#	plot of the dissimilarity matrix
-	coldiss(dta, diag = T)
+# assign header data stored as attributes in
+# imported original community table
+# omit dimnames, class and plot id
+df.attr <- as.data.frame(attributes(x)[-c(1:4)])
+rownames(df.attr) <- colnames(x)
+# reorder by plot
+df.attr <- df.attr[match(rownames(dta), rownames(df.attr)), ] 
 
-	# see if we can reproduce the grouping in the original table
-	prt.flx <- VegsoupPartition(dta, 3, "wards")
-	prt.org <- VegsoupPartition(dta, 3, clustering = "block")
+# give names and assign
+dta$block <- df.attr$Block
+dta$altitude <- df.attr$Seehöhe
+dta$expo <- df.attr$Exposition
+dta$cov <- df.attr$"Deckung...."
+dta$ph <- df.attr$"ph...10.2."
 
-	# block/group 3 is ambigously assigned
-	Confus(prt.flx, prt.org)
+names(Sites(dta))
 
-	# write object of class Vegsoup
-	foo <- write.verbatim(seriation(dta), file = tempfile(),
-		select = c(10,7,8,9,11))
-	foo[1:30] # resize console window
+# plot of the dissimilarity matrix
+coldiss(dta, diag = T)
+
+# see if we can reproduce the grouping in the original table
+prt.flx <- VegsoupPartition(dta, 3, "wards")
+prt.org <- VegsoupPartition(dta, 3, clustering = "block")
+
+# block/group 3 is ambigously assigned
+Confus(prt.flx, prt.org)
+
+# write object of class Vegsoup
+foo <- write.verbatim(seriation(dta), file = tempfile(),
+	select = c(10,7,8,9,11))
+foo[1:30] # resize console window
 }
-
 \seealso{
 \code{\link{SpeciesWide2SpeciesLong}}, 
 }
