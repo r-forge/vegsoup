@@ -58,6 +58,7 @@ Collate: AAA.R
          table.R
          fivenum.R
          shared.R
+         fidelity.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R
