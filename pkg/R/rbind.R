@@ -111,12 +111,13 @@
 	return(res)	    
 }
 
-#if (!isGeneric("rbind")) {
+#	Sites, Taxonomy Vegsoup have also rbind method
+if (!isGeneric("rbind")) {
 setGeneric("rbind",
 		function (..., deparse.level = 1)
 		standardGeneric("rbind"),
 		signature = "...")
-#}
+}
 
 setMethod("rbind",
     signature(... = "Vegsoup"),

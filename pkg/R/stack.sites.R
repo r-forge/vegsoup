@@ -36,7 +36,13 @@ if (!length(unique(x$plot)) == nrow(x))	{
 #	all columns must be of mode character to use stack()
 res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
 	colClasses = "character")
-res[,1] <- type.convert(res[,1]) #	leading zeros!
+
+#	leading zeros!
+res[,1] <- type.convert(res[,1])
+
+if (is.factor(res[,1])) {
+	res[,1] <- as.character(res[,1])
+}
 	
 res.stack <- stack(res, stringsAsFactors = FALSE)
 
@@ -50,8 +56,6 @@ res.stack <- data.frame(
 	stringsAsFactors = FALSE)
 res.stack <- res.stack[order(res.stack$plot),]
 res.stack[is.na(res.stack)] <- ""
-
-res.stack[,1]
 
 if (any(res.stack$plot == "")) {
 	stop("please review your data")

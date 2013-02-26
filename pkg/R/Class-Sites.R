@@ -89,3 +89,21 @@ setMethod("show",
 		print(head(object@data, n = 6L))
     }
 )
+".rbind.Sites" <- function (..., deparse.level = 1) {
+	allargs <- list(...)
+	#allargs <- list(sts, sts.xy)	
+	res <- do.call("rbind", lapply(allargs, sites))
+	return(sites(res))
+
+}
+#	Sites, Taxonomy Vegsoup have also rbind method
+if (!isGeneric("rbind")) {
+setGeneric("rbind",
+		function (..., deparse.level = 1)
+		standardGeneric("rbind"),
+		signature = "...")
+}
+setMethod("rbind",
+    signature(... = "Sites"),
+	.rbind.Sites
+)	

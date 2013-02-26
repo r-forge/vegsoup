@@ -91,9 +91,9 @@ library(vegan)
 data(dune)
 data(dune.env)
 
-#	create species data
-#	there are two moss species in the dune data set
-#	see vector of taxon names below
+# create species data
+# there are two moss species in the dune data set
+# see vector of taxon names below
 x <- data.frame(abbr = names(dune),
 	layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
 	comment = "", t(dune))
@@ -102,8 +102,9 @@ names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
 
 spc <- stack.species(x)
 
-#	create taxonomy reference list
-#	these are the scientific names corresponding to the abbreviations in dune
+# create taxonomy reference list from scratch
+# these are the scientific names corresponding to the abbreviations in dune
+# as I understand it
 
 taxon <- c("Bellis perennis", "Leontodon autumnalis", "Poa pratensis",
 	"Trifolium repens", "Achillea millefolium", "Poa trivialis",
@@ -120,7 +121,7 @@ txa <- data.frame(abbr = unique(slot(spc, "data")$abbr), taxon)
 
 txa <- new("Taxonomy", data = txa)
 
-spc.tax <- SpeciesTaxonomy(x = spc, y = txa)
+spc.txa <- SpeciesTaxonomy(x = spc, y = txa)
 
 }
 

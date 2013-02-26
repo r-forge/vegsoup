@@ -3,11 +3,11 @@
 \docType{class}
 \alias{taxonomy}
 \alias{Taxonomy-class}
-\alias{[,Taxonomy-method}
+\alias{[,Taxonomy,ANY,ANY,missing-method}
+\alias{$,Taxonomy-method}
+\alias{rbind,Taxonomy-method}
 \alias{taxonomy,Taxonomy-method}
-\alias{taxonomy,data.frame-method}
-\alias{taxonomy,matrix-method}
-
+\alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
 
 \title{Class \code{"Taxonomy"}}
 \description{
@@ -53,19 +53,24 @@ Data representation of taxonomic reference list.
         evaluate to an object with less than two columns will fail,
         due to the class inherent data model (see \sQuote{Slots}).
     }
+    \item{ rbind }{
+      \code{signature(x = "Taxonomy")}:
+        \code{rbind} method to combine two or more objects. If there are any
+        duplicates in the \code{'abbr'} key column only one instance is kept,
+        the first one!.
+    }
   }
 }
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \seealso{
-\code{\linkS4class{SpeciesTaxonomy}}
-and function \code{\link{SpeciesTaxonomy}},
-\code{\linkS4class{Species}},
-\code{\linkS4class{Sites}}
-\code{\link{tax}}
+  \code{\linkS4class{SpeciesTaxonomy}}
+  and function \code{\link{SpeciesTaxonomy}},
+  \code{\linkS4class{Species}},
+  \code{\linkS4class{Sites}}
+  \code{\link{tax}}
 }
 \examples{
+require(vegsoup)
 showClass("Taxonomy")
 
 data(testdata)
@@ -78,5 +83,12 @@ obj <- taxonomy(as.matrix(txa))
 
 #	get slot data from object
 class(taxonomy(txa))
+
+# combine objects
+data(bigtestdata)
+
+obj2 <- taxonomy(txa.big)
+
+rbind(obj, obj2)
 }
-\keyword{classes}
+\keyword{ classes }

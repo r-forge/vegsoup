@@ -2,12 +2,12 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{Species-class}
-\alias{species}
-\alias{[,Species-method}
+\alias{[,Species,ANY,ANY,missing-method}
+\alias{$,Species-method}
+\alias{$<-,Species-method}
+\alias{rbind,Species-method}
 \alias{species,Species-method}
-\alias{species,data.frame-method}
-\alias{species,matrix-method}
-
+\alias{species<-,SpeciesTaxonomy,Species-method}
 
 \title{Class \code{"Species"}}
 
@@ -48,8 +48,8 @@
 
 \section{Slots}{
   \describe{
-    \item{\code{data}:}{Object of class \code{"data.frame"}
-      with at least four columns named
+    \item{ \code{data}: }{
+      Object of class \code{"data.frame"} with at least four columns named
       \code{'plot'}, \code{'abbr'}, \code{'layer'} and \code{'cov'}.
     }
   }
@@ -83,15 +83,21 @@
         Retreive column by name, or perform replacement.
         See \code{\link{Extract.data.frame}}.
     }
+    \item{ rbind }{
+      \code{signature(x = "Species")}:
+        \code{rbind} method to combine two or more objects.
+    }
   }
 }
+
 \section{Details}{
   The initialization step for the class involves some basic checks of data
   integrity. If duplicated species are identified for a specific plot a
   warning is issued and duplicates are dropped automatically. The same applies
   to duplicated species abundances for plots. Finally an ordering of the form
-  and \code{order(plot, layer, data)} is performed. None of the first four columns
-  can contain \code{NA}, as this will not allow a valid object of the class to be built. 
+  and \code{order(plot, layer, data)} is performed. None of the first four
+  columns can contain \code{NA}, as this will not allow a valid object of the
+  class to be built.
 }
 \section{Note}{
   The design of the class, especially the initialization method, allows data
@@ -105,20 +111,18 @@
   (see\code{\link{make.cepnames}}). Depending on the number of taxa that need
   to be encoded, another block of four letters might be necessary, in order to
   reference lower taxonomic ranks, or to make non unique abbreviations unique.
-
 }
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \seealso{
-\code{\link{stack.species}},
-\code{\linkS4class{SpeciesTaxonomy}}
-and function \code{\link{SpeciesTaxonomy}},
-\code{\linkS4class{Taxonomy}},
-\code{\linkS4class{Sites}},
-\code{\linkS4class{Vegsoup}}
+  \code{\link{stack.species}},
+  \code{\linkS4class{SpeciesTaxonomy}}
+  and function \code{\link{SpeciesTaxonomy}},
+  \code{\linkS4class{Taxonomy}},
+  \code{\linkS4class{Sites}},
+  \code{\linkS4class{Vegsoup}}
 }
 \examples{
+require(vegsoup)
 showClass("Species")
 
 data(testdata)
@@ -131,5 +135,14 @@ obj <- species(as.matrix(spc))
 
 # get slot data from object
 class(species(obj))
+
+# combine objects
+data(bigtestdata)
+
+obj2 <- species(spc.big)
+
+obj <- rbind(obj, obj2)
+
 }
-\keyword{classes}
+\keyword{ classes }
+

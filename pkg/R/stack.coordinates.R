@@ -36,7 +36,6 @@ if (any(is.na(test))) {
 
 pt <- readOGR(dsn, layer, ...)
 
-
 pt <- spTransform(pt, CRS("+init=epsg:4326"))
 
 #	can be simplified!

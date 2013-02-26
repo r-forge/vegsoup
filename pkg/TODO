@@ -7,6 +7,8 @@ noquote for print method (e.g. as.matrix)
 extend slot partition to contain class dendrogram
 
 # minor
+
+tools::showNonASCII(readLines(f))
 rename
 layer to stratum
 cov to abu(dance)

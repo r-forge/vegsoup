@@ -1,12 +1,10 @@
-\name{latlng2tile}
+\name{tile2latlng}
 \alias{latlng2tile}
 \alias{tile2latlng}
 \alias{str2latlng}
 \alias{whatshere2lnglat}
 
-\title{
-Geocoding Using Tile Map Service Protocol
-}
+\title{ Geocoding Using Tile Map Service Protocol }
 \description{
 There are several ways to obtain coordinates for biological observations. This set of functions provides quick and dirty geocoding functionality using the grid scheme of tile map services such as google map tiles or OpenStreetMap.
 }
@@ -62,7 +60,7 @@ A numeric vector having latitude and longitude at first, respectively, second po
 }
 \references{
 
-See the open street map wiki for all details about tile protocols.
+See the open street map wiki for all details about the tile protocols.
 
 \url{http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames}
 }
@@ -70,7 +68,8 @@ See the open street map wiki for all details about tile protocols.
 Roland Kaiser
 }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{read.verbatim}}
+\code{\link{elevation}}
 }
 \examples{
 # a unique tile given coordiantes and zoom level 

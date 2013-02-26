@@ -2,6 +2,15 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{SpeciesTaxonomy-class}
+\alias{species,SpeciesTaxonomy-method}
+\alias{species<-,SpeciesTaxonomy,data.frame-method}
+\alias{species<-,SpeciesTaxonomy,Species-method}
+\alias{Species<-,Vegsoup,SpeciesTaxonomy-method}
+\alias{taxonomy,SpeciesTaxonomy-method}
+\alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
+\alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
+\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
+\alias{rbind,SpeciesTaxonomy-method}
 
 \title{Class \code{"SpeciesTaxonomy"}}
 
@@ -56,6 +65,10 @@ A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
         Accessor method for slot \code{taxonomy}
         returning a \code{data.frame}.
     }
+    \item{ rbind }{
+      \code{signature(x = "SpeciesTaxonomy")}:
+      \code{rbind} method to combine two or more objects.
+    }
   }
 }
 
@@ -86,10 +99,7 @@ A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
     }
   }
 }
-
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \seealso{
   \code{\link{SpeciesTaxonomy}},
   \code{\linkS4class{Sites}},
@@ -97,6 +107,7 @@ Roland Kaiser
   \code{\link{taxval}}
 }
 \examples{
+require(vegsoup)
 showClass("SpeciesTaxonomy")
 
 data(testdata)
@@ -118,5 +129,14 @@ obj2
 # first three
 species(obj3) <- species(obj3)[c(1:10, 15:20), ]
 obj3
+
+# combine objects
+data(bigtestdata)
+
+obj1 <- SpeciesTaxonomy(spc, txa)
+obj2 <- SpeciesTaxonomy(spc.big, txa.big)
+
+obj <- rbind(obj1, obj2)
+
 }
 \keyword{classes}

@@ -48,6 +48,7 @@ exportMethods(
     "decostand",
     "dim",
     "Disdiam",
+    "elevation",
     "Fidelity",
     "FisherTest",
     "getDistconnected",

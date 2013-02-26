@@ -36,6 +36,7 @@ setMethod("initialize",
 		} else {
 			names(data)[1:2] <- c("abbr", "taxon")
 		}
+		stopifnot(length(unique(data$abbr)) == nrow(data))
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
 		#	alphabetic order
@@ -95,4 +96,26 @@ setMethod("$", "Taxonomy",
 		}
 		return(x@data[[name]])
 	}
-)    	
+)
+".rbind.Taxonomy" <- function (..., deparse.level = 1) {
+	allargs <- list(...)	
+	res <- do.call("rbind", lapply(allargs, taxonomy))
+	
+	if (!length(unique(res$abbr)) == nrow(res)) {
+		warning("intersecting taxa abbreviations ('abbr') found.",
+			" Drop what is doubled!", call. = FALSE)
+		res <- unique(res)
+	}
+	return(taxonomy(res))
+}
+#	Sites, Taxonomy Vegsoup have also rbind method
+if (!isGeneric("rbind")) {
+setGeneric("rbind",
+		function (..., deparse.level = 1)
+		standardGeneric("rbind"),
+		signature = "...")
+}
+setMethod("rbind",
+    signature(... = "Taxonomy"),
+	.rbind.Taxonomy
+)	    	

@@ -235,7 +235,7 @@ setMethod("Association",
 	likelihood.ratio <- 2 * sum(chisq.results$observed * log(chisq.results$observed / chisq.results$expected))
 	alpha.G2 <- pchisq(likelihood.ratio, df = (X.rows - 1) * (X.cols - 1), lower = FALSE)
 
-	#	Cramér's V
+	#	Cramer's V
 	cramers.v <- sqrt(chisq.results$statistic / (N*(min(X.rows, X.cols) - 1)))
 	names(cramers.v) <- NULL
 

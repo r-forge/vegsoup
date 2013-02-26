@@ -3,6 +3,8 @@
 \docType{class}
 \alias{sites}
 \alias{Sites-class}
+\alias{$,Sites-method}
+\alias{rbind,Sites-method}
 \alias{sites,Sites-method}
 
 \title{Class \code{"Sites"}}
@@ -51,17 +53,20 @@
       Promote \code{matrix} to object of class \code{"Sites"}
       Note, \code{obj} does not need to have \code{dimnames}.
     }
+    \item{ rbind }{
+      \code{signature(x = "Sites")}:
+        \code{rbind} method to combine two or more objects.
+    }
   }
 }
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \seealso{
-\code{\link{stack.sites}}
-\code{\linkS4class{Species}}
-\code{\linkS4class{Vegsoup}}
+  \code{\link{stack.sites}}
+  \code{\linkS4class{Species}}
+  \code{\linkS4class{Vegsoup}}
 }
 \examples{
+require(vegsoup)
 showClass("Sites")
 
 showClass("Species")
@@ -76,5 +81,13 @@ obj <- sites(as.matrix(sts))
 
 # get slot data from object
 class(sites(sts))
+
+# combine objects
+data(bigtestdata)
+
+obj2 <- sites(sts.big)
+
+obj <- rbind(obj, obj2)
+
 }
-\keyword{classes}
+\keyword{ classes }

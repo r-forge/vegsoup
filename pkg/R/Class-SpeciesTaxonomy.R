@@ -63,7 +63,24 @@ setReplaceMethod("taxonomy",
 		taxonomy = value)
 	}
 )
-
+".rbind.SpeciesTaxonomy" <- function (..., deparse.level = 1) {
+	allargs <- list(...)
+	#allargs <- list(obj1, obj2)
+	x <- do.call("rbind", sapply(lapply(allargs, species), species))
+	z <- do.call("rbind", sapply(lapply(allargs, taxonomy), taxonomy))
+	return(SpeciesTaxonomy(x, z))
+}
+#	Sites, Taxonomy Vegsoup have also rbind method
+if (!isGeneric("rbind")) {
+setGeneric("rbind",
+		function (..., deparse.level = 1)
+		standardGeneric("rbind"),
+		signature = "...")
+}
+setMethod("rbind",
+    signature(... = "SpeciesTaxonomy"),
+	.rbind.SpeciesTaxonomy
+)	 	  
 #setMethod("[",
 #    signature(x = "SpeciesTaxonomy",
 #    i = "ANY", j = "ANY", drop = "missing"),
@@ -73,8 +90,6 @@ setReplaceMethod("taxonomy",
 #)    	
 
 #	initialize method is wrapped in function SpeciesTaxonomy
-#A virtual class is a class for which it is not possible to create objects!
-# but methods can be defined
 
 #setClass("SpeciesTaxonomyVirtual",
 #	representation = representation("VIRTUAL")	
