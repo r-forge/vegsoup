@@ -1,6 +1,7 @@
 \name{Species-class}
 \Rdversion{1.1}
 \docType{class}
+\alias{species}
 \alias{Species-class}
 \alias{[,Species,ANY,ANY,missing-method}
 \alias{$,Species-method}

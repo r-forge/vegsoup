@@ -37,6 +37,7 @@ Collate: AAA.R
          Class-VegsoupOptimstride.R
          Class-VegsoupPartitionFidelity.R
          Vegsoup.R
+         instantsoup.R
          names.R
          species.R
          sites.R

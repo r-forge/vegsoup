@@ -52,6 +52,11 @@
       \code{signature(obj = "matrix")}:
       Promote \code{matrix} to object of class \code{"Sites"}
       Note, \code{obj} does not need to have \code{dimnames}.
+
+      \code{signature(obj = "character")}:
+        Supply a file to be read by \code{read.csv} and promote that object to
+        class \code{"Sites"}. Remember to pass appropriate arguments to
+        \code{\link{read.csv}} that meet the specifications of your file.
     }
     \item{ rbind }{
       \code{signature(x = "Sites")}:

@@ -1,6 +1,6 @@
 ###	generating function
 #	to do: improve documentation
-Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", col.names = NULL, verbose = FALSE) {
+Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", verbose = FALSE) {
 	
 	if (missing(x)) {
 		stop("\nspecies are missing!")	

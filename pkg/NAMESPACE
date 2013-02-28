@@ -62,6 +62,7 @@ exportMethods(
     "Indpower",
     "Indspc",
     "Indval",
+#    "instant",
     "Isamic",
     "is.continuous",
     "is.ordinal",

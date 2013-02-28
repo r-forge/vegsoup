@@ -71,6 +71,13 @@ setMethod("taxonomy",
     	data = as.data.frame(obj, stringsAsFactors = FALSE))
     }    
 )
+setMethod("taxonomy",
+    signature(obj = "character"),
+    function (obj, ...) {
+    	new("Taxonomy",
+    	data = read.csv(obj, ...))
+    }    
+)
 setMethod("show",
     signature(object = "Taxonomy"),
     function (object) {
