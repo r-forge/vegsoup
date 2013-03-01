@@ -8,12 +8,12 @@
 #	representation = representation("VIRTUAL")	
 #)
 
-Instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
+instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
 	
 	if (missing(coverscale)) {
 		coverscale = "braun.blanquet"
 	}
-	#folder <- "~/Documents/vegsoup-data/barmstein dta"
+	#folder <- "~/Documents/vegsoup-data/hohewand dta"
 	files <- list.files(folder)
 	paths <- list.files(folder, full.names = TRUE)
 	

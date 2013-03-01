@@ -12,14 +12,20 @@
 
 #	to do: add column for indicator value, high priority!
 .FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
-#	debug
-#	binary = FALSE; obj = prt; group = NULL; method = "r.g"	
+#	obj <- prt
+#	method = "TCR"
+#	group = NULL; nboot = 0; alpha = 0.05; c = 1; fast = FALSE; verbose = TRUE
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
 }
 	
 if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
+	if (!is.null(decostand(obj)) & method == "TCR") {
+		warning("TCR is not defined for standardized data!",
+			"\nset decostand(obj) <- NULL", call. = FALSE)
+		decostand(obj) <- NULL
+	}
 	if (verbose) {
 		cat("\n individual based index\n")
 	}
@@ -339,7 +345,6 @@ cos.g <- function (sav, gmv, group = NULL) {
 	return(r)
 }
 
-
 #	Bruelheide's corrected u value
 u.s <- function (sav, gmv, group = NULL) {
 
@@ -367,7 +372,6 @@ u.s <- function (sav, gmv, group = NULL) {
 	if (!is.null(group)) r <- r[group,]
 	return(r)
 }
-
 
 #	G statsitic
 g.s <- function (sav, gmv, group = NULL) {
@@ -438,10 +442,7 @@ chi.s <- function (sav, gmv, group = NULL) {
 	return(r)
 }
 
-#	Fisher Test
-#	apapted from isotab.R (package 'isopam')
-#	which borrowed by itself from fisher.test
-
+#	Fisher Test	apapted from isotab.R (package 'isopam')
 Fisher.s <-  function (sav, gmv, group = NULL, alternative = "greater") {
 
 	alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
@@ -529,7 +530,6 @@ Fisher.s <-  function (sav, gmv, group = NULL, alternative = "greater") {
 	return(r)
 }
 
-
 #	constancy ratio as defiuned in Willner et al. 2009
 cr.s <- function (sav, gmv, group = NULL) {
 	sav[sav > 0] <- 1
@@ -551,17 +551,16 @@ cr.s <- function (sav, gmv, group = NULL) {
 	return(r)
 }
 
-
 #	total cover ratio as defined in Willner et al. 2009
 tcr.ind.s <- function (sav, gmv, group = NULL) {
 	#	avoid ratios greater than 100
 	#	cnst[cnst > 0 & cnst < 1] <- 1
-		#	avoid high values for species with low cover
-		if (!max(sav) < 1) {
+	#	avoid high values for species with low cover
+#		if (!max(sav) < 1) {
 			r <- vapply(1:nlevels(gmv),
 				FUN = function (x) mean(sav[gmv == levels(gmv)[x]]) / max(sav),
 				FUN.VALUE = numeric(1))		
-		}
+#		}
 	if (!is.null(group)) r <- r[group]		
 	return(r)
 }
@@ -630,36 +629,36 @@ if (!is.null(group)) {
 
 cpu.time.dm <- system.time({	
 
-if (verbose) {
-	require(pbapply)
-	pboptions(char = ".")
-	dm <- t(pbapply(X, 2,
-		function (x, ...) fidelity.method(x, cluster, method, group, ...))
-		)
-} else {
-	dm <- t(apply(X, 2,
-		function (x, ...) fidelity.method(x, cluster, method, group, ...))
-		)	
-}
+	if (verbose) {
+		require(pbapply)
+		pboptions(char = ".")
+		dm <- t(pbapply(X, 2,
+			function (x, ...) fidelity.method(x, cluster, method, group, ...))
+			)
+	} else {
+		dm <- t(apply(X, 2,
+			function (x, ...) fidelity.method(x, cluster, method, group, ...))
+			)	
+	}
 
-if (is.null(group)) {
-	colnames(dm) <- levels(cluster)
-} else {
-	dm <- t(dm)
-	colnames(dm) <- group
-}
+	if (is.null(group)) {
+		colnames(dm) <- levels(cluster)
+	} else {
+		dm <- t(dm)
+		colnames(dm) <- group
+	}
 
-#	warning! shoud not happen
+	#	warning! shoud not happen
 
-dm[is.na(dm)] <- 0
+	dm[is.na(dm)] <- 0
 
-# Latex method needs rownames for indexing
-#	all.equal(rownames(dm), names(obj)) 	
+	# Latex method needs rownames for indexing
+	#	all.equal(rownames(dm), names(obj)) 	
 
-#	IndVal.g returns the square root of indval (package(labdsv))!
-if (method == "IndVal.g") {
-	dm <- dm ^ 2
-}
+	#	IndVal.g returns the square root of indval (package(labdsv))!
+	if (method == "IndVal.g") {
+		dm <- dm ^ 2
+	}
 
 })
 

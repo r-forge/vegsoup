@@ -28,8 +28,8 @@ setMethod("initialize",
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
 		
-		###	order
-		#	was: data <- data[order(data$plot, data$layer, data$abbr), ]
+		###	order, problematic for verbatim
+		#data <- data[order(data$plot, data$layer, data$abbr), ]
 		
 		data$plot <- as.character(data$plot)
 				

@@ -33,7 +33,10 @@ setGeneric("Constancy",
 setMethod("Constancy",
 	signature(obj = "VegsoupPartition"),
 	function (obj, percentage = TRUE, ...) {
-		res <- Contingency(obj) / as.vector(t(as.matrix(table(Partitioning(obj)))))
+		res1 <- Contingency(obj)
+		res2 <- matrix(as.vector(table(Partitioning(obj))),
+			nrow = ncol(obj), ncol = getK(obj), byrow = TRUE)		
+		res <- res1 / res2
 		if (percentage) {
 			res <- round(res * 100, ...)
 		}		

@@ -27,8 +27,8 @@ setMethod("initialize",
 			as.matrix(data), stringsAsFactors = FALSE)		
 		names(data)[1:3] <- c("plot", "variable", "value")
 		
-		###	order		
-		#	was: data <- data[order(data$plot, data$variable), ]
+		###	order, problematic for verbatim
+		#data <- data[order(data$plot, data$variable), ]
 		
 		data$plot <- as.character(data$plot)
 

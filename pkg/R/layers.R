@@ -5,7 +5,9 @@ if (missing(collapse) & missing(aggregate)) {
 	return(obj@layers)	
 } else {
 	if (length(obj@layers) < 2) {
-		if (verbose) warning("\n obj has already only a single layer: ", obj@layers, call. = FALSE)
+		if (verbose) {
+			warning("\n obj has already only a single layer: ", obj@layers, call. = FALSE)
+		}	
 		return(obj)
 	} else {
 	
@@ -78,7 +80,7 @@ if (missing(collapse) & missing(aggregate)) {
 	} else {
 		species$cov <- as.numeric(species$cov)
 	}
-	
+
 	#	aggregate layers
 	species  <- switch(aggregate, mean = {
 		aggregate(cov ~ plot + abbr + layer, data = species,
@@ -106,6 +108,7 @@ if (missing(collapse) & missing(aggregate)) {
 		}		
 	})
 	
+	#	must bring to order
 	species <- species[order(species$plot, species$layer, species$abbr), ]
 	
 	if (!is.null(scale@codes)) {
@@ -124,7 +127,9 @@ if (missing(collapse) & missing(aggregate)) {
 	
 	res@species <- species
 	res@layers <- unique(collapse[, 2])
-	#res <- Vegsoup(res)
+	#	ensure order
+	res@sp.points <- res@sp.points[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
+	res@sp.polygons <- res@sp.polygons[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
 	
 	return(invisible(res))
 

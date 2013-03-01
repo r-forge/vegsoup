@@ -4,7 +4,7 @@
 
 	allargs <- list(...)
 	
-	#	allargs <- list(gk, rx)
+	#	allargs <- list(dta1, dta2, dta3)
 	
 	#	test if all objects have the same abundance scale
 	test <- length(unique((sapply(allargs,
@@ -71,6 +71,7 @@
 	y <- y[, -grep("plot", names(y))]
 	#	set NAs
 	y[is.na(y)] <- 0
+	
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
