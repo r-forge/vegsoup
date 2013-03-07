@@ -18,14 +18,14 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   \item{ x }{
     Object of class \code{\linkS4class{Species}} or
     \code{\linkS4class{SpeciesTaxonomy}}.
-}
+  }
   \item{ y }{
     Object of class \code{\linkS4class{Sites}}.
-}
+  }
   \item{ z }{
     Object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
     is of class \code{"SpeciesTaxonomy"}.
-}
+  }
   \item{ folder }{
     Path to a folder with three csv files. One file named \code{species.csv}
     represents a table that can be coerced to class \code{"Species"} by
@@ -34,41 +34,40 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     list  (\code{taxonomy("./sites.csv")}). If files for species and or sites
     have the file suffix \emph{wide}, functions \code{stack.species} and
    \code{stack.sites} are called.
-}
+  }
   \item{ coverscale }{
     Abundance scale of the observations. Possible choices include all
     definitions given by \code{\link{Coverscale}}.
-}
+  }
   \item{ group }{
     A-priori grouping, if any and can be missing.
-}
+  }
   \item{ proj4string }{
     Projection attributes for slots \code{sp.points} and \code{sp.polygons}.
     If missing set to \code{CRS("+init=epsg4326")}
     (see \code{\link{proj4string}} for details).
-}
+  }
   \item{ sp.points }{
     Object of class \code{\link{SpatialPointsDataFrame}}, if missing
     coordinates are seeked in argument \code{'y'}. If coordinate information
     can not be extracted, a random point pattern in the unit square is
     generated.
-}
+  }
   \item{ sp.polygons }{
     Object of class \code{\link{SpatialPolygonsDataFrame}}, if missing
     a random polygon pattern is generated based on \code{'sp.points'} equal to
     the number of plots (samples).
-}
+  }
   \item{ sep }{
-  See \code{\link{read.csv}} for parsing of csv files. Defaults are set
-  according to \code{read.csv2}, also regarding \code{dec}!
-}
+    See \code{\link{read.csv}} for parsing of csv files. Defaults are set
+    according to \code{read.csv2}, also regarding \code{dec}!
+  }
   \item{ dec }{
-  See \code{read.csv}. 
-}
-
-  \item{verbose}{
+    See \code{read.csv}. 
+  }
+  \item{ verbose }{
     Show status reports during function call.
-}
+  }
 }
 \details{
   \code{Vegsoup()} is the generic constructor function to create a valid

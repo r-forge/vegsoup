@@ -36,8 +36,7 @@ Roland Kaiser
 }
 \examples{
 data(testdata)
-dta <- Vegsoup(spc, sts, txa,
-               coverscale = "braun.blanquet")
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 # split object in three parts
 s1 <- dta[1:2, ]

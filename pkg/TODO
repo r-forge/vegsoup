@@ -10,6 +10,8 @@ extend slot partition to contain class dendrogram
 
 # minor
 
+csv2 = TRUE to sep and dec
+
 tools::showNonASCII(readLines(f))
 rename
 layer to stratum

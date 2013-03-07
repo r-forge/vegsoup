@@ -12,10 +12,10 @@
 \alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{rbind,SpeciesTaxonomy-method}
 
-\title{Class \code{"SpeciesTaxonomy"}}
+\title{ Class \code{"SpeciesTaxonomy"} }
 
 \description{
-A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
+  A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
 }
 
 \section{Objects from the Class}{

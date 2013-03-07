@@ -33,7 +33,8 @@ Roland Kaiser
 }
 
 \seealso{
-\code{\link{Coverscale}}
+\code{\link{Coverscale}},
+\code{\link{coverscale}}
 }
 \examples{
 showClass("Coverscale")

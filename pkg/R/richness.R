@@ -19,10 +19,11 @@ setMethod("richness",
 		switch(choice, "dataset" = {
 			res <- length(unique(DecomposeNames(obj)$abbr))
 		}, "sample" = {
-		#	slow but reliable	
+			#	slow but reliable	
 			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
-		})		
-
+			#	ensure order
+			res <- res[match(rownames(obj), names(res))]
+		})
 		return(res)
 	}
 )
@@ -40,8 +41,10 @@ setMethod("richness",
 		switch(choice, "dataset" = {
 			res <- length(unique(DecomposeNames(obj)$abbr))
 		}, "sample" = {
-		#	slow but reliable	
+			#	slow but reliable	
 			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
+			#	ensure order
+			res <- res[match(rownames(obj), names(res))]			
 		}, "partition" = {
 		#	also not very fast?	
 			res <- as.logical(Layers(obj, aggregate = "layer", verbose = FALSE))
@@ -52,8 +55,7 @@ setMethod("richness",
 				}
 			)
 			names(res) <- 1:getK(obj)
-		})		
-
+		})
 		return(res)
 	}
 )

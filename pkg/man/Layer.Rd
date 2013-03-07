@@ -1,49 +1,48 @@
 \name{Layer}
 \alias{Layer}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Return Layer for Each Observation of Class extending Vegsoup
-}
+
+\title{ Return Layer for Each Species Observation of Vegsoup* objects }
 \description{
 Simply return the layer for each observation.
 }
 \usage{
 Layer(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{ a class inheriting from class \code{vegsoup}}
-  \item{\dots}{ passed from to methods}
+  \item{ obj }{
+    A \code{Vegsoup*} object
+  }
+  \item{ \dots }{
+    passed from to methods.
+  }
 }
 \details{
-Simply returns the layer for each observation, equivalent to \code{SpeciesLong(obj)\$layer}.
+  Simply returns the layer for each observation, equivalent to
+  \code{Species(obj)\$layer}.
 }
-\value{\code{Layer} returns a character vector equal in length to \code{nrow(SpeciesLong(obj)}}
-\references{
-%% ~put references to the literature/web site here ~
-}
+\value{
+  \code{Layer} returns a character vector equal in length to
+  \code{nrow(Species(obj)}}
 \author{
 Roland Kaiser %(\email{kardinal.eros@gmail.com}
 }
 \note{
-The function will be renamed to avoid typos with method \code{Layers} or even dropped -- it is not very useful?.
+  The function will be renamed to avoid typos with method \code{Layers} or
+  even dropped -- it is not very useful and simple minded?.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-\link{Vegsoup-class}
+  \code{\link{Layers}},
+  \code{\linkS4class{Vegsoup}}
 }
 \examples{
-data(bigtestdata)
-dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
-	scale = list(scale = "Braun-Blanquet")))
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
-#	see how many occurences per layer
+# check the number of occurences per layer
 table(Layer(dta))
 
-#	alternatively
-table(SpeciesLong(dta)$layer)
+# alternative
+table(Species(dta)$layer)
 }
-\keyword{methods}
-
+\keyword{ methods }

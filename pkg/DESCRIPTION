@@ -63,6 +63,7 @@ Collate: AAA.R
          shared.R
          fidelity.R
          KML.R
+         shape.species.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
          Vegsoup-VisualisationMethods.R

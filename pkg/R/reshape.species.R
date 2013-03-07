@@ -1,6 +1,5 @@
-
 #	reshape tables where layers are in seperate columns
-reshape.species <- function (x, file, schema, csv2 = TRUE, verbose = TRUE) {
+reshape.species <- function (x, file, schema, sep = ";", dec = ",", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frmae or a csv file")	
@@ -8,13 +7,8 @@ if (missing(x) & missing(file)) {
 
 if (!missing(file)) {
 	if (is.character(file)) {
-		if (csv2) {
-			x <- read.csv2(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		} else {
-			x <- read.csv(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		}
+		x <- read.csv(file, stringsAsFactors = FALSE,
+			check.names = FALSE, sep = sep, dec = dec)
 	}
 } else {
 	if (is.data.frame(x) & missing(file)) {
@@ -60,3 +54,4 @@ res <- res[order(res$plot, res$abbr, res$layer),]
 res <- new("Species", data = res)
 return(invisible(res))
 }
+

@@ -38,7 +38,7 @@ A Numeric of length 1 and in the range of 0 and 1. See \sQuote{Details}.
   \item{ sep }{
 A character serving as sperator if \code{xyz} is a single string composed of more than one snippets of URL requests. See \sQuote{Details}.
 }
-  \item{ sep }{
+  \item{ style }{
 URL protocol style. Currently only google maps API (\code{'google'}) or OpenStreetMap API (\code{'OSM'}).
 }
 }
