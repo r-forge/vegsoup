@@ -4,14 +4,14 @@
 \alias{Fidelity-methods}
 \alias{FisherTest}
 \alias{FisherTest-methods}
-\alias{FisherTest,VegsoupDataPartition-method}
 \alias{Phi}
 \alias{Phi-methods}
-\alias{Phi,VegsoupDataPartition-method}
+\alias{Indval}
+\alias{Indval-methods}
 
 \title{ Calculate Fidelity Values }
 \description{
-Function \code{Fidelity} calculates fidelity values between two vectors for object inheriting \code{'VegsoupPartition'} and returns an extended object of class \code{\linkS4class{VegsoupPartitionFidelity}}. Method \code{Phi} calculates the phi Statistic acording to \code{\link[phi:optpart]{phi}} in \pkg{optpart}. Method \code{FisherTest} is a bit faster alternative to \code{Fidelity(obj, method = "fisher")}. \code{Phi} is also slightly faster compared to \code{\link{Fidelity}}. Both do not return an \code{'VegsoupPartitionFidelity'} object.
+Function \code{Fidelity} calculates fidelity values between two vectors for object inheriting \code{'VegsoupPartition'} and returns an extended object of class \code{\linkS4class{VegsoupPartitionFidelity}}. Methods \code{Phi} and \code{Indval} calculates the phi statistics acording to \code{\link[phi:optpart]{indval}} in package \pkg{optpart}. \code{IndVal} is a wrapper for \code{\link[phi:optpart]{indval}} of package \pkg{labdsv}. Method \code{FisherTest} is a bit faster alternative to \code{Fidelity(obj, method = "fisher")}. \code{Phi} and \code{Indval} are also slightly faster compared to \code{\link{Fidelity}}. All three do not return an \code{'VegsoupPartitionFidelity'} object.
 }
 
 \usage{

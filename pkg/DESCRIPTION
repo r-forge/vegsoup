@@ -69,6 +69,7 @@ Collate: AAA.R
          Vegsoup-VisualisationMethods.R
          VegsoupPartition.R
          VegsoupPartition-BaseMethods.R
+         partition.R
          VegsoupPartition-AssociationMethods.R
          VegsoupPartition-FidelityMethods.R
          VegsoupPartition-ClassificationStabilityMethods.R

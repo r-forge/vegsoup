@@ -13,7 +13,7 @@
 #	to do: add column for indicator value, high priority!
 .FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
 #	debug
-#	binary = FALSE; obj = prt; group = NULL; method = "r.g"	
+#	obj = prt; group = NULL; method = "r.g"	
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
@@ -667,7 +667,7 @@ if (method == "IndVal.g") {
 
 #	get binary matrix if fidelity measure is based on abundances
 if (r.ind) {
-	X <- as.logical(obj)
+	X <- ifelse(X > 0, 1, 0)
 }	
 
 #	debug
@@ -767,7 +767,6 @@ res <- new("VegsoupPartitionFidelity",
 	part = obj@part,
 	k = obj@k,
 	dist = obj@dist,
-	binary = obj@binary,
 	sites = obj@sites,
 	species = obj@species,
 	taxonomy = obj@taxonomy,
@@ -791,15 +790,15 @@ setMethod("Fidelity",
 	.FidelityVegsoupPartition	
 )
 
-.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE, binary = TRUE) {
+.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE) {
 
 mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
 
-if (binary) {
-	X <- as.matrix(as.logical(obj))
+if (any(decostand(obj) == "pa")) {
+	X <- as.logical(obj)
 } else {
-	X <- as.matrix(as.numeric(obj))
+	X <- as.numeric(obj)
 }
 n.species <- ncol(X)
 n.sites <- nrow(X)  

@@ -7,6 +7,5 @@ setClass("VegsoupPartition",
 	#	add specific slot for classes returned by method
 	part = "numeric",	# rename to partition
 	method = "character",
-	k = "numeric", # drop slot and replace with getter method!
-	binary = "logical"),
+	k = "numeric"), # drop slot and replace with getter method!
 	contains = c("Vegsoup"))

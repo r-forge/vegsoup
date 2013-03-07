@@ -3,7 +3,7 @@
 VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
-#	obj = dta; binary = TRUE; k = 3;
+#	obj = dta; k = 3;
 #	method = "isopam"
 #	dist = "bray"
 #	nitr = 99; polish = TRUE
@@ -105,7 +105,6 @@ switch(part.meth,
 	}, isopam = {
 		if (verbose) cat("\nrun isopam, ignoring k=", k)
 		if (verbose) cat("\nplease supply c.fix to restict to a specific number of partitions\n")
-		#	if (binary) tmp <- as.logical(obj) else tmp <- as.numeric(obj)
 		part <- isopam(X, distance = vegdist(obj),
 			...)
 	}, optpart = {
@@ -199,7 +198,6 @@ res <- new("VegsoupPartition", obj)
 res@part <- grp
 res@method <- part.meth	
 res@k <- length(unique(grp))
-res@binary = ifelse(decostand(obj) == "pa", TRUE, FALSE)
 
 return(res)
 }

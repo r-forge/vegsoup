@@ -13,8 +13,6 @@ setMethod("Confus",
     	obj2 = "VegsoupPartition"),
 	function (obj1, obj2) {
 
-	#	obj1 = VegsoupPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
-	#	obj2 = VegsoupPartition(dta, k = 5, binary = TRUE)
 	if (getK(obj1) != getK(obj2)) {
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")
@@ -61,8 +59,7 @@ setMethod("Accuracy",
     signature(obj1 = "VegsoupPartition",
     	obj2 = "VegsoupPartition"),
     function (obj1, obj2) {
-	#	obj1 = VegsoupPartition(dta, k = 5, decostand.method = "log", binary = FALSE)
-	#	obj2 = VegsoupPartition(dta, k = 5, binary = TRUE)
+
 	if (getK(obj1) != getK(obj2)) {
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")

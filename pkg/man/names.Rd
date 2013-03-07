@@ -10,7 +10,7 @@
 \alias{names-methods}
 \alias{$-methods}
 
-\title{Row and Column Names of a VegsoupData* object}
+\title{ Row and Column Names of a VegsoupData* object }
 \description{
 Retrieve the row or column names of the species \code{matrix} and the names of the sites \code{data.frame}.
 }

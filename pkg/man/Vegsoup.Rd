@@ -2,7 +2,7 @@
 \alias{Vegsoup}
 \alias{instantsoup}
 
-\title{ Create an object of class vegsoup }
+\title{ Create an object of class \code{"Vegsoup"} }
 \description{
   The provided creator functions build the basic data structures of
   \code{Vegsoup*} objects from local R objects or from csv files stored on

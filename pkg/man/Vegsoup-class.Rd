@@ -92,125 +92,291 @@
 \section{Slots}{
   \describe{
     \item{\code{species}:}{
-      Object of class \code{"data.frame"} ~~ 
+      Object of class \code{"data.frame"}
+      containing the species data in \sQuote{long} format.
     }
     \item{\code{sites}:}{
-       Object of class \code{"data.frame"} ~~ 
+      Object of class \code{"data.frame"}
+      containing the sites data in \sQuote{wide} format.
     }
     \item{\code{taxonomy}:}{
-      Object of class \code{"data.frame"} ~~
+      Object of class \code{"data.frame"}
+      containing the taxonomic reference list.
     }
     \item{\code{coverscale}:}{
-      Object of class \code{"Coverscale"} ~~
+      Object of class \code{"Coverscale"}
+      containing a description of the cover scale. See
+      \code{\linkS4class{Coverscale}} for details.
     }
     \item{\code{decostand}:}{
-      Object of class \code{"decostand"} ~~
+      Object of class \code{"decostand"}
+      containing a method for \code{\link{vegsoup:decostand}}. Takes effect if
+      \code{\link{as.matrix}} or \code{\link{as.dist}} is called on object.
     }
     \item{\code{dist}:}{
-      Object of class \code{"character"} ~~
+      Object of class \code{"character"},
+      giving a method for \code{\link{vegsoup:vegdist}}. Takes effect if
+      \code{\link{as.dist}} is called on object.
     }
     \item{\code{layers}:}{
-      Object of class \code{"character"} ~~
+      Object of class \code{"character"},
+      containing the layers the object is structered by.
     }
     \item{\code{group}:}{
-      Object of class \code{"integer"} ~~
+      Object of class \code{"integer"},
+      a vector of a-priori group assignments.
     }
     \item{\code{sp.points}:}{
-      Object of class \code{"SpatialPointsDataFrame"} ~~
+      Object of class \code{"SpatialPointsDataFrame"}
+      see \code{\link{SpatialPoints}} in package \pkg{sp}.
     }
     \item{\code{sp.polygons}:}{
-      Object of class \code{"SpatialPolygonsDataFrame"} ~~
+      Object of class \code{"SpatialPolygonsDataFrame"}
+      see \code{\link{SpatialPolygons}} in package \pkg{sp}.
     }
   }
 }
 \section{Methods}{
   \describe{
-    \item{[}{\code{signature(x = "Vegsoup", i = "ANY", j = "ANY", drop = "missing")}: ... }
-    \item{[<-}{\code{signature(x = "Vegsoup", i = "ANY", j = "missing")}: ... }
-    \item{$}{\code{signature(x = "Vegsoup")}: ... }
-    \item{$<-}{\code{signature(x = "Vegsoup")}: ... }
-    \item{abbr.layer}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Abbreviation}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Abbreviation<-}{\code{signature(obj = "Vegsoup", value = "character")}: ... }
-    \item{AprioriGrouping}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{as.character}{\code{signature(x = "Vegsoup")}: ... }
-    \item{as.dist}{\code{signature(m = "Vegsoup")}: ... }
-    \item{as.logical}{\code{signature(x = "Vegsoup")}: ... }
-    \item{as.matrix}{\code{signature(x = "Vegsoup")}: ... }
-    \item{as.numeric}{\code{signature(x = "Vegsoup")}: ... }
-    \item{as.vector}{\code{signature(x = "Vegsoup", mode = "missing")}: ... }
-    \item{BraunBlanquetReduce}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{coerce}{\code{signature(from = "Vegsoup", to = "dist")}: ... }
-    \item{coerce}{\code{signature(from = "Vegsoup", to = "dsparseMatrix")}: ... }
-    \item{coerce}{\code{signature(from = "Vegsoup", to = "list")}: ... }
-    \item{coerce}{\code{signature(from = "Vegsoup", to = "matrix")}: ... }
-    \item{coerce}{\code{signature(from = "Vegsoup", to = "sparseMatrix")}: ... }
-    \item{coldiss}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{colMeans}{\code{signature(x = "Vegsoup")}: ... }
-    \item{colnames}{\code{signature(x = "Vegsoup")}: ... }
-    \item{colSums}{\code{signature(x = "Vegsoup")}: ... }
-    \item{coordinates}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{coverscale}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{coverscale<-}{\code{signature(obj = "Vegsoup", value = "character")}: ... }
-    \item{coverscale<-}{\code{signature(obj = "Vegsoup", value = "Coverscale")}: ... }
-    \item{DecomposeNames}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{decostand}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{decostand<-}{\code{signature(obj = "Vegsoup", value = "character")}: ... }
-    \item{decostand<-}{\code{signature(obj = "Vegsoup", value = "NULL")}: ... }
-    \item{dim}{\code{signature(x = "Vegsoup")}: ... }
-    \item{dimnames}{\code{signature(x = "Vegsoup")}: ... }
-    \item{elevation}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{getDistconnected}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{head}{\code{signature(x = "Vegsoup")}: ... }
-    \item{indices}{\code{signature(x = "Vegsoup")}: ... }
-    \item{Indpower}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Indspc}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{KML}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Layer}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Layers}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Layers<-}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{map}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{MatrixFill}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{names}{\code{signature(x = "Vegsoup")}: ... }
-    \item{names<-}{\code{signature(x = "Vegsoup", value = "character")}: ... }
-    \item{ncell}{\code{signature(x = "Vegsoup")}: ... }
-    \item{ncol}{\code{signature(x = "Vegsoup")}: ... }
-    \item{nrow}{\code{signature(x = "Vegsoup")}: ... }
-    \item{plot}{\code{signature(x = "Vegsoup", y = "missing")}: ... }
-    \item{QuickMap}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{rbind}{\code{signature(... = "Vegsoup")}: ... }
-    \item{richness}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{rowMeans}{\code{signature(x = "Vegsoup")}: ... }
-    \item{rownames}{\code{signature(x = "Vegsoup", do.NULL = "missing", prefix = "missing")}: ... }
-    \item{rowSums}{\code{signature(x = "Vegsoup")}: ... }
-    \item{SampleVegsoup}{\code{signature(x = "Vegsoup")}: ... }
-    \item{seriation}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Sites}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Sites<-}{\code{signature(obj = "Vegsoup", value = "data.frame")}: ... }
-    \item{SpatialPointsVegsoup}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{SpatialPolygonsVegsoup}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Species}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Species<-}{\code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}: ... }
-    \item{SpeciesList}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Stride}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{summary}{\code{signature(object = "Vegsoup")}: ... }
-    \item{tail}{\code{signature(x = "Vegsoup")}: ... }
-    \item{Taxonomy}{\code{signature(obj = "Vegsoup")}: ... }
-    \item{Taxonomy<-}{\code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}: ... }
-    \item{vegdist}{\code{signature(x = "Vegsoup")}: ... }
-    \item{vegdist<-}{\code{signature(x = "Vegsoup", value = "character")}: ... }
-    \item{write.verbatim}{\code{signature(obj = "Vegsoup")}: ... }
+    \item{[}{
+      \code{signature(x = "Vegsoup", i = "ANY", j = "ANY")}:
+    }
+    \item{[<-}{
+      \code{signature(x = "Vegsoup", i = "ANY", j = "missing")}:
+    }
+    \item{$}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{$<-}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{abbr.layer}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Abbreviation}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Abbreviation<-}{
+      \code{signature(obj = "Vegsoup", value = "character")}:
+    }
+    \item{AprioriGrouping}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{as.character}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{as.dist}{
+      \code{signature(m = "Vegsoup")}:
+    }
+    \item{as.logical}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{as.matrix}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{as.numeric}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{as.vector}{
+      \code{signature(x = "Vegsoup", mode = "missing")}:
+    }
+    \item{BraunBlanquetReduce}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "dist")}:
+    }
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "dsparseMatrix")}:
+    }
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "list")}:
+    }
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "matrix")}:
+    }
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "sparseMatrix")}:
+    }
+    \item{coldiss}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{colMeans}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{colnames}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{colSums}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{coordinates}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{coverscale}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{coverscale<-}{
+      \code{signature(obj = "Vegsoup", value = "character")}:
+    }
+    \item{coverscale<-}{
+      \code{signature(obj = "Vegsoup", value = "Coverscale")}:
+    }
+    \item{DecomposeNames}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{decostand}{
+       \code{signature(obj = "Vegsoup")}:
+    }
+    \item{decostand<-}{
+      \code{signature(obj = "Vegsoup", value = "character")}:
+    }
+    \item{decostand<-}{
+      \code{signature(obj = "Vegsoup", value = "NULL")}:
+    }
+    \item{dim}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{dimnames}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{elevation}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{getDistconnected}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{head}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{indices}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{Indpower}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Indspc}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{KML}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Layer}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Layers}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Layers<-}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{map}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{MatrixFill}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{names}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{names<-}{
+      \code{signature(x = "Vegsoup", value = "character")}:
+    }
+    \item{ncell}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{ncol}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{nrow}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{plot}{
+      \code{signature(x = "Vegsoup", y = "missing")}:
+    }
+    \item{QuickMap}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{rbind}{
+      \code{signature(... = "Vegsoup")}:
+    }
+    \item{richness}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{rowMeans}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{rownames}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{rowSums}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{SampleVegsoup}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{seriation}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Sites}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Sites<-}{
+      \code{signature(obj = "Vegsoup", value = "data.frame")}:
+    }
+    \item{SpatialPointsVegsoup}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{SpatialPolygonsVegsoup}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Species}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Species<-}{
+      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
+    }
+    \item{SpeciesList}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Stride}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{summary}{
+      \code{signature(object = "Vegsoup")}:
+    }
+    \item{tail}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{Taxonomy}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Taxonomy<-}{
+      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
+    }
+    \item{vegdist}{
+      \code{signature(x = "Vegsoup")}:
+    }
+    \item{vegdist<-}{
+      \code{signature(x = "Vegsoup", value = "character")}:
+    }
+    \item{write.verbatim}{
+      \code{signature(obj = "Vegsoup")}:
+    }
 	 }
 }
 \author{ Roland Kaiser }
 \note{
-%%  ~~further notes~~
+  Classes \code{"VegsoupPartition"} and \code{"VegsoupPartition"} all extend
+  class \code{"Vegsoup"}.
 }
 
 \seealso{
 \code{\linkS4class{Species}},
 \code{\linkS4class{Sites}},
-\code{\linkS4class{Taxonomy}}
+\code{\linkS4class{Taxonomy}},
+\code{\linkS4class{Vegsoup}},
+\code{\linkS4class{instantsoup}}
 }
 \examples{
 showClass("Vegsoup")
