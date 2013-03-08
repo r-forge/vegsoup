@@ -115,7 +115,7 @@ if (class(test) == "factor" | class(test) == "character") {
 			if (class(test) == "numeric" & dim(table(test)) > 2) {
 				convert <- TRUE
 				cat("\n... cover seems to be continous: ")
-				cat("\n    Tukey's five number summary:", fivenum(test))
+				cat("\n    Tukey's five number summary:", fivenum(test), "\n")
 			} else {
 				if (class(test) == "integer" & dim(table(test)) > 2) {
 					convert <- TRUE
@@ -137,7 +137,10 @@ if (verbose) {
 	cat("\n... data has", length(unique(res$layer)),
 		"layer(s):", unique(res$layer))
 	}
-	
+
+#	leading spaces due to character conversion?
+res$cov <- gsub("[[:blank:]]", "", res$cov)
+
 res <- new("Species", data = res)	
 return(invisible(res))
 }

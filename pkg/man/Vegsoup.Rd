@@ -30,7 +30,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     Path to a folder with three csv files. One file named \code{species.csv}
     represents a table that can be coerced to class \code{"Species"} by
     simply calling \code{species("./species.csv")}, the other one gives sites
-    (\code{sites("./sites.csv")}) and the third one a taxonomic reference
+    as \code{sites("./sites.csv")} and the third one a taxonomic reference
     list  (\code{taxonomy("./sites.csv")}). If files for species and or sites
     have the file suffix \emph{wide}, functions \code{stack.species} and
    \code{stack.sites} are called.
@@ -109,32 +109,40 @@ If sp.points and/or sp.polygons are supplied the data slot (\code{SpatialPointsD
 When suppling argument \code{proj4string} please ensure that \code{CRS(proj4string)} works.
 }
 \value{
-An object of class Vegsoup, see class \code{\linkS4class{Vegsoup}}.
+An object of class \code{\linkS4class{Vegsoup}}.
 }
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \note{
 %%  ~~further notes~~
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 \examples{
 library(vegsoup)
+
+# real data
 data(testdata)
 
-qry <- Vegsoup(spc, sts, txa,
+dta <- Vegsoup(spc, sts, txa,
                coverscale = "braun.Blanquet")
-qry
+dta
 
-	
+# simulated data
+require(coenoflex)
+
+dta <- coenoflex(numgrd = 2, numplt = 50, numspc = 200,
+                 grdtyp = c("e","e"), grdlen = c(100,50), width = c(50,10),
+                 variab = c(20,10), grdprd = c(0,0), alphad = c(2,1.8),
+                 pdist = "r", sdist = "r", skew = 1.5, aacorr = 0.0,
+                 cmpasy = 0.5, cmpphy = 0, maxtot = 100,
+                 noise = 5, slack = 0.2, autlin = "irm(1,2)")
+# coerce method for class coenoflex
+sim <- as(dta, "Vegsoup")
+
+# promote to ordinal scale
+coverscale(sim) <- "braun.blanquet"
+sim
 }
 \seealso{
 \code{\link{Vegsoup-class}}
 
 }
-
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{classes}
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ classes }

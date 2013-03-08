@@ -7,6 +7,9 @@
 \alias{as.character-method}
 \alias{as.matrix}
 \alias{as.matrix-method}
+
+
+
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Retrieve Species Matrix with Specified Storage Mode
@@ -30,6 +33,9 @@ as.matrix(x, typeof, ...)
 
 ## S4 method for signature 'Vegsoup*'
 indices(x, typeof) 
+
+## S4 method for signature 'Vegsoup*'
+as.vector(x, typeof)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -49,9 +55,9 @@ Arguments passed to \code{as.logical} etc. to supply a value for the argument \c
 \details{
 For any object inheriting from class \code{VegsoupData} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{DecomposeNames}} and \code{\link{Taxonomy}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Allmost all of these functions internally coerce objects of class \code{"data.frame"} to class \code{"matrix"}. Besides that, it is possible to supply an object inheriting from class \code{VegsoupData} directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}).
 
-\code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{AbundanceScale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(x, typeof = "numeric")}.
+\code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{coverscale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(x, typeof = "numeric")}.
 
-\code{as.character} returns a matrix of mode \code{"character"} with species abundances in the data set's original scale \code{AbundanceScale(obj)\$codes}. Absences are coded as zeros! Equals \code{as.matrix(x, typeof = "character")}.
+\code{as.character} returns a matrix of mode \code{"character"} with species abundances in the data set's original scale \code{coverscale(obj)\$codes}. Absences are coded as zeros! Equals \code{as.matrix(x, typeof = "character")}.
 
 \code{as.logical} returns a matrix of mode \code{"numeric"} with zeros coding for species absences and ones for presences. Equals \code{as.matrix(obj, mode = "logical")}.
 
@@ -74,7 +80,7 @@ Roland Kaiser
 Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
 }
 \seealso{
-\code{\link{Vegsoup}}, \code{\link{VegsoupData}}, \code{\link{decostand}} and \code{\link{AbundanceScale}}
+\code{\link{Vegsoup}}, \code{\link{VegsoupData}}, \code{\link{decostand}} and \code{\link{Coverscale}}
 }
 \examples{
 library(vegsoup)
@@ -109,6 +115,13 @@ decorana(dta)
 decostand(dta) <- "pa"
 decorana(dta)
 
+# create matrices from indices
+m <- matrix(0, ncol = ncol(dta), nrow = nrow(dta))
+m[] <- as.vector(dta)
+dimnames(m) <- indices(dta)$dimnames
+
+all.equal(colnames(m), as.matrix(dta))
+
 # sparse matrix and alike representations
 # and their associated memory demands
 
@@ -116,12 +129,11 @@ decorana(dta)
 object.size(as.matrix(dta)) # most efficient
 # indices only
 object.size(indices(dta)) # almost equal 
-# clas sparseMatrix based on indices()
+# class sparseMatrix based on indices()
 object.size(as(dta, "sparseMatrix")) # efficient
 #  internal Vegsoup data structure
-object.size(Species(dta)) # less efficent, but less restrictions        
+object.size(Species(dta)) # most general but least efficent
 
 }
 \keyword{ methods }
 \keyword{ manip }
-

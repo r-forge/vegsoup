@@ -121,19 +121,19 @@ setMethod("Abbreviation",
     signature(obj = "Vegsoup"),
     function (obj, ...) DecomposeNames(obj)$abbr
 )
-setGeneric("Abbreviation<-",
-	function (obj, value, ...)
-		standardGeneric("Abbreviation<-")
-)
 setMethod("Abbreviation",
     signature(obj = "Vegsoup"),
     function (obj) sort(unique(Species(obj)$abbr))
 )
-setReplaceMethod("Abbreviation",
-	signature(obj = "Vegsoup", value = "character"),
-	function (obj, value) {
-		#	to do: needs security for all slots!
-		obj@species$abbr <- value		
-		return(obj)		
-	}
-)
+#setGeneric("Abbreviation<-",
+#	function (obj, value, ...)
+#		standardGeneric("Abbreviation<-")
+#)
+#setReplaceMethod("Abbreviation",
+#	signature(obj = "Vegsoup", value = "character"),
+#	function (obj, value) {
+#		#	to do: needs security for all slots!
+#		obj@species$abbr <- value		
+#		return(obj)		
+#	}
+#)

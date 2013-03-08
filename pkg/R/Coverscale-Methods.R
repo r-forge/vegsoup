@@ -76,16 +76,16 @@ setReplaceMethod("coverscale",
 		obj@coverscale <- value			
 		if (transform) {
 			obj@species$cov <- as.character(
-				cut(Species(obj)$cov,
+				cut(as.numeric(Species(obj)$cov), # as long as we store characters
 					breaks = c(coverscale(obj)@lims, 100),
 					labels = coverscale(obj)@codes))
-			warning("transformed cover values", .call = FALSE)					
+			warning("transformed cover values of object!", call. = FALSE)
 		}		
 		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
 		if (test) {
-			stop("coverscale does not match data", .call = FALSE)
+			stop("coverscale does not match data", call. = FALSE)
 		}		
 		return(obj)		
 	}
@@ -100,41 +100,21 @@ setReplaceMethod("coverscale",
 		obj@coverscale <- value			
 		if (transform) {
 			obj@species$cov <- as.character(
-				cut(Species(obj)$cov,
+				cut(as.numeric(Species(obj)$cov), # as long as we store characters 
 					breaks = c(coverscale(obj)@lims, 100),
 					labels = coverscale(obj)@codes))
-			warning("transformed cover values", .call = FALSE)					
+			warning("transformed cover values of object!", call. = FALSE)
 		}
 		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
 		if (test) {
-			stop("coverscale does not match data")
+			stop("coverscale does not match data", call. = FALSE)
 		}		
 		return(obj)		
 	}
 )
   
-setAs("list", "Coverscale", def = function (from) {
-	#	ordinal
-	if (!is.null(from[[2]]) & !is.null(from[[3]])) {
-		res <- new("Coverscale",
-			name = as.character(from[[1]]),
-			codes = as.character(from[[2]]),
-			lims = as.numeric(from[[3]])						
-			)
-	}		
-	#	continous
-	if (is.null(from[[2]]) & is.null(from[[3]])) { # 			
-		res <- new("Coverscale",
-			name = as.character(from[[1]]),
-			codes = NULL,
-			lims = NULL						
-			)			
-	}
-	return(res)
-})
-
 #	revert abunace scale for Braun-Blanquet scale
 ".BraunBlanquetReduce" <-  function (obj) {
 

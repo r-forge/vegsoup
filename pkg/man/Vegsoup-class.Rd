@@ -8,7 +8,6 @@
 \alias{$<-,Vegsoup-method}
 \alias{abbr.layer,Vegsoup-method}
 \alias{Abbreviation,Vegsoup-method}
-\alias{Abbreviation<-,Vegsoup,character-method}
 \alias{AprioriGrouping,Vegsoup-method}
 \alias{as.character,Vegsoup-method}
 \alias{as.dist,Vegsoup-method}
@@ -80,38 +79,38 @@
 
 \title{ Class \code{"Vegsoup"} }
 \description{
-  This is the basic class of all \code{Vegsoup*} objects.
+  This is the foundation class of all \code{Vegsoup*} objects.
 }
 \section{Objects from the Class}{
 
-  Objects can be created by calls of the form \code{new("Vegsoup", ...)}, but
-  the creator functions \code{\link{Vegsoup}} are much more convinient, as
-  there are many restrictions about how the data is structurted.
+  Objects can be created by calls of the form \code{new("Vegsoup", ...)}. The
+  creator function \code{\link{Vegsoup}} might be more more convinient and
+  transparent.
 
 }
 \section{Slots}{
   \describe{
     \item{\code{species}:}{
-      Object of class \code{"data.frame"}
-      containing the species data in \sQuote{long} format.
+      Object of class \code{"data.frame"},
+      the species data in \emph{long} format.
     }
     \item{\code{sites}:}{
-      Object of class \code{"data.frame"}
-      containing the sites data in \sQuote{wide} format.
+      Object of class \code{"data.frame"},
+      the sites data in \emph{wide} format.
     }
     \item{\code{taxonomy}:}{
-      Object of class \code{"data.frame"}
-      containing the taxonomic reference list.
+      Object of class \code{"data.frame"},
+      the taxonomic reference list.
     }
     \item{\code{coverscale}:}{
-      Object of class \code{"Coverscale"}
-      containing a description of the cover scale. See
+      Object of class \code{"Coverscale"},
+      the description of the cover scale. See
       \code{\linkS4class{Coverscale}} for details.
     }
     \item{\code{decostand}:}{
-      Object of class \code{"decostand"}
-      containing a method for \code{\link{vegsoup:decostand}}. Takes effect if
-      \code{\link{as.matrix}} or \code{\link{as.dist}} is called on object.
+      Object of class \code{"decostand"},
+      the method for \code{\link[vegsoup:decostand]{decostand}}. Takes effect
+      if \code{\link{as.matrix}} or \code{\link{as.dist}} is called on object.
     }
     \item{\code{dist}:}{
       Object of class \code{"character"},
@@ -136,81 +135,225 @@
     }
   }
 }
+
+
 \section{Methods}{
   \describe{
+%% 1
+  \bold{ 1) Retrieve species matrix.}
+    In fact there are several ways of how to obtain the species matrix from an
+    \code{Vegsoup*} object and all are based on the logic of object coercion.
+    There are methods focused on a specific storage mode, as well, as a
+    generic \code{as.matrix} coercion method. The following section outlines
+    even more general index methods.
+    \item{as.character}{
+%     \code{signature(x = "Vegsoup")}:
+      returns a matrix of mode "numeric" with species abundances in the data
+      set's original scale.
+    }
+    \item{as.logical}{
+%     \code{signature(x = "Vegsoup")}:
+      returns a matrix of mode "numeric" with zeros coding for species
+      absences and ones for presences.
+    }
+    \item{as.numeric}{
+%     \code{signature(x = "Vegsoup")}:
+      returns a matrix of mode "numeric" with species abundances coded by
+      according to \code{coverscale(obj)}.
+    }
+    \item{as.matrix}{
+%     \code{signature(x = "Vegsoup")}:
+        retrieves a species matrices like those outlined above by setting the
+        \code{typeof} argument specifing the mode of the returned matrix; can
+        be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
+        Use the additionla argument \code{mode} with all four methods to get
+        matrix transpositions. See \code{\link{as.matrix}}.
+    }
+
+%% 2
+  \bold{ 2) Dimensions of the object (species matrix).}
+    \item{dim}{
+%     \code{signature(x = "Vegsoup")}:
+      returns matrix dimensions (see above) giving the number of plots and
+      (pseudo-)species.
+    }
+    \item{ncol}{
+%     \code{signature(x = "Vegsoup")}:
+      the number of (pseudo-)species.
+    }
+    \item{nrow}{
+%     \code{signature(x = "Vegsoup")}:
+      the number of plots.
+    }
+    \item{ncell}{
+%     \code{signature(x = "Vegsoup")}:
+      the number of cells in the species matrix.
+    }
+    \item{MatrixFill}{
+      \code{signature(obj = "Vegsoup")}:
+      the percentage of presences in the species matrix.
+    }
+%% 3
+  \bold{ 3) Retrieve indices to species matrix.}
+    \item{indices}{
+%     \code{signature(x = "Vegsoup")}:
+      returns the locations (row and column pointers) and values of all
+      nonzero entries in a species matrix (see above).
+    }
+    \item{as.vector}{
+      \code{signature(x = "Vegsoup", mode = "missing")}:
+      is a shortcut to \code{as.vector(as.matrix(x, typeof = mode), mode)}.
+      Note, here the \code{'mode'} argument has the meaning of the base
+      \code{R} function and specifies the storge mode od the returned vector.
+     }
+   Together, \code{indices} and \code{as.vector} can be used to create a
+   species matrix. See \code{\link{as.matrix}}.
+%% 4
+  \bold{ 4) Retrieve dissimilarity/distance matrix.}
+    \item{vegdist}{
+%     \code{signature(x = "Vegsoup")}:
+      returns the dissimilarity/distance index set for an object.
+    }
+    \item{vegdist<-}{
+      \code{signature(x = "Vegsoup", value = "character")}:
+      set a distance measure for an object.
+    }
+    \item{as.dist}{
+      \code{signature(m = "Vegsoup")}:
+      compute a distance matrix as specified by \code{vegdist(obj)}.
+      See \code{\link{as.dist}}
+    }
+    \item{getDistconnected}{
+      \code{signature(obj = "Vegsoup")}:
+      tests if dissimilarities/distances are connected.
+    }
+%% 4
+  \bold{ 3) Retrieve class slots.}
+    Methods to access or replace the \code{'species'}, \code{'sites'}
+    or \code{'taxonomy'} slots are:
+    \item{Species}{
+      \code{signature(obj = "Vegsoup")}:
+      returns slot, on object of class
+      \code{"data.frame"}, equaling an object of class
+      \code{\linkS4class{Species}}.
+    }
+    \item{Species<-}{
+      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
+      assign object of class \code{"SpeciesTaxonomy"} to an existing
+      \code{Vegsoup*} object. Not implemented yet! See
+      \code{\linkS4class{SpeciesTaxonomy}}.
+    }
+    \cr
+    \item{Sites}{
+      \code{signature(obj = "Vegsoup")}:
+      returns slot, an object of class
+      \code{"data.frame"}.
+      %% equaling an object of class \code{\linkS4class{Sites}}.
+    }
+    \item{Sites<-}{
+      \code{signature(obj = "Vegsoup", value = "data.frame")}:
+      The value object for the replacement function needs to have rownames
+      matching \code{rownames(obj)}.
+    }
+    \cr
+    \item{Taxonomy}{
+      \code{signature(obj = "Vegsoup")}:
+      returns slot, an object of class
+      \code{"data.frame"}, equaling an object of class
+      \code{\linkS4class{Taxonomy}}.
+    }
+    \item{Taxonomy<-}{
+      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
+      assign object of class \code{"SpeciesTaxonomy"} to an existing
+      \code{Vegsoup*} object. Not implemented yet! See
+      \code{\linkS4class{SpeciesTaxonomy}}
+    }
+%% 1
+  \bold{ 1) Extract and replace.}
     \item{[}{
       \code{signature(x = "Vegsoup", i = "ANY", j = "ANY")}:
+      provides all common indexing operations allowed for class
+      \code{"matrix"}.
     }
     \item{[<-}{
       \code{signature(x = "Vegsoup", i = "ANY", j = "missing")}:
+      allows assigments to the \code{'sites'} slot. Note, this does not
+      affect the species matrix.
     }
     \item{$}{
-      \code{signature(x = "Vegsoup")}:
+%     \code{signature(x = "Vegsoup")}:
+      access columns of sites data by name.
     }
     \item{$<-}{
-      \code{signature(x = "Vegsoup")}:
+%     \code{signature(x = "Vegsoup")}:
+      assign columns of sites data by name.
+    }
+%% 1
+  \bold{ 1) Reorder and sample.}
+    \item{seriation}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{SampleVegsoup}{
+%     \code{signature(x = "Vegsoup")}:
+    }
+
+%% 1
+  \bold{ 1) Combine objects.}
+    \item{rbind}{
+      \code{signature(... = "Vegsoup")}:
+    }
+%% 1
+  \bold{ 1) Names and species Abbreviations.}
+    \item{rownames}{
+%     \code{signature(x = "Vegsoup")}:
+    }
+    \item{colnames}{
+%     \code{signature(x = "Vegsoup")}:
+      returns the column names of the species matrix.
+    }
+    \item{dimnames}{
+%     \code{signature(x = "Vegsoup")}:
     }
     \item{abbr.layer}{
+      \code{signature(obj = "Vegsoup")}:
+       Get abbreviations used to encode (pseudo-)species.
+    }
+    \item{DecomposeNames}{
       \code{signature(obj = "Vegsoup")}:
     }
     \item{Abbreviation}{
       \code{signature(obj = "Vegsoup")}:
+      Get abbreviations used to encode species.
     }
-    \item{Abbreviation<-}{
-      \code{signature(obj = "Vegsoup", value = "character")}:
+    \item{names}{
+%     \code{signature(x = "Vegsoup")}:
+    }
+    \item{names<-}{
+      \code{signature(x = "Vegsoup", value = "character")}:
     }
     \item{AprioriGrouping}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{as.character}{
-      \code{signature(x = "Vegsoup")}:
+%% 1
+  \bold{ 1) Layer structure.}
+
+    \item{Layer}{
+      \code{signature(obj = "Vegsoup")}:
+      returns the layer for each species observation.
     }
-    \item{as.dist}{
-      \code{signature(m = "Vegsoup")}:
+    \item{Layers}{
+      \code{signature(obj = "Vegsoup")}:
+      modifies an object's layer structure by suppling a layer combination
+      rule as a \code{"character"} vector \code{'collapse'}.
     }
-    \item{as.logical}{
-      \code{signature(x = "Vegsoup")}:
+    \item{Layers<-}{
+      \code{signature(obj = "Vegsoup")}:
+      modifies the order of layers. This has effects on \code{as.matrix} and
+      similar.
     }
-    \item{as.matrix}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{as.numeric}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{as.vector}{
-      \code{signature(x = "Vegsoup", mode = "missing")}:
-    }
+%% 1
+  \bold{ 1) Cover scale.}
     \item{BraunBlanquetReduce}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{coerce}{
-      \code{signature(from = "Vegsoup", to = "dist")}:
-    }
-    \item{coerce}{
-      \code{signature(from = "Vegsoup", to = "dsparseMatrix")}:
-    }
-    \item{coerce}{
-      \code{signature(from = "Vegsoup", to = "list")}:
-    }
-    \item{coerce}{
-      \code{signature(from = "Vegsoup", to = "matrix")}:
-    }
-    \item{coerce}{
-      \code{signature(from = "Vegsoup", to = "sparseMatrix")}:
-    }
-    \item{coldiss}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{colMeans}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{colnames}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{colSums}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{coordinates}{
       \code{signature(obj = "Vegsoup")}:
     }
     \item{coverscale}{
@@ -222,107 +365,82 @@
     \item{coverscale<-}{
       \code{signature(obj = "Vegsoup", value = "Coverscale")}:
     }
-    \item{DecomposeNames}{
-      \code{signature(obj = "Vegsoup")}:
-    }
+
+%% 1
+  \bold{ 1) Standardization methods.}
     \item{decostand}{
        \code{signature(obj = "Vegsoup")}:
+       returns the standardization method active for an object.
     }
     \item{decostand<-}{
       \code{signature(obj = "Vegsoup", value = "character")}:
-    }
-    \item{decostand<-}{
+       sets the standardization method active for an object. Note,
+       values of slot \code{decostand} have effect in \code{as.matrix} and
+       similar matrix methods.
       \code{signature(obj = "Vegsoup", value = "NULL")}:
+       reset/remove the standardization for an object by setting the value to
+       \code{NULL}.
     }
-    \item{dim}{
-      \code{signature(x = "Vegsoup")}:
+
+%% 1
+  \bold{ 1) Coerce methods.}
+    \item{coerce}{
+      \code{signature(from = "Vegsoup", to = "dist")}:
+      same as \code{as.dist(obj)} (see above).
+      \code{signature(from = "Vegsoup", to = "list")}:
+      returns objects all of class \code{"data.frame"} from slots
+      \code{'species'}, \code{'sites'} and \code{'taxonomy'}.
+      \code{signature(from = "Vegsoup", to = "matrix")}:
+      same as \code{as.matrix(obj)} (see above).
+      \code{signature(from = "Vegsoup", to = "dsparseMatrix")}:
+      returns objects all of class \code{"dsparseMatrix"}. See
+      \code{\link{as.matrix}}. %% improve doc
+      \code{signature(from = "Vegsoup", to = "sparseMatrix")}:
+      returns objects all of class \code{"sparseMatrix"}. See
+      \code{\link{as.matrix}}. %% improve doc
     }
-    \item{dimnames}{
-      \code{signature(x = "Vegsoup")}:
+%% 1
+  \bold{ 1) Plotting methods.}
+    \item{plot}{
+      \code{signature(x = "Vegsoup", y = "missing")}:
     }
-    \item{elevation}{
+    \item{coldiss}{
       \code{signature(obj = "Vegsoup")}:
-    }
-    \item{getDistconnected}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{head}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{indices}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{Indpower}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{Indspc}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{KML}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{Layer}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{Layers}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{Layers<-}{
-      \code{signature(obj = "Vegsoup")}:
+      plots of the dissimilarity matrix.
     }
     \item{map}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{MatrixFill}{
-      \code{signature(obj = "Vegsoup")}:
+
+%% 1
+  \bold{ 1) Row and colum aggregation.}
+    \item{colMeans}{
+%     \code{signature(x = "Vegsoup")}:
+      returns \code{colMeans(as.matrix(obj))}.
     }
-    \item{names}{
-      \code{signature(x = "Vegsoup")}:
+    \item{colSums}{
+%     \code{signature(x = "Vegsoup")}:
+      returns \code{colSums(as.matrix(obj))}
     }
-    \item{names<-}{
-      \code{signature(x = "Vegsoup", value = "character")}:
-    }
-    \item{ncell}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{ncol}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{nrow}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{plot}{
-      \code{signature(x = "Vegsoup", y = "missing")}:
-    }
-    \item{QuickMap}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{rbind}{
-      \code{signature(... = "Vegsoup")}:
+    \item{rowSums}{
+%     \code{signature(x = "Vegsoup")}:
     }
     \item{richness}{
       \code{signature(obj = "Vegsoup")}:
     }
     \item{rowMeans}{
-      \code{signature(x = "Vegsoup")}:
+%     \code{signature(x = "Vegsoup")}:
     }
-    \item{rownames}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{rowSums}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{SampleVegsoup}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{seriation}{
+%% 1
+  \bold{ 1) Spatial methods.}
+    \item{coordinates}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{Sites}{
+    \item{elevation}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{Sites<-}{
-      \code{signature(obj = "Vegsoup", value = "data.frame")}:
+    \item{KML}{
+      \code{signature(obj = "Vegsoup")}:
     }
     \item{SpatialPointsVegsoup}{
       \code{signature(obj = "Vegsoup")}:
@@ -330,40 +448,38 @@
     \item{SpatialPolygonsVegsoup}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{Species}{
-      \code{signature(obj = "Vegsoup")}:
+%% 1
+  \bold{ 1) Summary methods.}
+    \item{summary}{
+      \code{signature(object = "Vegsoup")}:
     }
-    \item{Species<-}{
-      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
+    \item{head}{
+%     \code{signature(x = "Vegsoup")}:
+    }
+    \item{tail}{
+%     \code{signature(x = "Vegsoup")}:
     }
     \item{SpeciesList}{
       \code{signature(obj = "Vegsoup")}:
     }
-    \item{Stride}{
+%% 1
+  \bold{ 1) Special output methods.}
+    \item{QuickMap}{
       \code{signature(obj = "Vegsoup")}:
-    }
-    \item{summary}{
-      \code{signature(object = "Vegsoup")}:
-    }
-    \item{tail}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{Taxonomy}{
-      \code{signature(obj = "Vegsoup")}:
-    }
-    \item{Taxonomy<-}{
-      \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
-    }
-    \item{vegdist}{
-      \code{signature(x = "Vegsoup")}:
-    }
-    \item{vegdist<-}{
-      \code{signature(x = "Vegsoup", value = "character")}:
     }
     \item{write.verbatim}{
       \code{signature(obj = "Vegsoup")}:
     }
-	 }
+%% 1
+  \bold{ 1) Miscellaneous.}
+    \item{Indpower}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+    \item{Indspc}{
+      \code{signature(obj = "Vegsoup")}:
+    }
+
+  }
 }
 \author{ Roland Kaiser }
 \note{

@@ -1,22 +1,18 @@
-findcoordiantes()
-
-rename Species to species?
-and Sites to sites?
-
+# major
+improve findcoordiantes()
 improve Spread()
-man files for coordiantes, bbox, proj4string
-noquote for print method (e.g. as.matrix)
 extend slot partition to contain class dendrogram
 
 # minor
-
+Species(dta) <-
 csv2 = TRUE to sep and dec
+noquote for print method (e.g. as.matrix)
 
-tools::showNonASCII(readLines(f))
-rename
+# rename
 layer to stratum
 cov to abu(dance)
+Species to species and Sites to sites
 
-# ideas
-rle() can be usefull
+# package check
+tools::showNonASCII(readLines(f))
 

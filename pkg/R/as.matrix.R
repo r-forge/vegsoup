@@ -122,9 +122,18 @@ setMethod("indices",
     	
 		sc <- coverscale(x)
 		al <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@")
-		ual <- unique(al)
+		l <- Species(x)$layer	
 		pl <- Species(x)$plot
 		upl <- unique(pl)
+		
+		#	resort to layer, copied from .cast()
+		if (length(Layers(x)) > 1) {	
+
+			al <- unique(as.vector(unlist(
+				sapply(Layers(x), function (y) al[l == y] ))))
+		}
+		ual <- unique(al)	
+		
 		if (typeof == "numeric" & !is.null(sc@codes)) {
 			cv <- as.numeric(as.character(
 				factor(Species(x)$cov, levels = sc@codes, labels = sc@lims)
@@ -138,7 +147,7 @@ setMethod("indices",
 		}
 		i <- match(al, ual)
 		j <- as.integer(ordered(pl, levels = upl))
-		list(i = i, j = j, x = cv, dimnames = list(ual, upl))
+		list(i = i, j = j, x = cv, dimnames = list(upl, ual))
 		}
 )
 

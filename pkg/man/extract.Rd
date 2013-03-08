@@ -45,6 +45,9 @@ require(vegsoup)
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
+# assigment using object slots
+Sites(dta) <- dta@sites[sample(nrow(dta)), ]
+
 # note, in this case summary returns a species list
 dta[1, ]
 }

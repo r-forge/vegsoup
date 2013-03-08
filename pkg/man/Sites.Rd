@@ -2,16 +2,15 @@
 \docType{methods}
 \alias{Sites}
 \alias{Sites-methods}
-\alias{Sites,VegsoupData-method}
 \alias{Sites<-}  
 \alias{Sites<--methods}
-\alias{Sites<-,VegsoupData,data.frame-method}
+
 
 \title{
 Methods to Retrieve or Manipulate the Sites Slot of an Object of Class Vegsoup*
 }
 \description{
-Accessor method to retrieve the \emph{sites data frame}.
+Accessor and replacement methods acting on the \code{'sites'} slot.
 }
 \usage{
 Sites(obj)
@@ -19,32 +18,34 @@ Sites(obj) <- value
 }
 
 \arguments{
-  \item{obj}{
-A object of class \code{Vegsoup*}
-}
+  \item{ obj }{
+    object of class \code{Vegsoup*}
+  }
+  \item{ value }{
+    object of class \code{"data.frame"}.
+  }
+
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The value object in the replacement function needs to have rownames matching \code{rownames(obj)}. The order is respected and leads to reordering of the object to which the value object is assigned.
 }
 \value{
-a data.frame}
-\references{
-%% ~put references to the literature/web site here ~
+  An object of class depending on the input class.
 }
-\author{
-Roland Kaiser
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+\author{ Roland Kaiser }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\linkS4class{Vegsoup}}
 }
+\examples{
+library(vegsoup)
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+# use replacemnet to shuffe order
+(x <- rownames(dta))
+Sites(dta) <- Sites(dta)[sample(rownames(dta)), ]
+(y <- rownames(dta))
+x;y
+}
+\keyword{ methods }
+

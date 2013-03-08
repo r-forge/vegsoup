@@ -11,6 +11,8 @@ setMethod("Taxonomy",
     signature(obj = "Vegsoup"),
     function (obj) obj@taxonomy
 )
+
+# Taxonomy<-
 setReplaceMethod("Taxonomy",
 	signature(obj = "Vegsoup", value = "SpeciesTaxonomy"),
 	function (obj, value) {

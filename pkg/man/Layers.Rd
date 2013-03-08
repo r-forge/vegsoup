@@ -15,6 +15,8 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 \usage{
 Layers(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
        dec = 0, verbose = FALSE)
+Layers(obj) <- value
+
 }
 \arguments{
   \item{ obj }{
@@ -31,6 +33,10 @@ Layers(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
   \item{ dec }{
     Number of decimals if abundance scale is treated as numeric,
     defaults to \code{0}.
+  }
+  \item{ value }{
+    A \code{"character"} giving a permutation of \code{Layers(obj)} to resort
+    layers.
   }
   \item{ verbose }{
     Print extra output.

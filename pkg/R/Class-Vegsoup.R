@@ -15,7 +15,6 @@ setClass("Vegsoup",
 	dist = "character",
 	layers = "character",
 	group = "integer",
-#	sp.raster = "raster",
 	sp.points = "SpatialPointsDataFrame",
 	sp.polygons = "SpatialPolygonsDataFrame")
 )

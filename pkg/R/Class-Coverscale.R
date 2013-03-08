@@ -31,13 +31,13 @@ setClass("Coverscale",
 .braun.blanquet <- list(
 	name = "Braun-Blanquet", 
 	codes = c("r", "+", "1", "2m", "2a", "2b", "3", "4", "5"),
-	lims = c(  1,   2,   3,   4,    8,   18,   38,  68,  88))
+	lims = c(  0.1, 1,   3,   4,    8,   18,   38,  68,  88))
 
 #	Braun-Blanquet old
 .braun.blanquet2 <- list(
 	name = "Braun-Blanquet 2", 
 	codes = c("r", "+", "1", "2", "3", "4", "5"),
-	lims = c(  1,   2,   3,  13,  38,  68,  88))
+	lims = c(  0.1, 1,   3,  13,  38,  68,  88))
 
 #	Hult, Sernander, Du Rietz
 #	reference

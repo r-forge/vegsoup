@@ -15,13 +15,16 @@ setGeneric("Sites<-",
 )
 #}
 
-
-#	replacement method for sites
-#	to do: needs comprehensive validity checks!
+#	Sites<-
 setReplaceMethod("Sites",
 	signature(obj = "Vegsoup", value = "data.frame"),
 	function (obj, value) {
-		obj@sites <- value		
+		sel <- match(rownames(obj), rownames(value))
+		if (any(is.na(sel))) {
+			stop("non matching rownames not allowed")
+		}
+		obj <- obj[sel, ]
+		obj@sites <- value				
 		return(obj)		
 	}
 )

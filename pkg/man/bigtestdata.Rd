@@ -1,7 +1,7 @@
 \name{bigtestdata}
 \alias{bigtestdata}
 \docType{data}
-\title{Big Test Data Set with Objects Suitable for Vegsoup}
+\title{ Big Test Data Set with Objects Suitable for Vegsoup }
 \description{
 Simple data structures for testing. A species and corresponding taxonomy data.frame plus a sites data.
 }
@@ -25,8 +25,7 @@ The three objects \code{"species.big"}, \code{"sites.big"} and \code{"taxonomy.b
 }
 }
 \source{
-Supalpine and alpine communities of wind exposed sites.
-Species abundances were estimated adopting the nine-point Braun-Blanquet scale (see \code{\link{AbundanceScale}}).
+Supalpine and alpine communities of wind exposed sites. Species abundances were estimated adopting the nine-point Braun-Blanquet scale (see \code{\link{Coverscale}}).
 Taxonomy of vascular plants agrees with Fischer et al. (2008), lichens with Türk \& Hafellner 2010 and  bryophytes with Köckinger et al. (2012). On sample plot (wf60 to wf70) no cryptogams were recorded.
 The data set has five layers \code{hl}, \code{ml}, \code{sl}, \code{tl1} and  \code{tl2}, where hl means herb layer, ml moos layer, sl shrub layer and tl1 lower tree layer and tl2 upper tree layer, respectively. The sites data contains e.\,g. information about stand heights, cover of layers, snow cover. Precise sampling locations are provided.
 }

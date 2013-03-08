@@ -138,5 +138,10 @@ obj2 <- SpeciesTaxonomy(spc.big, txa.big)
 
 obj <- rbind(obj1, obj2)
 
+# assign object of class SpeciesTaxonomy to an existing Vegsoup* object
+dta <- Vegsoup(obj, sts, coverscale = "braun.blanquet")
+#  not implemented yet!
+## Species(dta) <- obj3
+
 }
 \keyword{classes}

@@ -14,7 +14,7 @@ Fivenum(obj, na.rm = TRUE, recode = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{an object of inheriting from class \code{\link{VegsoupDataPartition}}
+  \item{obj}{an object of inheriting from class \code{\link{VegsoupPartition}}
 }
  \item{na.rm}{
 
@@ -35,15 +35,17 @@ Roland Kaiser
 }
 
 \seealso{
-\code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\link{AbundanceScale}}.
+\code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\linkS4class{Coverscale}}.
 }
 \examples{
+data(testdata)
 #	get minmum
 
-#res <- Fivenum(dta)
-#res[,,"min"]
+prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
+res <- Fivenum(prt)
+res[,,"max"]
 
+res <- Fivenum(prt, recode = TRUE)
+res[,,"max"]
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{univar}
+\keyword{ univar }

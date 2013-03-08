@@ -7,6 +7,7 @@ useDynLib(vegsoup)
 
 #importClassesFrom(Matrix, sparseMatrix)
 import(methods)
+import(coenoflex)
 importFrom("graphics", plot, hist)
 importFrom("stats", dist, as.dist)
 importFrom("utils", head, tail)
@@ -26,7 +27,6 @@ exportMethods(
     "$",
     "abbr.layer",
     "Abbreviation",
-    "Abbreviation<-",
     "AprioriGrouping",
     "Accuracy",
     "Association",

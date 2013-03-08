@@ -3,6 +3,8 @@
 	#	obj = dta; mode = 1
 			
 #	cpu.time <- system.time({
+#	})
+#	cat("\n time to init objects", cpu.time[3], "sec")
     		
 	#	slots
 	plot <- Species(obj)$plot
@@ -20,9 +22,7 @@
 	#	rather slow, but ensures order
 		species <- unique(as.vector(unlist(
 			sapply(Layers(obj),
-				function (x) {
-					species.layer[layer == x]
-				}
+				function (x) species.layer[layer == x]
 			))))
 	} else {
 	#	simple and faster if there is only one layer	
@@ -38,8 +38,10 @@
 			stop("cover scale codes do not match data" )
 		}	
 	}
-#	})
-#	cat("\n time to init objects", cpu.time[3], "sec")
+	if (mode == 1 & is.null(scale@codes)) {
+		cov <- as.numeric(cov)		
+	}
+
 	if (mode == 1) {
 		cpu.time <- system.time({	
 		m <- t(vapply(plots,
@@ -83,8 +85,7 @@
 			}))
 		dimnames(m) <- list(plots, species)
 		})		
-	}
-	#	cat("\n time to cast matrix", cpu.time[3], "sec")		
+	}	
 	
 	return(invisible(m))
 }

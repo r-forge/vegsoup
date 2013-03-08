@@ -11,29 +11,108 @@ The package should be particularly usefull when \dots.
 Below is a list of functions grouped by theme.
 }
 \details{
-\tabular{ll}{
-Package: \tab vegsoup\cr
-Type: \tab Package\cr
-Version: \tab 1.1\cr
-Date: \tab 2011-06-27\cr
-License: \tab What license is it under?\cr
-LazyLoad: \tab yes\cr
-Depends: \tab methods\cr
+
+The package implements classes for Raster data (see \link{Raster-class}) and supports
+  \itemize{
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+    \item 
+  }
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
+
+\section{I. Creating Vegsoup* objects}{
+Vegsoup* objects can be created, from files, from data base views, from objects, from community simualtions or from other classes, with the following functions:
+  \tabular{ll}{
+   \code{\link{}} \tab \cr
+  }
+RasterLayer, RasterStack, and RasterBrick objects are, as a group, referred to as Raster* objects
+}
+
+%% 1
+\section{I. Manipulating of Vegsoup* objects}{
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Set or changing the coverscale of Vegsoup* objects}{
+Coverscale
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Summarizing}{
+Summary
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Accessing values of Vegsoup* objects}{
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Plotting}{
+Plot
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Typesetting}{
+Latex
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Getting and setting Vegsoup* dimensions }{
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+}
+
+\section{I. Writing files}{
+Basic writing
+\tabular{ll}{
+ \code{\link{}} \tab \cr
+}
+Advanced writing of entire files or parts thereof
+  \tabular{ll}{
+   \code{\link{}} \tab \cr
+  }
+}
+
+\section{I. Miscellaneous}{
+  \tabular{ll}{
+   \code{\link{}} \tab \cr
+  }
 }
 \author{
 Roland Kaiser
 
-Maintainer: kardinal.eros@gmail.com
+Maintainer: Roland Kaiser \email{kardinal.eros@gmail.com}
 
 }
-\references{
-~~ Literature or other references for background information ~~
+\section{Acknowledgements}{
+Extensive suggestions were made by \dots and many others.
 }
 
 \keyword{ package }
+\keyword{ multivariate }
+\keyword{ manip }
+\keyword{ spatial }
+
+
 \seealso{
 ~~ Optional links to other man pages, e.g. ~~
 ~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~

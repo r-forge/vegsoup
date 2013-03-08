@@ -71,8 +71,8 @@ dta$rock
 names(dta)[1] <- "bar"
 
 # assign a value
-if (any(names(dta) == "rock") {
-	dta$rock <- sqrt(dta$rock))
+if (any(names(dta) == "rock")) {
+   dta$rock <- sqrt(dta$rock)
 }
 }
 \keyword{ methods }

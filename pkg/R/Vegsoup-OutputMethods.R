@@ -19,7 +19,9 @@ if (missing(select)) {
 	warning("think about selecting sites varibales ",
 		"used all numeric columns by default")
 	#	select all numeric columns
-	select <- apply(as.matrix(Sites(obj)), 2,
+	tmp <- as.matrix(Sites(obj))
+	mode(tmp) <- "character"
+	select <- apply(tmp, 2,
 		function (x) is.numeric(type.convert(x, as.is = FALSE)))
 } else {
 	if (is.numeric(select)) {
