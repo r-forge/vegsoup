@@ -1,48 +1,56 @@
 \name{SampleVegsoup}
 \alias{SampleVegsoup}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Random Samples and Permutations of Objects extending VegsoupData
-}
+
+\title{ Random Samples and Permutations for \code{Vegsoup*} Objects }
+
 \description{
-sample takes a sample of the specified size from the elements of x using either with or without replacement.
+The method takes a sample of the specified size from the elements of x using either with or without replacement.
 }
+
 \usage{
 SampleVegsoup(x, size, replace = FALSE, prob = NULL, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{x}{
-Either a vector of one or more elements from which to choose, or a positive integer.
-}
-  \item{size}{
-%%     ~~Describe \code{size} here~~
-}
-  \item{replace}{
-a non-negative integer giving the number of items to choose.
-}
-  \item{prob}{
-A vector of probability weights for obtaining the elements of the vector being sampled.
-}
+  \item{ x }{
+    a \code{Vegsoup*} object.
+  }
+  \item{ size }{
+    a non-negative integer giving the number of items to choose.
+  }
+  \item{ replace }{
+    Should sampling be with replacement?
+  }
+  \item{ prob }{
+    A vector of probability weights for obtaining the elements of the vector
+    being sampled.
+  }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+    Not used!
+  }
 }
-}
+
 \details{
-See \code{\link{sample}}.
+  See \code{\link{sample}} for details.
 }
+
 \value{
-An object of same class as the input class.
+  An object of same class as the input class.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\linkS4class{Vegsoup}}
+\code{\linkS4class{seriation}}
 }
+\examples{
+library(vegsoup)
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+rownames(dta)
+dta.smp <- SampleVegsoup(dta)
+rownames(dta.smp) # order is permuted
 
+rownames(SampleVegsoup(dta, size = 3))
+rownames(SampleVegsoup(dta, replace = TRUE))
+}
 \keyword{methods}
-

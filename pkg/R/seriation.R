@@ -9,7 +9,8 @@ setMethod("seriation",
 	
 	if (missing(method)) {
 		method  <- "dca"
-	} else {
+	}
+	else {
 		METHODS <- c("dca", "hclust", "ward", "flexible", "packed")
 		method <- match.arg(method, METHODS)
 	}
@@ -61,7 +62,6 @@ setMethod("seriation",
 			sp.ind  <- order(colSums(obj), decreasing = TRUE)
 		}
 	)
-
 	if (!missing(mode)) {
 		if (mode == "R") {
 			res <- obj[, sp.ind]	
@@ -69,33 +69,25 @@ setMethod("seriation",
 		if (mode == "Q") {
 			res <- obj[si.ind, ]
 		}
-	} else {	
+	}
+	else {	
 		res <- obj[si.ind, sp.ind]
 	}
 	
 	return(res)
-
+	
 	}
 )
 
 setMethod("seriation",
     signature(obj = "VegsoupPartition"),
 	function (obj, method, mode, ...) {
-		tmp <- lapply(1:getK(obj), function (x) obj[Partitioning(obj) == x, ])
-		tmp <- sapply(tmp, function (x) seriation(as(x, "Vegsoup"), ...)) 
-		res <- new("VegsoupPartition", do.call("rbind", tmp))
+		res <- lapply(1:getK(obj), function (x) obj[Partitioning(obj) == x, ])
+		res <- sapply(res, function (x) seriation(as(x, "Vegsoup"), ...)) 
+		res <- new("VegsoupPartition", do.call("rbind", res))
 		res@k <- getK(obj)
 		# this seems to be save based on lapply(1:getK(obj), ...)
 		res@part <- sort(Partitioning(obj)) 		
 		return(res)
 	}
 )
-
-
-
-
-
-
-
-
-		

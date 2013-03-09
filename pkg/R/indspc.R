@@ -9,16 +9,8 @@ setGeneric("Indspc",
 setMethod("Indspc",
     signature(obj = "Vegsoup"),
     function (obj, method, ...) {
-    	if (inherits(obj, "VegsoupPartition")) {
-    		dis <- vegdist(as.logical(obj), obj@dist)
-    	} else {
-   			if (missing(method)) {    			
-				dis <- vegdist(as.logical(obj), "bray")
-    		} else {
-    			dis <- vegdist(as.logical(obj), ...)
-    		}    		
-  	 	}
-    	res <- indspc(as.logical(obj), dis = dis, ...)
+    	require(labdsv)
+    	res <- indspc(as.logical(obj), dis = as.dist(obj), ...)
 		return(res)    	
     }
 )

@@ -9,7 +9,7 @@ setGeneric("Indpower",
 #}
 setMethod("Indpower",
     signature(obj = "Vegsoup"),
-    function (obj, ...) {
+    function (obj, type, ...) {
     	res <- indpower(as.logical(obj), ...)
     	diag(res)  <- NA
     	if (type == 0)

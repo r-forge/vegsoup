@@ -1,54 +1,36 @@
+\encoding{UTF-8}
 \name{Indspc}
 \docType{methods}
 \alias{Indspc}
 \alias{Indspc-methods}
 \alias{Indspc,VegsoupData-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-function to do
-}
+
+\title{ Compositional Indicator Species Analysis }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Calculates the mean similarity of all plots in which a species occurs.
 }
 \usage{
 Indspc(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
+  \item{ obj }{
+    A \code{Vegsoup*} object.
+  }
+  \item{ \dots }{
+    arguments passed to \code{labdsv::indspc} to specify \code{numitr}.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+  See \code{\link[labdsv:indspc]{indspc}} for details.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+  An object of class \code{"indspc"}.
 }
 \author{
-%%  ~~who you are~~
+Interfaced from Roland Kaiser for package vegsoup from function
+\code{indspc} by \emph{David. W. Roberts} in package \pkg{labdsv}.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{Fidelity}}
 }
-
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }

@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{VegsoupPartition-class}
 \Rdversion{1.1}
 \docType{class}
@@ -203,7 +204,7 @@
       \code{signature(obj = "VegsoupPartition")}:
       Identifies samples (plots) that typify clusters in a partition based on
       dissimilarity.
-      See \code{\link{}}.
+      See \code{\link{Typal}}.
     }
     \item{PartitioningMatrix}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -245,7 +246,7 @@
     \item{Phi}{
       \code{signature(obj = "VegsoupPartition")}:
       Calculate Phi statistic based on partitioning vector.
-      See \code{\link{}}.
+      See \code{\link{Phi}}.
     }
     \item{Indval}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -255,7 +256,7 @@
     \item{Isamic}{
       \code{signature(obj = "VegsoupPartition")}:
       Indicator species analysis to minimize intermediate constancy
-      See \code{\link{}}.
+      See \code{\link{Isamic}}.
     }
     \item{Murdoch}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -272,7 +273,7 @@
     \item{rectangles}{
       \code{signature(obj = "VegsoupPartition")}:
       Create a plot of matrix dimensions of each partition (cluster).
-      See \code{\link{}}.
+      See \code{\link{rectangles}}.
     }
     \item{ellipsoidhull}{
       \code{signature(x = "VegsoupPartition")}:
@@ -297,8 +298,8 @@
   \bold{ 12) Spatial output methods }
     \item{KML}{
       \code{signature(obj = "VegsoupPartition")}:
-      Save obj to KML file for visualization in Goolge Earth.
-      See \code{\link{}}.
+      Save KML file for visualization in Goolge Earth.
+      See \code{\link{KML}}.
     }
 %% 13
   \bold{ 1) Comparisons of two objects.}

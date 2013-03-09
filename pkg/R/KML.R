@@ -139,9 +139,11 @@ setMethod("KML",
 )
 
 #	KML output
-.KMLVegsoupPartition <- function (obj, path, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
-if (missing(path)) {
-	path <- getwd()	
+.KMLVegsoupPartition <- function (obj, file, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
+if (missing(file)) {
+	file <- paste(getwd(), "/vegsoup partition.kml", sep = "")
+	warning("\nargument file missing, drop KML to folder ",
+		getwd(), " as ./vegsoup partition.kml")
 }
 if (missing(website.url.path)) {
 	website.url.path <-
@@ -152,11 +154,7 @@ if (missing(thumbnail.url.path)) {
 		"http://sabotag.hausdernatur.at/vegsoup/thumbnails/"
 }
 	
-#	obj = prt
-
-#	to do!
 #	implement roll over labels.
-
 
 begin.kml <- c(
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -294,7 +292,7 @@ res <- c(
 
 #	x = 1
 #	c(apply(points[points$partitioning == x, ], 1, .placemark))	
-con <- file(paste(path, "/vegsoup partition.kml", sep = ""))
+con <- file(file)
 	writeLines(res, con)
 close(con)
 	

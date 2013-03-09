@@ -8,16 +8,13 @@
 \alias{as.matrix}
 \alias{as.matrix-method}
 
+\title{ Retrieve Species Matrix with Specified Storage Mode }
 
-
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Retrieve Species Matrix with Specified Storage Mode
-}
 \description{
 The functions retrieve a species matrix of mode according the methods name and \code{as.matrix} returns corresponding types of matrices but specified by its argument \code{mode}.
 %cross-classifying factors
 }
+
 \usage{
 ## S4 method for signature 'Vegsoup*'
 as.logical(x, mode)
@@ -73,9 +70,9 @@ A matrix of mode \code{"numeric"} or \code{"character"}. See \sQuote{Details}.
 \note{
 If the object has non \code{NULL} values in its data standardization slot the method defined by \code{decostand(obj)} will automatically be applied!
 }
-\author{
-Roland Kaiser
-}
+
+\author{ Roland Kaiser }
+
 \references{
 Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
 }

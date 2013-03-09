@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), clustering, polish = FALSE, nitr = 999, seed = 1234, verbose = FALSE, ...) {
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
 
 #	debug
 #	obj = dta; k = 3;

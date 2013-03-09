@@ -5,6 +5,8 @@
 \alias{coerce,sparseMatrix-method}
 \alias{coerce,dist-method}
 \alias{coerce,list-method}
+\alias{coerce.data.frame-method}
+
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
 \description{
 Coerce object a \code{'Vegsoup*'} object to other class.
@@ -19,6 +21,9 @@ as(x, "sparseMatrix")
 as(x, "dsparseMatrix")
 ## S4 method for signature from = 'Vegsoup*' to = 'list'
 as(x, "list")
+## S4 method for signature from = 'Vegsoup*' to = 'data.frame'
+as(x, "data.frame")
+
 }
 \arguments{
   \item{ x }{
@@ -42,9 +47,11 @@ object of class \code{'data.frame'}
 object of class \code{'data.frame'}
 }
 
+Coercion to 'data.frame' returns the sites data.
+
 }
 \section{Warning }{
-S3 functions must contain a call to \code{as.matrix} to gurantee dispatch. For example \code{metaMDS(dta)} does not work, but other functions in vegan will.
+S3 functions must contain a call to \code{as.matrix} to gurantee dispatch. For example \code{metaMDS(obj)} does not work, but other functions in package vegan will. Note, if a function that expects a species matrix calls \code{as.data.frame} in the function body it will certainly break, because \code{as.data.frame(obj)} returns the sites data slot. The species matrix is of class \code{"matrix"}.
 }
 \author{
 Roland Kaiser

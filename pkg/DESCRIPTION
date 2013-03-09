@@ -46,6 +46,7 @@ Collate: AAA.R
          grouping.R
          dim.R
          as.matrix.R
+         as.data.frame.R
          rowSums.R
          decostand.R
          vegdist.R
@@ -71,6 +72,7 @@ Collate: AAA.R
          VegsoupPartition.R
          VegsoupPartition-BaseMethods.R
          partition.R
+         validate.R
          VegsoupPartition-AssociationMethods.R
          VegsoupPartition-FidelityMethods.R
          VegsoupPartition-ClassificationStabilityMethods.R

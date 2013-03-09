@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{vegsoup-package}
 \alias{vegsoup-package}
 \alias{vegsoup}
@@ -12,17 +13,20 @@ Below is a list of functions grouped by theme.
 }
 \details{
 
-The package implements classes for Raster data (see \link{Raster-class}) and supports
+The package implements classes for vegetation data (see \link{Vegsoup-class}) and supports
   \itemize{
-    \item 
-    \item 
-    \item 
-    \item 
-    \item 
-    \item 
-    \item 
-    \item 
-    \item 
+    \item data to be structured in layers/strata.
+    \item several cover scales and conversions thereof.
+    \item taxonomic treatment including species traits.
+    \item standardizations and dissimilarity measures of the species data.
+    \item creation of species and dissimilarity/distance matrices.
+    \item indexing, extract, replace and sample operations.
+    \item row and column aggregation
+    \item merging of objects
+    \item coerce methods
+    \item output methods
+    \item spatial methods
+    \item plotting methods
   }
 }
 
@@ -114,6 +118,10 @@ Extensive suggestions were made by \dots and many others.
 
 
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+\code{\link[vegdata:vegdata-package]{vegdata}}
+\code{\link[mefa:mefa-package]{mefa}}
+\code{\link[multitable:multitable-package]{multitable}}
+\code{\link[vegan:vegan-package]{vegan}}
+\code{\link[optpart:optpart-package]{optpart}}
+\code{\link[labdsv:labdsv-package]{labdsv}}
 }

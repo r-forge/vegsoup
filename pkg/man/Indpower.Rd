@@ -1,54 +1,42 @@
+\encoding{UTF-8}
 \name{Indpower}
 \docType{methods}
 \alias{Indpower}
 \alias{Indpower-methods}
-\alias{Indpower,VegsoupData-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-function to do
-}
+
+\title{ Indicator Power of Species }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Indicator power calculation of Halme et al. (2009) or the congruence between indicator and target species.
 }
 \usage{
 Indpower(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{
-%%     ~~Describe \code{obj} here~~
+  \item{ obj }{
+    A \code{Vegsoup*} object.
+  }
+  \item{ \dots }{
+    arguments passed to \code{vegan::indpower} to specify \code{type}.
+  }
 }
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
-}
+
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+  See \code{\link[vegan:indpower]{indpower}} for details.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+An object of class \code{"matrix"}.
 }
 \references{
-%% ~put references to the literature/web site here ~
+Halme, P., \enc{Mönkkönen}{Monkkonen}, M., Kotiaho, J. S, 
+\enc{Ylisirniö}{Ylisirnio}, A-L. 2009. Quantifying the indicator power
+of an indicator species. \emph{Conservation Biology} 23: 1008--1016.
 }
 \author{
-%%  ~~who you are~~
+Interfaced from Roland Kaiser for package vegsoup from function
+\code{indpower} by \emph{Peter Solymos} in package \pkg{vegan}.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{Indspc}}
 }
-
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
