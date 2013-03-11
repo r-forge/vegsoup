@@ -2,13 +2,12 @@
 \docType{methods}
 \alias{Optsil}
 \alias{Optsil-methods}
-\alias{Optsil,VegsoupDataPartition-method}
+\alias{Optsil,VegsoupPartition-method}
 \alias{Optindval}
 \alias{Optindval-methods}
-\alias{Optindval,VegsoupDataPartition-method} 
-\title{
-Optimise Partitioning of an Object of Class VegsoupDataPartition
-}
+\alias{Optindval,VegsoupPartition-method}
+
+\title{ Optimise Partitioning of \code{"VegsoupPartition"} Objects }
 \description{
 Modify the partitioning of an object as to optimze silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
 }
@@ -19,20 +18,21 @@ Optindval(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
 }
 
 \arguments{
-  \item{obj}{
-An object of class \code{"VegsoupDataPartition"}.
+  \item{ obj }{
+    A \code{"VegsoupPartition"} object.
   }
   \item{ maxitr }{
-The maximum number of iterations to perform.
+    The maximum number of iterations to perform.
   }
   \item{ verbose }{
-Print cpu time used.
+    Print CPU time used.
   } 
   \item{ minsiz }{
-The minimum size of the partition to consider reassigning a sample out of.
+    The minimum size of the partition to consider reassigning a sample out of.
   }
-  \item{\dots}{
-Arguments passed to \code{\link{as.dist}} (\code{optsil}) or \code{link{as.matrix}} (\code{Optindval}).
+  \item{ \dots }{
+    Arguments passed to \code{\link{as.dist}} (\code{optsil}) or
+    \code{link{as.matrix}} (\code{Optindval}).
   }
 }
 
@@ -44,7 +44,7 @@ Arguments passed to \code{\link{as.dist}} (\code{optsil}) or \code{link{as.matri
 }
 
 \value{
-Returns a modified object of class \code{"VegsoupDataPartition"} with possibly changed partitioning vector.
+Returns a modified object of class \code{"VegsoupPartition"} with possibly changed partitioning vector.
 }
 
 \references{
@@ -54,7 +54,7 @@ Rousseeuw, P. (1987). Silhouettes: A graphical aid to the interpretation and val
 }
 
 \author{
-Implemented for vegsoup using Dave Roberts \code{optsil} and \code{optindval} procedures.
+Implemented for vegsoup using Dave W. Roberts \code{optsil} and \code{optindval} procedures of package \pkg{optpart}.
 }
 
 \note{
@@ -65,21 +65,18 @@ Both methods can be very slow when applied to big data sets! \code{Optsil} is us
 library(vegsoup)
 data(bigtestdata)
 
-dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
-	scale = list(scale = "Braun-Blanquet")))
-prt <- VegsoupDataPartition(dta, k = 4)
+dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+prt <- VegsoupPartition(dta, k = 4)
 
 prt.sil <- Optsil(prt, verbose = TRUE)
 prt.ind <- Optindval(prt, verbose = TRUE)
 
-Confus(prt, prt.opt)
-Confus(prt, prt.ind)	
+Confus(prt, prt.sil)
+Confus(prt, prt.ind)
 }
 \seealso{
 \code{\link[labdsv:indval]{indval}},
 \code{\link[cluster:silhouette]{silhouette}}
 }
-
-
 \keyword{ methods }
 \keyword{ cluster }

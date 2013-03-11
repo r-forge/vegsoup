@@ -54,7 +54,7 @@ if (missing(rule) & class(obj) != "VegsoupPartition") {
 nchar.layer <- max(sapply(Layers(obj), nchar))
 
 m <- as.matrix(obj, typeof = "character", mode = "R")
-txa <- DecomposeNames(obj)[rownames(m), ]
+txa <- split.abbr(obj)[rownames(m), ]
 
 #	prepare species data block
 if (short.names) {

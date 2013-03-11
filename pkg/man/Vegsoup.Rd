@@ -85,14 +85,15 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 %%to \code{as.numeric} (e.\,g. in x\$cov if abundance is not ordinal, or for
 %%all in y that represent continuous measurement on plot.).
 
-  \code{instantsoup} is a shorthand when raw data files are guaranteed to
+  Function \code{instantsoup} is a shorthand when data files are guaranteed to
   conform to some format that can be interpreted by the import functions
   \code{stack.species}, respectively \code{stack.sites} or are valid to simple
   calls to class creator methods \code{\link{species}}, \code{\link{sites}}
   and \code{\link{taxonomy}} for signature \code{'character'}. Arguments
   \code{'coverscale'} and \code{'decostand'} can be specified afterwards
-  if need, defaults of class \code{\linkS4class{Vegsoup}} apply otherwise. The
-  same is true for argument \code{'proj4string'}.
+  if needed, defaults of class \code{\linkS4class{Vegsoup}} apply otherwise.
+  The same is true for argument \code{'proj4string'}. The defaults for
+  argument \code{'group'} is to create a dummy integer variable of ones.
 }
 \note{
   If you gain errors using \code{instantsoup}, try to create separate objects
@@ -102,27 +103,27 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   are set according to \code{read.csv2}!
 }
 \section{Warning}{
-All missing values that might result when casting \code{y} will be replaced with zeros, not \code{NA}!
+  All missing values that might result when casting \code{y} will be replaced
+  with zeros, not \code{NA}!
 
-If sp.points and/or sp.polygons are supplied the data slot (\code{SpatialPointsDataFrame@data}) must have a column named plot. In addition, this column has to be ordered. Sorting can be performed using \code{SpatialPointsDataFrame[order(SpatialPointsDataFrame\$plot), ]}. The same is mandatory of slot \code{sp.polygons}.
+  If sp.points and/or sp.polygons are supplied the data slot
+  (\code{SpatialPointsDataFrame@data}) must have a column named plot. The same
+  is mandatory of slot \code{sp.polygons}.
 
-When suppling argument \code{proj4string} please ensure that \code{CRS(proj4string)} works.
+  When suppling argument \code{proj4string} ensure that
+ \code{CRS(proj4string)} works.
 }
 \value{
 An object of class \code{\linkS4class{Vegsoup}}.
 }
 \author{ Roland Kaiser }
-\note{
-%%  ~~further notes~~
-}
 \examples{
 library(vegsoup)
 
 # real data
 data(testdata)
 
-dta <- Vegsoup(spc, sts, txa,
-               coverscale = "braun.Blanquet")
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 dta
 
 # simulated data

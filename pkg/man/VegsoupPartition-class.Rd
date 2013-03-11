@@ -47,8 +47,8 @@
 \title{ Class \code{"VegsoupPartition"} }
 \description{
   Class \code{"VegsoupPartition"} is a class directly extending class
-  \code{\linkS4class{Vegsoup}} and is defined as having a partition
-  (clustering) structure.
+  \code{\linkS4class{Vegsoup}} and represents a partitioning of an object into
+  clusters.
 }
 \section{Objects from the Class}{
 
@@ -220,13 +220,12 @@
   \bold{ 8) Cluster validation }
     \item{Disdiam}{
       \code{signature(obj = "VegsoupPartition")}:
-      Maximum within-cluster dissimilarity) of all partitions.
+      Maximum within-cluster dissimilarity of all partitions.
       See \code{\link{Disdiam}}.
     }
     \item{Silhouette}{
       \code{signature(obj = "VegsoupPartition")}:
-      Compute silhouette information according the objects inherent
-      partitioning (clustering) vector.
+      Compute silhouette information.
       See \code{\link{Silhouette}}.
     }
 %% 9

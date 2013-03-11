@@ -123,6 +123,7 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 			stringsAsFactors = FALSE)
 	}
 
+	#	rewrite!
 	#	cast sites data	
 	#	replace missing values
 	if (any(y[, 3] == "") | any(is.na(y[, 3]))) {
@@ -142,6 +143,8 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 	y[is.na(y)] <- 0 # needed?
 	
 	#	change column mode to numeric if possible
+	
+	#	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
 	options(warn = -1)
 	y <- as.data.frame(
 		sapply(y,
@@ -164,7 +167,7 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
 	#	needs a work around because longitude is coreced to numeric
-	#	because of similiarity to scientifiuc notion (13.075533E)	
+	#	because of similiarity to scientific notion (13.075533E)	
 	sel <- grep("longitude", names(y))
 	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
 	

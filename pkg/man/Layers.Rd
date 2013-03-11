@@ -43,7 +43,12 @@ Layers(obj) <- value
   }
 }
 \details{
-Aggregation mode \code{"layer"} combines layers assuming their independence. For example, a species occurring in two layers with a cover of 50 \% will result in a overall cover of 75 \%. Mode \code{"sum"} will sum up cover values of all layers (see \code{\link{tv.veg}}). If \code{collapse} is missing, or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to match \code{length(Layers(obj))} (see \sQuote{Examples}).
+
+A data set composed of more than one layer might be represented as a multidimensional dimensional array, where there are as many dimensions as there are layers. Unfortunately, many multivariate methods requires a matrix-valued response variable.
+
+For practical issues, the vegsoup package collapses the species and layer dimension into a single dimension by using a special mark-up character \code{'@'}. This comes in effect if a speceis matrix is requested from the object. The order in which the collpased dimension (pseudo-species) appears in the column names of the resulting matrix is controlled by the order of \code{Layers(obj)}. Permuting this reorder also orders the blocks of layers.
+
+In stage of aggregating several data sources it might be nessecary to homogenize the various layers present in the object. For this task some basic aggreagtion mode are provided. Aggregation mode \code{"layer"} combines layers assuming their independence. For example, a species occurring in two layers with a cover of 50 \% will result in a overall cover of 75 \%. Mode \code{"sum"} will sum up cover values of all layers (see \code{\link{tv.veg}}). If \code{collapse} is missing, or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to match \code{length(Layers(obj))} (see \sQuote{Examples}).
 }
 \note{
 The returned object is reordered by plot, abbr and layer!
@@ -65,6 +70,8 @@ dta <- Vegsoup(spc.big, sts.big, txa.big, "braun.blanquet")
 #	print layers
 Layers(dta)
 
+# change order of layers
+Layers(dta) <- c("ml", "hl", "sl", "tl2", "tl1")
 # assign wl to sl, tl1 and tl2
 # see ?bigdataset for details
 dta.1 <- Layers(dta, aggregate = "layer",
@@ -105,6 +112,7 @@ Layers(dta[, grep("@tl", colnames(dta))])
 }
 \seealso{
 \code{\link{Layer}},
+\code{\link{abbr.layer}},
 \code{\link{Vegsoup}}
 and \code{\linkS4class{Vegsoup}}
 }

@@ -3,10 +3,7 @@
 \alias{Murdoch}
 \alias{Murdoch-methods}
 \alias{Murdoch,VegsoupDataPartition-method}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Indicator Species Analysis by Murdoch Preference Function
-}
+\title{ Indicator Species Analysis by Murdoch Preference Function }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -47,8 +44,5 @@ Murdoch(obj, ...)
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\keyword{ methods }
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

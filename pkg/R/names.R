@@ -67,13 +67,13 @@ setReplaceMethod("names",
 )
 
 #	convert abbr to taxon names
-#if (!isGeneric("DecomposeNames")) {
-setGeneric("DecomposeNames",
+#if (!isGeneric("split.abbr")) {
+setGeneric("split.abbr",
 	function (obj, ...)
-		standardGeneric("DecomposeNames")
+		standardGeneric("split.abbr")
 )
 #}
-setMethod("DecomposeNames",
+setMethod("split.abbr",
 	signature(obj = "Vegsoup"),
 	function (obj, verbose = FALSE) {
 	#	obj <- dta; type = "nospace"
@@ -110,26 +110,26 @@ setMethod("abbr.layer",
     }
 )
 
-#if (!isGeneric("Abbreviation")) {
+#if (!isGeneric("abbr")) {
 #	get or set taxon abbreviation
-setGeneric("Abbreviation",
+setGeneric("abbr",
 	function (obj, ...)
-		standardGeneric("Abbreviation")
+		standardGeneric("abbr")
 )
 #}
-setMethod("Abbreviation",
+setMethod("abbr",
     signature(obj = "Vegsoup"),
-    function (obj, ...) DecomposeNames(obj)$abbr
+    function (obj, ...) split.abbr(obj)$abbr
 )
-setMethod("Abbreviation",
+setMethod("abbr",
     signature(obj = "Vegsoup"),
     function (obj) sort(unique(Species(obj)$abbr))
 )
-#setGeneric("Abbreviation<-",
+#setGeneric("abbr<-",
 #	function (obj, value, ...)
-#		standardGeneric("Abbreviation<-")
+#		standardGeneric("abbr<-")
 #)
-#setReplaceMethod("Abbreviation",
+#setReplaceMethod("abbr",
 #	signature(obj = "Vegsoup", value = "character"),
 #	function (obj, value) {
 #		#	to do: needs security for all slots!

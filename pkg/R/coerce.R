@@ -19,6 +19,8 @@ setAs("list", "Coverscale", def = function (from) {
 	return(res)
 })
 
+#	set S3 class
+setOldClass("coenoflex")
 #	from coenoflex to Vegsoup
 as.Vegsoup.coenoflex <- function (obj) {
 
@@ -57,3 +59,43 @@ setAs(from = "coenoflex", to = "Vegsoup",
 	}
 )
 
+#	set S3 class
+setOldClass("data.list")
+
+#	from Vegsoup to data.list
+as.data.list.Vegsoup <- function (obj) {
+	require(multitable)
+
+	xx <- Species(obj)
+	names(xx)[4] <- "abundance"
+	scale <- coverscale(obj)
+	
+	#	cover transformation
+	if (!is.null(scale@codes)) {
+		xx$abundance <- as.numeric(as.character(
+			factor(xx$abundance, levels = scale@codes, labels = scale@lims)))
+		if (any(is.na(xx$abundance))) {
+			stop("cover scale codes do not match data")
+		}
+	}
+	if (is.null(scale@codes)) {
+		xx$cov <- as.numeric(xx$cov)
+	}
+	
+	yy <- data.frame(plot = rownames(obj), Sites(obj))
+		
+	zz <- Taxonomy(obj)
+
+	#xyz <- data.frame(plot = rownames(obj), coordinates(obj))
+		
+	l <- list(xx[, c(1,2,4)], xx[, c(1,2,3)], yy, zz)
+	res <- dlcast(l, fill = c(0, "", NA, NA))
+	
+	return(res)
+}
+
+setAs(from = "Vegsoup", to = "data.list",
+	def = function (from) {
+		as.data.list.Vegsoup(from)
+	}
+)

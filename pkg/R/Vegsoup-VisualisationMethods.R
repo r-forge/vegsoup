@@ -84,7 +84,7 @@ setMethod("plot",
 	D.labels <- attributes(D)$Labels
 	
 	if (translate & any(names(cl) == "mode")) {
-		D.labels <- DecomposeNames(obj)[D.labels, ]$taxon
+		D.labels <- split.abbr(obj)[D.labels, ]$taxon
 		op <- par(xpd = NA)
 	}
 

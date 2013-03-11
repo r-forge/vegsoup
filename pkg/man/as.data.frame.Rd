@@ -5,10 +5,12 @@
 
 \title{ Retrieve Sites Dataframe }
 \description{
-  In contrast to the \code{as.matrix} and alike methods that return the
-  species matrix of \code{Vegsoup*} objects, the \code{as.data.frame} dispatch
-  is rarely needed, as it adds no significant functionality compared to the
-  slot acessor method \code{\link{Sites}}. Both return equal objects.
+  Besides the \code{as.matrix} and alike methods that return just the
+  species matrix of \code{Vegsoup*} objects, an esstential requirement is the
+  coercion to class \code{"data.frame"} for which the variety of R tools for
+  single-table data, become available to code{Vegsoup*} objects. Because this
+  coercion is fundamental, the syntax to execute it is also is as simple
+  as possible.
 }
 \usage{
 as.data.frame(obj)
@@ -18,7 +20,11 @@ as.data.frame(obj)
     A \code{Vegsoup*} object.
   }
 }
-
+\details{
+  The \code{"as.data.frame"} method is essentially a database join operation.
+  Unlike the data stored in a \code{Vegsoup*} object, the returned data frame
+  has redundancy.
+}
 \author{ Roland Kaiser }
 
 \seealso{
@@ -28,6 +34,12 @@ as.data.frame(obj)
 library(vegsoup)
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-as.data.frame(dta)
+
+class(as(dta, "data.frame"))
+class(as.data.frame(dta))
+
+summary(lm(hcov ~ scov, data = dta))
+
 }
+
 \keyword{ methods }

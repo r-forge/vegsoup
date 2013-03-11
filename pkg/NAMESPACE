@@ -2,12 +2,14 @@
 
 #importClassesFrom(Matrix, sparseMatrix)
 import(methods)
-import(coenoflex)
-#importFrom(optpart, optpart, partana, tabdev, disdiam)
+#import(coenoflex)
+importFrom(optpart, optpart, partana, tabdev, disdiam)
+importFrom(coenoflex, coenoflex)
+importFrom(multitable, data.list)
 importFrom("graphics", plot, hist)
 importFrom("stats", dist, as.dist)
 importFrom("utils", head, tail)
-importFrom("vegan", coverscale, vegdist, decostand)
+importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 importFrom("sp", coordinates, bbox, spplot, proj4string, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 importFrom("rgdal", spTransform)
 importFrom("cluster", ellipsoidhull, agnes, pam) #silhouette
@@ -21,8 +23,8 @@ exportPattern("^[[:alpha:]]+")
 exportMethods(
     "[",
     "$",
+    "abbr",
     "abbr.layer",
-    "Abbreviation",
     "AprioriGrouping",
     "Accuracy",
     "Association",
@@ -31,6 +33,7 @@ exportMethods(
     "as.character",
     "as.logical",
     "as.numeric",
+#    "as.data.frame",
     "as.dist",
     "coerce",
     "colSums",
@@ -40,14 +43,13 @@ exportMethods(
     "Contingency",
     "coverscale",
     "coordinates",
-    "DecomposeNames",
     "decostand",
     "dim",
     "Disdiam",
     "elevation",
     "Fidelity",
     "FisherTest",
-    "getDistconnected",
+    "distconnected",
     "getK",
     "getStat",
     "QuickMap",	
@@ -88,6 +90,7 @@ exportMethods(
     "Sites",
     "sites",
     "Sites<-",
+    "split.abbr",
     "SpatialPointsVegsoup",
     "SpatialPolygonsVegsoup",
     "Species",
@@ -101,7 +104,7 @@ exportMethods(
     "taxonomy",
     "Taxonomy",
     "Taxonomy<-",
-    "Typal",
+    "typal",
     "vegdist" 
 )
 exportClasses(

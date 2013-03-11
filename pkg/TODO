@@ -1,4 +1,5 @@
 # major
+replace most warnings() with message()
 improve findcoordiantes()
 improve Spread()
 extend slot partition to contain class dendrogram

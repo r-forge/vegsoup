@@ -55,7 +55,7 @@ setMethod("[",
 		if (length(res@group) != 0) {
 			res@group <- res@group[names(res@group) %in% rownames(tmp)]
 		}
-		#	method Abbreviation relies on already subsetted taxonomy!
+		#	method abbr relies on already subsetted taxonomy!
 		abbr <- unlist(lapply(strsplit(colnames(res), "@", fixed = TRUE), "[[", 1))
  		#	finaly subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]

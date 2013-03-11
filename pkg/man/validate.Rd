@@ -4,14 +4,35 @@
 \alias{Tabdev-methods}
 \alias{Partana}
 \alias{Partana-methods}
+\alias{Disdiam}
+\alias{Disdiam-methods}
+\alias{Silhouette}
+\alias{Silhouette-methods}
+\alias{Silhouette,VegsoupDataPartition-method}
 
 \title{ Partition Quality Assessment for \code{"VegsoupPartition"} Objects }
 \description{
-Partition analysis (\code{partana}) evaluates the within-cluster to among-cluster similarity as a measure of cluster validity (distance based method). Table Deviance (\code{Tabdev}) assess the clarity of the partitioning by permuting the columns (species) of the community matrix (original data) and calculates the probability of observing as low a deviance as observed. Both methods are interfaces to corresponding functions in package \pkg{optpart}.
+  Partition analysis (\code{Partana}) evaluates the within-cluster to
+  among-cluster similarity as a measure of cluster validity. Silhouette
+  information (\code{Silhouette}) or Dissimilarity Diameters (\code{Disdiam})
+  can also be used to evaluate a partitioning of an object. All three are
+  distance based methods.
+
+  Table Deviance (\code{Tabdev}) assess the clarity of the partitioning by
+  permuting the columns (species) of the community matrix (original data) and
+  calculates the probability of observing as low a deviance as observed.
+ 
+  All methods are interfaces to corresponding functions in package
+  \pkg{optpart}.
 }
 \usage{
-Tabdev(obj, numitr = 999, verbose = FALSE, ...)
+Silhouette(obj, ...)
+
 Partana(obj, verbose = FALSE, ...)
+
+Disdiam(obj, ...)
+
+Tabdev(obj, numitr = 999, verbose = FALSE, ...)
 }
 
 \arguments{
@@ -26,12 +47,13 @@ Partana(obj, verbose = FALSE, ...)
   additional console output.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{as.dist}} (\code{Partana}) or
-    \code{link{as.matrix}} (\code{Tabdev}).
+    Arguments passed to \code{\link{as.dist}} (\code{Partana},
+    \code{Silhouette} and \code{Disdiam}) or \code{link{as.matrix}}
+    (\code{Tabdev}).
   }
 }
 \details{
-\code{Partana} (\emph{partition analysis}) evaluates the within-cluster to among-cluster similarity of partitions as a measure of cluster validity. See \code{\link[optpart:partana]{partana}} for details.
+\code{Partana} (\emph{partition analysis}) evaluates the within-cluster to among-cluster similarity of partitions as a measure of cluster validity. See \code{\link[optpart:partana]{partana}} for details. \code{\link[optpart:disdiam]{disdiam}} is also a cluster validation routine.
 
 As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a method to assess the quality of partitions with respect to the original data, and not its distance matrix representation. See \code{\link[optpart:tabdev]{tabdev}} for details.
 
@@ -55,8 +77,9 @@ As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a meth
 %% ~put references to the literature/web site here ~
 }
 \author{
-Interfaced by Roland Kaiser for package \pkg{vegsoup} using David W. Roberts
-\code{tabdev} and \code{partana} algorithms in package \pkg{optpart}.
+  Interfaced by Roland Kaiser for package \pkg{vegsoup} using David W. Roberts
+  \code{tabdev}, \code{partana}, \code{disdiam} and \code{silgouette}
+  algorithms in package \pkg{optpart}.
 }
 
 \seealso{

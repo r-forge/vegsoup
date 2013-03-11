@@ -1,20 +1,29 @@
-#as.data.frame(x, row.names = NULL, optional = FALSE, ..., 
-#              stringsAsFactors = default.stringsAsFactors())
-
 #if (!isGeneric("as.data.frame")) {
-setGeneric("as.data.frame",
-	function (x, ...)
-	standardGeneric("as.data.frame"))
+#setGeneric("as.data.frame",
+#	function (x, ...)
+#	standardGeneric("as.data.frame"))
 #}
-setMethod("as.data.frame",
-    signature(x = "Vegsoup"),
-    function (x, ...) {  		
-    	return(Sites(x))
-    }    	    
-)
+#setMethod("as.data.frame",
+#   signature(x = "Vegsoup"),
+#    function (x, ...) {  		
+#    	return(Sites(x))
+#    }    	    
+#)
+
 setAs(from = "Vegsoup", to = "data.frame",
 	def = function (from) {
-		as.data.frame(from)
+		#from = dta	
+		
+		replicates <- rep(1:nrow(from), rle(Species(dta)$plot)$lengths)
+	
+		res <- data.frame(
+		    Species(from),
+			Sites(from)[replicates, ],
+			coordinates(from)[replicates, ],
+			Taxonomy(from)[Species(from)$abbr, -1, drop = FALSE]
+		)
+		
+		return(res)
 		# typeof = "character", mode = "Q"
 	}
 )

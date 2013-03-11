@@ -58,9 +58,6 @@ setMethod("as.logical",
 )	
 
 #if (!isGeneric("as.matrix")) {
-#	setGeneric("as.logical")
-#}
-#if (!isGeneric("rowSums")) {
 setGeneric("as.matrix",
 	function (x, ...)
 	standardGeneric("as.matrix"))
@@ -91,9 +88,59 @@ setAs(from = "Vegsoup", to = "matrix",
 	}
 )
 #	ensure that also base functions dispatch properly
-as.array.Vegsoup <- as.matrix.Vegsoup <-
+as.matrix.Vegsoup <-
 	function (x, ...) as.matrix(x, ...) # as(x, "matrix")
 
+#	return array of species matrix, one dimension for each layer
+setMethod("as.array",
+    signature(x = "Vegsoup"),
+    function (x, typeof) {	
+	xx <- Species(x)
+	scale <- coverscale(x) # rename local object scale to ?
+	
+   	if (missing(typeof)) typeof <- "numeric"    		
+   	TYPEOF <- c("character", "numeric", "logical")
+   	typeof <- match.arg(typeof, TYPEOF)
+
+	#	cover transformation
+	if (typeof == "numeric" & !is.null(scale@codes)) {
+		xx$cov <- as.numeric(as.character(
+			factor(xx$cov, levels = scale@codes, labels = scale@lims)
+			))
+		if (any(is.na(xx$cov))) {
+			stop("cover scale codes do not match data" )
+		}	
+	}
+	if (typeof == "numeric" & is.null(scale@codes)) {
+		xx$cov <- as.numeric(xx$cov)		
+	}
+	
+	res <- table(xx[c(1,2,3)]) 
+
+	#	insert values, not need for presence/absence ('logical')
+	if (typeof == "numeric" | typeof == "character") {
+		for (i in dimnames(res)$layer) {
+			vals <- xx[xx$layer == i,]
+			for (j in 1:nrow(vals)) {
+				res[vals[j, 1], vals[j, 2], i] <- vals[j, 4]
+			}	
+		}
+	}
+	
+	#	ensure layer order
+	#	order of species is alphabetic due to a call to table()
+	return(res[, , Layers(dta)])
+	}
+)	
+setAs(from = "Vegsoup", to = "array",
+	def = function (from) {
+		as.array(from)
+	}
+)
+#	ensure that also base functions dispatch properly
+as.array.Vegsoup <-	function (x, ...) as.array(x, ...)
+
+#	return vector of abundances	
 setMethod("as.vector",
 	signature(x = "Vegsoup", mode = "missing"), # 
 	  function (x, mode) {
@@ -108,7 +155,6 @@ as.vector.Vegsoup <- function (x, mode) {
 
 #	locations and values of nonzero entries
 #if (!isGeneric("indices")) {
-
 setGeneric("indices",
 	function (x, ...)
 	standardGeneric("indices"))	
@@ -158,7 +204,7 @@ setAs(from = "Vegsoup", to = "sparseMatrix",
 		require(Matrix)
 		ij <- indices(from)
 		res <- sparseMatrix(ij$i, ij$j, x = as.integer(ij$x),
-			dimnames = ij$dimnames)
+			dimnames = ij$dimnames[c(2,1)])
 		res
 	}
 )
@@ -168,7 +214,7 @@ setAs(from = "Vegsoup", to = "dsparseMatrix",
 		require(Matrix)
 		ij <- indices(from)
 		res <- sparseMatrix(ij$i, ij$j, x = ij$x,
-			dimnames = ij$dimnames)
+			dimnames = ij$dimnames[c(2,1)])
 		res
 	}
 )

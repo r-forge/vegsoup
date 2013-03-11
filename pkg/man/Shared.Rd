@@ -1,43 +1,42 @@
 \name{Shared}
 \alias{Shared}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 Compare Shared Species between Partitions
 }
 \description{
-Computes a diagonal matrix showing percentages of shared species between partitons.
+Compute a diagonal matrix showing percentages of shared species between partitons.
 }
 \usage{
 Shared(obj)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{
-an object inheriting from class \code{VegsoupDataPartition}.
-}
+  \item{ obj }{
+     an object inheriting from class \code{VegsoupPartition}.
+  }
 }
 \details{
-The computed index is this equal to \code{designdist(t(Constancy(prt) > 0), method = "J/(A+B)*100")} and simply returns the percentage of shared species between partitions. See \code{\link{designdist}} for details on the \code{method} argument.
+  The computed index is this equal to \code{designdist(t(Constancy(prt) > 0),
+  method = "J/(A+B)*100")} and simply returns the percentage of shared species
+  between partitions.
 }
 \value{
 	an object of class \code{\link{dist}}.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-Roland Kaiser
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
+\author{ Roland Kaiser }
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{vegdist}}
 }
 \examples{
+library(vegsoup)
 
+# real data
+data(bigtestdata)
+
+dta <- Vegsoup(spc.big, sts.big, txa.big, "braun.blanquet")
+prt <- VegsoupPartition(dta, k = 3)
+
+Shared(prt)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }

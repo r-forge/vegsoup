@@ -17,6 +17,8 @@ as.dist(obj, mode)
 
 vegdist(obj, ...)
 vegdist(obj) <- value
+
+distconnected(obj, ...)
 }
 \arguments{
   \item{ obj }{
@@ -34,12 +36,27 @@ vegdist(obj) <- value
     \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
   }
   \item{ \dots }{
-    Additional arguments passed to \code{vegan::vegdist}, except argument
-    \code{method} which is supplied by the \pkg{vegsoup} object.
+    For \code{vegdist} additional arguments passed to \code{vegan::vegdist},
+    except argument \code{method} which is inherited supplied by the
+    \code{Vegsoup*} object.
+    For \code{distconnected}
   }
 }
 \details{
-If the resulting \code{"dist"} object is not a dissimilarity matrix (\code{max > 1}), it will be divided by \code{max(D)} to obtain dissimilarities. Note, the method returned by \code{decostand(obj)} will be applied before calculation of the distance matrix. Use \code{vegdist(obj)} to query which method is active for an object. Note, also the \code{print} and \code{show} methods will report this value. The argument \code{mode} controls if the distances are obtained for objects, the plots (\emph{Q mode}) or variables, the species (\emph{R mode}).
+%%If the resulting \code{"dist"} object is not a dissimilarity matrix
+%%(\code{max > 1}), it will be divided by \code{max(D)} to obtain
+%%dissimilarities.
+
+  Note, the method returned by \code{decostand(obj)} will be applied before
+  calculation of the distance matrix. Use \code{vegdist(obj)} to query which
+  method is active for an object. The \code{print}, \code{show} and
+  \code{summary} methods will report this value of \code{Vegsoup*} objects.
+  The argument \code{mode} controls if the distances are obtained for objects,
+  the plots (\emph{Q mode}) or variables, the species (\emph{R mode}).
+
+  Method \code{distconnected} is a simple wrapper for function
+  \code{\link[vegan:distconnected]{distconnected}} in package
+  \pkg{vegan.} and checks fpr connectedness of dissimilarities.
 }
 \value{
 Returns an object of class \code{"dist"} with an additional attribute \code{"mode"} one of \code{"Q"} or \code{"R"}.
@@ -47,8 +64,6 @@ Returns an object of class \code{"dist"} with an additional attribute \code{"mod
 \author{
 Roland Kaiser
 }
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
 \code{\link[vegan:vegdist]{vegdist}}
 }
@@ -78,5 +93,4 @@ d.r <- as.dist(dta, mode = "R")
 class(d.r)
 attr(d.r, "mode")   
 }
-\keyword{methods}
-
+\keyword{ methods }

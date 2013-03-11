@@ -6,48 +6,29 @@
 \alias{Species<-}
 \alias{Species<--methods}
 \alias{Species<-,Vegsoup,data.frame-method}
- 
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-Methods to Retrieve or Manipulate the Species Slot of an Object of Class Vegsoup*
+Methods to Retrieve or Manipulate the Species Slot Vegsoup* Objects
 }
 \description{
-Accessor method to retrieve the \emph{species matrix}.
+Accessor method to retrieve the species data in \emph{long format} as stored inside the object.
 }
 \usage{
-SpeciesLong(obj)
+Species(obj)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
+    A \code{Vegsoup*} object.
+  }
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A \code{"data.frame"} of species occurences and layer replications.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
+\author{ Roland Kaiser }
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\linkS4class{Vegsoup}}
 }
 
 \keyword{ methods }
-

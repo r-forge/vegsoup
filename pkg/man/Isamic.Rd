@@ -2,7 +2,7 @@
 \docType{methods} 
 \alias{Isamic}
 \alias{Isamic-methods}
-\alias{Isamic,VegsoupDataPartition-method}
+\alias{Isamic,VegsoupPartition-method}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 function to do

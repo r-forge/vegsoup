@@ -10,7 +10,7 @@ setMethod("Contingency",
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {
 				res <- t(aggregate(as.logical(obj, ...),
-					by = list(DecomposeNames(obj)$layer),
+					by = list(split.abbr(obj)$layer),
 					FUN = sum)[, -1])
 				colnames(res) <- Layers(obj)
 			} else {
@@ -56,7 +56,7 @@ setMethod("Importance",
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {
 				res <- t(aggregate(as.matrix(obj, ...),
-					by = list(DecomposeNames(obj)$layer),
+					by = list(split.abbr(obj)$layer),
 					FUN = sum)[, -1])
 				res <- res / Contingency(obj, ...)
 				#	division by zero

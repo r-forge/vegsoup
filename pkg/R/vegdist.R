@@ -33,26 +33,23 @@ setReplaceMethod("vegdist",
 		x	
 	}
 )	
+
+#	set old class
+setOldClass("dist")
 #	retrieve distance matrix
-#	to do: documentation
 setGeneric("as.dist",
 	function (m, diag = FALSE, upper = FALSE, ...)
 		standardGeneric("as.dist")
 )
 setMethod("as.dist",
 	signature(m = "Vegsoup"),
-	function (m, binary, mode, ...) {
+	function (m, mode, ...) {
 		#	as.mumeric and as.logical
 		#	automatically apply decostand method!
-		#	argument mode controls transpostion before
+		#	argument mode controls transposition before
 		#	caluclation of distances
 		if (missing(mode)) mode = "Q"
-		if (missing(binary)) {
-			X <- as.numeric(m, mode = mode)
-		} else {
-			X <- as.logical(m, mode = mode)	
-		}
-		Xd <- vegan::vegdist(X, method = m@dist, ...)
+		Xd <- vegan::vegdist(as.matrix(m), method = m@dist, ...)
 		
 		#	ensure dissimilarities
 		if (max(Xd) > 1) Xd <- Xd / max(Xd)	
@@ -73,16 +70,15 @@ as.dist.Vegsoup <- function (m, ...) {
 }
 	
 #	connectedness of dissimilarities
-#	method for class VegsoupPartition, check inheritance should be absolete!
-#	to do: documentation
-setGeneric("getDistconnected",
+#if (!isGeneric("decostand<-")) {
+setGeneric("distconnected",
 	function (obj, ...)
-		standardGeneric("getDistconnected")
+		standardGeneric("distconnected")
 )
-
-setMethod("getDistconnected",
+#}
+setMethod("distconnected",
 	signature(obj = "Vegsoup"),
 	function (obj, ...) {
-		distconnected(as.dist(obj), ...)
+		vegan::distconnected(as.dist(obj), ...)
 	}
 )

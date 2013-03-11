@@ -168,14 +168,14 @@ for (i in 1:getK(obj)) {
 	i.part <- obj[Partitioning(obj) == i, ]
 	i.part <- seriation(i.part, ...)
 	#	table will be order according to Layers(obj)
-	#	was i.part <- i.part[, order(DecomposeNames(i.part)$layer, decreasing = TRUE)]
+	#	was i.part <- i.part[, order(split.abbr(i.part)$layer, decreasing = TRUE)]
 	
 	res[[i]] <- i.part
 	
 	i.tex <- t(as.character(i.part))
 	i.tex <- gsub("0", ".", i.tex, fixed = TRUE)
 
-	i.tex <- cbind(DecomposeNames(i.part)[c("taxon", "layer")], i.tex)
+	i.tex <- cbind(split.abbr(i.part)[c("taxon", "layer")], i.tex)
 	#	tex valid filenames
 	filename <- paste(path, "species", i, ".tex", sep = "")
 	filenames <- c(filenames, filename)

@@ -7,6 +7,12 @@
 \alias{as.character-method}
 \alias{as.matrix}
 \alias{as.matrix-method}
+\alias{as.array}
+\alias{as.array-method}
+\alias{as.vector}
+\alias{as.vector-method}
+\alias{indices}
+\alias{indices-method}
 
 \title{ Retrieve Species Matrix with Specified Storage Mode }
 
@@ -29,6 +35,9 @@ as.character(x, mode)
 as.matrix(x, typeof, ...)
 
 ## S4 method for signature 'Vegsoup*'
+as.array(x, typeof)
+
+## S4 method for signature 'Vegsoup*'
 indices(x, typeof) 
 
 ## S4 method for signature 'Vegsoup*'
@@ -37,7 +46,7 @@ as.vector(x, typeof)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ x }{
-An object inheriting from class \code{VegsoupData}.
+An object inheriting from class \code{Vegsoup}.
 }
   \item{ mode }{
 If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"}, no transposition. Lower and upper case letters are treated the same. See \sQuote{Details}. 
@@ -46,11 +55,11 @@ If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"}, no tr
 A character string giving the desired storage mode or type of the object. Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
 }
   \item{ \dots }{
-Arguments passed to \code{as.logical} etc. to supply a value for the argument \code{mode}.
+Arguments passed to \code{as.logical} etc. to supply a value for the argument \code{mode}. See argument \code{'mode'} and \sQuote{Details}.
 }
 }
 \details{
-For any object inheriting from class \code{VegsoupData} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{DecomposeNames}} and \code{\link{Taxonomy}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Allmost all of these functions internally coerce objects of class \code{"data.frame"} to class \code{"matrix"}. Besides that, it is possible to supply an object inheriting from class \code{VegsoupData} directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}).
+For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{Layers}} and \code{\link{split.abbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
 
 \code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{coverscale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(x, typeof = "numeric")}.
 
@@ -60,15 +69,17 @@ For any object inheriting from class \code{VegsoupData} the methods return an ob
 
 Note, \code{as.logical} and \code{as.matrix(x, "logical")} do not return a boolean or logical matrix composed of \code{TRUE} and \code{FALSE} but use ones to code presences (\code{TRUE}) and zeros (\code{FALSE}) for absences. The \code{mode} (\code{storage.mode}) of the returned matrix is of type \code{"numeric"} (\code{"integer"}).
 
-As defined above, the some how misleading named argument \code{mode} refers to the type of analysis intended on the returned object (recall, \code{"typeof"} determines \code{mode} (\code{storage.mode}) of the returned matrix). The argument \code{mode} can be passed to all methods and has two possible values. If \code{mode = "Q"} pairs of objects are compared and the analysis is said to be in \emph{Q mode}. This is what users usally expect. When pairs of descriptors are compared, the analysis is said to be in \emph{Q mode} (Legendre & Legendre 2012). For example, \code{as.matrix(x, "logical", "R")} returns a transposed presence/absence matrix. Of cource, this can also be written as \code{t(as.matrix(x, "logical"))}.
+As defined above, the some how misleading named argument \code{mode} refers to the type of analysis intended on the returned object (recall, \code{"typeof"} determines \code{mode} (\code{storage.mode}) of the returned matrix). The argument \code{mode} can be passed to all methods and has two possible values. If \code{mode = "Q"} pairs of objects are compared and the analysis is said to be in \emph{Q mode}. This is what users usally want or expect. When pairs of descriptors are compared, the analysis is said to be in \emph{Q mode} (Legendre & Legendre 2012). For example, \code{as.matrix(x, "logical", "R")} returns a transposed presence/absence matrix. Of cource, this can also be written as \code{t(as.matrix(x, "logical"))}.
 
-Function \code{indices} returns the locations (row and column pointers) and values of nonzero entries in a matrix. Those indices can be used to construct a \code{\link{sparseMatrix}}. Coercion method \code{as(x, "sparseMatrix")} helps in doing so.
+A data set composed of more than one layer might also be represented as a multidimensional dimensional array, where there are as many dimensions as there are layers. Method \code{as.array} returns such an array. Note, the order in which species appear in the column names is alphabetic and there is currently no implementation of the \code{'mode'} argument!
+
+Method \code{indices} returns the locations (row and column pointers) and values of nonzero entries in a matrix. Those indices can be used to construct a \code{\link{sparseMatrix}}. Coercion method \code{as(x, "sparseMatrix")} helps in doing so.
 }
 \value{
-A matrix of mode \code{"numeric"} or \code{"character"}. See \sQuote{Details}.
+A \code{"matrix"} (or \code{"array"}) of mode \code{"numeric"} or \code{"character"}. See \sQuote{Details}.
 }
 \note{
-If the object has non \code{NULL} values in its data standardization slot the method defined by \code{decostand(obj)} will automatically be applied!
+If the object has non \code{NULL} values in its data standardization slot the method defined by \code{decostand(obj)} applies!
 }
 
 \author{ Roland Kaiser }
@@ -77,7 +88,10 @@ If the object has non \code{NULL} values in its data standardization slot the me
 Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
 }
 \seealso{
-\code{\link{Vegsoup}}, \code{\link{VegsoupData}}, \code{\link{decostand}} and \code{\link{Coverscale}}
+\code{\link{as.data,frame}},
+\code{\link{Vegsoup}},
+\code{\link{decostand}} and
+\code{\link{Coverscale}}
 }
 \examples{
 library(vegsoup)

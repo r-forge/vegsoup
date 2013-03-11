@@ -1,49 +1,62 @@
 \name{StablePartition}
 \alias{StablePartition}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Adjusted Goodman-Kruskal's lambda index of classification stability
-}
+
+\title{ Classification Stability for \code{VegsoupPartition} Objects }
 \description{
-Adjusted Goodman-Kruskal's lambda index of classification stability calculated from crosstabulation of clusters obtained from the data set and the subset selected by without replacement bootstrap.
+  Adjusted Goodman-Kruskal's lambda index of classification stability
+  calculated from cross-tabulation of partitions (clusters) obtained from the
+  data set and the subset selected by without replacement bootstrap.
 }
 \usage{
-StablePartition(obj, nitr = 200, nitr.lambda = 10, ...)
+  StablePartition(obj, nitr = 200, nitr.lambda = 10, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{an object of class \code{\link{VegsoupDataPartition}}}
-  \item{intro}{number of iterations}
-  \item{nitr.lambda}{number of iteration to calculate random values of lambda}
-  \item{\dots}{arguments passed to VegsoupDataPartition}
+  \item{ obj }{
+    an object of class \code{\link{VegsoupPartition}}
+  }
+  \item{ nitr }{
+    number of iterations
+  }
+  \item{ nitr.lambda }{
+    number of iteration to calculate random values of lambda
+  }
+  \item{ \dots }{
+    arguments passed to \code{\link{VegsoupPartition}}.
+  }
 }
 \details{
-Adjusted Goodman-Kruskal's lambda index of classification stability calculated from crosstabulation of clusters obtained from the data set and the subset selected by without replacement bootstrap
+  Some more details here!
 }
 \value{
-returns a list with components
-\item{lambda}{lambda statistic}
-\item{modified.lambda}{modified lambda statistic}
+  returns a list with components
+  \item{lambda}{
+    lambda statistic
+  }
+  \item{modified.lambda}{
+    modified lambda statistic
+  }
 }
 \references{
-%% ~put references to the literature/web site here ~
+adopted for vegsoup from script Classification Stability supplied for the
+JUICE software (\url{http://www.sci.muni.cz/botany/juice/})
 }
-\author{
-original authors, Roland Kaiser
+\author{ original authors, Roland Kaiser }
+\seealso{
+\code{\link{OptimStride}},
+\code{\link{SampleVegsoup}},
 }
 \note{
-adopted for vegsoup from script Function Classification Stability supplied for JUICE software (\url{http://www.sci.muni.cz/botany/juice/})
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+  This function is experimental!
 }
 \examples{
+data(bigtestdata)
 
+dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+
+prt <- VegsoupPartition(dta, k = 5)
+
+StablePartition(prt, nitr = 100, nitr.lambda = 10)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ multivariate }

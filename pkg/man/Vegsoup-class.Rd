@@ -11,6 +11,7 @@
 \alias{Abbreviation,Vegsoup-method}
 \alias{AprioriGrouping,Vegsoup-method}
 \alias{as.character,Vegsoup-method}
+\alias{as.data.list,Vegsoup-method}
 \alias{as.data.frame,Vegsoup-method}
 \alias{as.dist,Vegsoup-method}
 \alias{as.logical,Vegsoup-method}
@@ -19,6 +20,7 @@
 \alias{as.vector,Vegsoup,missing-method}
 \alias{BraunBlanquetReduce,Vegsoup-method}
 \alias{coerce,Vegsoup,data.frame-method}
+\alias{coerce,Vegsoup,data.list-method}
 \alias{coerce,Vegsoup,dist-method}
 \alias{coerce,Vegsoup,dsparseMatrix-method}
 \alias{coerce,Vegsoup,list-method}
@@ -32,7 +34,7 @@
 \alias{coverscale,Vegsoup-method}
 \alias{coverscale<-,Vegsoup,character-method}
 \alias{coverscale<-,Vegsoup,Coverscale-method}
-\alias{DecomposeNames,Vegsoup-method}
+\alias{split.abbr,Vegsoup-method}
 \alias{decostand,Vegsoup-method}
 \alias{decostand<-,Vegsoup,character-method}
 \alias{decostand<-,Vegsoup,NULL-method}
@@ -253,7 +255,7 @@
    species matrix. See \code{\link{as.matrix}}.
 
 %% 7
-  \bold{ 7) Retrieve species matrix.}
+  \bold{ 7) Retrieve species matrix.}\cr
     In fact there are several ways of how to obtain the species matrix from an
     \code{Vegsoup*} object and all are based on the logic of object coercion.
     There are methods focused on a specific storage mode, as well, as a
@@ -261,7 +263,7 @@
     even more general index methods.
     \item{as.character}{
       \code{signature(x = "Vegsoup")}:
-      returns a matrix of mode "numeric" with species abundances in the data
+      returns a matrix of mode "character" with species abundances in the data
       set's original scale.
     }
     \item{as.logical}{
@@ -271,7 +273,7 @@
     }
     \item{as.numeric}{
       \code{signature(x = "Vegsoup")}:
-      returns a matrix of mode "numeric" with species abundances coded by
+      returns a matrix of mode "numeric" with species abundances recoded
       according to \code{coverscale(obj)}.
     }
     \item{as.matrix}{
@@ -296,7 +298,7 @@
     }
 
 %% 9
-  \bold{ 9) Retrieve class slots.}
+  \bold{ 9) Retrieve class slots.}\cr
     Methods to access or replace the \code{'species'}, \code{'sites'}
     or \code{'taxonomy'} slots are:
     \item{Species}{
@@ -336,6 +338,8 @@
       \code{Vegsoup*} object. Not implemented yet! See
       \code{\linkS4class{SpeciesTaxonomy}}
     }
+    \cr
+    Methods to access or replace the \code{'Spatial*'} slots are:
     \item{SpatialPointsVegsoup}{
       \code{signature(obj = "Vegsoup")}:
       returns object of class \code{\linkS4class{SpatialPointsDataFrame}}.
@@ -362,7 +366,8 @@
     }
     \item{colnames}{
       \code{signature(x = "Vegsoup")}:
-      the column names of the species \code{"matrix"} (see \code{abbr.layer}).
+      the column names of the species \code{"matrix"}.
+      See \code{\link{abbr.layer}}.
     }
     \item{names}{
       \code{signature(x = "Vegsoup")}:
@@ -371,17 +376,17 @@
     \item{names<-}{
       \code{signature(x = "Vegsoup", value = "character")}:
     }
-    \item{abbr.layer}{
-      \code{signature(obj = "Vegsoup")}:
-       abbreviations used to encode (pseudo-)species.
-    }
-    \item{DecomposeNames}{
-      \code{signature(obj = "Vegsoup")}:
-      returns a \code{data.frame}. See \code{\link{DecomposeNames}}.
-    }
-    \item{Abbreviation}{
+    \item{abbr}{
       \code{signature(obj = "Vegsoup")}:
       abbreviations used to encode species.
+    }
+    \item{abbr.layer}{
+      \code{signature(obj = "Vegsoup")}:
+       abbreviations used to encode (pseudo-)species (layer replicates).
+    }
+    \item{split.abbr}{
+      \code{signature(obj = "Vegsoup")}:
+      returns a \code{data.frame}. See \code{\link{split.abbr}}.
     }
 
 %% 11
@@ -507,6 +512,9 @@
       \code{signature(from = "Vegsoup", to = "data.frame")}:
       returns objects all of class \code{"data.frame"}. See
       \code{\link{as.data.frame}}. %% improve doc
+      \code{signature(from = "Vegsoup", to = "data.list")}:
+      returns objects all of class \code{"data.list"}. See
+      \code{\link{as.data.list}}. %% improve doc
       \code{signature(from = "Vegsoup", to = "dsparseMatrix")}:
       returns objects all of class \code{"dsparseMatrix"}. See
       \code{\link{as.matrix}}. %% improve doc

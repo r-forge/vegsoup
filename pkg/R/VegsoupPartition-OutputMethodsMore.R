@@ -192,7 +192,7 @@ tmp <- list(tab = tmp, typical = typ)
 #	top and bottom of table
 if (length(dia) > 0) {
 	#	top of table, diagnostic/typical species
-	txn <- DecomposeNames(obj, verbose = FALSE)
+	txn <- split.abbr(obj, verbose = FALSE)
 	txn <- txn[match(rownames(tmp$tab), rownames(txn)), ] # dropped $abbr.layer
 	#	txn <- txn[rownames(tmp$tab), ]
 	#	rownames(txn) <- txn$abbr.layer
@@ -214,7 +214,7 @@ if (length(dia) > 0) {
 	bottom <- tmp$tab[rownames(txn.bottom), ]
 	tmp$tab <- rbind(top, bottom)
 } else {
-	txn <- DecomposeNames(obj, verbose = FALSE)
+	txn <- split.abbr(obj, verbose = FALSE)
 	txn <- txn[match(rownames(tmp$tab), rownames(txn)), ] # dropped $abbr.layer
 	#rownames(txn) <- txn$abbr.layer
 	txn <- txn[order(txn$layer), ]
@@ -225,7 +225,7 @@ if (length(dia) > 0) {
 tex <- as.data.frame(as.matrix(tmp$tab),
 	stringsAsFactors = FALSE)
 
-txn <- DecomposeNames(obj, verbose = FALSE) 
+txn <- split.abbr(obj, verbose = FALSE) 
 txn <- txn[match(rownames(tex), rownames(txn)), ]  # dropped $abbr.layer
 
 tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
@@ -340,7 +340,7 @@ if (mode == 1) {
 		tex <- tex[-match(footer.species, row.names(tex)), ]
 		footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
 
-		txn <- DecomposeNames(obj, verbose = FALSE)
+		txn <- split.abbr(obj, verbose = FALSE)
 		txn <- txn[match(rownames(footer), rownames(txn)), ] #	dropped $abbr.layer
 		footer <- as.data.frame(footer, stringsAsFactors = FALSE)
 		footer$taxon <- txn$taxon

@@ -17,7 +17,7 @@ setMethod("richness",
 		if (choice == -1) 
         	stop("ambiguous choice")
 		switch(choice, "dataset" = {
-			res <- length(unique(DecomposeNames(obj)$abbr))
+			res <- length(unique(split.abbr(obj)$abbr))
 		}, "sample" = {
 			#	slow but reliable	
 			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
@@ -39,7 +39,7 @@ setMethod("richness",
 			choice <- "dataset"
 		}		
 		switch(choice, "dataset" = {
-			res <- length(unique(DecomposeNames(obj)$abbr))
+			res <- length(unique(split.abbr(obj)$abbr))
 		}, "sample" = {
 			#	slow but reliable	
 			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))

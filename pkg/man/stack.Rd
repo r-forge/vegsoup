@@ -5,10 +5,33 @@
 
 \title{ Stack Species Matrix, Sites Data or Spatial Coordinates }
 \description{
-All functions reshape a data frame between \emph{wide format} with measurements in separate columns to \emph{long format} with the measurements in separate rows.
+  All functions reshape a data frame between \emph{wide format} with
+  measurements in separate columns to \emph{long format} with the measurements
+  in separate rows (see \code{link{reshape}}).
 
-Function \code{stack.species} converts a matrix like input object or file into a representation in long format, where each observation on a species consists of one row in a resulting data frame that has as many rows as there are single species occurrences in the data set (see \code{\linkS4class{Species}}). In a similar fashion, function \code{stack.sites} can be used to derive a plot by variable matrix in long format (see \code{\linkS4class{Sites}}). Function \code{stack.readOGR} collects spatial coordinates from spatial data stored on disk by calls to \code{\link{readOGR}}. It then reshapes two or three (3D features) columns of spatial coordinates together with a plot identifier to the format defined by class \code{"Sites"}. Results of \code{stack.sites} and \code{stack.readOGR} can be combined using \code{rbind} to form a complete sites data frame as demanded for \code{Vegsoup} objects.
-%Extract coordinates from OGR data source
+  The \emph{long format} is called as such, because more sampling results in a
+  lengthening of the data (i.e., the addition of rows) without any widening
+  (i.e., the addition of columns). In contrast, it is common in community
+  ecology for example to store abundance data as spreadsheets with sites as
+  rows and species as columns. Such a data storage format is often called
+  \emph{wide format}, because more sampling may result in a widening of the
+  data (e.g., more columns are required as further sampling reveals a greater
+  number of species). 
+
+  Function \code{stack.species} converts a matrix like input object or file
+  into a representation in long format, where each observation on a species
+  consists of one row in a resulting data frame that has as many rows as there
+  are single species occurrences in the data set (see
+  \code{\linkS4class{Species}}). In a similar fashion, function
+  \code{stack.sites} can be used to derive a plot by variable matrix in long
+  format (see \code{\linkS4class{Sites}}). Function \code{stack.readOGR}
+  collects spatial coordinates from spatial data stored on disk by calls to
+  \code{\link{readOGR}}. It then reshapes two or three (3D features) columns
+  of spatial coordinates together with a plot identifier to the format defined
+  by class \code{"Sites"}. Results of \code{stack.sites} and
+  \code{stack.readOGR} can be combined using \code{rbind} to form a complete
+  sites data frame as demanded for \code{Vegsoup} objects.
+
 }
 \usage{
 stack.species(x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"),

@@ -56,7 +56,7 @@ and \code{\link{VegsoupPartition}} for a feature-rich interface.
 \examples{
 data(testdata)
 dta <- Vegsoup(spc, sts, txa,
-       coverscale ="braun.blanquet")
+       coverscale = "braun.blanquet")
 seriation(dta)
 seriation(dta, "packed")	
 }

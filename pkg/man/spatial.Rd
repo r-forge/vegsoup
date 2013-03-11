@@ -1,8 +1,20 @@
 \name{sp-methods}
 \docType{methods}
-\alias{ccordinates}
+\alias{coordinates}
 \alias{coordinates-methods}
-\alias{coordinates,VegsoupData-method}
+\alias{coordinates,Vegsoup-method}
+
+\alias{bbox}
+\alias{bbox-methods}
+\alias{bbox,Vegsoup-method}
+
+\alias{proj4string}
+\alias{proj4string-methods}
+\alias{proj4string,Vegsoup-method}
+
+\alias{spTransform}
+\alias{spTransform-methods}
+\alias{spTransform,Vegsoup-method}
 
 \alias{SpatialPointsVegsoup}
 \alias{SpatialPointsVegsoup-methods}
@@ -18,10 +30,7 @@
 \alias{SpatialPolygonsVegsoup<--methods}
 \alias{SpatialPolygonsVegsoup<-,Vegsoup,SpatialPolygonsDataFrame-method}
 
-
-
-\title{ 'sp' and 'rgdal' Methods for Objects of Class VegsoupData*  } 
-
+\title{ Spatial Methods for \code{Vegsoup*} Objects } 
 
 \description{
 Methods 
@@ -42,18 +51,20 @@ SpatialPointsVegsoup(obj)
 SpatialPolygonsVegsoup(obj)
 }
 \arguments{
-  \item{obj}{
-an object of class \code{VegsoupData*},
-}
-  \item{value}{
-For \code{coordinates} spatial coordinates; either a \code{matrix}, \code{list}, or \code{data.frame} with numeric data. See \code{\link[sp:coordinates]{coordinates}}
+  \item{ obj }{
+    an object of class \code{Vegsoup*},
+  }
+  \item{ value }{
+    For \code{coordinates} spatial coordinates; either a \code{"matrix"},
+    \code{"list"}, or \code{"data.frame"} with numeric data. See
+    \code{\link[sp:coordinates]{coordinates}}.
 
-For \code{proj4string} a CRS object, containing a valid proj4 string. See \code{\link[sp:proj4string]{proj4string}}.
-}
+    For \code{proj4string} a \code{\linkS4class{CRS}} object, containing a
+    valid Proj.4 string. See \code{\link[sp:proj4string]{proj4string}}.
+  }
   \item{ CRS }{
-An object of class \code{"CRS"}. See \code{\link[rgdal:CRS]{CRS}}.
-}
-
+    An object of class \code{"CRS"}. See \code{\linkS4class{CRS}}.
+  }
 }
 \details{
 \code{coordinates} retrieves or sets the spatial coordinates.
@@ -71,7 +82,7 @@ An object depending on the input class.
 }
 
 \seealso{
-\code{\link{Spatial}},\code{\link{SpatialPointsDataFrame}}
+\code{\link{Spatial}}
 }
 \keyword{ methods }
 

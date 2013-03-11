@@ -11,61 +11,49 @@ Retrieves the number of species and sites for each partition and plots a box acc
 rectangles(obj, plot = TRUE)
 }
 \arguments{
-\item{obj}{
-An object inherting from class \code{VegsoupDataPartiton}
-}
-\item{plot}{
-If \code{TRUE} create a plot, otherwise just return a matrix of partition dimensons used to create boxes.
-}
-\item{\dots}{
-graphical parameters, see details
-}
+  \item{ obj }{
+    An object inherting from class \code{"VegsoupPartiton"}
+  }
+  \item{ plot }{
+    If \code{TRUE} create a plot, otherwise just return a matrix of partition
+    dimensons used to create boxes.
+  }
+  \item{ \dots }{
+    graphical parameters. See \sQuote{Details}.
+  }
 }
 \details{
-A lying box idicates species poor and an upright box indiactes species rich partitions. Currently graphical parameters are only passed to \code{\link{rect}}. The functions adds a line to mark all partitions that conatin only one site. See argument \code{polish} in function \code{\link{VegsoupDataPartition}} to get rid of singletons in your analysis.
+A lying box idicates species poor and an upright box indiactes species rich partitions. Currently graphical parameters are only passed to \code{\link{rect}}. The functions adds a line to mark all partitions that conatin only one site. See argument \code{polish} in function \code{\link{VegsoupPartition}} to get rid of singletons in your analysis.
 }
 \value{
 Returns a \code{matrix} with two columns as returned by  \code{dim(obj[Partitioning(obj) == i,])}, where \code{i} is a specific partition. The first column shows number of plots and the second column shows number of species.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
+\author{ Roland Kaiser }
 \note{
 Any warings that typically arise when a single partition is subsetted from an object are silenced. These warnings are harmless and not of interessent at this point.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 data(bigtestdata)
-dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
-	scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc.big, sts.big, txa.big,
+               coverscale = "braun.blanquet")
 
-prt <- VegsoupDataPartition(dta, k = 10)
+prt <- VegsoupPartition(dta, k = 20)
 rectangles(prt)
-#	add color to the boxes
+#   add color to the boxes
 rectangles(prt, col = rgb(0,0,0,0.2))
-#	returned matrix only
+#   returned matrix only
 res <- rectangles(prt, plot = FALSE)
 res
 
-#	use polish = TRUE
-prt <- VegsoupDataPartition(dta, k = 10, polish = TRUE)
+# use polish = TRUE
+prt <- VegsoupPartition(dta, k = 10, polish = TRUE)
 
-#	add fancy colors to the boxes
+#   add fancy colors to the boxes
 require(RColorBrewer)
 rectangles(prt, plot = TRUE,
-	col = rgb(0,0,0,0.2),
-	border = brewer.pal(getK(prt), "Spectral"),
-	lwd = 2)
+           col = rgb(0,0,0,0.2),
+           border = brewer.pal(getK(prt), "Spectral"),
+           lwd = 2)
 }
 \keyword{ methods }
 \keyword{ hplot }
-
-

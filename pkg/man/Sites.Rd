@@ -2,12 +2,12 @@
 \docType{methods}
 \alias{Sites}
 \alias{Sites-methods}
-\alias{Sites<-}  
+\alias{Sites<-}
 \alias{Sites<--methods}
 
 
 \title{
-Methods to Retrieve or Manipulate the Sites Slot of an Object of Class Vegsoup*
+Methods to Retrieve or Manipulate the Sites Slot of Vegsoup* Objects
 }
 \description{
 Accessor and replacement methods acting on the \code{'sites'} slot.
@@ -19,15 +19,17 @@ Sites(obj) <- value
 
 \arguments{
   \item{ obj }{
-    object of class \code{Vegsoup*}
+    A \code{Vegsoup*} object.
   }
   \item{ value }{
-    object of class \code{"data.frame"}.
+    An object of class \code{"data.frame"}.
   }
 
 }
 \details{
-The value object in the replacement function needs to have rownames matching \code{rownames(obj)}. The order is respected and leads to reordering of the object to which the value object is assigned.
+  The value object in the replacement function needs to have rownames matching
+  \code{rownames(obj)}. The order is respected and leads to reordering of the
+  object to which the value object is assigned.
 }
 \value{
   An object of class depending on the input class.
@@ -48,4 +50,3 @@ Sites(dta) <- Sites(dta)[sample(rownames(dta)), ]
 x;y
 }
 \keyword{ methods }
-
