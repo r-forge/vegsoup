@@ -8,7 +8,6 @@
 \alias{Disdiam-methods}
 \alias{Silhouette}
 \alias{Silhouette-methods}
-\alias{Silhouette,VegsoupDataPartition-method}
 
 \title{ Partition Quality Assessment for \code{"VegsoupPartition"} Objects }
 \description{
@@ -25,19 +24,24 @@
   All methods are interfaces to corresponding functions in package
   \pkg{optpart}.
 }
+
 \usage{
+## S4 method for class 'VegsoupPartition'
 Silhouette(obj, ...)
 
+## S4 method for class 'VegsoupPartition'
 Partana(obj, verbose = FALSE, ...)
 
+## S4 method for class 'VegsoupPartition'
 Disdiam(obj, ...)
 
+## S4 method for class 'VegsoupPartition'
 Tabdev(obj, numitr = 999, verbose = FALSE, ...)
 }
 
 \arguments{
   \item{ obj }{
-    An object of class \code{"VegsoupPartition"}
+    A \code{"VegsoupPartition"} object.
   }
   \item{ numitr }{
     Number of iterations to perform in calculating the probability of
@@ -73,12 +77,9 @@ As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a meth
     total tabele deviance.
   }
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
-  Interfaced by Roland Kaiser for package \pkg{vegsoup} using David W. Roberts
-  \code{tabdev}, \code{partana}, \code{disdiam} and \code{silgouette}
+  Interfaced by Roland Kaiser for package \pkg{vegsoup} using \emph{David W.
+  Roberts} \code{tabdev}, \code{partana}, \code{disdiam} and \code{silhouette}
   algorithms in package \pkg{optpart}.
 }
 

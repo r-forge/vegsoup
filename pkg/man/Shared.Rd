@@ -12,7 +12,7 @@ Shared(obj)
 }
 \arguments{
   \item{ obj }{
-     an object inheriting from class \code{VegsoupPartition}.
+     an object inheriting from class \code{"VegsoupPartition"}.
   }
 }
 \details{

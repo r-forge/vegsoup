@@ -10,26 +10,31 @@ The method rearranges the species matrix according to ordination coordinates, cl
 \usage{
 
 ## S4 method for signature 'Vegsoup'
-seriation(object, method, ...)
+seriation(obj, method, mode, ...)
 
 ## S4 method for signature 'VegsoupPartition'
-seriation(object, method, ...)
+seriation(obj, method, mode, ...)
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ obj }{
-A \code{Vegsoup*} object.
-}
-  \item{ methods }{
-Methods applied to obtain new order of data set. See \sQuote{Details}. If missing defaults to \code{"dca"}. See \sQuote{Details}.
-}
+    A \code{Vegsoup*} object.
+  }
+  \item{ method }{
+    Method applied to obtain new order of data set. If missing defaults to
+    \code{"dca"}.
+    See \sQuote{Details}.
+  }
   \item{ \dots }{
-Arguments passed to \code{\link[vegan:decorana]{decorana}}. See \sQuote{Note}.
-}
+    Q-mode
+  }
+  \item{ \dots }{
+    Arguments passed to \code{\link[vegan:decorana]{decorana}}.
+    See \sQuote{Note}.
+  }
 }
 \details{
-For objects of class \code{Vegsoup} the default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} with default settings. Method \code{\dQuote{hclust}} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{"ward"} calls \code{\link{agnes}} with argument \code{method = "ward"} and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. Finally, method \code{"packed"} simply performs ordering by row and col sums.
+For objects of class \code{Vegsoup} the default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} with default settings. Method \code{"hclust"} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{"ward"} calls \code{\link{agnes}} with argument \code{method = "ward"} and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. Finally, method \code{"packed"} simply performs ordering by row and col sums.
 
 The method defined for class \code{"VegsoupPartition"} equals separate calls to subsets defined by \code{Partitioning(obj)}, same as a call to objects of class \code{Vegsoup}, followed by final combination of all subsets into a single object. Note that this orders plots within each group based on the defined method, but the order of species is determined by order they appear in single subsets. So the order of species might not be satisfactory.
 
@@ -58,7 +63,7 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa,
        coverscale = "braun.blanquet")
 seriation(dta)
-seriation(dta, "packed")	
+seriation(dta, "packed")    
 }
 \keyword{ methods }
 

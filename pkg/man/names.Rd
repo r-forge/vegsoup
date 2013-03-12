@@ -16,23 +16,29 @@ Retrieve the row or column names of the species matrix and the names of the site
 }
 \usage{
 ## S4 method for signature 'Vegsoup*'
-rownames(obj)
+rownames(x, do.NULL = TRUE, prefix = "row")
 ## S4 method for signature 'Vegsoup*'
-colnames(obj)
+colnames(x, do.NULL = TRUE, prefix = "col")
 ## S4 method for signature 'Vegsoup*'
-dimnames(obj)
+dimnames(x)
 ## S4 method for signature 'Vegsoup*'
-names(obj)
-## S4 replacement method for 'Vegsoup*' objects
-names(obj) <- value
+names(x)
+## S4 replacement method for signature 'Vegsoup*'
+names(x) <- value
 ## S4 method for signature 'Vegsoup*'
 x$name
 ## S4 replacement method for signature 'Vegsoup*'
 x$i <– value
 }
 \arguments{
-  \item{ obj }{
-    an \code{Vegsoup*} object. 
+  \item{ x }{
+    a \code{Vegsoup*} object. 
+  }
+  \item{ do.NULL }{
+    Not used.
+  }
+  \item{ prefix }{
+    Not used.
   }
   \item{ value }{
     A character vector of the same length as \code{names(obj)}, or NULL.

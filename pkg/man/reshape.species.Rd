@@ -13,7 +13,7 @@
 }
 \usage{
   reshape.species(x, file, schema, sep = ";", dec = ",", verbose = FALSE)
-  reshape.species(obj)
+  shape.species(obj)
 }
 
 \arguments{

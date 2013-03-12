@@ -6,7 +6,6 @@
 \alias{abbr-methods}
 \alias{abbr<-}
 \alias{abbr<--methods}
-\alias{abbr<-,Vegsoup,character-method}
 
 \title{ Get Abbreviations used to Encode Species and Layer Replicates }
 \description{
@@ -14,20 +13,21 @@
   taxonomy data frame.
 }
 \usage{
-abbr(obj, ...)
-
+## S4 method for signature 'Vegsoup*'
+abbr(obj)
+## S4 replacement method for signature 'Vegsoup*'
 abbr(obj) <- value
-
+## S4 method for signature 'Vegsoup*'
 abbr.layer(obj)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{
-a \code{Vegsoup*} object.
-}
-  \item{\dots}{
-not used
-}
+  \item{ obj }{
+    a \code{Vegsoup*} object.
+  }
+  \item{ value }{
+    Character. Usefull to change abbreviations.a \code{Vegsoup*} object.
+  }
 }
 \details{
   The design of package vegsoup with regard to layer replication is to encode

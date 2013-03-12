@@ -1,48 +1,55 @@
 ###	generating function
 #	to do: improve documentation
-Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", verbose = FALSE) {
+Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", verbose = FALSE) {
 
 	if (missing(x)) {
 		stop("\nspecies are missing!")	
-	} else {
+	}
+	else {
 		# get taxonomy from class SpeciesTaxonomy
 		if (class(x) == "Species" | class(x) == "SpeciesTaxonomy") {
 			if (!missing(z)) {
 				x <- species(x)
-			} else {
+			}
+			else {
 				z <- taxonomy(x)
 				x <- species(x)				 
 			}
-		} else {
+		}
+		else {
 				x <- species(new("Species", data = x))
 		}	
 	}
 	if (missing(y)) {
 		stop("\nsites are missing!")	
-	} else {
+	}
+	else {
 		if (class(y) == "Sites") {
 			y <- sites(y) # formats numbers? 
-		} else {
+		}
+		else {
 			y <- sites(new("Sites", data = y))
 		}	
 	}	
 	if (missing(z)) {
 			stop("\ntaxonomy is missing and x is not of class SpeciesTaxonomy!")
-	} else {
+	}
+	else {
 		if (class(z) == "Taxonomy" | class(z) == "SpeciesTaxonomy") {
 			z <- taxonomy(z)	
-		} else {
+		}
+		else {
 			z <- taxonomy(new("Taxonomy", data = z))
 		}			
 	}
-	if (missing(decostand)) {
-		decostand = new("decostand", method = NULL)
-	} else {
-		decostand = new("decostand", method = decostand)
-	}	
-	if (missing(dist)) {
-		dist = "euclidean"
-	}	
+#	if (missing(decostand)) {
+#		decostand = new("decostand", method = NULL)
+#	} else {
+#		decostand = new("decostand", method = decostand)
+#	}	
+#	if (missing(dist)) {
+#		dist = "euclidean"
+#	}	
 	if	(!inherits(proj4string, "character")) {
 		stop("\n... argument proj4string does not inhertit from class 'character'")
 	}
@@ -71,24 +78,29 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 			warning("interpret abundance values as character",
 			"\n set cover scale to default 9 point Braun-Blanquet scale", call. = FALSE)
 			xs <- Coverscale("braun.blanquet")
-		} else {
+		}
+		else {
 			cat("\n cover seems to be numeric")
 			cat("\n set abundance scale to percentage")
 			xs <- Coverscale("percentage")
 		}	
-	} else {
+	}
+	else {
 		if (is.character(coverscale) & length(coverscale) == 1) {
 			xs <- Coverscale(coverscale)
-		} else { 
+		}
+		else { 
 			if (inherits(coverscale, "Coverscale")) {
 				xs <- coverscale
-			} else {
+			}
+			else {
 				if (is.list(coverscale)) {
 					#	problems with coerce methods will arise
 					#	if setAs("list", "Coverscale") is defined
 					#	currently not planned
 					xs <- as(coverscale, "Coverscale")
-				} else {
+				}
+				else {
 					stop("please supply a character, list or object of class Coverscale")					
 				}				
 			}
@@ -102,12 +114,14 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 			cat("\n no grouping factor supplied,",
 				"use single partition")
 		}
-	} else {
+	}
+	else {
 		#	stopifnot(!is.null(names(group)))
 		if (inherits(group, "numeric")) {
 			group <- as.integer(group)
 			names(group) <- unique(x$plot)
-		} else {
+		}
+		else {
 			stop("argument group must be of mode integer", call. = FALSE)	
 		}
 	}
@@ -151,7 +165,8 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		function (x) {
 			if (!any(is.na(as.numeric(x)))) {
 				x <- as.numeric(x)
-			} else {
+			}
+			else {
 				x <- as.character(x)	
 			}
 		}, simplify = FALSE),
@@ -177,11 +192,11 @@ Vegsoup <- function (x, y, z, coverscale, decostand, dist, group, sp.points, sp.
 		taxonomy = z,
 		coverscale = xs,
 		layers = as.character(unique(x$layer)),
-		decostand = decostand,
-		dist = dist,		
+		decostand = new("decostand", method = NULL),
+		dist = "euclidean",		
 		group = group,
 		sp.points = sp.points,
 		sp.polygons = sp.polygons
 		)		
-	res
+	return(res)
 }	

@@ -1,5 +1,5 @@
 #	function to import monospaced commuity tables
-read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "–", "_"), verbose = TRUE, species.only = FALSE) {
+read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "–", "_"), species.only = FALSE, verbose = TRUE) {
 
 require(stringr)
 

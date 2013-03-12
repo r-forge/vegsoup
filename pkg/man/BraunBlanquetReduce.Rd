@@ -40,6 +40,6 @@ class(BraunBlanquetReduce(red))
 }
 \seealso{
 \code{\linkS4class{Coverscale}},
-\code{\linkS4class{coverscale}}
+\code{\link{coverscale}}
 }
 \keyword{ methods }

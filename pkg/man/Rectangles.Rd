@@ -8,7 +8,7 @@ Create a Plot of Matrix Dimensions for Each Partition
 Retrieves the number of species and sites for each partition and plots a box according to its dimension.
 }
 \usage{
-rectangles(obj, plot = TRUE)
+rectangles(obj, plot = TRUE, ...)
 }
 \arguments{
   \item{ obj }{
@@ -16,7 +16,7 @@ rectangles(obj, plot = TRUE)
   }
   \item{ plot }{
     If \code{TRUE} create a plot, otherwise just return a matrix of partition
-    dimensons used to create boxes.
+    dimensons used to create boxes. Defaults to \code{TRUE}.
   }
   \item{ \dots }{
     graphical parameters. See \sQuote{Details}.

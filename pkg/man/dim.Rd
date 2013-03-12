@@ -2,13 +2,12 @@
 \docType{methods}
 \alias{ncol}
 \alias{ncol-methods}
-\alias{ncol,Vegsoup-method}
 \alias{ncol}
 \alias{nrow-methods}
-\alias{nrow,Vegsoup-method}
 \alias{dim}
 \alias{dim-methods}
-\alias{dim,Vegsoup-method}
+\alias{ncell}
+\alias{ncell-methods}
 
 \title{Number or Rows, Columns, and Cells of a Vegsoup* object}   
 
@@ -41,7 +40,9 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 }
 
 \value{
-An integer giving number of rows (plots) and species (each occurrence of a species in layer).
+  An integer giving number of rows (plots) and species (each occurrence of a
+  species in layer), or the dimension of that matrix, respectively the product
+  of this two-dimensional matrix.
 }
 \seealso{
 \code{\link{Vegsoup}},
@@ -58,6 +59,5 @@ dim(dta)
 nrow(dta)  # number of plots
 ncol(dta)  # number of (pseudo-)species
 ncell(dta) # number of cells, short hand for prod(dim(dta))
-}	
+}
 \keyword{methods}
-

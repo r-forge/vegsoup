@@ -6,7 +6,7 @@ setGeneric("decostand", function (obj)
 #}
 #if (!isGeneric("decostand<-")) {
 setGeneric("decostand<-",
-	function (obj, value, ...)
+	function (obj, value)
 		standardGeneric("decostand<-")
 )
 #}

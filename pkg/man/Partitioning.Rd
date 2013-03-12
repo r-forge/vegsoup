@@ -4,10 +4,8 @@
 \alias{Partitioning-methods}
 \alias{PartitioningMatrix}
 \alias{PartitioningMatrix-methods}
-\alias{PartitioningMatrix,VegsoupPartition-method}
 \alias{PartitioningCombinations}
 \alias{PartitioningCombinations-methods}
-\alias{PartitioningCombinations,VegsoupPartition-method}
 
 \title{ Methods for the Partitioning Vector of \code{"VegsoupPartition"} Objects }
 \description{

@@ -5,11 +5,9 @@
 \alias{species,SpeciesTaxonomy-method}
 \alias{species<-,SpeciesTaxonomy,data.frame-method}
 \alias{species<-,SpeciesTaxonomy,Species-method}
-\alias{Species<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{taxonomy,SpeciesTaxonomy-method}
 \alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
 \alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
-\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{rbind,SpeciesTaxonomy-method}
 
 \title{ Class \code{"SpeciesTaxonomy"} }
@@ -102,6 +100,7 @@
 \author{ Roland Kaiser }
 \seealso{
   \code{\link{SpeciesTaxonomy}},
+  \code{\linkS4class{Species}},
   \code{\linkS4class{Sites}},
   \code{\linkS4class{Taxonomy}},
   \code{\link{taxval}}
@@ -144,4 +143,4 @@ dta <- Vegsoup(obj, sts, coverscale = "braun.blanquet")
 ## Species(dta) <- obj3
 
 }
-\keyword{classes}
+\keyword{ classes }

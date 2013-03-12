@@ -9,7 +9,8 @@
 Contains the defintion for a cover scale (abundance scale) associated with an \code{Vegsoup*} object.
 }
 \section{Objects from the Class}{
-Objects can be created by calls to the function \code{\link{Coverscale}} or of the form \code{new("Coverscale", ...)}.
+  Objects can be created by calls to the function \code{\link{Coverscale}} or
+  of the form \code{new("Coverscale", ...)}.
 
 }
 \section{Slots}{
@@ -21,12 +22,19 @@ Objects can be created by calls to the function \code{\link{Coverscale}} or of t
 }
 \section{Methods}{
   \describe{
-    \item{coerce}{\code{signature(from = "list", to = "Coverscale")}: ... }
-	 }
-	The \code{from} object has to be a list of length three. Components \code{[2:3]} can be \code{NULL}.
+    \item{coerce}{
+      \code{signature(from = "list", to = "Coverscale")}:
+      The \code{from} object has to be a list of length three. Components
+      \code{[2:3]} can be \code{NULL}.
+    }
+  }
 }
 \references{
-%%  ~~put references to the literature/web site here~~
+Peet, R.K. & Roberts D.W. (2013). Classification of natural and semi-natural
+vegetation. In Vegetation Ecology (van der Maarel, E. & Franklin, J. eds).
+Wiley-Blackwell.
+
+Certainly, more references are needed here!
 }
 \author{
 Roland Kaiser

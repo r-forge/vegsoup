@@ -2,14 +2,13 @@
 \docType{methods}
 \alias{SigFidelity}
 \alias{SigFidelity-methods}
-\alias{SigFidelity,VegsoupPartition-method}
 
 \title{ Experimental Function }
 \description{
 Experimental Function
 }
 \usage{
-SigFidelity(obj, ...)
+SigFidelity(obj, mode, ...)
 }
 \arguments{
   \item{obj}{
@@ -19,7 +18,7 @@ SigFidelity(obj, ...)
     Type of analysis. See \sQuote{Details}.
   }
   \item{ \dots }{
-    Arguments passeed to \dots.
+    Arguments passed to \dots.
   }
 }
 \details{

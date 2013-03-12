@@ -7,11 +7,8 @@
 #	r.s: phi. or point-biserial correlation coefficien
 #	r.g: phi, group equalised
 
-#	returns a list with objects of class matrix.
-#	optionally calculates bootstrap
-
 #	to do: add column for indicator value, high priority!
-.FidelityVegsoupPartition <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
+".fidelityVegsoupPartition" <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
 #	obj <- prt
 #	method = "TCR"
 #	group = NULL; nboot = 0; alpha = 0.05; c = 1; fast = FALSE; verbose = TRUE
@@ -781,12 +778,12 @@ return(invisible(res))
 }
 
 setGeneric("Fidelity",
-	function (obj, ...)
+	function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...)
 		standardGeneric("Fidelity")
 )
 setMethod("Fidelity",
 	signature(obj = "VegsoupPartition"),
-	.FidelityVegsoupPartition	
+	.fidelityVegsoupPartition	
 )
 
 .SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE, binary = TRUE) {
@@ -882,7 +879,7 @@ return(invisible(res))
 }
 
 setGeneric("SigFidelity",
-	function (obj, ...)
+	function (obj, mode, ...)
 		standardGeneric("SigFidelity")
 )
 setMethod("SigFidelity",

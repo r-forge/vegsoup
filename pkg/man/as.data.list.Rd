@@ -10,7 +10,7 @@
   for details.
 }
 \usage{
-as.data.list(obj)
+as.data.list(x)
 }
 \arguments{
   \item{ x }{

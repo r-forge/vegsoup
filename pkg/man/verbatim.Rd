@@ -18,15 +18,16 @@ Read or Write Monospaced Community Tables From or To Plain Text Files
 }
 
 \usage{
-  read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
-           species.only = FALSE, verbose = TRUE)
-  
-  read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
-           collapse = ",", abundance)
+read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
+         species.only = FALSE, verbose = TRUE)
 
-  write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
-           abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE,
-           latex.input = FALSE)
+read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
+         collapse = ",", abundance)
+
+## S4 method for signature 'Vegsoup' and 'VegsoupPartition'
+write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
+         abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE,
+         latex.input = FALSE)
 }
 
 \arguments{

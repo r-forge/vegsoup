@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{getStat}
 \alias{getStat-methods}
-\alias{getStat,VegsoupPartitionFidelity-method}
+
 \title{ Methods for \code{VegsoupPartitionFidelity} Objects }
 \description{
   Return fidelity statistics.
@@ -19,7 +19,7 @@
   }
 }
 \value{
-  A \code{"matrix"} of fidelity/indicator values.
+  A \code{"matrix"} of fidelity (indicator) values.
 }
-\author{ Roladn Kaiser }
+\author{ Roland Kaiser }
 \keyword{ methods }

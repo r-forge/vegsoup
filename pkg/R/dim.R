@@ -27,12 +27,12 @@ setMethod("dim",
 )
 #if (!isGeneric("ncell")) {
 setGeneric("ncell",
-	function (x, ...)
+	function (x)
 	standardGeneric("ncell"))
 #}
 setMethod("ncell",
 	signature(x = "Vegsoup"),
-	function (x, ...) {
+	function (x) {
     	prod(dim(x))
     }
 )

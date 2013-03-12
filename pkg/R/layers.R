@@ -138,7 +138,7 @@ if (missing(collapse) & missing(aggregate)) {
 }
 
 setGeneric("Layers",
-	function (obj, ...)
+	function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE)
 	standardGeneric("Layers")
 )
 setGeneric("Layers<-", function (obj, value)

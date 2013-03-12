@@ -96,7 +96,7 @@ exportMethods(
     "Species",
     "Species<-",
 #    "Specieslist",	
-    "Spread",
+    "spread",
     "Stride",
     "summary",
     "Tabdev",

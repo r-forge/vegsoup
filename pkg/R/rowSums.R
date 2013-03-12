@@ -1,3 +1,17 @@
+#if (!isGeneric("colSums")) {
+setGeneric("colSums",
+	function (x, na.rm = FALSE, dims = 1, ...)
+	standardGeneric("colSums"))
+#}
+setMethod("colSums",
+	signature(x = "Vegsoup"),
+	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
+		if (typeof == "character") {
+			stop("\n no way to calculate sums based on characters")
+		}
+    	colSums(as.matrix(x, typeof = typeof), ...)
+    }
+)
 
 #if (!isGeneric("rowSums")) {
 setGeneric("rowSums",
@@ -13,20 +27,7 @@ setMethod("rowSums",
     	rowSums(as.matrix(x, typeof = typeof), ...)
     }
 )
-#if (!isGeneric("colSums")) {
-setGeneric("colSums",
-	function (x, na.rm = FALSE, dims = 1)
-	standardGeneric("colSums"))
-#}
-setMethod("colSums",
-	signature(x = "Vegsoup"),
-	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
-		if (typeof == "character") {
-			stop("\n no way to calculate sums based on characters")
-		}
-    	colSums(as.matrix(x, typeof = typeof), ...)
-    }
-)
+
 #if (!isGeneric("rowMeans")) {
 setGeneric("rowMeans", function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("rowMeans"))
@@ -40,7 +41,8 @@ setMethod("rowMeans",
     	rowMeans(as.matrix(x, typeof = typeof), ...)
     }
 )
-#if (!isGeneric("rowSums")) {
+
+#if (!isGeneric("colMeans")) {
 setGeneric("colMeans", function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("colMeans"))
 #}

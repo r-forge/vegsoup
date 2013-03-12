@@ -1,7 +1,7 @@
 #	summary statistics
 #	Tukey Five-Number Summary
 setGeneric("Fivenum",
-	function (obj, ...)
+	function (obj, na.rm = TRUE, recode = FALSE)
 		standardGeneric("Fivenum")
 )
 

@@ -5,15 +5,17 @@
 \alias{vegdist}
 \alias{vegdist-methods}
 \alias{vegdist<--methods}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Return a Distance Matrix from Objects of Class Vegsoup*
-}
+\alias{distconnected}
+\alias{distconnected-methods}
+\alias{distconnected,VegsoupData-method}
+\alias{distconnected,VegsoupDataPartition-method}
+
+\title{ Distance Matrices from \code{Vegsoup*} Objects }
 \description{
 Compute a distance matrix as specified by \code{vegdist(obj)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
 }
 \usage{
-as.dist(obj, mode)
+as.dist(obj)
 
 vegdist(obj, ...)
 vegdist(obj) <- value
@@ -27,10 +29,12 @@ distconnected(obj, ...)
   \item{ binary }{
     Compute the distance matrix based on presence/absence data.
   }
-  \item{ mode }{
-    Compute distances in \emph{Q} or \emph{R} mode. See
-    \code{\link{as.matrix}}.
-  }
+%% ... setGeneric("as.dist") will break dispatch for typal
+%% see code in as.dist.R
+%%\item{ mode }{
+%%  Compute distances in \emph{Q} or \emph{R} mode. See
+%%  \code{\link{as.matrix}}.
+%%}
   \item{ value }{
     A single character valid as argument \code{method} to function
     \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
@@ -56,7 +60,7 @@ distconnected(obj, ...)
 
   Method \code{distconnected} is a simple wrapper for function
   \code{\link[vegan:distconnected]{distconnected}} in package
-  \pkg{vegan.} and checks fpr connectedness of dissimilarities.
+  \pkg{vegan} and checks for connectedness of dissimilarities.
 }
 \value{
 Returns an object of class \code{"dist"} with an additional attribute \code{"mode"} one of \code{"Q"} or \code{"R"}.

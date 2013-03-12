@@ -2,7 +2,7 @@
 #	to do: check dist slot
 #	to do: implement ?testpart()
 setGeneric("Partana",
-	function (obj, ...)
+	function (obj, verbose = FALSE, ...)
 		standardGeneric("Partana")
 )
 
@@ -29,7 +29,7 @@ setMethod("Partana",
 
 #	table deviance
 setGeneric("Tabdev",
-	function (obj, ...)
+	function (obj, numitr = 99, verbose = FALSE, ...)
 		standardGeneric("Tabdev")
 )
 

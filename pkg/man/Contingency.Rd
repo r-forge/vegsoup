@@ -7,9 +7,8 @@
 \alias{Importance}
 \alias{Importance-methods}
 
-\title{
-Contingency and Constancy Tables for \sQuote{VegsoupPartition} Objects
-}
+\title{ Summary Tables for \code{"VegsoupPartition"} Objects }
+
 \description{
 Function \code{Constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs in; \code{Contingency} lists just the number of occurrences. The latter are based on presence/absence of a species, whereas method \code{Importance} divides the sum of species abundances by the number of plots in which it occurs.
 }
@@ -21,18 +20,23 @@ Constancy(obj, percentage = TRUE, ...)
 ## S4 method for signature 'VegsoupPartition'
 Importance(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{ obj }{
-An object inheriting from class \code{'VegsoupPartition'}
-}
+    An object inheriting from class \code{'VegsoupPartition'}
+  }
   \item{ percentage }{
-Return results of \code{Constancy} as percentages, the default.
-}
+    Return results of \code{Constancy} as percentages, the default.
+  }
   \item{ \dots }{
-For \code{Contingency} and \code{Importance} \dots expand to arguments passed to matrix methods \code{as.logical} and \code{as.matrix} respectively (see \sQuote{Details}).  Additional arguments to \code{Constancy} are passed to \code{\link{round}} and are only applicable if \code{percentage = TRUE}, the default.
+    For \code{Contingency} and \code{Importance} \dots expand to arguments
+    passed to matrix methods \code{as.logical} and \code{as.matrix}
+    respectively (see \sQuote{Details}).  Additional arguments to
+    \code{Constancy} are passed to \code{\link{round}} and are only applicable
+    if \code{percentage = TRUE}, the default.
+  }
 }
-}
+
 \details{
 An importance table lists for each species the average (mean) abundance of each species in each partition. Sensible results are only to be obtained if the object has either a semi-quantitative or quantitative cover cover scale defined. Note, if only presence/absence data is available \code{Importance} returns the same results as \code{Contingency(obj) / Contingency(obj)}, which bears no information as the summed abundance is just the number of occurrences. See method \code{\link{Fivenum}} for descriptive summaries of species abundances in partitions.
 
@@ -45,8 +49,9 @@ A \code{"matrix"} with as many columns as there are partitions (layers if \code{
 Roland Kaiser
 }
 \seealso{
-\code{\link{const}} and \code{\link{importance}} in \pkg{labdsv},
-\code{\link{Fivenum}} for Tukeys five-number summaries for each partition
+\code{\link[labdsv:const]{const}} and
+\code{\link[labdsv:importance]{importance}} in \pkg{labdsv},
+\code{\link{Fivenum}} for Tukeys five-number summaries for \code{"VegsoupPartition"} objects.
 }
 \examples{
 library(vegsoup)
@@ -76,4 +81,3 @@ Contingency(prt, mode = "R")
 Importance(prt, mode = "R")
 }
 \keyword{methods }
-

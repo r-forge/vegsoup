@@ -43,21 +43,6 @@ setMethod("names",
     }
 )
 
-#if (!isGeneric("names<-")) {
-#setGeneric("names <-",
-#	function (x, value, ...)
-#		standardGeneric("Sites<-")
-#)
-#}
-#	replacement method for names
-
-#	equivalent	
-#setMethod('names<-', signature(x='Vegsoup'), 
-#	function(x, value)  {
-#		x@sites@names <- value
-#		x
-#	}
-#)
 setReplaceMethod("names",
 	signature(x = "Vegsoup", value = "character"),
 	function (x, value) {
@@ -69,18 +54,15 @@ setReplaceMethod("names",
 #	convert abbr to taxon names
 #if (!isGeneric("split.abbr")) {
 setGeneric("split.abbr",
-	function (obj, ...)
+	function (obj)
 		standardGeneric("split.abbr")
 )
 #}
 setMethod("split.abbr",
 	signature(obj = "Vegsoup"),
-	function (obj, verbose = FALSE) {
+	function (obj) {
 	#	obj <- dta; type = "nospace"
-	if (verbose) {
-		cat("Vegsoup standard pattern taxa coding:")
-		cat("blanks are dots, '@' seperates abbreviations and layer")
-	}
+
 	abbr.layer <- colnames(obj)	
 	abbr <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 1))
 	layer <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 2))
@@ -99,13 +81,13 @@ setMethod("split.abbr",
 
 #if (!isGeneric("abbr.layer")) {
 setGeneric("abbr.layer",
-	function (obj, ...)
+	function (obj)
 		standardGeneric("abbr.layer")
 )
 #}
 setMethod("abbr.layer",
     signature(obj = "Vegsoup"),
-    function (obj, ...) {
+    function (obj) {
     	file.path(Species(obj)$abbr, Species(obj)$layer, fsep = "@")
     }
 )
@@ -113,17 +95,22 @@ setMethod("abbr.layer",
 #if (!isGeneric("abbr")) {
 #	get or set taxon abbreviation
 setGeneric("abbr",
-	function (obj, ...)
+	function (obj) {
 		standardGeneric("abbr")
+	}	
 )
 #}
 setMethod("abbr",
     signature(obj = "Vegsoup"),
-    function (obj, ...) split.abbr(obj)$abbr
+    function (obj) {
+    	split.abbr(obj)$abbr
+    }	
 )
 setMethod("abbr",
     signature(obj = "Vegsoup"),
-    function (obj) sort(unique(Species(obj)$abbr))
+    function (obj) {
+    	sort(unique(Species(obj)$abbr))
+    }	
 )
 #setGeneric("abbr<-",
 #	function (obj, value, ...)

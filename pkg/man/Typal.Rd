@@ -1,7 +1,6 @@
 \name{typal}
 \alias{typal}
 \alias{typal-methods}
-\alias{typal-VegsoupPartition-method}
 
 \title{
 Typical Samples of an Object of Class Vegsoup*
@@ -10,16 +9,19 @@ Typical Samples of an Object of Class Vegsoup*
 Identifies samples (plots) that typify clusters in a partition based on dissimilarity.
 }
 \usage{
-typal(obj, k=1)
+## S4 method for signature 'VegsoupPartition'
+typal(obj, k = 1)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ obj }{
-An object inheriting from class \code{VegsoupPartition}. 
-}
+    An object inheriting from class \code{VegsoupPartition}. 
+  }
+  \item{ k }{
+    integer. Number of typal species/clusters to identify. Defaults to 1.
+  }
   \item{ \dots }{
-Arguments passed to \code{\link{as.dist}}.
-}
+    Arguments passed to \code{\link{as.dist}}.
+  }
 }
 \details{
 Silhouette analysis returns \code{k} samples with the largest positive silhouette width for each partition. Partana analysis returns the \code{k} samples with the highest mean similarity to the partition. See \code{\link[optpart:typal]{typal}} in package \pkg{optpart} for further details.
@@ -50,6 +52,6 @@ prt <- VegsoupPartition(dta, k = 2)
 ## broken, due to as.dist dispatch
 #typal(prt)
 #typal(prt, typeof = "logical")
-#typal(prt, typeof = "logical", mode = "R")	
+#typal(prt, typeof = "logical", mode = "R") 
 }
 \keyword{ methods }

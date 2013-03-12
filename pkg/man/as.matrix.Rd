@@ -35,29 +35,34 @@ as.character(x, mode)
 as.matrix(x, typeof, ...)
 
 ## S4 method for signature 'Vegsoup*'
-as.array(x, typeof)
+as.array(x, typeof, ...)
 
 ## S4 method for signature 'Vegsoup*'
 indices(x, typeof) 
 
 ## S4 method for signature 'Vegsoup*'
-as.vector(x, typeof)
+as.vector(x, mode)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{ x }{
-An object inheriting from class \code{Vegsoup}.
-}
+    An object inheriting from class \code{Vegsoup}.
+  }
   \item{ mode }{
-If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"}, no transposition. Lower and upper case letters are treated the same. See \sQuote{Details}. 
-}
+    If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"},
+    no transposition. Lower and upper case letters are treated the same.
+    See \sQuote{Details}.
+  }
   \item{ typeof }{
-A character string giving the desired storage mode or type of the object. Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
-}
+    A character string giving the desired storage mode or type of the object.
+    Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
+  }
   \item{ \dots }{
-Arguments passed to \code{as.logical} etc. to supply a value for the argument \code{mode}. See argument \code{'mode'} and \sQuote{Details}.
+    Arguments passed to \code{as.logical} etc. to supply a value for the
+    argument \code{mode}. See argument \code{'mode'} and \sQuote{Details}.
+  }
 }
-}
+
 \details{
 For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{Layers}} and \code{\link{split.abbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
 
@@ -107,12 +112,12 @@ decostand(dta) <- "pa"
 # are the same if presence/absence (transformation) is applied
 dta.pa2 <- as.numeric(dta)
 
-#	for a true boolean matrix change mode
+#   for a true boolean matrix change mode
 mode(dta.pa) <- "logical"
 head(dta.pa)
 all.equal(dta.pa, dta.pa2, check.attributes = FALSE)
 
-#	using as.matrix and argument mode
+#   using as.matrix and argument mode
 as.matrix(dta, "character", "R")
 
 require(vegan)
@@ -141,10 +146,16 @@ object.size(as.matrix(dta)) # most efficient
 # indices only
 object.size(indices(dta)) # almost equal 
 # class sparseMatrix based on indices()
-object.size(as(dta, "sparseMatrix")) # efficient
-#  internal Vegsoup data structure
+# broken!
+# object.size(as(dta, "sparseMatrix")) # efficient
+# internal Vegsoup data structure
 object.size(Species(dta)) # most general but least efficent
 
+
+object.size(dta)
+object.size(as.array(dta))
+object.size(as.data.list(dta))
+object.size(as.data.frame(dta))
 }
 \keyword{ methods }
 \keyword{ manip }

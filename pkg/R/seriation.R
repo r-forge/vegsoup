@@ -1,6 +1,6 @@
 #	arrange an unpartitioned data set
 setGeneric("seriation",
-	function (obj, ...)
+	function (obj, method, mode, ...)
 		standardGeneric("seriation")
 )
 setMethod("seriation",

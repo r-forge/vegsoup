@@ -1,5 +1,6 @@
 \name{coerce-methods}
 \docType{methods}
+\alias{as-methods}
 \alias{coerce-methods}
 \alias{coerce,matrix-method}
 \alias{coerce.array-method}

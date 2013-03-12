@@ -8,7 +8,7 @@ The method takes a sample of the specified size from the elements of x using eit
 }
 
 \usage{
-SampleVegsoup(x, size, replace = FALSE, prob = NULL, ...)
+SampleVegsoup(x, size, replace = FALSE, prob = NULL)
 }
 
 \arguments{
@@ -24,9 +24,6 @@ SampleVegsoup(x, size, replace = FALSE, prob = NULL, ...)
   \item{ prob }{
     A vector of probability weights for obtaining the elements of the vector
     being sampled.
-  }
-  \item{\dots}{
-    Not used!
   }
 }
 

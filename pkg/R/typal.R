@@ -1,7 +1,7 @@
 ###	broken!
 #	typal samples in a partition
 setGeneric("typal",
-	function (obj, ...)
+	function (obj, k = 1, ...)
 		standardGeneric("typal")
 )
 ".typal.Vegsoup" <- function (clustering, dist, k = 1) 
@@ -36,7 +36,7 @@ setGeneric("typal",
 
 setMethod("typal",
     signature(obj = "VegsoupPartition"),
-    function (obj, k = 2, ...) {
+    function (obj, k = 1, ...) {
     	
     	require(optpart)    	
     	cl <- match.call()    	

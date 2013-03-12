@@ -1,10 +1,6 @@
 \name{plot-methods}
 \docType{methods}
 \alias{plot-methods}
-\alias{plot,Vegsoup,missing-method}
-\alias{plot,Vegsoup,ANY-method}
-\alias{plot,VegsoupPartition,missing-method}
-\alias{plot,VegsoupOptimstride,ANY-method}
 
 \title{ Plotting methods for \code{Vegsoup*} Objects }
 \description{

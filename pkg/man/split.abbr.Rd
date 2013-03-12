@@ -3,22 +3,17 @@
 \alias{split.abbr}
 \alias{split.abbr-methods}
 
-\title{
-Deparse Species Names of Objects of Class Vegsoup*
-}
+\title{ Deparse Species Layer Replication of \code{Vegsoup*} Objects }
 \description{
 Deparse the layer replications (pseudo-species) used as \code{colnames} of a species matrix returned from \code{Vegsoup*} objects into components.
 }
 \usage{
-## S4 getter method for 'Vegsoup*' objects
-split.abbr(obj, verbose = FALSE)
+## S4 method for signature 'Vegsoup*'
+split.abbr(obj)
 }
 \arguments{
   \item{ obj }{
     An \code{Vegsoup*} object.
-  }
-  \item{ verbose }{
-    Additional output.
   }
 }
 \details{

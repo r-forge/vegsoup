@@ -2,7 +2,11 @@
 \alias{Accuracy}
 \title{ Accuracy Statistics for Objects of class VegsoupPartition }
 \description{
-  \code{Accuracy} takes two objects inheriting from class \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a cross-tabulation (contingency table) of reference (observed) (\code{obj1}) vs. compoarison (predicted) class memberships (\code{obj2}), and calculates a range of statistics about prediction accuracy.
+  \code{Accuracy} takes two objects inheriting from class
+  \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
+  cross-tabulation (contingency table) of reference (observed) (\code{obj1})
+  vs. compoarison (predicted) class memberships (\code{obj2}), and calculates
+  a range of statistics about prediction accuracy.
 }
 \usage{
   Accuracy(obj1, obj2)
@@ -31,12 +35,19 @@ A list with the following components:
   Oaks: Sage Publications. 
 }
 \author{
-Adopted by Roland Kaiser for vegsoup from code by  Antti Arppe
+Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe}
 }
 \seealso{
 \code{\link{model.statistics}}.
 }
 \examples{
+require(vegsoup)
+data(bigtestdata)
+dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+prt1 <- VegsoupPartition(dta, k = 10, method = "flexible")
+prt2 <- VegsoupPartition(dta, k = 10, method = "pam")
 
+Accuracy(prt1, prt2)
 }
-\keyword{ ~kwd }
+\keyword{ methods }
+\keyword{ multivariate }

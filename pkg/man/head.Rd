@@ -15,9 +15,9 @@ Return the First or Last Part of the Species Matrix
 Returns the first or last parts of the species matrix.
 }
 \usage{
-head(x, n, choice, typeof, ...)
+head(x, n = 6L, choice, typeof, ...)
 
-tail(x, ...)
+tail(x, n = 6L, choice, typeof, ...)
 }
 \arguments{
 
@@ -62,7 +62,7 @@ If \code{n != 6L} the method prints the \emph{typal} (\code{\link{typal}}) sampl
 \seealso{
 \code{\link{as.matrix}} and \code{\link{typal}} in package \pkg{vegsoup}
 
-\code{\link[utils:head]{head}} and \code{\link[tail:head]{tail}} in package \pkg{utils}.
+\code{\link[utils:head]{head}} and \code{\link[utils:tail]{tail}} in package \pkg{utils}.
 }
 \examples{
 library(vegsoup)

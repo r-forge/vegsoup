@@ -1,26 +1,30 @@
 \name{Fivenum}
+\docType{methods}
 \alias{Fivenum}
+\alias{Fivenum-methods}
 
-\title{
-Tukeys Five-Number Summaries for a Community Matrix
-}
+\title{ Tukeys Five-Number Summaries for a Community Matrix }
 
 \description{
 Returns Tukey's five number summary (minimum, lower-hinge, median, upper-hinge, maximum) for each species in each cluster.
 }
 
 \usage{
+## S4 method for signature 'VegsoupPartition'
 Fivenum(obj, na.rm = TRUE, recode = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
-\arguments{
-  \item{obj}{an object of inheriting from class \code{\link{VegsoupPartition}}
-}
- \item{na.rm}{
 
-}
- \item{recode}{recode abundances and return orginal scale. Only applies if scale if ordinal.
-}
+\arguments{
+  \item{ obj }{
+    an object inheriting from class \code{"VegsoupPartition"}.
+  }
+  \item{ na.rm }{
+    handling of NAs
+  }
+  \item{ recode }{
+    recode abundances and return orginal scale. Only applies if scale if
+    ordinal.
+  }
 }
 
 \details{

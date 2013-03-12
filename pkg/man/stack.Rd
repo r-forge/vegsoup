@@ -35,11 +35,11 @@
 }
 \usage{
 stack.species(x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"),
-              absence, verbose = FALSE)
+              absences, verbose = FALSE)
 
 stack.sites(x, file, csv2 = TRUE, schema = "plot", verbose = FALSE)
 
-stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE)               
+stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)               
 }
 
 \arguments{

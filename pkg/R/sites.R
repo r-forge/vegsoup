@@ -1,6 +1,6 @@
 #if (!isGeneric("Sites")) {
 setGeneric("Sites",
-	function (obj, ...)
+	function (obj)
 		standardGeneric("Sites")
 )
 #}
@@ -10,7 +10,7 @@ setMethod("Sites",
 )
 #if (!isGeneric("Sites<-")) {
 setGeneric("Sites<-",
-	function (obj, value, ...)
+	function (obj, value)
 		standardGeneric("Sites<-")
 )
 #}

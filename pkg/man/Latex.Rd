@@ -2,65 +2,168 @@
 \docType{methods}
 \alias{Latex}
 \alias{Latex-methods}
-\alias{Latex,VegsoupDataPartition-method}
-\alias{Latex,VegsoupDataPartitionFidelity-method}
+\alias{Latex,VegsoupPartition-method}
+\alias{Latex,VegsoupPartitionFidelity-method}
 
-\title{
-Create Files for Typesetting Tables in LaTex
-}
+\title{ Create Files for Typesetting Tables in LaTex }
 \description{
-Saves LaTex files to disk.
+  Creates meaningful table structres to be compiled by LaTex.
 }
 \usage{
-Latex(object, ...)
+## S4 method for signature 'VegsoupPartition' and 'VegsoupPartitionFidelity'
+Latex(obj, choice, recursive, ...)
+
+## S4 method for choice = "sites" and recursive = FALSE
+Latex(obj, col.width, filename, verbose = FALSE, ...)
+
+## S4 method for choice  = "sites" and recursive = TRUE
+Latex(obj, path, ...)
+
+## S4 method for choice = "species" and recursive = FALSE
+Latex(obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95,
+     taxa.width = "60mm", col.width = "10mm", footer.treshold,
+     molticols.footer, footer.width = "150mm", use.letters = FALSE,
+     caption.text = NULL, fivenum.select, recode = FALSE, sep = "/",
+     sites.columns, verbose = FALSE, ...)
+
+## S4 method for choice = "species" and recursive = TRUE
+Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
 }
 
 \arguments{
-  \item{object}{An object inheriting from class \code{"VegsoupDataPartition"}}
-  \item{col.width}{Latex tag to set column width.}
-  \item{taxa.width}{Latex tag to set column width for taxa column.}
-  \item{p.max}{Threshold value for Fisher test.}
-  \item{stat.min}{Threshold value for fidelity statistic.}
-  \item{filename}{output filename. File extension can be missing.}
-  \item{footer.treshold}{Minimum number of occurences of a species to become excluded from the table, defaults to 2.}
-  \item{molticols.footer}{Number of columns to typeset species meeting conditions implied by \code{footer.treshold}}
-  \item{fivenum.select}{if \code{mode = 2} a character vector selecting dimensions returned by \code{\link{Fivenum}} to become a pasted to the constancy value (see details).}
-  \item{caption.text}{additional user supplied text paste into automatically generated table caption (see details).}
-  \item{use.letters}{use additional letters, only applicable if \code{getK(object <= 26)}}
-  \item{mode}{type of ouput. \code{mode = 1} will typeset a species by cluster fidelity table. \code{mode = 2} will typeset a summary table for each cluster (see details).}
-  \item{verbose}{print function ouput to screen.}	
-  \item{sep}{an optional character string to separate the summary statistics of \code{Fivenum}, defaults to \code{"/"}.}
-  \item{recode}{recode result returend from \code{Fivenum} to ordinal scale if applicable, defaults to \code{"FALSE"}.}
-  \item{...}{arguments passed to \code{\link{Fidelity}} if object is not of \code{class "VegsoupDataPartitionFidelity"}.}
+  \item{ obj }{
+    An object inheriting from class \code{"VegsoupPartition"}
+  }
+  \item{ choice }{
+    character. Either \code{"species"} or \code{"sites"}.
+  }
+  \item{ recursive }{
+    logical. If \code{TRUE} create tables for each partition. If \code{FALSE},
+    the default, summarize information in one table.
+  }
+  \item{ path }{
+    character. Path to a folder.
+  }
+  \item{ filename }{
+    character. Output filename. File extension can be missing.
+  }
+  \item{ mode }{
+    type of ouput. \code{mode = 1} will typeset a species by cluster fidelity
+    table. \code{mode = 2} will typeset a summary table for each cluster.
+    See \sQuote{Details}.
+  }
+  \item{ p.max }{
+    numeric. Threshold value for Fisher test.
+  }
+  \item{ stat.min }{
+    numeric. Threshold value of fidelity statistic.
+  }
+  \item{ constancy.treshold }{
+    numeric. Threshold value of the constancy of species(-layer replicate).
+  }
+  \item{ taxa.width }{
+    LaTex tag to set column width for taxon column.
+    See \sQuote{Details}.
+  }
+  \item{ col.width }{
+    LaTex tag to set column width of all other columns. Recycled as necessary.
+    See \sQuote{Details}.
+  }
+  \item{ footer.treshold }{
+    integer. Minimum number of occurences of a species to become excluded from
+    the table, defaults to 2.
+  }
+  \item{ molticols.footer }{
+    integer. Number of columns to typeset species meeting conditions implied
+    by \code{footer.treshold}
+  }
+  \item{ fivenum.select }{
+    a character vector selecting dimensions returned by
+    \code{\link{Fivenum}} to become pasted to the constancy value.
+    Only applicable in \code{mode = 2}.
+    See \sQuote{Details}.
+  }
+  \item{ caption.text }{
+    character. Additional user supplied text pasted into automatically
+    generated table caption.
+    See \sQuote{Details}.
+  }
+  \item{ use.letters }{
+    logical. Use additional letters.
+    Only applicable if \code{getK(object <= 26)}.
+  }
+  \item{ verbose }{
+    logical. Print messages on screen.
+  }
+  \item{ sep }{
+    character. Optional character string to separate the summary statistics of
+    \code{Fivenum}, defaults to \code{"/"}.
+  }
+  \item{ recode }{
+    logical. Recode result returend from \code{Fivenum} to ordinal scale if
+    applicable, defaults to \code{FALSE}.
+  }
+  \item{ \dots }{
+    arguments passed to \code{\link{Fidelity}} if object is not of class
+    \code{"VegsoupPartitionFidelity"}.
+  }
 }
 \details{
-\code{mode = 2} needs LaTex package subfloat 
-To prevent the latex file from being displayed on screen store the result of latex in an object. Most of the time you will prefer the option rowname = NULL in latex().
+  \code{Latex} is a complex function to create input files for LaTex to
+  typeset vegetation tables and related community summaries. It comes in four
+  flavours. See \sQuote{Usage}. Some usages have many arguments, most of which
+  have some sensible default values.
+
+  The method accepts both a \code{"VegsoupPartition"} as well as a
+  \code{"VegsoupPartitionFidelity"} object. The first class is promoted to the
+  latter class by internally calling \code{\link{Fidelity}} with it's default
+  arguments.
+
+  The method currently provides two differnt outputs. \code{mode = 1} builds
+  an ordered vegetation table based on a fidelity (indicator species)
+  statistic.
+
+  \code{mode = 2} creates descripive summaries for each partition (cluster) of
+  an object. It embeds it's ouput using LaTex package subfloat.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  A \code{"list"} containing the lines written to the file:
+  \item{ table }{
+    The main table. For \code{mode = 2} a list of subtables for each partition
+   (cluster).
+  }
+  \item{ footer.sites }{
+    Additional lines for table footer.
+  }
+  \item{ footer.species }{
+    Additional lines for table footer, giving species excluded from the table.
+  }
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \note{
-%%  ~~further notes~~
+%%Most of the time you will prefer the option rowname = NULL in latex().
+  
+  To prevent the LaTex file from being displayed on screen store the result of
+  latex in an object.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{write.verbatim}}
 }
+\examples{
+require(vegsoup)
 
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+data(bigtestdata)
+dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+prt <- VegsoupPartition(dta, k = 10)
+
+ltx <- Latex(prt, filename = tempfile())
+
+fid <- Fidelity(prt)
+class(fid)
+
+ltx <- Latex(fid, mode = 2)
+
+head(ltx$table)
+}
+\keyword{ methods }
+

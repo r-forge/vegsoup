@@ -130,29 +130,6 @@ setMethod("getK",
 	function (obj) obj@k
 )
 
-#	list of species occurence in clusters
-#	to do: documentation
-setGeneric("Spread",
-	function (obj)
-		standardGeneric("Spread")
-)
-#	to do: speed up?
-setMethod("Spread",
-	signature(obj = "VegsoupPartition"),
-	function (obj) {
-		part  <- Partitioning(obj)
-		com <- as.logical(obj)
-		if (length(unique(part)) == 1)
-			warning(" only a single partition present", call. = FALSE)
-		res <- apply(com, 2, function (y) {
-			sapply(rownames(com[y > 0,]), # y
-				function (z) part[which(names(part) == z)],
-				USE.NAMES = FALSE)
-			})
-	return(res)
-	}
-)
-
 #	summary funection
 #	to do: documentation
 setMethod("summary",
@@ -299,65 +276,6 @@ return(res)
 }
 )
 	
-#	standardised Phi statistic
-#	depreciated, maybe usefull to speed up things where Fidelity() is too slow
-#	preferred method is Fidelity(obj, func = "r.g")
-#	to do: documentation
-#	See also \code{\link{Fidelity}}, \code{\link{Indval}} and \code{\link{FisherTest}}
-
-setGeneric("Phi",
-	function (obj)
-		standardGeneric("Phi")
-)
-setMethod("Phi",
-	signature(obj = "VegsoupPartition"),
-	function (obj) {
-	
-	cnti <- Contingency(obj)
-	cnst <- Constancy(obj)
-	nc <- ncol(cnst)
-	N <- nrow(obj)
-	SP <- ncol(obj)
-	siz <- table(Partitioning(obj))
-	S <- 1 / nc	# constant S (Tichy et al 2006)
-	cs <- S * N	# new cluster sizes
-	res <- cnst
-
-	for (i in 1:SP) {	# loop over species
-		for (j in 1:ncol(cnst)) {	# loop over partitions
-			insd <- cnti[i, j]					# original n in cluster j
-			outs <- sum(cnti[i,-j])				# original n outside cluster j
-			oc <- cs * (insd / siz[j])				# new n in cluster j
-			on <- (N - cs) * (outs / (N - siz[j]))	# new n outside cluster j
-			total <- oc + on						# new total value
-			res.1 <- nv <- (N * oc - total * cs) 
-			res.2 <- sqrt(total * cs * (N - total) * (N - cs))            
-			nv <- res.1 / res.2
-			res[i,j] <- nv
-		}
-	}
-	
-	res[is.na (res)] <- 0
-
-	return(res)
-}
-)
-
-#	Dufrene & Legendre's indicator value
-#	to do: documentation
-#	See also \code{\link{Fidelity}}, \code{\link{Phi}} and \code{\link{FisherTest}}
-setGeneric("Indval",
-	function (obj, ...)
-		standardGeneric("Indval")
-) 
-setMethod("Indval",
-	signature(obj = "VegsoupPartition"),
-	function (obj, ...) {
-		res <- indval(as.logical(obj), Partitioning(obj), ...)$indval
-		return(res)
-	}
-)
-
 #	indicator species analysis by combining groups of sites
 #setGeneric("Multipatt",
 #	function (obj, ...)
@@ -421,86 +339,6 @@ setMethod("Murdoch",
 			pval[,i] <- round(res.ls[[i]]$pval, 3)
 		}
     	return(c(res.ls, list(murdoch = res, pval = pval)))
-    }
-)
-
-#	optimise partitioning using Dave Roberts optsil procedure
-setGeneric("Optsil",
-	function (obj, ...)
-		standardGeneric("Optsil")
-)
-setMethod("Optsil",
-    signature(obj = "VegsoupPartition"),
-    function (obj, maxitr = 100, verbose = FALSE, ...) {
-		require(optpart)
-		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
-    	
-    	nam <- names(obj@part) # save names    	
-    	cl <- match.call()
-    	    	
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
-    			stop("\n method not defined for R mode", call. = FALSE)
-    		}
-    	}   	  	
-    		
-		cpu.time <- system.time({
-			tmp <- optpart::optsil(
-					x = Partitioning(obj), dist = as.dist(obj, ...),
-					maxitr = maxitr)
-			obj@part <- as.integer(tmp$clustering)
-			numitr <- tmp$numitr			
-		})
-
-		if (verbose) {
-			cat("\n time to optimise species matrix of", ncell(obj), "cells",
-				"and", getK(obj), "partitions:",
-				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)	
-		}	
-	
-		names(obj@part) <- nam
-		return(obj)
-	}
-)
-
-#	optimise partitioning using Dave Roberts optindval procedure
-setGeneric("Optindval",
-	function (obj, ...)
-		standardGeneric("Optindval")
-)
-setMethod("Optindval",
-    signature(obj = "VegsoupPartition"),
-    function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
-		require(optpart)
-		
-    	if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
-
-    	nam <- names(obj@part) # save names		
-		cl <- match.call()
-		
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
-    			stop("\n method not defined for R mode", call. = FALSE)
-    		}
-    	}
-
-		cpu.time <- system.time({
-			tmp <- optpart::optindval(
-					as.matrix(obj, ...), Partitioning(obj),
-					maxitr = maxitr,
-					minsiz = minsiz)
-			obj@part <- as.integer(tmp$clustering)		
-			numitr <- tmp$numitr		
-		})
-		if (verbose) {
-			cat("\n time to optimise species matrix of", ncell(obj), "cells",
-				"and", getK(obj), "partitions:",
-				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)	
-		}					
-		names(obj@part) <- nam
-		return(obj)
     }
 )
 
@@ -627,32 +465,4 @@ setGeneric("PartitioningCombinations",
 setMethod("PartitioningCombinations",
 	signature(obj = "VegsoupPartition"),
 	.PartitioningCombinations
-)
-
-#	List occurences of species in partitions
-#	to do: documentation
-setGeneric("Spread",
-	function (object)
-		standardGeneric("Spread")
-)
-
-setMethod("Spread",
-    signature(obj = "VegsoupPartition"),
-	function (object) {
-		
-	part  <- Partitioning(object)
-	X <- as.logical(object)
-
-	res <- apply(X, 2, function (y) {
-		if (getK(object) > 1) {
-			sapply(rownames(X[y > 0,]),
-				function (z) part[which(names(part) == z)],
-					USE.NAMES = FALSE)
-		} else {
-			warning(" a single partition is not meaningful", call. = FALSE)
-		}
-	}
-	)
-	return(res)
-	}
 )

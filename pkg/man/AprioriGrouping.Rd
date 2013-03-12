@@ -2,32 +2,32 @@
 \docType{methods}
 \alias{AprioriGrouping}
 \alias{AprioriGrouping-methods}
-\alias{AprioriGrouping,Vegsoup-method}
 
-\title{
-Get Grouping Variable of Object Extending Class Vegsoup
-}
+\title{ Grouping Variable of \code{Vegsoup*} Objects }
 \description{
-Equivalent to \code{slot(obj, "group") and returns the grouping variable.}
+Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 }
 \usage{
 ## S4 method for signature 'Vegsoup*'
 AprioriGrouping(obj)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
-  \item{obj}{
-An object of class \code{Vegsoup*}.
-}
+  \item{ obj }{
+    A \code{Vegsoup*} object.
+  }
 }
 \details{
-If a grouping vector is supplied function \code{VegsoupPartition} will automatically use if it is called without any arguments.
+  If a grouping vector is supplied function \code{VegsoupPartition} will
+  automatically use if it is called without any arguments.
 }
 \value{
-a vector of mode \code{numeric} assigning plots to groups coded as integers.
+  a vector of mode \code{numeric} assigning plots to groups coded as integers.
 }
-\author{
-Roland Kaiser
+\author{ Roland Kaiser }
+
+\seealso{
+\code{\link{Partitioning}}
 }
 
 \examples{
@@ -38,10 +38,4 @@ dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 AprioriGrouping(dta)
 }
-
-\seealso{
-\code{\link{Partitioning}}
-}
-
 \keyword{ methods }
-

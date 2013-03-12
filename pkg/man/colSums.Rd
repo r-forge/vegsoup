@@ -16,22 +16,40 @@
 Form row and column sums for the the species matrix based on presence/absence and numeric matrices.
 }
 \usage{
-colSums(x, typeof = "logical", ...)
-rowSums(x, typeof = "logical", ...)
+## S4 method for signature 'Vegsoup*'
+colSums(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
+## S4 method for signature 'Vegsoup*'
+rowSums(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
 
+## S4 method for signature 'Vegsoup*'
 colMeans(x, na.rm = FALSE, dims = 1, typeof = "numeric", ...)
+## S4 method for signature 'Vegsoup*'
 rowMeans(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
 }
 \arguments{
   \item{ x }{
-An object of class VegsoupData*.
-}
+    An object of class VegsoupData*.
+  }
+  \item{ na.rm }{
+    logical. Should missing values (including NaN) be omitted from the
+    calculations?
+  }
+  \item{ dims }{
+    Not used.
+  }
   \item{ typeof }{
-The mode of the species matrix to compute values from, defaults to \code{"logical"} for \code{rowSums} and \code{colSums}. See \code{\link{as.matrix}} for details about argument \code{"typeof"}. The \code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"} as the default and \code{typeof = "character"} is not supported by neither of the functions. 
-}
-  \item{\dots}{
-Arguments passed to \code{\link[base:rowSums]{rowSums}}, \code{\link[base:rowSums]{rowSums}}, \code{\link[base:colSums]{colSums}} and \code{\link[base:colMeans]{colMeans}}, respectively.
-}
+    The mode of the species matrix to compute values from, defaults to
+    \code{"logical"} for \code{rowSums} and \code{colSums}. See
+    \code{\link{as.matrix}} for details about argument \code{'typeof'}. The
+    \code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"}
+    as the default and \code{typeof = "character"} is not supported by neither
+    of the functions.
+  }
+  \item{ \dots }{
+    Arguments passed to \code{\link[base:rowSums]{rowSums}},
+    \code{\link[base:rowSums]{rowSums}}, \code{\link[base:colSums]{colSums}}
+    and \code{\link[base:colMeans]{colMeans}}, respectively.
+  }
 }
 \details{
 Note, the default behaviour (argument \code{typeof} is missing) operates on a presence/absence version of the species matrix as can be obtained by \code{as.logical(x)} or \code{as.matrix(x, typeof = "logical")}. On this basis \code{colSums} returns the number of occurences of a species in the data set. The \code{rowSums} method returns the number of species with duplicated occurences of species on different layers if there is more than one layer and at least a single species occuring in more than one layer! In this case correct species richness can be obtained with method \code{richness(obj, "sample")}.
@@ -49,19 +67,19 @@ library(vegsoup)
 data(testdata)        
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
-#	number of species including layer duplicates	
+#   number of species including layer duplicates    
 rowSums(dta)
-#	sums of abundances 
+#   sums of abundances 
 rowSums(dta, typeof = "numeric")
-#	Layers(dta) tells that there is more than one layers
-#	some species occur in two layers
+#   Layers(dta) tells that there is more than one layers
+#   some species occur in two layers
 Layers(dta)
-#	true species richness
+#   true species richness
 richness(dta, "sample")
 
-#	number of occurences for each species
+#   number of occurences for each species
 colSums(dta)
-#	sums of abundances
+#   sums of abundances
 colSums(dta, typeof = "numeric")
 }
 \author{ Roladn Kaiser }

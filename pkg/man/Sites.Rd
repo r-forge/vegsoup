@@ -5,15 +5,15 @@
 \alias{Sites<-}
 \alias{Sites<--methods}
 
+\title{ Methods for the Sites Slot of \code{Vegsoup*} Objects }
 
-\title{
-Methods to Retrieve or Manipulate the Sites Slot of Vegsoup* Objects
-}
 \description{
 Accessor and replacement methods acting on the \code{'sites'} slot.
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 Sites(obj)
+## S4 method for signature 'Vegsoup*'
 Sites(obj) <- value
 }
 

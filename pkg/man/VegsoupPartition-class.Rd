@@ -38,10 +38,10 @@
 \alias{Shared,VegsoupPartition-method}
 \alias{SigFidelity,VegsoupPartition-method}
 \alias{Silhouette,VegsoupPartition-method}
-\alias{Spread,VegsoupPartition-method}
+\alias{spread,VegsoupPartition-method}
 \alias{summary,VegsoupPartition-method}
 \alias{Tabdev,VegsoupPartition-method}
-\alias{Typal,VegsoupPartition-method}
+\alias{typal-VegsoupPartition-method}
 \alias{write.verbatim,VegsoupPartition-method}
 
 \title{ Class \code{"VegsoupPartition"} }
@@ -189,7 +189,7 @@
       partitions (clusters).
       See \code{\link{richness}}.
     }
-    \item{Spread}{
+    \item{spread}{
       \code{signature(object = "VegsoupPartition")}:
       List occurrences of species in partitions (clusters).
       See \code{\link{}}.

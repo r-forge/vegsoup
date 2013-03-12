@@ -49,25 +49,22 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
   These generic methods below apply to objects inheriting
   \code{'VegsoupPartitionFidelity'}. All other methods defined for classes
   \code{\linkS4class{VegsoupPartition}} or
-  \code{\linkS4class{VegsoupPartition}} apply also by direct inheritance!
+  \code{\linkS4class{Vegsoup}} apply also by direct inheritance!
   See \sQuote{Extends}.
   \describe{
     \item{ getStat }{
       Method to return \code{slot(obj, "stat")}
     }
     \item{ hist }{
-      Plost a histogram of fidelity values.
+      Plot a histogram of fidelity values.
     }
     \item{ summary }{
-    Summary method.
+      Summary method.
     }
   }
 }
 \author{
 Roland Kaiser
-}
-\note{
-%%  ~~further notes~~
 }
 \seealso{
 \code{\link{Fidelity}}

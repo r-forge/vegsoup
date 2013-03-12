@@ -57,11 +57,11 @@ setMethod("as.logical",
     }
 )	
 
-#if (!isGeneric("as.matrix")) {
+if (!isGeneric("as.matrix")) {
 setGeneric("as.matrix",
 	function (x, ...)
 	standardGeneric("as.matrix"))
-#}
+}
 setMethod("as.matrix",
     signature(x = "Vegsoup"),
     function (x, typeof, ...) {
@@ -91,10 +91,15 @@ setAs(from = "Vegsoup", to = "matrix",
 as.matrix.Vegsoup <-
 	function (x, ...) as.matrix(x, ...) # as(x, "matrix")
 
+if (!isGeneric("as.array")) {	
+setGeneric("as.array",
+	function (x, ...)
+	standardGeneric("as.array"))
+}
 #	return array of species matrix, one dimension for each layer
 setMethod("as.array",
     signature(x = "Vegsoup"),
-    function (x, typeof) {	
+    function (x, typeof, ...) {	
 	xx <- Species(x)
 	scale <- coverscale(x) # rename local object scale to ?
 	
@@ -156,7 +161,7 @@ as.vector.Vegsoup <- function (x, mode) {
 #	locations and values of nonzero entries
 #if (!isGeneric("indices")) {
 setGeneric("indices",
-	function (x, ...)
+	function (x, typeof, ...)
 	standardGeneric("indices"))	
 #}	
 setMethod("indices",

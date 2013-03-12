@@ -15,7 +15,7 @@ setMethod("Partitioning",
 #	replace slot part
 if(!isGeneric("Partitioning<-")) {
 setGeneric("Partitioning<-",
-	function (obj, value, ...)
+	function (obj, value)
 		standardGeneric("Partitioning<-")
 )
 }

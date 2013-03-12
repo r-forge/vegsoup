@@ -2,33 +2,21 @@
 \docType{methods}
 \alias{coordinates}
 \alias{coordinates-methods}
-\alias{coordinates,Vegsoup-method}
-
 \alias{bbox}
 \alias{bbox-methods}
 \alias{bbox,Vegsoup-method}
-
 \alias{proj4string}
 \alias{proj4string-methods}
-\alias{proj4string,Vegsoup-method}
-
 \alias{spTransform}
 \alias{spTransform-methods}
-\alias{spTransform,Vegsoup-method}
-
 \alias{SpatialPointsVegsoup}
 \alias{SpatialPointsVegsoup-methods}
-\alias{SpatialPointsVegsoup,Vegsoup-method}
 \alias{SpatialPointsVegsoup<-}
 \alias{SpatialPointsVegsoup<--methods}
-\alias{SpatialPointsVegsoup<-,Vegsoup,SpatialPointsDataFrame-method}
-
 \alias{SpatialPolygonsVegsoup}
 \alias{SpatialPolygonsVegsoup-methods}
-\alias{SpatialPolygonsVegsoup,Vegsoup-method}
 \alias{SpatialPolygonsVegsoup<-}
 \alias{SpatialPolygonsVegsoup<--methods}
-\alias{SpatialPolygonsVegsoup<-,Vegsoup,SpatialPolygonsDataFrame-method}
 
 \title{ Spatial Methods for \code{Vegsoup*} Objects } 
 

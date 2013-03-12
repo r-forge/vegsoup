@@ -9,23 +9,22 @@ Retrieve dataset, sample or grouped species richness.
 \usage{
 
 ## S4 method for class Vegsoup
-richness(obj, choice = c("dataset", "sample"), ...)
+richness(obj, choice = c("dataset", "sample"))
 
 ## S4 method for class VegsoupPartition
-richness(obj, choice = c("dataset", "sample", "partition"), ...)
+richness(obj, choice = c("dataset", "sample", "partition"))
 
 }
 
 \arguments{
-  \item{obj}{
-A \code{Vegsoup*} object.
-}
-  \item{choice}{
-Return either dataset or sample richness, defaults to \code{"dataset"}. Partial matches are allowed. Objects of class \code{"VegsoupPartition"} accept  an additional option \code{choice = "partition"}. This returns .
-}
-  \item{\dots}{
-Not implemented.
-}
+  \item{ obj }{
+    A \code{Vegsoup*} object.
+  }
+  \item{ choice }{
+    Return either dataset or sample richness, defaults to \code{"dataset"}.
+    Partial matches are allowed. Objects of class \code{"VegsoupPartition"}
+    accept an additional option \code{choice = "partition"}.
+  }
 }
 \details{
 Dataset richness is defined as the number of species (discarding layer duplicates) found in the data set. Sample richness is the number of species per sample (plot) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed to one.
@@ -43,8 +42,8 @@ Roland Kaiser
 library(vegsoup)
 data(testdata)        
 dta <- VegsoupDataVegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet")))
-	
+    scale = list(scale = "Braun-Blanquet")))
+    
 richness(dta) # default choice = "dataset"
 richness(dta, "sa") # partial match
 

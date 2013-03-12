@@ -13,7 +13,7 @@
   as possible.
 }
 \usage{
-as.data.frame(obj)
+as.data.frame(x)
 }
 \arguments{
   \item{ x }{

@@ -1,13 +1,11 @@
-	   
-#	 methods based on functions in 'utils'
 #if (!isGeneric("head")) {
-setGeneric("head", function(x)
+setGeneric("head", function (x, ...)
 	standardGeneric("head"))
 #}
 
 setMethod("head",
     signature(x = "Vegsoup"),
-    function (x, choice, typeof, n = 6L, ...) {
+    function (x, n = 6L, choice, typeof, ...) {
 	    if (missing(choice))
 	    	choice = "species"
     	CHOICE <- c("species", "sites")
@@ -24,7 +22,7 @@ setMethod("head",
     }    	    
 )
 #if (!isGeneric("tail")) {
-setGeneric("tail", function (x)
+setGeneric("tail", function (x, ...)
 	standardGeneric("tail"))
 #}
 #	to do: documentation

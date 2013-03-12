@@ -2,10 +2,8 @@
 \docType{methods}
 \alias{Optsil}
 \alias{Optsil-methods}
-\alias{Optsil,VegsoupPartition-method}
 \alias{Optindval}
 \alias{Optindval-methods}
-\alias{Optindval,VegsoupPartition-method}
 
 \title{ Optimise Partitioning of \code{"VegsoupPartition"} Objects }
 \description{

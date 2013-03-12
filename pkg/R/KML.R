@@ -1,11 +1,15 @@
-.KMLVegsoup <- function (obj, file, thumbnail.url.path, website.url.path, ...) {
+#	for class "Vegsoup"
+
+.KMLVegsoup <- function (obj, file, add.label, thumbnail.url.path, website.url.path, ...) {
 
 #	function to format cdata tag in kml
 .placemark <- function (x, obj, website.url.path, thumbnail.url.path) {
 	
 plot <- unique(x[,1])
 table <- x[, -1]	
-
+if (missing(add.label)) {
+	add.label = TRUE
+}
 if (missing(website.url.path)) {
 	website.url.path <-
 		"http://sabotag.hausdernatur.at/vegsoup/albums/"
@@ -128,18 +132,22 @@ close(con)
 return(invisible(res))
 }
 
+#if (!isGeneric("KML")) {
 setGeneric("KML",
-	function (obj, ...)
+	function (obj, file, add.label, thumbnail.url.path, website.url.path, ...)
 		standardGeneric("KML")
 )
-
+#}
 setMethod("KML",
     signature(obj = "Vegsoup"),
     .KMLVegsoup
 )
 
-#	KML output
-.KMLVegsoupPartition <- function (obj, file, add.label = FALSE, website.url.path, thumbnail.url.path, ...) {
+#	for class "Vegsoup"
+.KMLVegsoupPartition <- function (obj, file, add.label, thumbnail.url.path, website.url.path, ...) {
+if (missing(add.label)) {
+	add.label = FALSE
+}	
 if (missing(file)) {
 	file <- paste(getwd(), "/vegsoup partition.kml", sep = "")
 	warning("\nargument file missing, drop KML to folder ",
@@ -290,8 +298,6 @@ res <- c(
 	folder,
 	end.kml)
 
-#	x = 1
-#	c(apply(points[points$partitioning == x, ], 1, .placemark))	
 con <- file(file)
 	writeLines(res, con)
 close(con)

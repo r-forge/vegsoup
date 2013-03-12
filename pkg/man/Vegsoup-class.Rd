@@ -8,6 +8,7 @@
 \alias{$,Vegsoup-method}
 \alias{$<-,Vegsoup-method}
 \alias{abbr.layer,Vegsoup-method}
+\alias{abbr<-,Vegsoup,character-method}
 \alias{Abbreviation,Vegsoup-method}
 \alias{AprioriGrouping,Vegsoup-method}
 \alias{as.character,Vegsoup-method}
@@ -72,6 +73,7 @@
 \alias{SpatialPolygonsVegsoup,Vegsoup-method}
 \alias{Species,Vegsoup-method}
 \alias{Species<-,Vegsoup,SpeciesTaxonomy-method}
+\alias{Species<-,Vegsoup,data.frame-method}
 \alias{SpeciesList,Vegsoup-method}
 \alias{Stride,Vegsoup-method}
 \alias{summary,Vegsoup-method}

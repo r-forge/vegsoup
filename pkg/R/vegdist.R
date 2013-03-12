@@ -1,74 +1,43 @@
 #	dissimilarity
 #if (!isGeneric("decostand<-")) {
 setGeneric("vegdist",
-	function (x, ...)
+	function (obj, ...)
 		standardGeneric("vegdist")
 )
 #}
 #if (!isGeneric("decostand<-")) {
 setGeneric("vegdist<-",
-	function (x, value, ...)
+	function (obj, value, ...)
 		standardGeneric("vegdist<-")
 )
 #}
+
 setMethod("vegdist",
-	signature(x = "Vegsoup"),
-	function (x, ...) {
-		x@dist
+	signature(obj = "Vegsoup"),
+	function (obj, ...) {
+		obj@dist
 	}
 )
 setReplaceMethod("vegdist",
-	signature(x = "Vegsoup", value = "character"),
-	function (x, value) {
+	signature(obj = "Vegsoup", value = "character"),
+	function (obj, value) {
 		#	from vegan::vegdist
 		METHODS <- c("manhattan", "euclidean", "canberra", "bray",
 		"kulczynski", "gower", "morisita", "horn", "mountford",
 		"jaccard", "raup", "binomial", "chao", "altGower", "cao")
 		method <- METHODS[pmatch(value, METHODS)]
+    	
     	if (is.na(method)) 
         	stop("invalid distance method")
     	if (method == -1) 
         	stop("ambiguous distance method")
-		x@dist <- method
-		x	
-	}
-)	
+		obj@dist <- method
 
-#	set old class
-setOldClass("dist")
-#	retrieve distance matrix
-setGeneric("as.dist",
-	function (m, diag = FALSE, upper = FALSE, ...)
-		standardGeneric("as.dist")
-)
-setMethod("as.dist",
-	signature(m = "Vegsoup"),
-	function (m, mode, ...) {
-		#	as.mumeric and as.logical
-		#	automatically apply decostand method!
-		#	argument mode controls transposition before
-		#	caluclation of distances
-		if (missing(mode)) mode = "Q"
-		Xd <- vegan::vegdist(as.matrix(m), method = m@dist, ...)
-		
-		#	ensure dissimilarities
-		if (max(Xd) > 1) Xd <- Xd / max(Xd)	
-		
-		#	assign attribute
-		attributes(Xd) <- c(attributes(Xd), mode = toupper(mode))
-		
-		return(Xd)
+		return(obj)
 	}
 )
-setAs(from = "Vegsoup", to = "dist",
-	def = function (from) {
-		vegsoup::as.dist(from)
-	}
-)
-as.dist.Vegsoup <- function (m, ...) {
-	vegsoup::as.dist(m, ...)
-}
-	
+
+#	vegan: dis, toolong = 1, trace = TRUE		
 #	connectedness of dissimilarities
 #if (!isGeneric("decostand<-")) {
 setGeneric("distconnected",

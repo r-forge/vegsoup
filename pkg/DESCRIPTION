@@ -25,13 +25,18 @@ Collate: AAA.R
          stack.coordinates.R
          verbatim.R
          Class-Species.R
+         Species-methods.R
          Class-Sites.R
+         Sites-methods.R
          Class-Taxonomy.R
+         Taxonomy-methods.R
          Class-SpeciesTaxonomy.R
-         SpeciesTaxonomy.R
          SpeciesTaxonomy-Methods.R
+         SpeciesTaxonomy.R
          Class-Coverscale.R
+         Coverscale-Methods.R
          Class-Vegsoup.R
+         Coverscale-VegsoupMethods.R
          Class-VegsoupPartition.R
          Class-VegsoupOptimstride.R
          Class-VegsoupPartitionFidelity.R
@@ -45,6 +50,7 @@ Collate: AAA.R
          grouping.R
          dim.R
          as.matrix.R
+         as.dist.R
          as.data.frame.R
          rowSums.R
          decostand.R
@@ -63,8 +69,13 @@ Collate: AAA.R
          fivenum.R
          shared.R
          fidelity.R
+         Phi.R
+         Indval.R
          elevation.R
          KML.R
+         map.R
+         QuickMap.R
+         coldiss.R
          shape.species.R
          Vegsoup-SpatialMethods.R
          Vegsoup-OutputMethods.R
@@ -73,8 +84,19 @@ Collate: AAA.R
          VegsoupPartition-BaseMethods.R
          partition.R
          validate.R
+         optimize.R
          typal.R
+         spread.R
          VegsoupPartition-AssociationMethods.R
+         Confus.R
+         Accuracy.R
+         Association.R
+         Contingency.R
+         Constancy.R
+         Importance.R
+         rectangles.R
+         ellipsoidhull.R
+         write.verbatim.R
          VegsoupPartition-FidelityMethods.R
          VegsoupPartition-ClassificationStabilityMethods.R
          VegsoupPartition-OutputMethods.R
@@ -82,8 +104,9 @@ Collate: AAA.R
          VegsoupPartition-VisualisationMethods.R
          VegsoupPartitionFidelity-BaseMethods.R
          OptimStride.R
-         VegsoupOptimstride-BaseMethods.R
-         Coverscale-Methods.R
+         VegsoupOptimstride-BaseMethods.R        
+         Latex.R
+         plot.R
          ZZZ.R
 Respository: R-Forge
 

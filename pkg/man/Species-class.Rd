@@ -8,7 +8,6 @@
 \alias{$<-,Species-method}
 \alias{rbind,Species-method}
 \alias{species,Species-method}
-\alias{species<-,SpeciesTaxonomy,Species-method}
 
 \title{Class \code{"Species"}}
 
@@ -115,12 +114,12 @@
 }
 \author{ Roland Kaiser }
 \seealso{
-  \code{\link{stack.species}},
   \code{\linkS4class{SpeciesTaxonomy}}
   and function \code{\link{SpeciesTaxonomy}},
   \code{\linkS4class{Taxonomy}},
   \code{\linkS4class{Sites}},
-  \code{\linkS4class{Vegsoup}}
+  \code{\linkS4class{Vegsoup}},
+  \code{\link{stack.species}}
 }
 \examples{
 require(vegsoup)
@@ -146,4 +145,3 @@ obj <- rbind(obj, obj2)
 
 }
 \keyword{ classes }
-

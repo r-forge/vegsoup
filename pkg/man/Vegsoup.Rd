@@ -9,7 +9,7 @@
   disk. A shorthand function is provided to collect data files from a folder.
 }
 \usage{
-Vegsoup(x, y, z, coverscale, decostand, dist, group, sp.points, sp.polygons,
+Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", verbose = FALSE)
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 }
@@ -70,14 +70,19 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   }
 }
 \details{
-  \code{Vegsoup()} is the generic constructor function to create a valid
-  object of class \code{Vegsoup}. If argument \code{'x'} inherits from class
-  "SpeciesTaxonomy", argument \code{'z'} can be missing.
-
-  If the sites data has variables exactly named longitude and latitude those
-  will be used to extract coordinates. For coordinates conforming to
-  \code{proj4string = "+init=epsg:4326"} those have to be formatted as decimal
-  degrees! See e.g. \code{\link{char2dms}} to convert between formats.
+  \code{Vegsoup()} is the generic constructor function to create a prototype
+  object of class \code{Vegsoup}. The first four arguments
+  (\code{x, y, z, coverscale}) have to be specified. However, if argument
+  \code{'x'} inherits from class "SpeciesTaxonomy", argument \code{'z'} can be
+  left missing.
+  
+  The creator function does not allow to specify all slots of an
+  \code{Vegsoup*} object, but rather tries to guess some of it's contents.
+  For example, if the sites data has variables exactly named longitude and
+  latitude those will be used to extract coordinates. For coordinates
+  conforming to \code{proj4string = "+init=epsg:4326"} those have to be
+  formatted as decimal degrees! See e.g. \code{\link{char2dms}} to convert
+  between formats.
 
 %%\code{Vegsoup} will discard any alphanumeric characters by calling
 %%\code{gsub(pattern = "[[:alpha:]]", replacement = "", ...}. Decimals (","

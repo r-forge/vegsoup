@@ -2,47 +2,42 @@
 \docType{methods} 
 \alias{Murdoch}
 \alias{Murdoch-methods}
-\alias{Murdoch,VegsoupDataPartition-method}
+\alias{Murdoch,VegsoupPartition-method}
+
 \title{ Indicator Species Analysis by Murdoch Preference Function }
+
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This is a wrapper for function
+\code{\link[optpart:murdoch]{murdoch}} in package \pkg{optpart}.
 }
 \usage{
 Murdoch(obj, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{obj}{
-%%     ~~Describe \code{obj} here~~
-}
+    A \code{VegsoupPartition} object.
+  }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
-}
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+    Arguments passed to \code{optpart::murdoch}
+  }
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+  a list object of class \code{"murdoch"}
 }
 \author{
-%%  ~~who you are~~
+  Implemented for vegsoup from function \code{murdoch} by \emph{David W.
+  Roberts} in package \pkg{optpart}.
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\linkS4class{VegsoupPartition}},
+\code{\link{Fidelity}}
+}
+\examples{
+require(vegsoup)
+
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+prt <- VegsoupPartition(dta, k = 2)
+Murdoch(prt)
 }
 \keyword{ methods }
-
