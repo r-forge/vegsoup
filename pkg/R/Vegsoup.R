@@ -75,13 +75,13 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			("\nno cover scale provided")	
 		}
 		if (is.character(x$cov)) {
-			warning("interpret abundance values as character",
-			"\n set cover scale to default 9 point Braun-Blanquet scale", call. = FALSE)
+			message("interpret abundance values as character",
+			"\nset cover scale to default 9 point Braun-Blanquet scale")
 			xs <- Coverscale("braun.blanquet")
 		}
 		else {
-			cat("\n cover seems to be numeric")
-			cat("\n set abundance scale to percentage")
+			message("cover seems to be numeric",
+			"\nset abundance scale to percentage")
 			xs <- Coverscale("percentage")
 		}	
 	}

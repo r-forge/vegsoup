@@ -389,29 +389,30 @@ setMethod("head",
 )
 
 #	dissimilarity diameters
-#	to do: documentation		
+#if (!isGeneric("Disdiam")) {
 setGeneric("Disdiam",
-	function (obj, ...)
+	function (obj, method, ...)
 		standardGeneric("Disdiam")
 )
-
+#}
 setMethod("Disdiam",
     signature(obj = "VegsoupPartition"),
     function (obj, method, ...) {
     	require(optpart)
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))    	
-		res <- optpart::disdiam(Partitioning(obj), as.dist(obj))
+		res <- optpart::disdiam(Partitioning(obj), as.dist(obj, ...))
 		return(res)    	
     }
 )
 
 #	tabulate partition vector to matrix
+#if (!isGeneric("PartitioningMatrix")) {
 setGeneric("PartitioningMatrix",
 	function (obj)
 		standardGeneric("PartitioningMatrix")
 )
-
+#}
 setMethod("PartitioningMatrix",
     signature(obj = "VegsoupPartition"),
 	function (obj) {

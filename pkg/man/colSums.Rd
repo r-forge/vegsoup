@@ -28,7 +28,7 @@ rowMeans(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
 }
 \arguments{
   \item{ x }{
-    An object of class VegsoupData*.
+    An \code{Vegsoup*} object.
   }
   \item{ na.rm }{
     logical. Should missing values (including NaN) be omitted from the

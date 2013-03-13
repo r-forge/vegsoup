@@ -131,31 +131,40 @@ decorana(dta)
 decostand(dta) <- "pa"
 decorana(dta)
 
-# create matrices from indices
+# create matrices based on indices
+# compare to vegsoup:as.matrix
+
+# remove the above defined decostand method
+decostand(dta) <- NULL
+m.vs <- as.matrix(dta)
+
+# "matrix"
+ij <- indices(dta)
 m <- matrix(0, ncol = ncol(dta), nrow = nrow(dta))
-m[] <- as.vector(dta)
-dimnames(m) <- indices(dta)$dimnames
+m[] <- as.vector(dta, mode = "numeric")
+dimnames(m) <- ij$dimnames
+# and test them against what is returned from as.matrix
+identical(m.vs, m)
 
-all.equal(colnames(m), as.matrix(dta))
+# "sparseMatrix" (class?dgCMatrix)
+m.M <- as(dta, "sparseMatrix")
+m.Mm <- as.matrix(m.M) # coerce for comparision
+identical(round(m.vs, 0), m.Mm)
 
-# sparse matrix and alike representations
 # and their associated memory demands
-
 # class matrix
-object.size(as.matrix(dta)) # most efficient
+sz1 <- object.size(m) # most efficient
 # indices only
-object.size(indices(dta)) # almost equal 
+sz2 <- object.size(ij) # almost equal 
 # class sparseMatrix based on indices()
-# broken!
-# object.size(as(dta, "sparseMatrix")) # efficient
+sz3 <- object.size(m.M) # efficient
 # internal Vegsoup data structure
-object.size(Species(dta)) # most general but least efficent
-
-
-object.size(dta)
-object.size(as.array(dta))
-object.size(as.data.list(dta))
-object.size(as.data.frame(dta))
+sz4 <- object.size(Species(dta)) # most general but least efficent
+# a multi-dimensional array of layer replicates
+sz5 <- object.size(as.array(dta)) 
+sz6 <- object.size(as.data.list(dta)) # effective
+sz7 <- object.size(as.data.frame(dta)) # alos effective
+sz8 <- object.size(dta)
 }
 \keyword{ methods }
 \keyword{ manip }

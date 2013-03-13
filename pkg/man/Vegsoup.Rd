@@ -7,13 +7,17 @@
   The provided creator functions build the basic data structures of
   \code{Vegsoup*} objects from local R objects or from csv files stored on
   disk. A shorthand function is provided to collect data files from a folder.
+
+  \code{Vegsoup} is the recommended user interface rather than direct
+  \code{link{new}}\code{("Vegsoup", ....)} call.
 }
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", verbose = FALSE)
+
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{ x }{
     Object of class \code{\linkS4class{Species}} or

@@ -1,3 +1,5 @@
+#	critcal!
+#	as.dist dispatach for generic with additional argument mode
 
 #	return species matrix
 setMethod("as.numeric",
@@ -16,10 +18,12 @@ setMethod("as.numeric",
 					stand <- c("max", "total")
 					m <- vegan::decostand(m, "max", 2)
 					m <- vegan::decostand(m, "total", 1)
-				} else {
+				}
+				else {
 					m <- vegan::decostand(m, stand)
 				}
-			} else {
+			}
+			else {
 				for (i in stand) {
 						m <- vegan::decostand(m, i)	
 					}
@@ -177,13 +181,13 @@ setMethod("indices",
 		pl <- Species(x)$plot
 		upl <- unique(pl)
 		
+		#	for sparseMatrix i,j must be vectors of the same length
 		#	resort to layer, copied from .cast()
-		if (length(Layers(x)) > 1) {	
-
-			al <- unique(as.vector(unlist(
+		if (length(Layers(x)) > 1) {
+			al2 <- unique(as.vector(unlist(#
 				sapply(Layers(x), function (y) al[l == y] ))))
 		}
-		ual <- unique(al)	
+		ual <- unique(al2)	
 		
 		if (typeof == "numeric" & !is.null(sc@codes)) {
 			cv <- as.numeric(as.character(
@@ -196,8 +200,8 @@ setMethod("indices",
 		if (typeof == "logical") {
 			cv <- rep(1, nrow(Species(x)))
 		}
-		i <- match(al, ual)
-		j <- as.integer(ordered(pl, levels = upl))
+		j <- match(al, al2)
+		i <- as.integer(ordered(pl, levels = upl))
 		list(i = i, j = j, x = cv, dimnames = list(upl, ual))
 		}
 )
@@ -206,10 +210,10 @@ setMethod("indices",
 #	very basic!
 setAs(from = "Vegsoup", to = "sparseMatrix",
 	def = function (from) {
-		require(Matrix)
+		require(Matrix)		
 		ij <- indices(from)
 		res <- sparseMatrix(ij$i, ij$j, x = as.integer(ij$x),
-			dimnames = ij$dimnames[c(2,1)])
+			dimnames = ij$dimnames[c(1,2)])
 		res
 	}
 )

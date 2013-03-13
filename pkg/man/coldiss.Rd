@@ -10,7 +10,7 @@ Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-heatmap(obj, colors, byrank = TRUE, diag = FALSE, seriation,
+coldiss(obj, colors, byrank = TRUE, diag = FALSE, seriation,
         ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
@@ -54,15 +54,12 @@ Borcard, D., Gillet, F., and Legendre, P. (2011). Numerical Ecology with R. Spri
 \code{\link{dmat.color}} in package \pkg{gclus}
 }
 \examples{
-
-library(vegsoup)
+require(vegsoup)
 data(testdata)
 
-dta <- Vegsoup(spc, sts, txa,
-		coverscale = "braun.blanquet")
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 coldiss(dta) # default
-
 
 # other dissimilarity
 vegdist(dta) <- "bray"
@@ -77,17 +74,16 @@ coldiss(dta, cols(4), byrank = FALSE, diag = TRUE)
 
 # R-mode analysis, see ?as.dist
 # first collapse layers
-dta.ol <- Layers(dta, aggregate = "layer",
-	collapse = "ol", verbose = TRUE)
-decostand(dta.ol) <- "chi.square"
-vegdist(dta.ol)	
+dta.0l <- Layers(dta, aggregate = "layer",
+                 collapse = "0l", verbose = TRUE)
+decostand(dta.0l) <- "chi.square"
+vegdist(dta.0l) 
 
 # annotate scientific species names
-# label only the diagonal to avoid cluttered display   
-coldiss(dta.ol, rev(cols(20)), mode = "R",
-	ordered.only = TRUE, translate = TRUE, diag = TRUE)
+# label only the diagonal to avoid cluttered display
+# mode = "R" defunct due to generic dispatch of as.dist
+coldiss(dta.0l, rev(cols(20)), mode = "R",
+    ordered.only = TRUE, translate = TRUE, diag = TRUE)
 }
-
-
-
-\keyword{datasets}
+\keyword{ methods }
+\keyword{ hplot }

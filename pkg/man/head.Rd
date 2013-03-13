@@ -30,7 +30,8 @@ tail(x, n = 6L, choice, typeof, ...)
     6L}.
   }
   \item{ choice }{
-    Display first row of species matrix (the default) or sites data frame.
+    Display the first rows of the species matrix (\code{"species"},
+    the default), or the sites data frame (\code{choice = "sites"}).
   }
   \item{ typeof }{
     If choice is \dQuote{species} of which mode should the returned matrix be
@@ -44,17 +45,25 @@ tail(x, n = 6L, choice, typeof, ...)
 
 \section{Methods}{
 
-\describe{
-\item{ \code{signature(obj = "Vegsoup")} }{
-\code{head()} (\code{tail()}) returns the first (last) \code{n} rows of the \emph{community matrix} when \code{choice = "species"} and the \code{n} rows of the \emph{sites data frame}.
-}
-\item{ \code{signature(obj = "VegsoupPartition")} }{
-If \code{n != 6L} the method prints the \emph{typal} (\code{\link{typal}}) sample for each partition, with the number of rows equaling \code{getK(x)}. If \code{n} is left as the default the behaviour is the same as defined for class \code{Vegsoup}.
-}
-}
+  \describe{
+    \item{ \code{signature(obj = "Vegsoup")} }{
+      \code{head()} (\code{tail()}) returns the first (last) \code{n} rows of
+      the \emph{community matrix} when \code{choice = "species"} and the
+      \code{n} rows of the \emph{sites data frame}.
+    }
+    \item{ \code{signature(obj = "VegsoupPartition")} }{
+      If \code{n != 6L} the method prints the \emph{typal}
+      (\code{\link{typal}}) sample for each partition, with the number of rows
+      equaling \code{getK(x)}. If \code{n} is left as the default the
+      behaviour is the same as defined for class \code{Vegsoup}.
+    }
+  }
 
 }
-
+\note{
+  Call the method with named arguments (\code{'choice'} respectively
+  \code{'typeof'}). See \sQuote{Examples}.
+}
 \value{
   An object like \code{as.matrix(x)} but generally smaller.
 }
@@ -69,10 +78,12 @@ library(vegsoup)
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 
-head(dta, n = 2)
+# print sites or species
+head(dta, choice = "sites")
+head(dta, choice = "sp") # choice can abbreviated
 
-head(dta, "si", n = 3) # choice can abbreviated
-head(dta, "sp", "numeric") # choice can abbreviated
+head(dta, "si", n = 3) 
+tail(dta, choice = "sp", typeof = "character", n = 2)
 
 prt <- VegsoupPartition(dta, k = 2)
 

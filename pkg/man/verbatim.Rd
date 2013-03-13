@@ -1,14 +1,12 @@
 \name{verbatim}
+\docType{methods}
 \alias{verbatim}
 \alias{read.verbatim}
 \alias{read.verbatim.append}
 \alias{write.verbatim}
-\alias{write.verbatim-method}
+\alias{write.verbatim-methods}
 
-
-\title{
-Read or Write Monospaced Community Tables From or To Plain Text Files
-}
+\title{ Read or Write Fixed-Column-Width Community Tables From or To Plain Text Files }
 \description{
   The base S3 function \code{read.verbatim(file)} reads data from text files
   as  encountered in published tables typesetted with monospaced fonts. It's
@@ -32,78 +30,101 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
 
 \arguments{
 ## Arguments to function \code{read.verbatim}
-\item{ file }{
-A character string. A path to a text file.
-}
-\item{ colnames }{
-A character string to be searched for in the header section and used to assign plot names. See \sQuote{Details}.
-}
-\item{ layers }{
-A named list giving start and end indices of to assign a layer to each species, or a vector of characters of length according to the number of species in the data set. See \sQuote{Examples}.
-}
-\item{ replace }{
-A vector of characters to be replaced by blanks. Note, both the hyphen and dash characters are defined in default set. See \sQuote{Details}.
-}
-\item{ species.only }{
-Just return a vector of species extracted from the data set.
-}
-\cr
+  \item{ file }{
+    A character string. A path to a text file.
+  }
+  \item{ colnames }{
+    A character string to be searched for in the header section and used to
+    assign plot names. See \sQuote{Details}.
+  }
+  \item{ layers }{
+    A named list giving start and end indices of to assign a layer to each
+    species, or a vector of characters of length according to the number of
+    species in the data set. See \sQuote{Examples}.
+  }
+  \item{ replace }{
+    A vector of characters to be replaced by blanks. Note, both the hyphen and
+    dash characters are defined in default set. See \sQuote{Details}.
+  }
+  \item{ species.only }{
+    Just return a vector of species extracted from the data set.
+  }
+  \cr
 ## Arguments to function \code{read.verbatim.append}
-\item{ x }{
-An object of class \code{VegsoupVerbatim} as created by calls to function \code{read.verbatim}
-}
-\item{ file }{
-A character string. A path to a text file.
-}
-\item{ file }{
-An integer specifying how the input file is organized. If missing defaults to \code{mode = 1}. See \sQuote{Details}.
-}
-\item{ collapse }{
-Character used as separator between successive species. Defaults to \code{","}.
-}
-\item{ mode }{
-Mode defining how the species occurrences in rows are organized. See \sQuote{Details}.
-}
-\item{ abundance }{
-For \code{mode = "species"} a single \code{character} to be applied to all observations giving an dummy cover value. Defaults to \code{"+"}.
-For \code{mode = "plots"} either \code{TRUE} or \code{FALSE} and specifying if the character found after the species name should be treated as a cover value. See \sQuote{Details}. If \code{abundance = FALSE} the defaults of \code{mode = "species"} apply with no option to override it, but setting \code{abundance} to any value (e.g. \code{"+"}) will use that value.
+  \item{ x }{
+    An object of class \code{VegsoupVerbatim} as created by calls to function
+    \code{read.verbatim}
+  }
+  \item{ file }{
+    character. Path to a text file.
+  }
+  \item{ file }{
+    integer, specifying how the input file is organized. If missing defaults
+    to \code{mode = 1}. See \sQuote{Details}.
+  }
+  \item{ collapse }{
+    character, the separator between successive species.
+    Defaults to \code{","}.
+  }
+  \item{ mode }{
+    character, defining how the species occurrences in rows are organized.
+    See \sQuote{Details}.
+  }
+  \item{ abundance }{
+    For \code{mode = "species"} a single \code{character} recycled for all
+    observations and setting a dummy cover value if no abundance for a species
+    is supplied in the data source. Defaults to \code{"+"}.
+
+    For \code{mode = "plots"} either \code{TRUE} or \code{FALSE} and
+    specifying if the character found after the species name should be treated
+    as a cover value. See \sQuote{Details}. If \code{abundance = FALSE} the
+    defaults of \code{mode = "species"} apply with no option to override it,
+    but setting \code{abundance} to any value (e.g. \code{"+"}) will use that
+    value.
 }
 \cr
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
-\item{ obj }{
-An object of class \code{VegsoupData}.
-}
-\item{ file }{
-A file name to output results.
-}
-\item{ select }{
-Character vector matching \code{names(obj)} or indices to columns in Sites(obj) to select information to be incorporated in the header section. Beware, this only makes sense for numeric (e.g. elevation) or short string variables (e.g. slope aspect)!
-}
-\item{ absence }{
-Character to code absences, defaults to \code{"."}.
-}
-\item{ collapse }{
-Character to be used as separator in columns of abundances (plots).
-}
-\item{ pad }{
-Integer specifying the number of blanks to add to taxon names (right side) and layers string (both sides), defaults to 1.
-}
-\item{ abbreviate }{
-Truncate abundance values to width 1 using abbreviate(x, minlength = 1, strict = TRUE).
-}
-\item{ rule }{
-Integer vector of length equal to the number of plots \code{nrow(obj)}.
-The lengths of runs of equal values in this vector are used to insert vertical rule mimicked by the pipe gylph (\code{'|'}).
-}
-\item{ short.names }{
-Use taxon abbreviation instead of long scientific names. Dots are converted to blanks.
-}
-\item{ add.lines }{
-Add blank lines separating header section.
-}
-\item{ latex.input }{
-Warp output in LaTex verbatim environment.
-}
+  \item{ obj }{
+    An object of class \code{VegsoupData}.
+  }
+  \item{ file }{
+    A file name to output results.
+  }
+  \item{ select }{
+    Character vector matching \code{names(obj)} or indices to columns in
+    Sites(obj) to select information to be incorporated in the header section.
+    Beware, this only makes sense for numeric (e.g. elevation) or short string
+    variables (e.g. slope aspect)!
+  }
+  \item{ absence }{
+    Character to code absences, defaults to \code{"."}.
+  }
+  \item{ collapse }{
+    Character to be used as separator in columns of abundances (plots).
+  }
+  \item{ pad }{
+    Integer specifying the number of blanks to add to taxon names (right side)
+    and layers string (both sides), defaults to 1.
+  }
+  \item{ abbreviate }{
+    Truncate abundance values to width 1 using \code{abbreviate(x, minlength =
+    1, strict = TRUE)}.
+  }
+  \item{ rule }{
+    Integer vector of length equal to the number of plots \code{nrow(obj)}.
+    The lengths of runs of equal values in this vector are used to insert
+    vertical rule mimicked by the pipe gylph (\code{'|'}).
+  }
+  \item{ short.names }{
+    Use taxon abbreviation instead of long scientific names. Dots are
+    converted to blanks.
+  }
+  \item{ add.lines }{
+    Add blank lines separating header section.
+  }
+  \item{ latex.input }{
+    Warp output in LaTex verbatim environment.
+  }
 }
 
 \details{
@@ -161,7 +182,7 @@ library(vegsoup)
 require(stringr)
 
 file <- system.file("extdata", "Erschbammer1992Tab4.txt",
-	package = "vegsoup")
+                    package = "vegsoup")
 x <- read.verbatim(file)
 class(x)
 head(x)
@@ -178,7 +199,7 @@ head(x)
 # add species from table footer
 file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
                     package = "vegsoup")
-x <- read.verbatim.append(x, file)
+x <- read.verbatim.append(x, file, mode = "species")
 tail(x)
 # 68 species were added
 dim(x)
@@ -189,7 +210,7 @@ x.df <- data.frame(abbr = rownames(x), layer = "hl", comment = NA, x,
 # promote to class "Species"
 X <- stack.species(x.df)
 
-#	sites data including coordinates
+#   sites data including coordinates
 file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
                     package = "vegsoup")
 Y <- read.delim(file, colClasses = "character")
@@ -201,15 +222,16 @@ Y <- stack.sites(Y)
 file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
                     package = "vegsoup")
 Z <- read.delim(file, colClasses = "character")
-#	promote to class Taxonomy
+#   promote to class Taxonomy
 Z <- taxonomy(Z)
 
 # groome abundance scale codes to fit the standard
+# of the extended Braun-Blanquet scale used in the origional publication
 X$cov <- gsub("m", "2m", X$cov)
 X$cov <- gsub("a", "2a", X$cov)
 X$cov <- gsub("b", "2b", X$cov)
 
-dta <- Vegsoup(X, Y, Z)
+dta <- Vegsoup(X, Y, Z, "braun.blanquet")
 
 # assign header data stored as attributes in
 # imported original community table
@@ -240,7 +262,7 @@ Confus(prt.flx, prt.org)
 
 # write object of class Vegsoup
 foo <- write.verbatim(seriation(dta), file = tempfile(),
-	select = c(10,7,8,9,11))
+    select = c(10,7,8,9,11))
 foo[1:30] # resize console window
 }
 \seealso{

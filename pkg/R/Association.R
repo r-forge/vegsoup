@@ -72,6 +72,8 @@ setMethod("Association",
 	
 	#	The above has been disfunct
 
+	X <- table(Partitioning(obj1), Partitioning(obj2))
+	
 	if (missing(alpha)) {
 		alpha = 0.05
 	}
@@ -83,9 +85,7 @@ setMethod("Association",
 			"and obj2 (", getK(obj1), ")!", sep = "")
 	}
 	#	reference (observed) as row margins, comporison (predicted) as column margins
-	N <- length(Partitioning(obj1))
-				
-	X <- table(Partitioning(obj1), Partitioning(obj2))
+	N <- length(Partitioning(obj1))		
 
 	X.rows <- nrow(X)
 	X.cols <- ncol(X)
@@ -160,7 +160,7 @@ setMethod("Association",
 	z.lambda.CR <- lambda.CR / ASE.lambda.CR
 	
 	#	significant change here!
-	#	warning: is commenting this out thwe following two lines really ok?
+	#	warning: is commenting this out the following two lines really ok?
 	#	p.lambda.RC <- (pnorm(z.lambda.RC, lower=FALSE)) * 2 # SPSS mimic
 	#	p.lambda.CR <- (pnorm(z.lambda.CR, lower=FALSE)) * 2 # SPSS mimic
 	p.lambda.RC <- 1 - pnorm(z.lambda.RC);

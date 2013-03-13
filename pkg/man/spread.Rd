@@ -30,6 +30,6 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 prt <- VegsoupPartition(dta, k = 2)
 
-Spread(prt)
+spread(prt)
 }
 \keyword{ methods }

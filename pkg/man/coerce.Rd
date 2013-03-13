@@ -94,7 +94,7 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
 
 # same as as.matrix(prt, typeof = "numeric")
-x <- as(prt, "matrix")
+x <- as(dta, "matrix")
 
 # the species matrix as an multi-dimensional array
 x <- as(dta, "array")

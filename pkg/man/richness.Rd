@@ -8,10 +8,10 @@ Retrieve dataset, sample or grouped species richness.
 }
 \usage{
 
-## S4 method for class Vegsoup
+## S4 method for signature 'Vegsoup'
 richness(obj, choice = c("dataset", "sample"))
 
-## S4 method for class VegsoupPartition
+## S4 method for signature 'VegsoupPartition'
 richness(obj, choice = c("dataset", "sample", "partition"))
 
 }
@@ -39,18 +39,21 @@ Roland Kaiser
 \code{\link[vegsoup:rowSums]{rowSums}},\code{\link[vegsoup:colSums]{colSums}}
 }
 \examples{
-library(vegsoup)
+require(vegsoup)
+
 data(testdata)        
-dta <- VegsoupDataVegsoup(species, sites, taxonomy,
-    scale = list(scale = "Braun-Blanquet")))
+dta <- Vegsoup(spc, sts, txa,"braun.blanquet")
     
 richness(dta) # default choice = "dataset"
 richness(dta, "sa") # partial match
 
-# rowSums counts each occurence an layers.
+# rowSums counts each species-layer replication (pseudo-species).
 # Because there are 3 layers the numbers are different
 # compared to richness(dta, "sample")!
 rowSums(dta)
+
+prt <- VegsoupPartition(dta, k = 2)
+richness(prt, "partition")
 }
 \keyword{ methods }
 

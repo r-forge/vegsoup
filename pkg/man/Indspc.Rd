@@ -3,13 +3,13 @@
 \docType{methods}
 \alias{Indspc}
 \alias{Indspc-methods}
-\alias{Indspc,VegsoupData-method}
 
 \title{ Compositional Indicator Species Analysis }
 \description{
 Calculates the mean similarity of all plots in which a species occurs.
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 Indspc(obj, ...)
 }
 \arguments{
@@ -24,7 +24,8 @@ Indspc(obj, ...)
   See \code{\link[labdsv:indspc]{indspc}} for details.
 }
 \value{
-  An object of class \code{"indspc"}.
+  An object of class \code{"indspc"}. See \code{\link[labdsv:indspc]{indspc}}
+  in package \pkg{labdsv}.
 }
 \author{
 Interfaced from Roland Kaiser for package vegsoup from function
@@ -32,5 +33,13 @@ Interfaced from Roland Kaiser for package vegsoup from function
 }
 \seealso{
 \code{\link{Fidelity}}
+}
+\examples{
+require(vegsoup)
+
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+
+Indspc(dta)
 }
 \keyword{ methods }

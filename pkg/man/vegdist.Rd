@@ -7,12 +7,10 @@
 \alias{vegdist<--methods}
 \alias{distconnected}
 \alias{distconnected-methods}
-\alias{distconnected,VegsoupData-method}
-\alias{distconnected,VegsoupDataPartition-method}
 
 \title{ Distance Matrices from \code{Vegsoup*} Objects }
 \description{
-Compute a distance matrix as specified by \code{vegdist(obj)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.  
+Compute a distance matrix as specified by \code{vegdist(obj)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
 }
 \usage{
 as.dist(obj)
@@ -63,10 +61,17 @@ distconnected(obj, ...)
   \pkg{vegan} and checks for connectedness of dissimilarities.
 }
 \value{
-Returns an object of class \code{"dist"} with an additional attribute \code{"mode"} one of \code{"Q"} or \code{"R"}.
+\code{as.dist} returns an object of class \code{"dist"} with an additional attribute \code{"mode"} one of \code{"Q"} or \code{"R"}.
+
+\code{vegdist} retruns the distance index active for a \code{Vegsoup*} object.
+
+\code{distconnected} returns an \code{"integer"} vector for observations to identify connected groups.
 }
 \author{
 Roland Kaiser
+
+\code{vegdist} and \code{distconnected} are method interfaces to functions by \emph{Jari
+Oksanen} in package \pkg{vegan}.
 }
 \seealso{
 \code{\link[vegan:vegdist]{vegdist}}
@@ -88,13 +93,15 @@ attributes(d.q)
 attr(d.q, "mode")
 
 # R-mode analysis
+# currently disfunct due to missing ... argument in stats:as.dist
 # chi square distances can be obtained
 # by computing euclidean distances on standardized data
 # see ?vegan::vegdist 
-decostand(dta)  <- "chi.square"
+##decostand(dta)  <- "chi.square"
+##d.r <- as.dist(dta, mode = "R")              
+##class(d.r)
+##attr(d.r, "mode")
 
-d.r <- as.dist(dta, mode = "R")              
-class(d.r)
-attr(d.r, "mode")   
+distconnected(dta)
 }
 \keyword{ methods }

@@ -4,8 +4,8 @@
   Measures of association for two partitonings
 }
 \description{
-  \code{Accuracy} takes two objects inheriting from class
-  \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
+  \code{Association} takes two objects inheriting from class
+  \code{\linkS4class{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
   cross-tabulation (contingency table) of reference (observed) (\code{obj1})
   vs. comparison (predicted) class memberships (\code{obj2}), and calculates a
   range of measures of association between the two partitions (clusters).

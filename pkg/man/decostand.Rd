@@ -5,26 +5,29 @@
 \alias{decostand-methods}
 \alias{decostand<--methods}  
 
-\title{
-Standardization Methods For Objects inheriting Class VegsoupData.
+\title{ Standardization Methods for \code{Vegsoup*} objects.
 }
 \description{
 This wrapper function provides the standardization methods implemented in function \code{\link[vegan:decostand]{decostand}} of \pkg{vegan}. Only the species matrix will be affected by standardization. 
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 decostand(obj)
 
+## S4 replacement method for signature 'Vegsoup*'
 decostand(obj) <- value
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{obj}{
-	An object inheriting from class \code{VegsoupData}.
-}
+    a \code{Vegsoup*} object.
+  }
   \item{value}{
-	A vector of characters giving methods as accepted by  \code{vegan::decostand} or \code{NULL}.
+    A vector of characters giving methods as accepted by
+    \code{vegan::decostand} or \code{NULL}.
+  }
 }
-}
+
 \details{
 Standardization is often nessecary before the species matrix is subject to analysis by a multivariate method. This can easyly be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are applied in sequence to the data (order matters). In fact, method \code{'wisconsion'} invokes a dauble standardization (\code{'max'} followed by \code{'total'}).
 
@@ -45,33 +48,32 @@ Use the extract and replace operators \code{\link[=Extract]{"$"}} to midify colu
 }
 
 \seealso{
-\code{\link{as.numeric}} and \code{\link{as.logical}}
+\code{\link{as.matrix}},
+\code{\link{as.dist}},
+\code{\link{vegdist}}
+\code{\link{coverscale}}
 }
 \examples{
-library(vegsoup)
-data(testdata)        
-qry <- Vegsoup(species, sites, taxonomy,
-	scale = list(scale = "Braun-Blanquet"))
-dta <- VegsoupData(qry)
-	
+require(vegsoup)
+
+data(testdata)
+dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+    
 # no standardization by default
 decostand(dta)
-	
-# create object of class VegsoupData
-# and supply standardization in one step
-dta <- VegsoupData(qry, decostand = "hellinger")
-decostand(dta)  
-	
-# retreive the strandardized species matrix
+
+decostand(dta) <- "total"
+
+# retreive a strandardized species matrix
 as.numeric(dta)
 
 # double strandardization
 decostand(dta) <- c("hellinger", "standardize")
 as.numeric(dta)
-	
+    
 # remove any standardization
-decostand(dta) <- NULL 
-	
+decostand(dta) <- NULL
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

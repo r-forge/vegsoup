@@ -1,5 +1,5 @@
 \name{Isamic}
-\docType{methods} 
+\docType{methods}
 \alias{Isamic}
 \alias{Isamic-methods}
 

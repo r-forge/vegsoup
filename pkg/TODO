@@ -1,8 +1,12 @@
 # major
+NEW
+decotrans method
+decostand method for fidelity, needs to recalculate fidelity if not presence absence
+extend slot partition to contain class dendrogram
+
 replace most warnings() with message()
 improve findcoordiantes()
 improve Spread()
-extend slot partition to contain class dendrogram
 
 # minor
 Species(dta) <-

@@ -39,6 +39,8 @@
 \alias{decostand,Vegsoup-method}
 \alias{decostand<-,Vegsoup,character-method}
 \alias{decostand<-,Vegsoup,NULL-method}
+\alias{distconnected,Vegsoup-method}
+\alias{distconnected,VegsoupPartition-method}
 \alias{dim,Vegsoup-method}
 \alias{dimnames,Vegsoup-method}
 \alias{elevation,Vegsoup-method}
@@ -122,8 +124,8 @@
     }
     \item{\code{dist}:}{
       Object of class \code{"character"},
-      giving a method for \code{\link{vegsoup:vegdist}}. Takes effect if
-      \code{\link{as.dist}} is called on object.
+      giving a method for \code{\link[vegsoup:vegdist]{vegdist}}.
+      Takes effect in calls or dispatch of \code{\link{as.dist}}.
     }
     \item{\code{layers}:}{
       Object of class \code{"character"},
@@ -238,7 +240,10 @@
       \code{signature(x = "Vegsoup", value = "character")}:
       set a distance measure for an object.
     }
-
+    \item{distconnected}{
+      \code{signature(x = "Vegsoup")}:
+      connectedness of Dissimilarities.
+    }
 %% 6
   \bold{ 6) Retrieve indices to species matrix.}
     \item{indices}{

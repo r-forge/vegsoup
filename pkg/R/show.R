@@ -31,6 +31,8 @@ setMethod("tail",
     function (x, n = 6L, choice, typeof, ...) {
 	    if (missing(choice))
 	    	choice = "species"
+    	CHOICE <- c("species", "sites")
+    	choice <- CHOICE[pmatch(choice, CHOICE)]
 		if (missing(typeof))
 		    typeof = "logical"
 	    if (missing(n))

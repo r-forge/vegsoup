@@ -1,16 +1,15 @@
 \name{rbind}
 \alias{rbind}
+\alias{rbind-methods}
 
-\title{
-Combine Vegsoup* objects
-}
+\title{ Combine \code{Vegsoup*} objects }
 \description{
 Take a sequence of arguments of objects from class \code{Vegsoup*} and combine them into a single object.
 }
 \usage{
+## S4 method for signature 'Vegsoup*'
 rbind(..., deparse.level = 1)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{ \dots }{
 Objects of class \code{VegsoupData}.

@@ -131,7 +131,7 @@ if (verbose) {
 }
 	
 if (length(test) > 0) {
-	warning("some mono type character columns deviate from the expected pattern\n")
+	message("some mono type character columns deviate from the expected pattern")
 	for (i in test) {
 		#	missing dot
 		if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
@@ -275,112 +275,112 @@ print.VegsoupVerbatim <- function (x) {
 #	function to append to class VegsoupVerbatim
 read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"), collapse = ",", abundance) {
 
-require(stringr)
-
-if (!inherits(x, "VegsoupVerbatim")) {
-	stop("plaese supply an object of class VegsoupVerbatim")	
-}
-if (missing(file)) {
-	stop("please supply a path to a file")
-}
-if (missing(mode)) {
-	mode = "plots"
-	warning("missing mode, but set mode to", mode, call. = FALSE)	
-} else {
-	MODES <- c("plots", "species", "layers")
-	mode <- match.arg(mode, MODES)
-	if (mode == "layers") {
-		stop("mode \"layers\" not yet implemented!", call. = FALSE)
+	require(stringr)
+	
+	if (!inherits(x, "VegsoupVerbatim")) {
+		stop("plaese supply an object of class VegsoupVerbatim")	
 	}
-}
-if (!missing(abundance)) {
-	stopifnot(length(abundance) == 1)
-	if (mode == 1) {
-		abundance <- as.character(abundance)	
+	if (missing(file)) {
+		stop("please supply a path to a file")
 	}
-	if (mode == 2) {
-		abundance <- as.logical(abundance)	
+	if (missing(mode)) {
+		mode = "plots"
+		message("missing mode, but set mode to ", mode)	
 	}
-} else {
-	if (mode == 1) {
-		abundance = "+"
+	else {
+		MODES <- c("plots", "species", "layers")
+		mode <- match.arg(mode, MODES)
+		if (mode == "layers") {
+			stop("mode \"layers\" not yet implemented!", call. = FALSE)
+		}
 	}
-	if (mode == 2) {
-		if (abundance == FALSE) {
+	if (!missing(abundance)) {
+		stopifnot(length(abundance) == 1)
+		if (mode == "species") {
+			abundance <- as.character(abundance)	
+		}
+		if (mode == "plots") {
+			if (!is.logical(abundance)) {
+				abundance <- as.logical(abundance)				
+			}
+			abundance <- ifelse(is.na(abundance), TRUE, FALSE)
+		}
+	}
+	else {
+		if (mode == "species") {
 			abundance = "+"
 		}
-	}			
-}
-
-#	save attributes
-attr <- attributes(x)
-
-txt <- readLines(file.path(file))
-
-txt <- sapply(txt, function (x) {
-		strsplit(x, ":", fixed = TRUE)
-	}, USE.NAMES = FALSE)
-
-#	plain and simple uses dummy abundance
-if (mode == "species") {
-	rn <- str_trim(unlist(lapply(txt, "[[", 1)))
-	xx <- gsub("[[:blank:]]", "", unlist(lapply(txt, "[[", 2)))
-	xx <- strsplit(xx, collapse, fixed = TRUE)
-	names(xx) <- rn	
-	y <- matrix(".", nrow = length(xx), ncol = ncol(x))
-	colnames(y) <- colnames(x)
-	rownames(y) <- rn
-
-	for (i in 1:length(xx)) {
-		#	i = 1
-		ii <- match(names(xx)[i], rownames(y))
-		stopifnot(length(ii) == 1)
-		jj <- match(xx[[i]], colnames(y))
-
-		y[ii, jj] <- abundance
+		if (mode == "plots") {
+			abundance = TRUE
+		}			
 	}
-}
-
-#	more structred, uses given abundance, but no layers
-if (mode == "plots") {
-	cn <- str_trim(unlist(lapply(txt, "[[", 1)))
-	xx <- str_trim(unlist(lapply(txt, "[[", 2)))
-	xx <- sapply(strsplit(xx, collapse, fixed = TRUE), str_trim)
-	tmp <- vector("list", length = length(xx))
-	names(tmp) <- type.convert(cn) # handle leading zeros as in read.verbatim!
-
-	for (i in 1:length(xx)) {
-		#	i = 26
-		ll <- sapply(xx[[i]], nchar)
-		tmp[[i]] <- list(
-			str_trim(substring(xx[[i]], 1, ll - 1)),
-			substring(xx[[i]], ll, ll))
+	#	save attributes
+	attr <- attributes(x)
+	
+	txt <- readLines(file.path(file))
+	
+	txt <- sapply(txt, function (x) {
+			strsplit(x, ":", fixed = TRUE)
+		}, USE.NAMES = FALSE)
+	
+	#	plain and simple uses dummy abundance
+	if (mode == "species") {
+		rn <- str_trim(unlist(lapply(txt, "[[", 1)))
+		xx <- gsub("[[:blank:]]", "", unlist(lapply(txt, "[[", 2)))
+		xx <- strsplit(xx, collapse, fixed = TRUE)
+		names(xx) <- rn	
+		y <- matrix(".", nrow = length(xx), ncol = ncol(x))
+		colnames(y) <- colnames(x)
+		rownames(y) <- rn
+	
+		for (i in 1:length(xx)) {
+			#	i = 1
+			ii <- match(names(xx)[i], rownames(y))
+			stopifnot(length(ii) == 1)
+			jj <- match(xx[[i]], colnames(y))	
+			y[ii, jj] <- abundance
+		}
 	}
 	
-	rn <- unique(unlist(lapply(tmp, "[[", 1)))
-	y <- matrix(".", nrow = length(rn), ncol = ncol(x))
-	colnames(y) <- colnames(x)
-	rownames(y) <- rn
+	#	more structred, uses given abundance, but no layers
+	if (mode == "plots") {
+		cn <- str_trim(unlist(lapply(txt, "[[", 1)))
+		xx <- str_trim(unlist(lapply(txt, "[[", 2)))
+		xx <- sapply(strsplit(xx, collapse, fixed = TRUE), str_trim)
+		tmp <- vector("list", length = length(xx))
+		names(tmp) <- type.convert(cn) # handle leading zeros as in read.verbatim!
 	
-	for (i in 1:length(tmp)) {
-		#	i = 27
-		for (j in seq(along = tmp[[ i ]][[1]])) {
-			#	j = 1
-			ii <- match(tmp[[ i ]][[1]][ j ], rownames(y))
-			jj <- match(names(tmp)[[ i ]], colnames(y))
-			y[ii, jj] <- ifelse(abundance == TRUE, tmp[[ i ]][[2]][j], abundance)
-		} 
-	}		
-}	
-
-test <- intersect(rownames(x), rownames(y))
-if (length(test) != 0) {
-	stop("some species in file are already present in object x: ", test)
-}
-x <- rbind(x, y)
-
-class(x) <- c("matrix", "VegsoupVerbatim")
-attributes(x) <- c(attributes(x), attr[-c(1:2)])
-
-return(x)	
+		for (i in 1:length(xx)) {
+			ll <- sapply(xx[[i]], nchar)
+			tmp[[i]] <- list(
+				str_trim(substring(xx[[i]], 1, ll - 1)),
+				substring(xx[[i]], ll, ll))
+		}
+		
+		rn <- unique(unlist(lapply(tmp, "[[", 1)))
+		y <- matrix(".", nrow = length(rn), ncol = ncol(x))
+		colnames(y) <- colnames(x)
+		rownames(y) <- rn
+		
+		for (i in 1:length(tmp)) {
+			#	i = 1
+			for (j in seq(along = tmp[[ i ]][[1]])) {
+				#	j = 1
+				ii <- match(tmp[[ i ]][[1]][ j ], rownames(y))
+				jj <- match(names(tmp)[[ i ]], colnames(y))
+				y[ii, jj] <- ifelse(abundance == TRUE, tmp[[ i ]][[2]][j], abundance)
+			} 
+		}		
+	}	
+	
+	test <- intersect(rownames(x), rownames(y))
+	if (length(test) != 0) {
+		stop("some species in file are already present in object x: ", test)
+	}
+	x <- rbind(x, y)
+	
+	class(x) <- c("matrix", "VegsoupVerbatim")
+	attributes(x) <- c(attributes(x), attr[-c(1:2)])
+	
+	return(x)	
 }

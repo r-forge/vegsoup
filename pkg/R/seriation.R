@@ -20,6 +20,7 @@ setMethod("seriation",
 	}
 	
 	si.dis <- as.dist(obj, "logical")
+	#	critical as.dist dispatch for mode = "R"
 	sp.dis <- as.dist(obj, "logical", mode = "R")	
 	
 	switch(method, dca = {
