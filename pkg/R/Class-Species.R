@@ -22,16 +22,15 @@ setMethod("initialize",
 	"Species",
 	function(.Object, data) {
 		#	for safety and to get rid of factors
+		#	improve speed, efficency
 		data <- as.data.frame(
 			as.matrix(data), stringsAsFactors = FALSE)				
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
 		
-		###	order, problematic for verbatim
-		#data <- data[order(data$plot, data$layer, data$abbr), ]
-		
-		data$plot <- as.character(data$plot)
+		#	needs order, at least block of plots
+		#data$plot <- as.character(data$plot)
 				
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
@@ -61,7 +60,7 @@ setMethod("initialize",
 				"\nplease review your data!", call. = FALSE)
 		}
 		#	ensure valid names	
-		data$abbr <- make.names(data$abbr)			
+		#	data$abbr <- make.names(data$abbr)			
 		rownames(data) <- 1:nrow(data)
 		
 	.Object@data <- data	

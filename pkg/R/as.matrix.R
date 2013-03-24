@@ -1,6 +1,24 @@
 #	critcal!
 #	as.dist dispatach for generic with additional argument mode
 
+#	internal function
+#	replacing .cast() in Vegsoup-Internal.R and fully vectorized
+
+.cast2 <- function (x, typeof) {
+		ij <- indices(x, typeof)
+		nc <- ncol(x)
+		nr <- nrow(x)
+		cv <- numeric(length = nc* nr)
+
+		#	warning: plots have to be ordered!		
+		jj <- ij$j + rep(cumsum(rep(nc, nr)) - ncol(x), times = rle(ij$i)$length)
+		cv[jj] <- ij$x
+		
+		return(matrix(cv, ncol = ncol(x), nrow = nrow(x),
+		            dimnames = ij$dimnames, byrow = TRUE))
+
+}
+
 #	return species matrix
 setMethod("as.numeric",
     signature(x = "Vegsoup"),
@@ -8,7 +26,9 @@ setMethod("as.numeric",
     	if (missing(mode)) mode <- "Q"
     	MODE <- c("Q", "R")
     	mode <- match.arg(toupper(mode), MODE)
-    	m <- .cast(x, mode = 1)
+    	#m <- .cast(x, mode = 1)    	
+    	m <- .cast2(x, "numeric")
+    	
 		#	standardization as definded by decostand(x)		
 		stand <- slot(slot(x, "decostand"), "method")
     	
@@ -42,7 +62,8 @@ setMethod("as.character",
     	if (missing(mode)) mode <- "Q"
     	MODE <- c("Q", "R")
     	mode <- match.arg(toupper(mode), MODE)
-    	m <- .cast(x, mode = 2)
+    	# m <- .cast(x, mode = 2)
+    	m <- .cast2(x, "character")
    		if (mode == "R") m <- t(m)
    		return(invisible(m))
     }
@@ -54,7 +75,8 @@ setMethod("as.logical",
     	if (missing(mode)) mode <- "Q"
     	MODE <- c("Q", "R")
     	mode <- match.arg(toupper(mode), MODE)
-    	m <- .cast(x, mode = 3)
+    	# m <- .cast(x, mode = 3)
+    	m <- .cast2(x, "logical")
    		if (mode == "R") m <- t(m)
    		storage.mode(m) <- "integer"
    		return(invisible(m))    	
@@ -169,40 +191,49 @@ setGeneric("indices",
 	standardGeneric("indices"))	
 #}	
 setMethod("indices",
-	signature(x = "Vegsoup"), # 
-	  function (x, typeof) {
-    	if (missing(typeof)) typeof <- "numeric"    		
-    	TYPEOF <- c("character", "numeric", "logical")
-    	typeof <- match.arg(typeof, TYPEOF)
+	signature(x = "Vegsoup"), #
+		function (x, typeof) {
+	    	if (missing(typeof)) typeof <- "numeric"    		
+    		TYPEOF <- c("character", "numeric", "logical")
+    		typeof <- match.arg(typeof, TYPEOF)
     	
-		sc <- coverscale(x)
-		al <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@")
-		l <- Species(x)$layer	
-		pl <- Species(x)$plot
-		upl <- unique(pl)
-		
-		#	for sparseMatrix i,j must be vectors of the same length
-		#	resort to layer, copied from .cast()
-		if (length(Layers(x)) > 1) {
-			al2 <- unique(as.vector(unlist(#
-				sapply(Layers(x), function (y) al[l == y] ))))
-		}
-		ual <- unique(al2)	
-		
-		if (typeof == "numeric" & !is.null(sc@codes)) {
-			cv <- as.numeric(as.character(
-				factor(Species(x)$cov, levels = sc@codes, labels = sc@lims)
-				))
-		}
-		if (typeof == "character") {
-			cv <- Species(x)$cov
-		}
-		if (typeof == "logical") {
-			cv <- rep(1, nrow(Species(x)))
-		}
-		j <- match(al, al2)
-		i <- as.integer(ordered(pl, levels = upl))
-		list(i = i, j = j, x = cv, dimnames = list(upl, ual))
+			cs <- coverscale(x)			
+			al <- abbr.layer(x)
+			ual <- abbr.layer(x, TRUE)			
+			pl <- Species(x)$plot
+			upl <- unique(pl)
+						
+			#	i,j vectors of the same length
+			j <- match(al, ual)
+			i <- as.integer(ordered(pl, levels = upl))
+			
+			if (typeof == "numeric" & !is.null(cs@codes)) {
+				#if (any(is.na(cov))) {
+				#	stop("cover scale codes do not match data" )
+				#}	
+				return(list(i = i, j = j, 				
+					x = as.numeric(as.character(
+						factor(Species(x)$cov, levels = cs@codes, labels = cs@lims))),
+					dimnames = list(upl, ual)))
+			}
+			if (typeof == "numeric" & is.null(cs@codes)) {
+				return(list(i = i, j = j, 				
+					x = as.numeric(Species(x)$cov),
+					dimnames = list(upl, ual)))				
+			}
+			if (typeof == "character") {
+				if (is.null(cs@codes)) {
+					message("coverscale has no codes")
+				}
+				return(list(i = i, j = j, 				
+					x = Species(x)$cov,	# is character by definition 
+					dimnames = list(upl, ual)))
+			}
+			if (typeof == "logical") {
+				return(list(i = i, j = j, 				
+					x = rep(1, nrow(Species(x))), 
+					dimnames = list(upl, ual)))
+			}		
 		}
 )
 
@@ -218,6 +249,10 @@ setAs(from = "Vegsoup", to = "sparseMatrix",
 	}
 )
 
+#as.sparseMatrix.Vegsoup <- function (x, ...) {
+#	as(x, "sparseMatrix")
+#}
+	
 setAs(from = "Vegsoup", to = "dsparseMatrix",
 	def = function (from) {
 		require(Matrix)

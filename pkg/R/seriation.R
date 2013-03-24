@@ -19,12 +19,13 @@ setMethod("seriation",
 		mode <- match.arg(toupper(mode), MODES)
 	}
 	
+	if (method != "dca" | method != "packed") {
 	si.dis <- as.dist(obj, "logical")
 	#	critical as.dist dispatch for mode = "R"
 	sp.dis <- as.dist(obj, "logical", mode = "R")	
-	
+	}
 	switch(method, dca = {
-		use <- try(decorana(as.logical(obj)), silent = TRUE, ...)
+		use <- try(decorana(obj), silent = TRUE, ...) # as.matrix dispatch
 		if (inherits(use, "try-error")) {
 			use <- NULL
 		}	

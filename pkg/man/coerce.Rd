@@ -9,6 +9,7 @@
 \alias{coerce,list-method}
 \alias{coerce.data.frame-method}
 \alias{coerce,data.list-method}
+\alias{coerce,mefa-method}
 
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
 \description{
@@ -36,6 +37,9 @@ as(x, "data.frame")
 
 ## S4 method for signature from = 'Vegsoup*' to = 'data.list'
 as(x, "data.list")
+
+## S4 method for signature from = 'Vegsoup*' to = 'mefa'
+as(x, "mefa")
 }
 \arguments{
   \item{ x }{
@@ -72,6 +76,9 @@ there are in \code{Species(x)}.
 
 Coercion to 'array' returns an \code{"array"}.
 
+Coercion to 'mefa' and 'data.list' returns a \code{"mefa"} respectively
+\code{"data.list"} object.
+
 }
 \section{ Warning }{
   S3 functions must contain a call to \code{as.matrix} to gurantee dispatch.
@@ -80,6 +87,8 @@ Coercion to 'array' returns an \code{"array"}.
   \code{as.data.frame} in the function body it will certainly break, because
   the \code{as.data.frame(x)} coercion does not return a species matrix (see
   \code{\link{as.data.frame}})!
+
+  Coercion to class \code{"mefa"} is only meaningful for count data!
 }
 \author{
 Roland Kaiser
@@ -107,6 +116,9 @@ dim(x)
 x <- as(dta, "data.list")
 summary(x)
 class(as.data.list(dta))
+
+# coerce to data.list in package multitable
+x <- as(dta, "mefa")
 
 # dispatch: use Vegsoup* object in S3 function
 decostand(dta) <- "hellinger"

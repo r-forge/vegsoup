@@ -32,7 +32,7 @@ as.numeric(x, mode)
 as.character(x, mode)
 
 ## S4 method for signature 'Vegsoup*'
-as.matrix(x, typeof, ...)
+as.matrix(x, typeof, mode, ...)
 
 ## S4 method for signature 'Vegsoup*'
 as.array(x, typeof, ...)
@@ -118,9 +118,11 @@ head(dta.pa)
 all.equal(dta.pa, dta.pa2, check.attributes = FALSE)
 
 #   using as.matrix and argument mode
-as.matrix(dta, "character", "R")
+as.matrix(dta, typeof = "character", mode = "R")
 
-require(vegan)
+#   compact display
+as(as.matrix(dta, "logical", "R"), "sparseMatrix")
+
 
 pro <- procrustes(as.logical(dta), as.numeric(dta))
 
@@ -128,43 +130,25 @@ pro <- procrustes(as.logical(dta), as.numeric(dta))
 # where an object of class matrix is expected
 decostand(dta) <- "hellinger"
 decorana(dta)
-decostand(dta) <- "pa"
-decorana(dta)
+decostand(dta) <- NULL # reset the default
 
-# create matrices based on indices
-# compare to vegsoup:as.matrix
-
-# remove the above defined decostand method
-decostand(dta) <- NULL
-m.vs <- as.matrix(dta)
-
-# "matrix"
-ij <- indices(dta)
-m <- matrix(0, ncol = ncol(dta), nrow = nrow(dta))
-m[] <- as.vector(dta, mode = "numeric")
-dimnames(m) <- ij$dimnames
-# and test them against what is returned from as.matrix
-identical(m.vs, m)
-
-# "sparseMatrix" (class?dgCMatrix)
-m.M <- as(dta, "sparseMatrix")
-m.Mm <- as.matrix(m.M) # coerce for comparision
-identical(round(m.vs, 0), m.Mm)
-
-# and their associated memory demands
-# class matrix
-sz1 <- object.size(m) # most efficient
-# indices only
-sz2 <- object.size(ij) # almost equal 
-# class sparseMatrix based on indices()
-sz3 <- object.size(m.M) # efficient
-# internal Vegsoup data structure
-sz4 <- object.size(Species(dta)) # most general but least efficent
+# species matrix representations and memory demands
+# class "matrix"
+object.size(as.matrix(dta)) # most efficient
+# class "list" (pointers and values of all non zero entries)
+object.size(indices(dta))   # almost equal 
+# class "sparseMatrix" based on indices()
+object.size(m.M)            # efficient
+# the long format as stored in Vegsoup objects (slot 'species')
+object.size(Species(dta)) # most general but least efficent
 # a multi-dimensional array of layer replicates
-sz5 <- object.size(as.array(dta)) 
-sz6 <- object.size(as.data.list(dta)) # effective
-sz7 <- object.size(as.data.frame(dta)) # alos effective
-sz8 <- object.size(dta)
+object.size(as.array(dta))  # least efficent
+
+# comparison of objects
+object.size(as.mefa(dta))       # most efficent, but it tocope with strata
+object.size(as.data.list(dta))  # least efficent, but highly generic
+object.size(as.data.frame(dta)) # also efficent
+object.size(dta) - object.size(dta@sp.points) - object.size(dta@sp.polygons) # most general most efficent               
 }
 \keyword{ methods }
 \keyword{ manip }

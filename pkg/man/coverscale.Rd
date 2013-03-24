@@ -1,10 +1,18 @@
 \name{coverscale}
+
 \alias{Coverscale}
+
 \alias{coverscale}
 \alias{coverscale-method}
 \alias{coverscale<--method}
+
+\alias{is.ordinal}
 \alias{is.ordinal-method}
+\alias{is.ordinal,Vegsoup-method}
+
+\alias{is.continuous}
 \alias{is.continuous-method}
+\alias{is.continuous,Vegsoup-method}
 
 \title{ Set or Retrieve an Abundance Scale for \code{Vegsoup*} Objects }
 \description{
@@ -25,10 +33,10 @@ coverscale(obj)
 ## S4 replacement method for signature 'Vegsoup*'
 coverscale(obj) <- value
 
-## S4 method for signature 'Vegsoup*'
+## S4 method for signature 'Coverscale' and 'Vegsoup*'
 is.ordinal(obj)
 
-## S4 method for signature 'Vegsoup*'
+## S4 method for signature 'Coverscale' and 'Vegsoup*'
 is.continuous(obj)
 }
 \arguments{
@@ -98,5 +106,7 @@ as(list("myscale", LETTERS[1:5], seq(20, 100, 20)), "Coverscale")
 
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+
+is.ordinal(dta)
 }
 \keyword{ methods }

@@ -5,7 +5,8 @@ setGeneric("nrow", function(x)
 setMethod("nrow",
     signature(x = "Vegsoup"),
     function (x) {
-		length(rownames(x))
+		nrow(Sites(x))
+#		length(rownames(x))
 	}
 )
 #if (!isGeneric("dim")) {
@@ -15,7 +16,12 @@ setGeneric("ncol", function (x)
 setMethod("ncol",
     signature(x = "Vegsoup"),
     function (x) {
-		length(colnames(x))
+    	if (length(Layers(x)) > 1) {
+    		nrow(unique(Species(x)[, 2:3])) # c("abbr", "layer")
+    	}
+    	else {
+    		nrow(Taxonomy(x))	
+    	}
 	}
 )
 #	'dim' is a primitive function

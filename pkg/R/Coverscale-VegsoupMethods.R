@@ -1,3 +1,18 @@
+#	based on Coverscale-methods 
+setMethod("is.continuous",
+    signature(obj = "Vegsoup"),
+    function (obj) {
+  		is.continuous(coverscale(obj))   	
+    }
+)
+
+setMethod("is.ordinal",
+    signature(obj = "Vegsoup"),
+    function (obj) {
+  		is.ordinal(coverscale(obj))   	
+    }
+)
+
 setMethod("coverscale",
     signature(obj = "Vegsoup"),
     function (obj) {

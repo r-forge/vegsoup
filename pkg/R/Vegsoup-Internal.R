@@ -1,4 +1,6 @@
 #	internal function to cast species matrix
+#	depreciated and now replaced by indices() and .cast2
+#	defined in as.matrix.R
 .cast <- function (obj, mode, ...) {
 	#	obj = dta; mode = 1
 			
@@ -180,25 +182,30 @@
 #		idvar = "plot")
 	
 ".find.coordinates" <- function (y, proj4string, ...) {
-	verbose = FALSE	
-	lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
+	verbose = FALSE
+	
+	lng <- grep("longitude", y$variable)
+	lat <- grep("latitude", y$variable)
+	
+	lnglat.test <- length(lng) > 0 & length(lat) > 0
+	#lnglat.test <- any(y$variable == "longitude") & any(y$variable == "latitude")
 	#	may raise errors in subset operations!
 	if (verbose) {
-		cat("\n attempt to retrieve coordinates from sites data ...\n")
+		message("attempt to retrieve coordinates")
 	}
 	
 	#	coordiantes can be found
 	if (lnglat.test) {
 		if (verbose) {		 
-			cat("\n found variables longitude and latitude!\n")
+			message("found variables longitude and latitude!")
 		}
 		#	warning!
 		#	check length of coordinates againts number of plots
 		#	rn <- rownames(prt)
 		#	pt <- prt@sp.points$plot
 		#	rn[-match(pt, rn)]
-		lng <- y[grep("longitude", y$variable), ]
-		lat <- y[grep("latitude", y$variable), ]
+		lng <- y[lng, ]
+		lat <- y[lat, ]
 		lnglat.test <- nrow(lng) == nrow(lat)
 	
 		#	spatial points			
@@ -223,7 +230,7 @@
 			latlng[, 3] <- as.numeric(gsub(",", ".", latlng[, 3], fixed = TRUE))
 		
 			sp.points <- latlng
-			sp.points <- sp.points[order(sp.points$plot), ]
+			#sp.points <- sp.points[order(sp.points$plot), ]
 		
 			#	test again if coordinates are really valid
 			#	if not valid set flags
@@ -233,19 +240,19 @@
 			} else {
 				lnglat.test <- FALSE
 				lnglat.sim <- TRUE			
-				warning("did not succeed!",
+				message("did not succeed!",
 					" Some coordinates seem to be doubled.",
 					"\n problematic plots: ",
 					paste(names(table(sp.points$plot)[table(sp.points$plot) > 1]),
-					collapse = " "), call. = FALSE)
+					collapse = " "))
 			}		
 		} else {
 			#	if no coordinates are found
-			#	set falgs
+			#	set flags
 			lnglat.test <- FALSE
 			lnglat.sim <- TRUE			
-			warning("did not succeed!",
-				"\n longitude and latitude do not match in length", call. = FALSE)
+			message("did not succeed!",
+				"\n longitude and latitude do not match in length")
 		}
 
 		#	spatial polygons from points, nested		
@@ -268,17 +275,18 @@
 					data = data.frame(plot = as.character(ids),
 						stringsAsFactors = FALSE))
 			sp.polygons <- spChFIDs(sp.polygons, x = ids)				
-		} else {		
+		}
+		else {		
 			warning("not a complete coordinates list",
 				" use random pattern instead", call. = FALSE)
 			tmp <- .rpoisppSites(y)	
 			sp.points <- tmp[[1]]
 			sp.polygons <- tmp[[2]] 
 		}	
-	} else {
-	#	or simulate	
-		warning("spatialPoints and SpatialPolygons missing",
-			" use random pattern", call. = FALSE)
+	}
+	else {
+	#	if not simulate	
+	#	message("use random pattern")
 			lnglat.sim <- TRUE
 			tmp <- .rpoisppSites(y)	
 			sp.points <- tmp[[1]]

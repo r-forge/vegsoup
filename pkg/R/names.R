@@ -81,14 +81,30 @@ setMethod("split.abbr",
 
 #if (!isGeneric("abbr.layer")) {
 setGeneric("abbr.layer",
-	function (obj)
+	function (obj, unique)
 		standardGeneric("abbr.layer")
 )
 #}
 setMethod("abbr.layer",
     signature(obj = "Vegsoup"),
-    function (obj) {
-    	file.path(Species(obj)$abbr, Species(obj)$layer, fsep = "@")
+    function (obj, unique) {
+    	if (missing(unique)) {
+    		unique = FALSE	
+    	}
+    	al <- file.path(Species(obj)$abbr, Species(obj)$layer, fsep = "@")
+    	if (!unique) {    	
+    		return(al)
+    	} else {
+    		if (length(Layers(obj)) > 1) {
+    			#	resort to layer, copied from .cast()
+    			#	speed issue here?
+    			l <- Species(obj)$layer
+				al <- unique(unlist(sapply(Layers(obj), function (x) al[l == x])))
+			} else {
+				al <- unique(al)	
+			}
+    		return(al)
+    	}
     }
 )
 
@@ -100,6 +116,7 @@ setGeneric("abbr",
 	}	
 )
 #}
+### which one below?
 setMethod("abbr",
     signature(obj = "Vegsoup"),
     function (obj) {
@@ -112,6 +129,21 @@ setMethod("abbr",
     	sort(unique(Species(obj)$abbr))
     }	
 )
+
+#if (!isGeneric("abbr")) {
+#	get or set taxon abbreviation
+setGeneric("taxon",
+	function (obj) {
+		standardGeneric("taxon")
+	}	
+)
+setMethod("taxon",
+    signature(obj = "Vegsoup"),
+    function (obj) {
+    	Taxonomy(obj)$taxon
+    }	
+)
+
 #setGeneric("abbr<-",
 #	function (obj, value, ...)
 #		standardGeneric("abbr<-")

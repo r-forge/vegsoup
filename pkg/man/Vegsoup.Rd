@@ -1,6 +1,7 @@
 \name{Vegsoup}
 \alias{Vegsoup}
 \alias{instantsoup}
+\alias{coenoflex}
 
 \title{ Create an object of class \code{"Vegsoup"} }
 \description{
@@ -16,6 +17,8 @@ Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", verbose = FALSE)
 
 instantsoup(folder, sep = ";", dec = ",", coverscale)
+
+coenoflex(numplt = 10, numspc = 10, ...)
 }
 
 \arguments{
@@ -69,6 +72,15 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   \item{ dec }{
     See \code{read.csv}. 
   }
+  \item{ numplt }{
+    See \code{\link[coenoflex:coenoflex]{coenoflex}}.
+  }
+  \item{ numspc }{
+    See \code{"coenoflex"}
+  }
+  \item{ \dots }{
+    Additional arguments passed to coenoflex.
+  }
   \item{ verbose }{
     Show status reports during function call.
   }
@@ -103,6 +115,8 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   if needed, defaults of class \code{\linkS4class{Vegsoup}} apply otherwise.
   The same is true for argument \code{'proj4string'}. The defaults for
   argument \code{'group'} is to create a dummy integer variable of ones.
+
+  Function \code{coenflex} creates a random community.
 }
 \note{
   If you gain errors using \code{instantsoup}, try to create separate objects
@@ -135,17 +149,8 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 dta
 
-# simulated data
-require(coenoflex)
-
-dta <- coenoflex(numgrd = 2, numplt = 50, numspc = 200,
-                 grdtyp = c("e","e"), grdlen = c(100,50), width = c(50,10),
-                 variab = c(20,10), grdprd = c(0,0), alphad = c(2,1.8),
-                 pdist = "r", sdist = "r", skew = 1.5, aacorr = 0.0,
-                 cmpasy = 0.5, cmpphy = 0, maxtot = 100,
-                 noise = 5, slack = 0.2, autlin = "irm(1,2)")
-# coerce method for class coenoflex
-sim <- as(dta, "Vegsoup")
+# plot ordinationsimulated data
+plot(metaMDS(as.numeric(coenoflex(100, 100))))
 
 # promote to ordinal scale
 coverscale(sim) <- "braun.blanquet"

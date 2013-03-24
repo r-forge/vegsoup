@@ -24,32 +24,51 @@ setOldClass("coenoflex")
 #	from coenoflex to Vegsoup
 as.Vegsoup.coenoflex <- function (obj) {
 
-require(coenoflex)
+	require(coenoflex)
+	
+	spc <- obj$veg
+	sts <- obj$site
+	
+	#	groome decimals
+	spc[spc > 0 & spc <= 0.2] <- 0.2 #! document this
+	spc <- round(spc, 1) # ... and that
 
-spc <- obj$veg
-spc[spc > 0 & spc <= 0.2] <- 0.2 #! document this
-spc <- round(spc, 1) # ... and that
-sts <- obj$site
-
-n.plt <- nrow(spc)
-n.spc = ncol(spc)
-
-abbr <- gsub(" ", "0", paste0("spc", format(1:n.spc, width = 2)))
-taxon <- gsub(" ", "0", paste0("species", format(1:n.spc, width = 2)))
-plot <- gsub(" ", "0", paste0("plt", format(1:n.plt, width = 2)))
-
-dimnames(spc) <- list(plot, abbr)
-mode(spc) <- "character"
-
-spc <- data.frame(abbr = colnames(spc), layer = "0l", comment = "", t(spc))
-spc <- stack.species(spc, absence = "0")
-sts <- stack.sites(data.frame(plot = plot, sts))
-
-txa <- taxonomy(data.frame(abbr, taxon))
-
-res <- Vegsoup(spc, sts, txa, "percentage")
-
-return(res)
+	#	coenoflex behaves unexpected for low numbers of 'numplt' and 'numspc'
+	#	so we need to cure empty species
+	test <- colSums(spc) == 0
+	if (any(test)) {
+		for (i in which(test)) {
+			spc[sample(1:nrow(spc), size = 1), i] <- 0.1
+		}
+	}	
+	#	and empty sites
+	test <- rowSums(spc) == 0
+	if (any(test)) {
+		for (i in which(test)) {
+			spc[i, sample(1:ncol(spc), size = 1)] <- 0.1
+		}
+	}	
+	
+	abbr <- gsub(" ", "0", paste0("spc", format(1:ncol(spc))))
+	taxon <- gsub("spc", "species", abbr)
+	plot <- gsub(" ", "0", paste0("plt", format(1:nrow(spc))))
+		
+	spc <- cbind(
+		rep(plot, times = length(abbr)),	# plot
+		rep(abbr, each = length(plot)),		# abbr
+		"0l",								# layer
+		as.vector(spc))						# cov
+		
+	spc <- spc[spc[,4] != 0, ]
+	spc <- species(spc[order(spc[,1], spc[,2]), ])
+	
+	sts <- stack.sites(data.frame(plot = plot, sts))
+	
+	txa <- taxonomy(cbind(abbr, taxon))
+	
+	res <- Vegsoup(spc, sts, txa, "percentage")
+	
+	return(res)
 
 }
 
@@ -97,5 +116,28 @@ as.data.list.Vegsoup <- function (obj) {
 setAs(from = "Vegsoup", to = "data.list",
 	def = function (from) {
 		as.data.list.Vegsoup(from)
+	}
+)
+
+#	set S3 class
+setOldClass("mefa")
+
+#	from Vegsoup to mefa
+as.mefa.Vegsoup <- function (obj) {
+	x <- Species(obj)
+	if (is.ordinal(coverscale(obj))) {
+		x$cov = as.numeric(as.character(factor(Species(obj)$cov,
+					levels = coverscale(obj)@codes,
+					labels = coverscale(obj)@lims)))
+	}
+	if (is.continuous(coverscale(obj))) {
+		x$cov <- as.numeric(x$cov)	
+	}			
+	return(mefa(stcs(x[, c(1,2,4,3)]), Sites(obj), Taxonomy(obj), nested = FALSE))
+}
+
+setAs(from = "Vegsoup", to = "mefa",
+	def = function (from) {
+		as.mefa.Vegsoup(from)
 	}
 )
