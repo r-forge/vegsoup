@@ -8,6 +8,9 @@ replace most warnings() with message()
 improve findcoordiantes()
 improve Spread()
 
+more rigourious tests of coverscale
+eg. cov "++" is accepted but must raise errors!
+
 # minor
 Species(dta) <-
 csv2 = TRUE to sep and dec

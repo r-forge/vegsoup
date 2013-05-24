@@ -43,9 +43,11 @@ setGeneric("taxonomy<-",
 setReplaceMethod("taxonomy",
 	signature(obj = "SpeciesTaxonomy", value = "Taxonomy"),
 	function (obj, value) {
-		x <- value$abbr
+		x <- value$abbr # taxonomy
 		y <- species(obj)$abbr
-		sel <- unlist(sapply(x, function (x) which(x == y)))
+		#	keep order!
+		sel <- logical(length(y))		
+		sel[unlist(sapply(x, function (x) which(x == y)))] <- TRUE
 		new("SpeciesTaxonomy",	
 		species = species(species(obj)[sel, ]),
 		taxonomy = value)
@@ -54,11 +56,12 @@ setReplaceMethod("taxonomy",
 setReplaceMethod("taxonomy",
 	signature(obj = "SpeciesTaxonomy", value = "data.frame"),
 	function (obj, value) {
-		value <- taxonomy(value)
-		x <- value$abbr
+	x <- value$abbr # taxonomy
 		y <- species(obj)$abbr
-		sel <- unlist(sapply(x, function (x) which(x == y)))
-		new("SpeciesTaxonomy",
+		#	keep order!
+		sel <- logical(length(y))		
+		sel[unlist(sapply(x, function (x) which(x == y)))] <- TRUE
+		new("SpeciesTaxonomy",	
 		species = species(species(obj)[sel, ]),
 		taxonomy = value)
 	}

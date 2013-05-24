@@ -1,6 +1,6 @@
 SpeciesTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, skip = TRUE, verbose = FALSE) {
 
-#	x = spc
+#	x = X
 #	y = txa
 #	tmp <- c(x = F, y = T, file.x = T, file.y = F)
 
@@ -28,38 +28,39 @@ if (sum(as.numeric(sel)) > 1) {
 
 if (which(sel) == 1) {
 	if (inherits(x, "Species")) {
-		species <- species(x)
+		X <- species(x)
 	} else {
-		species <- species(new("Species", data = x)) # ensures validity
+		X <- species(new("Species", data = x)) # ensures validity
 	}
 	if (inherits(y, "Taxonomy")) {	
-		taxonomy <- taxonomy(y)
+		Y <- taxonomy(y)
 	} else {
-		taxonomy <- taxonomy(new("Taxonomy", data = y)) # ensures validity
+		Y <- taxonomy(new("Taxonomy", data = y)) # ensures validity
 	}		
 }
 
 if (which(sel) == 2) {
+	#message("here")
 	if (inherits(x, "Species")) {
-		species <- species(x)
+		X <- species(x)
 	} else {
-		species <- species(new("Species", data = x))
+		X <- species(new("Species", data = x))
 	}	
 	y <- read.csv2(file.y,
 		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
 		stringsAsFactors = FALSE, check.names = FALSE)	
-	taxonomy <- taxonomy(new("Taxonomy", data = y))
+	Y <- taxonomy(new("Taxonomy", data = y))
 }
 
 if (which(sel) == 3) {
 	x <- read.csv2(file.x,
 		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
 		stringsAsFactors = FALSE, check.names = FALSE)
-	species <- species(new("Species", data = x))	
+	X <- species(new("Species", data = x))	
 	if (inherits(y, "Taxonomy")) {	
-		taxonomy <- taxonomy(y)
+		Y <- taxonomy(y)
 	} else {
-		taxonomy <- taxonomy(new("Taxonomy", data = y))
+		Y <- taxonomy(new("Taxonomy", data = y))
 	}		
 }
 
@@ -70,21 +71,21 @@ if (which(sel) == 4) {
 	y <- read.csv2(file.y,
 		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
 		stringsAsFactors = FALSE, check.names = FALSE)
-	species <- species(new("Species", data = x))
-	taxonomy <- taxonomy(new("Taxonomy", data = y))
+	X <- species(new("Species", data = x))
+	Y <- taxonomy(new("Taxonomy", data = y))
 }
 
 #	check unique abbrevations
-if (length(unique(taxonomy$abbr)) != nrow(taxonomy)) {
+if (length(unique(Y$abbr)) != nrow(Y)) {
 	stop("abbr has to be unique")
 } else {
-	rownames(taxonomy) <- taxonomy$abbr	
+	rownames(Y) <- Y$abbr	
 }
 	
-test1 <- match(unique(species$abbr), taxonomy$abbr)
+test1 <- match(unique(X$abbr), Y$abbr)
 
 if (any(is.na(test1))) {
-	test1 <- unique(species$abbr)[is.na(test1)]
+	test1 <- unique(X$abbr)[is.na(test1)]
 	cat(paste("the following abbrevation(s) used in",
 	cmb[1,sel],
 	"were not found in supplied reference list",
@@ -92,11 +93,11 @@ if (any(is.na(test1))) {
 	"\n"))
 	print(test1)
 	cat("did you mean?\n")
-	test1.pmatch <- matrix(c(test1, taxonomy$abbr[pmatch(test1, taxonomy$abbr)]), ncol = 2)
+	test1.pmatch <- matrix(c(test1, Y$abbr[pmatch(test1, Y$abbr)]), ncol = 2)
 	print(test1.pmatch)
 	if (pmatch) {
 		for (i in 1:nrow(test1.pmatch)) {
-			species$abbr[species$abbr == test1.pmatch[i,1]] <- test1.pmatch[i,2]
+			X$abbr[X$abbr == test1.pmatch[i,1]] <- test1.pmatch[i,2]
 		}
 		cat("replaced", test1.pmatch[,1])	
 	} else {
@@ -105,15 +106,15 @@ if (any(is.na(test1))) {
 	}
 }
 
-test2 <- dim(species)[1] - dim(unique(species[,c(1:4)]))[1]
+test2 <- dim(X)[1] - dim(unique(X[,c(1:4)]))[1]
 
 if (test2 > 0) {
 	warning("\nspecies data not unique for ", test2, " sample(s)")
 	if (verbose) {
 		cat("\n")
-		print(species[duplicated(species[ ,c(1:4)]), ])
+		print(X[duplicated(X[ ,c(1:4)]), ])
 	}
-	species <- species[!duplicated(species[, c(1:4)]), ]
+	X <- X[!duplicated(X[, c(1:4)]), ]
 	warning("\nremoved duplicted species:\n\n")
 } else {
 	if (verbose) {
@@ -121,10 +122,10 @@ if (test2 > 0) {
 	}
 }
 
-taxonomy <- taxonomy[as.character(unique(species$abbr)), ]
+Y <- Y[as.character(unique(X$abbr)), ]
 
-if (any(is.na(taxonomy[, 1]))) {
-	test3 <- as.character(unique(species$abbr))[is.na(taxonomy[, 1])]
+if (any(is.na(Y[, 1]))) {
+	test3 <- as.character(unique(X$abbr))[is.na(Y[, 1])]
 	cat("\nnot found the following abbrevation(s) in supplied reference list\n")
 	print(test3)
 	#	to do!
@@ -133,18 +134,19 @@ if (any(is.na(taxonomy[, 1]))) {
 	stop("Please review your reference list, you might need to include some new taxa")
 }
 
-if (any(is.na(species[, 1:4]))) {
+if (any(is.na(X[, 1:4]))) {
 	warning("\n... NAs introduced")
-	cat(apply(species, 2, function (x) any(is.na(x))) )
+	cat(apply(X, 2, function (x) any(is.na(x))) )
 }
 
 res <- new("SpeciesTaxonomy",
-	species = new("Species", data = species),
-	taxonomy = new("Taxonomy", data = taxonomy))
+	species = new("Species", data = X),
+	taxonomy = new("Taxonomy", data = Y)) # [, 1:2]
 
-if (skip) {
-	species(res) <- species(res)[, 1:4]
-	taxonomy(res) <- taxonomy(res)[, 1:2]
-}
+#if (skip) {
+#	species(res) <- species(res)[, 1:4]
+#	taxonomy(res) <- taxonomy(res)[, 1:2]
+#}
+#return(new("Species", data = X))
 return(invisible(res))
 }

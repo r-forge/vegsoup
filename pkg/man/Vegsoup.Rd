@@ -140,6 +140,13 @@ coenoflex(numplt = 10, numspc = 10, ...)
 An object of class \code{\linkS4class{Vegsoup}}.
 }
 \author{ Roland Kaiser }
+\seealso{
+  \code{\link{Vegsoup-class}}
+  \code{\link{as.matrix}}
+  \code{\link{coverscale}}
+  \code{\link{decostand}}
+  \code{\link{vegdist}}
+}
 \examples{
 library(vegsoup)
 
@@ -149,15 +156,16 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 dta
 
-# plot ordinationsimulated data
-plot(metaMDS(as.numeric(coenoflex(100, 100))))
+# plot ordinations of simulated data
+plot(metaMDS(as.logical(coenoflex(100, 100))))
+# we can omit 'as-logical'
+plot(decorana(coenoflex(100, 100))) 
 
-# promote to ordinal scale
-coverscale(sim) <- "braun.blanquet"
-sim
-}
-\seealso{
-\code{\link{Vegsoup-class}}
+# simulate and promote to ordinal scale
+sim <- coenoflex(100, 100)
+coverscale(sim) <- "ordinal"
+table(Species(sim)$cov)
 
+as(as.logical(seriation(coenoflex(10,30)), mode = "R"), "sparseMatrix")
 }
 \keyword{ classes }

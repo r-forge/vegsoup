@@ -124,7 +124,7 @@ as.matrix(dta, typeof = "character", mode = "R")
 as(as.matrix(dta, "logical", "R"), "sparseMatrix")
 
 
-pro <- procrustes(as.logical(dta), as.numeric(dta))
+pro <- protest(as.logical(dta), as.numeric(dta))
 
 # objects of class Vegsoup used in arguments of base functions
 # where an object of class matrix is expected
@@ -134,18 +134,18 @@ decostand(dta) <- NULL # reset the default
 
 # species matrix representations and memory demands
 # class "matrix"
-object.size(as.matrix(dta)) # most efficient
+object.size(as.matrix(dta))          # most efficient
 # class "list" (pointers and values of all non zero entries)
-object.size(indices(dta))   # almost equal 
-# class "sparseMatrix" based on indices()
-object.size(m.M)            # efficient
+object.size(indices(dta))            # almost equal 
+# coercion to class "sparseMatrix" is based on indices()
+object.size(as(dta, "sparseMatrix")) # efficient
 # the long format as stored in Vegsoup objects (slot 'species')
-object.size(Species(dta)) # most general but least efficent
+object.size(Species(dta))            # most general but least efficent
 # a multi-dimensional array of layer replicates
-object.size(as.array(dta))  # least efficent
+object.size(as.array(dta))           # least efficent
 
 # comparison of objects
-object.size(as.mefa(dta))       # most efficent, but it tocope with strata
+#object.size(as(dta, "mefa"))       # most efficent, but can't cope with strata
 object.size(as.data.list(dta))  # least efficent, but highly generic
 object.size(as.data.frame(dta)) # also efficent
 object.size(dta) - object.size(dta@sp.points) - object.size(dta@sp.polygons) # most general most efficent               

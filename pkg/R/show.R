@@ -70,29 +70,32 @@ setMethod("summary",
 	if (is.na(choice)) {
 		choice <- "all"
 	}
-	cat("object of class", class(object), "\n")
+	cat("object of class  :", class(object))
 	species.summary <- paste(
-		"\n species (discarding layer replicates): ",
-			nrow(Taxonomy(object)),
-		"\n sites (sample plots): ",
-			dim(object)[1],
-		"\n matrix fill: ",
-			round(MatrixFill(object), 0), " %",
-		"\n layers: ",
+	   "\nspecies          : ",
+			nrow(Taxonomy(object)), " (discarding layer/stratum duplicates)",
+	   "\nmatrix fill      : ",
+			round(MatrixFill(object), 0), " %",			
+	   "\nlayers           : ",
 			length(Layers(object)), " (", paste(Layers(object), collapse = ", "), ")",
-		"\n abundance scale: ",
+	   "\ncoverscale       : ",
 			coverscale(object)@name,
 		ifelse(is.null(decostand(object)),
-			paste("\n decostand method: undefined (NULL)"),
-			paste("\n decostand method: ", decostand(object))
+			paste("\ndecostand method : undefined (NULL)"),
+			paste("\ndecostand method : ", decostand(object))
 		),		
-		"\n dissimilarity: ",
+	   "\nvegdist          : ",
 			object@dist,	   				
 		ifelse(length(object@taxonomy) > 0,
-			"\n taxomomic reference: valid ",
-			"\n taxomomic reference: has non matching taxa!"),
+	   "\nreference list   : valid ",
+       "\nreference list   : non matching taxa!"),
+	   "\nsites            : ",
+			dim(object)[1], " (sample plots/relevees)",       
 		sep = ""
 	)
+#	tmp <- table(sapply(Sites(object), mode))
+	sites.summary <- paste(
+	   "\nsite variables   :", length(names(object)))
 	if (dim(object)[1] == 1) {
 		species.list <- Species(object)
 		species.list$taxon <-
@@ -104,16 +107,16 @@ setMethod("summary",
 	switch(choice, "all" = {
 		cat(species.summary)
 		if (dim(object)[1] == 1) cat("\n species list\n", species.list)
-		cat("\nsites ")	
-		str(Sites(object), no.list = TRUE)
+	cat(sites.summary)
 	}, "species" = {
 		cat(species.summary)
 		if (dim(object)[1] == 1) cat("\nspecies", species.list)
 	}, "sites" = {
-		cat("\nsites ")
-		str(Sites(object), no.list = TRUE)		
 	})
-	cat("\n    proj4string:\n", proj4string(object))
-	cat("\n    bbox:\n"); bbox(object)		
+	cat("\nproj4string      :", proj4string(object))
+	cat("\nbbox             :",
+		paste(paste(bbox(object)[1,], bbox(object)[2,]), collapse = " "),
+		" (longitude latitude / min max)"
+	)
 }
 )

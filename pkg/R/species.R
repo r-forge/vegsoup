@@ -34,10 +34,10 @@ setMethod("SpeciesList",
     		layered <- FALSE
     	}
     	if (layered) {
+    		#	relies on order given by layers(obj)
 	    	res <- Species(obj)
     		res <- unique(res[c("abbr", "layer")])
     		res$taxon <- Taxonomy(obj)[res$abbr, ]$taxon
-	    	res <- res[order(res$layer, res$taxon), ]
 	    	res <- res[, c("abbr", "taxon", "layer")]	    				
     	} else {
     		res <- Taxonomy(obj)[]	

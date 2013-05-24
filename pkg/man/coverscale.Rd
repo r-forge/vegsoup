@@ -63,7 +63,7 @@ The constructor Function \code{Coverscale} creates an object of class \code{"Cov
 
 The methods \code{is.continuous} and \code{is.ordinal} test objects of class \code{"Coverscale"} if they conform to the given type of cover scale. Note, this is just a simple test if slots \code{'codes'} and \code{'lims'} are \code{NULL}. If so, the coverscale is treated as continuous, otherwise as ordinal.
 
-The replacement function can also be used to transform a continuous scale to an ordinal one. This functionality is restricted to situations where \code{is.continous(obj)} evaluates to \code{TRUE} and the \code{"Coverscale"} object that is assigned (\code{value}) is ordinal (\code{is.ordinal(value)}). When doing so, the cover values stored in the \code{Vegsoup*} object are transformed and a warning is issued. Such a type of transformation makes sense, for example, when an output of function \code{link{write.verbatim}} is intended.
+The replacement function can also be used to transform a continuous scale to an ordinal one. This functionality is restricted to situations where \code{is.continous(obj)} evaluates to \code{TRUE} and the \code{"Coverscale"} object that is assigned (\code{value}) is ordinal (\code{is.ordinal(value)}). When doing so, the cover values stored in the \code{Vegsoup*} object are transformed and a message is issued. Such a type of transformation makes sense, for example, when an output of function \code{link{write.verbatim}} is intended.
 }
 \value{
 Function \code{Coverscale} returns an object of class \code{"Coverscale"}.
@@ -89,24 +89,30 @@ Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–8
   ancestor of the implementation.
 }
 \examples{
-# shows the buit in cover scales provided with package vegsoup  
+# shows the built in cover scales provided with package vegsoup
 Coverscale()
 
-# creates an object of class Coverscale by selecting a buit in definition
+# creates an object of class Coverscale by selecting a built in definition
 Coverscale("braun.blanquet")
 
 # define your own ordianl scale
 Coverscale("myscale", codes = LETTERS[1:5], lims = seq(20, 100, 20))
 
-# define your own continous scale (e.g. counts)
-Coverscale("counts", NULL, NULL)
+# define your own continuous scale (e.g. counts)
+Coverscale("myscale.continuous", NULL, NULL)
 
 #   using the coerce method for class Coverscale
 as(list("myscale", LETTERS[1:5], seq(20, 100, 20)), "Coverscale")
 
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-
 is.ordinal(dta)
+
+# transform coverscale
+sim1 <- sim2 <- coenoflex(100,100)
+is.continuous(sim1)
+coverscale(sim1) <- "ordinal"
+is.ordinal(sim1)
 }
+
 \keyword{ methods }

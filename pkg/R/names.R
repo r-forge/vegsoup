@@ -96,8 +96,8 @@ setMethod("abbr.layer",
     		return(al)
     	} else {
     		if (length(Layers(obj)) > 1) {
-    			#	resort to layer, copied from .cast()
-    			#	speed issue here?
+    			#	resort to Layers(obj), copied from .cast()
+    			#	speed issue here? see KML section resort to Layers(obj)
     			l <- Species(obj)$layer
 				al <- unique(unlist(sapply(Layers(obj), function (x) al[l == x])))
 			} else {

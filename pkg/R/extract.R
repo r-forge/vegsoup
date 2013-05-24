@@ -20,7 +20,7 @@ setMethod("[",
 		tmp <- as.character(x)[i, j, drop = FALSE]
 		#	validity
 		if (all(unlist(tmp) == 0)) {
-			stop(call. = FALSE, "subset does not contain any species!")
+			stop("subset does not contain any species!", call. = FALSE)
 		}
 		#	if single plot "[" method will return class character
 		if (class(tmp) == "character") {

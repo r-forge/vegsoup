@@ -23,16 +23,26 @@ setMethod("coverscale",
 #	needs cover scale conversion 
 setReplaceMethod("coverscale",
 	signature(obj = "Vegsoup", value = "Coverscale"),
-	function (obj, value) {	
-		transform <- is.continuous(coverscale(obj)) & is.ordinal(value)
+	function (obj, value) {
+#		obj <- coenoflex(100,100)
+#		value <- Coverscale("ordinal")			
+		transform <- is.continuous(obj) & is.ordinal(value)
 		obj@coverscale <- value			
 		if (transform) {
+			x <- as.numeric(Species(obj)$cov) # as long as we store characters
+			if (max(x) > 100) {
+				stop("highest cover value is bigger than 100")
+			}
+			#	move lowest value into range
+			x[x < coverscale(obj)@lims[1]] <- coverscale(obj)@lims[1]
+			
 			obj@species$cov <- as.character(
-				cut(as.numeric(Species(obj)$cov), # as long as we store characters
+				cut(x, 
 					breaks = c(coverscale(obj)@lims, 100),
-					labels = coverscale(obj)@codes))
-			warning("transformed cover values of object!", call. = FALSE)
-		}		
+					labels = coverscale(obj)@codes,
+					include.lowest = TRUE))					
+			message("transformed cover values!")
+		}
 		test <- any(is.na(factor(Species(obj)$cov, # was !any
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
@@ -44,20 +54,30 @@ setReplaceMethod("coverscale",
 )
 setReplaceMethod("coverscale",
 	signature(obj = "Vegsoup", value = "character"),
-	function (obj, value) {
+	function (obj, value) {		
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
 		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
 		transform <- is.continuous(coverscale(obj)) & is.ordinal(value)
 		obj@coverscale <- value			
+		
 		if (transform) {
+			x <- as.numeric(Species(obj)$cov) # as long as we store characters
+			if (max(x) > 100) {
+				stop("highest cover value is bigger than 100")
+			}
+
+			#	move lowest value into range
+			x[x < coverscale(obj)@lims[1]] <- coverscale(obj)@lims[1]
+			
 			obj@species$cov <- as.character(
-				cut(as.numeric(Species(obj)$cov), # as long as we store characters 
+				cut(x,
 					breaks = c(coverscale(obj)@lims, 100),
-					labels = coverscale(obj)@codes))
-			warning("transformed cover values of object!", call. = FALSE)
+					labels = coverscale(obj)@codes,
+					include.lowest = TRUE))
+			message("transformed cover values!")
 		}
-		test <- any(is.na(factor(Species(obj)$cov, # was !any
+		test <- any(is.na(factor(Species(obj)$cov,
 			levels = coverscale(obj)@codes,
 			labels = coverscale(obj)@lims)))
 		if (test) {
