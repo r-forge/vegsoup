@@ -3,14 +3,17 @@
 
 require(stringr)
 	
-if (class(obj) == "Vegsoup" | class(obj) == "VegsoupPartition") {
-	
-} else {
+if (class(obj) != "Vegsoup" & class(obj) != "VegsoupPartition") {
 	stop("verbatim is currently only implemented for class Vegsoup and VegsoupPartition?")
 }
 
+if (class(obj) == "VegsoupPartition") {
+	#	obj = prt
+	obj <- obj[order(Partitioning(obj)), ]
+}
 if (missing(file)) {
 	no.save <- TRUE
+	message("no filename provided")
 } else {
 	no.save <- FALSE
 	file <- file.path(file)

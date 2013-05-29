@@ -130,11 +130,11 @@
 }
 
 #	generic is set by VegsoupPartition-*Methods.R
-.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-	#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 1; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(obj)); verbose = TRUE; filename = paste("FidelityTable")
+.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, newpage = TRUE, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
+	#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(obj)); verbose = TRUE; filename = paste("FidelityTable")
 	if (class(obj) != "VegsoupPartitionFidelity") {
 		if (verbose) {
-			cat("\n apply default indicator species statistic")
+			message("\n apply default indicator species statistic")
 		}
 		obj <- Fidelity(obj, ...)
 	}
@@ -201,14 +201,14 @@
 		}
 	}
 	if (missing(fivenum.select)) {
-		fivenum.select = c("min", "median", "max")
+		fivenum.select = c("median")
 	}
 	if (missing(sites.columns)) {
 		sites.columns = names(Sites(obj)) # names(obj)
 		#	drop coordiantes
 		drp <- c(
-			grep("longitude", sites.columns),
-			grep("latitude", sites.columns),
+			grep("longitude", sites.columns), # already dropped in Vegsoup.R
+			grep("latitude", sites.columns), # already dropped in Vegsoup.R
 			grep("precision", sites.columns)
 		)
 		#	drop all columns constant at zero
@@ -216,12 +216,14 @@
 		drp <- c(drp, drp.zeros)
 		sites.columns <- sites.columns[ -drp ]
 	}
-	#	debug from here
+	
+
+	###	debug from here
 	#	set file name
 	if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 		filename = paste(filename, ".tex", sep = "")
 		if (verbose) {
-			cat("\n add file extension .tex")
+			message("\n add file extension .tex")
 		}
 	}
 	#	test filename
@@ -356,6 +358,7 @@
 	
 	tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
 		stringsAsFactors = FALSE, check.names = FALSE)
+
 	
 	###	internal funtion branching for MODE 1
 	#	standard mode, all species in one table
@@ -536,8 +539,8 @@
 		if (verbose) cat("\n run mode", mode)
 		
 		#	species summary
-		fn <- Fivenum(obj, na.rm = TRUE, recode = recode)
-		fn <- fn[match(rownames(tex), rownames(fn)), ,]
+		fn <- Fivenum(obj, na.rm = FALSE, recode = recode)
+		fn <- fn[match(rownames(tex.out), rownames(fn)), ,]
 	
 		fn.df <- t(apply(fn, c(2, 1),
 			function (x) {
@@ -546,19 +549,27 @@
 				res
 			}))
 	
+			
 		#	sites summary	
 		sts <- Sites(obj)
 		sts$part <- Partitioning(obj)
 		sts <- sts[, c("part", sites.columns)]
 	
-		#	resort to match order of intermediate result table 
-		ord <- match(rownames(tex), rownames(fn.df)) 
-		fn.df <- fn.df[ord, ]
-		cnst <- cnst[ord, ]
-		cntn <- cntn[ord, ]
-		stat <- stat[ord, ]
+		#	resort to match order of intermediate result table  
+		fn <- fn[match(rownames(tex), rownames(fn)), , ]
+		fn.df <- fn.df[match(rownames(tex), rownames(fn.df)), ]
+		cnst <- cnst[match(rownames(tex), rownames(cnst)), ]
+		cntn <- cntn[match(rownames(tex), rownames(cntn)), ]
+		stat <- stat[match(rownames(tex), rownames(stat)), ]
 		sprd <- spread(obj) # speed issue, method is slow!
-	
+		sprd <- sprd[match(rownames(tex), names(sprd))]
+
+		#	identical(rownames(fn), rownames(fn.df))
+		#	identical(rownames(fn), rownames(cnst))
+		#	identical(rownames(fn), rownames(cntn))
+		#	identical(rownames(fn), rownames(stat))				
+		#	identical(rownames(fn), names(sprd))
+					
 		tex <- footer.sites <- footer.species <- vector("list", length = getK(obj))
 		names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(obj)
 		
@@ -591,8 +602,8 @@
 				function (x) length(unique(x)))
 			tmp$out <- tmp$occu - tmp$cont
 				
-			tmp <- cbind(txn[match(rownames(tmp), txn$abbr.layer), c("taxon", "layer")], tmp,
-					row.names = rownames(tmp))
+			tmp <- cbind(txn[match(rownames(tmp), rownames(txn)), c("taxon", "layer")], tmp,
+					row.names = rownames(tmp)) # dropped $abbr.layer
 			tex[[i]] <- tmp[tmp$cont > footer.treshold | tmp$typical == "yes", ]
 			
 			#	rare species footer
@@ -604,17 +615,38 @@
 			
 			#	sites summary footer		
 			tmp <- sts[sts$part == i, -1]
-			tmp <- apply(tmp, 2, table)
-			tmp <- sapply(tmp, function (x) x[order(x, decreasing = TRUE)])		
-			tmp <- sapply(tmp, function (x) paste(names(x), x, sep = ": ", collapse = "; "))
-			tmp <- data.frame(parameter = names(tmp), values = tmp, stringsAsFactors = FALSE)
+			num <- apply(tmp, 2, function (x) is.numeric(type.convert(x)))
+		
+			#	string varibales			
+			tmp.str <- apply(tmp[, !num, drop = FALSE], 2, table)
+			tmp.str <- sapply(tmp.str, function (x) x[order(x, decreasing = TRUE)])
+			tmp.str <- sapply(tmp.str, function (x) paste(names(x), x, sep = ": ", collapse = "; "))
+			#tmp.str <- sapply(tmp.str, function (x) as.vector(x))
+
+			#	numerical variables
+			#	fivenum can be critical
+			tmp.num <- sapply(as.data.frame(apply(tmp[, num], 2, fivenum)), list)
+			#	reduce constant varibales
+			sel <- sapply(tmp.num, function (x) length(unique(x))) <= 1			
+			tmp.num[names(sel)[sel]] <- "."
+			tmp.num <- sapply(tmp.num, function (x) {
+				if (length(x) == 5) {# median of fivenum bold
+					x[3] <- paste("\\textbf{", x[3], "}")
+				}	
+				paste(x, collapse = "/")
+				}, simplify = FALSE)
+			
+			tmp <- as.matrix(c(tmp.num, tmp.str))
+			
+			tmp <- data.frame(parameter = unlist(names(tmp[,1])),
+				values = unlist(tmp[,1]), stringsAsFactors = FALSE)
 			
 			#	& glyph that might be used in Sites(obj)
 			sel <- which(apply(tmp, 2, function (x) (length(grep("&", x)) > 0)))
 			if (length(sel) > 0) {
 				for (j in sel) {
 					tmp[, j] <- gsub("&", "\\&", tmp[,j ], fixed = TRUE)			
-			}  
+				}  
 			}
 			footer.sites[[i]] <- tmp
 		}
@@ -691,8 +723,10 @@
 			latex(as.matrix(tex.out[[i]]),
 				file = filename,
 				append = TRUE,
-				caption = paste("Partion summary for cluster", i, ".",
-					ifelse(length(caption.text) > 0, paste(" ", caption.text, ".", sep = ""), "")),
+				caption = paste("Partion summary for cluster ", i,
+					" consisting out of ", table(Partitioning(obj))[i], " plots.",
+					ifelse(length(caption.text) > 0, paste(" ", caption.text, ".", sep = ""), ""),
+					sep = ""),
 				rowname = NULL,
 				booktabs = TRUE,
 				longtable = TRUE,
@@ -726,6 +760,9 @@
 			
 			tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
 			
+			if (newpage) {
+				tmp <- c(tmp, "\n\\newpage")
+			}
 			writeLines(tmp, con)
 		close(con)		
 		}

@@ -28,14 +28,14 @@
 		"</Placemark>"
 	)
 	
-	begin.description <- c(
-		"<description>",
+	begin.ExtendedData <- c(
+		"<ExtendedData>",
 	 		"<![CDATA[",
 				"<table border=\"0\" >"
 	)
-	end.description <- c(
+	end.ExtendedData <- c(
 			"]]>",
-		"</description>"
+		"</ExtendedData>"
 	)					
 
 	img <- paste(
@@ -82,12 +82,12 @@
 
 	res <- c(
 		begin.placemark,
-		begin.description,
+		begin.ExtendedData,
 		img,
 		begin.table,
 		table.body,
 		end.table,
-		end.description,
+		end.ExtendedData,
 		point,
 		end.placemark
 		)
@@ -253,9 +253,9 @@ end.kml <- c(
 		paste(thumbnail.url.path, x[4], sep = ""), "\"", " width=\"400\" >",
 		"</a>]]>", sep = ""),	
 	"</description>",
-	"<ExtendedData>",
+	"<description>",
 	paste("partition", x[1]),
-	"</ExtendedData>", 
+	"</description>", 
 #	"<gx:balloonVisibility>0</gx:balloonVisibility>",
 	"<Point>",
 		paste("<coordinates>", x[2], ",", x[3], ",0", "</coordinates>", sep =""),

@@ -20,7 +20,10 @@ setMethod("[",
 
 		#	develop class VegsoupPartition from class Vegsoup
 		res <- new("VegsoupPartition", tmp)
-		res@part = part[names(part) %in% rownames(tmp)]
+	
+		res@part <- part[names(part) %in% rownames(tmp)]
+		res@part <- res@part[match(rownames(res), names(part))]
+		
 		res@method = x@method
 		# was res@dist = x@dist # now slot of class Vegsoup
 		res@k = length(unique(part[names(part) %in% rownames(tmp)]))

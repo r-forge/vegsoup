@@ -8,8 +8,13 @@ setGeneric("Fivenum",
 setMethod("Fivenum",
 	signature(obj = "VegsoupPartition"),
 	function (obj, na.rm = TRUE, recode = FALSE) {
+		if (recode & !is.null(decostand(obj))) {
+			message("disregard decostand method for calculations")
+		 	decostand(obj) <- NULL
+		} 
 		tmp <- as.numeric(obj)
-		if (!na.rm) tmp[tmp == 0] <- NA
+		#	if (!na.rm)
+		tmp[tmp == 0] <- NA
 		tmp <- aggregate(tmp,
 			by = list(Partitioning(obj)),
 			FUN = function (x) fivenum(x, na.rm = TRUE), simplify = FALSE)
@@ -30,7 +35,8 @@ setMethod("Fivenum",
 				mode(tmp) <- "numeric"
 				vals <- as.character(cut(tmp,
 					breaks = c(0, coverscale(obj)@lims),
-					labels = coverscale(obj)@codes))
+					labels = coverscale(obj)@codes,
+					))
 				tmp.i <- tmp
 				mode(tmp.i) <- "character"
 				tmp.i[] <- vals

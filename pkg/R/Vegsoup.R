@@ -131,7 +131,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		sp.points <- sp[[1]]
 		sp.polygons <- sp[[2]]
 	}
-	
+
+	#	drop coordiates from data frame	they are stored in spatial object
+	y <- y[y$variable != "longitude" & y$variable != "latitude", ]
 	if (any(sapply(y, is.factor))) {
 		y <- as.data.frame(as.matrix(y),
 			stringsAsFactors = FALSE)
@@ -144,8 +146,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		y[y[, 3] == "", 3] <- 0
 		y[is.na(y[, 3]), 3] <- 0
 		if (verbose) {
-			cat("\n NAs and empty fields (\"\") in supplied sites data",
-			"filled with zeros")
+			message("\n NAs and empty fields (\"\") in supplied sites data",
+			" filled with zeros")
 		}
 	}
    	
