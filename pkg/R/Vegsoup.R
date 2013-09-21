@@ -77,7 +77,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		if (is.character(x$cov)) {
 			message("interpret abundance values as character",
 			"\nset cover scale to default 9 point Braun-Blanquet scale")
-			xs <- Coverscale("braun.blanquet")
+			xs <- Coverscale("braun.blanquet2")
 		}
 		else {
 			message("cover seems to be numeric",
@@ -105,6 +105,14 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 				}				
 			}
 		}
+	}
+
+	#	test coverscale, must be valid	
+	test <- any(is.na(factor(x$cov, # was !any
+		levels = xs@codes,
+		labels = xs@lims)))
+	if (test) {
+		stop("coverscale does not match data", call. = FALSE)
 	}
 	
 	if (missing(group))	{

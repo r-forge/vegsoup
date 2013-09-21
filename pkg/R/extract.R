@@ -1,8 +1,9 @@
 #	subsetting method
-#	to do: documenation
 #	VegsoupPartition implemts its own method,
 #	but internally coreces to class(Vegsoup)
 #	and applies this method!
+
+#	doubled indices should fail!
 setMethod("[",
     signature(x = "Vegsoup",
     i = "ANY", j = "ANY", drop = "missing"),
