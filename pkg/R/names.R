@@ -10,6 +10,50 @@ setMethod("rownames",
 		unique(Species(x)$plot)	
 	}
 )
+
+setReplaceMethod("rownames",
+	signature(x = "Vegsoup", value = "character"),
+	function (x, value) {
+		#	x <- strauch1992
+		#	value = paste("ms92.", rownames(x), sep = "")
+		if (inherits(x, "VegsoupPartition")) {
+			stop("rownames method fpr VegsoupPartition not yet implemented!")
+		}
+		
+		if (length(value) != nrow(x)) {
+			stop("length of values must match nrow(x)")
+		}
+		xy <- list(
+			x = rownames(Sites(x)),
+			y = value)
+		
+		#	species	
+		pl <- factor(Species(x)$plot, ordered = FALSE)
+		sel <- match(levels(pl), xy$x)
+		xy$x <- xy$x[sel]
+		xy$y <- xy$y[sel]
+		levels(pl) <- xy$y
+		
+		x@species$plot <- as.character(pl)
+		
+		#	sites
+		sel <- match(rownames(Sites(x)), xy$x)
+		rownames(x@sites) <- xy$y[sel]
+
+		#	points
+		sel <- match(x@sp.points$plot, xy$x)
+		x@sp.points$plot <- xy$y[sel]
+
+		#	polygons
+		sel <- match(x@sp.polygons$plot, xy$x)
+		x@sp.polygons$plot <- xy$y[sel]
+		row.names(x@sp.polygons) <- xy$y[sel]
+		#sapply(slot(x@sp.polygons, "polygons"), function (x) slot(x, "ID"))
+		
+		return(x)
+	}
+)
+
 #if (!isGeneric("colnames")) {
 setGeneric("colnames", function (x, do.NULL = TRUE, prefix = "col")
 	standardGeneric("colnames"))

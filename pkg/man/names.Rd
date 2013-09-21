@@ -17,6 +17,8 @@ Retrieve the row or column names of the species matrix and the names of the site
 \usage{
 ## S4 method for signature 'Vegsoup*'
 rownames(x, do.NULL = TRUE, prefix = "row")
+## S4 replacement method for signature 'Vegsoup*'
+rownames(x) <- value
 ## S4 method for signature 'Vegsoup*'
 colnames(x, do.NULL = TRUE, prefix = "col")
 ## S4 method for signature 'Vegsoup*'
@@ -41,7 +43,8 @@ x$i <– value
     Not used.
   }
   \item{ value }{
-    A character vector of the same length as \code{names(obj)}, or NULL.
+    A character vector of the same length as \code{names(obj)} and
+   \code{rownames(obj)}, or NULL.
   }
 }
 \details{
@@ -49,6 +52,10 @@ Function \code{dimnames} returns \code{dimnames(as.matrix(obj))}. Correspondingl
 
 The \code{"$"} operator can be used to access columns of the sites slot which is of class \code{data.frame} and has also functions to get or set the names of the object. Indexing of the species matrix can be done using indices specifying elements to extract. See \sQuote{Examples}.
 
+}
+\note{
+Assigment of new rownames can be dangerous and should only be performed with
+care!
 }
 \author{ Roland Kaiser }
 \seealso{
@@ -78,5 +85,11 @@ names(dta)[1] <- "bar"
 if (any(names(dta) == "rock")) {
    dta$rock <- sqrt(dta$rock)
 }
+
+# return plot names
+rownames(dta)
+
+# assig new rownames
+rownames(dta) <- paste("new", rownames(dta), sep = ".")
 }
 \keyword{ methods }

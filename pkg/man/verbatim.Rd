@@ -35,7 +35,8 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
   }
   \item{ colnames }{
     A character string to be searched for in the header section and used to
-    assign plot names. See \sQuote{Details}.
+    assign plot names. Note, do not use any characters defined for argument
+    replace in the header section! See \sQuote{Details}.
   }
   \item{ layers }{
     A named list giving start and end indices of to assign a layer to each

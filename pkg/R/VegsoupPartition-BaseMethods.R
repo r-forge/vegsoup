@@ -4,29 +4,36 @@ setMethod("[",
     signature(x = "VegsoupPartition",
     i = "ANY", j = "ANY", drop = "missing"),
 	function (x, i, j, ..., drop = TRUE) {
-		#	x <- prt; i = Partitioning(x) == 2
+		#	x <- prt; i = Partitioning(prt) %in% c(1,10)
 	    part <- Partitioning(x)
 	    
 	    if (missing(i)) i <- rep(TRUE, nrow(x))
 	    if (missing(j)) j <- rep(TRUE, ncol(x))
 	    
 	    tmp <- as(x, "Vegsoup")
-	    tmp <- tmp[i, j, ...]
+	    tmp <- tmp[i, j]#, ...]
         
-#		if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
-#			warning(" Partitioning vector was subsetted!",
-#				" k was changed accordingly", call. = FALSE)
-#		}
-
+        if (FALSE) {  # a little bit too verbose         	
+			if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
+				message(" Partitioning vector was subsetted!",
+					" k was changed accordingly")
+			}
+		}
+		
 		#	develop class VegsoupPartition from class Vegsoup
 		res <- new("VegsoupPartition", tmp)
 	
 		res@part <- part[names(part) %in% rownames(tmp)]
-		res@part <- res@part[match(rownames(res), names(part))]
+		if (!identical(names(res@part), rownames(tmp))) {
+			stop("inconsistency when subsetting partitioning vector")
+		}
 		
+		k <- length(unique(res@part))
+		res@part[] <- as.integer(as.character(factor(res@part, labels = 1:k)))
+		
+		#	reassign remaining slots
 		res@method = x@method
-		# was res@dist = x@dist # now slot of class Vegsoup
-		res@k = length(unique(part[names(part) %in% rownames(tmp)]))
+		res@k = k
 		res@group = res@group[names(part) %in% rownames(tmp)]
 
 	    return(res)

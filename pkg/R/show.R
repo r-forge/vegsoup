@@ -82,7 +82,7 @@ setMethod("summary",
 			coverscale(object)@name,
 		ifelse(is.null(decostand(object)),
 			paste("\ndecostand method : undefined (NULL)"),
-			paste("\ndecostand method : ", decostand(object))
+			paste("\ndecostand method : ", decostand(object), sep = "")
 		),		
 	   "\nvegdist          : ",
 			object@dist,	   				

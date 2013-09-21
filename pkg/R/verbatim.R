@@ -8,14 +8,16 @@ if (missing(file)) {
 }
 
 if (!missing(layers)) {
-	if (!is.list(layers) | !is.vector(layers)) {
+	if (!is.list(layers) & !is.character(layers)) {
 		stop("layers must be a list or character vector")
 	} else {
 		if (is.list(layers)) {
 			stopifnot(length(names(layers)) == length(layers))
 			l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))	
 		} else {
-			l <- layers
+			if (is.character(layers)) {
+				l <- layers
+			}
 		}
 		has.layers <- TRUE		
 	}
@@ -48,15 +50,14 @@ if (length(replace) > 0) {
 		txt <- sapply(txt,
 			function (x) gsub(replace[i], " ", x, fixed = TRUE),
 			USE.NAMES = FALSE)
-	}
-	
+	}	
 }
 
 #	find empty lines
 el <- sapply(txt, nchar, USE.NAMES = FALSE)
 
 #	find also uncomplete lines not representing data
-#	for example, lines consisting of only spaces
+#	for example, lines consisting only of spaces
 ul <- el < median(el) & el != 0
 #	hook keywords
 ul[hks] <- FALSE
@@ -115,9 +116,25 @@ n.dots <- apply(t.m, 2,
 	function (x) sum(sapply(x, function (y) y == ".")) )
 first.dot <- which(n.dots != 0)[1]
 
+#	split species (txa) and data blocks	(val)
 txa <- str_trim(apply(t.m[, 1:(first.dot -1)], 1,
 	function (x) paste(x, collapse = "")), side = "right")
 val <- t.m[, first.dot: ncol(t.m)]
+
+#	prune layer from taxa
+if (has.layers) {
+	lay <- paste("  ", layers, sep = "") # add two! leading spaces
+	lay <- sapply(lay, function (x) grep(x, txa, fixed = TRUE))
+	names(lay) <- layers
+	if (length(unlist(lay)) != length(txa)) {
+		stop("did not find all layer codes in all rows")
+	}
+	for (i in layers) {
+		txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
+	}
+	txa	<- str_trim(txa, side = "right")
+	l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]	 
+}
 
 #	check for spaces as seperators
 n.space <- apply(val, 2,
@@ -227,7 +244,8 @@ for (i in par) {
 		apply(y[y[, 1] == i, -1], 2, function (x) {
 			paste(x, collapse = "")			
 		}))
-	attr[[i]] <- type.convert(tmp) # this will drop leading zeros!	
+	#	remove dots and drop leading zeros!		
+	attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE))	
 }
 
 #	finally assign abbr to rownames and turn into matrix
@@ -239,7 +257,7 @@ if (length(unique(x[, 1])) != nrow(x) & !has.layers & !species.only) {
 	x <- txa	
 } else {
 	if (species.only) {
-		x <- (txa)		
+		x <- txa		
 	} else {
 		#	paste layers
 		if (has.layers) {
@@ -253,7 +271,12 @@ if (length(unique(x[, 1])) != nrow(x) & !has.layers & !species.only) {
 		#	assign header as attribute
 		#	assign plot ids
 		if (!missing(colnames)) {
-			dimnames(x)[[2]] <- attr[[colnames]]
+			cn <- attr[[colnames]]
+			if (any(duplicated(cn))) {
+				stop("duplicated colnames not allowed: ",
+				paste(as.character(cn[duplicated(cn)]), collapse = " & "))				
+			}
+			dimnames(x)[[2]] <- cn
 			attributes(x) <- c(attributes(x), attr)
 		} else {
 			dimnames(x)[[2]] <- NULL

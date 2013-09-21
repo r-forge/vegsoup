@@ -12,6 +12,7 @@ more rigourious tests of coverscale
 eg. cov "++" is accepted but must raise errors!
 
 # minor
+saerch for call. = FALSE in message commands, it will FALSE to console
 Species(dta) <-
 csv2 = TRUE to sep and dec
 noquote for print method (e.g. as.matrix)
