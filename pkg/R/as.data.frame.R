@@ -14,7 +14,7 @@ setAs(from = "Vegsoup", to = "data.frame",
 	def = function (from) {
 		#from = dta	
 		
-		replicates <- rep(1:nrow(from), rle(Species(dta)$plot)$lengths)
+		replicates <- rep(1:nrow(from), rle(Species(from)$plot)$lengths)
 	
 		res <- data.frame(
 		    Species(from),
