@@ -20,7 +20,6 @@ setMethod("as.dist",
 		#	calculation of distances!
 		#	unfortunately, this additional argument creates a new generic
 		#	and proper dispatch is not guranted any more?
-		#	severely affects dispatch in typal()!
 		if (missing(mode)) {
 			mode = "Q"
 		}
@@ -33,6 +32,12 @@ setMethod("as.dist",
 		attributes(Xd) <- c(attributes(Xd), mode = toupper(mode))
 		
 		return(Xd)
+	}
+)
+
+setAs(from = "Vegsoup", to = "dist",
+	def = function (from) {
+		vegsoup::as.dist(from)
 	}
 )
 
@@ -51,12 +56,6 @@ setMethod("as.dist",
 	}
 )
 	 
-#setAs(from = "Vegsoup", to = "dist",
-#	def = function (from) {
-#		vegsoup::as.dist(from)
-#	}
-#)
-
 as.dist.Vegsoup <- function (m, ...) {
 	#vegsoup::as.dist(m, ...)
 	as(m, "dist")

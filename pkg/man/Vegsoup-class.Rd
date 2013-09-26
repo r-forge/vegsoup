@@ -79,6 +79,7 @@
 \alias{SpeciesList,Vegsoup-method}
 \alias{Stride,Vegsoup-method}
 \alias{summary,Vegsoup-method}
+\alias{outlier,Vegsoup-method}
 \alias{tail,Vegsoup-method}
 \alias{Taxonomy,Vegsoup-method}
 \alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}

@@ -57,6 +57,8 @@ Collate: AAA.R
          decostand.R
          vegdist.R
          show.R
+         outlier.R
+         plot.outlier.R
          extract.R
          layers.R
          sample.R
