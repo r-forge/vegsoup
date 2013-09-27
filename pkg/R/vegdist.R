@@ -1,26 +1,32 @@
 #	dissimilarity
-#if (!isGeneric("decostand<-")) {
+
+#	vegan defines:
+#	vegdist(x, method="bray", binary=FALSE, diag=FALSE,
+#	upper=FALSE, na.rm = FALSE, ...)
+
 setGeneric("vegdist",
-	function (obj, ...)
+	function (x, method = "bray", binary = FALSE, diag = FALSE,
+	upper=FALSE, na.rm = FALSE, ...)
 		standardGeneric("vegdist")
 )
+
 #}
 #if (!isGeneric("decostand<-")) {
 setGeneric("vegdist<-",
-	function (obj, value, ...)
+	function (x, value, ...)
 		standardGeneric("vegdist<-")
 )
 #}
 
 setMethod("vegdist",
-	signature(obj = "Vegsoup"),
-	function (obj, ...) {
-		obj@dist
+	signature(x = "Vegsoup"),
+	function (x, ...) {
+		x@dist
 	}
 )
 setReplaceMethod("vegdist",
-	signature(obj = "Vegsoup", value = "character"),
-	function (obj, value) {
+	signature(x = "Vegsoup", value = "character"),
+	function (x, value) {
 		#	from vegan::vegdist
 		METHODS <- c("manhattan", "euclidean", "canberra", "bray",
 		"kulczynski", "gower", "morisita", "horn", "mountford",
@@ -31,23 +37,24 @@ setReplaceMethod("vegdist",
         	stop("invalid distance method")
     	if (method == -1) 
         	stop("ambiguous distance method")
-		obj@dist <- method
+		x@dist <- method
 
-		return(obj)
+		return(x)
 	}
 )
 
-#	vegan: dis, toolong = 1, trace = TRUE		
+#	vegan defines:
+#   distconnected(dis, toolong = 1, trace = TRUE)		
 #	connectedness of dissimilarities
-#if (!isGeneric("decostand<-")) {
+#if (!isGeneric("distconnected<-")) {
 setGeneric("distconnected",
-	function (obj, ...)
+	function (dis, toolong = 1, trace = TRUE)
 		standardGeneric("distconnected")
 )
 #}
 setMethod("distconnected",
-	signature(obj = "Vegsoup"),
-	function (obj, ...) {
+	signature(dis = "Vegsoup"),
+	function (dis, toolong = 1, trace = TRUE) {
 		vegan::distconnected(as.dist(obj), ...)
 	}
 )

@@ -1,6 +1,6 @@
-\name{typal}
-\alias{typal}
-\alias{typal-methods}
+\name{typical}
+\alias{typical}
+\alias{typical-methods}
 
 \title{
 Typical Samples of an Object of Class Vegsoup*
@@ -10,7 +10,7 @@ Identifies samples (plots) that typify clusters in a partition based on dissimil
 }
 \usage{
 ## S4 method for signature 'VegsoupPartition'
-typal(obj, k = 1)
+typical(obj, k = 1)
 }
 \arguments{
   \item{ obj }{
@@ -49,9 +49,8 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 prt <- VegsoupPartition(dta, k = 2)
 
-## broken, due to as.dist dispatch
-#typal(prt)
-#typal(prt, typeof = "logical")
+typical(prt)
+typical(prt, typeof = "logical")
 #typal(prt, typeof = "logical", mode = "R") 
 }
 \keyword{ methods }

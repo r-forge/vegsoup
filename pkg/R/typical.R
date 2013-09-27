@@ -1,10 +1,11 @@
-###	broken!
+#	optparz defines
+#	typal(clustering,dist,k=1)
 #	typal samples in a partition
-setGeneric("typal",
+setGeneric("typical",
 	function (obj, k = 1, ...)
-		standardGeneric("typal")
+		standardGeneric("typical")
 )
-".typal.Vegsoup" <- function (clustering, dist, k = 1) 
+".typical.Vegsoup" <- function (clustering, dist, k = 1) 
 {
 	require(optpart)
     clustering <- as.numeric(clustering)
@@ -34,7 +35,7 @@ setGeneric("typal",
     out
 }
 
-setMethod("typal",
+setMethod("typical",
     signature(obj = "VegsoupPartition"),
     function (obj, k = 1, ...) {
     	

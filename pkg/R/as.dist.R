@@ -3,16 +3,17 @@ setOldClass("dist")
 
 #	critcal, as it overrides the generic
 #	and creates a new generic?
+#	stats defines:
 #   as.dist(m, diag = FALSE, upper = FALSE)
 #if (!isGeneric("as.dist")) {
 setGeneric("as.dist",
-	function (m, diag = FALSE, upper = FALSE, ...)
+	function (m, diag = FALSE, upper = FALSE)
 		standardGeneric("as.dist")
 )
 #}
 setMethod("as.dist",
 	signature(m = "Vegsoup"),
-	function (m, mode, ...) { # dropped 
+	function (m, diag, upper) { # dropped: mode
 		#	as.mumeric and as.logical
 		#	automatically apply decostand method!
 
@@ -20,10 +21,10 @@ setMethod("as.dist",
 		#	calculation of distances!
 		#	unfortunately, this additional argument creates a new generic
 		#	and proper dispatch is not guranted any more?
-		if (missing(mode)) {
+		#if (missing(mode)) {
 			mode = "Q"
-		}
-		Xd <- vegan::vegdist(as.matrix(m), method = m@dist, ...) #
+		#}
+		Xd <- vegan::vegdist(as.matrix(m), method = m@dist) # ...
 		
 		#	ensure dissimilarities
 		if (max(Xd) > 1) Xd <- Xd / max(Xd)	
@@ -42,21 +43,21 @@ setAs(from = "Vegsoup", to = "dist",
 )
 
 #	cure my override?
-setMethod("as.dist",
-	signature(m = "matrix"),
-	function(m, ...) {
-		stats::as.dist(m, ...)	
-	}
-)
+#setMethod("as.dist",
+#	signature(m = "matrix"),
+#	function(m, ...) {
+#		stats::as.dist(m, ...)	
+#	}
+#)
 
-setMethod("as.dist",
-	signature(m = "dist"),
-	function(m, ...) {
-		stats::as.dist(m, ...)	
-	}
-)
+#setMethod("as.dist",
+#	signature(m = "dist"),
+#	function(m, ...) {
+#		stats::as.dist(m, ...)	
+#	}
+#)
 	 
 as.dist.Vegsoup <- function (m, ...) {
-	#vegsoup::as.dist(m, ...)
-	as(m, "dist")
+	vegsoup::as.dist(m, ...)
+	#as(m, "dist")
 }

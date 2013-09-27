@@ -32,33 +32,38 @@ Coverscale <- function (name, codes, lims) {
 	}
 }
 
+#	vegan defines:
+#	coverscale(x, scale=c("Braun.Blanquet", "Domin", "Hult", "Hill",
+#	"fix","log"), maxabund)
 #if (!isGeneric("coverscale")) {
-setGeneric("coverscale", function(obj)
+setGeneric("coverscale",
+	function (x, scale = c("Braun.Blanquet", "Domin", "Hult", "Hill",
+	"fix","log"), maxabund)
 	standardGeneric("coverscale"))
 #}
 #if (!isGeneric("coverscale <-")) {
 setGeneric("coverscale<-",
-	function (obj, value)
+	function (x, value)
 		standardGeneric("coverscale<-")
 )
 #}
 #if (!isGeneric("coverscale")) {
-setGeneric("is.ordinal", function(obj)
+setGeneric("is.ordinal", function (x)
 	standardGeneric("is.ordinal"))
 #}
 #if (!isGeneric("coverscale")) {
-setGeneric("is.continuous", function(obj)
+setGeneric("is.continuous", function (x)
 	standardGeneric("is.continuous"))
 #}
 setMethod("is.ordinal",
-    signature(obj = "Coverscale"),
-    function (obj) {
-  		!is.null(obj@codes) & !is.null(obj@codes)
+    signature(x = "Coverscale"),
+    function (x) {
+  		!is.null(x@codes) & !is.null(x@codes)
     }
 )
 setMethod("is.continuous",
-    signature(obj = "Coverscale"),
-    function (obj) {
-  		is.null(obj@codes) & is.null(obj@codes)
+    signature(x = "Coverscale"),
+    function (x) {
+  		is.null(x@codes) & is.null(x@codes)
     }
 )

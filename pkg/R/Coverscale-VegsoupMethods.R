@@ -1,96 +1,96 @@
 #	based on Coverscale-methods 
 setMethod("is.continuous",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-  		is.continuous(coverscale(obj))   	
+    signature(x = "Vegsoup"),
+    function (x) {
+  		is.continuous(coverscale(x))   	
     }
 )
 
 setMethod("is.ordinal",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-  		is.ordinal(coverscale(obj))   	
+    signature(x = "Vegsoup"),
+    function (x) {
+  		is.ordinal(coverscale(x))   	
     }
 )
 
 setMethod("coverscale",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-  		obj@coverscale   	
+    signature(x = "Vegsoup"),
+    function (x) {
+  		x@coverscale   	
     }
 )
 
 #	needs cover scale conversion 
 setReplaceMethod("coverscale",
-	signature(obj = "Vegsoup", value = "Coverscale"),
-	function (obj, value) {
-#		obj <- coenoflex(100,100)
+	signature(x = "Vegsoup", value = "Coverscale"),
+	function (x, value) {
+#		x <- coenoflex(100,100)
 #		value <- Coverscale("ordinal")			
-		transform <- is.continuous(obj) & is.ordinal(value)
-		obj@coverscale <- value			
+		transform <- is.continuous(x) & is.ordinal(value)
+		x@coverscale <- value			
 		if (transform) {
-			x <- as.numeric(Species(obj)$cov) # as long as we store characters
+			x <- as.numeric(Species(x)$cov) # as long as we store characters
 			if (max(x) > 100) {
 				stop("highest cover value is bigger than 100")
 			}
 			#	move lowest value into range
-			x[x < coverscale(obj)@lims[1]] <- coverscale(obj)@lims[1]
+			x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
 			
-			obj@species$cov <- as.character(
+			x@species$cov <- as.character(
 				cut(x, 
-					breaks = c(coverscale(obj)@lims, 100),
-					labels = coverscale(obj)@codes,
+					breaks = c(coverscale(x)@lims, 100),
+					labels = coverscale(x)@codes,
 					include.lowest = TRUE))					
 			message("transformed cover values!")
 		}
-		test <- any(is.na(factor(Species(obj)$cov, # was !any
-			levels = coverscale(obj)@codes,
-			labels = coverscale(obj)@lims)))
+		test <- any(is.na(factor(Species(x)$cov, # was !any
+			levels = coverscale(x)@codes,
+			labels = coverscale(x)@lims)))
 		if (test) {
 			stop("coverscale does not match data", call. = FALSE)
 		}		
-		return(obj)		
+		return(x)		
 	}
 )
 setReplaceMethod("coverscale",
-	signature(obj = "Vegsoup", value = "character"),
-	function (obj, value) {		
+	signature(x = "Vegsoup", value = "character"),
+	function (x, value) {		
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
 		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
-		transform <- is.continuous(coverscale(obj)) & is.ordinal(value)
-		obj@coverscale <- value			
+		transform <- is.continuous(coverscale(x)) & is.ordinal(value)
+		x@coverscale <- value			
 		
 		if (transform) {
-			x <- as.numeric(Species(obj)$cov) # as long as we store characters
+			x <- as.numeric(Species(x)$cov) # as long as we store characters
 			if (max(x) > 100) {
 				stop("highest cover value is bigger than 100")
 			}
 
 			#	move lowest value into range
-			x[x < coverscale(obj)@lims[1]] <- coverscale(obj)@lims[1]
+			x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
 			
-			obj@species$cov <- as.character(
+			x@species$cov <- as.character(
 				cut(x,
-					breaks = c(coverscale(obj)@lims, 100),
-					labels = coverscale(obj)@codes,
+					breaks = c(coverscale(x)@lims, 100),
+					labels = coverscale(x)@codes,
 					include.lowest = TRUE))
 			message("transformed cover values!")
 		}
-		test <- any(is.na(factor(Species(obj)$cov,
-			levels = coverscale(obj)@codes,
-			labels = coverscale(obj)@lims)))
+		test <- any(is.na(factor(Species(x)$cov,
+			levels = coverscale(x)@codes,
+			labels = coverscale(x)@lims)))
 		if (test) {
 			stop("coverscale does not match data", call. = FALSE)
 		}		
-		return(obj)		
+		return(x)		
 	}
 )
   
 #	revert abunace scale for Braun-Blanquet scale
-".BraunBlanquetReduce" <-  function (obj) {
+".BraunBlanquetReduce" <-  function (x) {
 
-	res <- Species(obj)
+	res <- Species(x)
 	for (i in c("2m", "2a", "2b")) {
 		if (i == "2m")
 			res$cov[res$cov == i]  <- "1"
@@ -100,19 +100,19 @@ setReplaceMethod("coverscale",
 			res$cov[res$cov == i]  <- "2"
 	}
 	
-	obj@species <- res
-	obj@coverscale <- Coverscale("braun.blanquet2")
+	x@species <- res
+	x@coverscale <- Coverscale("braun.blanquet2")
 
-	return(invisible(obj))
+	return(invisible(x))
 }
 
 #if (!isGeneric("BraunBlanquetReduce"))
 setGeneric("BraunBlanquetReduce",
-	function (obj)
+	function (x)
 		standardGeneric("BraunBlanquetReduce")
 )
 setMethod("BraunBlanquetReduce",
-    signature(obj = "Vegsoup"),
+    signature(x = "Vegsoup"),
     .BraunBlanquetReduce
 )
 

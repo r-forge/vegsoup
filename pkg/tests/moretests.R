@@ -79,10 +79,14 @@ SpatialPolygonsVegsoup(dta)
 
 #	as.matrix
 as.logical(dta)
+as.logical(dta, mode = "q")
 as.numeric(dta)
+as.numeric(dta, mode = "q")
 as.character(dta)
-as.character(dta, mode = "R")
-head(as.matrix(dta, "character", "r"))
+as.character(dta)
+as.character(dta, mode = "q")
+head(as.matrix(dta, "character", "q"))
+tail(as.matrix(dta, "character", "q"))
 head(t(as.character(dta)))
 indices(dta)
 indices(dta, "character")
@@ -102,11 +106,11 @@ richness(dta, "sa")
 
 #	standardization
 decostand(dta)  <- c("hellinger")
-foo <- as.numeric(dta)
+as.numeric(dta)
 decostand(dta)  <- c("hellinger", "standardize")
-foo <- as.numeric(dta)
+as.numeric(dta)
 decostand(dta)  <- c("wisconsin")
-foo <- as.numeric(dta)                  
+as.numeric(dta)                  
 
 #	subsetting
 dta[1:3,]
@@ -117,12 +121,12 @@ dim(Layers(dta[, grep("@sl", colnames(dta))]))
 #	subsample
 rownames(SampleVegsoup(dta))
 
-#	rbind
+#	bind
 s1 <- dta[1:2, ]
 s2 <- dta[3:4, ]
 s3 <- dta[5:6, ]
 
-try(rownames(rbind(s3, s1, s2)))
+try(rownames(bind(s3, s1, s2)))
 
 #	table methods
 seriation(dta) # dca
@@ -130,7 +134,7 @@ seriation(dta, "hclust")
 seriation(dta, "ward")
 seriation(dta, "flexible")
 seriation(dta, "packed")
-as.data.frame(as.matrix(seriation(dta, "packed"), "character", mode = "r"))
+as.data.frame(as.matrix(seriation(dta, "packed"), "character", "r"))
 
 #	partitioning methods
 prt <- VegsoupPartition(dta, k = 2)
@@ -155,7 +159,7 @@ Optindval(prt)
 Partana(prt)
 Silhouette(prt)
 Disdiam(prt)
-try(Typal(prt))	#	broken due to namespace conflict? as.dist
+typical(prt)	#	broken due to namespace conflict? as.dist
 Murdoch(prt)
 Isamic(prt)
 Tabdev(prt)

@@ -9,19 +9,20 @@ Identifies outliers based on the nearest neighbour criterion.
 }
 \arguments{
   \item{ obj }{
-    A \code{"Vegsoup*"} object.
+    a \code{Vegsoup*} object.
   }
   \item{ thresh }{
-    Threshold nearest neighbour distance for outliers.
+    threshold nearest neighbour distance for outliers.
   }
 }
 \details{
-   The methods returns a logical vector where outlieres are \code{TRUE}.
+   The methods returns a logical vector equal to the number of plots
+   where outlieres are \code{TRUE}.
    The resulting objects can be directly used to take a subset with
    outlier(s) removed. See \sQuote{Examples}.
 }
 \author{
-Implemented for vegsoup using Otto Wildis \code{outlier} function of package \pkg{dave}.
+Implemented for vegsoup using code from function \code{outlier} of package \pkg{dave}.
 }    
 \references{
 Wildi, O. 2013. Data Analysis in Vegetation Ecology. 2nd ed. Wiley-Blackwell, Chichester.	

@@ -1,6 +1,6 @@
 ###	warning layers must be equal!!!
 #	rbind like method to fuse objects
-".rbind.Vegsoup" <- function (..., deparse.level = 1) {
+".bind.Vegsoup" <- function (..., deparse.level = 1) {
 
 	allargs <- list(...)
 	
@@ -113,14 +113,16 @@
 }
 
 #	Sites, Taxonomy Vegsoup have also rbind method
-if (!isGeneric("rbind")) {
-setGeneric("rbind",
+#if (!isGeneric("rbind")) {
+setGeneric("bind",
 		function (..., deparse.level = 1)
-		standardGeneric("rbind"),
+		standardGeneric("bind"),
 		signature = "...")
-}
+#}
 
-setMethod("rbind",
+setMethod("bind",
     signature(... = "Vegsoup"),
-	.rbind.Vegsoup
+	function (..., deparse.level = 1) {
+		.bind.Vegsoup(..., deparse.level = 1)	
+	}
 )

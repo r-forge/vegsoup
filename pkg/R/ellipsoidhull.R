@@ -34,15 +34,19 @@ sapply(res, function (x) {
 return(invisible(cl))
 }
 
+#	cluster defines:
+#	ellipsoidhull(x, tol=0.01, maxit=5000, ret.wt = FALSE,
+#	ret.sqdist = FALSE, ret.pr = FALSE)
 #if (!isGeneric("ellipsoidhull")) {
 setGeneric("ellipsoidhull",
-	function (x, ...)
+	function (x, tol=0.01, maxit=5000, ret.wt = FALSE,
+	ret.sqdist = FALSE, ret.pr = FALSE)
 		standardGeneric("ellipsoidhull")
 )
 #}
 
 setMethod("ellipsoidhull",
 	signature(x = "VegsoupPartition"),
-	function (x, ...)
-	.ellipsoidhull(x, ...)
+	function (x)
+	.ellipsoidhull(x)
 )

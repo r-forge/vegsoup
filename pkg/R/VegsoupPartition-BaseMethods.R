@@ -382,7 +382,7 @@ setMethod("head",
     	if (missing(choice))
 	    	choice <- "species"
 	    if (n != 6L) {
-	    	sel <- match(c(as.matrix(typal(x, ...)$silhouette)),
+	    	sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
 	    		rownames(x))
 	    	if (choice == "species")
     			res <- as.character(x)[sel,]

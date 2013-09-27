@@ -21,8 +21,13 @@ setMethod("seriation",
 	
 	if (method != "dca" | method != "packed") {
 	si.dis <- as.dist(obj, "logical")
-	#	critical as.dist dispatch for mode = "R"
-	sp.dis <- as.dist(obj, "logical", mode = "R")	
+	#	as.dist lost argument mode = "R", generic is missing
+	#	... argument
+	#	but, as.matrix has a dots ... argument!
+	#	we use this
+	sp.dis <- vegan::vegdist(as.matrix(obj, "logical", mode = "R"),
+		method = vegdist(obj))	
+	#sp.dis <- as.dist(obj, "logical", mode = "R")	
 	}
 	switch(method, dca = {
 		use <- try(decorana(obj), silent = TRUE, ...) # as.matrix dispatch

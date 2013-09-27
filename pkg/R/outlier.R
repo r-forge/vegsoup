@@ -6,8 +6,13 @@ setGeneric("outlier",
 #}
 
 
-.outlier <-
-function (obj, thresh = 0.2, y = 1, ...) {
+#.outlier <-
+#function (obj, thresh = 0.2, y = 1, ...) {
+#}
+
+setMethod("outlier",
+    signature(obj = "Vegsoup"),
+    function (obj, thresh = 0.2, ...) {
 	#	burrowed from outly.R in package 'dave' by Otto Wildi
 	#	see Wildi 2013 page ., ...
 	m <- as.matrix(obj)
@@ -16,11 +21,7 @@ function (obj, thresh = 0.2, y = 1, ...) {
 	res <- apply(d, 1, min) >= thresh
 	#	print(names(res)[res])
 	return(res)
-}
-
-setMethod("outlier",
-    signature(obj = "Vegsoup"),
-    function (obj, ...) .outlier(obj, ...)
+    }
 )
 
 

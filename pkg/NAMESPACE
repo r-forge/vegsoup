@@ -33,6 +33,7 @@ exportMethods(
     "as.numeric",
 #    "as.data.frame",
     "as.dist",
+    "bind",
     "coerce",
     "colSums",
     "colMeans",
@@ -72,6 +73,7 @@ exportMethods(
     "nrow",
     "Optindval",
     "Optsil",
+    "outlier",
     "Partana",
     "Partitioning",
     "PartitioningMatrix",
@@ -104,7 +106,7 @@ exportMethods(
     "taxonomy",
     "Taxonomy",
     "Taxonomy<-",
-    "typal",
+    "typical",
     "vegdist" 
 )
 exportClasses(
@@ -123,7 +125,9 @@ exportClasses(
 S3method(as.matrix, Vegsoup)
 S3method(as.array, Vegsoup)
 S3method(as.vector, Vegsoup)
-S3method(as.dist, Vegsoup)
+#S3method(coverscale, Vegsoup)
+#S3method(vegdist, Vegsoup)
+#S3method(as.dist, Vegsoup)
 #S3method(as.data.frame, Vegsoup)
 #S3method(as.mefa, Vegsoup)
 #S3method(as.sparseMatrix, Vegsoup)

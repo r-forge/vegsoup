@@ -4,7 +4,7 @@ Date: 2013-03-24
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
-Depends: R (>= 2.14.0), methods, cluster, vegan, optpart, coenoflex, sp (1.0-9), pbapply, multitable
+Depends: R (>= 2.14.0), methods, cluster, vegan, optpart, coenoflex, sp (>= 1.0-9), pbapply, multitable
 Suggests: labdsv, Hmisc, spatstat, rgdal (>= 0.8-11), RColorBrewer, stringr, googleVis, gclus, vegclust (>= 1.5.1), misc3d, multicore, maptools, isopam, geonames, multitable, mefa
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
@@ -58,14 +58,13 @@ Collate: AAA.R
          vegdist.R
          show.R
          outlier.R
-         plot.outlier.R
          extract.R
          layers.R
          sample.R
          seriation.R
          richness.R
          stride.R
-         rbind.R
+         bind.R
          indpower.R
          indspc.R
          table.R
@@ -88,7 +87,7 @@ Collate: AAA.R
          partition.R
          validate.R
          optimize.R
-         typal.R
+         typical.R
          spread.R
          VegsoupPartition-AssociationMethods.R
          Confus.R
