@@ -1,13 +1,8 @@
-#if (!isGeneric("heatmap")) {
+#if (!isGeneric("outlier")) {
 setGeneric("outlier",
 	function (obj, ...)
 		standardGeneric("outlier")
 )
-#}
-
-
-#.outlier <-
-#function (obj, thresh = 0.2, y = 1, ...) {
 #}
 
 setMethod("outlier",
@@ -18,11 +13,9 @@ setMethod("outlier",
 	m <- as.matrix(obj)
 	d <- as.matrix(as.dist((1 - cor(t(m ^ 0.5))) / 2)) 
 	diag(d) <- 100
-	res <- apply(d, 1, min) >= thresh
-	#	print(names(res)[res])
+	nn <- apply(d, 1, min)
+	res <- nn >= thresh
+	attr(res, "distances") <- nn
 	return(res)
     }
 )
-
-
-#outlier(hg)
