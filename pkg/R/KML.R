@@ -5,7 +5,7 @@
 	#	function to format cdata tag in kml
 	.placemark <- function (x, obj, website.url.path, thumbnail.url.path) { # add.label
 		
-	plot <- unique(x[,1])
+	plot <- unique(x[, 1])
 	table <- x[, -1]	
 	
 	if (missing(website.url.path)) {
@@ -100,9 +100,9 @@
 	}
 	
 	if (missing(file)) {
-		file <- paste(getwd(), "/vegsoup.kml", sep = "")
+		file <- paste(getwd(), "/plots.kml", sep = "")
 		warning("\nargument file missing, drop KML to folder ",
-			getwd(), " as ./vegsoup.kml")
+			getwd(), " as ./plots.kml")
 	}	
 	begin.kml <- c(
 	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
@@ -160,9 +160,9 @@ if (missing(add.label)) {
 	add.label = FALSE
 }	
 if (missing(file)) {
-	file <- paste(getwd(), "/vegsoup partition.kml", sep = "")
+	file <- paste(getwd(), "/partitions.kml", sep = "")
 	warning("\nargument file missing, drop KML to folder ",
-		getwd(), " as ./vegsoup partition.kml")
+		getwd(), " as ./partitions partition.kml")
 }
 if (missing(website.url.path)) {
 	website.url.path <-

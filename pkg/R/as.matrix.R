@@ -1,16 +1,16 @@
 #	critcal!
 #	as.dist dispatach for generic with additional argument mode
 
-#	internal function
-#	replacing .cast() in Vegsoup-Internal.R and fully vectorized
+#	vectorized internal function 
+#	replacing .cast() in Vegsoup-Internal.R which is slower 
 
 .cast2 <- function (x, typeof) {
 		ij <- indices(x, typeof)
 		nc <- ncol(x)
 		nr <- nrow(x)
-		cv <- numeric(length = nc* nr)
+		cv <- numeric(length = nc * nr)
 
-		#	warning: plots have to be ordered!		
+		#	plots must be ordered for rle()!		
 		jj <- ij$j + rep(cumsum(rep(nc, nr)) - ncol(x), times = rle(ij$i)$length)
 		cv[jj] <- ij$x
 		
@@ -25,8 +25,7 @@ setMethod("as.numeric",
     function (x, mode) {
     	if (missing(mode)) mode <- "Q"
     	MODE <- c("Q", "R")
-    	mode <- match.arg(toupper(mode), MODE)
-    	#m <- .cast(x, mode = 1)    	
+    	mode <- match.arg(toupper(mode), MODE)  	
     	m <- .cast2(x, "numeric")
     	
 		#	standardization as definded by decostand(x)		
@@ -88,9 +87,10 @@ setGeneric("as.matrix",
 	function (x, ...)
 	standardGeneric("as.matrix"))
 }
+
 setMethod("as.matrix",
     signature(x = "Vegsoup"),
-    function (x, typeof, ...) {
+    function (x, typeof, ...) { # ... argument mode
     	if (missing(typeof)) typeof <- "numeric"    		
     	TYPEOF <- c("character", "numeric", "logical")
     	typeof <- match.arg(typeof, TYPEOF)
@@ -107,12 +107,14 @@ setMethod("as.matrix",
     	return(m)
     }    	    
 )
+
 setAs(from = "Vegsoup", to = "matrix",
 	def = function (from) {
 		as.matrix(from)
 		# typeof = "character", mode = "Q"
 	}
 )
+
 #	ensure that also base functions dispatch properly
 as.matrix.Vegsoup <-
 	function (x, ...) as.matrix(x, ...) # as(x, "matrix")
@@ -122,6 +124,7 @@ setGeneric("as.array",
 	function (x, ...)
 	standardGeneric("as.array"))
 }
+
 #	return array of species matrix, one dimension for each layer
 setMethod("as.array",
     signature(x = "Vegsoup"),
@@ -162,12 +165,14 @@ setMethod("as.array",
 	#	order of species is alphabetic due to a call to table()
 	return(res[, , Layers(x)])
 	}
-)	
+)
+	
 setAs(from = "Vegsoup", to = "array",
 	def = function (from) {
 		as.array(from)
 	}
 )
+
 #	ensure that also base functions dispatch properly
 as.array.Vegsoup <-	function (x, ...) as.array(x, ...)
 
@@ -187,11 +192,11 @@ as.vector.Vegsoup <- function (x, mode) {
 #	locations and values of nonzero entries
 #if (!isGeneric("indices")) {
 setGeneric("indices",
-	function (x, typeof, ...)
+	function (x, ...) # removed argument typeof from generic
 	standardGeneric("indices"))	
 #}	
 setMethod("indices",
-	signature(x = "Vegsoup"), #
+	signature(x = "Vegsoup"),
 		function (x, typeof) {
 	    	if (missing(typeof)) typeof <- "numeric"    		
     		TYPEOF <- c("character", "numeric", "logical")
@@ -213,7 +218,7 @@ setMethod("indices",
 				#}	
 				return(list(i = i, j = j, 				
 					x = as.numeric(as.character(
-						factor(Species(x)$cov, levels = cs@codes, labels = cs@lims))),
+						factor(Species(x)$cov, cs@codes, cs@lims))),
 					dimnames = list(upl, ual)))
 			}
 			if (typeof == "numeric" & is.null(cs@codes)) {

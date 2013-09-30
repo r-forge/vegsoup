@@ -102,7 +102,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 					xs <- as(coverscale, "Coverscale")
 				}
 				else {
-					stop("please supply a character, list or object of class Coverscale")					
+					stop("please supply a character, ",
+						"list or object of class Coverscale", call. = FALSE)					
 				}				
 			}
 		}
@@ -165,7 +166,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		timevar = "variable",
 		idvar = "plot")   
 	
-	y[is.na(y)] <- 0 # needed?
+	y[is.na(y)] <- 0 # needed? keep NAs?
 	
 	#	change column mode to numeric if possible
 	

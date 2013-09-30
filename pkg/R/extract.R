@@ -16,6 +16,11 @@ setMethod("[",
 	    
 	    if (missing(i)) i <- rep(TRUE, nrow(res))
 	    if (missing(j)) j <- rep(TRUE, ncol(res))
+	    
+	    #i[is.na(i)] <- FALSE	
+	  	#j[is.na(j)] <- FALSE	
+	    
+	    
 	    #	change to as.logical(x)[i, j, ...]
 		#	when slot species is dropped
 		tmp <- as.character(x)[i, j, drop = FALSE]
@@ -50,9 +55,10 @@ setMethod("[",
        	layer <- layer[!is.na(layer)]
 		#	subset sites
 		res@sites <- res@sites[match(rownames(tmp),	rownames(Sites(res))), ]
-		if (any(sapply(res@sites, is.na))) {
-			warning("NAs introduced in Sites(obj)", call. = FALSE)
-		}	   
+		
+		#if (any(sapply(res@sites, is.na))) {
+		#	warning("NAs introduced in Sites(obj)", call. = FALSE)
+		#}	   
 		if (length(res@group) != 0) {
 			res@group <- res@group[names(res@group) %in% rownames(tmp)]
 		}
@@ -61,10 +67,11 @@ setMethod("[",
  		#	finaly subset taxonomy, layers and spatial slots
 		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
 		res@layers <- layer 
+
 		res@sp.points <- res@sp.points[match(rownames(tmp),
-			SpatialPolygonsVegsoup(res)$plot), ]
+			res@sp.points$plot), ]
 		res@sp.polygons <- res@sp.polygons[match(rownames(tmp),
-			SpatialPolygonsVegsoup(res)$plot), ]
+			res@sp.polygons$plot), ]
 
 	    return(res)
     }

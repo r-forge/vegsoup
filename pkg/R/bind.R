@@ -21,10 +21,11 @@
 	#	if FALSE fall back to default eucliden
 	dist <- "euclidean"
 	#	test for overlapping plot ids
-	test <- c(sapply(allargs, rownames))
+	tmp <- test <- unlist(sapply(allargs, rownames))
 	test <- length(test) == length(unique(test))
 	if (!test) {
-		stop("\n there seem to be overlapping plot names")
+		noquote(tmp[duplicated(tmp)])
+		stop("\n there are overlapping plot names")
 	}
 	#	species 'x'	
 	j <- vapply(allargs,
@@ -43,34 +44,21 @@
     	FUN = function (x) Species(x)$layer))        
     x$cov <- unlist(sapply(allargs,
     	FUN = function (x) Species(x)$cov))
+
 	#	sites 'y'
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
-	#	copied from Vegsoup()
-	y <- reshape(y[, 1:3],
+	y <- reshape(y, #[, 1:3]
 		direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
-		
-	options(warn = -1)
-	y <- as.data.frame(
-		sapply(y,
-		function (x) {
-			if (!any(is.na(as.numeric(x)))) {
-				x <- as.numeric(x)
-			} else {
-				x <- as.character(x)	
-			}
-		}, simplify = FALSE),
-		stringsAsFactors = FALSE)
-	options(warn = 0)
-
- 	#	groome names
- 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+		#	groome names
+	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
+	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
     #	assign row names
 	rownames(y) <- y$plot 
 	y <- y[, -grep("plot", names(y))]
 	#	set NAs
-	y[is.na(y)] <- 0
+	# y[is.na(y)] <- 0
 	
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
@@ -122,7 +110,7 @@ setGeneric("bind",
 
 setMethod("bind",
     signature(... = "Vegsoup"),
-	function (..., deparse.level = 1) {
+	function (..., deparse.level = 1) { # add na.action argument
 		.bind.Vegsoup(..., deparse.level = 1)	
 	}
 )

@@ -19,3 +19,12 @@ setMethod("outlier",
 	return(res)
     }
 )
+
+#Average Bray-Curtis dissimilarity of an outlier plot to other plots is greater than two standard deviations from the mean inter-plot dissimilarity (McCune & Grace 2002)
+
+#McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.
+#obj <- prt
+#dis <- as.dist(obj)
+
+#greater <- mean(dis) + sd(dis) * 2
+#lower <- mean(dis) + sd(dis) * 2

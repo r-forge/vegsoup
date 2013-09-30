@@ -10,18 +10,21 @@ if (missing(file)) {
 if (!missing(layers)) {
 	if (!is.list(layers) & !is.character(layers)) {
 		stop("layers must be a list or character vector")
-	} else {
+	}
+	else {
 		if (is.list(layers)) {
 			stopifnot(length(names(layers)) == length(layers))
 			l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))	
-		} else {
+		}
+		else {
 			if (is.character(layers)) {
 				l <- layers
 			}
 		}
 		has.layers <- TRUE		
 	}
-} else {
+}
+else {
 	has.layers <- FALSE	
 }
 
@@ -82,18 +85,30 @@ sel2[el] <- FALSE # omit empty lines
 t.txt <- txt[sel1]
 a.txt <- txt[sel2]
 
-#	test
-test <- sapply(t.txt, nchar)
+#	test what we have done so far
+#	header may have trimming errors
+nc <- nchar(a.txt)
+test <- nc < median(nc)
+
+if (any(test)) {
+	a.txt[test] <- str_pad(a.txt[test], max(nc), side = "right")	
+}
+
+#	there might still remain inconsistencies in taxa block
+test <- nchar(t.txt)
 if (length(unique(test)) > 1) {
 	stop("length of characters",
 		" is not the same for all lines!",
 		call. = FALSE)
 }
-test <- sapply(a.txt, nchar)
+
+#	test header again 
+test <- nchar(a.txt)
 if (length(unique(test)) > 1) {
 	stop("length of characters",
 		" is not the same for all lines!",
-		"\n please inspect line(s) ", which(test != median(test)),
+		"\n please inspect line(s) ",
+		which(test != median(test)),
 		" in HEADER",
 		call. = FALSE)
 }

@@ -92,26 +92,23 @@
 	return(invisible(m))
 }
 
-#	internal function to melt sites data.frame
+#	internal function to melt sites data frame
 .melt <- function (obj) {
-	#	obj = dta
-	res <- stack(
-			data.frame(plot = rownames(slot(obj, "sites")),
-				slot(obj, "sites"), stringsAsFactors = FALSE),
-		stringsAsFactors = FALSE) 
-
-	plot <- res[res$ind == "plot", ]$values
-	plot <- rep(plot, (nrow(res) / length(plot)) - 1)
-	res <- res[!res$ind == "plot", ]
-	res <- data.frame(
-		plot = as.character(plot),
-		variable = as.character(res[, 2]),
-		value = as.character(res[, 1]),
-		stringsAsFactors = FALSE)
+	require(stringr)
+	#	obj = allargs[[10]]
+	res <- data.frame(plot = rownames(slot(obj, "sites")),
+				as.matrix(slot(obj, "sites")), stringsAsFactors = FALSE)
+	res <- reshape(res, direction = "long",
+		varying = names(res)[-1],
+		v.names = "value",
+		timevar = "variable",
+		times = names(res)[-1],
+		idvar = "plot", new.row.names = NULL)
+	#	order by plot and create sequential rownames!	
 	res <- res[order(res$plot), ]
-	res[is.na(res)] <- ""
-
 	rownames(res) <- 1:nrow(res)
+	#	width of numbers
+	res$value <- str_trim(res$value, side = "left")
 	res	
 }
 
@@ -147,7 +144,7 @@
 #	helper fucntion for .find.coordinates()
 #	random points and polygons in unit square
 #	
-".rpoisppSites" <- function (x) {
+.rpoisppSites <- function (x) {
 	require(spatstat)
 	require(maptools)
 	n <- length(unique(x$plot)) # must be unique!
@@ -181,7 +178,7 @@
 #		timevar = "variable",
 #		idvar = "plot")
 	
-".find.coordinates" <- function (y, proj4string, ...) {
+.find.coordinates <- function (y, proj4string, ...) {
 	verbose = FALSE
 	
 	lng <- grep("longitude", y$variable)
@@ -299,13 +296,3 @@
 	}
 	return(list(sp.points, sp.polygons))		
 }
-
-
-#Average Bray-Curtis dissimilarity of an outlier plot to other plots is greater than two standard deviations from the mean inter-plot dissimilarity (McCune & Grace 2002)
-
-#McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.
-#obj <- prt
-#dis <- as.dist(obj)
-
-#greater <- mean(dis) + sd(dis) * 2
-#lower <- mean(dis) + sd(dis) * 2

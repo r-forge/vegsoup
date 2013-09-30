@@ -10,7 +10,7 @@ setGeneric("QuickMap",
 setMethod("QuickMap",
     signature(obj = "Vegsoup"),
     function (obj) {
-		require(googleVis)
+    	suppressPackageStartupMessages(require(googleVis))
 		pt <- SpatialPointsVegsoup(obj)
 		if (nrow(pt) > 1) {
 			df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1,
