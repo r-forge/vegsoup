@@ -5,19 +5,38 @@
 #	replacing .cast() in Vegsoup-Internal.R which is slower 
 
 .cast2 <- function (x, typeof) {
-		ij <- indices(x, typeof)
-		nc <- ncol(x)
-		nr <- nrow(x)
-		cv <- numeric(length = nc * nr)
+	ij <- indices(x, typeof)
+	nc <- ncol(x)
+	nr <- nrow(x)
+	cv <- numeric(length = nc * nr)
 
-		#	plots must be ordered for rle()!		
-		jj <- ij$j + rep(cumsum(rep(nc, nr)) - ncol(x), times = rle(ij$i)$length)
-		cv[jj] <- ij$x
-		
-		return(matrix(cv, ncol = ncol(x), nrow = nrow(x),
-		            dimnames = ij$dimnames, byrow = TRUE))
-
+	#	plots must be ordered for rle()!		
+	jj <- ij$j + rep(cumsum(rep(nc, nr)) - ncol(x), times = rle(ij$i)$length)
+	cv[jj] <- ij$x
+	
+	return(matrix(cv, ncol = ncol(x), nrow = nrow(x),
+		dimnames = ij$dimnames, byrow = TRUE))
 }
+
+#	essentially the same as colnames method,
+#	but has unique argument needed by indices method!
+#.abbr.layer <- function (x, unique) {
+#	if (missing(unique)) {
+#    	unique = FALSE	
+#    }
+#    res <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@")
+#    if (!unique) {    	
+#    	if (length(Layers(x)) > 1) {
+#   			l <- Species(x)$layer
+#			res <- unique(unlist(sapply(Layers(x), function (x) res[l == x])))
+#		}
+#		else {
+#			res <- unique(res)	
+#		}
+#   }
+#   return(res)
+#}
+
 
 #	return species matrix
 setMethod("as.numeric",
@@ -198,13 +217,17 @@ setGeneric("indices",
 setMethod("indices",
 	signature(x = "Vegsoup"),
 		function (x, typeof) {
-	    	if (missing(typeof)) typeof <- "numeric"    		
+	    	if (missing(typeof)) {
+	    		typeof <- "numeric"
+	    	}	    		
     		TYPEOF <- c("character", "numeric", "logical")
     		typeof <- match.arg(typeof, TYPEOF)
     	
-			cs <- coverscale(x)			
-			al <- abbr.layer(x)
-			ual <- abbr.layer(x, TRUE)			
+			cs <- coverscale(x)
+			# was: al <- .abbr.layer(x)			
+			al <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@") 
+			# was: ual <- .abbr.layer(x, TRUE)
+			ual <- colnames(x)			
 			pl <- Species(x)$plot
 			upl <- unique(pl)
 						
@@ -248,8 +271,8 @@ setAs(from = "Vegsoup", to = "sparseMatrix",
 	def = function (from) {
 		require(Matrix)		
 		ij <- indices(from)
-		res <- sparseMatrix(ij$i, ij$j, x = as.integer(ij$x),
-			dimnames = ij$dimnames[c(1,2)])
+		res <- sparseMatrix(i = ij$i, j = ij$j, x = as.integer(ij$x),
+			dimnames = ij$dimnames)
 		res
 	}
 )
@@ -262,8 +285,8 @@ setAs(from = "Vegsoup", to = "dsparseMatrix",
 	def = function (from) {
 		require(Matrix)
 		ij <- indices(from)
-		res <- sparseMatrix(ij$i, ij$j, x = ij$x,
-			dimnames = ij$dimnames[c(2,1)])
+		res <- sparseMatrix(i = ij$i, j = ij$j, x = as.numeric(ij$x),
+			dimnames = ij$dimnames)
 		res
 	}
 )

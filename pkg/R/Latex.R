@@ -321,7 +321,7 @@
 	if (length(dia) > 0) {
 		#	top of table, diagnostic/typical species
 		txn <- split.abbr(obj)
-		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ] # dropped $abbr.layer
+		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ]
 		#	txn <- txn[rownames(tmp$tab), ]
 		#	rownames(txn) <- txn$abbr.layer
 		txn.top <- txn[rownames(diag), ]

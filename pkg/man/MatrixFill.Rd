@@ -1,7 +1,7 @@
-\name{MatrixFill}
+\name{fill}
 \docType{methods}
-\alias{MatrixFill}
-\alias{MatrixFill-methods}
+\alias{fill}
+\alias{fill-methods}
 
 \title{ Matrix fill of ASpecies Matrix for \code{Vegsoup*} Objects }
 
@@ -10,10 +10,10 @@
   species matrix.
 }
 \usage{
-MatrixFill(obj)
+  fill(obj)
 }
 \arguments{
-  \item{obj}{
+  \item{ obj }{
     A \code{Vegsoup*} object.
   }
 }
@@ -22,16 +22,13 @@ MatrixFill(obj)
 }
 \author{ Roland Kaiser }
 \seealso{
-\code{\link{nestedtemp}} in \pkg{vegan} for nestedess indices.
+  \code{\link{nestedtemp}} in \pkg{vegan} for nestedess indices.
 }
 \examples{
 library(vegsoup)
 
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-MatrixFill(dta)
-
-#   use object of class Vegsoup in vegan
-nestedbetajac(as.logical(dta))
+fill(dta)
 }
 \keyword{ methods }

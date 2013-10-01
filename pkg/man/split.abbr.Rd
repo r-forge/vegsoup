@@ -1,19 +1,20 @@
-\name{split.abbr}
+\name{abbreviations}
 \docType{methods}
 \alias{split.abbr}
 \alias{split.abbr-methods}
 
 \title{ Deparse Species Layer Replication of \code{Vegsoup*} Objects }
 \description{
-Deparse the layer replications (pseudo-species) used as \code{colnames} of a species matrix returned from \code{Vegsoup*} objects into components.
+  Deparse the layer replications (pseudo-species) used as \code{colnames} in the
+  species matrix of \code{Vegsoup*} objects into it's components.
 }
 \usage{
-## S4 method for signature 'Vegsoup*'
-split.abbr(obj)
+  ## S4 method for signature 'Vegsoup*'
+  split.abbr(obj)
 }
 \arguments{
   \item{ obj }{
-    An \code{Vegsoup*} object.
+    A \code{Vegsoup*} object.
   }
 }
 \details{
@@ -24,8 +25,8 @@ split.abbr(obj)
   \code{Taxonomy(obj)}.
 
   The compound taxon key (\code{'abbr.layer'}) can be accessed from the
-  \code{rownames} of the resulting object. This is advantegous as it provides
-   an easy means of subsetting with \code{colnames(obj)}.
+  \code{rownames} of the resulting object. This is advantegous as it provides 
+  an easy means of subsetting with \code{colnames(obj)}.
 
   \code{\link{Vegsoup}} and \code{\linkS4class{Species}} construct these
   \emph{compound taxon abbreviations} by pasting \code{make.names(x)} and
@@ -41,6 +42,8 @@ split.abbr(obj)
 \seealso{
 \code{\link{Vegsoup}}
 \code{\link{Taxonomy}}
+\code{\link{SpeciesList}}
+\code{\link{taxon}}
 }
 \examples{
 library(vegsoup)
@@ -53,8 +56,14 @@ all.equal(rownames(x), colnames(dta))
 
 #   get scientific taxa names
 m <- as.matrix(dta, typeof = "character", mode = "R")
-x[rownames(m), ]
+head(x[rownames(m), ])
 
-cbind(x[rownames(m), ], m)
+#	similar result but without meaningfull rownames
+head(SpeciesList(dta, layered = TRUE))
+
+#	species matrix including taxon anmes and layers
+head(cbind(x[rownames(m), ], m))
+
+res <- dta[, rownames(split.abbr(dta))[sample(1:ncol(dta), 10)]]
 }
 \keyword{ methods }

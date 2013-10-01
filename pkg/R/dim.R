@@ -45,13 +45,13 @@ setMethod("ncell",
 
 #	matrix fill
 #	used in summary
-if (!isGeneric("MatrixFill")) {
-setGeneric("MatrixFill",
+if (!isGeneric("fill")) {
+setGeneric("fill",
 	function (obj)
-	standardGeneric("MatrixFill"))
+	standardGeneric("fill"))
 }
 
-setMethod("MatrixFill",
+setMethod("fill",
     signature(obj = "Vegsoup"),
     function (obj) {
 		#x <- nrow(obj)

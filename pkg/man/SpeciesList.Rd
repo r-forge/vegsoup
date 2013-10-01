@@ -1,16 +1,19 @@
 \name{SpeciesList}
 \alias{SpeciesList}
+\alias{SpeciesList-methods}
+\alias{taxon-methods}
 
 \title{ Return Species List for an \code{Vegsoup*} object }
 \description{
 Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"}. 
 }
 \usage{
-SpeciesList(obj, layered)
+  SpeciesList(obj, layered)
+  taxon(obj)
 }
 \arguments{
   \item{ obj }{
-    An object inheriting from class \code{Vegsoup}.
+    a \code{Vegsoup*} object.
   }
   \item{ layered }{
     return species list with layers, defaults to \code{FALSE}. See
@@ -34,14 +37,16 @@ SpeciesList(obj, layered)
 library(vegsoup)
 data(testdata)
 
-dta <- Vegsoup(spc, sts, txa,
-              coverscale = "braun.blanquet")
+dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 
+#	including abbreviations
 sl <- SpeciesList(dta)
 head(sl)
 
 sl <- SpeciesList(dta, layered = TRUE)
 head(sl)
 
+#	scientific taxon names only
+taxon(dta)
 }
 \keyword{methods}

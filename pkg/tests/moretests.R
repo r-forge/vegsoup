@@ -32,7 +32,7 @@ ncol(dta)
 nrow(dta)
 dim(dta)
 ncell(dta)
-MatrixFill(dta)
+fill(dta)
 
 #	print, show and summary
 head(dta)
@@ -43,16 +43,23 @@ head(dta, "si")
 tail(dta, n=3)
 summary(dta)
 show(dta)
+outlier(dta)
+outlier(dta, thresh = 0.2)
 
 #	dimnames and names
 colnames(dta)
-rownames(dta)
+old.rownames <- rownames(dta)
+rownames(dta) <- 1:nrow(dta)   # value = "integer"
+row.names(dta) <- old.rownames # value = "character"
+all.equal(rownames(Sites(dta)), rownames(dta))
+
 names(dta)
+names(dta)[1:2] <- names(dta)[1:2]
 
 #	taxon abbreviations
-head(DecomposeNames(dta))
-Abbreviation(dta)
-abbr.layer(dta)
+head(taxon(dta))
+head(SpeciesList(dta))
+split.abbr(dta)
 #	abundance scale
 
 class(BraunBlanquetReduce(dta))
