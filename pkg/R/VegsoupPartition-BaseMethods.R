@@ -335,6 +335,10 @@ setMethod("Murdoch",
     		minplt <- 1
 		if (missing(type))
 			part <- Partitioning(obj)
+			
+		if (any(table(part) == 1)) {
+			stop("singleton present")
+		}	
 		ks <- getK(obj)
 		res <- matrix(0, nrow = dim(obj)[2], ncol = ks)
 		dimnames(res) <- list(colnames(obj), 1:ks)

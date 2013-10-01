@@ -67,7 +67,7 @@ if (verbose) print(collapse)
 
 #	test collapse vector
 if (any(is.na(collapse[,2]))) {
-	message("NA in collapse, all species on these layers will be dropped")
+	message("\nNA in collapse, dropped all species on these layers")
 	ld <- collapse[is.na(collapse[,2 ]), 1]
 	collapse <- collapse[!is.na(collapse[,2 ]), ]
 	#	drop all occurences on these layers
@@ -78,8 +78,7 @@ if (any(is.na(collapse[,2]))) {
 	if (length(res@sites$plot) > length(unique(species$plot))) {
 		message("also some plots will be dropped")
 		res@sites <- res@sites[res@sites$plot %in% species$plot, ]
-	}		
-	#	critcal! also need to subset spatial objects!
+	}
 }	
 
 species$layer <- factor(species$layer)
@@ -127,7 +126,7 @@ species  <- switch(aggregate, mean = {
 	}		
 })
 
-#	must bring to order
+#	must bring into order
 species <- species[order(species$plot, species$layer, species$abbr), ]
 
 if (!is.null(scale@codes)) {

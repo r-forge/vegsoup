@@ -40,6 +40,7 @@
 \alias{rowSums,Vegsoup-method}
 \alias{rowMeans,Vegsoup-method}
 \alias{richness,Vegsoup-method}
+\alias{nndist,Vegsoup-method}
 
 \alias{coverscale,Vegsoup-method}
 \alias{coverscale<-,Vegsoup,character-method}

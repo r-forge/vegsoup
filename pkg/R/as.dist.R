@@ -1,10 +1,9 @@
+#	retrieve distance matrix based on object settings (vegdist, decostand)
+#	stats defines:
+#   as.dist(m, diag = FALSE, upper = FALSE)
 #	set old class
 setOldClass("dist")
 
-#	critcal, as it overrides the generic
-#	and creates a new generic?
-#	stats defines:
-#   as.dist(m, diag = FALSE, upper = FALSE)
 #if (!isGeneric("as.dist")) {
 setGeneric("as.dist",
 	function (m, diag = FALSE, upper = FALSE)
@@ -41,23 +40,31 @@ setAs(from = "Vegsoup", to = "dist",
 		vegsoup::as.dist(from)
 	}
 )
-
-#	cure my override?
-#setMethod("as.dist",
-#	signature(m = "matrix"),
-#	function(m, ...) {
-#		stats::as.dist(m, ...)	
-#	}
-#)
-
-#setMethod("as.dist",
-#	signature(m = "dist"),
-#	function(m, ...) {
-#		stats::as.dist(m, ...)	
-#	}
-#)
-	 
+ 
 as.dist.Vegsoup <- function (m, ...) {
 	vegsoup::as.dist(m, ...)
 	#as(m, "dist")
 }
+
+
+#if (!isGeneric("outlier")) {
+setGeneric("nndist",
+	function (X, ...)
+		standardGeneric("nndist")
+)
+#}
+
+setMethod("nndist",
+    signature(X = "Vegsoup"),
+    function (X, ...) {
+    	d <- as.matrix(as.dist(X))
+    	diag(d) <- 1
+    	nn <- apply(d, 1, which.min)
+    	diag(d) <- 0
+    	res <- apply(cbind(nn, 1:ncol(d)), 1,
+    		function (x) d[x[1], x[2]])
+    	attr(res, "neighbour") <- rownames(d)[nn]
+    	
+    	return(res)
+    }
+)   	
