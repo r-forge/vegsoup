@@ -2,15 +2,15 @@
 
 import(methods)
 import(coenoflex)
-importFrom(optpart, optpart, partana, tabdev, disdiam)
-importFrom(multitable, data.list)
+importFrom("optpart", optpart, partana, tabdev, disdiam)
+importFrom("multitable", data.list)
 importFrom("graphics", plot, hist)
-importFrom("stats", as.dist)
+importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 importFrom("sp", coordinates, bbox, spplot, proj4string, spTransform, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 #importFrom("rgdal", spTransform)
-importFrom("cluster", ellipsoidhull, agnes, pam) #silhouette
+importFrom("cluster", ellipsoidhull, agnes, pam, silhouette) #
 
 #importFrom("Hmisc", latex)
 #importFrom("googleVis", gvisMap)
@@ -25,24 +25,25 @@ exportMethods(
     "AprioriGrouping",
     "Accuracy",
     "Association",
-    "as.vector",
-    "as.matrix",
-    "as.character",
-    "as.logical",
-    "as.numeric",
+#   "as.vector",
+#   "as.matrix",
+#   "as.character",
+#   "as.logical",
+#   "as.numeric",
 #    "as.data.frame",
-    "as.dist",
+#   "as.dist",
+    "average",
     "bind",
-    "coerce",
-    "colSums",
-    "colMeans",
+#   "coerce",
+#   "colSums",
+#   "colMeans",
     "Confus",
-    "Constancy",
-    "Contingency",
+    "constancy",
+    "contingency",
     "coverscale",
-    "coordinates",
+#   "coordinates",
     "decostand",
-    "dim",
+#   "dim",
     "Disdiam",
     "elevation",
     "fill",
@@ -52,9 +53,8 @@ exportMethods(
     "getK",
     "getStat",
     "QuickMap",	
-    "head",
+#   "head",
     "coldiss",
-    "Importance",
     "indices",
     "Indpower",
     "Indspc",
@@ -67,11 +67,11 @@ exportMethods(
     "Layers",
     "Layers<-",
     "Murdoch",
-    "names",
+#   "names",
 #   "names<-",
-    "ncol",
+#   "ncol",
     "nndist",
-    "nrow",
+#   "nrow",
     "Optindval",
     "Optsil",
     "outlier",
@@ -79,16 +79,16 @@ exportMethods(
     "Partitioning",
     "PartitioningMatrix",
     "Phi",
-    "plot",
+#   "plot",
     "richness",
-    "rownames",
+#   "rownames",
 #   "rownames<-",
-    "rowSums",
-    "rowMeans",
+#   "rowSums",
+#   "rowMeans",
     "SampleVegsoup",
     "seriation",
     "SigFidelity",
-    "Silhouette",
+#   "silhouette",
     "species",
     "Sites",
     "sites",
@@ -98,10 +98,10 @@ exportMethods(
     "SpatialPolygonsVegsoup",
     "Species",
     "Species<-",
-#    "Specieslist",	
+#   "Specieslist",	
     "spread",
     "Stride",
-    "summary",
+#   "summary",
     "Tabdev",
     "tail",
     "taxonomy",

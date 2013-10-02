@@ -1,7 +1,8 @@
 \name{SpeciesList}
 \alias{SpeciesList}
-\alias{SpeciesList-methods}
-\alias{taxon-methods}
+\alias{SpeciesList-method}
+\alias{taxon}
+\alias{taxon-method}
 
 \title{ Return Species List for an \code{Vegsoup*} object }
 \description{
@@ -13,10 +14,10 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 }
 \arguments{
   \item{ obj }{
-    a \code{Vegsoup*} object.
+    A \code{Vegsoup*} object.
   }
   \item{ layered }{
-    return species list with layers, defaults to \code{FALSE}. See
+    Return species list with layers, defaults to \code{FALSE}. See
     \sQuote{Details}.
 }
 }

@@ -1,38 +1,37 @@
-\name{table}
+\name{tables}
 \docType{methods}
-\alias{Contingency}
-\alias{Contingency-methods}
-\alias{Constancy}
-\alias{Constancy-methods}
-\alias{Importance}
-\alias{Importance-methods}
+\alias{contingency}
+\alias{contingency-methods}
+\alias{constancy}
+\alias{constancy-methods}
+\alias{average}
+\alias{average-methods}
 
 \title{ Summary Tables for \code{"VegsoupPartition"} Objects }
 
 \description{
-Function \code{Constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs in; \code{Contingency} lists just the number of occurrences. The latter are based on presence/absence of a species, whereas method \code{Importance} divides the sum of species abundances by the number of plots in which it occurs.
+Function \code{constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs in; \code{contingency} lists just the number of occurrences. The latter are based on presence/absence of a species, whereas method \code{average} divides the sum of species abundances by the number of plots in which it occurs.
 }
 \usage{
-## S4 method for signature 'VegsoupPartition'
-Contingency(obj, ...)
-## S4 method for signature 'VegsoupPartition'
-Constancy(obj, percentage = TRUE, ...)
-## S4 method for signature 'VegsoupPartition'
-Importance(obj, ...)
+\S4method{contingency}{VegsoupPartition}(obj, ...)
+
+\S4method{constancy}{VegsoupPartition}(obj, percentage = TRUE, ...)
+
+\S4method{average}{VegsoupPartition}(obj, ...)
 }
 
 \arguments{
   \item{ obj }{
-    An object inheriting from class \code{'VegsoupPartition'}
+    \code{'VegsoupPartition'} object.
   }
   \item{ percentage }{
-    Return results of \code{Constancy} as percentages, the default.
+    Return results of \code{constancy} as percentages, the default.
   }
   \item{ \dots }{
-    For \code{Contingency} and \code{Importance} \dots expand to arguments
+    For \code{contingency} and \code{average} \dots expand to arguments
     passed to matrix methods \code{as.logical} and \code{as.matrix}
-    respectively (see \sQuote{Details}).  Additional arguments to
-    \code{Constancy} are passed to \code{\link{round}} and are only applicable
+    respectively (see \sQuote{Details}). Additional arguments to
+    \code{constancy} are passed to \code{\link{round}} and are only applicable
     if \code{percentage = TRUE}, the default.
   }
 }
@@ -51,7 +50,7 @@ Roland Kaiser
 \seealso{
 \code{\link[labdsv:const]{const}} and
 \code{\link[labdsv:importance]{importance}} in \pkg{labdsv},
-\code{\link{Fivenum}} for Tukeys five-number summaries for \code{"VegsoupPartition"} objects.
+\code{\link{fivenum}}
 }
 \examples{
 library(vegsoup)
@@ -64,7 +63,7 @@ head(Constancy(prt))
 # equivalent
 head(Contingency(prt) / as.vector(table(Partitioning(prt)))) * 100
 
-# impaortance table based on class midpoints of braun blanquet scale
+# importance table based on class midpoints of braun blanquet scale
 Importance(prt)
 
 # adust to mimic presence/absence data

@@ -47,11 +47,11 @@
 
 	#	sites 'y'
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
-	y <- reshape(y, #[, 1:3]
-		direction = "wide",
+	#	copied from Vegsoup.R!
+	y <- reshape(y,	direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
-		#	groome names
+	#	groome names
 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
 	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
     #	assign row names

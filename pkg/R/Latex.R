@@ -1,8 +1,8 @@
 #	to do: add column for indicator value, high priority!
 .latexVegsoupPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {
-#	obj  <- prt
+#	obj  <- fid
 
-	sites <- obj@sites
+	sites <- Sites(obj)
 	
 	#	variables to drop for summary table	
 	drop <- grep("date", names(sites), fixed = TRUE)
@@ -130,8 +130,9 @@
 }
 
 #	generic is set by VegsoupPartition-*Methods.R
-.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, newpage = TRUE, fivenum.select, recode = FALSE, sep = "/", sites.columns, verbose = FALSE, ...) {
-	#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; fivenum.select = c("min", "median", "max"); sites.columns = names(Sites(obj)); verbose = TRUE; filename = paste("FidelityTable")
+.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, newpage = TRUE, quantile.select, coverscale = TRUE, sep = "/", sites.columns, verbose = FALSE, ...) {
+###	debuging arguments
+#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; quantile.select = c(1,3,5); sites.columns = names(Sites(obj)); verbose = TRUE; filename = "PartitionSummary"; coverscale = TRUE
 	if (class(obj) != "VegsoupPartitionFidelity") {
 		if (verbose) {
 			message("\n apply default indicator species statistic")
@@ -139,16 +140,17 @@
 		obj <- Fidelity(obj, ...)
 	}
 	
-	#	adapted from Sebastian Schmidtlein's isotab()
+	#	inspired by Sebastian Schmidtlein's isotab() in package isopam
 	
-	cntn <- Contingency(obj)
-	cnst <- Constancy(obj)
-	nc <- ncol(cnst) # number of clusters
-	sp <- ncol(obj) # number of species
+	ct <- contingency(obj)
+	cs <- constancy(obj)
+	nc <- getK(obj)
+	sp <- ncol(obj)
 	
 	ft <- obj@fisher.test
-	N <- nrow(obj) # number of plots
-	frq <- colSums(as.logical(obj))
+	N <- nrow(obj)
+	
+	frq <- colSums(obj)
 	siz <- table(Partitioning(obj))
 	
 	if (missing(filename) & mode == 1) {
@@ -160,31 +162,31 @@
 	if (missing(col.width)) {
 		col.width = "10mm"
 		if (verbose) {
-			cat("\n col.width missing, set to ", col.width)
+			message("\ncol.width missing, set to ", col.width)
 		}
 	}
 	if (missing(col.width)) {
 		taxa.width = "60mm"
 		if (verbose) {
-			cat("\n taxa.width missing, set to ", taxa.width)
+			message("\ntaxa.width missing, set to ", taxa.width)
 		}
 	}
 	if (missing(p.max)) {
 		p.max = .05
 		if (verbose) {
-			cat("\n p.max missing, set to ", p.max)
+			message("\np.max missing, set to ", p.max)
 		}
 	}
 	if (missing(footer.treshold)) {
 		footer.treshold = 1
 		if (verbose) {
-			cat("\n footer treshold missing, set to ", footer.treshold)
+			message("\nfooter treshold missing, set to ", footer.treshold)
 		}	
 	}
 	if (missing(molticols.footer)) {
 		molticols.footer = 3
 		if (verbose) {
-			cat("\n molticols footer missing, set to ", molticols.footer)
+			message("\nmolticols footer missing, set to ", molticols.footer)
 		}	
 	}
 	if (missing(use.letters) & getK(obj) > 10) {
@@ -196,12 +198,12 @@
 	} else {
 		if (missing(stat.min)) {
 			stat.min = 0.1
-			warning("stat.min missing set to: ", stat.min,
+			message("stat.min missing set to: ", stat.min,
 				"results may be meaningless. Please set an appropriate value for stat.min")
 		}
 	}
-	if (missing(fivenum.select)) {
-		fivenum.select = c("median")
+	if (missing(quantile.select)) {
+		quantile.select = c(1,3,5)
 	}
 	if (missing(sites.columns)) {
 		sites.columns = names(Sites(obj)) # names(obj)
@@ -218,7 +220,8 @@
 	}
 	
 
-	###	debug from here
+	###	debug both MODE 1 & MODE 2
+	
 	#	set file name
 	if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
 		filename = paste(filename, ".tex", sep = "")
@@ -251,22 +254,22 @@
 	symb[ft <= 0.001] <- "***"
 	
 	#	combine frequency table with significance symbols
-	frq.ft <- matrix(paste(cnst, symb, sep = ""), 
-		nrow = nrow(cnst), ncol = ncol(cnst))
+	frq.ft <- matrix(paste(cs, symb, sep = ""), 
+		nrow = nrow(cs), ncol = ncol(cs))
 	frq.ft <- data.frame(frq.ft)
-	colnames(frq.ft) <- 1:getK(obj)
+	colnames(frq.ft) <- 1:nc
 	rownames(frq.ft) <- colnames(obj)
 	  
 	#	fidelity measure
-	stat <- obj@stat
+	stat <- getStat(obj)
 	
 	#	sort table
-	# 	which cluster has highest fidelity measure
+	# 	which cluster has highest fidelity
 	stat.idx <- apply(stat, 1, which.max)
 	frq.ord <- stat.idx
 	
 	for (i in 1:length(frq.ord)) {
-		frq.ord[i] <- cnst[i, stat.idx [i]]
+		frq.ord[i] <- cs[i, stat.idx [i]]
 	}	
 	
 	#	sort freqency table
@@ -313,7 +316,7 @@
 			typ[[i]] <- "Nothing particularly typical"
 		}	
 	}
-	names(typ) <- colnames(cnst)
+	names(typ) <- colnames(cs)
 	
 	tmp <- list(tab = tmp, typical = typ)
 	
@@ -448,7 +451,7 @@
 			tex[tex == 0] <- "."
 	
 			#	move rare species to table footer
-			footer.species <- row.names(cntn)[rowSums(cntn) < footer.treshold]
+			footer.species <- row.names(ct)[rowSums(ct) < footer.treshold]
 	
 			#	check if we loose the only typical species in a partition
 			candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
@@ -467,7 +470,7 @@
 			#	prune footer species and collapse to string 
 			tex.footer <- tex[match(footer.species, row.names(tex)), ]
 			tex <- tex[-match(footer.species, row.names(tex)), ]
-			footer <- cntn[match(row.names(tex.footer), row.names(cntn)), ]
+			footer <- ct[match(row.names(tex.footer), row.names(ct)), ]
 	
 			txn <- split.abbr(obj)
 			txn <- txn[match(rownames(footer), rownames(txn)), ] #	dropped $abbr.layer
@@ -494,7 +497,7 @@
 			}
 			footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
 		} else {
-			warning("footer is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
+			message("\nfooter is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
 			footer <- ""
 		}
 	
@@ -528,23 +531,23 @@
 		tex.out <- tex
 		footer.species <- footer
 		footer.sites <- NULL
-	}
-	# end if (mode == 1)
+	} # end if (mode == 1)
 	
 	###	internal function branching for MODE 2
 	#	partition summary
 	#	add typesetting commands to intermediate results backuped as tex.out
 	
 	if (mode == 2) {
-		if (verbose) cat("\n run mode", mode)
+		if (verbose) message("\nrun mode ", mode)
 		
 		#	species summary
-		fn <- Fivenum(obj, na.rm = FALSE, recode = recode)
+		fn <- quantile(obj, coverscale = coverscale)
 		fn <- fn[match(rownames(tex.out), rownames(fn)), ,]
+		#	groome names
 	
-		fn.df <- t(apply(fn, c(2, 1),
+		fn.m <- t(apply(fn, c(2, 1),
 			function (x) {
-				res <- x[fivenum.select]
+				res <- x[quantile.select]
 				res <- paste(res, collapse = sep)
 				res
 			}))
@@ -557,16 +560,16 @@
 	
 		#	resort to match order of intermediate result table  
 		fn <- fn[match(rownames(tex), rownames(fn)), , ]
-		fn.df <- fn.df[match(rownames(tex), rownames(fn.df)), ]
-		cnst <- cnst[match(rownames(tex), rownames(cnst)), ]
-		cntn <- cntn[match(rownames(tex), rownames(cntn)), ]
+		fn.m <- fn.m[match(rownames(tex), rownames(fn.m)), ]
+		cs <- cs[match(rownames(tex), rownames(cs)), ]
+		ct <- ct[match(rownames(tex), rownames(ct)), ]
 		stat <- stat[match(rownames(tex), rownames(stat)), ]
 		sprd <- spread(obj) # speed issue, method is slow!
 		sprd <- sprd[match(rownames(tex), names(sprd))]
 
-		#	identical(rownames(fn), rownames(fn.df))
-		#	identical(rownames(fn), rownames(cnst))
-		#	identical(rownames(fn), rownames(cntn))
+		#	identical(rownames(fn), rownames(fn.m))
+		#	identical(rownames(fn), rownames(cs))
+		#	identical(rownames(fn), rownames(ct))
 		#	identical(rownames(fn), rownames(stat))				
 		#	identical(rownames(fn), names(sprd))
 					
@@ -575,23 +578,23 @@
 		
 		for (i in 1:getK(obj)) {
 			#	i = 1
-			sel <- which(cnst[, i] > 0)
+			sel <- which(cs[, i] > 0)
 			
 			#	main table
 			tmp <- data.frame(
-			#	abbr.layer = rownames(cnst[sel, ]),
+			#	abbr.layer = rownames(cs[sel, ]),
 				typical = "",
 				stat = round(stat[sel ,i], 3),
-				cons = cnst[sel, i],
-				cont = cntn[sel, i],
+				cons = cs[sel, i],
+				cont = ct[sel, i],
 				occu = 0,
 				out = 0,
 				spread = 0,
 				fn[sel, i, ],
-				summary = paste(cut(cnst[sel, i],
+				summary = paste(cut(cs[sel, i],
 				breaks = seq(0, 100, by = 20),
 					labels = c("I","II", "III", "IV", "V")),
-					" (", fn.df[sel, i], ", n = ", cntn[sel, i], ")", sep = ""),
+					" (", fn.m[sel, i], ", n = ", ct[sel, i], ")", sep = ""),
 				stringsAsFactors = FALSE)
 			
 			tmp$typical[match(typ[[i]], rownames(tmp))] <- "yes"
@@ -603,7 +606,7 @@
 			tmp$out <- tmp$occu - tmp$cont
 				
 			tmp <- cbind(txn[match(rownames(tmp), rownames(txn)), c("taxon", "layer")], tmp,
-					row.names = rownames(tmp)) # dropped $abbr.layer
+					row.names = rownames(tmp))
 			tex[[i]] <- tmp[tmp$cont > footer.treshold | tmp$typical == "yes", ]
 			
 			#	rare species footer
@@ -624,8 +627,9 @@
 			#tmp.str <- sapply(tmp.str, function (x) as.vector(x))
 
 			#	numerical variables
-			#	fivenum can be critical
-			tmp.num <- sapply(as.data.frame(apply(tmp[, num], 2, fivenum)), list)
+			#	fivenum can be critical!
+			tmp.num <- sapply(as.data.frame(
+				apply(tmp[, num], 2, function (x) fivenum(x, na.rm = TRUE))), list)
 			#	reduce constant varibales
 			sel <- sapply(tmp.num, function (x) length(unique(x))) <= 1			
 			tmp.num[names(sel)[sel]] <- "."
@@ -653,16 +657,12 @@
 		tex.out <- tex
 	}
 	# end if (mode == 2)
-
-	#	check species characters
-	#	times glyph in hybrid combinations
-	#	taxon is always in first position in the table
 	
 	if (mode == 1) {
 		if (verbose) cat("\n run mode", mode)
-		
-		#	special characters used in taxon names
-		#	hybrid combinations 	
+		#	check species characters
+		#	times glyph in hybrid combinations
+		#	taxon is always in first position in the table
 		tex[, 1] <- gsub("×", "$\\times$", tex[, 1], fixed = TRUE)
 		footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
 		#	& gylph used in Sites(obj)
@@ -700,7 +700,8 @@
 	# end if (mode == 1)
 	
 	if (mode == 2) {
-	
+	#	check species characters
+	#	times glyph in hybrid combinations	
 		tex.out <- sapply(tex.out, function (x) {
 				tmp <- x
 				#	replace ×
@@ -711,6 +712,13 @@
 				tmp[tmp[, 5] >= constancy.treshold, 1] <- 
 					paste("\\textbf{", tmp[tmp[, 5] >= constancy.treshold, 1], "}")
 				}	
+				tmp
+				}, simplify = FALSE)
+		
+		footer.species <- sapply(footer.species, function (x) {
+				tmp <- x
+				#	replace ×
+				tmp[, 2] <- gsub("×", "$\\times$", tmp[, 2], fixed = TRUE)
 				tmp
 				}, simplify = FALSE)
 			
@@ -733,7 +741,6 @@
 				lines.page = nrow(tex.out[[i]]),
 	#			numeric.dollar = FALSE, # raises errors in format.df
 				here = TRUE
-	#			, col.just = col.just
 			)
 	
 		con <- file(filename)

@@ -9,8 +9,7 @@
   Nearest neighbours can 
 }
 \usage{
-## S4 method for signature 'Vegsoup*'
-outlier(obj, type = c("mccune", "wildi"), thresh = 0.2, ...)
+\S4method{outlier}{Vegsoup}(obj, type = c("mccune", "wildi"), thresh = 0.2, ...)
 }
 \arguments{
   \item{ obj }{
@@ -47,7 +46,7 @@ McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software 
 Wildi, O. 2013. Data Analysis in Vegetation Ecology. 2nd ed. Wiley-Blackwell, Chichester.	
 }
 \seealso{
-\code{\link{plotPCO}}, \code{\link[dave:outlier]{outlier}} in \pkg{dave}.
+\code{\link{plotPCO}}, \code{\link{coldiss}}, \code{\link[dave:outlier]{outlier}} in \pkg{dave}.
 }
 \examples{
 library(vegsoup)

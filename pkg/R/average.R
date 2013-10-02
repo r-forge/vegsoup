@@ -1,9 +1,9 @@
-setGeneric("Importance",
+setGeneric("average",
 	function (obj, ...)
-		standardGeneric("Importance")
+		standardGeneric("average")
 )
 
-setMethod("Importance",
+setMethod("average",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		cl <- match.call()
@@ -12,7 +12,7 @@ setMethod("Importance",
 				res <- t(aggregate(as.matrix(obj, ...),
 					by = list(split.abbr(obj)$layer),
 					FUN = sum)[, -1])
-				res <- res / Contingency(obj, ...)
+				res <- res / contingency(obj, ...)
 				#	division by zero
 				res[is.na(res)] <- 0
 				colnames(res) <- Layers(obj)									
@@ -22,7 +22,7 @@ setMethod("Importance",
     	} else {  		
 			res <- t(aggregate(as.matrix(obj, ...),
 				by = list(Partitioning(obj)), FUN = sum))[-1, ]
-			res <- res / Contingency(obj)
+			res <- res / contingency(obj)
 			#	division by zero
 			res[is.na(res)] <- 0
 			colnames(res) <- unique(Partitioning(obj))

@@ -14,10 +14,10 @@ setMethod("Fivenum",
 		} 
 		tmp <- as.numeric(obj)
 		#	if (!na.rm)
-		tmp[tmp == 0] <- NA
+		#tmp[tmp == 0] <- NA
 		tmp <- aggregate(tmp,
 			by = list(Partitioning(obj)),
-			FUN = function (x) fivenum(x, na.rm = TRUE), simplify = FALSE)
+			FUN = function (x) stats::fivenum(x, na.rm = TRUE), simplify = FALSE)
 		part <- tmp[, 1]
 		tmp <- tmp[, -1]
 		res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], 5),

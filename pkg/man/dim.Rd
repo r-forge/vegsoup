@@ -1,5 +1,7 @@
 \name{dim}
 \docType{methods}
+\alias{nrow}
+\alias{nrow-methods}
 \alias{ncol}
 \alias{ncol-methods}
 \alias{ncol}
@@ -16,13 +18,10 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 }
 
 \usage{
-  ## S4 method for signature 'Vegsoup*'
+  ## S4 methods for signature 'Vegsoup*'
   ncol(x)
-  ## S4 method for signature 'Vegsoup*'
   nrow(x)
-  ## S4 method for signature 'Vegsoup*'
   dim(x)
-  ## S4 method for signature 'Vegsoup*'
   ncell(x)
 
   ## not yet implemented
@@ -31,11 +30,14 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
   ## ncell(x) <- value
 }
 \details{
-\code{nrow(x)} allways equals the number of rows in the sites slot. \code{ncol(x)} gives the number of species including layer duplicates. For species richness see \code{\link{Richness}}. \code{dim} retrieves the dimension of the species matrix of an object and \code{ncell} the numbder of cells in the species matrix.
+  \code{nrow(x)} allways equals the number of plots. \code{ncol(x)} gives the number of species
+  including layer duplicates. For species richness see \code{\link{richness}}. \code{dim}
+  retrieves the dimension of the species matrix of an object and \code{ncell} the numbder of
+  cells in the species matrix.
 }
 \arguments{
   \item{ x }{
-    A Vegsoup* object
+    A Vegsoup* object.
   }
 }
 

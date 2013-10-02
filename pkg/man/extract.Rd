@@ -2,6 +2,7 @@
 %% was $-methods
 \docType{methods}
 \alias{Extract}
+\alias{[}
 \alias{[-methods}
 \alias{Partition}
 \alias{Partition-methods}
@@ -13,7 +14,7 @@ Extract or replace parts of an object.
 
 \usage{
 ## S4 method for signature 'Vegsoup*'
-x[i, j, ... , drop = FALSE]
+x[i, j, ... , drop = TRUE]
 
 ## S4 method for signature 'VegsoupPartition'
 Partition(obj, value)
@@ -22,8 +23,11 @@ Partition(obj, value)
   \item{ x }{
     An object ingeriting from class \code{Vegsoup}.
   }
-  \item{ i, j }{
-    Indices specifying elements to extract or replace.
+   \item{ i, j, \dots }{
+    Elements to extract or replace.
+  }
+  \item{ drop }{
+    Not used. The method will allways return a valid \code{Vegsoup*} object!
   }
   \item{ obj }{
     A \code{VegsoupPartition} object.

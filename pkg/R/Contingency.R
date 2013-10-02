@@ -1,8 +1,8 @@
-setGeneric("Contingency",
+setGeneric("contingency",
 	function (obj, ...)
-		standardGeneric("Contingency")
+		standardGeneric("contingency")
 )
-setMethod("Contingency",
+setMethod("contingency",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		cl <- match.call()

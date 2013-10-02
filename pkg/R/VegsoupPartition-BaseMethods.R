@@ -140,43 +140,9 @@ setMethod("getK",
 	function (obj) obj@k
 )
 
-#	summary funection
-#	to do: documentation
-setMethod("summary",
-    signature(object = "VegsoupPartition"),
-	function (object, choice = c("all", "species", "sites", "partition"), ...) {
-		if (missing(choice)) {
-			choice <- "all"
-		}
-		choices <- c("all", "species", "sites", "partition")
-		choice <- choices[pmatch(choice, choices)]
-		if (is.na(choice)) {
-			stop("invalid choice")
-		}       	
-    	if (choice == -1) 
-        	stop("ambiguous choice")
-        	
-		switch(choice, "all" = {
-			summary(as(object, "Vegsoup"), choice = "all")
-			cat("\ntable of partition contingencies")
-			print(table(Partitioning(object)))
-		}, "species" = {
-			summary(as(object, "Vegsoup"), choice = "species")
-		}, "sites" = {
-			summary(as(object, "Vegsoup"), choice = "sites")
-		}, "partition" = {
-			cat("\ntable of partition contingencies")
-			print(table(Partitioning(object)))	
-		})	
-	}
-)
-
-#	contingency table
-
 #	Fisher Test
 #	depreciated
 #	use Fidelity(obj, "Fisher") instead
-#	to do: documentation
 
 setGeneric("FisherTest",
 	function (obj, ...)
@@ -268,7 +234,7 @@ setMethod("FisherTest",
 	N <- nrow(obj)						# number of plots
 	n_i <- colSums(as.logical(obj))		# species frequencies
 	N_pi <- table(Partitioning(obj))	# number of plots in partition
-	n_pi <- Contingency(obj)			# number of occurences in partition
+	n_pi <- contingency(obj)			# number of occurences in partition
 
 	res <- n_pi
 
@@ -311,7 +277,7 @@ setGeneric("Isamic",
 setMethod("Isamic",
 	signature(obj = "VegsoupPartition"),
 	function (obj) { 	
-	   	tmp <- Constancy(obj) / 100
+	   	tmp <- constancy(obj) / 100
     	res <- apply(tmp, 1, function (x) {
     			2 * sum(abs(as.numeric(x)- 0.5)) / ncol(tmp)
     		})
@@ -359,19 +325,19 @@ setMethod("Murdoch",
 #	Silhouette Analysis
 #	to do: documentation
 #	dots argument does not work with cluster::silhouette
-setGeneric("Silhouette",
-	function (obj, ...)
-		standardGeneric("Silhouette")
+setGeneric("silhouette",
+	function (x, ...)
+		standardGeneric("silhouette")
 )
 
-setMethod("Silhouette",
-    signature(obj = "VegsoupPartition"),
-    function (obj, method , ...) {
+setMethod("silhouette",
+    signature(x = "VegsoupPartition"),
+    function (x, ...) {
     	require(cluster)
-		if (getK(obj) == 1)
-			stop("meaningless with k = ", getK(obj))
+		if (getK(x) == 1)
+			stop("meaningless with k = ", getK(x))
     	
-		res <- cluster::silhouette(Partitioning(obj), dist = obj)
+		res <- cluster::silhouette(Partitioning(x), dist = as.dist(obj, ...))
 		return(res)    	
     }
 )
@@ -405,13 +371,13 @@ setMethod("head",
 #	dissimilarity diameters
 #if (!isGeneric("Disdiam")) {
 setGeneric("Disdiam",
-	function (obj, method, ...)
+	function (obj, ...)
 		standardGeneric("Disdiam")
 )
 #}
 setMethod("Disdiam",
     signature(obj = "VegsoupPartition"),
-    function (obj, method, ...) {
+    function (obj, ...) {
     	require(optpart)
 		if (getK(obj) == 1)
 			stop("meaningless with k = ", getK(obj))    	

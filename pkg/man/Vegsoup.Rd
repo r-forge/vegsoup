@@ -14,7 +14,7 @@
 }
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
-        proj4string = "+init=epsg:4326", verbose = FALSE)
+        proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE)
 
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 
@@ -32,6 +32,9 @@ coenoflex(numplt = 10, numspc = 10, ...)
   \item{ z }{
     Object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
     is of class \code{"SpeciesTaxonomy"}.
+  }
+  \item{ stringsAsFactors }{
+    Convert character strings in \code{y} to factors.
   }
   \item{ folder }{
     Path to a folder with three csv files. One file named \code{species.csv}

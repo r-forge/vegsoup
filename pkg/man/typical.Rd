@@ -9,8 +9,7 @@ Typical Samples of an Object of Class Vegsoup*
 Identifies samples (plots) that typify clusters in a partition based on dissimilarity.
 }
 \usage{
-## S4 method for signature 'VegsoupPartition'
-typical(obj, k = 1)
+\S4method{typical}{VegsoupPartition}(obj, k = 1, ...)
 }
 \arguments{
   \item{ obj }{
@@ -24,7 +23,7 @@ typical(obj, k = 1)
   }
 }
 \details{
-Silhouette analysis returns \code{k} samples with the largest positive silhouette width for each partition. Partana analysis returns the \code{k} samples with the highest mean similarity to the partition. See \code{\link[optpart:typal]{typal}} in package \pkg{optpart} for further details.
+Typical calculates two versions of typal species. Silhouette analysis returns \code{k} samples with the largest positive silhouette width for each partition. Partana analysis returns the \code{k} samples with the highest mean similarity to the partition. See \code{\link[optpart:typal]{typal}} in package \pkg{optpart} for further details.
 }
 \value{
 Returns a \code{list} with two components
@@ -50,7 +49,6 @@ dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 prt <- VegsoupPartition(dta, k = 2)
 
 typical(prt)
-typical(prt, typeof = "logical")
-#typal(prt, typeof = "logical", mode = "R") 
+typical(prt, typeof = "logical") 
 }
 \keyword{ methods }

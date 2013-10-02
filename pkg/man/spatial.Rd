@@ -1,12 +1,14 @@
-\name{sp-methods}
+\name{spatial}
 \docType{methods}
 \alias{coordinates}
 \alias{coordinates-methods}
+\alias{coordinates<-,Vegsoup,ANY-method}
 \alias{bbox}
 \alias{bbox-methods}
 \alias{bbox,Vegsoup-method}
 \alias{proj4string}
 \alias{proj4string-methods}
+\alias{coordinates<-,Vegsoup,CRS-method}
 \alias{spTransform}
 \alias{spTransform-methods}
 \alias{SpatialPointsVegsoup}
@@ -21,7 +23,7 @@
 \title{ Spatial Methods for \code{Vegsoup*} Objects } 
 
 \description{
-Methods 
+Spatial methods as defined in package \pkg{sp}.
 }
 
 \usage{
@@ -52,6 +54,9 @@ SpatialPolygonsVegsoup(obj)
   }
   \item{ CRS }{
     An object of class \code{"CRS"}. See \code{\linkS4class{CRS}}.
+  }
+  \item{ \dots }{
+    Additional arguments, not used.
   }
 }
 \details{

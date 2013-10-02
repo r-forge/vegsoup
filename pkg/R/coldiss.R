@@ -1,11 +1,7 @@
 ".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) { 
-# adapted for vegsoup from function coldiss()
+# adapted for vegsoup from function coldiss() by Francois Gillet
 # Color plots of a dissimilarity matrix, without and with ordering
-#
-# License: GPL-2 
-# Author: Francois Gillet, August 2009
-#
-#	argument nc renamed to colors with extended meaning	
+# argument nc renamed to colors with extended meaning	
 	require(gclus)
 
 	cl <- match.call()

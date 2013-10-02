@@ -1,11 +1,11 @@
 Package: vegsoup
-Version: 0.1-8
-Date: 2013-03-24
+Version: 0.1-9
+Date: 2013-10-02
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
-Depends: R (>= 2.14.0), methods, cluster, vegan, optpart, coenoflex, sp (>= 1.0-9), pbapply, multitable
-Suggests: labdsv, Hmisc, spatstat, rgdal (>= 0.8-11), RColorBrewer, stringr, googleVis, gclus, vegclust (>= 1.5.1), misc3d, multicore, maptools, isopam, geonames, multitable, mefa
+Depends: R (>= 3.0.1), methods, cluster, vegan, optpart, coenoflex, sp (>= 1.0-9), multitable
+Suggests: labdsv, pbapply, Hmisc, spatstat, rgdal (>= 0.8-11), RColorBrewer, stringr, googleVis, gclus, vegclust (>= 1.5.1), misc3d, multicore, maptools, isopam, geonames, mefa
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
 	Methods are provided for data manipulation, multivariate analysis,
@@ -69,6 +69,7 @@ Collate: AAA.R
          indspc.R
          table.R
          fivenum.R
+         quantile.R
          shared.R
          fidelity.R
          Phi.R
@@ -95,7 +96,7 @@ Collate: AAA.R
          Association.R
          Contingency.R
          Constancy.R
-         Importance.R
+         average.R
          rectangles.R
          ellipsoidhull.R
          write.verbatim.R
@@ -106,7 +107,8 @@ Collate: AAA.R
          VegsoupPartition-VisualisationMethods.R
          VegsoupPartitionFidelity-BaseMethods.R
          OptimStride.R
-         VegsoupOptimstride-BaseMethods.R        
+         VegsoupOptimstride-BaseMethods.R
+         VegsoupOptimstride-VisualisationMethods.R        
          Latex.R
          plot.R
          ZZZ.R

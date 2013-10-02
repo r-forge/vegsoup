@@ -4,6 +4,7 @@
 
 \alias{coverscale}
 \alias{coverscale-method}
+\alias{coverscale<-}
 \alias{coverscale<--method}
 
 \alias{is.ordinal}

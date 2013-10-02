@@ -36,7 +36,7 @@ if (any(is.na(test))) {
 
 pt <- readOGR(dsn, layer, ...)
 
-pt <- rgdal::spTransform(pt, CRS("+init=epsg:4326"))
+pt <- spTransform(pt, CRS("+init=epsg:4326")) # rgdal::
 
 #	can be simplified!
 if (!withz & length(schema) == 1) {

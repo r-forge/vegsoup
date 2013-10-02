@@ -1,5 +1,6 @@
-\name{coerce-methods}
+\name{coerce}
 \docType{methods}
+\alias{as}
 \alias{as-methods}
 \alias{coerce-methods}
 \alias{coerce,matrix-method}
@@ -10,6 +11,7 @@
 \alias{coerce.data.frame-method}
 \alias{coerce,data.list-method}
 \alias{coerce,mefa-method}
+
 
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
 \description{

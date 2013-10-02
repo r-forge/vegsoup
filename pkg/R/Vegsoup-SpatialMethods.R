@@ -38,8 +38,8 @@ setMethod("spTransform",
 	signature(x = "Vegsoup", "CRS"),
 	function (x, CRSobj, ...) {
 		require(rgdal)
-		x@sp.points <- rgdal::spTransform(x@sp.points, CRSobj, ...)
-		x@sp.polygons <- rgdal::spTransform(x@sp.polygons, CRSobj, ...)
+		x@sp.points <- spTransform(x@sp.points, CRSobj, ...) # rgdal::
+		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...) # rgdal::
 		x	
 	}
 	

@@ -1,11 +1,11 @@
 #	Species richness of data set
 setGeneric("richness",
-	function (obj, choice)
+	function (obj, ...)
 		standardGeneric("richness")
 )
 setMethod("richness",
     signature(obj = "Vegsoup"),
-	function (obj, choice) {
+	function (obj, choice = c("dataset", "sample")) {
 		#	obj = sub
 		CHOICES <- c("dataset", "sample")
 		if (missing(choice)) {
@@ -30,7 +30,7 @@ setMethod("richness",
 
 setMethod("richness",
     signature(obj = "VegsoupPartition"),
-	function (obj, choice) {
+	function (obj, choice = c("dataset", "sample", "partition")) {
 		#	obj = sub
 		CHOICES <- c("dataset", "sample", "partition")
 		if (missing(choice)) choice <- "dataset"

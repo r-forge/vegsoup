@@ -26,17 +26,13 @@
 }
 
 \usage{
-## S4 method for class 'VegsoupPartition'
-Silhouette(obj, ...)
+\S4method{Silhouette}{VegsoupPartition}(obj, ...)
 
-## S4 method for class 'VegsoupPartition'
-Partana(obj, verbose = FALSE, ...)
+\S4method{Partana}{VegsoupPartition}(obj, verbose = FALSE, ...)
 
-## S4 method for class 'VegsoupPartition'
-Disdiam(obj, ...)
+\S4method{Disdiam}{VegsoupPartition}(obj, ...)
 
-## S4 method for class 'VegsoupPartition'
-Tabdev(obj, numitr = 999, verbose = FALSE, ...)
+\S4method{Tabdev}{VegsoupPartition}(obj, numitr = 99, verbose = FALSE, ...)
 }
 
 \arguments{

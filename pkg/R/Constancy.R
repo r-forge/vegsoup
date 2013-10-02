@@ -1,11 +1,11 @@
-setGeneric("Constancy",
+setGeneric("constancy",
 	function (obj, percentage = TRUE, ...)
-		standardGeneric("Constancy")
+		standardGeneric("constancy")
 )
-setMethod("Constancy",
+setMethod("constancy",
 	signature(obj = "VegsoupPartition"),
 	function (obj, percentage = TRUE, ...) {
-		res1 <- Contingency(obj)
+		res1 <- contingency(obj)
 		res2 <- matrix(as.vector(table(Partitioning(obj))),
 			nrow = ncol(obj), ncol = getK(obj), byrow = TRUE)		
 		res <- res1 / res2

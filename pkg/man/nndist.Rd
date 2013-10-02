@@ -36,7 +36,7 @@ nndist(obj, ...)
 library(vegsoup)
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-
+vegdist(dta) <- "bray"
 (res <- nndist(dta))
 
 # access nearest neighbour distances 

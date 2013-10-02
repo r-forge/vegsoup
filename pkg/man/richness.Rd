@@ -7,23 +7,19 @@
 Retrieve dataset, sample or grouped species richness.
 }
 \usage{
+\S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample")
 
-## S4 method for signature 'Vegsoup'
-richness(obj, choice = c("dataset", "sample"))
-
-## S4 method for signature 'VegsoupPartition'
-richness(obj, choice = c("dataset", "sample", "partition"))
-
+\S4method{richness}{VegsoupPartition}(obj, choice = c("dataset", "sample", "partition")
 }
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+    \code{Vegsoup*} object.
   }
   \item{ choice }{
     Return either dataset or sample richness, defaults to \code{"dataset"}.
-    Partial matches are allowed. Objects of class \code{"VegsoupPartition"}
-    accept an additional option \code{choice = "partition"}.
+    Partial matches are allowed. Objects of class \code{'VegsoupPartition'}
+    take an additional option \code{"partition"}.
   }
 }
 \details{

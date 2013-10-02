@@ -1,6 +1,5 @@
-###	generating function
-#	to do: improve documentation
-Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", verbose = FALSE) {
+#	generating function
+Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE) {
 
 	if (missing(x)) {
 		stop("\nspecies are missing!")	
@@ -41,17 +40,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		else {
 			z <- taxonomy(new("Taxonomy", data = z))
 		}			
-	}
-#	if (missing(decostand)) {
-#		decostand = new("decostand", method = NULL)
-#	} else {
-#		decostand = new("decostand", method = decostand)
-#	}	
-#	if (missing(dist)) {
-#		dist = "euclidean"
-#	}	
+	}	
 	if	(!inherits(proj4string, "character")) {
-		stop("\n... argument proj4string does not inhertit from class 'character'")
+		stop("\nproj4string must inhertit from class 'character'")
 	}
 		
 	#	intersect x, y and z
@@ -65,7 +56,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		x <- x[which(x$plot %in% sel), ]
 		y <- y[which(y$plot %in% sel), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
-		warning("unique(x$plot) and unique(y$plot) do not match, ",
+		warning("\nunique(x$plot) and unique(y$plot) do not match, ",
 			"had to drop plots: \n",
 			paste(xx[xx != yy], collapse = ", "), call. = FALSE)
 	}
@@ -76,8 +67,10 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			xs <- Coverscale("braun.blanquet")
 		}
 		if (is.character(x$cov)) {
-			message("interpret abundance values as character",
-			"\nset cover scale to default 9 point Braun-Blanquet scale")
+			if (verbose) {
+				message("interpret abundance values as character",
+				"\ntry to set cover scale to default 9 point Braun-Blanquet scale")
+			}
 			xs <- Coverscale("braun.blanquet")
 		}
 		else {
@@ -103,16 +96,14 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 				}
 				else {
 					stop("please supply a character, ",
-						"list or object of class Coverscale", call. = FALSE)					
+						"list or object of class Coverscale", call. = FALSE)	
 				}				
 			}
 		}
 	}
 
-	#	test coverscale, must be valid	
-	test <- any(is.na(factor(x$cov, # was !any
-		levels = xs@codes,
-		labels = xs@lims)))
+	#	coverscale must be valid!	
+	test <- any(is.na(factor(x$cov,	xs@codes, xs@lims)))
 	if (test) {
 		stop("coverscale does not match data", call. = FALSE)
 	}
@@ -121,12 +112,11 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
 		if (verbose) {
-			cat("\n no grouping factor supplied,",
+			message("\n no grouping factor supplied,",
 				"use single partition")
 		}
 	}
 	else {
-		#	stopifnot(!is.null(names(group)))
 		if (inherits(group, "numeric")) {
 			group <- as.integer(group)
 			names(group) <- unique(x$plot)
@@ -135,64 +125,50 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			stop("argument group must be of mode integer", call. = FALSE)	
 		}
 	}
-	
+
+	#	sites data		
 	if (missing(sp.points) & missing(sp.polygons))	{
 		sp <- .find.coordinates(y, proj4string = proj4string)
 		sp.points <- sp[[1]]
 		sp.polygons <- sp[[2]]
 	}
 
-	#	drop coordiates from data frame	they are stored in spatial object
+	#	drop coordiates from data frame	they will be stored in spatial object
 	y <- y[y$variable != "longitude" & y$variable != "latitude", ]
-	if (any(sapply(y, is.factor))) {
-		y <- as.data.frame(as.matrix(y),
-			stringsAsFactors = FALSE)
-	}
+	#if (any(sapply(y, is.factor))) {
+	#	y <- as.data.frame(as.matrix(y),
+	#		stringsAsFactors = FALSE)
+	#}
 
-	#	rewrite!
-	#	cast sites data	
-	#	replace missing values
-	if (any(y[, 3] == "") | any(is.na(y[, 3]))) {
-		y[y[, 3] == "", 3] <- 0
-		y[is.na(y[, 3]), 3] <- 0
+	#	check missing values
+	#	not very rigid!
+	if (any(y[, 3] == "")) {
+		y[y[, 3] == "", 3] <- NA
 		if (verbose) {
-			message("\n NAs and empty fields (\"\") in supplied sites data",
-			" filled with zeros")
+			message("\n empty fields (\"\") in sites data set as NA")
 		}
 	}
    	
-	y <- reshape(y[, 1:3],
-		direction = "wide",
+   	#	copied to bind.R!
+	y <- reshape(y,	direction = "wide",
 		timevar = "variable",
-		idvar = "plot")   
+		idvar = "plot")
+	#	groome names
+	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
+	y <- as.data.frame(sapply(y,
+		function (x) type.convert(x), simplify = FALSE))
 	
-	y[is.na(y)] <- 0 # needed? keep NAs?
-	
-	#	change column mode to numeric if possible
-	
-	#	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
-	options(warn = -1)
-	y <- as.data.frame(
-		sapply(y,
-		function (x) {
-			if (!any(is.na(as.numeric(x)))) {
-				x <- as.numeric(x)
-			}
-			else {
-				x <- as.character(x)	
-			}
-		}, simplify = FALSE),
-		stringsAsFactors = FALSE)
-	options(warn = 0)
-
- 	#	groome names from reshape
- 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+	if (!stringsAsFactors) {
+		y <- as.data.frame(as.matrix(y),
+			stringsAsFactors = FALSE)
+	}	
     #	assign row names
-	rownames(y) <- y$plot
+	rownames(y) <- y$plot 
 	y <- y[, -grep("plot", names(y))]
 	#	order to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
-	#	change longitude column!
+	
+	#	finaly groome longitude column!
 	#	needs a work around because longitude is coreced to numeric
 	#	because of similiarity to scientific notion (13.075533E)	
 	sel <- grep("longitude", names(y))

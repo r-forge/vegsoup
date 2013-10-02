@@ -56,11 +56,12 @@ stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   \item{ schema }{
      Names of columns to be searched for. See \sQuote{Details}.
   }
-  \item{ absence }{
-    Character used to code absences. Can be missing, see \sQuote{Details}.
-    }
   \item{ verbose }{
      Prints some diagnostic messages.
+  }
+## Arguments for function stack.species
+  \item{ absences }{
+    Character used to code absences. Can be missing, see \sQuote{Details}.
   }
 
 ## Arguments for function stack.coordinates

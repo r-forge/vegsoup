@@ -24,13 +24,13 @@ if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
 		decostand(obj) <- NULL
 	}
 	if (verbose) {
-		cat("\n individual based index\n")
+		cat("individual based index")
 	}
 	r.ind <- TRUE #	Fisher test needs binary matrix
 	X <- as.numeric(obj)
 } else {
 	if (verbose) {
-		cat("\n presence/absence based index\n")
+		message("presence/absence based index")
 	}
 	X <- as.logical(obj)
 	r.ind <- FALSE # Fisher can use matrix X
@@ -562,7 +562,7 @@ tcr.ind.s <- function (sav, gmv, group = NULL) {
 	return(r)
 }
 
-#	method function
+#	method functions
 fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 		 if (method == "r")			a <- r.s(sav, gmv, group)
 	else if (method == "r.g")		a <- r.g(sav, gmv, group)
@@ -586,7 +586,7 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 	else if (method == "CR")		a <- cr.s(sav, gmv, group)
 	else if (method == "TCR")		a <- tcr.ind.s(sav, gmv, group)
 	
-	return (a)
+	return(a)
 }	
 
 #	verbose method names
@@ -596,8 +596,8 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
 	else if (method == "cos.g")		method.name <- "cosine (Ochiai index), group equalised"
 	else if (method == "r.ind")		method.name <- "phi individual based"
 	else if (method == "r.ind.g")	method.name <- "phi individual based, group equalised"
-	else if (method == "s.ind")		method.name <- "square root of Indval A times Indval B"
-	else if (method == "s.ind.g")	method.name <- "square root of Indval A.g * Indval B, group equalised"
+	else if (method == "s.ind")		method.name <- "sqrt of Indval A times Indval B"
+	else if (method == "s.ind.g")	method.name <- "sqrt of Indval A.g * Indval B, group equalised"
 	else if (method == "IndVal.g")	method.name <- "Indval, group equalised"
 	else if (method == "IndVal")	method.name <- "Indval"
 	else if (method == "A.g")		method.name <- "Indval A, group equalised"
@@ -700,8 +700,10 @@ if (is.null(group)) {
 })
 
 if (verbose) {
-	cat("\n computed fidelity measure", method, "in", cpu.time.dm[3], "sec")
-	cat("\n computed Fisher test in", cpu.time.ft[3], "sec")
+	message("computed fidelity measure ", method, " in ",
+		round(cpu.time.dm[3], 3), " sec", appendLF = FALSE)
+	message(" and Fisher test in ",
+		round(cpu.time.ft[3], 3), " sec")
 }
 
 #	perform bootstrap of diagnostic values

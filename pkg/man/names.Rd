@@ -2,42 +2,49 @@
 \docType{methods}
 \alias{rownames}
 \alias{rownames-methods}
+\alias{rownames<-,Vegsoup,character-method}
+\alias{rownames<-,Vegsoup,integer-method}
 \alias{row.names}
 \alias{row.names-methods}
+\alias{row.names<-,Vegsoup,integer-method}
 \alias{colnames}
 \alias{colnames-methods}
 \alias{dimnames}
 \alias{dimnames-methods}
 \alias{names}
 \alias{names-methods}
+\alias{names<-,Vegsoup,character-method}
+\alias{$}
 \alias{$-methods}
+\alias{$<-}
 
 \title{ Row and Column Names of \code{Vegsoup*} objects }
 \description{
 Retrieve the row or column names of the species matrix and the names of the sites \code{data.frame}. Note, the species matrix and the sites table relate to each other by a 1:1 data base schema. Therefore \code{rownames(obj)} (the plots) apply to both the species matrix and the sites data frame.
 }
 \usage{
-## S4 method for signature 'Vegsoup*'
+## S4 method for signature 'Vegsoup*' and slot 'species'
+dimnames(x)
 rownames(x, do.NULL = TRUE, prefix = "row")
+colnames(x, do.NULL = TRUE, prefix = "col")
 ## S4 replacement method for signature 'Vegsoup*'
 rownames(x) <- value
-## S4 method for signature 'Vegsoup*'
-colnames(x, do.NULL = TRUE, prefix = "col")
-## S4 method for signature 'Vegsoup*'
-dimnames(x)
 
-## S4 method for signature 'Vegsoup*'
+## S4 method for signature 'Vegsoup*' and slot 'sites'
+row.names(x)
 names(x)
-## S4 replacement method for signature 'Vegsoup*'
-names(x) <- value
-## S4 method for signature 'Vegsoup*'
 x$name
 ## S4 replacement method for signature 'Vegsoup*'
+row.names(x) <- value
+names(x) <- value
 x$i <– value
 }
 \arguments{
   \item{ x }{
     a \code{Vegsoup*} object. 
+  }
+  \item{ name }{
+    A literal character string or a \link[base:name]{name}.
   }
   \item{ do.NULL }{
     Not used.

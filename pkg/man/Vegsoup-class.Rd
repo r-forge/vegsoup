@@ -110,7 +110,7 @@
 \alias{Taxonomy,Vegsoup-method}
 \alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{vegdist,Vegsoup-method}
-\alias{vegdist<-,Vegsoup,character-method}
+%\alias{vegdist<-,Vegsoup,character-method}
 \alias{write.verbatim,Vegsoup-method}
 \alias{KML,Vegsoup-method}
 \alias{coldiss,Vegsoup-method}

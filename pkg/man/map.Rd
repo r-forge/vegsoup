@@ -16,7 +16,7 @@
 }
 \usage{
 ## S4 method for signature 'Vegsoup*'
-map(obj, ...)
+map(obj, database, ...)
 ## S4 method for signature 'VegsoupPartition*'
 ellipsoidhull(x, ...)
 }
@@ -28,8 +28,8 @@ ellipsoidhull(x, ...)
   \item{ x }{
     an object inhertiting from class \code{"VegsoupPartition"}.
   }
-  \item{ col }{
-    Color of the lines.
+  \item{ database }{
+    Character string naming a geographical database. See \code{\link[maps:map]{map}}.
    }
   \item{ \dots }{
     Arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps},

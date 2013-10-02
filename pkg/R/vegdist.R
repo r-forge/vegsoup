@@ -3,14 +3,14 @@
 #	vegan defines:
 #	vegdist(x, method="bray", binary=FALSE, diag=FALSE,
 #	upper=FALSE, na.rm = FALSE, ...)
-
+#if (!isGeneric("vegdist")) {
 setGeneric("vegdist",
 	function (x, method = "bray", binary = FALSE, diag = FALSE,
-	upper=FALSE, na.rm = FALSE, ...)
+	upper = FALSE, na.rm = FALSE, ...)
 		standardGeneric("vegdist")
 )
-
 #}
+
 #if (!isGeneric("decostand<-")) {
 setGeneric("vegdist<-",
 	function (x, value, ...)
@@ -55,6 +55,6 @@ setGeneric("distconnected",
 setMethod("distconnected",
 	signature(dis = "Vegsoup"),
 	function (dis, toolong = 1, trace = TRUE) {
-		vegan::distconnected(as.dist(obj), ...)
+		vegan::distconnected(as.dist(dis))
 	}
 )

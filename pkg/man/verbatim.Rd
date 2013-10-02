@@ -29,10 +29,11 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
 }
 
 \arguments{
-## Arguments to function \code{read.verbatim}
+## Arguments to functions
   \item{ file }{
-    A character string. A path to a text file.
-  }
+    A character string. A path to a plain text file.
+}
+## Arguments to function \code{read.verbatim}
   \item{ colnames }{
     A character string to be searched for in the header section and used to
     assign plot names. Note, do not use any characters defined for argument
@@ -50,25 +51,25 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
   \item{ species.only }{
     Just return a vector of species extracted from the data set.
   }
+  \item{ verbose }{
+    Print diagnostic messages.
+  }
   \cr
 ## Arguments to function \code{read.verbatim.append}
   \item{ x }{
     An object of class \code{VegsoupVerbatim} as created by calls to function
-    \code{read.verbatim}
+    \code{read.verbatim}.
   }
-  \item{ file }{
-    character. Path to a text file.
-  }
-  \item{ file }{
-    integer, specifying how the input file is organized. If missing defaults
-    to \code{mode = 1}. See \sQuote{Details}.
+  \item{ mode }{
+    Character, specifying how the input file is organized. If missing defaults
+    to \code{"plot"}. See \sQuote{Details}.
   }
   \item{ collapse }{
-    character, the separator between successive species.
+    Character, the separator between successive species.
     Defaults to \code{","}.
   }
   \item{ mode }{
-    character, defining how the species occurrences in rows are organized.
+    Character, defining how the species occurrences in rows are organized.
     See \sQuote{Details}.
   }
   \item{ abundance }{
@@ -87,9 +88,6 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
     An object of class \code{VegsoupData}.
-  }
-  \item{ file }{
-    A file name to output results.
   }
   \item{ select }{
     Character vector matching \code{names(obj)} or indices to columns in

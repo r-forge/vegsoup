@@ -10,35 +10,37 @@ Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-coldiss(obj, colors, byrank = TRUE, diag = FALSE, seriation,
+coldiss(obj, colors, byrank = TRUE, diag = FALSE, method,
         ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
   \item{ obj }{
-An object of class \code{Vegsoup*}.
-}
+    An object of class \code{Vegsoup*}.
+   }
   \item{ colors }{
-The number of colors, or a vector of colors. See \sQuote{Details}.
-}                          
+    The number of colors, or a vector of colors. See \sQuote{Details}.
+   }                          
   \item{ byrank }{
-Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equal-length intervals.
-}                          
+    Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equal-length
+    intervals.
+  }                          
   \item{ diag }{
-Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
-}                          
+    Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
+  }                          
   \item{ method }{
-Method argument passed to \code{\link{seriation}}.
-}                          
+    Method argument passed to \code{\link{seriation}}.
+  }                          
   \item{ ordered.only }{
-Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
-}
+    Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
+  }
   \item{ translate }{
-Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE} and only applies if additional argument \code{mode} is supplied and it's value is \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
-}
-  \item{\dots}{
-Arguments passed to \code{as.dist}. See \sQuote{Examples}.
-}                          
-
+    Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE}
+    and only applies if additional argument \code{mode} is supplied and it's value is
+    \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
+  }
+  \item{ \dots }{
+    Arguments passed to \code{as.dist}. See \sQuote{Examples}.
+  }
 }
 \details{
 If \code{colors} is a single integer, the argument determines the number of colors to be used with \code{\link{cm.colors}}. If \code{colors} is vector of colors longer than 1 those colors will be used. The function uses \code{\link{dmat.color}} and \code{\link{order.single}} in package \pkg{gclus}.

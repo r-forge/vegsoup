@@ -77,6 +77,9 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
     integer. Number of columns to typeset species meeting conditions implied
     by \code{footer.treshold}
   }
+  \item{ footer.width }{
+     LaTex tag to set column width for footer columns.
+  }
   \item{ fivenum.select }{
     a character vector selecting dimensions returned by
     \code{\link{Fivenum}} to become pasted to the constancy value.
@@ -87,6 +90,9 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
     character. Additional user supplied text pasted into automatically
     generated table caption.
     See \sQuote{Details}.
+  }
+  \item{ sites.columns }{
+    character. Selceting columns from sites data frame.
   }
   \item{ use.letters }{
     logical. Use additional letters.
@@ -161,7 +167,7 @@ ltx <- Latex(prt, filename = tempfile())
 fid <- Fidelity(prt)
 class(fid)
 
-ltx <- Latex(fid, mode = 2)
+ltx <- Latex(fid, mode = 2, filename = tempfile())
 
 head(ltx$table)
 }

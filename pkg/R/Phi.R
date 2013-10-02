@@ -12,8 +12,8 @@ setMethod("Phi",
 	signature(obj = "VegsoupPartition"),
 	function (obj) {
 	
-	cnti <- Contingency(obj)
-	cnst <- Constancy(obj)
+	cnti <- contingency(obj)
+	cnst <- constancy(obj)
 	nc <- ncol(cnst)
 	N <- nrow(obj)
 	SP <- ncol(obj)
