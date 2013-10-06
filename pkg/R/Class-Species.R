@@ -40,18 +40,18 @@ setMethod("initialize",
 			tmp <- data[duplicated(input), ][c("plot", "abbr")]
 			tmp <- paste(paste(tmp[,1], tmp[,2]), collapse = "\n")
 
-			warning("found duplicated species and dropped all duplicates",
+			message("found duplicated species and dropped all duplicates",
 				"\nplease review your data for observations:\n",
-				tmp, call. = FALSE)
+				tmp)
 			
 			data <- data[!duplicated(data[, c(1,2,3)]), ]
 		}
 		#	additional test
 		if (dim(unique(unique(data)))[1] != dim(data)[1]) {
-			warning("\n found duplicated species abundances for plots:\n... ",
+			message("\n found duplicated species abundances for plots:\n... ",
 				paste(data[duplicated(data), ]$plot, collapse = ", "),
 				"\n apply unique(..., fromLast = FALSE) to get rid of duplicates!",
-				"\n please review your data!", call. = FALSE)
+				"\n please review your data!")
 			data <- unique(data, fromLast = FALSE)
 		}
 		#	test for missing cover

@@ -1,6 +1,6 @@
 #	convert between matrix formats for import
 #	rename to Species
-stack.species <- function (x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
+stack.species <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
@@ -8,13 +8,8 @@ if (missing(x) & missing(file)) {
 
 if (!missing(file)) {
 	if (is.character(file)) {
-		if (csv2) {
-			x <- read.csv2(file,
+		x <- read.csv(file, sep = sep, dec = dec,
 				colClasses = "character", check.names = FALSE)				
-		} else {
-			x <- read.csv(file,
-				colClasses = "character", check.names = FALSE)				
-		}
 	}
 } else {
 	if (is.data.frame(x) & missing(file)) {

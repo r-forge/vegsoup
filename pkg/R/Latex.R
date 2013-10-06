@@ -243,8 +243,8 @@
 	test <- apply(ft, 2, function (x) any(x <= 0.05))
 	
 	if (!all(test)) {
-		warning(paste("Not a single species beeing significant for cluster",
-			as.vector(which(!test))), call. = FALSE)
+		message(paste("Not a single species beeing significant for cluster",
+			as.vector(which(!test))))
 	}
 	
 	symb <- ft
@@ -482,22 +482,29 @@
 				tmp.i <- data.frame(footer[, i], footer$taxon)
 				if (sum(tmp.i[,1]) > 0) {
 					tmp.i <- paste("\\textbf{", i, "}: ",
-						paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "), sep = "")	
+						paste(tmp.i[tmp.i[, 1] != 0,][, 2], collapse = ", "),
+						sep = "")	
 						tmp <- c(tmp, tmp.i)
 					}
 			}
 	
 			#	nice language for low thresholds
 			if (footer.treshold < 4) {
-				footer <- paste("\\textbf{Occuring only ", c("once", "twice", "thrice")[footer.treshold], " }",
+				footer <- paste("\\textbf{Occuring only ",
+					c("once", "twice", "thrice")[footer.treshold], " }",
 					paste(tmp, collapse = "\n\n "), sep = "")
-				} else {
-				footer <- paste("\\textbf{Occuring only ", footer.treshold, " times:}",
+				}
+				else {
+				footer <- paste("\\textbf{Occuring only ",
+					footer.treshold, " times:}",
 					paste(tmp, collapse = "\n\n "), sep = "")
 			}
-			footer <- paste("\\begin{multicols}{", molticols.footer, "}", footer, "\\end{multicols}")
-		} else {
-			message("\nfooter is empty with given treshold: ", footer.treshold, "!", call. = FALSE)
+			footer <- paste("\\begin{multicols}{", molticols.footer, "}",
+				footer, "\\end{multicols}")
+		}
+		else {
+			message("\nfooter is empty with given treshold: ",
+				footer.treshold, "!")
 			footer <- ""
 		}
 	
@@ -507,8 +514,8 @@
 			if (any(!is.na(tmp))) {
 				tmp <- tmp[!is.na(tmp)]
 				if (length(typ[[i]][-tmp]) < 1) {
-					warning("list of typical species would be empty",
-						" if this rare species gets dropped!", call. = FALSE)
+					message("list of typical species would be empty",
+						" if this rare species gets dropped!")
 					footer.species <- footer.species[-match(typ[[i]], footer.species)]
 				} else {
 					typ[[i]] <- typ[[i]][-tmp]

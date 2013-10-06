@@ -17,8 +17,8 @@ setMethod("SampleVegsoup",
 		sel <- sample(1:dim(x)[1], size, replace = replace, prob = prob)
     	if (any(table(sel) > 1)) {
     		sel <- sort(unique(sel))
-    		warning("\n replace was set to ", replace,
-    			", can only select unique plots! A subsample will be returend!", call. = FALSE)
+    		message("\nreplace was set to ", replace,
+    			", can only select unique plots! A subsample will be returend!")
     	}
     	res <- x[sel, ]
     	return(invisible(res))

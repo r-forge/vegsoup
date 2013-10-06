@@ -131,8 +131,8 @@ species <- species[order(species$plot, species$layer, species$abbr), ]
 
 if (!is.null(scale@codes)) {
 	if (any(max(species$cov) > max(scale@lims))) {
-		warning("\n reduced maximum aggregated abundance value to fit into limits: ",
-			min(scale@lims)[1], " to ", max(scale@lims), call. = FALSE)
+		message("\nreduced maximum aggregated abundance value to fit into limits: ",
+			min(scale@lims)[1], " to ", max(scale@lims))
 		species$cov[species$cov >  max(scale@lims)] <- max(scale@lims)
 	}
 }

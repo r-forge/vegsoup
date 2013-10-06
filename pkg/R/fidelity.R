@@ -20,7 +20,7 @@ if (getK(obj) < 2) {
 if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
 	if (!is.null(decostand(obj)) & method == "TCR") {
 		message("TCR is not defined for standardized data!",
-			"\nset decostand(obj) <- NULL", call. = FALSE)
+			"\nset decostand(obj) <- NULL")
 		decostand(obj) <- NULL
 	}
 	if (verbose) {

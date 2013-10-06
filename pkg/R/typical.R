@@ -18,8 +18,7 @@ setMethod("typical",
     		}
     	}
 		if (getK(obj) == 1) {
-			warning(" results are meaningless with k = ",
-				getK(obj), call. = FALSE)
+			message("results are meaningless with k = ", getK(obj))
 			return(NULL)
 		}
 		else {

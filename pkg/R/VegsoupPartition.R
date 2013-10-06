@@ -25,7 +25,7 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		#	for class(obj) VegsoupOptimstride
 		if ((missing(k) & missing(clustering)) & !inherits(obj, "VegsoupOptimstride")) {
 			k = 1
-			message("argument k missing, set to ", k, call. = FALSE)
+			message("argument k missing, set to ", k)
 		}	
 		if (missing(k) & inherits(obj, "VegsoupOptimstride")) {
 			#	warning! no sensible results so far!
@@ -48,13 +48,13 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		}
 		if (!missing(clustering) | match.arg(method) == "external") {
 			if (missing(clustering)) {
-				message(" selected method external but did not define clustering", call. = FALSE)
+				message("selected method external but clustering is misssing")
 			}
 			part.meth <- method <- "external"
 			if (length(clustering) == 1) {		
-				sel <- pmatch(clustering, names(Sites(obj))) # rename to: names(sites)
+				sel <- pmatch(clustering, names(obj))
 				if (!is.na(sel)) {			
-					clustering = as.vector(Sites(obj)[, sel]) 			
+					clustering <- as.vector(Sites(obj)[, sel]) 			
 				}
 				else {
 					stop("if length of clustering is 1",

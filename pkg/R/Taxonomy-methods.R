@@ -59,7 +59,7 @@ setMethod("$", "Taxonomy",
 	
 	if (!length(unique(res$abbr)) == nrow(res)) {
 		message("intersecting taxa abbreviations ('abbr') found.",
-			" Drop what is doubled!", call. = FALSE)
+			" Drop what is doubled!")
 		res <- unique(res)
 	}
 	return(taxonomy(res))

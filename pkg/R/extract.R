@@ -56,9 +56,6 @@ setMethod("[",
 		#	subset sites
 		res@sites <- res@sites[match(rownames(tmp),	rownames(Sites(res))), ]
 		
-		#if (any(sapply(res@sites, is.na))) {
-		#	warning("NAs introduced in Sites(obj)", call. = FALSE)
-		#}	   
 		if (length(res@group) != 0) {
 			res@group <- res@group[names(res@group) %in% rownames(tmp)]
 		}

@@ -180,8 +180,8 @@
 			sp.polygons <- spChFIDs(sp.polygons, x = ids)				
 		}
 		else {		
-			warning("not a complete coordinates list",
-				" use random pattern instead", call. = FALSE)
+			message("not a complete coordinates list",
+				" use random pattern instead")
 			tmp <- .rpoisppSites(y)	
 			sp.points <- tmp[[1]]
 			sp.polygons <- tmp[[2]] 

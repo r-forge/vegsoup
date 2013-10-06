@@ -7,12 +7,12 @@
 \title{ Get or Subset Object by Scientific Taxon Name }
 \description{
   Retrieve a \code{character} vector of scientific taxon names as defined by
-  \code{Taxonomy(obj)} or subset an object based on \code{Taxonomy(obj)} such that
+  \code{Taxonomy(x)} or subset an object based on these names such that
   only a subset of species remain.
 }
 \usage{
-\S4method{taxon}{Vegsoup}(taxon(x))
-\S4method{subset}{Vegsoup}(subset(x, subset, ...))
+\S4method{taxon}{Vegsoup}(x)
+\S4method{subset}{Vegsoup}(x, subset, ...)
 }
 
 \arguments{
@@ -28,11 +28,15 @@
   }
 }
 \details{
+  Function \code{taxon} retrieves scientific species names from an object.
+
   Extending the functionality of the \code{\link[vegsoup:extract]{"["}} extract methods for
-  vegsoup objects, that allows, for example, definition of subsets based on abbreviations as
-  returned by in colnames(x), this set of methods provides other means of selecting species.
-  By using the the \code{subset}-method it becomes possible to select species by their
-  taxonomic classification or other traits that might be existing in along with species names.
+  vegsoup objects, that allow for a definition of subsets based on abbreviations as
+  returned by \code{\link[vegsoup:colnames]{colnames}}, this set of methods provides other
+  means of selecting species.
+
+  By using the the \code{subset}-method it becomes possible to select species based on their
+  taxonomic classification or other traits that go along with species names.
 
   If subset is of mode \code{character} the string is passed to function \code{grep} and seeked
   in column \code{'taxon'} of \code{Taxonomy(x)}. Argument \code{"subset"} can be a vector of

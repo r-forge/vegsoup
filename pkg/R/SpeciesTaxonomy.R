@@ -1,4 +1,4 @@
-SpeciesTaxonomy <- function (x, y, file.x, file.y, sep = ",", dec = ".", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...) {
+SpeciesTaxonomy <- function (x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...) {
 
 #	x = X
 #	y = txa
@@ -46,14 +46,13 @@ if (which(sel) == 2) {
 	} else {
 		X <- species(new("Species", data = x))
 	}	
-	y <- read.csv(file.y, sep = spe, dec = dec,
+	y <- read.csv(file.y, sep = sep, dec = dec,
 		stringsAsFactors = FALSE, check.names = FALSE)	
 	Y <- taxonomy(new("Taxonomy", data = y))
 }
 
 if (which(sel) == 3) {
-	x <- read.csv2(file.x,
-		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+	x <- read.csv(file.x, sep = sep, dec = dec,
 		stringsAsFactors = FALSE, check.names = FALSE)
 	X <- species(new("Species", data = x))	
 	if (inherits(y, "Taxonomy")) {	
@@ -64,11 +63,9 @@ if (which(sel) == 3) {
 }
 
 if (which(sel) == 4) {
-	x <- read.csv2(file.x,
-		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+	x <- read.csv(file.x, sep = sep, dec = dec,
 		stringsAsFactors = FALSE, check.names = FALSE)	
-	y <- read.csv2(file.y,
-		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+	y <- read.csv(file.y, sep = sep, dec = dec,
 		stringsAsFactors = FALSE, check.names = FALSE)
 	X <- species(new("Species", data = x))
 	Y <- taxonomy(new("Taxonomy", data = y))

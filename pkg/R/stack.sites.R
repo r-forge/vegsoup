@@ -1,20 +1,14 @@
 #	stack sites data frame to match database structure
 #	rename to Sites
-stack.sites <- function (x, file, csv2 = TRUE, schema = "plot", verbose = FALSE) {
+stack.sites <- function (x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
 }
 if (!missing(file)) {
 	if (is.character(file)) {
-		if (csv2) {
-			x <- read.csv2(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-
-		} else {
-			x <- read.csv(file,
-				stringsAsFactors = FALSE, check.names = FALSE)
-		}
+		x <- read.csv(file, sep = sep, dec = dec,
+			stringsAsFactors = FALSE, check.names = FALSE)
 	}
 } else {
 	if (is.data.frame(x) & missing(file)) {
