@@ -91,9 +91,10 @@ setGeneric("summary", function(object, ...)
 		tmp$taxon <-
 			Taxonomy(x)$taxon[match(tmp$abbr, Taxonomy(x)$abbr)]
 		tmp <- tmp[, c(1,5,3,4)]
+		tmp <- tmp[order(tmp$taxon, tmp$layer), ]
 		tmp <- apply(tmp[, -1], 1,
-			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ","))
-		res <- paste(res, "\n species list\n", tmp, collapse = "")	
+			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ", "))
+		res <- paste(res, "\nspecies list     :", paste(tmp, collapse = ""))
 	}
 		
 	res		

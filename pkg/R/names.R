@@ -63,6 +63,7 @@ setMethod("colnames",
 		l <- Species(x)$layer
 		al <- file.path(a, l, fsep = "@") # faster than paste
 		res <- unique(unlist(sapply(Layers(x), function (x) al[l == x])))
+		if (!is.vector(res)) res <- as.vector(res) # to coerce if there is only one layer
 	    res
     }
 )

@@ -1,4 +1,4 @@
-SpeciesTaxonomy <- function (x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, skip = TRUE, verbose = FALSE) {
+SpeciesTaxonomy <- function (x, y, file.x, file.y, sep = ",", dec = ".", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...) {
 
 #	x = X
 #	y = txa
@@ -46,8 +46,7 @@ if (which(sel) == 2) {
 	} else {
 		X <- species(new("Species", data = x))
 	}	
-	y <- read.csv2(file.y,
-		sep = ifelse(csv2, ";", ","), dec = ifelse(csv2, ",", "."),
+	y <- read.csv(file.y, sep = spe, dec = dec,
 		stringsAsFactors = FALSE, check.names = FALSE)	
 	Y <- taxonomy(new("Taxonomy", data = y))
 }

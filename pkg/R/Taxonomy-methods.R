@@ -58,7 +58,7 @@ setMethod("$", "Taxonomy",
 	res <- do.call("rbind", lapply(allargs, taxonomy))
 	
 	if (!length(unique(res$abbr)) == nrow(res)) {
-		warning("intersecting taxa abbreviations ('abbr') found.",
+		message("intersecting taxa abbreviations ('abbr') found.",
 			" Drop what is doubled!", call. = FALSE)
 		res <- unique(res)
 	}

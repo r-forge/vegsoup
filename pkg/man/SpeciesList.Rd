@@ -1,8 +1,6 @@
 \name{SpeciesList}
 \alias{SpeciesList}
 \alias{SpeciesList-method}
-\alias{taxon}
-\alias{taxon-method}
 
 \title{ Return Species List for an \code{Vegsoup*} object }
 \description{
@@ -10,7 +8,6 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 }
 \usage{
   SpeciesList(obj, layered)
-  taxon(obj)
 }
 \arguments{
   \item{ obj }{
