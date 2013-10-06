@@ -42,7 +42,7 @@ setMethod("SpeciesList",
     	} else {
     		res <- Taxonomy(obj)[]	
     	}
-    	rownames(res) <- seq_len(nrow(sl))
+    	rownames(res) <- seq_len(nrow(res))
     	return(invisible(res))	
 	}
 )

@@ -101,7 +101,7 @@
 	
 	if (missing(file)) {
 		file <- paste(getwd(), "/plots.kml", sep = "")
-		warning("\nargument file missing, drop KML to folder ",
+		message("\nargument file missing, drop KML to folder ",
 			getwd(), " as ./plots.kml")
 	}	
 	begin.kml <- c(
@@ -161,7 +161,7 @@ if (missing(add.label)) {
 }	
 if (missing(file)) {
 	file <- paste(getwd(), "/partitions.kml", sep = "")
-	warning("\nargument file missing, drop KML to folder ",
+	message("\nargument file missing, drop KML to folder ",
 		getwd(), " as ./partitions partition.kml")
 }
 if (missing(website.url.path)) {
@@ -267,7 +267,7 @@ end.kml <- c(
 
 if (max(Partitioning(obj)) > 10) {
 	if (max(Partitioning(obj)) < 26) {
-		warning("numbered styled KML ouput is currently limited to 10 groups",
+		message("numbered styled KML ouput is currently limited to 10 groups",
 			"\nuse alphabet as alternative to numbers")
 		paddle.file <- LETTERS[unique(Partitioning(obj))]
 		paddle.identifier <- LETTERS[Partitioning(obj)]
