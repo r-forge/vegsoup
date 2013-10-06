@@ -19,6 +19,11 @@ order method for Vegsoup object (plot, abbr, layer)
 
 # rename
 layer to stratum
+Layers to strata
+add strata(obj) <- value logical-method
+if FALSE collapse all strata
+if TRUE no method to add strata to unlayered object 
+
 cov to abu(dance)
 Species to species and Sites to sites
 

@@ -9,9 +9,16 @@ setMethod("taxon",
 		Taxonomy(x)$taxon	
 	}
 )	
-
+#	subset = c("Warnstorfia", "Philonotis")
 .taxon.Taxonomy <- function (x, subset, ...) {
 	#	subset ="Carex"
+	allargs <- list(...)
+	if (any(names(allargs) == "invert")) {
+		#	invert argument to grep needs extra handling!
+		invert <- allargs$invert
+	} else {
+		invert = FALSE	
+	}
 	if (length(subset) < 1) {
 		stop("not a single species given", call. = FALSE)
 	}
@@ -29,8 +36,20 @@ setMethod("taxon",
 	}
 	if (is.character(subset)) {
 		xx <- taxon(x)
-		j <- unlist(sapply(subset, simplify = FALSE, USE.NAMES = FALSE,
-			FUN = function (x, ...) grep(pattern = x, x = xx, ...), ...))
+		j <- sapply(subset, simplify = FALSE, USE.NAMES = FALSE,
+			FUN = function (x) grep(pattern = x, x = xx, fixed = TRUE))
+		j <- sapply(subset, simplify = FALSE, USE.NAMES = FALSE,
+			FUN = function (x, ...) grep(pattern = x, x = xx, ...), ...)
+		if (!invert) {
+			j <- sort(unlist(j))
+		}
+		else {
+			tmp <- rep(0, length(xx))
+			for (i in seq(along = j)) {
+				tmp[j[[i]]] <- tmp[j[[i]]] + 1
+			}
+			j <- which(tmp == max(tmp))			
+		}	
 		j <- Taxonomy(x)[j, 1, drop = TRUE]
 	}
 	jj <- colnames(x)
