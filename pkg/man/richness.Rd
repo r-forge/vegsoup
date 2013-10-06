@@ -7,9 +7,9 @@
 Retrieve dataset, sample or grouped species richness.
 }
 \usage{
-\S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample")
+\S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample"))
 
-\S4method{richness}{VegsoupPartition}(obj, choice = c("dataset", "sample", "partition")
+\S4method{richness}{VegsoupPartition}(obj, choice = c("dataset", "sample", "partition"))
 }
 
 \arguments{

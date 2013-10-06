@@ -13,19 +13,39 @@ setMethod("plot",
 	function (x, ...) {
 
 	opar <- par(mfrow = c(1,2))
-	on.exit(par(opar))
 	
-	plt <- Species(x)$plot		
-	richness <- aggregate(rep(1, length(plt)),
-		by = list(plt), sum)$x
-	hist(richness, xlab = "Species richness", ...)
-    
-	spc <- Species(x)$abbr
-	occurences <- aggregate(rep(1, length(spc)),
-		by = list(spc), sum)$x
-    
-	hist(occurences, xlab = "Species occurences", ...)
-	res <- list(richness, occurences)
-	return(invisible(res))
+	hist(richness(x, "sample"), ...)
+        
+	hist(colSums(x), ...)
+	
+	par(opar)
 }
+)
+
+#	plotting methods for hist()
+setMethod("hist",
+	signature(x = "Vegsoup"),
+	function (x, ...) {
+		fig <- hist(colSums(x), ...)
+		return(invisible(fig))
+	}
+)
+
+#	plotting method hist
+setMethod("hist",
+	signature(x = "VegsoupPartition"),
+	function (x, ...) {
+		fig <- hist(richness(prt, "partition"), ...)
+		return(invisible(fig))
+	}
+
+)
+
+setMethod("hist",
+	signature(x = "VegsoupPartitionFidelity"),
+	function (x, ...) {
+		fig <- hist(x@stat, ...)
+		return(invisible(fig))
+	}
+
 )

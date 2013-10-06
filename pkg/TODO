@@ -1,3 +1,7 @@
+# man
+document
+system.file("extdata", "template.tex", package = "vegsoup")
+
 # major
 NEW
 decotrans method
