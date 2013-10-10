@@ -112,3 +112,24 @@ setMethod("SpatialPolygonsVegsoup",
 #		return(obj)		
 #	}
 #)
+
+#	dispatch on Spatial*
+setAs(from = "Vegsoup", to = "SpatialPoints",
+	def = function (from) {
+	as(from@sp.points, "SpatialPoints")
+})
+
+#	ensure that also base functions dispatch properly
+as.SpatialPoints.Vegsoup <-	function (x, ...) as.array(x, ...)
+
+setAs(from = "Vegsoup", to = "SpatialPointsDataFrame",
+	def = function (from) {
+	from@sp.points
+})
+
+setMethod("extract",
+	signature(x = "Raster", y = "Vegsoup"), 
+	function(x, y, ...){ 
+		raster::extract(x, as(y, "SpatialPoints"))
+	}
+)
