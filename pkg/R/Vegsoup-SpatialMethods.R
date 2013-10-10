@@ -13,10 +13,29 @@ setMethod("coordinates",
     function (obj) coordinates(obj@sp.points)
 )
 
+#	taken from SpatialPointsDataFrame-methods in package sp
 setReplaceMethod("coordinates",
 	signature(object = "Vegsoup", value = "ANY"),
-	function (object, value) 
-		stop("setting coordinates cannot be done on Spatial objects, where they have already been set")
+	function (object, value) {
+		#	only formula method
+		if (!inherits(value, "formula")) {
+			stop("only formula method is implemented (e.g. coordinates(x) <- ~X+Y", call. = FALSE)
+		}	
+		xy <- model.frame(value, Sites(object))
+		if (dim(xy)[2] == 2) {
+			jj <- as.character(as.list(value)[[2]])[2:3]
+			j <- match(nm, names(object))
+		} else if (dim(xy)[2] == 3) { 
+			jj <- c(as.character(as.list((as.list(value)[[2]])[2])[[1]])[2:3],
+				as.character(as.list(value)[[2]])[3])
+			j <- match(j, names(object))
+		}		
+		object@sp.points <- SpatialPointsDataFrame(
+			coords = xy, data = slot(slot(object, "sp.points"), "data"),
+			match.ID = FALSE)
+		Sites(object) <- Sites(object)[, -j]
+		return(object)			
+	}
 )
 		
 #	proj4string method
