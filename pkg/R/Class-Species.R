@@ -60,8 +60,8 @@ setMethod("initialize",
 				"\nplease review your data!", call. = FALSE)
 		}
 		#	ensure valid names	
-		#	data$abbr <- make.names(data$abbr)			
-		rownames(data) <- 1:nrow(data)
+					
+		rownames(data) <- seq_len(nrow(data))
 		
 	.Object@data <- data	
 	return(invisible(.Object))	

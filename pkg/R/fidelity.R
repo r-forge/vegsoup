@@ -11,7 +11,7 @@
 ".fidelityVegsoupPartition" <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...) {
 #	obj <- prt
 #	method = "TCR"
-#	group = NULL; nboot = 0; alpha = 0.05; c = 1; fast = FALSE; verbose = TRUE
+#	group = NULL; nboot = 0; alpha = 0.05; c = 1; fast = TRUE; verbose = TRUE
 if (getK(obj) < 2) {
 	if (verbose)
 		cat("results maybe meaningless with k = ", getK(obj))
@@ -614,7 +614,12 @@ fidelity.method <- function (sav, gmv, method = "r", group = NULL, ...) {
   
 if (sum(is.na(cluster)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
 if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
-  
+
+#	init multicore if active
+if (fast) {
+	require(multicore)
+	if (verbose) message("use multicore")
+}	
 #	create result object for fidelity measure
 nsps <- dim(X)[2]	# dim(obj)[2] 
 nsts <- dim(X)[1]	# dim(obj)[1] 
@@ -629,14 +634,27 @@ cpu.time.dm <- system.time({
 	if (verbose) {
 		require(pbapply)
 		pboptions(char = ".")
-		dm <- t(pbapply(X, 2,
-			function (x, ...) fidelity.method(x, cluster, method, group, ...))
-			)
-	} else {
-		dm <- t(apply(X, 2,
-			function (x, ...) fidelity.method(x, cluster, method, group, ...))
-			)	
+	}	
+	if (fast) {
+		dm <- mclapply(as.data.frame(X),
+			function (x, ...) fidelity.method(
+			x, cluster, method, group, ...))
+		dm <- matrix(unlist(dm), ncol = nlevels(cluster), nrow = length(dm),
+			dimnames = list(names(dm), levels(cluster)), byrow = TRUE)
+			
 	}
+	else {
+		if (verbose) {
+		dm <- t(pbapply(X, 2,
+			function (x, ...) fidelity.method(
+			x, cluster, method, group, ...)))
+		}
+		else {	
+		dm <- t(apply(X, 2,
+			function (x, ...) fidelity.method(
+			x, cluster, method, group, ...)))
+		}	
+	}	
 
 	if (is.null(group)) {
 		colnames(dm) <- levels(cluster)
@@ -656,7 +674,6 @@ cpu.time.dm <- system.time({
 	if (method == "IndVal.g") {
 		dm <- dm ^ 2
 	}
-
 })
 
 #	compute Fisher test
@@ -673,22 +690,20 @@ cpu.time.ft <- system.time({
 if (verbose) {
 	require(pbapply)
 	pboptions(char = ".")
-	ft <- t(pbapply(X, 2,
-		function (x, ...) fidelity.method(x, cluster, "Fisher", group, alternative = "greater"))
-		)
-} else {
-	if (fast) {
-		require(multicore)
-		ft <- mclapply(as.data.frame(X),
-			function (x, ...) fidelity.method(x, cluster, "Fisher", group, alternative = "greater"))
-		ft <- matrix(unlist(ft), ncol = nlevels(cluster), nrow = length(ft),
-			dimnames = list(names(ft), levels(cluster)), byrow = TRUE)
-	} else {
-	ft <- t(apply(X, 2,
-		function (x, ...) fidelity.method(x, cluster, "Fisher", , group, alternative = "greater"))
-		)		
-	}
+}	
+if (fast) {
+	ft <- mclapply(as.data.frame(X),
+		function (x, ...) fidelity.method(
+		x, cluster, "Fisher", group, alternative = "greater"))
+	ft <- matrix(unlist(ft), ncol = nlevels(cluster), nrow = length(ft),
+		dimnames = list(names(ft), levels(cluster)), byrow = TRUE)
 }
+else {
+	ft <- t(pbapply(X, 2,
+		function (x, ...) fidelity.method(
+		x, cluster, "Fisher", group, alternative = "greater")))		
+}
+#}
 
 if (is.null(group)) {
 	colnames(ft) <- levels(cluster)
@@ -696,7 +711,6 @@ if (is.null(group)) {
 	ft <- t(ft)
 	colnames(ft) <- group
 }
-
 })
 
 if (verbose) {

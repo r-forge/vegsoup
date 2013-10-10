@@ -24,7 +24,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}
 	else {
 		if (class(y) == "Sites") {
-			y <- sites(y) # formats numbers? 
+			y <- sites(y)
 		}
 		else {
 			y <- sites(new("Sites", data = y))
@@ -60,7 +60,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			"had to drop plots: \n",
 			paste(xx[xx != yy], collapse = ", "), call. = FALSE)
 	}
-		
+	#	coverscale	
 	if (missing(coverscale)) {
 		if (verbose) {
 			("\nno cover scale provided")
@@ -101,13 +101,16 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			}
 		}
 	}
-
-	#	coverscale must be valid!	
-	test <- any(is.na(factor(x$cov,	xs@codes, xs@lims)))
-	if (test) {
-		stop("coverscale does not match data", call. = FALSE)
+	#	test coverscale if ordinal
+	if (is.ordinal(xs)) {
+		test <- any(is.na(factor(x$cov,	xs@codes, xs@lims)))
+		if (test) {
+			stop("coverscale does not match data", call. = FALSE)
+		}
 	}
-	
+	#	no test need if continuous?
+	if (is.continuous(xs)) {
+	}		
 	if (missing(group))	{
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
@@ -135,29 +138,20 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 
 	#	drop coordiates from data frame	they will be stored in spatial object
 	y <- y[y$variable != "longitude" & y$variable != "latitude", ]
-	#if (any(sapply(y, is.factor))) {
-	#	y <- as.data.frame(as.matrix(y),
-	#		stringsAsFactors = FALSE)
-	#}
-
-	#	check missing values
-	#	not very rigid!
+	#	check missing values, not very rigid!
 	if (any(y[, 3] == "")) {
 		y[y[, 3] == "", 3] <- NA
 		if (verbose) {
 			message("\n empty fields (\"\") in sites data set as NA")
 		}
-	}
-   	
+	}  	
    	#	copied to bind.R!
 	y <- reshape(y,	direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
-	#	groome names
 	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
 	y <- as.data.frame(sapply(y,
-		function (x) type.convert(x), simplify = FALSE))
-	
+		function (x) type.convert(x), simplify = FALSE))	
 	if (!stringsAsFactors) {
 		y <- as.data.frame(as.matrix(y),
 			stringsAsFactors = FALSE)
@@ -167,12 +161,6 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	y <- y[, -grep("plot", names(y))]
 	#	order to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
-	
-	#	finaly groome longitude column!
-	#	needs a work around because longitude is coreced to numeric
-	#	because of similiarity to scientific notion (13.075533E)	
-	sel <- grep("longitude", names(y))
-	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
 	
 	res <- new("Vegsoup",
 		species = x,

@@ -5,8 +5,7 @@ setAs("list", "Coverscale", def = function (from) {
 		res <- new("Coverscale",
 			name = as.character(from[[1]]),
 			codes = as.character(from[[2]]),
-			lims = as.numeric(from[[3]])						
-			)
+			lims = as.numeric(from[[3]]))
 	}		
 	#	continous
 	if (is.null(from[[2]]) & is.null(from[[3]])) { # 			
@@ -23,15 +22,14 @@ setAs("list", "Coverscale", def = function (from) {
 setOldClass("coenoflex")
 #	from coenoflex to Vegsoup
 as.Vegsoup.coenoflex <- function (obj) {
-
-	require(coenoflex)
 	
 	spc <- obj$veg
 	sts <- obj$site
+	ns <- ncol(spc)
+	np <- nrow(spc)
 	
 	#	groome decimals
-	spc[spc > 0 & spc <= 0.2] <- 0.2 #! document this
-	spc <- round(spc, 1) # ... and that
+	spc[spc > 0 & spc <= 0.1] <- 0.1 #! document this
 
 	#	coenoflex behaves unexpected for low numbers of 'numplt' and 'numspc'
 	#	so we need to cure empty species
@@ -49,18 +47,22 @@ as.Vegsoup.coenoflex <- function (obj) {
 		}
 	}	
 	
-	abbr <- gsub(" ", "0", paste0("spc", format(1:ncol(spc))))
-	taxon <- gsub("spc", "species", abbr)
-	plot <- gsub(" ", "0", paste0("plt", format(1:nrow(spc))))
-		
-	spc <- cbind(
-		rep(plot, times = length(abbr)),	# plot
-		rep(abbr, each = length(plot)),		# abbr
-		"0l",								# layer
-		as.vector(spc))						# cov
-		
-	spc <- spc[spc[,4] != 0, ]
-	spc <- species(spc[order(spc[,1], spc[,2]), ])
+	#	meaningful names
+	abbr <- sprintf(paste0("spc%0", nchar(ns), ".0f"), 1:ns)
+	taxon <- sprintf(paste0("Species %0", nchar(ns), ".0f"), 1:ns)
+	plot <- sprintf(paste0("plt%0", nchar(np), ".0f"), 1:np)
+	
+	#	row-wise index to as.vector()
+	ij <- c(t(matrix(seq_len(np * ns), nrow = np, ncol = ns)))
+	#	pointer to non-zero values
+	z <- spc[ij] != 0
+	
+	spc <- matrix(c(
+		rep(plot, each = ns)[z],	# plot
+		rep.int(abbr, np)[z],		# abbr
+		rep("0l", length(which(z))),# layer
+		round(spc[ij[z]], 1)),		# cov
+		ncol = 4, nrow = table(z)[2])
 	
 	sts <- stack.sites(data.frame(plot = plot, sts))
 	

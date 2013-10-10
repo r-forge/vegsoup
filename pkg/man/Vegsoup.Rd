@@ -160,7 +160,9 @@ dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 dta
 
 # plot ordinations of simulated data
+plotPCO(coenoflex(100, 100), thresh = 0.2)
 plot(metaMDS(as.logical(coenoflex(100, 100))))
+
 # we can omit 'as-logical'
 plot(decorana(coenoflex(100, 100))) 
 
@@ -169,6 +171,10 @@ sim <- coenoflex(100, 100)
 coverscale(sim) <- "ordinal"
 table(Species(sim)$cov)
 
+# order and coerce to a sparse matrix representation
+as(seriation(coenoflex(10,30)), "sparseMatrix")
+
+#	R-mode analysis using mode argument, one of 'Q' or 'R'
 as(as.logical(seriation(coenoflex(10,30)), mode = "R"), "sparseMatrix")
 }
 \keyword{ classes }

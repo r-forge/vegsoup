@@ -62,16 +62,16 @@ setReplaceMethod("coverscale",
 		x@coverscale <- value			
 		
 		if (transform) {
-			x <- as.numeric(Species(x)$cov) # as long as we store characters
-			if (max(x) > 100) {
+			tmp <- as.numeric(Species(x)$cov) # as long as we store characters
+			if (max(tmp) > 100) {
 				stop("highest cover value is bigger than 100")
 			}
 
 			#	move lowest value into range
-			x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+			tmp[tmp < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
 			
 			x@species$cov <- as.character(
-				cut(x,
+				cut(tmp,
 					breaks = c(coverscale(x)@lims, 100),
 					labels = coverscale(x)@codes,
 					include.lowest = TRUE))
