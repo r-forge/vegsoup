@@ -24,7 +24,7 @@ if (length(schema) > 1) {
 
 stopifnot(!is.na(match(schema, names(x))))	
 
-if (!length(unique(x$plot)) == nrow(x))	{
+if (!length(unique(x[[schema]])) == nrow(x))	{
 	stop("schema column is not unique")
 }
 #	all columns must be of mode character to use stack()

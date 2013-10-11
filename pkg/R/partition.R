@@ -1,57 +1,127 @@
-#	running partition vector
-if(!isGeneric("Partitioning")) {
+#	number of partitions
+setGeneric("getK",
+	function (x)
+		standardGeneric("getK")
+)
+setMethod("getK",
+	signature(x = "VegsoupPartition"),
+	function (x) {
+		x@k
+	}	
+)
+
+#	retrieve partitions
+if (!isGeneric("Partitioning")) {
 setGeneric("Partitioning",
-	function (obj)
+	function (x)
 		standardGeneric("Partitioning")
 )
 }
 
-#	retrieve or set slot part
 setMethod("Partitioning",
-	signature(obj = "VegsoupPartition"),
-	function (obj) obj@part
+	signature(x = "VegsoupPartition"),
+	function (x) x@part
 )
 
-#	replace slot part
-if(!isGeneric("Partitioning<-")) {
+#	replace partitions
+if (!isGeneric("Partitioning<-")) {
 setGeneric("Partitioning<-",
-	function (obj, value)
+	function (x, value)
 		standardGeneric("Partitioning<-")
 )
 }
+
 setReplaceMethod("Partitioning",
-	signature(obj = "VegsoupPartition", value = "numeric"),
-	function (obj, value) {
-		if (length(value) != length(Partitioning(obj))) {
-			stop("\n replacement does not match in length")
+	signature(x = "VegsoupPartition", value = "numeric"),
+	function (x, value) {
+		if (length(value) != length(Partitioning(x))) {
+			stop("replacement does not match in length", call. = FALSE)
 		}
 		if (is.null(names(value))) {		
-			names(value) <- rownames(obj)
-		} else {
-			if (length(intersect(names(value), rownames(obj))) != nrow(obj)) {
-				stop("\n if value has names, these have to match rownames(obj)")
-			} else {
-				value <- value[match(rownames(obj), names(value))]
+			names(value) <- rownames(x)
+		}
+		else {
+			if (length(intersect(names(value), rownames(x))) != nrow(x)) {
+				stop("if value has names, those have to match rownames(x)")
+			}
+			else {
+				value <- value[match(rownames(x), names(value))]
 			}
 		}
-		obj@part <- value
-		obj@k <- length(unique(value))
-		
-		return(obj)		
+		x@part <- value
+		x@k <- length(unique(value))		
+		return(x)		
 	}
 )
 
-#	extended getter method
-#if(!isGeneric("Partition")) {
+#	subset by partiton
+if (!isGeneric("Partition")) {
 setGeneric("Partition",
-	function (obj, value, ...)
+	function (x, value, ...)
 		standardGeneric("Partition")
 )
-#}
+}
 
 setMethod("Partition",
-	signature(obj = "VegsoupPartition"),
-	function (obj, value) {	
-		obj[obj@part == value, ]
+	signature(x = "VegsoupPartition"),
+	function (x, value) {	
+		x[x@part == value, ]
 	}		
+)
+
+#	tabulate partition vector to matrix
+if (!isGeneric("PartitioningMatrix")) {
+setGeneric("PartitioningMatrix",
+	function (x)
+		standardGeneric("PartitioningMatrix")
+)
+}
+
+setMethod("PartitioningMatrix",
+    signature(x = "VegsoupPartition"),
+	function (x) {
+		res <- t(sapply(Partitioning(x),
+			function (y) {
+				as.numeric(y == levels(factor(Partitioning(x))))
+			}))
+		dimnames(res)[2] <- list(levels(factor(Partitioning(x))))
+    return(res)                                                                                                                              
+	}
+)
+
+#	matrix of possible partition combinations
+setGeneric("PartitioningCombinations",
+	function (x, collapse)
+		standardGeneric("PartitioningCombinations")
+)
+
+.PartitioningCombinations <- function (x, collapse) {	
+	if (missing(collapse)) {
+		collapse = "+"
+	}	
+	cluster <- levels(as.factor(Partitioning(x)))	
+	cl.comb <- function (x) {
+		k <- k <- getK(prt)# length(x)
+		ep <- diag(1, k, k)
+		names.ep <- x
+	    for (j in 2:k) {
+	    	nco <- choose(k, j)
+	    	co <- combn(k, j)
+	    	epn <- matrix(0, ncol = nco, nrow = k)
+			for (i in 1:ncol(co)) {
+				epn[co[, i], i] <- 1
+				names.ep <- c(names.ep, paste(x[co[,i]], collapse = collapse))
+			}
+		ep <- cbind(ep, epn)
+		}
+		colnames(ep) <- names.ep
+		return(ep)
+	}
+	res <- cl.comb(cluster)
+	return(res)
+}
+
+setMethod("PartitioningCombinations",
+	signature(x = "VegsoupPartition"),
+	.PartitioningCombinations
 )

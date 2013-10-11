@@ -101,11 +101,11 @@ setMethod("as.logical",
     }
 )	
 
-if (!isGeneric("as.matrix")) {
-setGeneric("as.matrix",
-	function (x, ...)
-	standardGeneric("as.matrix"))
-}
+#if (!isGeneric("as.matrix")) {
+#setGeneric("as.matrix",
+#	function (x, ...)
+#	standardGeneric("as.matrix"))
+#}
 
 setMethod("as.matrix",
     signature(x = "Vegsoup"),
@@ -193,7 +193,9 @@ setAs(from = "Vegsoup", to = "array",
 )
 
 #	ensure that also base functions dispatch properly
-as.array.Vegsoup <-	function (x, ...) as.array(x, ...)
+as.array.Vegsoup <-	function (x, ...) {
+	as.array(x, ...)
+}	
 
 #	return vector of abundances	
 setMethod("as.vector",

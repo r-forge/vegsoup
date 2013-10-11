@@ -1,18 +1,16 @@
-\name{Shared}
-\alias{Shared}
+\name{shared}
+\alias{shared}
 
-\title{
-Compare Shared Species between Partitions
-}
+\title{ Compare shared species between partitions }
 \description{
-Compute a diagonal matrix showing percentages of shared species between partitons.
+  Compute a diagonal matrix showing percentages of shared species between partitons.
 }
 \usage{
-Shared(obj)
+\S4method{Shared}{VegsoupPartition}(x)
 }
 \arguments{
-  \item{ obj }{
-     an object inheriting from class \code{"VegsoupPartition"}.
+  \item{ x }{
+     An \code{VegsoupPartition} object.
   }
 }
 \details{
@@ -21,7 +19,7 @@ Shared(obj)
   between partitions.
 }
 \value{
-	an object of class \code{\link{dist}}.
+  an object of class \code{\link{dist}}.
 }
 \author{ Roland Kaiser }
 

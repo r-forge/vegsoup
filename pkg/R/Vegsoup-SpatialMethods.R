@@ -24,7 +24,7 @@ setReplaceMethod("coordinates",
 		xy <- model.frame(value, Sites(object))
 		if (dim(xy)[2] == 2) {
 			jj <- as.character(as.list(value)[[2]])[2:3]
-			j <- match(nm, names(object))
+			j <- match(jj, names(object))
 		} else if (dim(xy)[2] == 3) { 
 			jj <- c(as.character(as.list((as.list(value)[[2]])[2])[[1]])[2:3],
 				as.character(as.list(value)[[2]])[3])
@@ -44,10 +44,18 @@ setMethod("proj4string",
 	function (obj) proj4string(obj@sp.points)
 )
 
+#setReplaceMethod("proj4string",
+#	signature(obj = "Vegsoup", value = "character"),
+#	function (obj, value) {
+#		value <- CRS(value)
+#		proj4string(obj@sp.points) <- value
+#		obj
+#	}
+#)
+
 setReplaceMethod("proj4string",
-	signature(obj = "Vegsoup", value = "character"),
+	signature(obj = "Vegsoup", value = "CRS"),
 	function (obj, value) {
-		value <- CRS(value)
 		proj4string(obj@sp.points) <- value
 		obj
 	}
@@ -57,8 +65,8 @@ setMethod("spTransform",
 	signature(x = "Vegsoup", "CRS"),
 	function (x, CRSobj, ...) {
 		require(rgdal)
-		x@sp.points <- spTransform(x@sp.points, CRSobj, ...) # rgdal::
-		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...) # rgdal::
+		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
+		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...)
 		x	
 	}
 	
@@ -70,7 +78,9 @@ setGeneric("SpatialPointsVegsoup",
 )
 setMethod("SpatialPointsVegsoup",
     signature(obj = "Vegsoup"),
-    function (obj) obj@sp.points
+    function (obj) {
+    	obj@sp.points
+    }
 )
 #if (!isGeneric("SpatialPoints<-")) {
 #setGeneric("SpatialPointsVegsoup<-",
@@ -116,20 +126,25 @@ setMethod("SpatialPolygonsVegsoup",
 #	dispatch on Spatial*
 setAs(from = "Vegsoup", to = "SpatialPoints",
 	def = function (from) {
-	as(from@sp.points, "SpatialPoints")
-})
+		as(from@sp.points, "SpatialPoints")
+	}
+)
 
-#	ensure that also base functions dispatch properly
-as.SpatialPoints.Vegsoup <-	function (x, ...) as.array(x, ...)
+#as.SpatialPoints.Vegsoup <- function (x) {
+#	as(x, "SpatialPoints")
+#}	
 
 setAs(from = "Vegsoup", to = "SpatialPointsDataFrame",
 	def = function (from) {
-	from@sp.points
-})
-
-setMethod("extract",
-	signature(x = "Raster", y = "Vegsoup"), 
-	function(x, y, ...){ 
-		raster::extract(x, as(y, "SpatialPoints"))
+		from@sp.points
 	}
 )
+
+#as.SpatialPointsDataFrame.Vegsoup <- function (x) {
+#	as(x, "SpatialPointsDataFrame")
+#}	
+
+#	plot spatial points
+points.Vegsoup <- function (x, y = NULL, ...) {
+	points(coordinates(x), ...)
+}

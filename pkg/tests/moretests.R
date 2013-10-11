@@ -78,8 +78,13 @@ dim(Layers(dta, collapse = c("hl", "sl", NA)))
 
 #	spatial methods
 coordinates(dta)
+dta$X <- coordinates(dta)[, 1]
+dta$Y <- coordinates(dta)[, 2]
+coordinates(dta) <- ~X+Y
 proj4string(dta)
+proj4string(dta) <- CRS("+init=epsg:4326")
 bbox(dta)
+
 spTransform(dta, CRS("+init=epsg:3857"))
 SpatialPointsVegsoup(dta)
 SpatialPolygonsVegsoup(dta)
@@ -123,7 +128,7 @@ as.numeric(dta)
 dta[1:3,]
 dta[1,]
 dim(dta[1:3,2:3])
-dim(Layers(dta[, grep("@sl", colnames(dta))]))
+Layers(dta[, grep("@sl", colnames(dta))])
 
 #	subsample
 rownames(SampleVegsoup(dta))
@@ -147,24 +152,26 @@ as.data.frame(as.matrix(seriation(dta, "packed"), "character", "r"))
 prt <- VegsoupPartition(dta, k = 2)
 
 fid <- Fidelity(prt, verbose = TRUE)
-#	inherited methods
+fid <- Fidelity(prt, verbose = TRUE, fast = TRUE)
+
 head(prt)
 getK(prt)
 Partitioning(prt)
 spread(prt)
-Contingency(prt)
-Constancy(prt)
-Shared(prt)
-Fivenum(prt)[,,1] # min
-Fivenum(prt, na.rm = FALSE)[,,2] # lower hinge
-Fivenum(prt, recode = TRUE)[,,3] # median
+contingency(prt)
+constancy(prt)
+shared(prt)
+
+quantile(prt)[,,1] # min
+quantile(prt, na.rm = FALSE)[,,2] # lower hinge
+quantile(prt, coverscale = TRUE)[,,3] # median
 prt[1,]
 prt[,1:10]
-
+Partition(prt, 1)
 Optsil(prt)
 Optindval(prt)
 Partana(prt)
-Silhouette(prt)
+#silhouette(prt)
 Disdiam(prt)
 typical(prt)
 #Murdoch(prt) 

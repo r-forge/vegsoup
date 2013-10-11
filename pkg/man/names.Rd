@@ -1,42 +1,61 @@
 \name{row+colnames}
 \alias{rownames}
-\alias{rownames-methods}
+
+\alias{rownames-method}
 \alias{rownames<-,Vegsoup,character-method}
 \alias{rownames<-,Vegsoup,integer-method}
+
 \alias{row.names}
-\alias{row.names-methods}
+\alias{row.names-method}
 \alias{row.names<-,Vegsoup,integer-method}
+
 \alias{colnames}
-\alias{colnames-methods}
+\alias{colnames-method}
+
 \alias{dimnames}
-\alias{dimnames-methods}
+\alias{dimnames-method}
+
 \alias{names}
-\alias{names-methods}
+\alias{names-method}
 \alias{names<-,Vegsoup,character-method}
+
 \alias{$}
-\alias{$-methods}
+\alias{$-method}
+\alias{$,character-method}
+\alias{$,Vegsoup,character-method}
+
 \alias{$<-}
+\alias{$<-,character,ANY-method}
+\alias{$<-,Vegsoup,character-method}
 
 \title{ Row and Column Names of \code{Vegsoup*} objects }
 \description{
-Retrieve the row or column names of the species \code{matrix} and the names of the sites \code{data.frame}. Note, the species matrix and the sites table relate to each other by a 1:1 data base schema. Therefore \code{rownames(obj)} (the plots) apply to both the species matrix and the sites data frame.
+Retrieve the row or column names of the species matrix (\code{\link[vegsoup:as.matrix]{as.matrix}}) and the names of the sites data (\code{\link{Sites}}). Note, the \emph{species matrix} and the \emph{sites data frame} relate to each other by a 1:1 data base schema. Therefore, \code{rownames(x)} (matrix method) and \code{row.names(x)} (data.frame method) return the same and the second method just exists for completeness.
 }
 \usage{
 ## slot 'species'
 \S4method{dimnames}{Vegsoup}(x)
+
 \S4method{rownames}{Vegsoup}(x, do.NULL = TRUE, prefix = "row")
+
 \S4method{colnames}{Vegsoup}(x, do.NULL = TRUE, prefix = "col")
-## S4 replacement method for signature 'Vegsoup*'
-rownames(x) <- value
+
+\S4method{rownames}{Vegsoup}(x) <- value
 
 ## slot 'sites'
 \S4method{row.names}{Vegsoup}(x)
+
 \S4method{names}{Vegsoup}(x)
-x$name
-## S4 replacement method for signature 'Vegsoup*'
-row.names(x) <- value
-names(x) <- value
-x$i <– value
+
+\S4method{$}{Vegsoup}(x, name)
+
+\S4method{row.names}{Vegsoup}(x) <- value
+
+\S4method{names}{Vegsoup}(x) <- value
+
+\S4method{row.names}{Vegsoup}(x) <- value
+
+\S4method{$}{Vegsoup}(x, name) <- value
 }
 \arguments{
   \item{ x }{

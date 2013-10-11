@@ -1,5 +1,6 @@
 library(vegsoup)
 
+if (FALSE) {
 #?vegclass
 data(bigtestdata)
 dta <- VegsoupData(Vegsoup(species.big, sites.big, taxonomy.big,
@@ -67,7 +68,4 @@ vc <- as.vegclust(vegdist(as.logical(dta1)),
 	cluster = as.numeric(class))
 cls2 <- vegclass(vc, as.data.frame(as.matrix(vegdist(as.logical(dta2)))) )
 defuzzify(cls2$memb)
-
-
-
-
+}

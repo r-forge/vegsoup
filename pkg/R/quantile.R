@@ -42,7 +42,9 @@ setGeneric("quantile",
 		}			
 	}
 	else {
-		message("coverscale is not ordinal")
+		if (coverscale & is.continuous(x)) {
+			message("coverscale is not ordinal")			
+		}
 	}
 	res	
 }

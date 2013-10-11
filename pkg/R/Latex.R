@@ -392,8 +392,9 @@
 			} else {
 				tmp <- tex.typical[rep(1,2),]
 				rownames(tmp) <- c(i, paste("typical", i, sep =""))
-				tmp[1,1] <- ""
-				tmp[2,1] <- paste("\\textbf{Nothing particularly typical for ", i, "}", sep = "")	
+				tmp[1, 1] <- ""
+				tmp[2, 1] <-
+					paste("\\textbf{Nothing particularly typical for ", i, "}",sep = "")	
 				tmp[1:2, 2:ncol(tmp)] <- ""
 			}
 		tex.typical.seperated <- rbind(tex.typical.seperated, tmp)
@@ -443,7 +444,8 @@
 				table(Partitioning(obj)), sep = ":", collapse = ", "),
 			". ",
 			sep = "")
-			caption <- paste(caption, caption.text, collapse = " ")	# additional user supplied text	
+			# additional user supplied text
+			caption <- paste(caption, caption.text, collapse = " ")	
 	
 			#	prepare intermediate result for formating	
 			names(tex) <- col.names

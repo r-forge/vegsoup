@@ -85,10 +85,11 @@ dim(res)
 
 #  logical index to define subset
 #  get family retrieved from the plant list
-require(Taxonstand)
+library(Taxonstand)
+
 tmp <- TPL(taxon(dta))
 #  Carex is a genus of Cyperaceae, let's see if there are more mebers of this family
 taxon(subset(dta, tmp$Family == "Cyperaceae")) # no, there are not
 }
-\keyword{ method }
+\keyword{ methods }
 

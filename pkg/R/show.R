@@ -1,50 +1,3 @@
-#if (!isGeneric("head")) {
-setGeneric("head", function (x, ...)
-	standardGeneric("head"))
-#}
-
-setMethod("head",
-    signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(choice))
-	    	choice = "species"
-    	CHOICES <- c("species", "sites")
-    	choice <- CHOICES[pmatch(choice, CHOICES)]
-	    if (missing(typeof))
-		    typeof = "logical"
-	    if (missing(n))
-		    n = 6L
-    	if (choice == "species")
-			res <- head(as.matrix(x, typeof), n, ...)
-    	if (choice == "sites")
-    		res <- head(Sites(x), n, ...)
-    	return(res)
-    }    	    
-)
-#if (!isGeneric("tail")) {
-setGeneric("tail", function (x, ...)
-	standardGeneric("tail"))
-#}
-#	to do: documentation
-setMethod("tail",
-    signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(choice))
-	    	choice = "species"
-    	CHOICES <- c("species", "sites")
-    	choice <- CHOICES[pmatch(choice, CHOICES)]
-		if (missing(typeof))
-		    typeof = "logical"
-	    if (missing(n))
-			n = 6L
-		if (choice == "species")
-			res <- tail(as.matrix(x, typeof), n, ...)
-    	if (choice == "sites")
-    		res <- tail(Sites(x), n, ...)
-    	return(res)
-    }    	    
-)
-
 #	show and summary methods
 setMethod("show",
     signature(object = "Vegsoup"),
@@ -59,11 +12,6 @@ setMethod("show",
 			summary(object)
     }
 )
-
-#if (!isGeneric("summary")) {
-setGeneric("summary", function(object, ...)
-	standardGeneric("summary"))
-#}
 
 #	partial summary functions
 .species.summary <- function (x) {
@@ -131,6 +79,11 @@ setGeneric("summary", function(object, ...)
 	res
 }
 
+#if (!isGeneric("summary")) {
+setGeneric("summary", function (object, ...)
+	standardGeneric("summary"))
+#}	
+
 #	class Vegsoup
 setMethod("summary",
     signature(object = "Vegsoup"),
@@ -145,11 +98,11 @@ setMethod("summary",
 		s3 <- .spatial.summary(object)
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3)
+			cat(s1, s2, s3, "\n")
 		}, "species" = {
-			cat(s1, s3)
+			cat(s1, s3, "\n")
 		}, "sites" = {
-			cat(s2, s3)
+			cat(s2, s3, "\n")
 		})
 	}
 )
@@ -170,13 +123,13 @@ setMethod("summary",
 		cat("object of class  :", class(object))		
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3, s4)			
+			cat(s1, s2, s3, s4, "\n")			
 		}, "species" = {
-			cat(s1, s3, s4)
+			cat(s1, s3, s4, "\n")
 		}, "sites" = {
 			cat(s2, s3, s4)
 		}, "partition" = {
-			cat(s4)
+			cat(s4, "\n")
 		})	
 	}
 )
@@ -198,15 +151,15 @@ setMethod("summary",
 		cat("object of class  :", class(object))		
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3, s4)			
+			cat(s1, s2, s3, s4, "\n")			
 		}, "species" = {
-			cat(s1, s3, s4)
+			cat(s1, s3, s4, "\n")
 		}, "sites" = {
-			cat(s2, s3, s4)
+			cat(s2, s3, s4, "\n")
 		}, "partition" = {
-			cat(s4)
+			cat(s4, "\n")
 		}, "fidelity" = {
-			cat(s5)
+			cat(s5, "\n")
 		})	
 	}
 )
@@ -246,4 +199,51 @@ setMethod("summary",
 		}
 		return(invisible(res))
 		}
+)
+
+if (!isGeneric("head")) {
+setGeneric("head", function (x, ...)
+	standardGeneric("head"))
+}
+
+setMethod("head",
+    signature(x = "Vegsoup"),
+    function (x, n = 6L, choice, typeof, ...) {
+	    if (missing(choice))
+	    	choice = "species"
+    	CHOICES <- c("species", "sites")
+    	choice <- CHOICES[pmatch(choice, CHOICES)]
+	    if (missing(typeof))
+		    typeof = "logical"
+	    if (missing(n))
+		    n = 6L
+    	if (choice == "species")
+			res <- head(as.matrix(x, typeof), n, ...)
+    	if (choice == "sites")
+    		res <- head(Sites(x), n, ...)
+    	return(res)
+    }    	    
+)
+if (!isGeneric("tail")) {
+setGeneric("tail", function (x, ...)
+	standardGeneric("tail"))
+}
+
+setMethod("tail",
+    signature(x = "Vegsoup"),
+    function (x, n = 6L, choice, typeof, ...) {
+	    if (missing(choice))
+	    	choice = "species"
+    	CHOICES <- c("species", "sites")
+    	choice <- CHOICES[pmatch(choice, CHOICES)]
+		if (missing(typeof))
+		    typeof = "logical"
+	    if (missing(n))
+			n = 6L
+		if (choice == "species")
+			res <- tail(as.matrix(x, typeof), n, ...)
+    	if (choice == "sites")
+    		res <- tail(Sites(x), n, ...)
+    	return(res)
+    }    	    
 )

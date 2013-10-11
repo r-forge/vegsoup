@@ -67,7 +67,7 @@ if (verbose) print(collapse)
 
 #	test collapse vector
 if (any(is.na(collapse[,2]))) {
-	message("\nNA in collapse, dropped all species on these layers")
+	message("NA in collapse, dropped all species on these layers")
 	ld <- collapse[is.na(collapse[,2 ]), 1]
 	collapse <- collapse[!is.na(collapse[,2 ]), ]
 	#	drop all occurences on these layers

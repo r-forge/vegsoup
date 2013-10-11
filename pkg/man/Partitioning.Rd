@@ -1,48 +1,51 @@
 \name{Partitioning}
 \docType{methods}
+\alias{getK}
+\alias{getK-method}
 \alias{Partitioning}
-\alias{Partitioning-methods}
+\alias{Partitioning-method}
 \alias{PartitioningMatrix}
-\alias{PartitioningMatrix-methods}
+\alias{PartitioningMatrix-method}
 \alias{PartitioningCombinations}
-\alias{PartitioningCombinations-methods}
+\alias{PartitioningCombinations-method}
 
-\title{ Methods for the Partitioning Vector of \code{"VegsoupPartition"} Objects }
+\title{ Partitioning vector of \code{VegsoupPartition} objects }
 \description{
-  Retreive partitioning vector, create a matrix of memberships of plots to
-  partitions or tabulate all possibele combinations of partitions.
+  Retrieve number of partitions (\code{getK}), partitioning vector (\code{Partitioning}),
+  create a matrix of memberships of plots to partitions (\code{PartitioningMatrix})
+  or tabulate all possibele combinations of partitions (\code{PartitioningCombinations}).
 }
 \usage{
-## S4 method for signature 'VegsoupPartition'
-Partitioning(obj)
+\S4method{getK}{VegsoupPartition}(x)
 
-## S4 method for signature 'VegsoupPartition'
-PartitioningMatrix(obj)
+\S4method{Partitioning}{VegsoupPartition}(x)
 
-## S4 method for signature 'VegsoupPartition'
-PartitioningCombinations(obj, collapse)
+\S4method{PartitioningMatrix}{VegsoupPartition}(x)
+
+\S4method{PartitioningCombinations}{VegsoupPartition}(x, collapse)
 }
 \arguments{
-  \item{ obj }{
-    An object inheriting from class \code{"VegsoupPartition"}.
+  \item{ x }{
+    A \code{VegsoupPartition} object.
   }
   \item{ collapse }{
-    Character of be be used as seperator in dimnames. Only characters are
-    allowed that can be iddentified with \code{grep("[:punct:]", collapse)}.
-    See \code{\link{regex}} in package base.
+    Character be be used as seperator in dimnames. Only characters are
+    allowed that can be identified with \code{grep("[:punct:]", collapse)}.
+    See \code{\link{regex}} in package \pkg{base} for details.
   }
 }
 
 \value{
-  \item{Partitioning}{
+  \item{ Partitioning }{
     returns the running partitioning vector.
   }
-  \item{PartitioningMatrix}{
-    returns a \code{"matrix"} of zeros and ones where rows are plots and
+  \item{ PartitioningMatrix }{
+    returns a \code{matrix} of zeros and ones where rows are plots and
     columns are partitons. Ones indicate to which partition a plot belongs.
   }
-  \item{PartitioningCombinations}{
-    returns a \code{"matrix"} of combinations coded within column names.
+  \item{ PartitioningCombinations }{
+    returns a \code{matrix} of combinations where column names indicate a particular
+    combination.
   }
 }
 \author{ Roland Kaiser }
@@ -55,7 +58,15 @@ data(testdata)
 dta <- Vegsoup(spc, sts, txa,
        coverscale = "braun.blanquet")
 prt <- VegsoupPartition(dta, 2)
+
+# number of partitions
+getK(prt)
+# vector of assigments
+Partitioning(prt)
+# matrix of meberships
 PartitioningMatrix(prt)
+# matrix of possible combinations
+PartitioningCombinations(prt)
 }
 \keyword{ methods }
 
