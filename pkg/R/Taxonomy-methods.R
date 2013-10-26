@@ -7,24 +7,23 @@ setMethod("taxonomy",
     function (obj) obj@data
 )
 setMethod("taxonomy",
+    signature(obj = "character"),
+    function (obj, ...) {
+    	new("Taxonomy",
+    	data = read.csv(obj, ...))
+    }    
+)
+setMethod("taxonomy",
     signature(obj = "data.frame"),
     function (obj) {
     	new("Taxonomy", data = obj)
-    }
-    
+    }    
 )
 setMethod("taxonomy",
     signature(obj = "matrix"),
     function (obj) {
     	new("Taxonomy",
     	data = as.data.frame(obj, stringsAsFactors = FALSE))
-    }    
-)
-setMethod("taxonomy",
-    signature(obj = "character"),
-    function (obj, ...) {
-    	new("Taxonomy",
-    	data = read.csv(obj, ...))
     }    
 )
 setMethod("show",
@@ -64,7 +63,6 @@ setMethod("$", "Taxonomy",
 	}
 	return(taxonomy(res))
 }
-#	Sites, Taxonomy Vegsoup have also rbind method
 if (!isGeneric("rbind")) {
 setGeneric("rbind",
 		function (..., deparse.level = 1)

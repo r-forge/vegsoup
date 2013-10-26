@@ -1,22 +1,26 @@
 \name{abbreviations}
 \docType{methods}
+
 \alias{split.abbr}
-\alias{split.abbr-methods}
+\alias{split.abbr,Vegsoup-method}
 
 \title{ Deparse Species Layer Replication of \code{Vegsoup*} Objects }
+
 \description{
   Deparse the layer replications (pseudo-species) used as \code{colnames} in the
   species matrix of \code{Vegsoup*} objects into it's components.
 }
+
 \usage{
-  ## S4 method for signature 'Vegsoup*'
-  split.abbr(obj)
+\S4method{split.abbr}{Vegsoup}(obj)
 }
+
 \arguments{
   \item{ obj }{
     A \code{Vegsoup*} object.
   }
 }
+
 \details{
   The method decomposes the \code{colnames} of the species matrix into three
   components. The first giving the taxon abbreviation only (\code{'abbr'}),
@@ -33,18 +37,22 @@
   \code{layer} seperated with \code{"@"}. To deparse the abbreviation and
   layer string \code{split.abbr} should be used.
 }
+
 \value{
   A \code{"data.frame"} with as many rows and in the same order as there are
   columns in the species matrix. Note, the method uses \code{invisible} when
   returning it's results.
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
 \code{\link{Vegsoup}}
-\code{\link{Taxonomy}}
+\code{\linkS4class{Taxonomy}}
 \code{\link{SpeciesList}}
 \code{\link{taxon}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)
@@ -66,4 +74,5 @@ head(cbind(x[rownames(m), ], m))
 
 res <- dta[, rownames(split.abbr(dta))[sample(1:ncol(dta), 10)]]
 }
+
 \keyword{ methods }

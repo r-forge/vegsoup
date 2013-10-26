@@ -26,7 +26,7 @@
   \code{stack.sites} can be used to derive a plot by variable matrix in long
   format (see \code{\linkS4class{Sites}}). Function \code{stack.readOGR}
   collects spatial coordinates from spatial data stored on disk by calls to
-  \code{\link{readOGR}}. It then reshapes two or three (3D features) columns
+  \code{\link[rgdal]{readOGR}}. It then reshapes two or three (3D features) columns
   of spatial coordinates together with a plot identifier to the format defined
   by class \code{"Sites"}. Results of \code{stack.sites} and
   \code{stack.readOGR} can be combined using \code{rbind} to form a complete
@@ -34,10 +34,10 @@
 
 }
 \usage{
-stack.species(x, file, csv2 = TRUE, schema = c("abbr", "layer", "comment"),
+stack.species(x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "comment"),
               absences, verbose = FALSE)
 
-stack.sites(x, file, csv2 = TRUE, schema = "plot", verbose = FALSE)
+stack.sites(x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE)
 
 stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)               
 }
@@ -50,8 +50,8 @@ stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   \item{ file }{
      Path to a csv-file
   }
-  \item{ csv2 }{
-    Use \code{read.csv2} instead of \code{read.csv}, defaults to \code{TRUE}.
+  \item{ sep, dec }{
+    See \code{\link{read.csv}}.
   }
   \item{ schema }{
      Names of columns to be searched for. See \sQuote{Details}.
@@ -66,10 +66,10 @@ stack.coordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 
 ## Arguments for function stack.coordinates
   \item{ dsn }{
-    Data source name. See \code{\link{readOGR}}.
+    Data source name. See \code{\link[rgdal]{readOGR}}.
   }
   \item{ layer }{
-    Layer name. See \code{\link{readOGR}}.
+    Layer name. See \code{readOGR}.
   }
   \item{ round }{
     Round decimals to given precision. See \sQuote{Details}.
@@ -84,7 +84,7 @@ For \code{stack.species} the supported data frame, either read from file, or pas
 
 For \code{stack.sites} theres are no specific requirements about the form of the object, except that one column must be specified which will then be used as the plot identifier. The default is to search for a column named \code{'plot'}, but an other column name can be specified by argument \code{schema}. 
 
-For \code{stack.readOGR} the first element of schema defines the name of the column in the OGR data source that identifies unique plots. This argument is mandatory and must match a column name in the spatial attributes data. A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements. If absent and the geometry is 3D the function read the third (z) dimension if the data source supports it. If \code{verbose} the function will print what is returned by \code{\link{ogrInfo}}. Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot. In case of irregular polygons the centroid so obtained must not be accurate. If the coordinte reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
+For \code{stack.readOGR} the first element of schema defines the name of the column in the OGR data source that identifies unique plots. This argument is mandatory and must match a column name in the spatial attributes data. A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements. If absent and the geometry is 3D the function read the third (z) dimension if the data source supports it. If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot. In case of irregular polygons the centroid so obtained must not be accurate. If the coordinte reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
 %Using WGS decimal coordinates, 6 decimals places are sufficient for a precision at the meter level
 %If some values are missing those will not raise NA's but will set to zero elevation.
 }
@@ -150,7 +150,7 @@ sts <- rbind(sts, sts.xy)
 \code{\link{elevation}},
 \code{\link{tile2latlng}},
 \code{\link{read.csv}},
-\code{\link{readOGR}} in package \pkg{rgdal}
+\code{\link[rgdal]{readOGR}} in package \pkg{rgdal}
 }
 
 \keyword{import}

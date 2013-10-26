@@ -11,9 +11,9 @@ setGeneric("vegdist",
 )
 #}
 
-#if (!isGeneric("decostand<-")) {
+#if (!isGeneric("vegdist <-")) {
 setGeneric("vegdist<-",
-	function (x, value, ...)
+	function (x, value)
 		standardGeneric("vegdist<-")
 )
 #}

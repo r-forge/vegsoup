@@ -1,13 +1,20 @@
 \name{validate}
 \docType{methods}
+
 \alias{Tabdev}
 \alias{Tabdev-methods}
+\alias{Tabdev,VegsoupPartition-method}
+
 \alias{Partana}
 \alias{Partana-methods}
+\alias{Partana,VegsoupPartition-method}
+
 \alias{Disdiam}
 \alias{Disdiam-methods}
-\alias{Silhouette}
-\alias{Silhouette-methods}
+\alias{Disdiam,VegsoupPartition-method}
+
+\alias{silhouette}
+\alias{silhouette,VegsoupPartition-method}
 
 \title{ Partition Quality Assessment for \code{"VegsoupPartition"} Objects }
 \description{
@@ -26,7 +33,7 @@
 }
 
 \usage{
-\S4method{Silhouette}{VegsoupPartition}(obj, ...)
+\S4method{silhouette}{VegsoupPartition}(x, ...)
 
 \S4method{Partana}{VegsoupPartition}(obj, verbose = FALSE, ...)
 
@@ -36,7 +43,7 @@
 }
 
 \arguments{
-  \item{ obj }{
+  \item{ obj, x }{
     A \code{"VegsoupPartition"} object.
   }
   \item{ numitr }{

@@ -1,4 +1,5 @@
 \name{reshape}
+
 \alias{shape.species}
 \alias{reshape.species}
 
@@ -11,6 +12,7 @@
   \code{shape.species} performs the reverse operation on objects of class
   \code{Vegsoup*}.
 }
+
 \usage{
   reshape.species(x, file, schema, sep = ";", dec = ",", verbose = FALSE)
   shape.species(obj)
@@ -40,6 +42,7 @@
     Prints diagnostic messages.
   }
 }
+
 \details{
   The current implementation for \code{reshape.species} support only a single
   case. The values of \code{schema} are seeked in the column names of
@@ -53,6 +56,7 @@
   main purpose of that function is print a compact and more readable species
   list including when there are more than one layer.
 }
+
 \value{
   \code{reshape.species} returns an object of class
   \code{\linkS4class{Species}}.
@@ -60,11 +64,13 @@
   \code{shape.species} returns an object of class
   \code{"data.frame"}.
 }
+
 \note{
   \code{shape.species} will change the order of taxa based on
   \code{Taxonomy(obj)}. The order of plots equals that of the input object.
   The same is true for the order of layer columns.
 }
+
 \author{ Roland Kaiser }
 
 \seealso{
@@ -85,4 +91,5 @@ spc <- shape.species(dta)
 res <- reshape.species(spc, schema = c("plot", "abbr", "hl", "sl", "ml"))
 
 }
+
 \keyword{ import }

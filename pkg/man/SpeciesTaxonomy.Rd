@@ -1,13 +1,16 @@
 \name{taxonomy}
-\docType{methods} 
+\docType{methods}
+
 \alias{SpeciesTaxonomy}
 
-\title{Compare Species Abbreviations to Taxonomic Reference List}
+\title{ Compare Species Abbreviations to Taxonomic Reference List }
+
 \description{
 Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} respectively \code{file.x}) or csv-files (\code{y} respectively \code{file.y}). All meaningfull combinations are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initilaized as class \code{"Species"} and \code{y} as class \code{"Taxonomy"}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
 }
+
 \usage{
-  SpeciesTaxonomy(x, y, file.x, file.y, csv2 = TRUE, pmatch = FALSE, skip = TRUE, verbose = FALSE)
+  SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...)
 }
 
 \arguments{
@@ -27,8 +30,9 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
     Path to a csv-file giving a taxonomic reference list as defined for
     \code{\linkS4class{Taxonomy}}.
   }
-  \item{ csv2 }{
-    use \code{read.csv2} instead of \code{read.csv}, defaults to \code{TRUE}.
+  \item{ sep, dec }{
+    Seperators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
+	of \code{read.csv2}!
   }
   \item{ pmatch }{
     use \code{pmatch} to match abbreviation in \code{x} respectively
@@ -39,6 +43,9 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
   }
   \item{ verbose }{
     Prints Diagnostic messages.
+  }
+  \item{ \dots }{
+    Not used.
   }
 }
 
@@ -77,14 +84,15 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
   \code{write.table(taxonomy(obj), "foo.txt", quote = FALSE, row.names =
   FALSE)} to create an object suitable for automatic replacement.
 }
-\author{
-  Roland Kaiser
-}
+
+\author{ Roland Kaiser }
+
 \seealso{
 \code{\linkS4class{Species}},
 \code{\link{stack.species}},
 \code{\linkS4class{Taxonomy}}
 }
+
 \examples{
 library(vegsoup)
 library(vegan)

@@ -35,7 +35,7 @@ setMethod("hist",
 setMethod("hist",
 	signature(x = "VegsoupPartition"),
 	function (x, ...) {
-		fig <- hist(richness(prt, "partition"), ...)
+		fig <- hist(richness(x, "partition"), ...)
 		return(invisible(fig))
 	}
 

@@ -1,32 +1,37 @@
 \name{abbreviations}
 \docType{methods}
+
 \alias{abbr.layer}
-\alias{abbr.layer-methods}
+\alias{abbr.layer,Vegsoup-method}
+
 \alias{abbr}
-\alias{abbr-methods}
+\alias{abbr,Vegsoup-method}
+
 \alias{abbr<-}
-\alias{abbr<--methods}
+\alias{abbr<-,Vegsoup-method}
+\alias{abbr<-,Vegsoup,Character-method}
 
 \title{ Get Abbreviations used to Encode Species and Layer Replicates }
+
 \description{
   Get the abbreviations (\emph{abbr}) used in species matrix and corresponding
   taxonomy data frame.
 }
+
 \usage{
-## S4 method for signature 'Vegsoup*'
-abbr(obj)
-## S4 replacement method for signature 'Vegsoup*'
-abbr(obj) <- value
-## S4 method for signature 'Vegsoup*'
-abbr.layer(obj)
+  \S4method{abbr}{Vegsoup}(obj)
+
+  \S4method{abbr}{Vegsoup}(obj) <- value
+
+  \S4method{abbr.layer}{Vegsoup}(obj)
 }
 
 \arguments{
   \item{ obj }{
-    a \code{Vegsoup*} object.
+    A \code{Vegsoup*} object.
   }
   \item{ value }{
-    Character. Usefull to change abbreviations.a \code{Vegsoup*} object.
+    Character. Usefull to change abbreviations.
   }
 }
 \details{

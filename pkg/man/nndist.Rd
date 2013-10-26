@@ -1,27 +1,31 @@
 \name{nndist}
 \docType{methods}
 \alias{nndist}
-\alias{nndist-methods}
+\alias{nndist,Vegsoup-method}
 
 \title{ Nearest Neighbour Distances }
+
 \description{
   Identifies the nearest neighbour of each plot based on dissimilarity matrix.
 }
+
 \usage{
-## S4 method for signature 'Vegsoup*'
-nndist(obj, ...)
+\S4method{nndist}{Vegsoup}(X, ...)
 }
+
 \arguments{
-  \item{ obj }{
+  \item{ X }{
     A \code{Vegsoup*} object.
   }
   \item{ \dots }{
     Not used.
   }
 }
-\details{
 
+\details{
+Nothing here yet!
 }
+
 \value{
   Returns a numeric vector of distances equal to the number of plots. The identified nearest
   neighbouring plot is given as attribute. See \sQuote{Examples}.

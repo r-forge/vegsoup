@@ -224,6 +224,32 @@ setMethod("head",
     	return(res)
     }    	    
 )
+
+#	head like print function based on identification of
+#	typal samples in a partition
+
+setMethod("head",
+    signature(x = "VegsoupPartition"),
+    function (x, n = 6L, choice = "species", ...) {
+    	if (missing(choice))
+	    	choice <- "species"
+	    if (n != 6L) {
+	    	sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
+	    		rownames(x))
+	    	if (choice == "species")
+    			res <- as.character(x)[sel,]
+	    	if (choice == "sites")
+    			res <- Sites(x)[sel,]
+    	} else {
+	    	if (choice == "species")
+    			res <- head(as.character(x), ...)
+	    	if (choice == "sites")
+    			res <- head(as.character(x), ...)
+    	}	
+    	return(res)
+    }    	    
+)
+
 if (!isGeneric("tail")) {
 setGeneric("tail", function (x, ...)
 	standardGeneric("tail"))

@@ -1,11 +1,23 @@
 \name{Sites-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{sites}
+
 \alias{Sites-class}
-\alias{$,Sites-method}
-\alias{rbind,Sites-method}
+
+\alias{$,Sites-methods}
+
+\alias{rbind,Sites-methods}
+
+\alias{sites,Sites-methods}
+
+\alias{sites-method}
+\alias{sites,character-method}
+\alias{sites,data.frame-method}
+\alias{sites,matrix-method}
 \alias{sites,Sites-method}
+\alias{sites,rbind-method}
 
 \title{Class \code{"Sites"}}
 
@@ -30,9 +42,9 @@
       observation.
     \item \code{variable} contains a name for the measured variable.
     \item \code{value} holds the value of a particular variable.
+  }
 }
 
-}
 \section{Slots}{
   \describe{
     \item{\code{data}:}{Object of class \code{"data.frame"}
@@ -40,6 +52,7 @@
       \code{'plot'}, \code{'variable'} and \code{'value'}. }
   }
 }
+
 \section{Methods}{
   \describe{
     \item{ sites }{
@@ -64,12 +77,15 @@
     }
   }
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
   \code{\link{stack.sites}}
   \code{\linkS4class{Species}}
   \code{\linkS4class{Vegsoup}}
 }
+
 \examples{
 require(vegsoup)
 showClass("Sites")
@@ -95,4 +111,5 @@ obj2 <- sites(sts.big)
 obj <- rbind(obj, obj2)
 
 }
+
 \keyword{ classes }

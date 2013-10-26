@@ -1,13 +1,17 @@
 \name{Partitioning}
 \docType{methods}
+
 \alias{getK}
-\alias{getK-method}
+\alias{getK,VegsoupPartition-method}
+
 \alias{Partitioning}
-\alias{Partitioning-method}
+\alias{Partitioning,VegsoupPartition-method}
+
 \alias{PartitioningMatrix}
-\alias{PartitioningMatrix-method}
+\alias{PartitioningMatrix,VegsoupPartition-method}
+
 \alias{PartitioningCombinations}
-\alias{PartitioningCombinations-method}
+\alias{PartitioningCombinations,VegsoupPartition-method}
 
 \title{ Partitioning vector of \code{VegsoupPartition} objects }
 \description{
@@ -50,7 +54,7 @@
 }
 \author{ Roland Kaiser }
 \seealso{
-\code{\linkS4class{getK}}
+\code{\link{getK}}
 \code{\linkS4class{VegsoupPartition}}
 }
 \examples{

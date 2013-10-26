@@ -2,118 +2,119 @@
 \name{Vegsoup-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{Vegsoup-class}
 
-\alias{AprioriGrouping,Vegsoup-method}
+\alias{AprioriGrouping,Vegsoup-methods}
 
-\alias{indices,Vegsoup-method}
-\alias{as.logical,Vegsoup-method}
-\alias{as.numeric,Vegsoup-method}
-\alias{as.character,Vegsoup-method}
-\alias{as.vector,Vegsoup,missing-method}
-\alias{as.matrix,Vegsoup-method}
+\alias{indices,Vegsoup-methods}
+\alias{as.logical,Vegsoup-methods}
+\alias{as.numeric,Vegsoup-methods}
+\alias{as.character,Vegsoup-methods}
+\alias{as.vector,Vegsoup,missing-methods}
+\alias{as.matrix,Vegsoup-methods}
 
-\alias{as.dist,Vegsoup-method}
-\alias{as.data.frame,Vegsoup-method}
-\alias{as.data.list,Vegsoup-method}
+\alias{as.dist,Vegsoup-methods}
+\alias{as.data.frame,Vegsoup-methods}
+\alias{as.data.list,Vegsoup-methods}
 
-\alias{[,Vegsoup,ANY,ANY,missing-method}
-\alias{[<-,Vegsoup,ANY,missing-method}
-\alias{$,Vegsoup-method}
-\alias{$<-,Vegsoup-method}
+\alias{[,Vegsoup,ANY,ANY,missing-methods}
+\alias{[<-,Vegsoup,ANY,missing-methods}
+\alias{$,Vegsoup-methods}
+\alias{$<-,Vegsoup-methods}
 
-\alias{coerce,Vegsoup,data.frame-method}
-\alias{coerce,Vegsoup,data.list-method}
-\alias{coerce,Vegsoup,dist-method}
-\alias{coerce,Vegsoup,dsparseMatrix-method}
-\alias{coerce,Vegsoup,list-method}
-\alias{coerce,Vegsoup,matrix-method}
-\alias{coerce,Vegsoup,sparseMatrix-method}
+\alias{coerce,Vegsoup,data.frame-methods}
+\alias{coerce,Vegsoup,data.list-methods}
+\alias{coerce,Vegsoup,dist-methods}
+\alias{coerce,Vegsoup,dsparseMatrix-methods}
+\alias{coerce,Vegsoup,list-methods}
+\alias{coerce,Vegsoup,matrix-methods}
+\alias{coerce,Vegsoup,sparseMatrix-methods}
 
-\alias{dim,Vegsoup-method}
-\alias{ncell,Vegsoup-method}
-\alias{ncol,Vegsoup-method}
-\alias{nrow,Vegsoup-method}
-\alias{fill,Vegsoup-method}
-\alias{colMeans,Vegsoup-method}
-\alias{colSums,Vegsoup-method}
-\alias{rowSums,Vegsoup-method}
-\alias{rowMeans,Vegsoup-method}
-\alias{richness,Vegsoup-method}
-\alias{nndist,Vegsoup-method}
+\alias{dim,Vegsoup-methods}
+\alias{ncell,Vegsoup-methods}
+\alias{ncol,Vegsoup-methods}
+\alias{nrow,Vegsoup-methods}
+\alias{fill,Vegsoup-methods}
+\alias{colMeans,Vegsoup-methods}
+\alias{colSums,Vegsoup-methods}
+\alias{rowSums,Vegsoup-methods}
+\alias{rowMeans,Vegsoup-methods}
+\alias{richness,Vegsoup-methods}
+\alias{nndist,Vegsoup-methods}
 
-\alias{coverscale,Vegsoup-method}
-\alias{coverscale<-,Vegsoup,character-method}
-\alias{coverscale<-,Vegsoup,Coverscale-method}
-\alias{BraunBlanquetReduce,Vegsoup-method}
+\alias{coverscale,Vegsoup-methods}
+\alias{coverscale<-,Vegsoup,character-methods}
+\alias{coverscale<-,Vegsoup,Coverscale-methods}
+\alias{BraunBlanquetReduce,Vegsoup-methods}
 
-\alias{decostand,Vegsoup-method}
-\alias{decostand<-,Vegsoup,character-method}
-\alias{decostand<-,Vegsoup,NULL-method}
+\alias{decostand,Vegsoup-methods}
+\alias{decostand<-,Vegsoup,character-methods}
+\alias{decostand<-,Vegsoup,NULL-methods}
 
-\alias{bind,Vegsoup-method}
-\alias{rbind,Species-method}
-\alias{rbind,Sites-method}
-\alias{rbind,Taxonomy-method}
+\alias{bind,Vegsoup-methods}
+\alias{rbind,Species-methods}
+\alias{rbind,Sites-methods}
+\alias{rbind,Taxonomy-methods}
 
-\alias{distconnected,Vegsoup-method}
-\alias{distconnected,VegsoupPartition-method}
+\alias{distconnected,Vegsoup-methods}
+\alias{distconnected,VegsoupPartition-methods}
 
-\alias{elevation,Vegsoup-method}
-\alias{getDistconnected,Vegsoup-method}
+\alias{elevation,Vegsoup-methods}
+\alias{getDistconnected,Vegsoup-methods}
 
 
-\alias{Indpower,Vegsoup-method}
-\alias{Indspc,Vegsoup-method}
+\alias{Indpower,Vegsoup-methods}
+\alias{Indspc,Vegsoup-methods}
 
-\alias{Layer,Vegsoup-method}
-\alias{Layers,Vegsoup-method}
-\alias{Layers<-,Vegsoup-method}
-\alias{map,Vegsoup-method}
-\alias{names,Vegsoup-method}
-\alias{names<-,Vegsoup,character-method}
-\alias{plot,Vegsoup,missing-method}
-\alias{QuickMap,Vegsoup-method}
+\alias{Layer,Vegsoup-methods}
+\alias{Layers,Vegsoup-methods}
+\alias{Layers<-,Vegsoup-methods}
+\alias{map,Vegsoup-methods}
+\alias{names,Vegsoup-methods}
+\alias{names<-,Vegsoup,character-methods}
+\alias{plot,Vegsoup,missing-methods}
+\alias{QuickMap,Vegsoup-methods}
 
-\alias{dimnames,Vegsoup-method}
-\alias{colnames,Vegsoup-method}
-\alias{rownames,Vegsoup,missing,missing-method}
-\alias{rownames,Vegsoup,character-method}
-\alias{rownames,Vegsoup,integer-method}
-\alias{row.names,Vegsoup,character-method}
-\alias{row.names,Vegsoup,integer-method}
+\alias{dimnames,Vegsoup-methods}
+\alias{colnames,Vegsoup-methods}
+\alias{rownames,Vegsoup,missing,missing-methods}
+\alias{rownames,Vegsoup,character-methods}
+\alias{rownames,Vegsoup,integer-methods}
+\alias{row.names,Vegsoup,character-methods}
+\alias{row.names,Vegsoup,integer-methods}
 
-\alias{split.abbr,Vegsoup-method}
-\alias{abbr<-,Vegsoup,character-method}
-\alias{SpeciesList,Vegsoup-method}
-\alias{taxon,Vegsoup-method}
+\alias{split.abbr,Vegsoup-methods}
+\alias{abbr<-,Vegsoup,character-methods}
+\alias{SpeciesList,Vegsoup-methods}
+\alias{taxon,Vegsoup-methods}
 
-\alias{summary,Vegsoup-method}
-\alias{head,Vegsoup-method}
-\alias{tail,Vegsoup-method}
-\alias{outlier,Vegsoup-method}
+\alias{summary,Vegsoup-methods}
+\alias{head,Vegsoup-methods}
+\alias{tail,Vegsoup-methods}
+\alias{outlier,Vegsoup-methods}
 
-\alias{Species,Vegsoup-method}
-\alias{Species<-,Vegsoup,SpeciesTaxonomy-method}
-\alias{Species<-,Vegsoup,data.frame-method}
+\alias{Species,Vegsoup-methods}
+\alias{Species<-,Vegsoup,SpeciesTaxonomy-methods}
+\alias{Species<-,Vegsoup,data.frame-methods}
 
-\alias{Sites,Vegsoup-method}
-\alias{Sites<-,Vegsoup,data.frame-method}
+\alias{Sites,Vegsoup-methods}
+\alias{Sites<-,Vegsoup,data.frame-methods}
 
-\alias{coordinates,Vegsoup-method}
-\alias{SpatialPointsVegsoup,Vegsoup-method}
-\alias{SpatialPolygonsVegsoup,Vegsoup-method}
+\alias{coordinates,Vegsoup-methods}
+\alias{SpatialPointsVegsoup,Vegsoup-methods}
+\alias{SpatialPolygonsVegsoup,Vegsoup-methods}
 
-\alias{SampleVegsoup,Vegsoup-method}
-\alias{seriation,Vegsoup-method}
-\alias{Stride,Vegsoup-method}
-\alias{Taxonomy,Vegsoup-method}
-\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
-\alias{vegdist,Vegsoup-method}
-%\alias{vegdist<-,Vegsoup,character-method}
-\alias{write.verbatim,Vegsoup-method}
-\alias{KML,Vegsoup-method}
-\alias{coldiss,Vegsoup-method}
+\alias{SampleVegsoup,Vegsoup-methods}
+\alias{seriation,Vegsoup-methods}
+\alias{Stride,Vegsoup-methods}
+\alias{Taxonomy,Vegsoup-methods}
+\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-methods}
+\alias{vegdist,Vegsoup-methods}
+%\alias{vegdist<-,Vegsoup,character-methods}
+\alias{write.verbatim,Vegsoup-methods}
+\alias{KML,Vegsoup-methods}
+\alias{coldiss,Vegsoup-methods}
 
 \title{ Class \code{"Vegsoup"} }
 
@@ -578,7 +579,7 @@
       file.
     }
 
-%% 1
+%% 20
   \bold{ 1) Miscellaneous.}
     \item{Indpower}{
       \code{signature(obj = "Vegsoup")}:
@@ -590,7 +591,9 @@
     }
   }
 }
+
 \author{ Roland Kaiser }
+
 \note{
 Give notes!
 }
@@ -600,7 +603,8 @@ Give notes!
 \code{\linkS4class{Sites}},
 \code{\linkS4class{Taxonomy}},
 \code{\linkS4class{Vegsoup}},
-\code{\linkS4class{instantsoup}}
+\code{\link{instantsoup}}
+\code{\link{coenoflex}}
 }
 \examples{
 showClass("Vegsoup")

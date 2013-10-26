@@ -3,46 +3,46 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{VegsoupPartition-class}
-\alias{[,VegsoupPartition,ANY,ANY,missing-method}
-\alias{Accuracy,VegsoupPartition,VegsoupPartition-method}
-\alias{Association,VegsoupPartition,VegsoupPartition-method}
-\alias{Confus,VegsoupPartition,VegsoupPartition-method}
-\alias{Constancy,VegsoupPartition-method}
-\alias{Contingency,VegsoupPartition-method}
-\alias{Disdiam,VegsoupPartition-method}
-\alias{ellipsoidhull,VegsoupPartition-method}
-\alias{Fidelity,VegsoupPartition-method}
-\alias{FisherTest,VegsoupPartition-method}
-\alias{Fivenum,VegsoupPartition-method}
-\alias{getK,VegsoupPartition-method}
-\alias{head,VegsoupPartition-method}
-\alias{Importance,VegsoupPartition-method}
-\alias{Indval,VegsoupPartition-method}
-\alias{Isamic,VegsoupPartition-method}
-\alias{KML,VegsoupPartition-method}
-\alias{Latex,VegsoupPartition-method}
-\alias{Murdoch,VegsoupPartition-method}
-\alias{Optindval,VegsoupPartition-method}
-\alias{Optsil,VegsoupPartition-method}
-\alias{Partana,VegsoupPartition-method}
-\alias{Partition,VegsoupPartition-method}
-\alias{Partitioning,VegsoupPartition-method}
-\alias{Partitioning<-,VegsoupPartition,numeric-method}
-\alias{PartitioningCombinations,VegsoupPartition-method}
-\alias{PartitioningMatrix,VegsoupPartition-method}
-\alias{Phi,VegsoupPartition-method}
-\alias{plot,VegsoupPartition,missing-method}
-\alias{rectangles,VegsoupPartition-method}
-\alias{richness,VegsoupPartition-method}
-\alias{seriation,VegsoupPartition-method}
-\alias{Shared,VegsoupPartition-method}
-\alias{SigFidelity,VegsoupPartition-method}
-\alias{Silhouette,VegsoupPartition-method}
-\alias{spread,VegsoupPartition-method}
-\alias{summary,VegsoupPartition-method}
-\alias{Tabdev,VegsoupPartition-method}
-\alias{typal-VegsoupPartition-method}
-\alias{write.verbatim,VegsoupPartition-method}
+\alias{[,VegsoupPartition,ANY,ANY,missing-methods}
+\alias{Accuracy,VegsoupPartition,VegsoupPartition-methods}
+\alias{Association,VegsoupPartition,VegsoupPartition-methods}
+\alias{Confus,VegsoupPartition,VegsoupPartition-methods}
+\alias{Constancy,VegsoupPartition-methods}
+\alias{Contingency,VegsoupPartition-methods}
+\alias{Disdiam,VegsoupPartition-methods}
+\alias{ellipsoidhull,VegsoupPartition-methods}
+\alias{Fidelity,VegsoupPartition-methods}
+\alias{FisherTest,VegsoupPartition-methods}
+\alias{Fivenum,VegsoupPartition-methods}
+\alias{getK,VegsoupPartition-methods}
+\alias{head,VegsoupPartition-methods}
+\alias{Importance,VegsoupPartition-methods}
+\alias{Indval,VegsoupPartition-methods}
+\alias{Isamic,VegsoupPartition-methods}
+\alias{KML,VegsoupPartition-methods}
+\alias{Latex,VegsoupPartition-methods}
+\alias{Murdoch,VegsoupPartition-methods}
+\alias{Optindval,VegsoupPartition-methods}
+\alias{Optsil,VegsoupPartition-methods}
+\alias{Partana,VegsoupPartition-methods}
+\alias{Partition,VegsoupPartition-methods}
+\alias{Partitioning,VegsoupPartition-methods}
+\alias{Partitioning<-,VegsoupPartition,numeric-methods}
+\alias{PartitioningCombinations,VegsoupPartition-methods}
+\alias{PartitioningMatrix,VegsoupPartition-methods}
+\alias{Phi,VegsoupPartition-methods}
+\alias{plot,VegsoupPartition,missing-methods}
+\alias{rectangles,VegsoupPartition-methods}
+\alias{richness,VegsoupPartition-methods}
+\alias{seriation,VegsoupPartition-methods}
+\alias{Shared,VegsoupPartition-methods}
+\alias{SigFidelity,VegsoupPartition-methods}
+\alias{Silhouette,VegsoupPartition-methods}
+\alias{spread,VegsoupPartition-methods}
+\alias{summary,VegsoupPartition-methods}
+\alias{Tabdev,VegsoupPartition-methods}
+\alias{typal-VegsoupPartition-methods}
+\alias{write.verbatim,VegsoupPartition-methods}
 
 \title{ Class \code{"VegsoupPartition"} }
 \description{
@@ -50,14 +50,14 @@
   \code{\linkS4class{Vegsoup}} and represents a partitioning of an object into
   clusters.
 }
-\section{Objects from the Class}{
 
+\section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("VegsoupPartition",
   ...)} where \dots expand to slots \code{'part'}, \code{'method'} and
   \code{'k'}. It is strongly advisable to use the class creator function
   \code{\link{VegsoupPartition}}.
-
 }
+
 \section{Slots}{
   \describe{
     \item{\code{part}:}{
@@ -123,12 +123,12 @@
     \item{summary}{
       \code{signature(object = "VegsoupPartition")}:
       Summary method for \code{"VegsoupPartition"} objects.
-      See \code{\link{}}.
+%     See \code{\link{}}.
     }
     \item{head}{
       \code{signature(x = "VegsoupPartition")}:
       Print method.
-      See \code{\link{}head}.
+      See \code{\link{head}}.
     }
 %% 5
   \bold{ 5) Cluster optimization methods }
@@ -145,28 +145,27 @@
     }
 %% 6
   \bold{ 6) Table Summaries }
-    \item{Contingency}{
+    \item{contingency}{
       \code{signature(obj = "VegsoupPartition")}:
       Contingency table.
-      See \code{\link{Contingency}}.
+      See \code{\link{contingency}}.
     }
-    \item{Constancy}{
+    \item{constancy}{
       \code{signature(obj = "VegsoupPartition")}:
       Constancy table.
-      See \code{\link{Constancy}}
+      See \code{\link{constancy}}
     }
-    \item{Importance}{
+    \item{importance}{
       \code{signature(obj = "VegsoupPartition")}:
       Importance table.
-      See \code{\link{Importance}}.
+      See \code{\link[labdsv]{importance}}.
     }
 %% 7
   \bold{ 7) Descriptive statistics and and additional summaries }
-    \item{Fivenum}{
+    \item{quantile}{
       \code{signature(obj = "VegsoupPartition")}:
-      Tukeys Five-Number Summaries for each species in each partition
-      (cluster).
-      See \code{\link{Fivenum}}.
+      Sample quantiles for each species in each partition (cluster).
+      See \code{\link{quantile}}.
     }
     \item{FisherTest}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -176,7 +175,7 @@
     \item{Tabdev}{
       \code{signature(obj = "VegsoupPartition")}:
       Partitioning (classification) validity assessment by table deviance.
-      See \code{\link{}}.    
+%     See \code{\link{}}.    
     }
     \item{Partana}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -192,19 +191,19 @@
     \item{spread}{
       \code{signature(object = "VegsoupPartition")}:
       List occurrences of species in partitions (clusters).
-      See \code{\link{}}.
+%     See \code{\link{}}.
     }
-    \item{Shared}{
+    \item{shared}{
       \code{signature(obj = "VegsoupPartition")}:
       Computes a diagonal matrix showing percentages of shared species between
       partitions (clusters).
-      See \code{\link{Shared}}.
+      See \code{\link{shared}}.
     }
-    \item{Typal}{
+    \item{typal}{
       \code{signature(obj = "VegsoupPartition")}:
       Identifies samples (plots) that typify clusters in a partition based on
       dissimilarity.
-      See \code{\link{Typal}}.
+      See \code{\link{typal}}.
     }
     \item{PartitioningMatrix}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -226,7 +225,7 @@
     \item{Silhouette}{
       \code{signature(obj = "VegsoupPartition")}:
       Compute silhouette information.
-      See \code{\link{Silhouette}}.
+      See \code{\link{silhouette}}.
     }
 %% 9
   \bold{ 9) Indicator species (fidelity) methods}
@@ -267,7 +266,7 @@
     \item{plot}{
       \code{signature(x = "VegsoupPartition", y = "missing")}:
       Ordination plot highlighting partitions.
-      See \code{\link{}}.
+%     See \code{\link{}}.
     }
     \item{rectangles}{
       \code{signature(obj = "VegsoupPartition")}:

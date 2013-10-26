@@ -3,6 +3,7 @@
 \alias{as}
 \alias{as-methods}
 \alias{coerce-methods}
+
 \alias{coerce,matrix-method}
 \alias{coerce.array-method}
 \alias{coerce,sparseMatrix-method}
@@ -12,11 +13,12 @@
 \alias{coerce,data.list-method}
 \alias{coerce,mefa-method}
 
-
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
+
 \description{
 Coerce object a \code{'Vegsoup*'} object to other class.
 }
+
 \usage{
 ## S4 method for signature from = 'Vegsoup*' to = 'matrix'
 as(x, "matrix")
@@ -43,11 +45,17 @@ as(x, "data.list")
 ## S4 method for signature from = 'Vegsoup*' to = 'mefa'
 as(x, "mefa")
 }
+
 \arguments{
   \item{ x }{
     A Vegsoup* object
   }
+  \item{ matrix, array, dist, sparseMatrix, dsparseMatrix, list,
+  data.frame, data.list, mefa}{
+    Classes to coerce to.
+  }
 }
+
 \details{
   These are generic coerce methods to ensure that S3 functions dispatch
   properly, especially regarding the \code{as(x, "matrix")} and \code{as(x,
@@ -57,8 +65,9 @@ as(x, "mefa")
   species matrix according to the defaults of \code{\link{as.matrix}} and the
   list coercion calls \code{as.matrix(x, typeof = "character", mode = "Q")}.
 
-  Coercion to sparse matrices is currently very limited.
+  Coercion to sparse matrices is currently rather limited.
 }
+
 \value{
 Coercion to \code{'matrix'} and \code{'sparseMatrix'} returns an object of the corresponding class.
 

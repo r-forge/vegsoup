@@ -1,14 +1,18 @@
 \name{optimize}
 \docType{methods}
+
 \alias{Optsil}
 \alias{Optsil-methods}
+
 \alias{Optindval}
 \alias{Optindval-methods}
 
 \title{ Optimise Partitioning of \code{"VegsoupPartition"} Objects }
+
 \description{
 Modify the partitioning of an object as to optimze silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
 }
+
 \usage{
 Optsil(obj, maxitr = 100, verbose = FALSE, ...)
 
@@ -51,8 +55,7 @@ Dufrene, M. and Legendre, P. (1997). Species assemblages and indicator species: 
 Rousseeuw, P. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. Journal of Computational and Applied Mathematics, 53:53–65.
 }
 
-\author{
-Implemented for vegsoup using Dave W. Roberts \code{optsil} and \code{optindval} procedures of package \pkg{optpart}.
+\author{ Roland Kaiser, implemented for vegsoup using Dave W. Roberts \code{optsil} and \code{optindval} procedures of package \pkg{optpart}.
 }
 
 \note{

@@ -1,18 +1,24 @@
 \name{verbatim}
 \docType{methods}
+
 \alias{verbatim}
+
 \alias{read.verbatim}
+
 \alias{read.verbatim.append}
+
 \alias{write.verbatim}
-\alias{write.verbatim-methods}
+\alias{write.verbatim,Vegsoup-method}
+\alias{write.verbatim,VegsoupPartition-method}
 
 \title{ Read or Write Fixed-Column-Width Community Tables From or To Plain Text Files }
+
 \description{
   The base S3 function \code{read.verbatim(file)} reads data from text files
   as  encountered in published tables typesetted with monospaced fonts. It's
   main purpose is to help digitizing literature data. The corresponding
-  \code{write.verbatim(obj)} S4-method performs the reverse on objects
-  inheriting from class \code{Vegsoup}.
+  \code{write.verbatim(obj)} method performs the reverse on objects
+  inheriting from class \code{'Vegsoup'}.
 }
 
 \usage{
@@ -21,11 +27,14 @@ read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
          collapse = ",", abundance)
+		 
+\S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
+          sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
+		  rule, add.lines = FALSE, latex.input = FALSE)
 
-## S4 method for signature 'Vegsoup' and 'VegsoupPartition'
-write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
-         abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE,
-         latex.input = FALSE)
+\S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
+          sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
+  		  rule, add.lines = FALSE, latex.input = FALSE)
 }
 
 \arguments{
@@ -61,16 +70,12 @@ write.verbatim(obj, file, select, absence = ".", collapse = " ", pad = 1,
     \code{read.verbatim}.
   }
   \item{ mode }{
-    Character, specifying how the input file is organized. If missing defaults
-    to \code{"plot"}. See \sQuote{Details}.
-  }
-  \item{ collapse }{
-    Character, the separator between successive species.
-    Defaults to \code{","}.
-  }
-  \item{ mode }{
     Character, defining how the species occurrences in rows are organized.
     See \sQuote{Details}.
+  }
+  \item{ sep }{
+    Character, the separator between successive species.
+    Defaults to \code{","}.
   }
   \item{ abundance }{
     For \code{mode = "species"} a single \code{character} recycled for all
@@ -265,6 +270,6 @@ foo <- write.verbatim(seriation(dta), file = tempfile(),
 foo[1:30] # resize console window
 }
 \seealso{
-\code{\link{SpeciesWide2SpeciesLong}}, 
+\code{\link{stack.species}}, 
 }
 \keyword{import}

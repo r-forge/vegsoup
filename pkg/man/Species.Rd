@@ -1,23 +1,31 @@
 \name{Species}
 \docType{methods} 
+
 \alias{Species}
-\alias{Species-methods}
+\alias{Species,Vegsoup-method}
+
 \alias{Species<-}
-\alias{Species<--methods}
+\alias{Species<-,Vegsoup-method}
+\alias{Species<-,Vegsoup,Species-method}
+\alias{Species<-,Vegsoup,data.frame-method}
 
 \title{ Methods to Retrieve or Manipulate the Species Slot of \code{Vegsoup*} Objects }
 \description{
 Accessor method to retrieve the species data in \emph{long format} as stored inside the object.
 }
 \usage{
-## S4 method for class 'Vegsoup*'
-Species(obj)
+\S4method{Species}{Vegsoup}(obj)
+
+\S4method{Species}{Vegsoup}(obj) <- value
 }
 
 \arguments{
-  \item{obj}{
+  \item{ obj }{
     A \code{Vegsoup*} object.
   }
+  \item{ value }{
+    Not yet implemented.
+  }  
 }
 
 \value{

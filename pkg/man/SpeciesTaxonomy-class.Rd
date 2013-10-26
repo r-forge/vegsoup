@@ -103,7 +103,7 @@
   \code{\linkS4class{Species}},
   \code{\linkS4class{Sites}},
   \code{\linkS4class{Taxonomy}},
-  \code{\link{taxval}}
+  \code{\link[vegdata:taxval]{taxval}} inpackage \pkg{vegdata}.
 }
 \examples{
 require(vegsoup)

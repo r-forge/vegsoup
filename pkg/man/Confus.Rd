@@ -15,10 +15,10 @@
 }
 \arguments{
     \item{ obj1 }{
-      an object of class \code{\link{VegsoupPartition}}.
+      A \code{VegsoupPartition} object.
     }
     \item{ obj2 }{
-      a second object of class \code{\link{VegsoupPartition}} to be compared
+      A second \code{VegsoupPartition} object to be compared
       with \code{obj1}.
     }
 }
@@ -53,9 +53,9 @@ Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classi
 \author{ Roland Kaiser }
 \seealso{
 \code{\link{VegsoupPartition}},
-\code{\link{Accuracy}} and \code{\link{Association}} in package 'Vegsoup'.
+\code{\link{Accuracy}} and \code{\link{Association}} in package '\pkg{vegsoup}.
 \code{\link{confus}} in package \pkg{optpart} and
-\code{\link{crosstable.statistics}} and \code{\link{associations}} in package \pkg{polytomous}
+\code{\link[polytomous:crosstable.statistics]{crosstable.statistics}} and \code{\link[polytomous:associations]{associations}} in package \pkg{polytomous}.
 }
 \examples{
 require(vegsoup)

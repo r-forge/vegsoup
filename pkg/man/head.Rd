@@ -1,11 +1,10 @@
 \name{head}
 
 \alias{head}
-\alias{head-methods}
 \alias{head,Vegsoup-method}
 \alias{head,VegsoupPartition-method}
+
 \alias{tail}
-\alias{tail-methods}
 \alias{tail,Vegsoup-method}
 
 \title{
@@ -15,9 +14,11 @@ Return the First or Last Part of the Species Matrix
 Returns the first or last parts of the species matrix.
 }
 \usage{
-head(x, n = 6L, choice, typeof, ...)
+\S4method{head}{Vegsoup}(x, n = 6L, choice, typeof, ...)
 
-tail(x, n = 6L, choice, typeof, ...)
+\S4method{head}{VegsoupPartition}(x, n = 6L, choice, typeof, ...)
+
+\S4method{tail}{Vegsoup}(x, n = 6L, choice, typeof, ...)
 }
 \arguments{
 

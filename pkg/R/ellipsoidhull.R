@@ -39,7 +39,7 @@ return(invisible(cl))
 #	ret.sqdist = FALSE, ret.pr = FALSE)
 #if (!isGeneric("ellipsoidhull")) {
 setGeneric("ellipsoidhull",
-	function (x, tol=0.01, maxit=5000, ret.wt = FALSE,
+	function (x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
 	ret.sqdist = FALSE, ret.pr = FALSE)
 		standardGeneric("ellipsoidhull")
 )
@@ -47,6 +47,7 @@ setGeneric("ellipsoidhull",
 
 setMethod("ellipsoidhull",
 	signature(x = "VegsoupPartition"),
-	function (x)
-	.ellipsoidhull(x)
+	function (x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
+	ret.sqdist = FALSE, ret.pr = FALSE)
+	.ellipsoidhull(x, ...)
 )

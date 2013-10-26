@@ -1,28 +1,31 @@
 \name{decostand}
 \docType{methods}
+
 \alias{decostand}
+\alias{decostand,Vegsoup-method}
+
 \alias{decostand<-}
-\alias{decostand-methods}
-\alias{decostand<--methods}  
+\alias{decostand<-,Vegsoup-method}
+\alias{decostand<-,Vegsoup,character-method}
 
 \title{ Standardization Methods for \code{Vegsoup*} objects.
 }
+
 \description{
 This wrapper function provides the standardization methods implemented in function \code{\link[vegan:decostand]{decostand}} of \pkg{vegan}. Only the species matrix will be affected by standardization. 
 }
-\usage{
-## S4 method for signature 'Vegsoup*'
-decostand(obj)
 
-## S4 replacement method for signature 'Vegsoup*'
-decostand(obj) <- value
+\usage{
+\S4method{decostand}{Vegsoup}(x)
+
+\S4method{decostand}{Vegsoup}(x) <- value
 }
 
 \arguments{
-  \item{obj}{
-    a \code{Vegsoup*} object.
+  \item{ x }{
+    A \code{Vegsoup*} object.
   }
-  \item{value}{
+  \item{ value }{
     A vector of characters giving methods as accepted by
     \code{vegan::decostand} or \code{NULL}.
   }
@@ -33,18 +36,18 @@ Standardization is often nessecary before the species matrix is subject to analy
 
 Currently only the \code{'method'} argument of \code{vegan::decostand} is implemented. Whereas argument \code{MARGIN} is not.
 }
+
 \value{
 \code{decostand(obj)} returns a character vector depending on the number of methods.
 
 \code{decostand(obj) <- value} sets the standardization method(s).
 }
 
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
+
 \note{
 Manipulation of the sites has to be done by modifing elements of the \code{'sites'} slot, which is represented as \code{data.frame}.
-Use the extract and replace operators \code{\link[=Extract]{"$"}} to midify colums of the sites data. See \code{\link[vegsoup:Extract]{Extract}} for details.
+Use the extract and replace operators \code{\link[=Extract]{"$"}} to modify colums of the sites data. See \code{\link[vegsoup:Extract]{Extract}} for details.
 }
 
 \seealso{
@@ -75,7 +78,6 @@ as.numeric(dta)
 decostand(dta) <- NULL
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{methods}
 

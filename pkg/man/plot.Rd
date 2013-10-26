@@ -15,6 +15,7 @@ Methods for function \code{plot}.
     \item{\code{signature(x = "VegsoupPartition", y = "missing")}}{
       Simple ordination plot.
     }
+	
     \item{\code{signature(x = "VegsoupOptimstride", y = "missing")}}{
      Argument \code{'oc.treshold'} is passed to summary(obj) and controls the
      threshold value of OptimClass2 (see Tichy 2010)

@@ -1,15 +1,17 @@
 \name{bind}
+
 \alias{bind}
-\alias{bind-methods}
+\alias{bind,Vegsoup-method}
 
 \title{ Combine \code{Vegsoup*} objects }
 \description{
 Take a sequence of arguments of objects from class \code{Vegsoup*} and combine them into a single object.
 }
+
 \usage{
-## S4 method for signature 'Vegsoup*'
-bind(..., deparse.level = 1)
+  \S4method{bind}{Vegsoup}(..., deparse.level = 1)
 }
+
 \arguments{
   \item{ \dots }{
 Objects of class \code{VegsoupData}.
@@ -18,13 +20,15 @@ Objects of class \code{VegsoupData}.
 Not used.
 }
 }
+
 \details{
 By calling \code{bind} all slots of the input objects are combined and a new object is returned. Note, if a list of \code{Vegsoup*} objects needs to be combined, simply call \code{do.call("bind", list.of.Vegsoup.objects)} (see \sQuote{Examples}).
 }
 \value{
 On object of class \code{VegsoupData}.
 }
-\section{Warning }{
+
+\section{Warning}{
 The method raises an error if plot names are not unique after combining objects.
 }
 \author{

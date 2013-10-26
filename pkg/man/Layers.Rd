@@ -1,23 +1,25 @@
 \name{Layers}
 \docType{methods}
-\alias{Layers}
-\alias{Layers<-}
-\alias{Layers-methods}
-\alias{Layers<--methods}
 
-\title{ Modify the Layer Structure of Objects of Class Vegsoup* }
+\alias{Layers}
+\alias{Layers,Vegsoup-method}
+
+\alias{Layers<-}
+\alias{Layers<-,Vegsoup-method}
+\alias{Layers<-,Vegsoup,character-method}
+
+\title{ Get or Modify Layers }
 
 \description{
 Modify an object's layer structure by suppling a layer combination vector as a character argument \code{collapse}. A layer that is intended to be collapsed with one or more layers is simply given the same value of collapse. Different aggregation modes are provided.
 }
 
 \usage{
-## S4 method for 'Vegsoup*' objects
-Layers(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
-       dec = 0, verbose = FALSE)
-## S4 method for 'Vegsoup*' objects
-Layers(obj) <- value
+\S4method{Layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE)
+	   
+\S4method{Layers}{Vegsoup}(obj)<-value
 }
+
 \arguments{
   \item{ obj }{
     a \code{Vegsoup*} object.
@@ -41,6 +43,7 @@ Layers(obj) <- value
     logical. Prints messages.
   }
 }
+
 \details{
 
 A data set composed of more than one layer might be represented as a multidimensional dimensional array, where there are as many dimensions as there are layers. Unfortunately, many multivariate methods requires a matrix-valued response variable.
@@ -49,18 +52,18 @@ For practical issues, the vegsoup package collapses the species and layer dimens
 
 In stage of aggregating several data sources it might be necessary to homogenize the various layers present in the object. For this task some basic aggregation mode are provided. Aggregation mode \code{"layer"} combines layers assuming their independence. For example, a species occurring in two layers with a cover of 50 \% will result in a overall cover of 75 \%. Mode \code{"sum"} will sum up cover values of all layers (see \code{\link[vegdata:tv.veg]{tv.veg}}). If \code{collapse} is missing, or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to match \code{length(Layers(obj))} (see \sQuote{Examples}).
 }
+
 \note{
 The returned object is reordered by plot, abbr and layer!
 
 If there are any \code{NAs} in \code{collapse} all species that occur only on these layers will be dropped from the data set and a warning is issued. This can be useful e.g. if you want to drop cryptogams (bryophytes and/or lichens) from a dataset that has no complete coverage for these taxa and would otherwise influence the analysis (see \sQuote{Examples}).
 }
+
 \value{
 An object depending on the input class.
 }
-\author{
-Roland Kaiser
 
-Based on code from \emph{Florian Jansen} for function \code{tv.veg} in package \pkg{vegdata}.
+\author{ Roland Kaiser, impsired by code from \emph{Florian Jansen} for function \code{tv.veg} in package \pkg{vegdata}.
 }
 
 \examples{

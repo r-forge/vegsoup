@@ -1,24 +1,32 @@
 \name{spatial}
 \docType{methods}
+
 \alias{coordinates}
-\alias{coordinates-methods}
+\alias{coordinates,Vegsoup-method}
+
+\alias{coordinates<-}
+\alias{coordinates<-,Vegsoup-method}
 \alias{coordinates<-,Vegsoup,ANY-method}
-\alias{bbox}
-\alias{bbox-methods}
-\alias{bbox,Vegsoup-method}
-\alias{proj4string}
-\alias{proj4string-methods}
 \alias{coordinates<-,Vegsoup,CRS-method}
+
+\alias{bbox}
+\alias{bbox,Vegsoup-method}
+
+\alias{proj4string}
+\alias{proj4string,Vegsoup-method}
+
+\alias{proj4string<-}
+\alias{proj4string<-,Vegsoup-method}
+\alias{proj4string<-,Vegsoup,CRS-method}
+
 \alias{spTransform}
-\alias{spTransform-methods}
+\alias{spTransform,Vegsoup-method}
+
 \alias{SpatialPointsVegsoup}
-\alias{SpatialPointsVegsoup-methods}
-\alias{SpatialPointsVegsoup<-}
-\alias{SpatialPointsVegsoup<--methods}
+\alias{SpatialPointsVegsoup,Vegsoup-method}
+
 \alias{SpatialPolygonsVegsoup}
-\alias{SpatialPolygonsVegsoup-methods}
-\alias{SpatialPolygonsVegsoup<-}
-\alias{SpatialPolygonsVegsoup<--methods}
+\alias{SpatialPolygonsVegsoup,Vegsoup-method}
 
 \title{ Spatial Methods for \code{Vegsoup*} Objects } 
 
@@ -27,19 +35,23 @@ Spatial methods as defined in package \pkg{sp}.
 }
 
 \usage{
-coordinates(obj, ...)
-coordinates(obj) <- value
+\S4method{coordinates}{Vegsoup}(obj)
 
-bbox(obj)
+\S4method{coordinates}{Vegsoup}(obj) <- value
 
-proj4string(obj)
-proj4string(obj) <- value
+\S4method{bbox}{Vegsoup}(obj)
 
-spTransform(obj, CRS)
+\S4method{proj4string}{Vegsoup}(obj)
 
-SpatialPointsVegsoup(obj)
-SpatialPolygonsVegsoup(obj)
+\S4method{proj4string}{Vegsoup}(obj) <- value
+
+\S4method{spTransform}{Vegsoup}(obj, CRS)
+
+\S4method{SpatialPointsVegsoup}{Vegsoup}(obj)
+
+\S4method{SpatialPolygonsVegsoup}{Vegsoup}(obj)
 }
+
 \arguments{
   \item{ obj }{
     an object of class \code{Vegsoup*},
@@ -59,6 +71,7 @@ SpatialPolygonsVegsoup(obj)
     Additional arguments, not used.
   }
 }
+
 \details{
 \code{coordinates} retrieves or sets the spatial coordinates.
 
@@ -70,9 +83,12 @@ SpatialPolygonsVegsoup(obj)
 
 All methods operate on the spatial slots of an object: \code{SpatialPointsVegsoup} and \code{SpatialPolygonsVegsoup}.
 }
+
 \value{
 An object depending on the input class.
 }
+
+\author{ Roladn Kaiser }
 
 \seealso{
 \code{\link{Spatial}}

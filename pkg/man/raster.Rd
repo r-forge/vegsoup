@@ -1,8 +1,8 @@
 \name{extract}
-
 \docType{methods}
 
 \alias{extract}
+\alias{extract,Vegsoup-method}
 \alias{extract,Raster,Vegsoup-method}
 
 \title{ Extract values from Raster objects }
@@ -17,10 +17,10 @@ Extract the values of the cells of a \code{Raster} object for the locations (\co
 
 \arguments{
   \item{ x }{
-    A Raster* object.
+    A \code{Raster*} object.
   }
   \item{ y }{
-    A Vegsoup* object.
+    A \code{Vegsoup*} object.
   }
   \item{ \dots }{
     Additional arguments passed to \code{\link[raster:extract]{extract}}.

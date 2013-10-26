@@ -6,7 +6,7 @@ setGeneric("quantile",
 		standardGeneric("quantile")
 )
 #}
-.quantile.Vegsoup <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, type = 7, coverscale = FALSE, ...) {
+.quantile.Vegsoup <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) {
 	if (coverscale & !is.null(decostand(x))) {
 		message("disregard decostand method for calculations")
 	 	decostand(x) <- NULL
@@ -51,5 +51,5 @@ setGeneric("quantile",
 	
 setMethod("quantile",
 	signature(x = "VegsoupPartition"),
-	function (x, ...) .quantile.Vegsoup(x, ...)
+	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) .quantile.Vegsoup(x, ...)
 )

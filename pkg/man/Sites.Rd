@@ -1,9 +1,12 @@
 \name{Sites}
 \docType{methods}
+
 \alias{Sites}
-\alias{Sites-methods}
+\alias{Sites,Vegsoup-method}
+
 \alias{Sites<-}
-\alias{Sites<--methods}
+\alias{Sites<-,Vegsoup-method}
+\alias{Sites<-,Vegsoup,data.frame-method}
 
 \title{ Methods for the Sites Slot of \code{Vegsoup*} Objects }
 
@@ -11,10 +14,9 @@
 Accessor and replacement methods acting on the \code{'sites'} slot.
 }
 \usage{
-## S4 method for signature 'Vegsoup*'
-Sites(obj)
-## S4 method for signature 'Vegsoup*'
-Sites(obj) <- value
+\S4method{Sites}{Vegsoup}(obj)
+
+\S4method{Sites}{Vegsoup}(obj) <- value
 }
 
 \arguments{

@@ -38,7 +38,7 @@ A list with the following components:
 Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe}
 }
 \seealso{
-\code{\link{model.statistics}}.
+\code{\link[polytomous:model.statistics]{model.statistics}} in package \pkg{polytomous}.
 }
 \examples{
 require(vegsoup)

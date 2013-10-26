@@ -6,14 +6,14 @@ shape.species <- function (obj) {
 	#	data.frame to store results
 	res <- as.data.frame(
     	     matrix("",
-        	   ncol = length(Layers(dta)) + 2, # we need 2 more columns
-	           nrow = sum(richness(dta, "sample"))),
+        	   ncol = length(Layers(obj)) + 2, # we need 2 more columns
+	           nrow = sum(richness(obj, "sample"))),
     	   stringsAsFactors = FALSE)
-	names(res) <- c("plot", "abbr", Layers(dta))
+	names(res) <- c("plot", "abbr", Layers(obj))
 
-	res$plot <- rep(rownames(dta), richness(dta, "sample"))
-	res$abbr <- unlist(sapply(rownames(dta), function (x) {
-		Taxonomy(dta[rownames(dta) == x, ])$abbr}))
+	res$plot <- rep(rownames(obj), richness(obj, "sample"))
+	res$abbr <- unlist(sapply(rownames(obj), function (x) {
+		Taxonomy(obj[rownames(obj) == x, ])$abbr}))
 	#	slow
 	for (i in 1:nrow(res)) {
 		tmp <- res[i, ]

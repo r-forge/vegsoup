@@ -1,14 +1,18 @@
 \name{OptimStride}
 \alias{OptimStride}
+
 \title{ Compute a Series of Partitions/Clusterings }
+
 \description{
 Compute a series of clusterings by differnet methods and quanitfy their quality using a Fisher test or table deviance.
 }
+
 \usage{
 OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
             method = c("ward", "flexible", "pam", "kmeans", "wards"),
             CALL = match.call(), ...)
 }
+
 \arguments{
   \item{ obj }{
     an object of class \code{VegsoupPartition}
@@ -39,7 +43,7 @@ OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
   }
 }
 \details{
-The implementaion follows the method defined in Tíchý et al. (2010). The function takes several arguments passed to \code{VegsoupPartition}. For example \code{decostand.method} allows for all standardization methods available in \code{\link{decostand}}. \code{binary = TRUE} (the default) uses binary data only. \code{alternative} set the alternative hypothesis ind \code{\link{FischerTest}}.
+The implementaion follows the method defined in Tíchý et al. (2010). The function takes several arguments passed to \code{VegsoupPartition}. For example \code{decostand.method} allows for all standardization methods available in \code{\link{decostand}}. \code{binary = TRUE} (the default) uses binary data only. \code{alternative} set the alternative hypothesis ind \code{\link{FisherTest}}.
 
 }
 \references{

@@ -12,6 +12,7 @@ importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot, proj4string, "proj4string<-", spTransform)
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
 
+importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer, RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell)
 
@@ -129,7 +130,7 @@ exportMethods(
     "Species<-",
     "SpeciesList",	
     "spread",
-    "Stride",
+#   "Stride",
     "summary",
     "Tabdev",
     "tail",

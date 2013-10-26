@@ -1,11 +1,14 @@
 \name{richness}
 \alias{richness}
-\alias{richness-method}
+\alias{richness,Vegsoup-method}
+\alias{richness,VegsoupPartition-method}
 
 \title{ Species Richness of an Object of Class Vegsoup* }
+
 \description{
 Retrieve dataset, sample or grouped species richness.
 }
+
 \usage{
 \S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample"))
 
@@ -17,14 +20,16 @@ Retrieve dataset, sample or grouped species richness.
     \code{Vegsoup*} object.
   }
   \item{ choice }{
-    Return either dataset or sample richness, defaults to \code{"dataset"}.
+    Return either dataset or sample richness, defaults to \code{dataset}.
     Partial matches are allowed. Objects of class \code{'VegsoupPartition'}
     take an additional option \code{"partition"}.
   }
 }
+
 \details{
-Dataset richness is defined as the number of species (discarding layer duplicates) found in the data set. Sample richness is the number of species per sample (plot) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed to one.
+Dataset richness is defined as the number of species (discarding layer replicates) found in the data set. Sample richness is the number of species per sample (plot) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed to one.
 }
+
 \value{
 A numeric vector of suitable size with names taken from the object, except \code{choice = "dataset"}, where names are meaningless
 }

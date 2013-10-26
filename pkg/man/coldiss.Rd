@@ -1,7 +1,7 @@
 \name{coldiss}
 
 \alias{coldiss}
-\alias{coldiss-method}
+\alias{coldiss,Vegsoup-method}
 
 \title{
 Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
@@ -10,7 +10,7 @@ Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-coldiss(obj, colors, byrank = TRUE, diag = FALSE, method,
+\S4method{coldiss}{Vegsoup}(obj, colors, byrank = TRUE, diag = FALSE, method,
         ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
@@ -42,18 +42,20 @@ coldiss(obj, colors, byrank = TRUE, diag = FALSE, method,
     Arguments passed to \code{as.dist}. See \sQuote{Examples}.
   }
 }
+
 \details{
-If \code{colors} is a single integer, the argument determines the number of colors to be used with \code{\link{cm.colors}}. If \code{colors} is vector of colors longer than 1 those colors will be used. The function uses \code{\link{dmat.color}} and \code{\link{order.single}} in package \pkg{gclus}.
+If \code{colors} is a single integer, the argument determines the number of colors to be used with \code{\link{cm.colors}}. If \code{colors} is vector of colors longer than 1 those colors will be used. The function uses \code{\link[gclus]{dmat.color}} and \code{\link[gclus:order.single]{order.single}} in package \pkg{gclus}.
 %Combinig \code{translate = TRUE} and \code{diag = TRUE} will result in over-plotting.
 }
-\author{
-Implemented from Roland Kaiser for vegsoup from code in \code{colldiss.R} by Francois Gillet supplied with the Book Numerical Ecology with Rm (Borcard et al. 2011)
+
+\author{ Roland Kaiser, implemented for vegsoup inspired by code in \code{colldiss.R} by \emph{Francois Gillet} supplied with the Book Numerical Ecology with R (Borcard et al. 2011)
 }
+
 \references{
 Borcard, D., Gillet, F., and Legendre, P. (2011). Numerical Ecology with R. Springer.
 }
 \seealso{
-\code{\link{dmat.color}} in package \pkg{gclus}
+\code{\link[gclus]{dmat.color}} in package \pkg{gclus}
 }
 \examples{
 require(vegsoup)

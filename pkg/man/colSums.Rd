@@ -1,31 +1,37 @@
 \name{colSums}
 \docType{methods}
+
 \alias{colSums}
-\alias{colSums-methods}
+\alias{colSums,Vegsoup-method}
+
 \alias{rowSums}
-\alias{rowSums-methods}
+\alias{rowSums,Vegsoup-method}
+
 \alias{rowSums}
-\alias{rowSums-methods}
+\alias{rowSums,Vegsoup-method}
+
 \alias{rowMeans}
-\alias{rowMeans-methods}
+\alias{rowMeans,Vegsoup-method}
+
 \alias{colMeans}
-\alias{colMeans-methods}
+\alias{colMeans,Vegsoup-method}
 
 \title{ Row and Column Sums for Objects of Class VegsoupData* }
+
 \description{
 Form row and column sums for the the species matrix based on presence/absence and numeric matrices.
 }
-\usage{
-## S4 method for signature 'Vegsoup*'
-colSums(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
-## S4 method for signature 'Vegsoup*'
-rowSums(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
 
-## S4 method for signature 'Vegsoup*'
-colMeans(x, na.rm = FALSE, dims = 1, typeof = "numeric", ...)
-## S4 method for signature 'Vegsoup*'
-rowMeans(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
+\usage{
+\S4method{colSums}{Vegsoup}(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
+
+\S4method{rowSums}{Vegsoup}(x, na.rm = FALSE, dims = 1, typeof = "logical", ...)
+
+\S4method{colMeans}{Vegsoup}(x, na.rm = FALSE, dims = 1, typeof = "numeric", ...)
+
+\S4method{rowMeans}{Vegsoup}(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
 }
+
 \arguments{
   \item{ x }{
     An \code{Vegsoup*} object.
@@ -51,17 +57,23 @@ rowMeans(x, na.rm = FALSE, dims = 1, typeof  = "numeric", ...)
     and \code{\link[base:colMeans]{colMeans}}, respectively.
   }
 }
+
 \details{
 Note, the default behaviour (argument \code{typeof} is missing) operates on a presence/absence version of the species matrix as can be obtained by \code{as.logical(x)} or \code{as.matrix(x, typeof = "logical")}. On this basis \code{colSums} returns the number of occurences of a species in the data set. The \code{rowSums} method returns the number of species with duplicated occurences of species on different layers if there is more than one layer and at least a single species occuring in more than one layer! In this case correct species richness can be obtained with method \code{richness(obj, "sample")}.
 
 The \code{colSums}
 }
+
 \value{
 A numeric vector of suitable size with names taken from the object.
 }
+
+\author{ Roland Kaiser }
+
 \seealso{
 \code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)        
@@ -82,7 +94,5 @@ colSums(dta)
 #   sums of abundances
 colSums(dta, typeof = "numeric")
 }
-\author{ Roladn Kaiser }
 
 \keyword{methods}
-

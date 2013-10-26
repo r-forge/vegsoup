@@ -1,6 +1,7 @@
 \name{typical}
 \alias{typical}
 \alias{typical-methods}
+\alias{typical,VegsoupPartition-method}
 
 \title{
 Typical Samples of an Object of Class Vegsoup*

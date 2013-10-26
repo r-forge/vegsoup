@@ -1,35 +1,39 @@
-# man
+# drop
+Association, is defined for nominal variables only?
+
+# Latex.Rd
 document
 system.file("extdata", "template.tex", package = "vegsoup")
 
-# major
-NEW
-decotrans method
-decostand method for fidelity, needs to recalculate fidelity if not presence absence
-extend slot partition to contain class dendrogram
-
-replace most warnings() with message()
-improve findcoordiantes()
-improve Spread()
-
-more rigourious tests of coverscale
-eg. cov "++" is accepted but must raise errors!
-
-# minor
-saerch for 
-Species(dta) <-
-noquote for print method (e.g. as.matrix)
-order method for Vegsoup object (plot, abbr, layer)
-
 # rename
+‘stack.species’ ‘stack.sites’ ‘stack.coordinates’ to
+stackSpecies, stackSites, stackSpatial
+
+cov to abu(dance)
+Species to species and Sites to sites
 layer to stratum
 Layers to strata
 add strata(obj) <- value logical-method
 if FALSE collapse all strata
 if TRUE no method to add strata to unlayered object 
 
-cov to abu(dance)
-Species to species and Sites to sites
+# add?
+decotrans method, better math method e.g. obj^0.2
+decostand method for fidelity, needs to recalculate fidelity if not presence absence
+extend slot partition to contain class dendrogram
+
+improve findcoordiantes(), or drop and replace it with coordinates<- method
+
+
+more rigourious tests of coverscale
+eg. cov "++" is accepted but must raise errors!
+
+# minor
+improve Spread()
+saerch for 
+Species(dta) <-
+noquote for print method (e.g. as.matrix)
+order method for Vegsoup object (plot, abbr, layer)?
 
 # package check
 tools::showNonASCII(readLines(f))

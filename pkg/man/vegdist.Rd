@@ -1,27 +1,35 @@
 \name{vegdist}
 \docType{methods}
+
 \alias{as.dist}
-\alias{as.dist-methods}
+\alias{as.dist,Vegsoup-method}
+
 \alias{vegdist}
-\alias{vegdist-methods}
-\alias{vegdist<--methods}
+\alias{vegdist,Vegsoup-method}
+
+\alias{vegdist<-}
+\alias{vegdist<-,Vegsoup-method}
 \alias{vegdist<-,Vegsoup,character-method}
+
 \alias{distconnected}
-\alias{distconnected-methods}
+\alias{distconnected,Vegsoup-method}
 
 \title{ Distance Matrices from \code{Vegsoup*} Objects }
 \description{
 Compute a distance matrix as specified by \code{vegdist(obj)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
 }
+
 \usage{
-as.dist(m, diag = FALSE, upper = FALSE)
+\S4method{as.dist}{Vegsoup}(m, diag = FALSE, upper = FALSE)
 
-vegdist(x, method = "bray", binary = FALSE, diag = FALSE,
+\S4method{vegdist}{Vegsoup}(x, method = "bray", binary = FALSE, diag = FALSE,
 	upper = FALSE, na.rm = FALSE, ...)
-vegdist(x) <- value
 
-distconnected(dis, toolong, trace)
+\S4method{vegdist}{Vegsoup}(x) <- value
+
+\S4method{distconnected}{Vegsoup}(dis, toolong, trace)
 }
+
 \arguments{
   \item{ x, m, dis }{
     \code{Vegsoup*} object.

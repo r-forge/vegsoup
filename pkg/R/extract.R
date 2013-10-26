@@ -74,14 +74,14 @@ setMethod("[",
     }
 )
 
-setReplaceMethod("[", c("Vegsoup", "ANY", "missing", "ANY"), 
-	function(x, i, j, value) {
-		if (!("sites" %in% slotNames(x)))
-			stop("no [[ method for object without slot sites")
-		x@sites[[i]] <- value
-		x
-	}
-)
+#setReplaceMethod("[", c("Vegsoup", "ANY", "missing", "ANY"), 
+#	function(x, i, j, value) {
+#		if (!("sites" %in% slotNames(x)))
+#			stop("no [[ method for object without slot sites")
+#		x@sites[[i]] <- value
+#		x
+#	}
+#)
 
 #	indexing method
 setMethod("$", "Vegsoup", 

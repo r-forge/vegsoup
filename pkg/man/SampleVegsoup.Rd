@@ -37,7 +37,7 @@ SampleVegsoup(x, size, replace = FALSE, prob = NULL)
 \author{ Roland Kaiser }
 \seealso{
 \code{\linkS4class{Vegsoup}}
-\code{\linkS4class{seriation}}
+\code{\link{seriation}}
 }
 \examples{
 library(vegsoup)

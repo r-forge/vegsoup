@@ -1,4 +1,4 @@
-.plotVegsoupPartition <- function (x, ...) {
+.plotVegsoupPartition <- function (x, y, ...) {
 	#	x = prt
 #	op <- par()
 #	on.exit(par(op))
@@ -22,16 +22,19 @@
 		9, 2, byrow = TRUE)	
 
 	if (missing(y)) {
-		cat("\nuse slot partition")
+		#	nuse slot partition
 		grp <- as.factor(Partitioning(x))
 	}
-	if (!missing(y) && missing(ind)) {
-		stop("please supply sites column name or index!")
+	else {
+		stop("no method yet")
 	}
-	if (!missing(y) && !missing(ind)) {
-		cat("\nnot implemented yet")
-	#	grp <- get.sites.variable(y, ind)	
-	}
+#	if (!missing(y) && missing(ind)) {
+#		stop("please supply sites column name or index!")
+#	}
+#	if (!missing(y) && !missing(ind)) {
+#		cat("\nnot implemented yet")
+#	#	grp <- get.sites.variable(y, ind)	
+#	}
 
 	scs <- scores(ord, display = "sites")
 

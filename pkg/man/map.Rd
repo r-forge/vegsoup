@@ -1,39 +1,44 @@
 \name{map}
 \docType{methods}
+
 \alias{map}
-\alias{map-methods}
+\alias{map,Vegsoup-method}
+
 \alias{QuickMap}
-\alias{QuickMap-methods}
+\alias{QuickMap,Vegsoup-method}
+
 \alias{ellipsoidhull}
-\alias{ellipsoidhull-methods}
+\alias{ellipsoidhull,VegsoupPartition-method}
 
 \title{ Draw Map of Plot Locations }
 
 \description{
 \code{map} draws a simple vector background map and plot locations. \code{ellipsoidhull} computes the \emph{ellipsoid hull} or \emph{spanning ellipsoid} such that all given points lie just inside or on the boundary of the ellipsoid and adds it to a map.
 
-\code{QuickMap} opens a browser window and plots pushpins of plot centers on top of "Google Maps"
+\code{QuickMap} opens a browser window and plots pushpins of plot coordiantes on top of \sQuote{Google Maps}.
 }
+
 \usage{
-## S4 method for signature 'Vegsoup*'
-map(obj, database, ...)
-## S4 method for signature 'VegsoupPartition*'
-ellipsoidhull(x, ...)
+\S4method{map}{Vegsoup}(x, database, ...)
+
+\S4method{QuickMap}{Vegsoup}(x)
+
+\S4method{ellipsoidhull}{VegsoupPartition}(x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
+	ret.sqdist = FALSE, ret.pr = FALSE)
 }
 
 \arguments{
-  \item{ obj }{
-    a \code{Vegsoup*} object.
-  }
   \item{ x }{
-    an object inhertiting from class \code{"VegsoupPartition"}.
+    A \code{Vegsoup*} or for ellipsoidhull a \code{VegsoupPartition} object.
   }
   \item{ database }{
     Character string naming a geographical database. See \code{\link[maps:map]{map}}.
    }
   \item{ \dots }{
-    Arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps},
-    or \code{\link[cluster:ellipsoidhull]{ellipsoidhull}} in package
+    Arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps}.
+  }
+  \item{ tol, maxit, ret.wt, ret.sqdist, ret.pr}
+    Arguments to \code{\link[cluster:ellipsoidhull]{ellipsoidhull}} in package
     \pkg{cluster}.
   }
 }
@@ -42,7 +47,7 @@ method \code{map} is intended to provide a quick and dirty map background to dis
 
 \code{ellipsoidhull} is a simple wrapper for function \code{\link{ellipsoidhull}} in package cluster. The main purpose of the function is to visualize partitions on a map.
 
-Function \code{QuickMap} opens a browser window and plots pushpins of plot centers on top of "Google Maps". See \link{gvisMap} in package \pkg{googleVis} for details.
+Function \code{QuickMap} opens a browser window and plots pushpins of plot centers on top of \sQuote{Google Maps}. See \link[googleVis]{gvisMap} in package \pkg{googleVis} for details.
 }
 \value{
   \code{map} creates a map plot.
@@ -56,7 +61,7 @@ Function \code{QuickMap} opens a browser window and plots pushpins of plot cente
 }
 \author{ Roland Kaiser }
 \seealso{
-  \code{\link{gvisMap}} in package \pkg{googleVis},
+  \code{\link[googleVis]{gvisMap}} in package \pkg{googleVis},
   \code{\link{ellipsoidhull}} in package \pkg{cluster}
 }
 \keyword{ methods }

@@ -2,12 +2,26 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{taxonomy}
+
 \alias{Taxonomy-class}
+
 \alias{[,Taxonomy,ANY,ANY,missing-method}
+
 \alias{$,Taxonomy-method}
+
 \alias{rbind,Taxonomy-method}
-\alias{taxonomy,Taxonomy-method}
+
+\alias{Taxonomy<-}
 \alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
+
+\alias{Taxonomy}
+
+\alias{taxonomy-methods}
+\alias{taxonomy,character-method}
+\alias{taxonomy,data.frame-method}
+\alias{taxonomy,matrix-method}
+\alias{taxonomy,SpeciesTaxonomy-method}
+\alias{taxonomy,Taxonomy-method}
 
 \title{Class \code{"Taxonomy"}}
 \description{
@@ -71,7 +85,7 @@ Data representation of taxonomic reference list.
   and function \code{\link{SpeciesTaxonomy}},
   \code{\linkS4class{Species}},
   \code{\linkS4class{Sites}}
-  \code{\link{tax}}
+  \code{\link[vegdata:tax]{tax}} in package \pkg{vegdata}
 }
 \examples{
 require(vegsoup)

@@ -1,5 +1,5 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoup <- function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE) {
+.write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE) {
 
 require(stringr)
 	
@@ -152,7 +152,7 @@ res <- cbind(
 	as.vector(apply(res[, c(1,2)], 1,
 		function (x) paste0(x, collapse = ""))),
 	as.vector(apply(res[, -c(1,2)], 1,
-		function (x) paste0(x, collapse = collapse))))		
+		function (x) paste0(x, collapse = sep))))		
 res <- apply(res, 1, function (x) paste0(x, collapse = ""))
 
 #	add keywords
@@ -176,7 +176,7 @@ return(invisible(res))
 
 #if (!inGeneric("write.verbatim")) {
 setGeneric("write.verbatim",
-	function (obj, file, select, absence = ".", collapse = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE)
+	function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE)
 		standardGeneric("write.verbatim")
 )
 #}

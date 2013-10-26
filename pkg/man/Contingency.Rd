@@ -1,17 +1,24 @@
 \name{tables}
 \docType{methods}
+
 \alias{contingency}
-\alias{contingency-methods}
+\alias{contingency,VegsoupPartition-method}
+
 \alias{constancy}
-\alias{constancy-methods}
+\alias{constancy,VegsoupPartition-method}
+
 \alias{average}
-\alias{average-methods}
+\alias{average,VegsoupPartition-method}
+
+\alias{imprtance}
+\alias{imprtance,VegsoupPartition-method}
 
 \title{ Summary Tables for \code{"VegsoupPartition"} Objects }
 
 \description{
 Function \code{constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs in; \code{contingency} lists just the number of occurrences. The latter are based on presence/absence of a species, whereas method \code{average} divides the sum of species abundances by the number of plots in which it occurs.
 }
+
 \usage{
 \S4method{contingency}{VegsoupPartition}(obj, ...)
 
@@ -37,21 +44,23 @@ Function \code{constancy} lists for each species the fraction (percentage) of sa
 }
 
 \details{
-An importance table lists for each species the average (mean) abundance of each species in each partition. Sensible results are only to be obtained if the object has either a semi-quantitative or quantitative cover cover scale defined. Note, if only presence/absence data is available \code{Importance} returns the same results as \code{Contingency(obj) / Contingency(obj)}, which bears no information as the summed abundance is just the number of occurrences. See method \code{\link{Fivenum}} for descriptive summaries of species abundances in partitions.
+An importance table lists for each species the average (mean) abundance of each species in each partition. Sensible results are only to be obtained if the object has either a semi-quantitative or quantitative cover cover scale defined. Note, if only presence/absence data is available \code{importance} returns the same results as \dots \dots, which bears no information as the summed abundance is just the number of occurrences. See method \code{\link{quantile}} for descriptive summaries of species abundances in partitions.
 
 Specifing \code{mode = "R"} in \code{Contingency} and \code{Importance} allows for a kind of \emph{R-mode} analyis where the grouping is defined by the layer structure (\code{\link{Layers}}). Note, this rarely makes sense if there is only one layer. For multi layer objects a call to \code{Importance} in \emph{R-mode} implies that all species abundances in a layer are summed up and devided by layer contingencies (\code{Contingency(obj, mode = "R")}), in this case the number of species found in a respective layer for each plot.
 }
+
 \value{
 A \code{"matrix"} with as many columns as there are partitions (layers if \code{mode = "R"}) and as many rows as species (or plots). If mode is not specified layer pseudo-species are treated sperately.
 }
-\author{
-Roland Kaiser
-}
+
+\author{ Roland Kaiser }
+
 \seealso{
 \code{\link[labdsv:const]{const}} and
 \code{\link[labdsv:importance]{importance}} in \pkg{labdsv},
-\code{\link{fivenum}}
+\code{\link{quantile}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)

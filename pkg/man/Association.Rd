@@ -191,7 +191,7 @@ Antti Arppe, modified for package \code{vegsoup} by Roland Kaiser
 }
 \seealso{
 \code{\link{Accuracy}} and \code{\link{Confus}} in package \pkg{vegsoup},
-\code{\link{associations}} in package \pkg{polytomous}
+\code{\link[polytomous:associations]{associations}} in package \pkg{polytomous}
 }
 \examples{
 require(vegsoup)

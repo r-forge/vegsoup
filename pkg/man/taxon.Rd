@@ -1,17 +1,22 @@
 \name{taxon}
+
 \alias{taxon}
-\alias{taxon-method}
+\alias{taxon,Vegsoup-method}
+
 \alias{subset}
-\alias{subset-methods}
+\alias{subset,Vegsoup-method}
 
 \title{ Get or Subset Object by Scientific Taxon Name }
+
 \description{
   Retrieve a \code{character} vector of scientific taxon names as defined by
   \code{Taxonomy(x)} or subset an object based on these names such that
   only a subset of species remain.
 }
+
 \usage{
 \S4method{taxon}{Vegsoup}(x)
+
 \S4method{subset}{Vegsoup}(x, subset, ...)
 }
 
@@ -27,6 +32,7 @@
     Arguments passed to \code{\link{grep}}.
   }
 }
+
 \details{
   Function \code{taxon} retrieves scientific species names from an object.
 

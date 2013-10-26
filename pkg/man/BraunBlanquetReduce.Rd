@@ -2,30 +2,38 @@
 \alias{BraunBlanquetReduce}
 
 \title{ Reduce 9 Point Braun-Blanquet Abundance Scale to 7 Point }
+
 \description{
 Revert Braun-Blanquet abundance scale from extended (new) to simple (old).
 }
+
 \usage{
-BraunBlanquetReduce(obj)
+BraunBlanquetReduce(x)
 }
+
 \arguments{
-  \item{ obj }{
+  \item{ x }{
     An \code{Vegsoup*} object.
   }
 }
+
 \details{
   Converts from 9 and 7 point Braun-Blanquet scale by merging abundance
   classes "2m", "2a" and "2b" to "2".
 }
+
 \value{
   returns an object depending on the input class. 
 }
+
 \references{
   Peet, R.K. & Roberts D.W. (2013). Classification of natural and semi-natural
   vegetation. In Vegetation Ecology (van der Maarel, E. & Franklin, J. eds).
   Wiley-Blackwell.
 }
+
 \author{ Roland Kaiser }
+
 \examples{
 library(vegsoup)
 

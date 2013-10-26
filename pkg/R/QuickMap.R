@@ -1,17 +1,17 @@
 #	inherited visulalisation method
 #if (!isGeneric("gvisMap")) {
 setGeneric("QuickMap",
-	function (obj)
+	function (x)
 		standardGeneric("QuickMap")
 )
 #}
 
 #	gvisMap package
 setMethod("QuickMap",
-    signature(obj = "Vegsoup"),
-    function (obj) {
+    signature(x = "Vegsoup"),
+    function (x) {
     	suppressPackageStartupMessages(require(googleVis))
-		pt <- SpatialPointsVegsoup(obj)
+		pt <- SpatialPointsVegsoup(x)
 		if (nrow(pt) > 1) {
 			df <- data.frame(LatLong = apply(coordinates(pt)[, c(2,1)], 1,
 				function (x) paste(x, collapse = ":")),

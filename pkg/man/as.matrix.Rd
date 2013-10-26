@@ -1,18 +1,24 @@
 \name{as.matrix}
 \alias{as.logical}
-\alias{as.logical-method}
+\alias{as.logical,Vegsoup-method}
+
 \alias{as.numeric}
-\alias{as.numeric-method}
+\alias{as.numeric,Vegsoup-method}
+
 \alias{as.character}
-\alias{as.character-method}
+\alias{as.character,Vegsoup-method}
+
 \alias{as.matrix}
-\alias{as.matrix-method}
+\alias{as.matrix,Vegsoup-method}
+
 \alias{as.array}
-\alias{as.array-method}
+\alias{as.array,Vegsoup-method}
+
 \alias{as.vector}
-\alias{as.vector-method}
+\alias{as.vector,Vegsoup-method}
+
 \alias{indices}
-\alias{indices-method}
+\alias{indices,Vegsoup-method}
 
 \title{ Retrieve Species Matrix with Specified Storage Mode }
 
@@ -22,26 +28,19 @@ The functions retrieve a species matrix of mode according the methods name and \
 }
 
 \usage{
-## S4 method for signature 'Vegsoup*'
-as.logical(x, mode)
+\S4method{as.logical}{Vegsoup}(x, mode)
 
-## S4 method for signature 'Vegsoup*'
-as.numeric(x, mode)
+\S4method{as.numeric}{Vegsoup}(x, mode)
 
-## S4 method for signature 'Vegsoup*'
-as.character(x, mode)
+\S4method{as.character}{Vegsoup}(x, mode)
 
-## S4 method for signature 'Vegsoup*'
-as.matrix(x, typeof, mode, ...)
+\S4method{as.matrix}{Vegsoup}(x, typeof, mode, ...)
 
-## S4 method for signature 'Vegsoup*'
-as.array(x, typeof, ...)
+\S4method{as.array}{Vegsoup}(x, typeof, ...)
 
-## S4 method for signature 'Vegsoup*'
-indices(x, typeof) 
+\S4method{indices}{Vegsoup}(x, typeof) 
 
-## S4 method for signature 'Vegsoup*'
-as.vector(x, mode)
+\S4method{as.vector}{Vegsoup}(x, mode)
 }
 
 \arguments{
@@ -93,7 +92,7 @@ If the object has non \code{NULL} values in its data standardization slot the me
 Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
 }
 \seealso{
-\code{\link{as.data,frame}},
+\code{\link{as.data.frame}},
 \code{\link{Vegsoup}},
 \code{\link{decostand}} and
 \code{\link{Coverscale}}

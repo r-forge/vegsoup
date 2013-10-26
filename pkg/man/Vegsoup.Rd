@@ -1,9 +1,12 @@
 \name{Vegsoup}
 \alias{Vegsoup}
+
 \alias{instantsoup}
+
 \alias{coenoflex}
 
 \title{ Create an object of class \code{"Vegsoup"} }
+
 \description{
   The provided creator functions build the basic data structures of
   \code{Vegsoup*} objects from local R objects or from csv files stored on
@@ -12,13 +15,14 @@
   \code{Vegsoup} is the recommended user interface rather than direct
   \code{link{new}}\code{("Vegsoup", ....)} call.
 }
+
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE)
 
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 
-coenoflex(numplt = 10, numspc = 10, ...)
+coenoflex(numplt = 20, numspc = 10, ...)
 }
 
 \arguments{
@@ -88,6 +92,7 @@ coenoflex(numplt = 10, numspc = 10, ...)
     Show status reports during function call.
   }
 }
+
 \details{
   \code{Vegsoup()} is the generic constructor function to create a prototype
   object of class \code{Vegsoup}. The first four arguments
@@ -121,6 +126,7 @@ coenoflex(numplt = 10, numspc = 10, ...)
 
   Function \code{coenflex} creates a random community.
 }
+
 \note{
   If you gain errors using \code{instantsoup}, try to create separate objects
   for classes \code{"Species"}, \code{"Sites"} and \code{"Taxonomy"}. You may
@@ -128,6 +134,7 @@ coenoflex(numplt = 10, numspc = 10, ...)
   mentioned. Defaults for \code{sep} and \code{dec} passed to \code{read.csv}
   are set according to \code{read.csv2}!
 }
+
 \section{Warning}{
   All missing values that might result when casting \code{y} will be replaced
   with zeros, not \code{NA}!
@@ -139,10 +146,13 @@ coenoflex(numplt = 10, numspc = 10, ...)
   When suppling argument \code{proj4string} ensure that
  \code{CRS(proj4string)} works.
 }
+
 \value{
 An object of class \code{\linkS4class{Vegsoup}}.
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
   \code{\link{Vegsoup-class}}
   \code{\link{as.matrix}}
@@ -150,6 +160,7 @@ An object of class \code{\linkS4class{Vegsoup}}.
   \code{\link{decostand}}
   \code{\link{vegdist}}
 }
+
 \examples{
 library(vegsoup)
 
@@ -177,4 +188,5 @@ as(seriation(coenoflex(10,30)), "sparseMatrix")
 #	R-mode analysis using mode argument, one of 'Q' or 'R'
 as(as.logical(seriation(coenoflex(10,30)), mode = "R"), "sparseMatrix")
 }
+
 \keyword{ classes }

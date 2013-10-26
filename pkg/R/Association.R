@@ -21,7 +21,7 @@ setMethod("Association",
 	#	E-mail: antti.arppe@helsinki.fi
 
 	#	This is an R function that calculates a range of measures of
-	#	association for nominal variables.	In addition to eachstatistic
+	#	association for ?>>>>nominal<<<<? variables.	In addition to eachstatistic
 	#	value, the variance, ASE and significance (P-level) is computed The
 	#	formulas are based on the following sources:
  
@@ -115,7 +115,7 @@ setMethod("Association",
 
 	#	Log-likelihood chi-squared (G2) test of independence (homogeneity)
 	likelihood.ratio <- 2 * sum(chisq.results$observed * log(chisq.results$observed / chisq.results$expected))
-	alpha.G2 <- pchisq(likelihood.ratio, df = (X.rows - 1) * (X.cols - 1), lower = FALSE)
+	alpha.G2 <- pchisq(likelihood.ratio, df = (X.rows - 1) * (X.cols - 1), lower.tail = FALSE)
 
 	#	Cramer's V
 	cramers.v <- sqrt(chisq.results$statistic / (N*(min(X.rows, X.cols) - 1)))
@@ -193,7 +193,7 @@ setMethod("Association",
 	#	p.tau.CR <- 1-pnorm(z.tau.CR)
 	#	Chi-squared approximation for H0 according to Margolin & Light (1974), see also Liebetrau (1983)
 	U.tau.CR <- (N - 1) * (X.cols - 1) * tau.CR
-	p.tau.CR <- pchisq(U.tau.CR,df = (X.rows - 1) * (X.cols - 1), lower=FALSE);
+	p.tau.CR <- pchisq(U.tau.CR,df = (X.rows - 1) * (X.cols - 1), lower.tail=FALSE);
 
 	#	Tau Row|Column
 	n.err.unconditional <- N^2
@@ -220,7 +220,7 @@ setMethod("Association",
 	#	p.tau.RC <- 1 - pnorm(z.tau.RC)
 	#	Chi-squared approximation for H0 according to Margolin & Light 1974, see also Liebetrau 1983
 	U.tau.RC <- (N - 1) * (X.rows - 1) * tau.RC
-	p.tau.RC <- pchisq(U.tau.RC, df = (X.rows - 1) * (X.cols - 1), lower=FALSE)
+	p.tau.RC <- pchisq(U.tau.RC, df = (X.rows - 1) * (X.cols - 1), lower.tail=FALSE)
 
 	#	Theil's UC (1970)
 	hx <- -sum((apply(X, 1, sum) * log(apply(X, 1, sum) / N)) / N)
@@ -262,7 +262,7 @@ setMethod("Association",
 	effect.size <- sqrt(sum(((p1 - p0)^2) / p0))
 	noncentrality <- N * (effect.size^2)
 	d.f <- (X.rows - 1) * (X.cols - 1)
-	beta <- pchisq(qchisq(alpha, df = d.f, lower = FALSE), df = d.f, ncp = noncentrality)
+	beta <- pchisq(qchisq(alpha, df = d.f, lowertail = FALSE), df = d.f, ncp = noncentrality)
 	power <- 1 - beta
 
 res <- list(

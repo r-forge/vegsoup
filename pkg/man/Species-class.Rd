@@ -1,13 +1,26 @@
 \name{Species-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{species}
 \alias{Species-class}
+
 \alias{[,Species,ANY,ANY,missing-method}
+
 \alias{$,Species-method}
+
 \alias{$<-,Species-method}
+
 \alias{rbind,Species-method}
+
 \alias{species,Species-method}
+
+\alias{species-methods}
+\alias{species,character-method}
+\alias{species,data.frame-method}
+\alias{species,matrix-method}
+\alias{species,Species-method}
+\alias{species,SpeciesTaxonomy-method}
 
 \title{Class \code{"Species"}}
 
@@ -54,6 +67,7 @@
     }
   }
 }
+
 \section{Methods}{
   \describe{
     \item{ species }{
@@ -81,7 +95,6 @@
     \item{ $ }{
       \code{signature(x = "Species")}:
         Retreive column by name, or perform replacement.
-        See \code{\link{Extract.data.frame}}.
     }
     \item{ rbind }{
       \code{signature(x = "Species")}:
@@ -99,6 +112,7 @@
   columns can contain \code{NA}, as this will not allow a valid object of the
   class to be built.
 }
+
 \section{Note}{
   The design of the class, especially the initialization method, allows data
   that have not been checked for data integrity. Such data might arise when
@@ -112,7 +126,9 @@
   to be encoded, another block of four letters might be necessary, in order to
   reference lower taxonomic ranks, or to make non unique abbreviations unique.
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
   \code{\linkS4class{SpeciesTaxonomy}}
   and function \code{\link{SpeciesTaxonomy}},
@@ -121,6 +137,7 @@
   \code{\linkS4class{Vegsoup}},
   \code{\link{stack.species}}
 }
+
 \examples{
 require(vegsoup)
 showClass("Species")

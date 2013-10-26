@@ -29,7 +29,7 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		}	
 		if (missing(k) & inherits(obj, "VegsoupOptimstride")) {
 			#	warning! no sensible results so far!
-			k = summary(opt)$best.optimclass1
+			k = summary(obj)$best.optimclass1
 		}
 		#	for class(obj) Vegsoup
 		if (missing(k) & missing(clustering)) {
@@ -101,7 +101,7 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		   	alpha <- 0.625
 		   	beta = 1 - 2 * alpha
 		   	part <- agnes(Xd, method = "flexible",
-		   		par.meth = c(alpha, alpha, beta, 0),
+		   		par.method = c(alpha, alpha, beta, 0),
 		   		...)
 		}, pam = {
 			if (verbose) cat("\nrun pam")
@@ -179,10 +179,11 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 	if (out.grp) {
 		message("single member groups detected!")
 	}
-	#	fundamental change! 
+	#	fundamental change ! 
 	if (out.grp && polish) { # was ||
 		if (verbose) cat("\n... try to resolve using function optsil")
-		grp.opt <- optsil(grp, Xd, k^2)$clustering
+		require(optpart)
+		grp.opt <- optpart::optsil(grp, Xd, k^2)$clustering
 		names(grp.opt) <- rownames(obj)
 		if (any(as.vector(table(grp.opt)) == 1)) {
 			message("did not succeed in reallocation")

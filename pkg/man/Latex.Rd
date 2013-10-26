@@ -23,7 +23,7 @@ Latex(obj, path, ...)
 Latex(obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95,
      taxa.width = "60mm", col.width = "10mm", footer.treshold,
      molticols.footer, footer.width = "150mm", use.letters = FALSE,
-     caption.text = NULL, fivenum.select, recode = FALSE, sep = "/",
+     caption.text = NULL, recode = FALSE, sep = "/",
      sites.columns, verbose = FALSE, ...)
 
 ## S4 method for choice = "species" and recursive = TRUE
@@ -80,12 +80,12 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
   \item{ footer.width }{
      LaTex tag to set column width for footer columns.
   }
-  \item{ fivenum.select }{
-    a character vector selecting dimensions returned by
-    \code{\link{Fivenum}} to become pasted to the constancy value.
-    Only applicable in \code{mode = 2}.
-    See \sQuote{Details}.
-  }
+%  \item{ fivenum.select }{
+%    a character vector selecting dimensions returned by
+%    \code{\link{Fivenum}} to become pasted to the constancy value.
+%    Only applicable in \code{mode = 2}.
+%    See \sQuote{Details}.
+%  }
   \item{ caption.text }{
     character. Additional user supplied text pasted into automatically
     generated table caption.

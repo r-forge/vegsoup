@@ -88,5 +88,5 @@ setGeneric("coldiss",
 #}
 setMethod("coldiss",
     signature(obj = "Vegsoup"),
-    function (obj, ...) .coldiss(obj, ...)
+    function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) .coldiss(obj, ...)
 )

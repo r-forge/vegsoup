@@ -1,16 +1,20 @@
 \name{seriation}
 \docType{methods}
+
 \alias{seriation}
-\alias{seriation-methods}
+\alias{seriation,Vegsoup-method}
+\alias{seriation,VegsoupPartition-method}
 
 \title{ Modify an Objects Internal Order as to Reflect a Vegetation Table }
+
 \description{
 The method rearranges the species matrix according to ordination coordinates, cluster analysis or by species frequencies to achieve a \sQuote{structured} table following phytosociological principles. A modified object is returned as to reflect the order of plots and species as returned by the selected method.
 }
-\usage{
 
-## S4 method for signature 'Vegsoup' and 'VegsoupPartition'
-seriation(obj, method, mode, ...)
+\usage{
+\S4method{seriation}{Vegsoup}(obj, method, mode, ...)
+
+\S4method{seriation}{VegsoupPartition}(obj, method, mode, ...)
 
 }
 \arguments{
@@ -50,7 +54,7 @@ Currently there are only very limited ways to pass down arguments to functions a
 }
 \seealso{
 \code{\link{vegemite}} in package \pkg{vegan} for the ancestor of all vegetation table functions,
-\code{\link{ordtaxa}} for an interactive implementation in package \pkg{labdsv},
+\code{\link[labdsv:ordtaxa]{ordtaxa}} for an interactive implementation in package \pkg{labdsv},
 and \code{\link{VegsoupPartition}} for a feature-rich interface.
 }
 
