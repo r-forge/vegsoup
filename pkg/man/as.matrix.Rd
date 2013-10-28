@@ -34,7 +34,7 @@ The functions retrieve a species matrix of mode according the methods name and \
 
 \S4method{as.character}{Vegsoup}(x, mode)
 
-\S4method{as.matrix}{Vegsoup}(x, typeof, mode, ...)
+\S4method{as.matrix}{Vegsoup}(x, typeof, ...)
 
 \S4method{as.array}{Vegsoup}(x, typeof, ...)
 
@@ -45,15 +45,15 @@ The functions retrieve a species matrix of mode according the methods name and \
 
 \arguments{
   \item{ x }{
-    An object inheriting from class \code{Vegsoup}.
+    \code{'Vegsoup'} object.
   }
   \item{ mode }{
-    If \code{mode = "R"} return the transposed matrix. Defaults to \code{"Q"},
-    no transposition. Lower and upper case letters are treated the same.
+    character. If \code{mode = "R"} return the transposed matrix. If missing, defaults to
+    \code{"Q"} no transposition. Lower and upper case letters are treated the same.
     See \sQuote{Details}.
   }
   \item{ typeof }{
-    A character string giving the desired storage mode or type of the object.
+    character. Selectes the desired storage mode or type of the object.
     Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
   }
   \item{ \dots }{

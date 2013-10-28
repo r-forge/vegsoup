@@ -208,17 +208,13 @@ setGeneric("head", function (x, ...)
 
 setMethod("head",
     signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(choice))
-	    	choice = "species"
+    function (x, n = 6L, choice, typeof, ...) {    	
+	    if (missing(choice)) choice = "species"
     	CHOICES <- c("species", "sites")
     	choice <- CHOICES[pmatch(choice, CHOICES)]
-	    if (missing(typeof))
-		    typeof = "logical"
-	    if (missing(n))
-		    n = 6L
+	    if (missing(typeof)) typeof = "logical"
     	if (choice == "species")
-			res <- head(as.matrix(x, typeof), n, ...)
+			res <- head(as.matrix(x, typeof = typeof), n, ...)
     	if (choice == "sites")
     		res <- head(Sites(x), n, ...)
     	return(res)
@@ -230,22 +226,21 @@ setMethod("head",
 
 setMethod("head",
     signature(x = "VegsoupPartition"),
-    function (x, n = 6L, choice = "species", ...) {
-    	if (missing(choice))
-	    	choice <- "species"
+    function (x, n = 6L, choice, typeof, ...) {
+	    if (missing(typeof)) typeof = "logical"
+    	if (missing(choice)) choice = "species"	    	
+
 	    if (n != 6L) {
 	    	sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
 	    		rownames(x))
+		    if (choice == "species") res <- as.character(x)[sel,]
+	    	if (choice == "sites") res <- Sites(x)[sel,]	
+		}
 	    	if (choice == "species")
-    			res <- as.character(x)[sel,]
+    			res <- head(as.matrix(x, typeof = typeof), n, ...)
 	    	if (choice == "sites")
-    			res <- Sites(x)[sel,]
-    	} else {
-	    	if (choice == "species")
-    			res <- head(as.character(x), ...)
-	    	if (choice == "sites")
-    			res <- head(as.character(x), ...)
-    	}	
+    			res <- head(Sites(x), n, ...)	
+    
     	return(res)
     }    	    
 )

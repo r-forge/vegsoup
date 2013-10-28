@@ -14,9 +14,8 @@
   Extract parts of an object. Currently, a replace method is not implemented!
 }
 
-%\S4method{[}{Vegsoup}(x, i, j, ... , drop = TRUE)
 \usage{
-x[i, j, ... , drop = TRUE]
+\S4method{[}{Vegsoup}(x, i, j, ... , drop = TRUE)
 
 \S4method{Partition}{Vegsoup}(x, value)
 }

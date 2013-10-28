@@ -35,20 +35,22 @@
     Character string naming a geographical database. See \code{\link[maps:map]{map}}.
    }
   \item{ \dots }{
-    Arguments passed to \code{\link[maps:map]{map}} in package \pkg{maps}.
+    Arguments passed to \code{\link[maps]{map}} in package \pkg{maps}.
   }
-  \item{ tol, maxit, ret.wt, ret.sqdist, ret.pr}
-    Arguments to \code{\link[cluster:ellipsoidhull]{ellipsoidhull}} in package
+  \item{ tol, maxit, ret.wt, ret.sqdist, ret.pr }{
+    Arguments to \code{\link[cluster]{ellipsoidhull}} in package
     \pkg{cluster}.
   }
 }
+
 \details{
 method \code{map} is intended to provide a quick and dirty map background to dispaly plot locations.
 
 \code{ellipsoidhull} is a simple wrapper for function \code{\link{ellipsoidhull}} in package cluster. The main purpose of the function is to visualize partitions on a map.
 
-Function \code{QuickMap} opens a browser window and plots pushpins of plot centers on top of \sQuote{Google Maps}. See \link[googleVis]{gvisMap} in package \pkg{googleVis} for details.
+Function \code{QuickMap} opens a browser window and plots pushpins of plot centers on top of \sQuote{Google Maps}. See \code{\link[googleVis]{gvisMap}} in package \pkg{googleVis} for details.
 }
+
 \value{
   \code{map} creates a map plot.
 

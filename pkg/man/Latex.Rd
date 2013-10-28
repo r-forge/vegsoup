@@ -1,56 +1,54 @@
 \name{Latex}
 \docType{methods}
+
 \alias{Latex}
-\alias{Latex-methods}
 \alias{Latex,VegsoupPartition-method}
 \alias{Latex,VegsoupPartitionFidelity-method}
 
-\title{ Create Files for Typesetting Tables in LaTex }
+\title{ Typesetting Tables in LaTeX }
 \description{
-  Creates meaningful table structres to be compiled by LaTex.
+  Creates meaningful table structres to be compiled by \acronym{LaTeX}.
 }
 \usage{
-## S4 method for signature 'VegsoupPartition' and 'VegsoupPartitionFidelity'
-Latex(obj, choice, recursive, ...)
-
-## S4 method for choice = "sites" and recursive = FALSE
-Latex(obj, col.width, filename, verbose = FALSE, ...)
-
-## S4 method for choice  = "sites" and recursive = TRUE
-Latex(obj, path, ...)
-
-## S4 method for choice = "species" and recursive = FALSE
-Latex(obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95,
-     taxa.width = "60mm", col.width = "10mm", footer.treshold,
-     molticols.footer, footer.width = "150mm", use.letters = FALSE,
-     caption.text = NULL, recode = FALSE, sep = "/",
-     sites.columns, verbose = FALSE, ...)
-
-## S4 method for choice = "species" and recursive = TRUE
-Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
+\S4method{Latex}{VegsoupPartitionFidelity}(obj, choice = "species", recursive = FALSE, file,
+    mode = 1,
+    p.max = .05,
+    stat.min,
+    constancy.min = 95,
+    taxa.width = "60mm",
+    col.width = "10mm",
+    footer.width = "150mm",
+    footer.treshold,
+    molticols.footer,
+    use.letters = FALSE,
+    caption.text = NULL,
+    quantile.select,
+    coverscale = FALSE,
+    sep = "/",
+    sites.columns,
+    newpage = TRUE,
+    verbose, ...)
 }
 
 \arguments{
   \item{ obj }{
-    An object inheriting from class \code{"VegsoupPartition"}
+    \code{'VegsoupPartition'} object.
   }
   \item{ choice }{
-    character. Either \code{"species"} or \code{"sites"}.
+    character. Either \code{"species"} or \code{"sites"}, partial matches allowed.
   }
   \item{ recursive }{
-    logical. If \code{TRUE} create tables for each partition. If \code{FALSE},
-    the default, summarize information in one table.
+    logical. If \code{TRUE}, loop over partitions and create a standalone tables for each
+    partition. If \code{FALSE}, the default, summarize information in single table.
   }
-  \item{ path }{
-    character. Path to a folder.
-  }
-  \item{ filename }{
-    character. Output filename. File extension can be missing.
+  \item{ file }{
+    character. Output filename. If missing a default filename is choosen depending on
+    arguments \code{choice} and \code{recursive}, otherwise file is tested for validity.
   }
   \item{ mode }{
-    type of ouput. \code{mode = 1} will typeset a species by cluster fidelity
-    table. \code{mode = 2} will typeset a summary table for each cluster.
-    See \sQuote{Details}.
+    integer. With defaults values for choice and species (\sQuote{Details}), mode determines
+    the type of ouput created. \code{mode = 1} will typeset a species by cluster fidelity table.
+    \code{mode = 2} will typeset a summary table for each cluster.  See \sQuote{Details}.
   }
   \item{ p.max }{
     numeric. Threshold value for Fisher test.
@@ -62,11 +60,11 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
     numeric. Threshold value of the constancy of species(-layer replicate).
   }
   \item{ taxa.width }{
-    LaTex tag to set column width for taxon column.
+    \acronym{LaTeX} tag to set column width for taxon column.
     See \sQuote{Details}.
   }
   \item{ col.width }{
-    LaTex tag to set column width of all other columns. Recycled as necessary.
+    \acronym{LaTeX} tag to set column width of all other columns. Recycled as necessary.
     See \sQuote{Details}.
   }
   \item{ footer.treshold }{
@@ -78,14 +76,14 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
     by \code{footer.treshold}
   }
   \item{ footer.width }{
-     LaTex tag to set column width for footer columns.
+    \acronym{LaTeX} tag to set column width for footer columns.
   }
-%  \item{ fivenum.select }{
-%    a character vector selecting dimensions returned by
-%    \code{\link{Fivenum}} to become pasted to the constancy value.
-%    Only applicable in \code{mode = 2}.
-%    See \sQuote{Details}.
-%  }
+  \item{ quantile.select }{
+    a character vector selecting dimensions returned by
+    \code{\link{quantile}} to become pasted to the constancy value.
+    Only applicable if \code{mode == 2}.
+    See \sQuote{Details}.
+  }
   \item{ caption.text }{
     character. Additional user supplied text pasted into automatically
     generated table caption.
@@ -115,9 +113,20 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
   }
 }
 \details{
-  \code{Latex} is a complex function to create input files for LaTex to
-  typeset vegetation tables and related community summaries. It comes in four
-  flavours. See \sQuote{Usage}. Some usages have many arguments, most of which
+  Typical usages are
+  \preformatted{Latex(obj)}
+  \preformatted{Latex(obj, choice = "species", recursive = FALSE, file = "foo.tex", mode = 1)}
+  \preformatted{Latex(obj, "species", FALSE, mode = 1, ...)}
+  \preformatted{Latex(obj, "species", FALSE, mode = 2, ...)}
+  \preformatted{Latex(obj, "species", TRUE,  ...)} 
+  \preformatted{Latex(obj, "sites",   FALSE, ...)}
+  \preformatted{Latex(obj, "sites",   TRUE,  ...)}
+  If arguments \code{choice} and \code{recursive} are missing the default for both
+  arguments apply (see \sQuote{Usage}).
+
+  \code{Latex} is a complex function to create input files for \acronym{LaTeX} to
+  typeset vegetation tables and related community summaries. It comes in four (five)
+  flavours (see above). Some usages have many arguments, most of which
   have some sensible default values.
 
   The method accepts both a \code{"VegsoupPartition"} as well as a
@@ -125,12 +134,11 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
   latter class by internally calling \code{\link{Fidelity}} with it's default
   arguments.
 
-  The method currently provides two differnt outputs. \code{mode = 1} builds
-  an ordered vegetation table based on a fidelity (indicator species)
-  statistic.
-
-  \code{mode = 2} creates descripive summaries for each partition (cluster) of
-  an object. It embeds it's ouput using LaTex package subfloat.
+  The \code{choice = "species"} and \code{recursive = FALSE} form currently provides two
+  differnt types of output. \code{mode = 1} builds an ordered vegetation table based on a
+  fidelity (indicator species) statistic. \code{mode = 2} creates descripive summaries for each
+  partition (cluster) of an object. It embeds it's ouput using \acronym{LaTeX} package subfloat
+  (put usepackage{subflota} in the LaTex preamble).
 }
 \value{
   A \code{"list"} containing the lines written to the file:
@@ -149,8 +157,8 @@ Latex(obj, path, col.width, taxa.width, caption.text, verbose, ...)
 \note{
 %%Most of the time you will prefer the option rowname = NULL in latex().
   
-  To prevent the LaTex file from being displayed on screen store the result of
-  latex in an object.
+  To prevent the \acronym{LaTeX} file from being displayed on screen store the result of
+  Latex in an object.
 }
 \seealso{
 \code{\link{write.verbatim}}

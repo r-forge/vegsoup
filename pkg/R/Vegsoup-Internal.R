@@ -53,6 +53,7 @@
 .rpoisppSites <- function (x) {
 	require(spatstat)
 	require(maptools)
+	
 	n <- length(unique(x$plot)) # must be unique!
 	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
 	pts <- as.SpatialPoints.ppp(pts)
@@ -65,7 +66,7 @@
 
 	pgs <- vector("list", nrow(cents))
 	for (i in 1:nrow(cents)) {
-		pg <- coordinates(GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
+		pg <- coordinates(sp::GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
 		pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 		pgs[[i]] <- pg
 	}
@@ -85,6 +86,7 @@
 #		idvar = "plot")
 	
 .find.coordinates <- function (y, proj4string, ...) {
+	
 	verbose = FALSE
 	
 	lng <- grep("longitude", y$variable)
@@ -201,4 +203,16 @@
 		proj4string(sp.polygons) <- CRS(proj4string)	
 	}
 	return(list(sp.points, sp.polygons))		
+}
+
+.texfile <- function (x, verbose, ...) {
+	#	add file extension if missing
+	if (length(grep(".tex", x, fixed = TRUE)) < 1) {
+		x = paste0(x, ".tex")
+	}
+	#	replaced all blanks with underscores
+	if (length(grep(" ", x, fixed = TRUE)) > 0) {
+		x = gsub(" ", "_", x, fixed = TRUE)	
+	}
+	return(x)
 }

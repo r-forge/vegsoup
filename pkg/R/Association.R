@@ -262,7 +262,7 @@ setMethod("Association",
 	effect.size <- sqrt(sum(((p1 - p0)^2) / p0))
 	noncentrality <- N * (effect.size^2)
 	d.f <- (X.rows - 1) * (X.cols - 1)
-	beta <- pchisq(qchisq(alpha, df = d.f, lowertail = FALSE), df = d.f, ncp = noncentrality)
+	beta <- pchisq(qchisq(alpha, df = d.f, lower.tail = FALSE), df = d.f, ncp = noncentrality)
 	power <- 1 - beta
 
 res <- list(

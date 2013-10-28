@@ -19,28 +19,28 @@
 }
 
 \usage{
-  \S4method{abbr}{Vegsoup}(obj)
+\S4method{abbr}{Vegsoup}(obj)
 
-  \S4method{abbr}{Vegsoup}(obj) <- value
+\S4method{abbr}{Vegsoup}(obj) <- value
 
-  \S4method{abbr.layer}{Vegsoup}(obj)
+\S4method{abbr.layer}{Vegsoup}(obj)
 }
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+    a \code{Vegsoup*} object.
   }
   \item{ value }{
-    Character. Usefull to change abbreviations.
+    character. Usefull to change abbreviations.
   }
 }
 \details{
   The design of package vegsoup with regard to layer replication is to encode
   species and layer in a collpased string that is then used as column names in
-  a species matrix. This so avoids the creation of multi dimensional arrays.
+  the species matrix. This so avoids the creation of multi dimensional arrays.
 }
 \value{
-returns a vector of mode \code{"character"}.
+\code{character}. A vector of column names.
 }
 \author{
 Roland Kaiser

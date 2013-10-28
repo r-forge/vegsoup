@@ -1,5 +1,5 @@
-#	to do: add column for indicator value, high priority!
-.latexVegsoupPartitionSites <- function (obj, col.width, filename, verbose = FALSE, ...) {
+#	Sites table
+.latexVegsoupPartitionSites <- function (obj, choice = "sites", recursive = TRUE, file, ...) {
 #	obj  <- fid
 
 	sites <- Sites(obj)
@@ -9,9 +9,8 @@
 	drop <- c(drop, grep("longitude", names(sites), fixed = TRUE))
 	drop <- c(drop, grep("latitude", names(sites), fixed = TRUE))
 	
-	if (missing(filename)) {
-		filename <- "SitesPartitionTable"	
-	}
+	file <- .texfile(file)
+		
 	if (length(drop) > 0) {
 		if (verbose) {
 			cat("dropped variables ",
@@ -20,17 +19,14 @@
 		}	
 		sites <- sites[ ,-drop]
 	}
-	if (missing(col.width)) {
-		col.width <- "15mm"
-		if (verbose) {
-			cat("col.width missing, set to ", col.width)
-		}
-	}
+#	if (missing(col.width)) {
+#		col.width <- "10mm"
+#	}
 	
 	part <- Partitioning(obj)
 	
 	num.cols <- sapply(sites, is.numeric)
-	char.cols <- sapply(sites, is.character)
+	str.cols <- sapply(sites, is.character)
 	
 	num.cols.agg <- matrix(NA,
 		ncol = length(which(num.cols)),
@@ -45,24 +41,24 @@
 	num.cols.agg <- as.data.frame(num.cols.agg, stringsAsFactors = FALSE)
 	names(num.cols.agg) <- names(sites)[num.cols]
 	
-	char.cols.agg <- matrix(NA,
-		ncol = length(which(char.cols)),
+	str.cols.agg <- matrix(NA,
+		ncol = length(which(str.cols)),
 		nrow = getK(obj))
 		
-	for (i in seq(along = which(char.cols))) {
+	for (i in seq(along = which(str.cols))) {
 		#	i = 1
-		i.table <- data.frame(variable = sites[,which(char.cols)[i]], part)
+		i.table <- data.frame(variable = sites[,which(str.cols)[i]], part)
 		j.res <- c()
 		for (j in 1:getK(obj)) {
 			j.tmp <- table(i.table[i.table$part == j,]$variable)
 			j.tmp <- sort(j.tmp[j.tmp > 0], decreasing = TRUE)
 			j.res <- c(j.res, paste(names(j.tmp), j.tmp, sep = ":", collapse = ", "))
 		}	
-		char.cols.agg[,i] <- j.res
+		str.cols.agg[,i] <- j.res
 	}
 	
-	char.cols.agg <- as.data.frame(char.cols.agg, stringsAsFactors = FALSE)
-	names(char.cols.agg) <- names(sites)[char.cols]
+	str.cols.agg <- as.data.frame(str.cols.agg, stringsAsFactors = FALSE)
+	names(str.cols.agg) <- names(sites)[str.cols]
 	
 	#	add plots to partition column
 	part.plot <- data.frame(part, names(part))
@@ -77,7 +73,7 @@
 	
 	tex <- res <- data.frame(
 		partiton = part.plot,
-		num.cols.agg, char.cols.agg,
+		num.cols.agg, str.cols.agg,
 		stringsAsFactors = FALSE)
 		
 	caption <- paste("Summary table for sites variables grouped in",
@@ -91,28 +87,9 @@
 	p.col <- paste("|p{", col.width, "}", sep = "")
 	col.just <- c(rep(p.col, ncol(tex)))
 	#col.just[ncol(num.cols.agg) + 1] <- paste("|", col.just[ncol(num.cols.agg) + 1], sep = "")
-	#	tex valid filenames
-	#	to do! see .latexVegsoupPartitionFidelity
-	#	more tests on filename
-	if (length(grep(".", "_", filename, fixed = TRUE))) {
-			
-	}
-	
-	if (length(grep(" ", filename, fixed = TRUE)) > 0) {
-		warning("LaTex assumes no blanks in filenames!",
-			" we replace all blanks!")
-		filename <- gsub(" ", "_", filename, fixed = TRUE)	
-	}
-	
-	if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
-		if (verbose) {
-			cat("add file extension .tex to filename ", filename)
-		}
-		filename <- paste(filename, ".tex", sep = "")
-	}
 	
 	latex(tex,
-		file = filename,
+		file = file,
 		caption = caption,
 		rowname = NULL,
 		booktabs = TRUE,
@@ -125,18 +102,17 @@
 	return(invisible(res))
 	}
 	
-.latexVegsoupPartitionSitesRecursive <- function (obj, path, ...) {
+.latexVegsoupPartitionSitesRecursive <- function (obj, choice = "sites", recursive = TRUE, file, ...) {
+	require(Hmisc)
 	#	to do!	
 }
 
-#	generic is set by VegsoupPartition-*Methods.R
-.latexVegsoupPartitionSpecies <- function (obj, filename, mode = 1, p.max = .05, stat.min, constancy.treshold = 95, taxa.width = "60mm", col.width = "10mm", footer.treshold, molticols.footer, footer.width = "150mm", use.letters = FALSE, caption.text = NULL, newpage = TRUE, quantile.select, coverscale = TRUE, sep = "/", sites.columns, verbose = FALSE, ...) {
+.latexVegsoupPartitionSpecies <- function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min, constancy.min = 95, taxa.width = "60mm", col.width = "10mm", footer.width = "150mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, quantile.select, coverscale = FALSE, sep = "/", sites.columns, newpage = TRUE, verbose = FALSE, ...) {
 ###	debuging arguments
-#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; quantile.select = c(1,3,5); sites.columns = names(Sites(obj)); verbose = TRUE; filename = "PartitionSummary"; coverscale = TRUE
+#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; quantile.select = c(1,3,5); sites.columns = names(Sites(obj)); verbose = TRUE; file = "PartitionSummary"; coverscale = TRUE
+	require(Hmisc)
 	if (class(obj) != "VegsoupPartitionFidelity") {
-		if (verbose) {
-			message("\n apply default indicator species statistic")
-		}
+			message("apply default indicator species statistic")
 		obj <- Fidelity(obj, ...)
 	}
 	
@@ -148,45 +124,41 @@
 	sp <- ncol(obj)
 	
 	ft <- obj@fisher.test
-	N <- nrow(obj)
+	N  <- nrow(obj)
 	
 	frq <- colSums(obj)
 	siz <- table(Partitioning(obj))
-	
-	if (missing(filename) & mode == 1) {
-		filename = paste("FidelityTable")
-	}
-	if (missing(filename) & mode == 2) {
-		filename = paste("PartitionSummary")
-	}
-	if (missing(col.width)) {
-		col.width = "10mm"
-		if (verbose) {
-			message("\ncol.width missing, set to ", col.width)
-		}
-	}
+
+	file <- .texfile(file)
+
+#	if (missing(col.width)) {
+#		col.width = "10mm"
+#		if (verbose) {
+#			message("col.width missing, set to ", col.width)
+#		}
+#	}
 	if (missing(col.width)) {
 		taxa.width = "60mm"
 		if (verbose) {
-			message("\ntaxa.width missing, set to ", taxa.width)
+			message("taxa.width missing, set to ", taxa.width)
 		}
 	}
 	if (missing(p.max)) {
 		p.max = .05
 		if (verbose) {
-			message("\np.max missing, set to ", p.max)
+			message("p.max missing, set to ", p.max)
 		}
 	}
 	if (missing(footer.treshold)) {
 		footer.treshold = 1
 		if (verbose) {
-			message("\nfooter treshold missing, set to ", footer.treshold)
+			message("footer treshold missing, set to ", footer.treshold)
 		}	
 	}
 	if (missing(molticols.footer)) {
 		molticols.footer = 3
 		if (verbose) {
-			message("\nmolticols footer missing, set to ", molticols.footer)
+			message("molticols footer missing, set to ", molticols.footer)
 		}	
 	}
 	if (missing(use.letters) & getK(obj) > 10) {
@@ -198,19 +170,19 @@
 	} else {
 		if (missing(stat.min)) {
 			stat.min = 0.1
-			message("stat.min missing set to: ", stat.min,
-				"results may be meaningless. Please set an appropriate value for stat.min")
+			message("stat.min missing set to: ", stat.min, ",",
+			"Please set an appropriate value for stat.min")
 		}
 	}
 	if (missing(quantile.select)) {
 		quantile.select = c(1,3,5)
 	}
 	if (missing(sites.columns)) {
-		sites.columns = names(Sites(obj)) # names(obj)
+		sites.columns = names(obj)			  # names(Sites(obj))
 		#	drop coordiantes
 		drp <- c(
 			grep("longitude", sites.columns), # already dropped in Vegsoup.R
-			grep("latitude", sites.columns), # already dropped in Vegsoup.R
+			grep("latitude", sites.columns),  # already dropped in Vegsoup.R
 			grep("precision", sites.columns)
 		)
 		#	drop all columns constant at zero
@@ -221,23 +193,7 @@
 	
 
 	###	debug both MODE 1 & MODE 2
-	
-	#	set file name
-	if (length(grep(".tex", filename, fixed = TRUE)) < 1) {
-		filename = paste(filename, ".tex", sep = "")
-		if (verbose) {
-			message("\n add file extension .tex")
-		}
-	}
-	#	test filename
-	if (length(grep(" ", filename, fixed = TRUE)) > 0) {
-		filename = gsub(" ", "_", filename, fixed = TRUE)	
-		if (verbose) {
-			warning("\n LaTex demands no blanks in filenames!",
-			" we replace all blanks with underscores")
-		}
-	}
-	
+		
 	###	init steps for mode 1 and 2
 	#	significance symbols
 	test <- apply(ft, 2, function (x) any(x <= 0.05))
@@ -248,9 +204,9 @@
 	}
 	
 	symb <- ft
-	symb[ft > 0.05] <- ""
-	symb[ft <= 0.05] <- "*"
-	symb[ft <= 0.01] <- "**"
+	symb[ft >  0.050] <- ""
+	symb[ft <= 0.050] <- "*"
+	symb[ft <= 0.010] <- "**"
 	symb[ft <= 0.001] <- "***"
 	
 	#	combine frequency table with significance symbols
@@ -269,15 +225,14 @@
 	frq.ord <- stat.idx
 	
 	for (i in 1:length(frq.ord)) {
-		frq.ord[i] <- cs[i, stat.idx [i]]
+		frq.ord[i] <- cs[i, stat.idx[i]]
 	}	
 	
-	#	sort freqency table
+	#	sort frequency table
 	#	first by fidelity measure and then by constancy
 	frq.top <- as.matrix(frq)[order(stat.idx, -frq.ord), ]
 	ord.top <- names(frq.top)
 	frq.ft.top <- frq.ft[ord.top, ]
-	#	breaks here
 	ft <- ft[ord.top, ]
 	stat <- stat[ord.top, ]
 	
@@ -346,7 +301,7 @@
 		tmp$tab <- rbind(top, bottom)
 	} else {
 		txn <- split.abbr(obj)
-		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ] # dropped $abbr.layer
+		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ]
 		#rownames(txn) <- txn$abbr.layer
 		txn <- txn[order(txn$layer), ]
 		tmp$tab <- tmp$tab[rownames(txn), ]
@@ -357,7 +312,7 @@
 		stringsAsFactors = FALSE)
 	
 	txn <- split.abbr(obj) 
-	txn <- txn[match(rownames(tex), rownames(txn)), ]  # dropped $abbr.layer
+	txn <- txn[match(rownames(tex), rownames(txn)), ]
 	
 	tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
 		stringsAsFactors = FALSE, check.names = FALSE)
@@ -668,7 +623,7 @@
 	# end if (mode == 2)
 	
 	if (mode == 1) {
-		if (verbose) cat("\n run mode", mode)
+		if (verbose) message("run mode", mode)
 		#	check species characters
 		#	times glyph in hybrid combinations
 		#	taxon is always in first position in the table
@@ -687,11 +642,11 @@
 				" (", LETTERS[sort(unique(Partitioning(obj)))], ")", sep = "")
 		}
 		if (verbose) {
-			cat("\nprint LaTex table to", filename)	
+			cat("\nprint LaTex table to", file)	
 		}
-	
+
 		latex(tex,
-			file = filename,
+			file = file,
 			caption = caption,
 			rowname = NULL,
 			booktabs = TRUE,
@@ -702,7 +657,7 @@
 	
 		# append footer to LaTex table in file
 	
-		con <- file(filename, open = "a")
+		con <- file(file, open = "a")
 			writeLines(footer, con)
 		close(con)
 	}
@@ -718,8 +673,8 @@
 				#	make taxa having cons >= a user defined constancy treshold
 				#	check first if we have a singleton
 				if (any(tmp[, 5] < 100)) {
-				tmp[tmp[, 5] >= constancy.treshold, 1] <- 
-					paste("\\textbf{", tmp[tmp[, 5] >= constancy.treshold, 1], "}")
+				tmp[tmp[, 5] >= constancy.min, 1] <- 
+					paste("\\textbf{", tmp[tmp[, 5] >= constancy.min, 1], "}")
 				}	
 				tmp
 				}, simplify = FALSE)
@@ -732,13 +687,13 @@
 				}, simplify = FALSE)
 			
 		#	create file for appending	
-		con <- file(filename)
+		con <- file(file)
 			writeLines("%start", con)
 		close(con)	
 	
 		for (i in 1:getK(obj)) {
 			latex(as.matrix(tex.out[[i]]),
-				file = filename,
+				file = file,
 				append = TRUE,
 				caption = paste("Partion summary for cluster ", i,
 					" consisting out of ", table(Partitioning(obj))[i], " plots.",
@@ -752,7 +707,7 @@
 				here = TRUE
 			)
 	
-		con <- file(filename)
+		con <- file(file)
 			tmp <- readLines(con)
 			hook <- max(grep("bottomrule", tmp))
 	
@@ -791,10 +746,11 @@
 }
 
 #	\dots passed to seriation()
-.latexVegsoupPartitionSpeciesRecursive <- function (obj, path, col.width, taxa.width, caption.text, verbose, ...) {
+.latexVegsoupPartitionSpeciesRecursive <- function (obj, choice = "species", recursive = TRUE, file, col.width, taxa.width, caption.text, verbose, ...) {
+	require(Hmisc)
 		
 	#	obj  <- prt
-	if (missing(path)) {
+	if (missing(file)) {
 		message("no path supplied for LaTex files")
 	}	
 	if (missing(verbose)) {
@@ -820,14 +776,13 @@
 	}
 	
 	res <- vector("list", length = getK(obj))
-	filenames <- c()
+	files <- c()
 	
 	for (i in 1:getK(obj)) {
 		#	obj = prt; i = 2
 		i.part <- obj[Partitioning(obj) == i, ]
 		i.part <- seriation(i.part, ...)
 		#	table will be order according to Layers(obj)
-		#	was i.part <- i.part[, order(split.abbr(i.part)$layer, decreasing = TRUE)]
 		
 		res[[i]] <- i.part
 		
@@ -835,9 +790,9 @@
 		i.tex <- gsub("0", ".", i.tex, fixed = TRUE)
 	
 		i.tex <- cbind(split.abbr(i.part)[c("taxon", "layer")], i.tex)
-		#	tex valid filenames
-		filename <- paste(path, "species", i, ".tex", sep = "")
-		filenames <- c(filenames, filename)
+		#	tex valid files
+		file <- paste(path, "species", i, ".tex", sep = "")
+		files <- c(files, file)
 		caption <- paste("Sample table of Cluster", i)
 	
 		p.col <- paste("p{", col.width, "}", sep = "")
@@ -847,7 +802,7 @@
 		col.heads = c("Taxon", "Layer", paste("\\rotatebox{90}{", dimnames(i.tex)[[2]][-c(1,2)], "}"))
 		
 		latex(i.tex,
-		file = filename,
+		file = file,
 		caption = paste(caption, caption.text, collapse = " "),
 		rowname = NULL,
 		booktabs = TRUE,
@@ -860,7 +815,7 @@
 	
 	con <- file(paste(path, "species.tex", sep = ""))
 		writeLines(paste("\\input{",
-				gsub(path, "", filenames, fixed = TRUE),
+				gsub(path, "", files, fixed = TRUE),
 				"}", sep = ""), con)
 	close(con)
 	
@@ -869,31 +824,38 @@
 
 #	if(!isGeneric("Latex")) {
 setGeneric("Latex",
-	function (obj, ...)
+	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min, constancy.min = 95, taxa.width = "60mm", col.width = "10mm", footer.width = "150mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, quantile.select, coverscale = FALSE, sep = "/", sites.columns, newpage = TRUE, verbose = FALSE, ...)
 		standardGeneric("Latex")
 )
 #}
+
 setMethod("Latex",
 	signature(obj = "VegsoupPartition"),
-	function (obj, choice, recursive, ...) {
+	function (obj, choice = "species", recursive = FALSE, file, ...) {
 			require(Hmisc)
-			if (missing(choice)) {
-				choice <- "species"	
-			}
-			if (missing(recursive)) {
-				recursive <- FALSE
-			}			
+
+			CHOICES <- c("species", "sites")
+			choice <- CHOICES[pmatch(choice, CHOICES)]
+			if (is.na(choice)) stop("choice must be either species or sites")
+						
+			stopifnot(is.logical(recursive))
+
 			if (choice == "sites" & !recursive) {
-				res <- .latexVegsoupPartitionSites(obj, ...)
+				if (missing(file)) file = "SitesPartitionTable"
+				res <- .latexVegsoupPartitionSites(obj, file = file, ...)
 			}
 			if (choice == "species" & !recursive) {
-				res <- .latexVegsoupPartitionSpecies(obj, ...)
+				if (missing(file) & mode == 1) file = "FidelityTable"
+				if (missing(file) & mode == 2) file = "PartitionSummary"
+				res <- .latexVegsoupPartitionSpecies(obj, file = file, ...)
 			}
 			if (choice == "sites" & recursive) {
-				res <- .latexVegsoupPartitionSitesRecursive(obj, ...)
+				if (missing(file)) file = "SitesTables"
+				res <- .latexVegsoupPartitionSitesRecursive(obj, file = file, ...)
 			}
 			if (choice == "species" & recursive) {
-				res <- .latexVegsoupPartitionSpeciesRecursive(obj, ...)
+				if (missing(file)) file = "SpeciesTables"				
+				res <- .latexVegsoupPartitionSpeciesRecursive(obj, file = file, ...)
 			}			
 	return(invisible(res))
 	}
