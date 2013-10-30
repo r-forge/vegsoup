@@ -1,6 +1,7 @@
 \name{SpeciesTaxonomy-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{SpeciesTaxonomy-class}
 \alias{species,SpeciesTaxonomy-method}
 \alias{species<-,SpeciesTaxonomy,data.frame-method}
@@ -14,6 +15,22 @@
 
 \description{
   A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
+}
+
+\usage{
+\S4method{species<-}{SpeciesTaxonomy,Species}(x) <- value
+\S4method{species<-}{SpeciesTaxonomy,data.frame}(x) <- value
+\S4method{taxonomy<-}{SpeciesTaxonomy,Taxonomy}(x) <- value
+\S4method{taxonomy<-}{SpeciesTaxonomy,data.frame}(x) <- value
+}
+
+\arguments{
+\item{ x }{
+\code{'Vegsoup'} object.
+}
+\item{value}{
+class. Either \code{'Species'}, \code{'Taxonomy'} or \code{'data.frame'}.
+}
 }
 
 \section{Objects from the Class}{

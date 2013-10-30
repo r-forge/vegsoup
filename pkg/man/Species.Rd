@@ -15,7 +15,6 @@ Accessor method to retrieve the species data in \emph{long format} as stored ins
 }
 \usage{
 \S4method{Species}{Vegsoup}(obj)
-
 \S4method{Species}{Vegsoup}(obj) <- value
 }
 
