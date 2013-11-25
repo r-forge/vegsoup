@@ -15,17 +15,19 @@ if (!missing(layers)) {
 		if (is.list(layers)) {
 			stopifnot(length(names(layers)) == length(layers))
 			l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))	
+			paste.layers <- TRUE
 		}
 		else {
 			if (is.character(layers)) {
 				l <- layers
+				paste.layers <- TRUE
 			}
 		}
-		has.layers <- TRUE		
+		with.layers <- TRUE
 	}
 }
 else {
-	has.layers <- FALSE	
+	with.layers <- FALSE	
 }
 
 #	read file
@@ -137,18 +139,20 @@ txa <- str_trim(apply(t.m[, 1:(first.dot -1)], 1,
 val <- t.m[, first.dot: ncol(t.m)]
 
 #	prune layer from taxa
-if (has.layers) {
-	lay <- paste("  ", layers, sep = "") # add two! leading spaces
-	lay <- sapply(lay, function (x) grep(x, txa, fixed = TRUE))
-	names(lay) <- layers
-	if (length(unlist(lay)) != length(txa)) {
-		stop("did not find all layer codes in all rows")
+if (with.layers) {
+	if (!paste.layers) {
+		lay <- paste("  ", l, sep = "") # add two! leading spaces
+		lay <- sapply(lay, function (x) grep(x, txa, fixed = TRUE))
+		names(lay) <- layers
+		if (length(unlist(lay)) != length(txa)) {
+			stop("did not find all layer codes in all rows")
+		}
+		for (i in layers) {
+			txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
+		}
+		txa	<- str_trim(txa, side = "right")
+		l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]
 	}
-	for (i in layers) {
-		txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
-	}
-	txa	<- str_trim(txa, side = "right")
-	l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]	 
 }
 
 #	check for spaces as seperators
@@ -180,7 +184,8 @@ if (length(test) > 0) {
 		}		
 	}
 	stop("\nplease review your data and apply necessary changes")
-} else {
+}
+else {
 	if (verbose) {
 		cat("\nfound no obvious errors in species data block",
 			"\nskip",
@@ -265,7 +270,7 @@ for (i in par) {
 
 #	finally assign abbr to rownames and turn into matrix
 #	test if rownames can be assigned
-if (length(unique(x[, 1])) != nrow(x) & !has.layers & !species.only) {
+if (length(unique(x[, 1])) != nrow(x) & !with.layers & !species.only) {
 	warning("\nspecies are not unique.",
 		" is the data structured in layers?",
 		"\nreturn vector of species instead of matrix")
@@ -275,7 +280,7 @@ if (length(unique(x[, 1])) != nrow(x) & !has.layers & !species.only) {
 		x <- txa		
 	} else {
 		#	paste layers
-		if (has.layers) {
+		if (with.layers) {
 			rownames(x) <- paste(x[, 1], l, sep = "@")	
 		} else {
 			rownames(x) <- x[, 1]
@@ -399,14 +404,13 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 		y <- matrix(".", nrow = length(rn), ncol = ncol(x))
 		colnames(y) <- colnames(x)
 		rownames(y) <- rn
-		
 		for (i in 1:length(tmp)) {
 			#	i = 1
 			for (j in seq(along = tmp[[ i ]][[1]])) {
 				#	j = 1
 				ii <- match(tmp[[ i ]][[1]][ j ], rownames(y))
 				jj <- match(names(tmp)[[ i ]], colnames(y))
-				y[ii, jj] <- ifelse(abundance == TRUE, tmp[[ i ]][[2]][j], abundance)
+				y[ii, jj] <- tmp[[ i ]][[2]][j]
 			} 
 		}		
 	}	

@@ -36,7 +36,14 @@ export(
     "instantsoup",
     "OptimStride",
     "VegsoupPartition",
-    "plotPCO"
+    "plotPCO",
+    "read.verbatim",
+    "read.verbatim.append",
+    "write.verbatim",
+    "str2latlng",
+    "tile2latlng",
+    "latlng2tile",
+    "whatshere2lnglat"
 )
 exportMethods(
     "[",
@@ -108,6 +115,7 @@ exportMethods(
     "proj4string<-",
     "quantile",
     "richness",
+    "write.verbatim",
     "rownames",
     "row.names",
     "rownames<-",

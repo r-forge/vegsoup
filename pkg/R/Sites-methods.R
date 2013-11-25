@@ -38,6 +38,13 @@ setMethod("$", "Sites",
 		return(x@data[[name]])
 	}
 )
+setReplaceMethod("$",
+	signature(x = "Sites"),
+	function (x, name, value) {
+ 		x@data[[name]] <- value 	
+		return(x)		
+	}
+)
 setMethod("show",
     signature(object = "Sites"),
     function (object) {
