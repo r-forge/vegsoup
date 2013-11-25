@@ -26,10 +26,10 @@ setMethod("initialize",
 		data <- as.data.frame(
 			as.matrix(data), stringsAsFactors = FALSE)		
 		names(data)[1:3] <- c("plot", "variable", "value")
-		
-		###	order, problematic for verbatim
+		#	only one plot variable possible
+		data <- data[!duplicated(data[, 1:2]), ]
+		###	order
 		#data <- data[order(data$plot, data$variable), ]
-		
 		data$plot <- as.character(data$plot)
 
 		.Object@data <- data	

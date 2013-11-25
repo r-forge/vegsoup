@@ -51,15 +51,18 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	xx <- sort(unique(x$plot))
 	yy <- sort(unique(y$plot))
 	test <- !isTRUE(identical(xx, yy))	
-	
+		
 	if (test) {
-		sel <- xx[xx == yy]
+		sel <- intersect(xx, yy) # was <- xx[xx == yy]
 		x <- x[which(x$plot %in% sel), ]
 		y <- y[which(y$plot %in% sel), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
-		warning("\nunique(x$plot) and unique(y$plot) do not match, ",
-			"had to drop plots: \n",
-			paste(xx[xx != yy], collapse = ", "), call. = FALSE)
+		
+		test <- sort(unique(c(xx, yy)))
+		test <- test[!test %in% sel]
+		warning("unique(x$plot) and unique(y$plot) do not match, ",
+			"had to drop ", length(test), " plots: ",
+			paste(test, collapse = ", "), call. = FALSE)
 	}
 	#	coverscale	
 	if (missing(coverscale)) {

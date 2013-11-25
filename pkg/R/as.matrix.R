@@ -237,22 +237,19 @@ setMethod("indices",
 			j <- match(al, ual)
 			i <- as.integer(ordered(pl, levels = upl))
 			
-			if (typeof == "numeric" & !is.null(cs@codes)) {
-				#if (any(is.na(cov))) {
-				#	stop("cover scale codes do not match data" )
-				#}	
+			if (typeof == "numeric" & !is.continuous(x)) {
 				return(list(i = i, j = j, 				
 					x = as.numeric(as.character(
 						factor(Species(x)$cov, cs@codes, cs@lims))),
 					dimnames = list(upl, ual)))
 			}
-			if (typeof == "numeric" & is.null(cs@codes)) {
+			if (typeof == "numeric" & is.continuous(x)) {
 				return(list(i = i, j = j, 				
 					x = as.numeric(Species(x)$cov),
 					dimnames = list(upl, ual)))				
 			}
 			if (typeof == "character") {
-				if (is.null(cs@codes)) {
+				if (!is.continuous(x)) {
 					message("coverscale has no codes")
 				}
 				return(list(i = i, j = j, 				
