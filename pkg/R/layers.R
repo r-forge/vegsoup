@@ -38,16 +38,19 @@ else{
 	}
 }
 
-#	check 'dec' argument		
-if (dec == 0 & trunc(min(coverscale(obj)@lims)) == 0) {
-	for (dec in 0:5) {
-		if (round(min(coverscale(obj)@lims), dec) != 0) break
-	}	
-	if (verbose) {
-		message("set dec to ", dec,
-			", min of coverscale(obj)@lims is ",
-			min(coverscale(obj)@lims), "!")
-	}	
+#	check 'dec' argument
+
+if (is.ordinal(obj)) { 		
+	if (dec == 0 & trunc(min(coverscale(obj)@lims)) == 0) {
+		for (dec in 0:5) {
+			if (round(min(coverscale(obj)@lims), dec) != 0) break
+		}	
+		if (verbose) {
+			message("set dec to ", dec,
+				", min of coverscale(obj)@lims is ",
+				min(coverscale(obj)@lims), "!")
+		}	
+	}
 }
 #	debug
 #	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = "0l"; collapse <- rep(collapse, length(obj@layers))

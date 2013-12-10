@@ -94,6 +94,7 @@ exportMethods(
     "Latex",
     "Layers",
     "Layers<-",
+    "KML",
     "Murdoch",
     "names",
     "names<-",

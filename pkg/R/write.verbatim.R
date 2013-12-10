@@ -19,13 +19,18 @@ if (missing(file)) {
 	file <- file.path(file)
 }
 if (missing(select)) {
-	warning("think about selecting sites varibales ",
-		"used all numeric columns by default")
+	message("think about selecting sites varibales? ",
+		"try to use all numeric columns")
 	#	select all numeric columns
 	tmp <- as.matrix(Sites(obj))
 	mode(tmp) <- "character"
 	select <- apply(tmp, 2,
 		function (x) is.numeric(type.convert(x, as.is = FALSE)))
+	if (all(select) == FALSE) {
+		message("found no numeric columns?")
+		obj$richness <- richness(obj, "sample")
+		select <- select
+	}	
 } else {
 	if (is.numeric(select)) {
 		if (any(is.na(names(obj)[select]))) {
@@ -77,7 +82,7 @@ m <- gsub("0", absence, m, fixed = TRUE)
 x <- cbind(taxon, layer, m)
 
 #	truncate abundance value
-if (abbreviate) {
+if (abbreviate & is.ordinal(obj)) {
 	width <- max(sapply(coverscale(obj)@codes, nchar))
 	if (width > 1) {
 		x[, -c(1,2)] <- apply(x[, -c(1,2)], 2,
