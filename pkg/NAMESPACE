@@ -95,6 +95,7 @@ exportMethods(
     "Layers",
     "Layers<-",
     "KML",
+    "reverseGeocode",
     "Murdoch",
     "names",
     "names<-",
