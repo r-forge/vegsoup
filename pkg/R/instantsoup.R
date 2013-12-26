@@ -27,13 +27,13 @@ instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
 	}
 
 	if (length(grep("wide", files[x.file])) > 0) {
-		x <- stack.species(file = paths[x.file])		
+		x <- stackSpecies(file = paths[x.file])		
 	} else {
 		x <- species(paths[x.file],	sep = sep, dec = dec)[,1:4]
 	}
 
 	if (length(grep("wide", files[y.file])) > 0) {
-		y <- stack.sites(file = paths[y.file])		
+		y <- stackSites(file = paths[y.file])		
 	} else {
 		y <- sites(paths[y.file], sep = sep, dec = dec)
 	}

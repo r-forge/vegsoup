@@ -7,6 +7,7 @@
 \alias{Species<-}
 \alias{Species<-,Vegsoup-method}
 \alias{Species<-,Vegsoup,Species-method}
+\alias{Species<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{Species<-,Vegsoup,data.frame-method}
 
 \title{ Methods to Retrieve or Manipulate the Species Slot of \code{Vegsoup*} Objects }
@@ -15,7 +16,9 @@ Accessor method to retrieve the species data in \emph{long format} as stored ins
 }
 \usage{
 \S4method{Species}{Vegsoup}(obj)
-\S4method{Species}{Vegsoup}(obj) <- value
+\S4method{Species}{Vegsoup,Species}(obj) <- value
+\S4method{Species}{Vegsoup,SpeciesTaxonomy}(obj) <- value
+\S4method{Species}{Vegsoup,data.frame}(obj) <- value
 }
 
 \arguments{

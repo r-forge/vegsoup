@@ -22,7 +22,7 @@
 }
 
 \usage{
-read.verbatim(file, colnames, layers, replace = c("|", "-", "–", "_"),
+read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
          species.only = FALSE, verbose = TRUE)
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
@@ -212,7 +212,7 @@ dim(x)
 x.df <- data.frame(abbr = rownames(x), layer = "hl", comment = NA, x,
                    check.names = FALSE)
 # promote to class "Species"
-X <- stack.species(x.df)
+X <- stackSpecies(x.df)
 
 #   sites data including coordinates
 file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
@@ -220,7 +220,7 @@ file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
 Y <- read.delim(file, colClasses = "character")
 names(Y)[1] <- "plot"
 # promote to class "Sites"
-Y <- stack.sites(Y)
+Y <- stackSites(Y)
 
 # taxonomy reference list
 file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
@@ -270,6 +270,6 @@ foo <- write.verbatim(seriation(dta), file = tempfile(),
 foo[1:30] # resize console window
 }
 \seealso{
-\code{\link{stack.species}}, 
+\code{\link{stackSpecies}}, 
 }
 \keyword{import}

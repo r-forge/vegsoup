@@ -1,4 +1,6 @@
 \name{shared}
+\docType{methods}
+
 \alias{shared}
 \alias{shared,VegsoupPartition-method}
 

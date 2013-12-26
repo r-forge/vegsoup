@@ -268,9 +268,10 @@ setMethod("indices",
 #	very basic!
 setAs(from = "Vegsoup", to = "sparseMatrix",
 	def = function (from) {
-		require(Matrix)		
+		#	Imports:
+		#	require(Matrix)	
 		ij <- indices(from)
-		res <- sparseMatrix(i = ij$i, j = ij$j, x = as.integer(ij$x),
+		res <- Matrix::sparseMatrix(i = ij$i, j = ij$j, x = as.integer(ij$x),
 			dimnames = ij$dimnames)
 		res
 	}
@@ -282,9 +283,10 @@ setAs(from = "Vegsoup", to = "sparseMatrix",
 	
 setAs(from = "Vegsoup", to = "dsparseMatrix",
 	def = function (from) {
-		require(Matrix)
+		#	Imports:
+		#	require(Matrix)
 		ij <- indices(from)
-		res <- sparseMatrix(i = ij$i, j = ij$j, x = as.numeric(ij$x),
+		res <- Matrix::sparseMatrix(i = ij$i, j = ij$j, x = as.numeric(ij$x),
 			dimnames = ij$dimnames)
 		res
 	}

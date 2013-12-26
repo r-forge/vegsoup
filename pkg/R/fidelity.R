@@ -617,6 +617,7 @@ if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run a
 
 #	init multicore if active
 if (fast) {
+	#	Suggests:
 	require(multicore)
 	if (verbose) message("use multicore")
 }	
@@ -632,6 +633,7 @@ if (!is.null(group)) {
 cpu.time.dm <- system.time({	
 
 	if (verbose) {
+		#	Suggests:
 		require(pbapply)
 		pboptions(char = ".")
 	}	
@@ -688,6 +690,7 @@ if (r.ind) {
 cpu.time.ft <- system.time({
 #	warning! changed from two.sided to greater
 if (verbose) {
+	#	Suggests:
 	require(pbapply)
 	pboptions(char = ".")
 }	
@@ -802,16 +805,13 @@ setMethod("Fidelity",
 	.fidelityVegsoupPartition	
 )
 
-.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE, binary = TRUE) {
+.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE) {
 
 mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
 
-if (binary) {
-	X <- as.matrix(as.logical(obj))
-} else {
-	X <- as.matrix(as.numeric(obj))
-}
+X <- as.matrix(obj)
+
 n.species <- ncol(X)
 n.sites <- nrow(X)  
 U <- PartitioningMatrix(obj) 

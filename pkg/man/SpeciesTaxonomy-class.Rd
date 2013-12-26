@@ -1,36 +1,24 @@
+\encoding{UTF-8}
 \name{SpeciesTaxonomy-class}
 \Rdversion{1.1}
 \docType{class}
 
 \alias{SpeciesTaxonomy-class}
+
 \alias{species,SpeciesTaxonomy-method}
 \alias{species<-,SpeciesTaxonomy,data.frame-method}
 \alias{species<-,SpeciesTaxonomy,Species-method}
+
 \alias{taxonomy,SpeciesTaxonomy-method}
 \alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
 \alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
+
 \alias{rbind,SpeciesTaxonomy-method}
 
-\title{ Class \code{"SpeciesTaxonomy"} }
+\title{ SpeciesTaxonomy Class }
 
 \description{
   A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
-}
-
-\usage{
-\S4method{species<-}{SpeciesTaxonomy,Species}(x) <- value
-\S4method{species<-}{SpeciesTaxonomy,data.frame}(x) <- value
-\S4method{taxonomy<-}{SpeciesTaxonomy,Taxonomy}(x) <- value
-\S4method{taxonomy<-}{SpeciesTaxonomy,data.frame}(x) <- value
-}
-
-\arguments{
-\item{ x }{
-\code{'Vegsoup'} object.
-}
-\item{value}{
-class. Either \code{'Species'}, \code{'Taxonomy'} or \code{'data.frame'}.
-}
 }
 
 \section{Objects from the Class}{
@@ -58,63 +46,66 @@ class. Either \code{'Species'}, \code{'Taxonomy'} or \code{'data.frame'}.
 }
 
 \section{Methods}{
-  Unlike classes \code{"Species"} and \code{"Taxonomy"} there exists no
+  Unlike for classes \code{"Species"} and \code{"Taxonomy"} there exists no
   custom initialize method. Therefore, function \code{SpeciesTaxonomy} should
   be used in cases where the data integrity is unsure.
 
-  Subsetting methods are provided for classes \code{\linkS4class{Species}},
+  Sub-setting methods are provided for classes \code{\linkS4class{Species}},
   and \code{\linkS4class{Taxonomy}}, but not for this class. It is possible,
   however, to replace one of the slots by the respective replacement method,
-  which will take care about subsetting of the remaining slot
-  (see \sQuote{Methods for "species<-"} and
-  \sQuote{Methods for "taxonomy<-"}).
+  which will take care about sub-setting of the remaining slot
+  (see \sQuote{Methods for "species<-"} and \sQuote{Methods for "taxonomy<-"}).
 
   \describe{
     \item{ species }{
-      \code{signature(obj = "SpeciesTaxonomy")}:
+      \code{ signature(obj = "SpeciesTaxonomy") }:
         Accessor method for slot \code{species}
         returning a \code{data.frame}
     }
     \item{ taxonomy }{
-      \code{signature(obj = "SpeciesTaxonomy")}:
+      \code{ signature(obj = "SpeciesTaxonomy") }:
         Accessor method for slot \code{taxonomy}
         returning a \code{data.frame}.
     }
     \item{ rbind }{
-      \code{signature(x = "SpeciesTaxonomy")}:
-      \code{rbind} method to combine two or more objects.
+      \code{ signature(x = "SpeciesTaxonomy") }:
+      \code{ rbind } method to combine two or more objects.
     }
-  }
-}
+%  }
+%}
 
-\section{Methods for "species<-"}{
-  \describe{
-    \item{ obj = "SpeciesTaxonomy", value = "Taxonomy" }{
-      subset slot \code{species} as to contain anly the taxa given by an
+%\section{Methods for "species<-"}{
+%  \describe{
+    \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
+      subset slot \code{species} as to contain only the taxa given by an
       object of class \code{"Taxonomy"}, which by itself will replace
       slot \code{taxonomy}.
     }
-    \item{ obj = "SpeciesTaxonomy", value = "data.frame" }{
+    \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
       subset slot \code{species} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
     }
-  }
-}
+%  }
+%}
 
-\section{Methods for "taxonomy<-"}{
-  \describe{
-    \item{ obj = "SpeciesTaxonomy", value = "Species" }{
+%\section{Methods for "taxonomy<-"}{
+%  \describe{
+    \item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
       subset slot \code{taxonomy} as to contain anly the taxa given by an
       object of class \code{"Species"}, which by itself will replace
       slot \code{species}.
     }
-    \item{ obj = "SpeciesTaxonomy", value = "data.frame" }{
+    \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
       subset slot \code{taxonomy} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
     }
-  }
+%  }
+%}
 }
+}
+
 \author{ Roland Kaiser }
+
 \seealso{
   \code{\link{SpeciesTaxonomy}},
   \code{\linkS4class{Species}},

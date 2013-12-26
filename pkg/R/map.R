@@ -1,5 +1,7 @@
 ".map" <- function (x, database, ...) {
+	#	Suggests:
 	require(maps)
+	#	Suggests:
 	require(mapdata)
 	if (missing(database)) database = "world"
 	if (database != "world") require(mapdata)

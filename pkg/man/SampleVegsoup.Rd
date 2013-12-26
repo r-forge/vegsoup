@@ -1,5 +1,9 @@
 \name{SampleVegsoup}
+\docType{methods}
+
 \alias{SampleVegsoup}
+\alias{SampleVegsoup-methods}
+\alias{SampleVegsoup,Vegsoup-method}
 
 \title{ Random Samples and Permutations for \code{Vegsoup*} Objects }
 
@@ -8,7 +12,7 @@ The method takes a sample of the specified size from the elements of x using eit
 }
 
 \usage{
-SampleVegsoup(x, size, replace = FALSE, prob = NULL)
+\S4method{SampleVegsoup}{Vegsoup}(x, size, replace = FALSE, prob = NULL)
 }
 
 \arguments{
@@ -35,10 +39,11 @@ SampleVegsoup(x, size, replace = FALSE, prob = NULL)
   An object of same class as the input class.
 }
 \author{ Roland Kaiser }
+
 \seealso{
-\code{\linkS4class{Vegsoup}}
-\code{\link{seriation}}
+\code{\linkS4class{Vegsoup}}, \code{\link{seriation}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)

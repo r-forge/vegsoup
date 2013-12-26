@@ -137,84 +137,8 @@ setMethod("Isamic",
 	function (obj) { 	
 	   	tmp <- constancy(obj) / 100
     	res <- apply(tmp, 1, function (x) {
-    			2 * sum(abs(as.numeric(x)- 0.5)) / ncol(tmp)
+    			2 * sum(abs(as.numeric(x) - 0.5)) / ncol(tmp)
     		})
     	return(res)
-    }
-)
-
-#	Indicator species analysis by Murdoch preference function
-#	to do: documentation
-setGeneric("Murdoch",
-	function (obj, ...)
-		standardGeneric("Murdoch")
-)
-setMethod("Murdoch",
-    signature(obj = "VegsoupPartition"),
-    function (obj, minplt, type, ...) {
-    	require(optpart)
-    	if (getK(obj) == 1)
-			stop("meaningless with k = ", getK(obj))
-    	if (missing(minplt))
-    		minplt <- 1
-		if (missing(type))
-			part <- Partitioning(obj)
-			
-		if (any(table(part) == 1)) {
-			stop("singleton present")
-		}	
-		ks <- getK(obj)
-		res <- matrix(0, nrow = dim(obj)[2], ncol = ks)
-		dimnames(res) <- list(colnames(obj), 1:ks)
-		pval <- matrix(0, nrow = dim(obj)[2], ncol = ks)
-		dimnames(pval) <- list(colnames(obj), 1:ks)
-		res.ls <- vector("list", length = ks)
-		names(res.ls) <- 1:ks
-		for (i in 1:ks) {
-			res.ls[[i]] <- optpart::murdoch(as.logical(obj),
-				part == i, minplt = minplt)
-			res[,i] <- res.ls[[i]]$murdoch
-			pval[,i] <- round(res.ls[[i]]$pval, 3)
-		}
-    	return(c(res.ls, list(murdoch = res, pval = pval)))
-    }
-)
-
-#	Silhouette Analysis
-#	to do: documentation
-#	dots argument does not work with cluster::silhouette
-setGeneric("silhouette",
-	function (x, ...)
-		standardGeneric("silhouette")
-)
-
-setMethod("silhouette",
-    signature(x = "VegsoupPartition"),
-    function (x, ...) {
-    	require(cluster)
-		if (getK(x) == 1)
-			stop("meaningless with k = ", getK(x))
-    	
-		res <- cluster::silhouette(Partitioning(x), dist = as.dist(obj, ...))
-		return(res)    	
-    }
-)
-
-#	dissimilarity diameters
-if (!isGeneric("Disdiam")) {
-setGeneric("Disdiam",
-	function (obj, ...)
-		standardGeneric("Disdiam")
-)
-}
-
-setMethod("Disdiam",
-    signature(obj = "VegsoupPartition"),
-    function (obj, ...) {
-    	require(optpart)
-		if (getK(obj) == 1)
-			stop("meaningless with k = ", getK(obj))    	
-		res <- optpart::disdiam(Partitioning(obj), as.dist(obj, ...))
-		return(res)    	
     }
 )

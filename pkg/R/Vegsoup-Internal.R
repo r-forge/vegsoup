@@ -1,5 +1,6 @@
 #	internal function to melt sites data frame
 .melt <- function (obj) {
+	#	Suggests:
 	require(stringr)
 	#	obj = allargs[[10]]
 	res <- data.frame(plot = rownames(slot(obj, "sites")),
@@ -51,7 +52,9 @@
 #	random points and polygons in unit square
 #	
 .rpoisppSites <- function (x) {
+	#	Suggests:
 	require(spatstat)
+	#	Suggests:
 	require(maptools)
 	
 	n <- length(unique(x$plot)) # must be unique!
@@ -67,12 +70,12 @@
 	pgs <- vector("list", nrow(cents))
 	for (i in 1:nrow(cents)) {
 		pg <- coordinates(sp::GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
-		pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
+		pg <- sp::Polygons(list(sp::Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
 		pgs[[i]] <- pg
 	}
 
-	pgs <- SpatialPolygons(pgs)
-	pgs <- SpatialPolygonsDataFrame(pgs,
+	pgs <- sp::SpatialPolygons(pgs)
+	pgs <- sp::SpatialPolygonsDataFrame(pgs,
 		data = data.frame(plot = sort(unique(x$plot))))
 	return(list(pts, pgs))
 }
@@ -86,6 +89,8 @@
 #		idvar = "plot")
 	
 .find.coordinates <- function (y, proj4string, ...) {
+	#	Imports:
+	#	rewuire(sp)
 	
 	verbose = FALSE
 	
@@ -170,16 +175,16 @@
 			pgs <- vector("list", nrow(cents))
 			for (i in 1:nrow(cents)) {
 			#	to do use plsx and plsy	
-				pg <- coordinates(GridTopology(
+				pg <- coordinates(sp::GridTopology(
 					cents[i,] - 0.00005 / 2, c(0.00005, 0.00005), c(2,2)))
-				pg <- Polygons(list(Polygon(rbind(pg[c(1, 3 ,4 , 2), ], pg[1, ]))), i)
+				pg <- sp::Polygons(list(sp::Polygon(rbind(pg[c(1, 3 ,4 , 2), ], pg[1, ]))), i)
 				pgs[[i]] <- pg
 			}
 
-			sp.polygons <- SpatialPolygonsDataFrame(SpatialPolygons(pgs),
+			sp.polygons <- sp::SpatialPolygonsDataFrame(sp::SpatialPolygons(pgs),
 					data = data.frame(plot = as.character(ids),
 						stringsAsFactors = FALSE))
-			sp.polygons <- spChFIDs(sp.polygons, x = ids)				
+			sp.polygons <- sp::spChFIDs(sp.polygons, x = ids)			
 		}
 		else {		
 			message("not a complete coordinates list",
@@ -199,8 +204,8 @@
 	}
 		
 	if (!lnglat.sim) {
-		proj4string(sp.points) <- CRS(proj4string)
-		proj4string(sp.polygons) <- CRS(proj4string)	
+		proj4string(sp.points) <- sp::CRS(proj4string)
+		proj4string(sp.polygons) <- sp::CRS(proj4string)	
 	}
 	return(list(sp.points, sp.polygons))		
 }

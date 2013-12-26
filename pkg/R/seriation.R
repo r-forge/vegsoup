@@ -61,9 +61,9 @@ setMethod("seriation",
 		   	alpha <- 0.625
 	   		beta = 1 - 2 * alpha
 		   	si.ind <- agnes(si.dis, method = "flexible",
-		   		par.meth = c(alpha, alpha, beta, 0))$order
+		   		par.method = c(alpha, alpha, beta, 0))$order
 	   		sp.ind <- agnes(sp.dis, method = "flexible",
-	   			par.meth = c(alpha, alpha, beta, 0))$order
+	   			par.method = c(alpha, alpha, beta, 0))$order
 		}, packed = {
 			si.ind <- order(rowSums(obj), decreasing = TRUE)
 			sp.ind  <- order(colSums(obj), decreasing = TRUE)

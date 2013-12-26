@@ -2,63 +2,25 @@
 \name{VegsoupPartition-class}
 \Rdversion{1.1}
 \docType{class}
-\alias{VegsoupPartition-class}
-\alias{[,VegsoupPartition,ANY,ANY,missing-methods}
-\alias{Accuracy,VegsoupPartition,VegsoupPartition-methods}
-\alias{Association,VegsoupPartition,VegsoupPartition-methods}
-\alias{Confus,VegsoupPartition,VegsoupPartition-methods}
-\alias{Constancy,VegsoupPartition-methods}
-\alias{Contingency,VegsoupPartition-methods}
-\alias{Disdiam,VegsoupPartition-methods}
-\alias{ellipsoidhull,VegsoupPartition-methods}
-\alias{Fidelity,VegsoupPartition-methods}
-\alias{FisherTest,VegsoupPartition-methods}
-\alias{Fivenum,VegsoupPartition-methods}
-\alias{getK,VegsoupPartition-methods}
-\alias{head,VegsoupPartition-methods}
-\alias{Importance,VegsoupPartition-methods}
-\alias{Indval,VegsoupPartition-methods}
-\alias{Isamic,VegsoupPartition-methods}
-\alias{KML,VegsoupPartition-methods}
-\alias{Latex,VegsoupPartition-methods}
-\alias{Murdoch,VegsoupPartition-methods}
-\alias{Optindval,VegsoupPartition-methods}
-\alias{Optsil,VegsoupPartition-methods}
-\alias{Partana,VegsoupPartition-methods}
-\alias{Partition,VegsoupPartition-methods}
-\alias{Partitioning,VegsoupPartition-methods}
-\alias{Partitioning<-,VegsoupPartition,numeric-methods}
-\alias{PartitioningCombinations,VegsoupPartition-methods}
-\alias{PartitioningMatrix,VegsoupPartition-methods}
-\alias{Phi,VegsoupPartition-methods}
-\alias{plot,VegsoupPartition,missing-methods}
-\alias{rectangles,VegsoupPartition-methods}
-\alias{richness,VegsoupPartition-methods}
-\alias{seriation,VegsoupPartition-methods}
-\alias{Shared,VegsoupPartition-methods}
-\alias{SigFidelity,VegsoupPartition-methods}
-\alias{Silhouette,VegsoupPartition-methods}
-\alias{spread,VegsoupPartition-methods}
-\alias{summary,VegsoupPartition-methods}
-\alias{Tabdev,VegsoupPartition-methods}
-\alias{typal-VegsoupPartition-methods}
-\alias{write.verbatim,VegsoupPartition-methods}
 
-\title{ Class \code{"VegsoupPartition"} }
+\alias{VegsoupPartition-class}
+
+\title{ VegsoupPartition Class }
+
 \description{
   Class \code{"VegsoupPartition"} is a class directly extending class
   \code{\linkS4class{Vegsoup}} and represents a partitioning of an object into
   clusters.
 }
 
-\section{Objects from the Class}{
+\section{ Objects from the Class }{
   Objects can be created by calls of the form \code{new("VegsoupPartition",
   ...)} where \dots expand to slots \code{'part'}, \code{'method'} and
   \code{'k'}. It is strongly advisable to use the class creator function
   \code{\link{VegsoupPartition}}.
 }
 
-\section{Slots}{
+\section{ Slots }{
   \describe{
     \item{\code{part}:}{
       Object of class \code{"numeric"}
@@ -74,11 +36,11 @@
     }
   }
 }
-\section{Extends}{
+\section{ Extends }{
   Class \code{"VegsoupPartition"} extends \code{"\linkS4class{Vegsoup}"}
   directly and all methods defined for the latter class apply.
 }
-\section{Methods}{
+\section{ Methods }{
   Methods defined for class \code{"VegsoupPartition"} include the following:
   \describe{
 %% 1
@@ -217,12 +179,12 @@
     }
 %% 8
   \bold{ 8) Cluster validation }
-    \item{Disdiam}{
+    \item{disdiam}{
       \code{signature(obj = "VegsoupPartition")}:
       Maximum within-cluster dissimilarity of all partitions.
-      See \code{\link{Disdiam}}.
+      See \code{\link{disdiam}}.
     }
-    \item{Silhouette}{
+    \item{silhouette}{
       \code{signature(obj = "VegsoupPartition")}:
       Compute silhouette information.
       See \code{\link{silhouette}}.
@@ -256,10 +218,10 @@
       Indicator species analysis to minimize intermediate constancy
       See \code{\link{Isamic}}.
     }
-    \item{Murdoch}{
+    \item{murdoch}{
       \code{signature(obj = "VegsoupPartition")}:
       Indicator Species Analysis by Murdoch Preference Function.
-      See \code{\link{Murdoch}}.
+      See \code{\link{murdoch}}.
     }
 %% 10
   \bold{ 10) Plot methods }

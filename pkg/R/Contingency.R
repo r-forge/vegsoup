@@ -10,7 +10,7 @@ setMethod("contingency",
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {
 				res <- t(aggregate(as.logical(obj, ...),
-					by = list(split.abbr(obj)$layer),
+					by = list(splitAbbr(obj)$layer),
 					FUN = sum)[, -1])
 				colnames(res) <- Layers(obj)
 			} else {

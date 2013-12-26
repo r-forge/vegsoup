@@ -9,8 +9,8 @@ setGeneric("typical",
 setMethod("typical",
     signature(obj = "VegsoupPartition"),
     function (obj, k = 1, ...) {
-    	
-    	require(optpart)    	
+    	#	Imports:
+    	#	require(optpart)    	
     	cl <- match.call()    	
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {

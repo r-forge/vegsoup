@@ -1,10 +1,13 @@
+\encoding{UTF-8}
 \name{Coverscale-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{Coverscale-class}
 \alias{coerce,list,Coverscale-method}
 
-\title{Class \code{"Coverscale"}}
+\title{ Coverscale Class }
+
 \description{
 Contains the defintion for a cover scale (abundance scale) associated with an \code{Vegsoup*} object.
 }

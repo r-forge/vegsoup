@@ -1,7 +1,9 @@
 \name{Confus}
 \docType{methods}
+
 \alias{Confus}
-\alias{Confus-methods}
+\alias{Confus,VegsoupPartition-method}
+\alias{Confus,VegsoupPartition,VegsoupPartition-method}
 
 \title{ Confusion Matrix for Objects of class VegsoupPartition }
 
@@ -10,16 +12,14 @@
   predicted membership, computing overall accuracy, and the Kappa statistic of
   agreement.
 }
+
 \usage{
-  Confus(obj1, obj2)
+  \S4method{Confus}{VegsoupPartition,VegsoupPartition}(obj1, obj2)
 }
+
 \arguments{
-    \item{ obj1 }{
-      A \code{VegsoupPartition} object.
-    }
-    \item{ obj2 }{
-      A second \code{VegsoupPartition} object to be compared
-      with \code{obj1}.
+    \item{ obj1, obj2 }{
+      \code{'VegsoupPartition'} object. \code{obj1} is be compared with \code{obj2}.
     }
 }
 \details{

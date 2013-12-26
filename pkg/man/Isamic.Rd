@@ -1,17 +1,21 @@
 \name{Isamic}
 \docType{methods}
+
 \alias{Isamic}
 \alias{Isamic-methods}
+\alias{Isamic,VegsoupPartition-method}
 
 \title{ Indicator Species Analysis to Minimize Intermediate Constancy }
 
 \description{
-This is a wrapper for function
-\code{\link[optpart:isamic]{isamic}} in package \pkg{optpart}.
+  This is a wrapper for function
+  \code{\link[optpart:isamic]{isamic}} in package \pkg{optpart}.
 }
+
 \usage{
-Isamic(obj)
+  \S4method{Isamic}{VegsoupPartition}(obj)
 }
+
 \arguments{
   \item{obj}{
     A \code{VegsoupPartition} object.

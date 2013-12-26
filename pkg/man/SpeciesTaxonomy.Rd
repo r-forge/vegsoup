@@ -89,7 +89,7 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 
 \seealso{
 \code{\linkS4class{Species}},
-\code{\link{stack.species}},
+\code{\link{stackSpecies}},
 \code{\linkS4class{Taxonomy}}
 }
 
@@ -108,7 +108,7 @@ x <- data.frame(abbr = names(dune),
 #	groome plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
 
-spc <- stack.species(x)
+spc <- stackSpecies(x)
 
 # create taxonomy reference list from scratch
 # these are the scientific names corresponding to the abbreviations in dune

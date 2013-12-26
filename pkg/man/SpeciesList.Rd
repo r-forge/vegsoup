@@ -1,13 +1,16 @@
 \name{SpeciesList}
+\docType{methods}
+
 \alias{SpeciesList}
-\alias{SpeciesList-method}
+\alias{SpeciesList-methods}
+\alias{SpeciesList,Vegsoup-method}
 
 \title{ Return Species List for an \code{Vegsoup*} object }
 \description{
 Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"}. 
 }
 \usage{
-  SpeciesList(obj, layered)
+\S4method{SpeciesList}{Vegsoup}(obj, layered)
 }
 \arguments{
   \item{ obj }{

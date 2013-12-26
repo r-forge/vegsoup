@@ -12,15 +12,15 @@
 	file <- .texfile(file)
 		
 	if (length(drop) > 0) {
-		if (verbose) {
-			cat("dropped variables ",
+		#if (verbose) {
+			message("dropped variables ",
 			paste(names(sites)[drop], collapse = ", "),
 			". not meaningful for summary")
-		}	
+		#}	
 		sites <- sites[ ,-drop]
 	}
 #	if (missing(col.width)) {
-#		col.width <- "10mm"
+		col.width <- "10mm"
 #	}
 	
 	part <- Partitioning(obj)
@@ -103,6 +103,7 @@
 	}
 	
 .latexVegsoupPartitionSitesRecursive <- function (obj, choice = "sites", recursive = TRUE, file, ...) {
+	#	Suggests:
 	require(Hmisc)
 	#	to do!	
 }
@@ -110,6 +111,7 @@
 .latexVegsoupPartitionSpecies <- function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min, constancy.min = 95, taxa.width = "60mm", col.width = "10mm", footer.width = "150mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, quantile.select, coverscale = FALSE, sep = "/", sites.columns, newpage = TRUE, verbose = FALSE, ...) {
 ###	debuging arguments
 #	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; quantile.select = c(1,3,5); sites.columns = names(Sites(obj)); verbose = TRUE; file = "PartitionSummary"; coverscale = TRUE
+	#	Suggests:
 	require(Hmisc)
 	if (class(obj) != "VegsoupPartitionFidelity") {
 			message("apply default indicator species statistic")
@@ -278,7 +280,7 @@
 	#	top and bottom of table
 	if (length(dia) > 0) {
 		#	top of table, diagnostic/typical species
-		txn <- split.abbr(obj)
+		txn <- splitAbbr(obj)
 		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ]
 		#	txn <- txn[rownames(tmp$tab), ]
 		#	rownames(txn) <- txn$abbr.layer
@@ -300,7 +302,7 @@
 		bottom <- tmp$tab[rownames(txn.bottom), ]
 		tmp$tab <- rbind(top, bottom)
 	} else {
-		txn <- split.abbr(obj)
+		txn <- splitAbbr(obj)
 		txn <- txn[match(rownames(tmp$tab), rownames(txn)), ]
 		#rownames(txn) <- txn$abbr.layer
 		txn <- txn[order(txn$layer), ]
@@ -311,7 +313,7 @@
 	tex <- as.data.frame(as.matrix(tmp$tab),
 		stringsAsFactors = FALSE)
 	
-	txn <- split.abbr(obj) 
+	txn <- splitAbbr(obj) 
 	txn <- txn[match(rownames(tex), rownames(txn)), ]
 	
 	tex.out <- tex <- data.frame(taxon = txn$taxon, layer = txn$layer, tex,
@@ -429,7 +431,7 @@
 			tex <- tex[-match(footer.species, row.names(tex)), ]
 			footer <- ct[match(row.names(tex.footer), row.names(ct)), ]
 	
-			txn <- split.abbr(obj)
+			txn <- splitAbbr(obj)
 			txn <- txn[match(rownames(footer), rownames(txn)), ] #	dropped $abbr.layer
 			footer <- as.data.frame(footer, stringsAsFactors = FALSE)
 			footer$taxon <- txn$taxon
@@ -627,14 +629,14 @@
 		#	check species characters
 		#	times glyph in hybrid combinations
 		#	taxon is always in first position in the table
-		tex[, 1] <- gsub("×", "$\\times$", tex[, 1], fixed = TRUE)
-		footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
+		tex[, 1] <- gsub("\u00D7", "$\\times$", tex[, 1], fixed = TRUE)
+		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)
 		#	& gylph used in Sites(obj)
 		footer <- gsub("&", "\\&", footer, fixed = TRUE)
-		footer <- gsub("×", "$\\times$", footer, fixed = TRUE)
+		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)
 		tex <- gsub("%", "\\%", tex, fixed = TRUE)
 		tex <- gsub("&", "\\&", tex, fixed = TRUE)
-		tex <- gsub("×", "$\\times$", tex, fixed = TRUE)
+		tex <- gsub("\u00D7", "$\\times$", tex, fixed = TRUE)
 		
 		if (use.letters) {
 			sel <- match(sort(unique(Partitioning(obj))), dimnames(tex)[[2]])
@@ -668,8 +670,8 @@
 	#	times glyph in hybrid combinations	
 		tex.out <- sapply(tex.out, function (x) {
 				tmp <- x
-				#	replace ×
-				tmp[, 1] <- gsub("×", "$\\times$", tmp[, 1], fixed = TRUE)
+				#	replace \u00D7
+				tmp[, 1] <- gsub("\u00D7", "$\\times$", tmp[, 1], fixed = TRUE)
 				#	make taxa having cons >= a user defined constancy treshold
 				#	check first if we have a singleton
 				if (any(tmp[, 5] < 100)) {
@@ -681,8 +683,8 @@
 		
 		footer.species <- sapply(footer.species, function (x) {
 				tmp <- x
-				#	replace ×
-				tmp[, 2] <- gsub("×", "$\\times$", tmp[, 2], fixed = TRUE)
+				#	replace \u00D7
+				tmp[, 2] <- gsub("\u00D7", "$\\times$", tmp[, 2], fixed = TRUE)
 				tmp
 				}, simplify = FALSE)
 			
@@ -747,6 +749,7 @@
 
 #	\dots passed to seriation()
 .latexVegsoupPartitionSpeciesRecursive <- function (obj, choice = "species", recursive = TRUE, file, col.width, taxa.width, caption.text, verbose, ...) {
+	#	Suggests:
 	require(Hmisc)
 		
 	#	obj  <- prt
@@ -789,9 +792,9 @@
 		i.tex <- t(as.character(i.part))
 		i.tex <- gsub("0", ".", i.tex, fixed = TRUE)
 	
-		i.tex <- cbind(split.abbr(i.part)[c("taxon", "layer")], i.tex)
+		i.tex <- cbind(splitAbbr(i.part)[c("taxon", "layer")], i.tex)
 		#	tex valid files
-		file <- paste(path, "species", i, ".tex", sep = "")
+		file <- paste(file, "species", i, ".tex", sep = "")
 		files <- c(files, file)
 		caption <- paste("Sample table of Cluster", i)
 	
@@ -813,9 +816,9 @@
 		colheads = col.heads) 
 	}
 	
-	con <- file(paste(path, "species.tex", sep = ""))
+	con <- file(paste(file, "species.tex", sep = ""))
 		writeLines(paste("\\input{",
-				gsub(path, "", files, fixed = TRUE),
+				gsub(file, "", files, fixed = TRUE),
 				"}", sep = ""), con)
 	close(con)
 	
@@ -832,6 +835,7 @@ setGeneric("Latex",
 setMethod("Latex",
 	signature(obj = "VegsoupPartition"),
 	function (obj, choice = "species", recursive = FALSE, file, ...) {
+			#	Suggests:		
 			require(Hmisc)
 
 			CHOICES <- c("species", "sites")

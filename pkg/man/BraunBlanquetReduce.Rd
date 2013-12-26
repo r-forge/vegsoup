@@ -1,5 +1,6 @@
 \name{BraunBlanquetReduce}
 \alias{BraunBlanquetReduce}
+\alias{BraunBlanquetReduce,Vegsoup-method}
 
 \title{ Reduce 9 Point Braun-Blanquet Abundance Scale to 7 Point }
 
@@ -8,7 +9,7 @@ Revert Braun-Blanquet abundance scale from extended (new) to simple (old).
 }
 
 \usage{
-BraunBlanquetReduce(x)
+\S4method{BraunBlanquetReduce}{Vegsoup}(x)
 }
 
 \arguments{

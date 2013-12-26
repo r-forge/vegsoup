@@ -1,8 +1,9 @@
 \name{Murdoch}
 \docType{methods} 
-\alias{Murdoch}
-\alias{Murdoch-methods}
-\alias{Murdoch,VegsoupPartition-method}
+
+\alias{murdoch}
+\alias{murdoch-methods}
+\alias{murdoch,VegsoupPartition-method}
 
 \title{ Indicator Species Analysis by Murdoch Preference Function }
 
@@ -10,24 +11,32 @@
 This is a wrapper for function
 \code{\link[optpart:murdoch]{murdoch}} in package \pkg{optpart}.
 }
+
 \usage{
-Murdoch(obj, ...)
+\S4method{murdoch}{VegsoupPartition}(x, minplt, type, ...)
 }
+
 \arguments{
-  \item{obj}{
-    A \code{VegsoupPartition} object.
+  \item{ x }{
+    \code{'VegsoupPartition'} object.
   }
-  \item{\dots}{
-    Arguments passed to \code{optpart::murdoch}
+  \item{ minplt, type }{
+    see \\code{\link[optpart:murdoch]{murdoch}}
+  }
+  \item{ \dots }{
+    not used.
   }
 }
+
 \value{
   a list object of class \code{"murdoch"}
 }
+
 \author{
-  Implemented for vegsoup from function \code{murdoch} by \emph{David W.
+  Implemented for \pkg{vegsoup} from function \code{murdoch} by \emph{David W.
   Roberts} in package \pkg{optpart}.
 }
+
 \seealso{
 \code{\linkS4class{VegsoupPartition}},
 \code{\link{Fidelity}}

@@ -1,17 +1,16 @@
 \name{coerce}
 \docType{methods}
-\alias{as}
-\alias{as-methods}
-\alias{coerce-methods}
+\alias{as,Vegsoup-method}
 
-\alias{coerce,matrix-method}
-\alias{coerce.array-method}
-\alias{coerce,sparseMatrix-method}
-\alias{coerce,dist-method}
-\alias{coerce,list-method}
-\alias{coerce.data.frame-method}
-\alias{coerce,data.list-method}
-\alias{coerce,mefa-method}
+\alias{coerce,Vegsoup,matrix-method}
+\alias{coerce,Vegsoup,array-method}
+\alias{coerce,Vegsoup,sparseMatrix-method}
+\alias{coerce,Vegsoup,dsparseMatrix-method}
+\alias{coerce,Vegsoup,dist-method}
+\alias{coerce,Vegsoup,list-method}
+\alias{coerce,Vegsoup,data.frame-method}
+\alias{coerce,Vegsoup,data.list-method}
+\alias{coerce,Vegsoup,mefa-method}
 
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
 
@@ -20,39 +19,23 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 }
 
 \usage{
-## S4 method for signature from = 'Vegsoup*' to = 'matrix'
-as(x, "matrix")
-
-## S4 method for signature from = 'Vegsoup*' to = 'array'
-as(x, "array")
-
-## S4 method for signature from = 'Vegsoup*' to = 'dist'
-as(x, "dist")
-
-## S4 method for signature from = 'Vegsoup*' to = 'sparseMatrix'
-as(x, "sparseMatrix")
-as(x, "dsparseMatrix")
-
-## S4 method for signature from = 'Vegsoup*' to = 'list'
-as(x, "list")
-
-## S4 method for signature from = 'Vegsoup*' to = 'data.frame'
-as(x, "data.frame")
-
-## S4 method for signature from = 'Vegsoup*' to = 'data.list'
-as(x, "data.list")
-
-## S4 method for signature from = 'Vegsoup*' to = 'mefa'
-as(x, "mefa")
+\S4method{coerce}{Vegsoup,matrix}(from,to)
+\S4method{coerce}{Vegsoup,array}(from,to)
+\S4method{coerce}{Vegsoup,dist}(from,to)
+\S4method{coerce}{Vegsoup,sparseMatrix}(from,to)
+\S4method{coerce}{Vegsoup,dsparseMatrix}(from,to)
+\S4method{coerce}{Vegsoup,list}(from,to)
+\S4method{coerce}{Vegsoup,data.frame}(from,to)
+\S4method{coerce}{Vegsoup,data.list}(from,to)
+\S4method{coerce}{Vegsoup,mefa}(from,to)
 }
 
 \arguments{
-  \item{ x }{
-    A Vegsoup* object
+  \item{ from }{
+    A Vegsoup* object.
   }
-  \item{ matrix, array, dist, sparseMatrix, dsparseMatrix, list,
-  data.frame, data.list, mefa}{
-    Classes to coerce to.
+  \item{ to }{
+    class to coerce to.
   }
 }
 
@@ -69,28 +52,28 @@ as(x, "mefa")
 }
 
 \value{
-Coercion to \code{'matrix'} and \code{'sparseMatrix'} returns an object of the corresponding class.
-
-Coercion to 'list' returns a list with three components.
+  Coercion to \code{'matrix'} and \code{'sparseMatrix'} returns an object of the corresponding class.
+  Coercion to 'list' returns a list with three components.
   \item{ species }{
-object of class \code{'matrix'}
-}
+     object of class \code{'matrix'}
+  }
   \item{ sites }{
-object of class \code{'data.frame'}
-}
+     object of class \code{'data.frame'}
+  }
   \item{ taxonomy }{
-object of class \code{'data.frame'}
+    object of class \code{'data.frame'}
+  }
+
+  Coercion to 'data.frame' returns a \code{"data.frame"} with as many row as
+  there are in \code{Species(x)}.
+
+  Coercion to 'array' returns an \code{"array"}.
+
+  Coercion to 'mefa' and 'data.list' returns a \code{"mefa"} respectively
+  \code{"data.list"} object.
+
 }
 
-Coercion to 'data.frame' returns a \code{"data.frame"} with as many row as
-there are in \code{Species(x)}.
-
-Coercion to 'array' returns an \code{"array"}.
-
-Coercion to 'mefa' and 'data.list' returns a \code{"mefa"} respectively
-\code{"data.list"} object.
-
-}
 \section{ Warning }{
   S3 functions must contain a call to \code{as.matrix} to gurantee dispatch.
   For example \code{metaMDS(obj)} does not work, but other functions in
@@ -101,13 +84,13 @@ Coercion to 'mefa' and 'data.list' returns a \code{"mefa"} respectively
 
   Coercion to class \code{"mefa"} is only meaningful for count data!
 }
-\author{
-Roland Kaiser
-}
+
+\author{ Roland Kaiser }
+
 \seealso{
-\code{\link{as.matrix}},
-\code{\link{as.dist}}
+\code{\link{as.matrix}}, \code{\link{as.dist}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)
@@ -141,4 +124,5 @@ agnes(dta) # agglomerative nesting
 # no call to as.dist(d) in hclust
 hclust(as.dist(dta))
 }
+
 \keyword{ methods }

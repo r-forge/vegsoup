@@ -12,15 +12,15 @@
 \alias{rbind,Taxonomy-method}
 
 \alias{Taxonomy<-}
-\alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
+\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 
 \alias{Taxonomy}
+\alias{Taxonomy,Vegsoup-method}
 
-\alias{taxonomy-methods}
+\alias{taxonomy}
 \alias{taxonomy,character-method}
 \alias{taxonomy,data.frame-method}
 \alias{taxonomy,matrix-method}
-\alias{taxonomy,SpeciesTaxonomy-method}
 \alias{taxonomy,Taxonomy-method}
 
 \title{Class \code{"Taxonomy"}}

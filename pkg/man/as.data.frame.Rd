@@ -1,9 +1,11 @@
 \name{as.data.frame}
 \docType{methods}
+
 \alias{as.data.frame}
-\alias{as.data.frame-method}
+\alias{as.data.frame,Vegsoup-method}
 
 \title{ Retrieve Sites Dataframe }
+
 \description{
   Besides the \code{as.matrix} and alike methods that return just the
   species matrix of \code{Vegsoup*} objects, an esstential requirement is the
@@ -12,24 +14,29 @@
   coercion is fundamental, the syntax to execute it is also is as simple
   as possible.
 }
+
 \usage{
-as.data.frame(x)
+\S4method{as.data.frame}{Vegsoup}(x)
 }
+
 \arguments{
   \item{ x }{
     A \code{Vegsoup*} object.
   }
 }
+
 \details{
   The \code{"as.data.frame"} method is essentially a database join operation.
   Unlike the data stored in a \code{Vegsoup*} object, the returned data frame
   has redundancy.
 }
+
 \author{ Roland Kaiser }
 
 \seealso{
 \code{link{as.matrix}}
 }
+
 \examples{
 library(vegsoup)
 data(testdata)

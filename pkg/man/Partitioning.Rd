@@ -14,20 +14,20 @@
 \alias{PartitioningCombinations,VegsoupPartition-method}
 
 \title{ Partitioning vector of \code{VegsoupPartition} objects }
+
 \description{
   Retrieve number of partitions (\code{getK}), partitioning vector (\code{Partitioning}),
   create a matrix of memberships of plots to partitions (\code{PartitioningMatrix})
   or tabulate all possibele combinations of partitions (\code{PartitioningCombinations}).
 }
+
 \usage{
 \S4method{getK}{VegsoupPartition}(x)
-
 \S4method{Partitioning}{VegsoupPartition}(x)
-
 \S4method{PartitioningMatrix}{VegsoupPartition}(x)
-
 \S4method{PartitioningCombinations}{VegsoupPartition}(x, collapse)
 }
+
 \arguments{
   \item{ x }{
     A \code{VegsoupPartition} object.
@@ -52,11 +52,13 @@
     combination.
   }
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
-\code{\link{getK}}
-\code{\linkS4class{VegsoupPartition}}
+\code{\link{getK}}, \code{\linkS4class{VegsoupPartition}}
 }
+
 \examples{
 data(testdata)
 dta <- Vegsoup(spc, sts, txa,

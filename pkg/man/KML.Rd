@@ -1,16 +1,19 @@
 \name{KML}
 \docType{methods}
+
 \alias{KML}
-\alias{KML-methods}
+\alias{KML,Vegsoup-method}
+\alias{KML,VegsoupPartition-method}
+
 \title{ Write KML Files to Disk }
+
 \description{
-A simple utility function for visualization of plots in google earth.
+  A simple utility function for visualization of plots in google earth.
 }
+
 \usage{
-## S4 method for signature 'Vegsoup'
-KML(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
-## S4 method for signature 'Vegsoup' and 'VegsoupPartition'
-KML(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
+\S4method{KML}{Vegsoup}(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
+\S4method{KML}{VegsoupPartition}(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
 }
 
 \arguments{
@@ -55,4 +58,5 @@ KML(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
 \seealso{
 \code{\link{QuickMap}}
 }
+
 \keyword{ methods }

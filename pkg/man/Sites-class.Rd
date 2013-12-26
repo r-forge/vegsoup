@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{Sites-class}
 \Rdversion{1.1}
 \docType{class}
@@ -6,11 +7,12 @@
 
 \alias{Sites-class}
 
-\alias{$,Sites-methods}
+\alias{$,Sites-method}
+\alias{$<-,Sites-method}
 
-\alias{rbind,Sites-methods}
+\alias{rbind,Sites-method}
 
-\alias{sites,Sites-methods}
+\alias{sites,Sites-method}
 
 \alias{sites-method}
 \alias{sites,character-method}
@@ -19,7 +21,7 @@
 \alias{sites,Sites-method}
 \alias{sites,rbind-method}
 
-\title{Class \code{"Sites"}}
+\title{ Sites Class }
 
 \description{
   Data representation of sites data in \emph{long format} where
@@ -81,7 +83,7 @@
 \author{ Roland Kaiser }
 
 \seealso{
-  \code{\link{stack.sites}}
+  \code{\link{stackSites}}
   \code{\linkS4class{Species}}
   \code{\linkS4class{Vegsoup}}
 }

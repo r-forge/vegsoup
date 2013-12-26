@@ -4,6 +4,9 @@
 
 \alias{coverscale}
 \alias{coverscale,Vegsoup-method}
+
+\alias{coverscale<-}
+\alias{coverscale<-,Vegsoup-method}
 \alias{coverscale<-,Vegsoup,character-method}
 \alias{coverscale<-,Vegsoup,Coverscale-method}
 

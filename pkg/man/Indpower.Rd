@@ -1,20 +1,24 @@
 \encoding{UTF-8}
 \name{Indpower}
 \docType{methods}
+
 \alias{Indpower}
-\alias{Indpower-methods}
+\alias{Indpower,Vegsoup-method}
 
 \title{ Indicator Power of Species }
 \description{
 Indicator power calculation of Halme et al. (2009) or the congruence between indicator and target species.
 }
 \usage{
-Indpower(obj, ...)
+\S4method{Indpower}{Vegsoup}(obj, type, ...)
 }
 
 \arguments{
   \item{ obj }{
     A \code{Vegsoup*} object.
+  }
+  \item{ type }{
+    Nothing here yet.
   }
   \item{ \dots }{
     arguments passed to \code{vegan::indpower} to specify \code{type}.

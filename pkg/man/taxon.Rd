@@ -1,4 +1,5 @@
 \name{taxon}
+\docType{methods}
 
 \alias{taxon}
 \alias{taxon,Vegsoup-method}

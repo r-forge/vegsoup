@@ -1,5 +1,7 @@
 \name{reverseGeocode}
 \alias{reverseGeocode}
+\alias{reverseGeocode,Vegsoup-method}
+\alias{reverseGeocode,SpatialPointsDataFrame-method}
 
 \title{ Reverse geocoding }
 

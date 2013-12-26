@@ -1,120 +1,10 @@
 \encoding{UTF-8}
 \name{Vegsoup-class}
 \Rdversion{1.1}
+
 \docType{class}
 
 \alias{Vegsoup-class}
-
-\alias{AprioriGrouping,Vegsoup-methods}
-
-\alias{indices,Vegsoup-methods}
-\alias{as.logical,Vegsoup-methods}
-\alias{as.numeric,Vegsoup-methods}
-\alias{as.character,Vegsoup-methods}
-\alias{as.vector,Vegsoup,missing-methods}
-\alias{as.matrix,Vegsoup-methods}
-
-\alias{as.dist,Vegsoup-methods}
-\alias{as.data.frame,Vegsoup-methods}
-\alias{as.data.list,Vegsoup-methods}
-
-\alias{[,Vegsoup,ANY,ANY,missing-methods}
-\alias{[<-,Vegsoup,ANY,missing-methods}
-\alias{$,Vegsoup-methods}
-\alias{$<-,Vegsoup-methods}
-
-\alias{coerce,Vegsoup,data.frame-methods}
-\alias{coerce,Vegsoup,data.list-methods}
-\alias{coerce,Vegsoup,dist-methods}
-\alias{coerce,Vegsoup,dsparseMatrix-methods}
-\alias{coerce,Vegsoup,list-methods}
-\alias{coerce,Vegsoup,matrix-methods}
-\alias{coerce,Vegsoup,sparseMatrix-methods}
-
-\alias{dim,Vegsoup-methods}
-\alias{ncell,Vegsoup-methods}
-\alias{ncol,Vegsoup-methods}
-\alias{nrow,Vegsoup-methods}
-\alias{fill,Vegsoup-methods}
-\alias{colMeans,Vegsoup-methods}
-\alias{colSums,Vegsoup-methods}
-\alias{rowSums,Vegsoup-methods}
-\alias{rowMeans,Vegsoup-methods}
-\alias{richness,Vegsoup-methods}
-\alias{nndist,Vegsoup-methods}
-
-\alias{coverscale,Vegsoup-methods}
-\alias{coverscale<-,Vegsoup,character-methods}
-\alias{coverscale<-,Vegsoup,Coverscale-methods}
-\alias{BraunBlanquetReduce,Vegsoup-methods}
-
-\alias{decostand,Vegsoup-methods}
-\alias{decostand<-,Vegsoup,character-methods}
-\alias{decostand<-,Vegsoup,NULL-methods}
-
-\alias{bind,Vegsoup-methods}
-\alias{rbind,Species-methods}
-\alias{rbind,Sites-methods}
-\alias{rbind,Taxonomy-methods}
-
-\alias{distconnected,Vegsoup-methods}
-\alias{distconnected,VegsoupPartition-methods}
-
-\alias{elevation,Vegsoup-methods}
-\alias{getDistconnected,Vegsoup-methods}
-
-
-\alias{Indpower,Vegsoup-methods}
-\alias{Indspc,Vegsoup-methods}
-
-\alias{Layer,Vegsoup-methods}
-\alias{Layers,Vegsoup-methods}
-\alias{Layers<-,Vegsoup-methods}
-\alias{map,Vegsoup-methods}
-\alias{names,Vegsoup-methods}
-\alias{names<-,Vegsoup,character-methods}
-\alias{plot,Vegsoup,missing-methods}
-\alias{QuickMap,Vegsoup-methods}
-
-\alias{dimnames,Vegsoup-methods}
-\alias{colnames,Vegsoup-methods}
-\alias{rownames,Vegsoup,missing,missing-methods}
-\alias{rownames,Vegsoup,character-methods}
-\alias{rownames,Vegsoup,integer-methods}
-\alias{row.names,Vegsoup,character-methods}
-\alias{row.names,Vegsoup,integer-methods}
-
-\alias{split.abbr,Vegsoup-methods}
-\alias{abbr<-,Vegsoup,character-methods}
-\alias{SpeciesList,Vegsoup-methods}
-\alias{taxon,Vegsoup-methods}
-
-\alias{summary,Vegsoup-methods}
-\alias{head,Vegsoup-methods}
-\alias{tail,Vegsoup-methods}
-\alias{outlier,Vegsoup-methods}
-
-\alias{Species,Vegsoup-methods}
-\alias{Species<-,Vegsoup,SpeciesTaxonomy-methods}
-\alias{Species<-,Vegsoup,data.frame-methods}
-
-\alias{Sites,Vegsoup-methods}
-\alias{Sites<-,Vegsoup,data.frame-methods}
-
-\alias{coordinates,Vegsoup-methods}
-\alias{SpatialPointsVegsoup,Vegsoup-methods}
-\alias{SpatialPolygonsVegsoup,Vegsoup-methods}
-
-\alias{SampleVegsoup,Vegsoup-methods}
-\alias{seriation,Vegsoup-methods}
-\alias{Stride,Vegsoup-methods}
-\alias{Taxonomy,Vegsoup-methods}
-\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-methods}
-\alias{vegdist,Vegsoup-methods}
-%\alias{vegdist<-,Vegsoup,character-methods}
-\alias{write.verbatim,Vegsoup-methods}
-\alias{KML,Vegsoup-methods}
-\alias{coldiss,Vegsoup-methods}
 
 \title{ Class \code{"Vegsoup"} }
 
@@ -421,9 +311,9 @@
       \code{signature(obj = "Vegsoup")}:
        abbreviations used to encode (pseudo-)species (layer replicates).
     }
-    \item{split.abbr}{
+    \item{splitAbbr}{
       \code{signature(obj = "Vegsoup")}:
-      returns a \code{data.frame}. See \code{\link{split.abbr}}.
+      returns a \code{data.frame}. See \code{\link{splitAbbr}}.
     }
 
 %% 11

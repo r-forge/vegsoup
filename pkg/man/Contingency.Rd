@@ -46,7 +46,7 @@ Function \code{constancy} lists for each species the fraction (percentage) of sa
 \details{
 An importance table lists for each species the average (mean) abundance of each species in each partition. Sensible results are only to be obtained if the object has either a semi-quantitative or quantitative cover cover scale defined. Note, if only presence/absence data is available \code{importance} returns the same results as \dots \dots, which bears no information as the summed abundance is just the number of occurrences. See method \code{\link{quantile}} for descriptive summaries of species abundances in partitions.
 
-Specifing \code{mode = "R"} in \code{Contingency} and \code{Importance} allows for a kind of \emph{R-mode} analyis where the grouping is defined by the layer structure (\code{\link{Layers}}). Note, this rarely makes sense if there is only one layer. For multi layer objects a call to \code{Importance} in \emph{R-mode} implies that all species abundances in a layer are summed up and devided by layer contingencies (\code{Contingency(obj, mode = "R")}), in this case the number of species found in a respective layer for each plot.
+Specifying \code{mode = "R"} in \code{Contingency} and \code{Importance} allows for a kind of \emph{R-mode} analysis where the grouping is defined by the layer structure (\code{\link{Layers}}). Note, this rarely makes sense if there is only one layer. For multi layer objects a call to \code{Importance} in \emph{R-mode} implies that all species abundances in a layer are summed up and divided by layer contingencies (\code{Contingency(obj, mode = "R")}), in this case the number of species found in a respective layer for each plot.
 }
 
 \value{

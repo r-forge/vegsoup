@@ -1,8 +1,13 @@
 \name{Association}
+
 \alias{Association}
+\alias{Association,VegsoupPartition-method}
+\alias{Association,VegsoupPartition,VegsoupPartition-method}
+
 \title{
   Measures of association for two partitonings
 }
+
 \description{
   \code{Association} takes two objects inheriting from class
   \code{\linkS4class{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
@@ -10,9 +15,11 @@
   vs. comparison (predicted) class memberships (\code{obj2}), and calculates a
   range of measures of association between the two partitions (clusters).
 }
+
 \usage{
   Association(obj1, obj2, alpha, p.zero.correction)
 }
+
 \arguments{
   \item{ obj1 }{
     an object of class \code{"VegsoupPartition"}.
@@ -32,6 +39,7 @@
     of \code{1 / sum(table(Partitioning(obj1), Partitioning(obj1))^2}.
   }
 }
+
 \value{
   A list with the following components:
     \describe{

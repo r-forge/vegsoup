@@ -75,7 +75,7 @@
 
 \seealso{
   \code{\linkS4class{Species}},
-  \code{\link{stack.species}}
+  \code{\link{stackSpecies}}
 }
 
 \examples{

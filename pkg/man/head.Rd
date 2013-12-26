@@ -7,19 +7,18 @@
 \alias{tail}
 \alias{tail,Vegsoup-method}
 
-\title{
-Return the First or Last Part of the Species Matrix
-}
+\title{ Return the First or Last Part of the Species Matrix }
+
 \description{
-Returns the first or last parts of the species matrix.
+  Returns the first or last parts of the species matrix.
 }
+
 \usage{
-\S4method{head}{Vegsoup}(x, n = 6L, choice, typeof, ...)
-
-\S4method{head}{VegsoupPartition}(x, n = 6L, choice, typeof, ...)
-
-\S4method{tail}{Vegsoup}(x, n = 6L, choice, typeof, ...)
+  \S4method{head}{Vegsoup}(x, n = 6L, choice, typeof, ...)
+  \S4method{head}{VegsoupPartition}(x, n = 6L, choice, typeof, ...)
+  \S4method{tail}{Vegsoup}(x, n = 6L, choice, typeof, ...)
 }
+
 \arguments{
 
   \item{ x }{
@@ -68,12 +67,15 @@ Returns the first or last parts of the species matrix.
 \value{
   An object like \code{as.matrix(x)} but generally smaller.
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
 \code{\link{as.matrix}} and \code{\link{typal}} in package \pkg{vegsoup}
 
 \code{\link[utils:head]{head}} and \code{\link[utils:tail]{tail}} in package \pkg{utils}.
 }
+
 \examples{
 library(vegsoup)
 data(testdata)

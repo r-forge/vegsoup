@@ -9,6 +9,7 @@ setGeneric("Indspc",
 setMethod("Indspc",
     signature(obj = "Vegsoup"),
     function (obj, method, ...) {
+    	#	Suggests:
     	require(labdsv)
     	res <- indspc(as.logical(obj), dis = as.dist(obj), ...)
 		return(res)    	

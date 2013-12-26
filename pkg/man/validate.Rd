@@ -9,9 +9,9 @@
 \alias{Partana-methods}
 \alias{Partana,VegsoupPartition-method}
 
-\alias{Disdiam}
-\alias{Disdiam-methods}
-\alias{Disdiam,VegsoupPartition-method}
+\alias{disdiam}
+\alias{disdiam-methods}
+\alias{disdiam,VegsoupPartition-method}
 
 \alias{silhouette}
 \alias{silhouette,VegsoupPartition-method}
@@ -37,7 +37,7 @@
 
 \S4method{Partana}{VegsoupPartition}(obj, verbose = FALSE, ...)
 
-\S4method{Disdiam}{VegsoupPartition}(obj, ...)
+\S4method{disdiam}{VegsoupPartition}(x, ...)
 
 \S4method{Tabdev}{VegsoupPartition}(obj, numitr = 99, verbose = FALSE, ...)
 }

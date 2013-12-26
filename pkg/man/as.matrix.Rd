@@ -1,4 +1,5 @@
 \name{as.matrix}
+
 \alias{as.logical}
 \alias{as.logical,Vegsoup-method}
 
@@ -16,6 +17,7 @@
 
 \alias{as.vector}
 \alias{as.vector,Vegsoup-method}
+\alias{as.vector,Vegsoup,missing-method}
 
 \alias{indices}
 \alias{indices,Vegsoup-method}
@@ -29,17 +31,11 @@ The functions retrieve a species matrix of mode according the methods name and \
 
 \usage{
 \S4method{as.logical}{Vegsoup}(x, mode)
-
 \S4method{as.numeric}{Vegsoup}(x, mode)
-
 \S4method{as.character}{Vegsoup}(x, mode)
-
 \S4method{as.matrix}{Vegsoup}(x, typeof, ...)
-
 \S4method{as.array}{Vegsoup}(x, typeof, ...)
-
-\S4method{indices}{Vegsoup}(x, typeof) 
-
+\S4method{indices}{Vegsoup}(x, typeof)
 \S4method{as.vector}{Vegsoup}(x, mode)
 }
 
@@ -63,7 +59,7 @@ The functions retrieve a species matrix of mode according the methods name and \
 }
 
 \details{
-For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{Layers}} and \code{\link{split.abbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
+For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{Layers}} and \code{\link{splitAbbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
 
 \code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{coverscale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(x, typeof = "numeric")}.
 

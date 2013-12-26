@@ -64,7 +64,7 @@ as.Vegsoup.coenoflex <- function (obj) {
 		round(spc[ij[z]], 1)),		# cov
 		ncol = 4, nrow = table(z)[2])
 	
-	sts <- stack.sites(data.frame(plot = plot, sts))
+	sts <- stackSites(data.frame(plot = plot, sts))
 	
 	txa <- taxonomy(cbind(abbr, taxon))
 	
@@ -85,7 +85,8 @@ setOldClass("data.list")
 
 #	from Vegsoup to data.list
 as.data.list.Vegsoup <- function (obj) {
-	require(multitable)
+	#	Imports:
+	#	require(multitable)
 
 	xx <- Species(obj)
 	names(xx)[4] <- "abundance"
@@ -110,7 +111,7 @@ as.data.list.Vegsoup <- function (obj) {
 	#xyz <- data.frame(plot = rownames(obj), coordinates(obj))
 		
 	l <- list(xx[, c(1,2,4)], xx[, c(1,2,3)], yy, zz)
-	res <- dlcast(l, fill = c(0, "", NA, NA))
+	res <- multitable::dlcast(l, fill = c(0, "", NA, NA))
 	
 	return(res)
 }

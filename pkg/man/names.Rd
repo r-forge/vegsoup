@@ -2,19 +2,21 @@
 
 \alias{rownames}
 \alias{rownames,Vegsoup-method}
+\alias{rownames,Vegsoup,missing,missing-method}
 
 \alias{rownames<-}
 \alias{rownames<-,Vegsoup-method}
-\alias{rownames<-,Vegsoup,character-method}
 \alias{rownames<-,Vegsoup,integer-method}
+\alias{rownames<-,Vegsoup,character-method}
+\alias{rownames<-,Vegsoup,missing,missing-method}
 
 \alias{row.names}
 \alias{row.names,Vegsoup-method}
 
 \alias{row.names<-}
 \alias{row.names<-,Vegsoup-method}
-\alias{names<-,Vegsoup,character-method}
 \alias{row.names<-,Vegsoup,integer-method}
+\alias{row.names<-,Vegsoup,character-method}
 
 \alias{colnames}
 \alias{colnames,Vegsoup-method}
@@ -48,26 +50,16 @@ Retrieve the row or column names of the species matrix (\code{\link[vegsoup:as.m
 \usage{
 ## slot 'species'
 \S4method{dimnames}{Vegsoup}(x)
-
 \S4method{rownames}{Vegsoup}(x, do.NULL = TRUE, prefix = "row")
-
 \S4method{colnames}{Vegsoup}(x, do.NULL = TRUE, prefix = "col")
-
 \S4method{rownames}{Vegsoup}(x) <- value
-
 ## slot 'sites'
 \S4method{row.names}{Vegsoup}(x)
-
 \S4method{names}{Vegsoup}(x)
-
 \S4method{$}{Vegsoup}(x, name)
-
 \S4method{row.names}{Vegsoup}(x) <- value
-
 \S4method{names}{Vegsoup}(x) <- value
-
 \S4method{row.names}{Vegsoup}(x) <- value
-
 \S4method{$}{Vegsoup}(x, name) <- value
 }
 

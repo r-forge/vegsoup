@@ -1,4 +1,5 @@
 #useDynLib(vegsoup)
+
 import(methods)
 import(coenoflex)
 importFrom("optpart", optpart, partana, tabdev, disdiam)
@@ -10,7 +11,7 @@ importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
 
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot, proj4string, "proj4string<-", spTransform)
-importClassesFrom(sp, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS)
+importClassesFrom(sp, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS, GridTopology)
 
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer, RasterBrick, RasterStack, RasterStackBrick)
@@ -20,16 +21,15 @@ importMethodsFrom(raster, extract, ncell)
 #importFrom("googleVis", gvisMap)
 #importFrom("isopam", isopam)
 
-#exportPattern("^[^\\.]")
-#exportPattern("^[[:alpha:]]+")
+#explicit exports
 export(
     "Coverscale",
     "species",
     "sites",
     "taxonomy",
-    "stack.sites",
-    "stack.species",
-    "stack.coordinates",
+    "stackSpecies",
+    "stackSites",
+    "stackCoordinates",
     "SpeciesTaxonomy",
     "Vegsoup",
     "coenoflex",
@@ -73,8 +73,9 @@ exportMethods(
     "decostand",
     "decostand<-",
     "dim",
-    "Disdiam",
+    "disdiam",
     "elevation",
+    "extract",
     "fill",
     "Fidelity",
     "FisherTest",
@@ -96,7 +97,7 @@ exportMethods(
     "Layers<-",
     "KML",
     "reverseGeocode",
-    "Murdoch",
+    "murdoch",
     "names",
     "names<-",
     "ncol",
@@ -133,7 +134,7 @@ exportMethods(
     "Sites",
     "sites",
     "Sites<-",
-    "split.abbr",
+    "splitAbbr",
     "SpatialPointsVegsoup",
     "SpatialPolygonsVegsoup",
     "Species",

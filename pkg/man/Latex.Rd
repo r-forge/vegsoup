@@ -56,7 +56,7 @@
   \item{ stat.min }{
     numeric. Threshold value of fidelity statistic.
   }
-  \item{ constancy.treshold }{
+  \item{ constancy.min }{
     numeric. Threshold value of the constancy of species(-layer replicate).
   }
   \item{ taxa.width }{
@@ -103,10 +103,13 @@
     character. Optional character string to separate the summary statistics of
     \code{Fivenum}, defaults to \code{"/"}.
   }
-  \item{ recode }{
+  \item{ coverscale }{
     logical. Recode result returend from \code{Fivenum} to ordinal scale if
     applicable, defaults to \code{FALSE}.
   }
+  \item{ newpage }{
+    logical. Insert LaTex newpage command.
+  }  
   \item{ \dots }{
     arguments passed to \code{\link{Fidelity}} if object is not of class
     \code{"VegsoupPartitionFidelity"}.

@@ -1,6 +1,6 @@
 #	stack sites data frame to match database structure
 #	rename to Sites
-stack.sites <- function (x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE) {
+stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	

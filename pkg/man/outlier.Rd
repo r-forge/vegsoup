@@ -1,5 +1,6 @@
 \name{outlier}
 \docType{methods}
+
 \alias{outlier}
 \alias{outlier,Vegsoup-method}
 
@@ -56,6 +57,7 @@ Wildi, O. 2013. Data Analysis in Vegetation Ecology. 2nd ed. Wiley-Blackwell, Ch
 \seealso{
 \code{\link{plotPCO}}, \code{\link{coldiss}}, \code{\link[dave:outlier]{outlier}} in \pkg{dave}.
 }
+
 \examples{
 library(vegsoup)
 data(testdata)

@@ -4,9 +4,13 @@
 
 \alias{[}
 \alias{[,Vegsoup-method}
+\alias{[,Vegsoup,ANY,ANY,missing-method}
+\alias{[,VegsoupPartition,ANY,ANY,missing-method}
 
 \alias{Partition}
 \alias{Partition,Vegsoup-method}
+\alias{Partition,VegsoupPartition-method}
+\alias{[,Partition,ANY,ANY,missing-method}
 
 \title{ Indexing to Extract Values of a Vegsoup* Object }
 
@@ -16,7 +20,6 @@
 
 \usage{
 \S4method{[}{Vegsoup}(x, i, j, ... , drop = TRUE)
-
 \S4method{Partition}{Vegsoup}(x, value)
 }
 

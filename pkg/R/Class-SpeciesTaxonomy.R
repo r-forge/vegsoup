@@ -32,8 +32,8 @@ setReplaceMethod("species",
 		value <- species(value)
 		sel <- match(unique(value$abbr), taxonomy(obj)$abbr)
 		new("SpeciesTaxonomy",
-		species = value,
-		taxonomy = taxonomy(taxonomy(obj)[sel, ]))
+			species = value,
+			taxonomy = taxonomy(taxonomy(obj)[sel, ]))
 	}
 )
 setGeneric("taxonomy<-",
@@ -49,8 +49,8 @@ setReplaceMethod("taxonomy",
 		sel <- logical(length(y))		
 		sel[unlist(sapply(x, function (x) which(x == y)))] <- TRUE
 		new("SpeciesTaxonomy",	
-		species = species(species(obj)[sel, ]),
-		taxonomy = value)
+			species = species(species(obj)[sel, ]),
+			taxonomy = value)
 	}
 )
 setReplaceMethod("taxonomy",

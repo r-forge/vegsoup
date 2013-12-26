@@ -1,5 +1,6 @@
 \name{spread}
 \docType{methods}
+
 \alias{spread}
 \alias{spread-methods}
 \alias{spread,VegsoupPartition-method}

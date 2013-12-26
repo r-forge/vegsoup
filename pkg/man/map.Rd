@@ -20,11 +20,9 @@
 
 \usage{
 \S4method{map}{Vegsoup}(x, database, ...)
-
 \S4method{QuickMap}{Vegsoup}(x)
-
 \S4method{ellipsoidhull}{VegsoupPartition}(x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
-	ret.sqdist = FALSE, ret.pr = FALSE)
+  ret.sqdist = FALSE, ret.pr = FALSE)
 }
 
 \arguments{

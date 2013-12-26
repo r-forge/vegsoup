@@ -1,7 +1,8 @@
 \name{getStat}
 \docType{methods}
+
 \alias{getStat}
-\alias{getStat-methods}
+\alias{getStat,Vegsoup-method}
 
 \title{ Methods for \code{VegsoupPartitionFidelity} Objects }
 \description{

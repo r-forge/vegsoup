@@ -1,6 +1,11 @@
 \name{Accuracy}
+
 \alias{Accuracy}
+\alias{Accuracy,VegsoupPartition-method}
+\alias{Accuracy,VegsoupPartition,VegsoupPartition-method}
+
 \title{ Accuracy Statistics for Objects of class VegsoupPartition }
+
 \description{
   \code{Accuracy} takes two objects inheriting from class
   \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
@@ -8,13 +13,16 @@
   vs. compoarison (predicted) class memberships (\code{obj2}), and calculates
   a range of statistics about prediction accuracy.
 }
+
 \usage{
   Accuracy(obj1, obj2)
 }
+
 \arguments{
     \item{obj1}{an object of class \code{\link{VegsoupPartition}}. }
     \item{obj2}{a second object of class \code{\link{VegsoupPartition}} to compare to \code{obj1}. }
 }
+
 \value{
 A list with the following components:
 \describe{
@@ -29,17 +37,21 @@ A list with the following components:
   \item{\code{p.tau.classification}}{P(tau): probability of reaching \code{tau} by chance}
 }
 }
+
 \references{
   Menard, Scott (1995). Applied Logistic Regression Analysis. Sage University Paper 
   Series on Quantitative Applications in the Social Sciences 07-106. Thousand 
   Oaks: Sage Publications. 
 }
+
 \author{
 Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe}
 }
+
 \seealso{
 \code{\link[polytomous:model.statistics]{model.statistics}} in package \pkg{polytomous}.
 }
+
 \examples{
 require(vegsoup)
 data(bigtestdata)

@@ -6,7 +6,8 @@
 setMethod("extract",
 	signature(x = "Raster", y = "Vegsoup"), 
 	function(x, y, ...){
-		require(raster) 
+		#	Imports:
+		#	require(raster) 
 		raster::extract(x, as(y, "SpatialPoints"), ...)
 	}
 )

@@ -3,25 +3,26 @@
 
 \alias{Optsil}
 \alias{Optsil-methods}
+\alias{Optsil,VegsoupPartition-method}
 
 \alias{Optindval}
 \alias{Optindval-methods}
+\alias{Optindval,VegsoupPartition-method}
 
-\title{ Optimise Partitioning of \code{"VegsoupPartition"} Objects }
+\title{ Optimize Partitioning }
 
 \description{
-Modify the partitioning of an object as to optimze silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
+Modify the partitioning of an object as to optimize silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
 }
 
 \usage{
-Optsil(obj, maxitr = 100, verbose = FALSE, ...)
-
-Optindval(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) 
+\S4method{Optsil}{VegsoupPartition}(obj, maxitr = 100, verbose = FALSE, ...)
+\S4method{Optindval}{VegsoupPartition}(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) 
 }
 
 \arguments{
   \item{ obj }{
-    A \code{"VegsoupPartition"} object.
+    A \code{'VegsoupPartition'} object.
   }
   \item{ maxitr }{
     The maximum number of iterations to perform.
@@ -33,7 +34,7 @@ Optindval(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
     The minimum size of the partition to consider reassigning a sample out of.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{as.dist}} (\code{optsil}) or
+    Arguments passed to \code{\link{as.dist}} (\code{Optsil}) or
     \code{link{as.matrix}} (\code{Optindval}).
   }
 }
@@ -46,7 +47,7 @@ Optindval(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
 }
 
 \value{
-Returns a modified object of class \code{"VegsoupPartition"} with possibly changed partitioning vector.
+Returns a modified object of class \code{'VegsoupPartition'} with possibly changed partitioning vector.
 }
 
 \references{

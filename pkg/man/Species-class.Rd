@@ -1,11 +1,13 @@
+\encoding{UTF-8}
 \name{Species-class}
 \Rdversion{1.1}
 \docType{class}
 
-\alias{species}
 \alias{Species-class}
 
 \alias{[,Species,ANY,ANY,missing-method}
+
+\alias{species}
 
 \alias{$,Species-method}
 
@@ -15,14 +17,12 @@
 
 \alias{species,Species-method}
 
-\alias{species-methods}
 \alias{species,character-method}
 \alias{species,data.frame-method}
 \alias{species,matrix-method}
 \alias{species,Species-method}
-\alias{species,SpeciesTaxonomy-method}
 
-\title{Class \code{"Species"}}
+\title{ Species Class}
 
 \description{
   Data representation of species data in \emph{long format}, where each
@@ -135,7 +135,7 @@
   \code{\linkS4class{Taxonomy}},
   \code{\linkS4class{Sites}},
   \code{\linkS4class{Vegsoup}},
-  \code{\link{stack.species}}
+  \code{\link{stackSpecies}}
 }
 
 \examples{

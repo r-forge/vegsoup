@@ -1,4 +1,5 @@
 \name{VegsoupPartition}
+
 \alias{VegsoupPartition}
 
 \title{ Partition/Cluster a \code{Vegsoup*} object}

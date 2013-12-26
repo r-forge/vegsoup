@@ -1,6 +1,7 @@
 #	generating function
 Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE) {
-	require(sp) # otherwise GridTopology in .rpoisppSites() will fail?
+	#	Imports:
+	#	require(sp) # otherwise GridTopology in .rpoisppSites() will fail?
 
 	if (missing(x)) {
 		stop("\nspecies are missing!")	

@@ -1,19 +1,23 @@
+\encoding{UTF-8}
 \name{VegsoupPartitionFidelity-class}
 \Rdversion{1.1}
 \docType{class}
+
 \alias{VegsoupPartitionFidelity-class}
 \alias{getStat,VegsoupPartitionFidelity-method}
 \alias{hist,VegsoupPartitionFidelity-method}
-\alias{summary,VegsoupPartitionFidelity-method}
 
-\title{Class \code{"VegsoupPartitionFidelity"}}
+\title{ VegsoupPartitionFidelity Class }
+
 \description{
 A class extending calss \code{"VegsoupPartition"}.
 }
-\section{Objects from the Class}{
+
+\section{ Objects from the Class }{
 Objects can be by calls to the fucntion \code{Fidelity}.
 
 }
+
 \section{Slots}{
   Class slots extending \code{'VegsoupPartition'}
   \describe{
@@ -41,10 +45,12 @@ Objects can be by calls to the fucntion \code{Fidelity}.
     }
   }
 }
+
 \section{Extends}{
 Class \code{"\linkS4class{VegsoupPartition}"}, directly.
 Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
 }
+
 \section{Methods}{
   These generic methods below apply to objects inheriting
   \code{'VegsoupPartitionFidelity'}. All other methods defined for classes
@@ -55,23 +61,19 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
     \item{ getStat }{
       Method to return \code{slot(obj, "stat")}
     }
-    \item{ hist }{
-      Plot a histogram of fidelity values.
-    }
     \item{ summary }{
       Summary method.
     }
   }
 }
-\author{
-Roland Kaiser
-}
-\seealso{
-\code{\link{Fidelity}}
-\code{\linkS4class{VegsoupOptimstride}}
-}
-\examples{
 
+\author{ Roland Kaiser }
+
+\seealso{
+\code{\link{Fidelity}}, \code{\linkS4class{VegsoupOptimstride}}
+}
+
+\examples{
 showClass("VegsoupPartitionFidelity")
 
 require(vegsoup)
@@ -79,4 +81,5 @@ data(testdata)
 prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
 fid <- Fidelity(prt)
 }
+
 \keyword{ classes }

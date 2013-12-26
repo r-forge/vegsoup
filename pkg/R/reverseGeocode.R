@@ -1,10 +1,11 @@
 #	implement route option in method!
 
-".reverseGeocode" <- function (lnglat, pm = 100, route = FALSE) {
+".reverseGeocode" <- function (lnglat, pm = 100, route = FALSE, ...) {
+	#	Suggests:
 	require(ggmap)
+	#	Suggests
 	require(geonames)	
-	#lnglat <- c(12.86217, 48.00019)
-	#pm <- 10	# precision
+	
 	lnglat <- as.numeric(as.character(lnglat))
 	r <- revgeocode(lnglat, output = c("more"))
 	r <- as.data.frame(as.matrix(r), stringsAsFactors = FALSE)
@@ -28,7 +29,7 @@
 	options(warn = 0)
 	ew <- paste(format(abs(lnglat[1]), nsmall = 6), ifelse(lnglat[1] < 0, "W", "E"), sep = "")
 	ns <- paste(format(abs(lnglat[2]), nsmall = 6), ifelse(lnglat[2] < 0, "S", "N"), sep = "")
-	pm <- paste("±", pm, "m", sep = "")
+	pm <- paste("\u00B1", pm, "m", sep = "") # PLUS-MINUS SIGN
 	al <- paste(ifelse(masl == -32768, "N/A", c(round(masl/10) * 10)), "masl")
 	coordinates <- paste(al, ", ", ns, ", ", ew, ", ", pm, sep = "") 
 	
@@ -42,8 +43,6 @@
 	return(as.character(res))
 }
 
-#require(vegsoup)
-#	calculate prediction accuracy statistics for two partitionings
 #if(!isGeneric("reverseGeocode")) {
 setGeneric("reverseGeocode",
 	function (x, ...)
@@ -53,7 +52,7 @@ setGeneric("reverseGeocode",
 
 setMethod("reverseGeocode",
     signature(x = "Vegsoup"),
-    function (x) {
+    function (x, ...) {
     	m <- coordinates(x)[, 1:2]
     	p <- grep("horizontal.precision", names(x))
     	if (length(p) == 1) {
@@ -81,7 +80,7 @@ setMethod("reverseGeocode",
 
 setMethod("reverseGeocode",
     signature(x = "SpatialPointsDataFrame"),
-    function (x) {
+    function (x, ...) {
     	m <- coordinates(x)[, 1:2]
     	p <- sapply(c("accuracy", "precision"),
     		function (y) agrep(y, names(x)))

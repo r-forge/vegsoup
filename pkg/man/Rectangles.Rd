@@ -1,36 +1,43 @@
 \name{rectangles}
-\alias{rectangles}
+\docType{methods}
 
-\title{
-Create a Plot of Matrix Dimensions for Each Partition
-}
+\alias{rectangles}
+\alias{rectangles,VegsoupPartiton-method}
+
+\title{ Plot Matrix Dimensions }
+
 \description{
-Retrieves the number of species and sites for each partition and plots a box according to its dimension.
+  Retrieves the number of species and sites for each partition and plots a box according to its dimension.
 }
+
 \usage{
-rectangles(obj, plot = TRUE, ...)
+\S4method{rectangles}{VegsoupPartiton}(obj, plot = TRUE, ...)
 }
+
 \arguments{
   \item{ obj }{
-    An object inherting from class \code{"VegsoupPartiton"}
+    \code{'VegsoupPartiton'} object.
   }
   \item{ plot }{
     If \code{TRUE} create a plot, otherwise just return a matrix of partition
-    dimensons used to create boxes. Defaults to \code{TRUE}.
+    dimensions used to create boxes. Defaults to \code{TRUE}.
   }
   \item{ \dots }{
     graphical parameters. See \sQuote{Details}.
   }
 }
 \details{
-A lying box idicates species poor and an upright box indiactes species rich partitions. Currently graphical parameters are only passed to \code{\link{rect}}. The functions adds a line to mark all partitions that conatin only one site. See argument \code{polish} in function \code{\link{VegsoupPartition}} to get rid of singletons in your analysis.
+A lying box indicates species poor and an upright box highlights species rich partitions. Currently graphical parameters can only be passed to \code{\link{rect}}. The functions adds a additional rug-like line to marking partitions that contain only one site. See argument \code{polish} in function \code{\link{VegsoupPartition}} to get rid of singletons in your analysis.
 }
+
 \value{
 Returns a \code{matrix} with two columns as returned by  \code{dim(obj[Partitioning(obj) == i,])}, where \code{i} is a specific partition. The first column shows number of plots and the second column shows number of species.
 }
+
 \author{ Roland Kaiser }
+
 \note{
-Any warings that typically arise when a single partition is subsetted from an object are silenced. These warnings are harmless and not of interessent at this point.
+Any warnings that typically arise when a single partition is subsetted from an object are silenced. These warnings are harmless and not of interest at this point.
 }
 \examples{
 data(bigtestdata)

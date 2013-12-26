@@ -52,7 +52,7 @@ dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
 abbr(dta)
 }
 \seealso{
-\code{\link{split.abbr}}
+\code{\link{splitAbbr}}
 \code{\link{Layers}}
 \code{\link{as.array}}
 }

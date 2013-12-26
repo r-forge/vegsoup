@@ -7,6 +7,7 @@
 \alias{decostand<-}
 \alias{decostand<-,Vegsoup-method}
 \alias{decostand<-,Vegsoup,character-method}
+\alias{decostand<-,Vegsoup,NULL-method}
 
 \title{ Standardization Methods for \code{Vegsoup*} objects.
 }

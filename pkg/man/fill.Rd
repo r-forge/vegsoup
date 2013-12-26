@@ -1,7 +1,7 @@
 \name{fill}
 \docType{methods}
 \alias{fill}
-\alias{fill-methods}
+\alias{fill,Vegsoup-method}
 
 \title{ Matrix fill of ASpecies Matrix for \code{Vegsoup*} Objects }
 

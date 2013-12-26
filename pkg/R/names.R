@@ -114,13 +114,13 @@ setReplaceMethod("row.names",
 )
 		
 #	convert abbr to taxon names
-#if (!isGeneric("split.abbr")) {
-setGeneric("split.abbr",
+#if (!isGeneric("splitAbbr")) {
+setGeneric("splitAbbr",
 	function (obj)
-		standardGeneric("split.abbr")
+		standardGeneric("splitAbbr")
 )
 #}
-setMethod("split.abbr",
+setMethod("splitAbbr",
 	signature(obj = "Vegsoup"),
 	function (obj) {
 	#	obj <- dta; type = "nospace"
@@ -153,7 +153,7 @@ setGeneric("abbr",
 setMethod("abbr",
     signature(obj = "Vegsoup"),
     function (obj) {
-    	split.abbr(obj)$abbr
+    	splitAbbr(obj)$abbr
     }	
 )
 setMethod("abbr",

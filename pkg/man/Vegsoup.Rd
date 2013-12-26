@@ -46,8 +46,8 @@ coenoflex(numplt = 20, numspc = 10, ...)
     simply calling \code{species("./species.csv")}, the other one gives sites
     as \code{sites("./sites.csv")} and the third one a taxonomic reference
     list  (\code{taxonomy("./sites.csv")}). If files for species and or sites
-    have the file suffix \emph{wide}, functions \code{stack.species} and
-   \code{stack.sites} are called.
+    have the file suffix \emph{wide}, functions \code{stackSpecies} and
+   \code{stackSites} are called.
   }
   \item{ coverscale }{
     Abundance scale of the observations. Possible choices include all
@@ -116,7 +116,7 @@ coenoflex(numplt = 20, numspc = 10, ...)
 
   Function \code{instantsoup} is a shorthand when data files are guaranteed to
   conform to some format that can be interpreted by the import functions
-  \code{stack.species}, respectively \code{stack.sites} or are valid to simple
+  \code{stackSpecies}, respectively \code{stackSites} or are valid to simple
   calls to class creator methods \code{\link{species}}, \code{\link{sites}}
   and \code{\link{taxonomy}} for signature \code{'character'}. Arguments
   \code{'coverscale'} and \code{'decostand'} can be specified afterwards

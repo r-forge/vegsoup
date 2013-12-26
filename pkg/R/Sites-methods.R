@@ -26,7 +26,7 @@ setMethod("sites",
     signature(obj = "character"),
     function (obj, ...) {
     	new("Sites",
-    	data = read.csv(obj, ...))
+    	data = read.csv(obj, ...)[, 1:3])
     }
     
 )

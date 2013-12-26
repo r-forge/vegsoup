@@ -15,7 +15,6 @@ Accessor and replacement methods acting on the \code{'sites'} slot.
 }
 \usage{
 \S4method{Sites}{Vegsoup}(obj)
-
 \S4method{Sites}{Vegsoup}(obj) <- value
 }
 

@@ -1,7 +1,9 @@
-".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) { 
 # adapted for vegsoup from function coldiss() by Francois Gillet
 # Color plots of a dissimilarity matrix, without and with ordering
 # argument nc renamed to colors with extended meaning	
+
+".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) { 
+	#	Suggests
 	require(gclus)
 
 	cl <- match.call()
@@ -25,7 +27,7 @@
 	D.labels <- attributes(D)$Labels
 	
 	if (translate & any(names(cl) == "mode")) {
-		D.labels <- split.abbr(obj)[D.labels, ]$taxon
+		D.labels <- splitAbbr(obj)[D.labels, ]$taxon
 		op <- par(xpd = NA)
 	}
 

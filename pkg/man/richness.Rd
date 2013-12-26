@@ -1,9 +1,11 @@
 \name{richness}
+\docType{methods}
+
 \alias{richness}
 \alias{richness,Vegsoup-method}
 \alias{richness,VegsoupPartition-method}
 
-\title{ Species Richness of an Object of Class Vegsoup* }
+\title{ Species Richness }
 
 \description{
 Retrieve dataset, sample or grouped species richness.
@@ -11,7 +13,6 @@ Retrieve dataset, sample or grouped species richness.
 
 \usage{
 \S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample"))
-
 \S4method{richness}{VegsoupPartition}(obj, choice = c("dataset", "sample", "partition"))
 }
 

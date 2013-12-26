@@ -1,8 +1,8 @@
-\name{abbreviations}
+\name{ collapse abbreviations }
 \docType{methods}
 
-\alias{split.abbr}
-\alias{split.abbr,Vegsoup-method}
+\alias{splitAbbr}
+\alias{splitAbbr,Vegsoup-method}
 
 \title{ Deparse Species Layer Replication of \code{Vegsoup*} Objects }
 
@@ -12,7 +12,7 @@
 }
 
 \usage{
-\S4method{split.abbr}{Vegsoup}(obj)
+\S4method{splitAbbr}{Vegsoup}(obj)
 }
 
 \arguments{
@@ -25,17 +25,17 @@
   The method decomposes the \code{colnames} of the species matrix into three
   components. The first giving the taxon abbreviation only (\code{'abbr'}),
   the second the layer code (\code{'layer'}) and the last component
-  corresponds to the full taxon name (\code{'taxon'}) as queryied from
+  corresponds to the full taxon name (\code{'taxon'}) as queried from
   \code{Taxonomy(obj)}.
 
   The compound taxon key (\code{'abbr.layer'}) can be accessed from the
-  \code{rownames} of the resulting object. This is advantegous as it provides 
+  \code{rownames} of the resulting object. This is advantageous as it provides 
   an easy means of subsetting with \code{colnames(obj)}.
 
   \code{\link{Vegsoup}} and \code{\linkS4class{Species}} construct these
   \emph{compound taxon abbreviations} by pasting \code{make.names(x)} and
   \code{layer} seperated with \code{"@"}. To deparse the abbreviation and
-  layer string \code{split.abbr} should be used.
+  layer string \code{splitAbbr} should be used.
 }
 
 \value{
@@ -57,7 +57,7 @@
 library(vegsoup)
 data(testdata)
 dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-x <- split.abbr(dta)
+x <- splitAbbr(dta)
 
 head(txa)
 all.equal(rownames(x), colnames(dta))
@@ -72,7 +72,7 @@ head(SpeciesList(dta, layered = TRUE))
 #	species matrix including taxon anmes and layers
 head(cbind(x[rownames(m), ], m))
 
-res <- dta[, rownames(split.abbr(dta))[sample(1:ncol(dta), 10)]]
+res <- dta[, rownames(splitAbbr(dta))[sample(1:ncol(dta), 10)]]
 }
 
 \keyword{ methods }

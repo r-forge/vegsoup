@@ -1,6 +1,6 @@
 #	read OGR data source
-stack.coordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
-
+stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
+	#	Suggests:
 	require(rgdal)
 	
 	pt <- ogrInfo(dsn, layer)

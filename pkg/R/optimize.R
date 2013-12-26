@@ -8,7 +8,8 @@ setGeneric("Optsil",
 setMethod("Optsil",
     signature(obj = "VegsoupPartition"),
     function (obj, maxitr = 100, verbose = FALSE, ...) {
-		require(optpart)
+		#	Imports:
+		#	require(optpart)
 		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
     	
     	nam <- names(obj@part) # save names    	
@@ -50,7 +51,8 @@ setGeneric("Optindval",
 setMethod("Optindval",
     signature(obj = "VegsoupPartition"),
     function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
-		require(optpart)
+		#	Imports:
+		#	require(optpart)
 		
     	if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
 

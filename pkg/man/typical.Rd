@@ -1,6 +1,7 @@
 \name{typical}
+\docType{methods}
+
 \alias{typical}
-\alias{typical-methods}
 \alias{typical,VegsoupPartition-method}
 
 \title{

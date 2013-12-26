@@ -1,5 +1,6 @@
 \name{quantile}
 \docType{methods}
+
 \alias{quantile}
 \alias{quantile,VegsoupPartition-method}
 
@@ -46,13 +47,12 @@ If the input object has layers the summary statistics are calculated for each la
 An array with as many dimensions as \code{length(probs)} containing the summary information of  \code{\link[stats:quantile]{quantile}} for a species by cluster matrix.
 }
 
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 
 \seealso{
 \code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\linkS4class{Coverscale}}.
 }
+
 \examples{
 data(testdata)
 prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
@@ -65,4 +65,5 @@ res2 <- quantile(prt, probs = c(0, 0.5, 1), coverscale = TRUE)
 res2[ , , 2] # probs[2]
 
 }
+
 \keyword{ univar }

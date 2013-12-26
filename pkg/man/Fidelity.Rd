@@ -1,15 +1,20 @@
 \name{Fidelity}
 \docType{methods}
+
 \alias{Fidelity}
-\alias{Fidelity-methods}
+\alias{Fidelity,VegsoupPartition-method}
+
 \alias{FisherTest}
-\alias{FisherTest-methods}
+\alias{FisherTest,VegsoupPartition-method}
+
 \alias{Phi}
-\alias{Phi-methods}
+\alias{Phi,VegsoupPartition-method}
+
 \alias{Indval}
-\alias{Indval-methods}
+\alias{Indval,VegsoupPartition-method}
 
 \title{ Calculate Fidelity Values }
+
 \description{
   Method \code{Fidelity} calculates fidelity values for objects inheriting
   \code{"VegsoupPartition"} and returns an extended object of class
@@ -28,49 +33,46 @@
 }
 
 \usage{
-## S4 method for signature 'VegsoupPartition'
-Fidelity(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05,
-         c = 1, fast = FALSE, verbose = TRUE, ...)
-## S4 method for signature 'VegsoupPartition'
-FisherTest(obj, ...)
-
-## S4 method for signature 'VegsoupPartition'
-Phi(obj)
-
-## S4 method for signature 'VegsoupPartition'
-Indval(obj, ...)
+\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...)
+\S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
+\S4method{Phi}{VegsoupPartition}(obj)
+\S4method{Indval}{VegsoupPartition}(obj, ...)
 }
 
 \arguments{
   \item{ obj }{
-    An object inheriting from class \code{'VegsoupPartition'}
+    \code{'VegsoupPartition'} object.
    }
   \item{ method }{
-    Indicator measure.
+    indicator measure.
   }
   \item{ group }{
-    A grouping variable.
+    grouping variable.
   }
   \item{ nboot }{
-    Number of boot straps, defaults to .
+    number of boot straps, defaults to.
   }
   \item{ alpha }{
-    Significance.
+    significance.
   }
   \item{ c }{
-    Forgot what that is:)
+    Forgot what that this is?
   }
   \item{ fast }{
-    Accelerate computations. Needs package \code{multicore}.
+    accelerate computations. Needs package \code{multicore}.
   }
   \item{ verbose }{
-    Display compuation status bar.
+    display computation status bar.
+  }
+  \item{ alternative }{
+    alternative hypothesis.
   }
   \item{ \dots }{
     For \code{Fidelity} additional arguments for \code{method = "fisher.s"}
-    and for \code{Indval} arguments to \code{\link[labdsv:indval]{indval}}.
+    and for \code{Indval} arguments passed to \code{\link[labdsv:indval]{indval}}.
   }
 }
+
 \details{
 Methods currently implemented include the following:
 

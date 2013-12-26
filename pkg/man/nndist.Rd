@@ -1,12 +1,13 @@
 \name{nndist}
 \docType{methods}
+
 \alias{nndist}
 \alias{nndist,Vegsoup-method}
 
-\title{ Nearest Neighbour Distances }
+\title{ Nearest Neighbor Distances }
 
 \description{
-  Identifies the nearest neighbour of each plot based on dissimilarity matrix.
+  Identifies the nearest neighbor of each plot based on dissimilarity matrix.
 }
 
 \usage{
@@ -28,7 +29,7 @@ Nothing here yet!
 
 \value{
   Returns a numeric vector of distances equal to the number of plots. The identified nearest
-  neighbouring plot is given as attribute. See \sQuote{Examples}.
+  neighboring plot is given as attribute. See \sQuote{Examples}.
 }
 \author{ Roland Kaiser }
 %\references{
