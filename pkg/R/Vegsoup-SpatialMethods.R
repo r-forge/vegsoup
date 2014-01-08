@@ -57,6 +57,7 @@ setReplaceMethod("proj4string",
 	signature(obj = "Vegsoup", value = "CRS"),
 	function (obj, value) {
 		proj4string(obj@sp.points) <- value
+		proj4string(obj@sp.polygons) <- value
 		obj
 	}
 )
