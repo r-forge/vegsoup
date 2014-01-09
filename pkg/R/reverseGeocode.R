@@ -36,13 +36,6 @@
 	return(list(coordinates = coordinates, locality = locality))
 }
 
-".compassDirection"  <- function (x) {
-	res <- cut(18, breaks = c(0, seq(22.5/2, 360, by = 22.5)),
-	labels = c("N","NNE","NE","ENE","E","ESE","SE","SSE",
-	"S","SSW","SW","WSW","W","WNW","NW","NNW"))
-	return(as.character(res))
-}
-
 #if(!isGeneric("reverseGeocode")) {
 setGeneric("reverseGeocode",
 	function (x, ...)

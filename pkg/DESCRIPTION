@@ -118,6 +118,7 @@ Collate: AAA.R
          VegsoupOptimstride-VisualisationMethods.R        
          Latex.R
          plot.R
+         misc.R
          ZZZ.R
 Respository: R-Forge
 

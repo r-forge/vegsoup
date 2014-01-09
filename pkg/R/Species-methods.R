@@ -1,14 +1,15 @@
-#	get slot species
 setGeneric("species",
 	function (obj, ...)
 		standardGeneric("species")
 )
+
 setMethod("species",
     signature(obj = "Species"),
     function (obj) {
     	obj@data
     }	
 )
+
 setMethod("species",
     signature(obj = "data.frame"),
     function (obj) {
@@ -16,6 +17,7 @@ setMethod("species",
     }
     
 )
+
 setMethod("species",
     signature(obj = "matrix"),
     function (obj) {
@@ -24,6 +26,7 @@ setMethod("species",
     }
     
 )
+
 setMethod("species",
     signature(obj = "character"),
     function (obj, ...) {
@@ -32,6 +35,7 @@ setMethod("species",
     }
     
 )
+
 setMethod("show",
     signature(object = "Species"),
     function (object) {
@@ -47,6 +51,7 @@ setMethod("show",
 		print(head(object@data, n = 6L))
     }
 )
+
 setMethod("[",
     signature(x = "Species",
     i = "ANY", j = "ANY", drop = "missing"),
@@ -54,6 +59,7 @@ setMethod("[",
     	species(x@data[i, j, ...])
     }
 )
+
 setMethod("$", "Species", 
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {
@@ -62,6 +68,7 @@ setMethod("$", "Species",
 		return(x@data[[name]])
 	}
 )
+
 setReplaceMethod("$",
 	signature(x = "Species"),
 	function (x, name, value) {
@@ -69,10 +76,16 @@ setReplaceMethod("$",
 		return(x)		
 	}
 )
+
 ".rbind.Species" <- function (..., deparse.level = 1) {
 	allargs <- list(...)
 	#allargs <- list(sts, sts.xy)	
 	res <- do.call("rbind", lapply(allargs, species))
+	if (any(duplicated(res))) {
+		warning("found duplicates", call. = FALSE)
+		print(res[duplicated(res), ])
+	}
+	res <- res[order(res$plot, res$layer, res$abbr), ]	
 	return(species(res))
 
 }

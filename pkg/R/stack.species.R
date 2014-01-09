@@ -1,4 +1,4 @@
-stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "comment"), absences, verbose = FALSE) {
+stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon"), absences, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {
 		stop("please supply either a data.frame or a csv file")	
@@ -9,10 +9,12 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 			x <- read.csv(file, sep = sep, dec = dec,
 					colClasses = "character", check.names = FALSE)				
 		}
-	} else {
+	}
+	else {
 		if (is.data.frame(x) & missing(file)) {
 	
-			} else {
+			}
+			else {
 				stop("please supply a data.frame")	
 		}
 	}
@@ -22,30 +24,26 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	#	check schema
 	abbr <- grep(schema[1], names(x)) #"abbr"
 	layer <- grep(schema[2], names(x)) # "layer"
-	comment <- grep(schema[3], names(x)) # "comment"
+	taxon <- grep(schema[3], names(x)) # "taxon"
 	
 	#	test schema
-	test <- length(abbr) > 0 & length(layer) > 0 & length(comment) > 0
+	test <- length(abbr) > 0 & length(layer) > 0 & length(taxon) > 0
 	
 	if (!test) {
 		if (length(abbr) < 1) {
-			warning("did not find column abbr")		
+			warning("did not find column", schema[1])		
 		}
 		if (length(layer) < 1) {
-			warning("did not find column abbr")		
+			warning("did not find column", schema[2])		
 		}
-		if (length(comment) < 1) {
-			warning("did not find column comment")		
+		if (length(taxon) < 1) {
+			warning("did not find column", schema[1])		
 		}
-		stop("can't coerce object")
+		stop("can't stack object")
 	}
 	
-	abbr <- grep("abbr", names(x))
-	layer <- grep("layer", names(x))
-	comment <- grep("comment", names(x))
-	
 	#	only species abundances
-	sel <- c(max(c(abbr, layer, comment)) + 1):ncol(x)
+	sel <- c(max(c(abbr, layer, taxon)) + 1):ncol(x)
 	xx <- x[, sel]
 	
 	#	check unique column labels
@@ -78,7 +76,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 			abbr = as.character(abbr)[ij],
 			layer = as.character(layer)[ij],
 			cov = as.character(cov)[ij],
-			comment = "",
+			taxon = "",
 			stringsAsFactors = FALSE)
 	
 	if (length(grep(",", res$cov)) > 0) {

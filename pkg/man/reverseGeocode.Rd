@@ -17,7 +17,7 @@ Performs reverse geocoding using function \code{\link[ggmap:revgeocode]{revgeoco
 
 \arguments{
   \item{ x }{
-A vegsoup or SpatialPointsDataFrame object.
+vegsoup or SpatialPointsDataFrame object.
 }
   \item{ \dots }{
 not used.

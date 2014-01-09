@@ -9,6 +9,8 @@ importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
+importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
+rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame, SpatialPointsDataFrame, SpatialPolygonsDataFrame)
 
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot, proj4string, "proj4string<-", spTransform)
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS, GridTopology)
@@ -43,7 +45,8 @@ export(
     "str2latlng",
     "tile2latlng",
     "latlng2tile",
-    "whatshere2lnglat"
+    "whatshere2lnglat",
+    "compass"
 )
 exportMethods(
     "[",
@@ -117,8 +120,9 @@ exportMethods(
     "proj4string",
     "proj4string<-",
     "quantile",
+    "rbind",
     "richness",
-    "write.verbatim",
+    "rectangles",
     "rownames",
     "row.names",
     "rownames<-",
@@ -151,7 +155,8 @@ exportMethods(
     "Taxonomy<-",
     "typical",
     "vegdist",
-    "vegdist<-"
+    "vegdist<-",
+    "write.verbatim"
 )
 
 exportClasses(

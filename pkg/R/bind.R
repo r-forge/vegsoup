@@ -4,7 +4,7 @@
 
 	allargs <- list(...)
 	
-	#	allargs <- list(dta1, dta2, dta3)
+	#	allargs <- list(eckkrammer2003tab1, eckkrammer2003tab2)
 	
 	#	test if all objects have the same abundance scale
 	test <- length(unique((sapply(allargs,
@@ -59,7 +59,6 @@
 	y <- y[, -grep("plot", names(y))]
 	#	set NAs
 	# y[is.na(y)] <- 0
-	
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	#	change longitude column!
@@ -69,23 +68,30 @@
 	z <- do.call("rbind", sapply(allargs, Taxonomy, simplify = FALSE))
 	z <- unique(z)
 	z <- z[order(z$abbr), ]
-	#	spatial points
-	pts <- do.call("rbind",
-		sapply(allargs, SpatialPointsVegsoup, simplify = FALSE))
+	#	spatial points, taken from sp::rbind.SpatialPointsDataFrame because
+	#	of dispatch issue
+    pts <- sapply(allargs, SpatialPointsVegsoup, simplify = FALSE)
+    names(pts) <- NULL
+    sp <- do.call(sp::rbind.SpatialPoints, lapply(pts, function(x) as(x, "SpatialPoints")))
+    df <- do.call(rbind, lapply(pts, function(x) x@data))
+    pts <- sp::SpatialPointsDataFrame(sp, df, coords.nrs = pts[[1]]@coords.nrs)
 	#	order pts to x
 	pts <- pts[match(unique(x$plot), pts$plot), ] 
 	#	stopifnot(all.equal(unique(x$plot), pts$plot))
 	#	spatial polygons
-	pgs <- do.call("rbind",
-		sapply(allargs, SpatialPolygonsVegsoup, simplify = FALSE))	
+	pgs <- sapply(allargs, SpatialPolygonsVegsoup, simplify = FALSE)
+	names(pgs) <- NULL
+    sp <- do.call(sp::rbind.SpatialPolygons, lapply(pgs, function(x) as(x, "SpatialPolygons")))
+    df <- do.call(rbind, lapply(pgs, function(x) x@data))
+    pgs <- sp::SpatialPolygonsDataFrame(sp, df, match.ID = FALSE)
 	#	polygon IDs
 	#ids <- unlist(sapply(allargs, function (x) { 
 	#	sapply(slot(SpatialPolygonsVegsoup(x), "polygons"),
 	#		function (x) slot(x, "ID")) # "Polygons"
 	#}, simplify = FALSE))		
-	pgs <- SpatialPolygonsDataFrame(pgs, data = pts@data, match.ID = FALSE)	
 	#	order pgs to x
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
+	
 	res <- new("Vegsoup",
 		species = x,
 		sites = y, 
