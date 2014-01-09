@@ -150,7 +150,8 @@ exportMethods(
     "Taxonomy",
     "Taxonomy<-",
     "typical",
-    "vegdist"
+    "vegdist",
+    "vegdist<-"
 )
 
 exportClasses(
