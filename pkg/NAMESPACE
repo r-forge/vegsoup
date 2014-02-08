@@ -46,7 +46,8 @@ export(
     "tile2latlng",
     "latlng2tile",
     "whatshere2lnglat",
-    "compass"
+    "compass",
+    "castFooter"
 )
 exportMethods(
     "[",

@@ -426,3 +426,61 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 	
 	return(x)	
 }
+
+#	cast species (and abundances) given in table footers
+castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
+	require(stringr)
+		if (missing(file)) {
+			stop("need a file name")
+		}
+	
+	#	seperate abundance value from species string
+	.seperate <- function (x, y) {
+		require(stringr)
+		m <- regexpr(y, x) # first schema match
+		v <- str_trim(substring(x, 1, m))	# value
+		s <- str_trim(substring(x, m + 1, nchar(x))) # species
+		r <- cbind(v, s)
+		colnames(r) <- NULL
+		return(r)	
+	}
+	
+	con <- file(file)
+	x <- readLines(con)
+	close(con)
+	
+	test <- which(x == "")
+	if (length(test > 0)) {
+		message("skip line(s) ", test)
+		x <- x[-test]	
+	}
+	x <- strsplit(x, schema[1], fixed = TRUE)
+	# plot
+	p <- str_trim(sapply(x, "[[", 1))
+	# species
+	x <- str_trim(sapply(x, "[[", 2))
+	x <- strsplit(x, schema[2], fixed = TRUE)
+	x <- sapply(x, function (y) {
+			sapply(y, function (z) {
+				str_trim(z)
+			}, USE.NAMES = FALSE)
+		}, USE.NAMES = FALSE)
+	# expand plot vector
+	p <- rep(p, time = sapply(x, length))
+	
+	#	cast string to values and species
+	if (first) {
+	x <- sapply(x, function (y) .seperate(y, schema[3]))
+	x <- do.call("rbind", x)	
+	} else {
+		stop("first = FALSE not implemented")
+	}
+	
+	r <- cbind(p, x)
+	test <- nchar(r[,2])
+	if (sum(test) != length(test)) {
+		message("at least abundance values are not speperated properly")
+	}
+	colnames(r) <- c("plot", "cov", "taxon")
+	return(r)
+}

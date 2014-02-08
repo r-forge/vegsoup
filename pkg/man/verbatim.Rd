@@ -7,6 +7,8 @@
 
 \alias{read.verbatim.append}
 
+\alias{castFooter}
+
 \alias{write.verbatim}
 \alias{write.verbatim,Vegsoup-method}
 \alias{write.verbatim,VegsoupPartition-method}
@@ -28,6 +30,8 @@ read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
          collapse = ",", abundance)
 		 
+castFooter(file, schema = c(":", "," , " "), first = TRUE)
+
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
 		  rule, add.lines = FALSE, latex.input = FALSE)
@@ -56,6 +60,17 @@ read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
   \item{ replace }{
     A vector of characters to be replaced by blanks. Note, both the hyphen and
     dash characters are defined in default set. See \sQuote{Details}.
+  }
+  \item{ schema }{
+    A vector of characters of length 3 to be used to split character strings.
+    Element one gives the separator to prune the plot identifier.
+    Element two is the separator in the taxon and abundance value part.
+    Element three is used to prune abundance values associated with each taxon.
+    See \sQuote{Details}.
+  }
+  \item{ first }{
+    If \code{TRUE} abundance value precede taxon names, if \code{FALSE} abundance
+    values are given after taxon names.
   }
   \item{ species.only }{
     Just return a vector of species extracted from the data set.
@@ -154,6 +169,8 @@ Plot identifiers can be assigned using one of the attributes on the resulting ob
 
 It is often the case that rare species are only given in the table footer but not in the main table. The function \code{read.verbatim.append()} takes an object created by calls to \code{read.verbatim()} and adds species given in argument \code{file}. The function currently accepts two formats specified by argument \code{mode}. Input files in \code{mode = "species"} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and separated with commas (see argument \code{collapse}). All spaces found after the colon will be discarded. See \sQuote{Examples} for a valid input file in species mode. Files applicable to \code{mode = "plots"} have plots (must match \code{colnames(x)}) in each row, followed by a colon. Note, if the plot identifier can be interpreted as numeric leading zeros are stripped of. This is also the behavior of \code{read.verbatim}. The part after the colon has to be an enumeration of taxa for a respective plot; again separated by argument \code{collapse}. If argument \code{abundance} is \code{TRUE} the single last character after the species name is treated as an abundance value. \code{mode = "layers"} allows also a layer to be parsed.
 
+Function \code{stackFooter} is a stand-alone utility function to cast a three column matrix from plain text consisting of (1) plot, (2) species and (3) abundance values character strings given on a single row of the input file. Suppose the following example: \code{"30: 1 Empetrum nigrum ssp. hermaphroditum, + Arabis ciliata, + Luzula campestris"}. In this case, \code{30:} gives the plot identifier, it is separated with a colon from the listing of species with their associated abundance values. Each species and cover combination is further separated with a comma. Finally, the abundance value can be unscrambled by searching for the first space. The \code{schema} argument must be used to define the particular patterning of the input file. For this particular case it is \code{c(":", ",", " ")}. Unfortunately there are no standards and there are plenty of variants in the literature. The main practical effect of the \code{stackFooter} function is to transpose the data to a matrix representation for further manipulation.
+
 Finally the S4 method \code{write.verbatim()} creates output honoring the set of definitions given above. See \sQuote{Arguments} for possible customization of the output file. If called on an object of class \code{"VegsoupPartition"} argument \code{rule} is taken form \code{Partitioning(obj)}. To get partition aligned properly it might be necessary to apply \code{seriation(obj)} beforehand.
 
 The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.frame(x)} as a means to get rid of quotes and to provide clean screen output.
@@ -163,6 +180,8 @@ The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.
 \code{read.verbatim} and \code{read.verbatim.append} return an S3 object of class \code{VegsoupVerbatim}. Basically a matrix of mode \code{character} with attributes giving the data in the header section of the input file. Species are rownames. If argument \code{colnames} is supplied the returned matrix will hold meaningful \code{colnames}.
 
 \code{write.verbatim} writes a file to disk and invisibly returns the vector of characters written to the file.
+
+\code{castFooter} returns a matrix with three columns.
 }
 
 \note{
