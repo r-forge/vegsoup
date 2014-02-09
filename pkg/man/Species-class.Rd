@@ -21,6 +21,7 @@
 \alias{species,data.frame-method}
 \alias{species,matrix-method}
 \alias{species,Species-method}
+\alias{species,VegsoupVerbatim-method}
 
 \title{ Species Class}
 
@@ -85,6 +86,10 @@
         Supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Species"}. Remember to pass appropriate arguments to
         \code{\link{read.csv}} that meet the specifications of your file.
+
+      \code{signature(obj = "VergsoupVerbatim")}:
+        Supply an \code{"VegsoupVerbatim"} and promote that object to
+        class \code{"Species"}.
     }
     \item{ [ }{
       \code{signature(x = "Species")}:

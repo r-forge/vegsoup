@@ -35,7 +35,7 @@ setMethod("species",
     }
     
 )
-
+  
 setMethod("show",
     signature(object = "Species"),
     function (object) {
@@ -99,7 +99,32 @@ setGeneric("rbind",
 setMethod("rbind",
     signature(... = "Species"),
 	.rbind.Species
-)	     	
+)
+
+#	S3-methods
+#species <- function(obj) {
+#    UseMethod("species")
+#}
+
+setOldClass("VegsoupVerbatim")
+setMethod("species",
+    signature(obj = "VegsoupVerbatim"),
+    function (obj) {
+	#stopifnot(inherits(x, "VegsoupVerbatim"))
+	r <- data.frame(abbr = rownames(x),
+			layer = NA,
+			taxon = NA, x,
+			check.names = FALSE, stringsAsFactors = FALSE)
+					
+	if (length(grep("@", rownames(x))) > 0 ) {
+		a <- strsplit(as.character(r$abbr), "@")			
+		r$abbr <- sapply(a, "[[", 1)		
+		r$layer <- sapply(a, "[[", 2)			
+	}
+	r <- stackSpecies(r)
+	return(r)
+})
+	     	
 #setReplaceMethod("Layers",
 #	signature(obj = "Species", value = "ANY"),
 #	function (obj, value) {

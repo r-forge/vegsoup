@@ -304,7 +304,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				attributes(x) <- c(attributes(x), attr)
 			}
 	
-			class(x) <- c("matrix", "VegsoupVerbatim")
+			class(x) <- c("VegsoupVerbatim", "matrix")
 		}
 	}
 	
@@ -421,7 +421,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 	}
 	x <- rbind(x, y)
 	
-	class(x) <- c("matrix", "VegsoupVerbatim")
+	class(x) <- c("VegsoupVerbatim", "matrix")
 	attributes(x) <- c(attributes(x), attr[-c(1:2)])
 	
 	return(x)	
@@ -482,5 +482,13 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
 		message("at least abundance values are not speperated properly")
 	}
 	colnames(r) <- c("plot", "cov", "taxon")
+	return(r)
+}
+
+#	accesor to get header data from VegsoupVerbatim objects
+header <- function (x) {
+	stopifnot(inherits(x, "VegsoupVerbatim"))
+	r <- as.data.frame(attributes(x)[- c(1:3, length(attributes(x)))])
+	rownames(r) <- colnames(x)
 	return(r)
 }

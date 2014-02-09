@@ -8,6 +8,7 @@
 \alias{read.verbatim.append}
 
 \alias{castFooter}
+\alias{header}
 
 \alias{write.verbatim}
 \alias{write.verbatim,Vegsoup-method}
@@ -29,8 +30,10 @@ read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
          collapse = ",", abundance)
-		 
+
 castFooter(file, schema = c(":", "," , " "), first = TRUE)
+
+header(x)
 
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
@@ -166,6 +169,7 @@ The S3 function \code{read.verbatim()} makes the following additional assumption
 }
 
 Plot identifiers can be assigned using one of the attributes on the resulting object or by supplying an argument \code{colnames}.
+Function \code{header} can be used to retrieve the header part stared as additional object matrix attributes.
 
 It is often the case that rare species are only given in the table footer but not in the main table. The function \code{read.verbatim.append()} takes an object created by calls to \code{read.verbatim()} and adds species given in argument \code{file}. The function currently accepts two formats specified by argument \code{mode}. Input files in \code{mode = "species"} requires a simple text file, where each row corresponds to a unique species, followed by a colon (\sQuote{:}) and subsequent strings matching \code{colnames(x)} and separated with commas (see argument \code{collapse}). All spaces found after the colon will be discarded. See \sQuote{Examples} for a valid input file in species mode. Files applicable to \code{mode = "plots"} have plots (must match \code{colnames(x)}) in each row, followed by a colon. Note, if the plot identifier can be interpreted as numeric leading zeros are stripped of. This is also the behavior of \code{read.verbatim}. The part after the colon has to be an enumeration of taxa for a respective plot; again separated by argument \code{collapse}. If argument \code{abundance} is \code{TRUE} the single last character after the species name is treated as an abundance value. \code{mode = "layers"} allows also a layer to be parsed.
 
