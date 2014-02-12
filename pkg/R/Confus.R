@@ -14,7 +14,7 @@ setMethod("Confus",
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
 			"and obj2 (", getK(obj1), ")!", sep = "")
 	}
-	#	reference (observed) as row margins, compoarison (predicted) as column margins
+	#	reference (observed) as row margins, comparison (predicted) as column margins
     	N <- length(Partitioning(obj1))
 	    nc <- getK(obj1)
 	        	
@@ -27,7 +27,7 @@ setMethod("Confus",
 		#	calculate kappa
 	    kappa <- (c(N * correct) - sum) / (N^2 - sum)
 	    
-	    #	warning: formula needs to be confirmed 	
+	    #	formula needs to be confirmed by a reference	
 	    #	calculate lambda
 		q1 <- sum(apply(res, 1, function (x) max(x)))
 		q2 <- sum(apply(res, 2, function (x) max(x)))

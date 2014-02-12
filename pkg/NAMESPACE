@@ -8,7 +8,7 @@ importFrom("graphics", plot, hist)
 importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
-importFrom("cluster", ellipsoidhull, agnes, pam, silhouette)
+importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
 rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame, SpatialPointsDataFrame, SpatialPolygonsDataFrame)
 

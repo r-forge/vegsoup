@@ -33,8 +33,8 @@
   A list with the following components:
   \describe{
     \item{ confus }{
-      the cross tabulation of \code{obj1} and \code{obj2}
-      (\code{table(Partitioning(obj1), Partitioning(obj1))}).
+      the cross tabulation of \code{obj1} (rows) and \code{obj2} (columns).
+      % (\code{table(Partitioning(obj1), Partitioning(obj1))}).
     }
     \item{ correct }{
       the percentage of correctly predicted samples.

@@ -114,7 +114,7 @@
 	#	Suggests:
 	require(Hmisc)
 	if (class(obj) != "VegsoupPartitionFidelity") {
-			message("apply default indicator species statistic")
+			cat("apply default indicator species statistic")
 		obj <- Fidelity(obj, ...)
 	}
 	

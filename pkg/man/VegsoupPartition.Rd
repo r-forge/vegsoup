@@ -8,7 +8,7 @@ Create an object of class \code{"VegsoupPartition"} by selecting a clustering al
 }
 \usage{
 VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
-                 "kmeans", "optpart", "wards", "external"), clustering,
+                 "kmeans", "optpart", "wards", "fanny", "external"), clustering,
                  polish = FALSE, seed = 1234, verbose = FALSE,
                  ...)
 }
@@ -33,7 +33,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
     existing multi element partition
   }
   \item{ seed }{
-    set random number generator to make results from \code{method = "kmeans"}
+    set random number generator to make results from methods \code{"kmeans"} and \code{"fanny"}
     reproducible
   }
   \item{ verbose }{
@@ -48,12 +48,13 @@ Create a partitioned object of class Vegsoup using several clustering methods.
 
 %%Elaborate on methods!
 
-If \code{clustering} is of length 1 and of mode \code{"character"} the function seeks to select the supplied column from \code{Sites(obj)}. If \code{clustering} is given as a vector of mode \code{numeric} and \code{length(clustering) == nrow(obj)} this will be used. A vector of mode\code{character} is coereced using \code{as.numeric(factor(clustering))} to construct the clustering vector. In both cases \code{method} will be set to \code{"external"}.
+If \code{clustering} is of length 1 and of mode \code{"character"} the function seeks to select the supplied column from \code{Sites(obj)}. If \code{clustering} is given as a vector of mode \code{numeric} and \code{length(clustering) == nrow(obj)} this will be used. A vector of mode\code{character} is coerced using \code{as.numeric(factor(clustering))} to construct the clustering vector. In both cases \code{method} will be set to \code{"external"}.
 
-If \code{polish} is \code{TRUE} the function tries to groome singletons (single member group) using the \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to \code{k^2}.
+If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to \code{k^2}.
 }
 \value{
-Returns an object of class \code{VegsoupPartition}
+Returns an object of class \code{VegsoupPartition}.
+For method fanny the matrix containing the memberships is retained in the sites data.
 }
 \references{
 Missing, there are many!
@@ -68,7 +69,19 @@ partition.
 \code{\link{OptimStride}}
 \code{\link{hclust}}
 }
+\examples{
+#	simulate 100 plots and 200 species distributed along a two-dimensional gradient
+x <- coenoflex(100, 200)
+r <- VegsoupPartition(x, k = 2, method = "fanny", memb.exp = 1.5)
+Partitioning(r)
+head(Sites(r))
 
+#	plot membership values against gradient values
+stars(Sites(r)[grep("fanny", names(r))],
+	locations = Sites(r)[, 1:2] * 20, len = 1,
+	draw.segments = TRUE, labels = NULL)
+
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~kwd1 }

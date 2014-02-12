@@ -1,5 +1,5 @@
-#	warning! some how slot sp.points cab get messed up?
-OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards"), CALL = match.call(), ...) {
+#	warning! some how slot sp.points can get messed up?
+OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny"), CALL = match.call(), ...) {
 	if (missing(k)) stop("please supply k for stride")
 	#	obj = dta; k = 3; alternative = "greater"
 	cycle <- function (obj, k, ...) {
@@ -23,7 +23,8 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 #		txtProgressBar behaves somehow differnt? Mac Gui?
 		print("\n")
 		pb.j <- txtProgressBar(min = 2, max = k,
-			char = '.', width = 45, style = 3)		
+			char = '.', width = 45, style = 3)
+		#	mclapply here?			
 		for (j in 2:k) {
 			setTxtProgressBar(pb.j, j)
 			res.j[[j]] <- cycle(obj, k = j, method = method[i], ...)

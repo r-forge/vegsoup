@@ -250,7 +250,7 @@ setMethod("indices",
 			}
 			if (typeof == "character") {
 				if (!is.continuous(x)) {
-					message("coverscale has no codes")
+					#	message("coverscale has no codes")
 				}
 				return(list(i = i, j = j, 				
 					x = Species(x)$cov,	# is character by definition 
