@@ -108,9 +108,8 @@
 	#	to do!	
 }
 
-.latexVegsoupPartitionSpecies <- function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min, constancy.min = 95, taxa.width = "60mm", col.width = "10mm", footer.width = "150mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, quantile.select, coverscale = FALSE, sep = "/", sites.columns, newpage = TRUE, verbose = FALSE, ...) {
-###	debuging arguments
-#	obj = fid; caption.text = NULL; col.width = "10mm"; sep = "/"; mode = 2; taxa.width = "60mm"; p.max = .05; footer.treshold = 1; molticols.footer = 3; use.letters = FALSE; stat.min = 0.2; quantile.select = c(1,3,5); sites.columns = names(Sites(obj)); verbose = TRUE; file = "PartitionSummary"; coverscale = TRUE
+.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.treshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose) {
+	CALL <- match.call()
 	#	Suggests:
 	require(Hmisc)
 	if (class(obj) != "VegsoupPartitionFidelity") {
@@ -132,67 +131,28 @@
 	siz <- table(Partitioning(obj))
 
 	file <- .texfile(file)
-
-#	if (missing(col.width)) {
-#		col.width = "10mm"
-#		if (verbose) {
-#			message("col.width missing, set to ", col.width)
-#		}
-#	}
-	if (missing(col.width)) {
-		taxa.width = "60mm"
-		if (verbose) {
-			message("taxa.width missing, set to ", taxa.width)
-		}
-	}
-	if (missing(p.max)) {
-		p.max = .05
-		if (verbose) {
-			message("p.max missing, set to ", p.max)
-		}
-	}
-	if (missing(footer.treshold)) {
-		footer.treshold = 1
-		if (verbose) {
-			message("footer treshold missing, set to ", footer.treshold)
-		}	
-	}
-	if (missing(molticols.footer)) {
-		molticols.footer = 3
-		if (verbose) {
-			message("molticols footer missing, set to ", molticols.footer)
-		}	
-	}
-	if (missing(use.letters) & getK(obj) > 10) {
+	
+	if (getK(obj) > 10) {
 		use.letters = TRUE
 	}
-	if (missing(stat.min) & obj@method == "r.g") {
-		#	automatic guess adapted from isopam()
-		stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
-	} else {
-		if (missing(stat.min)) {
-			stat.min = 0.1
-			message("stat.min missing set to: ", stat.min, ",",
-			"Please set an appropriate value for stat.min")
+	if (is.null(stat.min)) {
+		message("here")
+		if (obj@method == "r.g") {
+			#	automatic guess adapted from isopam()
+			stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
 		}
 	}
-	if (missing(quantile.select)) {
-		quantile.select = c(1,3,5)
-	}
-	if (missing(sites.columns)) {
-		sites.columns = names(obj)			  # names(Sites(obj))
-		#	drop coordiantes
-		drp <- c(
-			grep("longitude", sites.columns), # already dropped in Vegsoup.R
-			grep("latitude", sites.columns),  # already dropped in Vegsoup.R
-			grep("precision", sites.columns)
-		)
-		#	drop all columns constant at zero
-		drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric)], 2, sum) == 0)
-		drp <- c(drp, drp.zeros)
-		sites.columns <- sites.columns[ -drp ]
-	}
-	
+	#	drop coordiantes
+	drp <- c(
+		grep("longitude", sites.columns), # already dropped in Vegsoup.R
+		grep("latitude", sites.columns),  # already dropped in Vegsoup.R
+		grep("precision", sites.columns)
+	)
+	#	drop all columns constant at zero
+	drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric)], 2, sum) == 0)
+	drp <- c(drp, drp.zeros)
+	sites.columns <- sites.columns[ -drp ]
+
 
 	###	debug both MODE 1 & MODE 2
 		
@@ -827,16 +787,18 @@
 
 #	if(!isGeneric("Latex")) {
 setGeneric("Latex",
-	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min, constancy.min = 95, taxa.width = "60mm", col.width = "10mm", footer.width = "150mm", footer.treshold, molticols.footer, use.letters = FALSE, caption.text = NULL, quantile.select, coverscale = FALSE, sep = "/", sites.columns, newpage = TRUE, verbose = FALSE, ...)
+	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min = NULL, constancy.min = 95, taxa.width = "60mm", col.width = "5mm", footer.width = "150mm", footer.treshold = 1, molticols.footer = 2, use.letters = FALSE, caption.text = NULL, quantile.select = c(1,3,5), coverscale = FALSE, sep = "/", sites.columns = names(obj), newpage = TRUE, verbose = FALSE, ...)
 		standardGeneric("Latex")
 )
 #}
 
+#	all defaults inhertited from generic!
 setMethod("Latex",
 	signature(obj = "VegsoupPartition"),
-	function (obj, choice = "species", recursive = FALSE, file, ...) {
+	function (obj, ...) {
 			#	Suggests:		
 			require(Hmisc)
+			CALL <- match.call()
 
 			CHOICES <- c("species", "sites")
 			choice <- CHOICES[pmatch(choice, CHOICES)]
@@ -851,7 +813,14 @@ setMethod("Latex",
 			if (choice == "species" & !recursive) {
 				if (missing(file) & mode == 1) file = "FidelityTable"
 				if (missing(file) & mode == 2) file = "PartitionSummary"
-				res <- .latexVegsoupPartitionSpecies(obj, file = file, ...)
+				res <- .latexVegsoupPartitionSpecies(obj, file = file,
+					mode = mode, p.max = p.max, stat.min = stat.min,
+					constancy.min = constancy.min, taxa.width = taxa.width,
+					col.width = col.width, footer.treshold = footer.treshold,
+					molticols.footer = molticols.footer, use.letters = use.letters,
+					caption.text = caption.text, quantile.select = quantile.select,
+					coverscale = coverscale, sep = sep, sites.columns = sites.columns,
+					newpage = newpage, verbose = verbose, ...)
 			}
 			if (choice == "sites" & recursive) {
 				if (missing(file)) file = "SitesTables"

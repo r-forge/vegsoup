@@ -10,7 +10,7 @@ Compute a series of clusterings by differnet methods and quanitfy their quality 
 \usage{
 OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
             method = c("ward", "flexible", "pam", "kmeans", "wards"),
-            CALL = match.call(), ...)
+            fast = FALSE, CALL = match.call(), ...)
 }
 
 \arguments{
@@ -33,6 +33,9 @@ OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
     "flexible", "pam", "kmeans", and "wards" methods are computed,
     computationally expensive methods, such as "isopam" and "optpart" are
     omitted to reduce run duration.
+  }
+  \item{ fast }{
+    accelerate computations. Needs package \code{multicore}.
   }
   \item{ CALL }{
     To be removed.

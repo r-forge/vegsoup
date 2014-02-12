@@ -1,40 +1,47 @@
 #	warning! some how slot sp.points can get messed up?
-OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny"), CALL = match.call(), ...) {
+OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny"), fast = FALSE, CALL = match.call(), ...) {
 	if (missing(k)) stop("please supply k for stride")
-	#	obj = dta; k = 3; alternative = "greater"
+
 	cycle <- function (obj, k, ...) {
 		prt <- VegsoupPartition(obj, k = k, ...)
 		ft <- FisherTest(prt, alternative = alternative)
 		res <- apply(ft < ft.treshold, 2, sum)
 		return(res)
 	}
-
-	res.i <- vector("list", length = length(method))
-	names(res.i) <- method
-#	print(method)
-	
-	for (i in seq(along = method)) {
-#		cat(method[i])
-		res.j <- vector("list", length = k)
-		names(res.j) <- 1:k
-		res.j[[1]] <- 0
-		names(res.j[[1]]) <- 1
-#		since R 2.15.2 (2012-10-26)
-#		txtProgressBar behaves somehow differnt? Mac Gui?
-		print("\n")
-		pb.j <- txtProgressBar(min = 2, max = k,
-			char = '.', width = 45, style = 3)
-		#	mclapply here?			
-		for (j in 2:k) {
-			setTxtProgressBar(pb.j, j)
-			res.j[[j]] <- cycle(obj, k = j, method = method[i], ...)
-		}
-		res.i[[i]] <- res.j
-		close(pb.j)
-		print("\n")
+	if (as.logical(fast)) {
+		require(multicore)
+		message("spawn multicore process on ", multicore:::detectCores(), " cores")
 	}	
 	
-#	very slow from here?
+	#	results list for top level loop
+	res.i <- vector("list", length = length(method))
+	names(res.i) <- method
+	
+	for (i in seq(along = method)) {
+		if (fast) {
+			cat(method[i], " ")			
+			res.j <- mclapply(2:k, function (y, ...) cycle(obj, k = y, method = method[i], ...), ...)
+			res.i[[i]] <- c(0, res.j)
+		} else {
+			res.j <- vector("list", length = k)
+	 		names(res.j) <- 1:k
+			res.j[[1]] <- 0
+			names(res.j[[1]]) <- 1
+			
+			print("\n")
+			pb.j <- txtProgressBar(min = 2, max = k,
+			char = '.', width = 45, style = 3)			
+			for (j in 2:k) {
+				setTxtProgressBar(pb.j, j)
+				res.j[[j]] <- cycle(obj, k = j, method = method[i], ...)
+			}
+			res.i[[i]] <- res.j
+			close(pb.j)
+			print("\n")
+		}
+		
+	}	
+	
 	#	develop class VegsoupOptimstride
 	res <- new("VegsoupOptimstride", obj)
 	
