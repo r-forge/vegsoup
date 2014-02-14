@@ -64,16 +64,15 @@ Both methods can be very slow when applied to big data sets! \code{Optsil} is us
 }
 
 \examples{
-library(vegsoup)
-data(bigtestdata)
+require(vegsoup)
+data(windsfeld)
 
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 4)
+prt <- VegsoupPartition(windsfeld, k = 5)
 
-prt.sil <- Optsil(prt, verbose = TRUE)
+# prt.sil <- Optsil(prt, verbose = TRUE)
 prt.ind <- Optindval(prt, verbose = TRUE)
 
-Confus(prt, prt.sil)
+# Confus(prt, prt.sil)
 Confus(prt, prt.ind)
 }
 \seealso{

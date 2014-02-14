@@ -32,34 +32,33 @@
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("Sites", ...)},
   where \code{...} expands to slot \code{'data'}. Using the
-  \code{sites} method with appropriate objects is also fast and convenient
-  (see \sQuote{Methods}).
+  \code{sites} method with appropriate objects is also convenient.
+  (see \sQuote{Methods}). The \code{\link{stackSites}} is appropriate
+  when the data is in \emph{wide} format (plot by variable matrix).
+}
 
+\section{Slots}{
+  \describe{
   The \code{data} slot holds a \code{"data.frame"} with three columns,
   all of type \code{character} and with names \code{plot}, \code{variable}
   and \code{value}. The meaning of these columns is as detailed below:
 
   \itemize{
     \item \code{plot} contains the plot identifier associated with each
-      observation.
+      observation (cf. \code{\linkS4class{Species}}).
     \item \code{variable} contains a name for the measured variable.
     \item \code{value} holds the value of a particular variable.
-  }
-}
-
-\section{Slots}{
-  \describe{
-    \item{\code{data}:}{Object of class \code{"data.frame"}
-      with three columns named
-      \code{'plot'}, \code{'variable'} and \code{'value'}. }
+  }  
+  \item{\code{data}:}{Object of class \code{"data.frame"}
+  with three columns named
+  \code{'plot'}, \code{'variable'} and \code{'value'}. }
   }
 }
 
 \section{Methods}{
   \describe{
     \item{ sites }{
-      \code{signature(obj = "Sites")}:
-      Accessor function (slot \code{obj@data}).
+      There exists \code{species} methods for a number of R base classes:
 
       \code{signature(obj = "data.frame")}:
       Promote \code{data.frame} to object of class \code{"Sites"}
@@ -71,7 +70,12 @@
       \code{signature(obj = "character")}:
         Supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Sites"}. Remember to pass appropriate arguments to
-        \code{\link{read.csv}} that meet the specifications of your file.
+        \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
+
+      Only the Sites class has a \code{sites} method so far.
+
+      \code{signature(obj = "Sites")}:
+      Accessor function (slot \code{obj@data}).
     }
     \item{ rbind }{
       \code{signature(x = "Sites")}:

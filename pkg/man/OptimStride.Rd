@@ -17,7 +17,8 @@ Compute a series of clusterings by different methods and quantify their quality 
 
 \usage{
 OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
-            method = c("ward", "flexible", "pam", "kmeans", "wards"),
+            method = c("ward", "flexible", "pam", "kmeans", "wards",
+                       "fanny", "FCM", "KM"),
             fast = FALSE, CALL = match.call(), ...)
 \S4method{methods}{VegsoupOptimstride}(x)
 
@@ -112,19 +113,33 @@ Science, 21(2):287–299.
 require(vegsoup)
 
 # a dummy example using simulated data
-# we don't assume to spot discrete communities in this case
 x <- coenoflex(100, 200)
 
 res <- OptimStride(x, k = 10)
 summary(res)
-# the methods computed
+
+# get the computed clustering methods
 methods(res)
+
+# the treshold of the Fisher test
+treshold(res)
+
+# matrix of results for OptimClass1
+optimclass1(res)
+
 # the number of faithful species for each partition and method
 stride(res)
-stride(res, "felxible")
-# the treshold used
+stride(res, "flexible") # for method flexible
 
 # plot method for class VegsoupOptimstride
 plot(res)
+plot(res, method = "FCM")
+
+# get k where the curve peaks
+peaks(res)
+
+# get k with the maximum number of faithful species
+which.max(res)
+
 }
 \keyword{ multivariate }

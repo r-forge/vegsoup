@@ -6,7 +6,7 @@
 \title{ Compare Species Abbreviations to Taxonomic Reference List }
 
 \description{
-Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} respectively \code{file.x}) or csv-files (\code{y} respectively \code{file.y}). All meaningfull combinations are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initilaized as class \code{"Species"} and \code{y} as class \code{"Taxonomy"}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
+Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} and \code{y}) or csv-files  (\code{file.x} and \code{file.y}) as inputs. All meaningful combinations (e. g. \code{x} and \code{file.y})are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initialized as class \code{\linkS4class{Species}} and \code{y} as class \code{\linkS4class{Taxonomy}}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
 }
 
 \usage{
@@ -31,8 +31,8 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
     \code{\linkS4class{Taxonomy}}.
   }
   \item{ sep, dec }{
-    Seperators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
-	of \code{read.csv2}!
+    Separators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
+    of \code{read.csv2}!
   }
   \item{ pmatch }{
     use \code{pmatch} to match abbreviation in \code{x} respectively
@@ -94,8 +94,6 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 }
 
 \examples{
-library(vegsoup)
-library(vegan)
 data(dune)
 data(dune.env)
 
@@ -104,11 +102,12 @@ data(dune.env)
 # see vector of taxon names below
 x <- data.frame(abbr = names(dune),
 	layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
-	comment = "", t(dune))
-#	groome plot names
+	taxon = "", t(dune))
+# groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
 
 spc <- stackSpecies(x)
+spc
 
 # create taxonomy reference list from scratch
 # these are the scientific names corresponding to the abbreviations in dune
@@ -120,16 +119,28 @@ taxon <- c("Bellis perennis", "Leontodon autumnalis", "Poa pratensis",
 	"Bormus hordeaceus", "Juncus bufonius", "Ranunculus flammula",
 	"Cheopodium album", "Sagina procumbens", "Agrostis stolonifera",
 	"Brachytethium rutabulum", "Cirsium arvense", "Juncus articulatus",
-	"Eleocharis palustris", "Caliergonella cuspidata", "Rumex acetosa",
+	"Eleocharis palustris", "Calliergonella cuspidata", "Rumex acetosa",
 	"Trifolium pratense", "Anthoxanthum odoratum", "Plantago lanceolata",
 	"Aira praecox", "Hypochaeris radicata", "Potentilla palustris",
 	"Vicia latifolia", "Salix repens", "Empetrum nigrum")
 
-txa <- data.frame(abbr = unique(slot(spc, "data")$abbr), taxon)
+txa <- data.frame(abbr = unique(spc$abbr), taxon)
 
-txa <- new("Taxonomy", data = txa)
+txa <- taxonomy(txa)
+
+txa
 
 spc.txa <- SpeciesTaxonomy(x = spc, y = txa)
+
+## sites data frame
+data(dune.env)
+x <- data.frame(plot = row.names(dune.env), dune.env)
+# groom plot names
+x$plot <- paste("dn", x$plot, sep = "")
+
+sts <- stackSites(x, verbose = TRUE)
+
+res <- Vegsoup(spc.txa, sts, coverscale = "ordinal")
 
 }
 

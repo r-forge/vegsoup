@@ -6,7 +6,7 @@ importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 
 import(coenoflex)
-importFrom("optpart", optpart, partana, tabdev, disdiam)
+importFrom("optpart", optpart, optsil, partana, tabdev, disdiam)
 
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)

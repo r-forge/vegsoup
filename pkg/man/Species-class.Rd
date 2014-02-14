@@ -34,58 +34,62 @@
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("Species", ...)},
   where \code{...} expands to slot \code{'data'}. Using the \code{species}
-  method with appropriate objects is also fast and convenient
-  (see \sQuote{Methods}).
+  method with appropriate objects is also convenient (see \sQuote{Methods}).
+  The \code{\link{stackSpecies}} function is useful when the data is in \emph{wide}
+  format (plot by species matrix).
 
-  The \code{data} slot holds a \code{"data.frame"} with four columns, all of
-  type \code{character} and with names \code{plot}, \code{abbr}, \code{layer}
-  and \code{cov}. The meaning of these columns is as detailed below:
-
-  \itemize{
-    \item \code{plot} contains the plot identifier associated with each
-      species observation.
-    \item \code{abbr} typically contains unique abbreviations of a scientific
-      latin name, however, any character string of potentially unlimited
-      length can be used. Syntactic valid names are automatically created
-      using \code{\link{make.names}} (e.g. blanks will be dots).
-    \item \code{layer} assigns a layer to each observation.
-    \item \code{cov} contains an estimate of species cover (abundance or
-      performance) coerced to as character, regardless if it is ordinal
-      or continuous.
-  }
-
-  Besides these mandatory columns and their rigid order it is possible
-  for an object of class \code{"Species"} to contain more columns with
-  data. Imagine, for example, you have additional information
-  (grazed/not grazed) on an observed species in a plot.
 }
 
 \section{Slots}{
   \describe{
-    \item{ \code{data}: }{
-      Object of class \code{"data.frame"} with at least four columns named
-      \code{'plot'}, \code{'abbr'}, \code{'layer'} and \code{'cov'}.
-    }
+  \item{ \code{data}: }{
+    Object of class \code{"data.frame"} with at least four columns named
+    \code{'plot'}, \code{'abbr'}, \code{'layer'} and \code{'cov'}, all of
+    type \code{character}. The meaning of these columns is as detailed below:
+
+    \itemize{
+    \item \code{plot} contains the plot identifier associated with each
+      species observation, any numeric values are coerced to characters.
+    \item \code{abbr} typically contains unique abbreviations of a scientific
+      latin name, although, any character string might be used (the full species name for example).
+      It's handy however, to keep \code{'abbr'} short and intuitive. In any case, syntactic valid
+      names are automatically created using \code{\link{make.names}} (e.g. blanks will be dots).
+    \item \code{layer} assigns a stratum/layer to each observation, even if they are all the same
+      (e.g. the data includes only a single herb layer)
+    \item \code{cov} contains an estimate of species abundance or performance (e.g. plant cover)
+      coerced to as character, regardless if it is ordinal (Braun-Blanquet scale),
+      continuous (frequencies or counts) or simple presence.
+    
+    Besides these mandatory columns and their rigid names and order, it is possible
+    for an object of class \code{"Species"} to contain more columns with
+    data. Imagine, for example, additional useful information for an observed species
+    in a particular plot (plant size, flowering/not flowering, etc.) is available.
+   }
+  }
   }
 }
 
 \section{Methods}{
   \describe{
     \item{ species }{
-      \code{signature(obj = "Species")}:
-        Accessor method (slot \code{obj@data}).
+      There exists \code{species} methods for a number of R base classes:
 
       \code{signature(obj = "data.frame")}:
         Promote \code{data.frame} to object of class \code{"Species"}.
 
       \code{signature(obj = "matrix")}:
         Promote \code{matrix} to object of class \code{"Species"}.
-        Note, \code{obj} does not need to have \code{dimnames}.
+        Note, \code{obj} does not need to have \code{dimnames}, but order matters.
 
       \code{signature(obj = "character")}:
         Supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Species"}. Remember to pass appropriate arguments to
-        \code{\link{read.csv}} that meet the specifications of your file.
+        \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
+
+      The following classes defined in the vegsoup package have a \code{species} method:
+
+      \code{signature(obj = "Species")}:
+        Accessor method (slot \code{obj@data}).
 
       \code{signature(obj = "VergsoupVerbatim")}:
         Supply an \code{"VegsoupVerbatim"} and promote that object to
@@ -99,11 +103,12 @@
     }
     \item{ $ }{
       \code{signature(x = "Species")}:
-        Retreive column by name, or perform replacement.
+        Retrieve column by name (see \sQuote{Slots}), or perform replacement.
     }
     \item{ rbind }{
       \code{signature(x = "Species")}:
-        \code{rbind} method to combine two or more objects.
+        \code{rbind} method to combine two or more objects. See \code{\link{verbatim}}
+        for an example.
     }
   }
 }
@@ -116,18 +121,17 @@
   and \code{order(plot, layer, data)} is performed. None of the first four
   columns can contain \code{NA}, as this will not allow a valid object of the
   class to be built.
-}
 
-\section{Note}{
-  The design of the class, especially the initialization method, allows data
-  that have not been checked for data integrity. Such data might arise when
-  field data was entered in spread sheet software. The default behavior is to
-  discard all ambiguities in the data (e.g. duplicated observations of species
-  in the same plot and the same layer, if there are more than one.).
+  The design of the the class initialization method allows for data
+  that have not been checked for data stringency. Such data might arise when
+  field data was digitized without the help of a database system, for example, by
+  using a spread sheet software. The default behavior is to  discard all ambiguities
+  in the data (e.g. duplicated observations of species in the same plot
+  and/or in the same stratum).
 
   A standard procedure to abbreviate scientific names is to use four first
   letters of the generic name and four first letters of the specific epithet
-  (see\code{\link{make.cepnames}}). Depending on the number of taxa that need
+  (see \code{\link{make.cepnames}}). Depending on the number of taxa that need
   to be encoded, another block of four letters might be necessary, in order to
   reference lower taxonomic ranks, or to make non unique abbreviations unique.
 }
@@ -135,7 +139,7 @@
 \author{ Roland Kaiser }
 
 \seealso{
-  \code{\linkS4class{SpeciesTaxonomy}}
+  class \code{\linkS4class{SpeciesTaxonomy}}
   and function \code{\link{SpeciesTaxonomy}},
   \code{\linkS4class{Taxonomy}},
   \code{\linkS4class{Sites}},
@@ -145,25 +149,32 @@
 
 \examples{
 require(vegsoup)
+
 showClass("Species")
 
-data(testdata)
+data(barmstein)
 
-new("Species", data = spc)
+# retrieve data.frame from an Vegsoup object
+spc <- Species(barmstein)
 
 class(spc)
-species(spc)
-obj <- species(as.matrix(spc))
 
-# get slot data from object
-class(species(obj))
+# the data slot
+class(species(spc))
 
-# combine objects
-data(bigtestdata)
+# matrix method
+obj1 <- species(as.matrix(spc))
 
-obj2 <- species(spc.big)
+# get slot data from object, a simple data.frame
+class(species(obj1))
 
-obj <- rbind(obj, obj2)
+# combine two objects
+data(windsfeld)
+obj2 <- species(Species(windsfeld))
+
+obj <- rbind(obj1, obj2)
+
+obj
 
 }
 \keyword{ classes }
