@@ -1,31 +1,42 @@
 #	plot method
 setMethod("plot",
 	signature(x = "VegsoupOptimstride", y = "missing"),
-	function (x, mode = 1, oc.treshold = 2, silent = TRUE, ...) {
+	function (x, mode = 1, oc.treshold = 2, method, retain = FALSE, ...) {
 	#	require(RColorBrewer)
-	#	x <- dta.os
+
+	if (!missing(method)) {
+		METHODS <- methods(x)
+		m <- match.arg(method, METHODS, several.ok = TRUE)
+		m <- match(m, methods(x))
+	}
+	else {
+		m <- 1:length(methods(x))
+	}	
 	
-	tmp <- summary(object = x, oc.treshold = oc.treshold, silent = silent)
-	
-	k <- tmp$args$k
-	ft.treshold <- tmp$args$ft.treshold
-	oc1 <- tmp$optimclass1
-	oc2 <- tmp$optimclass2
+	k <- getK(x)	
+	ft.treshold <- treshold(x)
+	oc1 <- optimclass1(x)
+	oc2 <- optimclass2(x)
+	p <- peaks(x)
 	cols = 1	
 
 	if (mode == 1) {
+		#	open plot
 		plot(1:k, rep(0, k),
 			type = "n", ylim = c(0, max(oc1)),
 			xlab = "OptimClass1",
 			ylab = "No. of significant indicator species",
 			sub = paste("Fisher's exact test, treshold",
 				format(ft.treshold, scientific = TRUE)), ...)
+		#	and add	lines
+		for (i in c(1:nrow(oc1))[m]) {
+				lines(1:k, oc1[i, ], lty = i, col = cols)
+				rug(p[[i]], side = 3, lwd = 5, col = "grey80", ticksize = -0.03)
+		}			
+		#	add rug axes to help eye-balling curve peaks
 		rug(1:k, side = 3)
 		rug(1:k, side = 1)
-		axis(3)	
-		for (i in 1:nrow(oc1)) {
-			lines(1:k, oc1[i, ], lty = i, col = cols)
-		}
+		axis(3)		
 	}
 	if (mode == 2) {
 		plot(1:k, rep(0, k),
@@ -41,8 +52,8 @@ setMethod("plot",
 		}
 	}
 	legend("bottomright",
-		lty = 1:length(tmp$args$method),
-		legend = rownames(oc1), col = cols,
+		lty = 1:length(m),
+		legend = methods(x)[m], col = cols,
 		inset = 0.04, bty = "n")
 }
 

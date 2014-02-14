@@ -1,23 +1,33 @@
 #useDynLib(vegsoup)
 
 import(methods)
-import(coenoflex)
-importFrom("optpart", optpart, partana, tabdev, disdiam)
-importFrom("multitable", data.list)
 importFrom("graphics", plot, hist)
 importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
+
+import(coenoflex)
+importFrom("optpart", optpart, partana, tabdev, disdiam)
+
+
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
+
+importFrom("vegclust", vegclustdist, defuzzify)
+
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
-rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame, SpatialPointsDataFrame, SpatialPolygonsDataFrame)
+                 rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
+                 SpatialPointsDataFrame, SpatialPolygonsDataFrame)
+importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
+                      proj4string, "proj4string<-", spTransform)
+importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
+                      SpatialPolygonsDataFrame, CRS, GridTopology)
 
-importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot, proj4string, "proj4string<-", spTransform)
-importClassesFrom(sp, Spatial, SpatialPointsDataFrame, SpatialPolygonsDataFrame, CRS, GridTopology)
-
-importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
-importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer, RasterBrick, RasterStack, RasterStackBrick)
+importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
+                          RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell)
+
+importFrom("multitable", data.list)
+importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 
 #importFrom("Hmisc", latex)
 #importFrom("googleVis", gvisMap)
@@ -102,6 +112,7 @@ exportMethods(
     "Layers<-",
     "KML",
     "reverseGeocode",
+    "methods",
     "murdoch",
     "names",
     "names<-",
@@ -109,6 +120,8 @@ exportMethods(
     "ncell",
     "nndist",
     "nrow",
+    "optimclass1",
+    "optimclass2",
     "Optindval",
     "Optsil",
     "outlier",
@@ -117,6 +130,7 @@ exportMethods(
     "Partitioning",
     "PartitioningMatrix",
     "PartitioningCombinations",
+    "peaks",
     "Phi",
     "plot",
     "proj4string",
@@ -147,6 +161,7 @@ exportMethods(
     "Species<-",
     "SpeciesList",	
     "spread",
+    "stride",
 #   "Stride",
     "summary",
     "Tabdev",
@@ -155,9 +170,11 @@ exportMethods(
     "taxonomy",
     "Taxonomy",
     "Taxonomy<-",
+    "treshold",
     "typical",
     "vegdist",
     "vegdist<-",
+    "which.max",
     "write.verbatim"
 )
 

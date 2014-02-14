@@ -52,6 +52,20 @@ If \code{clustering} is of length 1 and of mode \code{"character"} the function 
 
 If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to \code{k^2}.
 }
+\note{
+  If you gain errors using \code{instantsoup}, try to create separate objects
+  for classes \code{"Species"}, \code{"Sites"} and \code{"Taxonomy"}. You may
+  also want to call \code{"SpeciesTaxonomy"} for the first and last objects
+  mentioned. Defaults for \code{sep} and \code{dec} passed to \code{read.csv}
+  are set according to \code{read.csv2}!
+}
+
+\section{Warning}{
+  Method \code{"fanny"} and \code{fast = TRUE} may hang due to warnings
+  issued by fanny and may freeze your R session. Setting \code{memb.exp = 1.1} will in most cases
+  avoid any warning of fanny.
+}
+
 \value{
 Returns an object of class \code{VegsoupPartition}.
 For method fanny the matrix containing the memberships is retained in the sites data.
@@ -77,7 +91,7 @@ Partitioning(r)
 head(Sites(r))
 
 #	plot membership values against gradient values
-stars(Sites(r)[grep("fanny", names(r))],
+stars(Sites(r)[grep("M", names(r))],
 	locations = Sites(r)[, 1:2] * 20, len = 1,
 	draw.segments = TRUE, labels = NULL)
 

@@ -1,6 +1,6 @@
 #	generating function
 #	to do: implement formula interface for method, high priority
-VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
 
 	#	debug
 	#	obj = dta; k = 3;
@@ -46,7 +46,9 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 	}
 	else {
 		METHODS <- c("ward", "flexible", "pam", "isopam",
-					 "kmeans", "optpart", "wards", "fanny", "external")
+					 "kmeans", "optpart", "wards", "fanny",
+					 "FCM", "KM", # vegclust
+					 "external")
 		part.meth <- match.arg(method, METHODS)
 	}
 	if (!missing(clustering) | match.arg(method) == "external") {
@@ -139,22 +141,28 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 				#	, ...)
 		}, fanny = {
 			#	the value of memb.exp is an issue with fanny()
-			#	to lower default value to prevent fanny()
-			#	complining about "memberships are all very close to 1/k"
+			#	we lower default value to prevent fanny()
+			#	complaining about "memberships are all very close to 1/k"
 			#	we keep the value very crisp at 1.1
-			if (length(grep("memb.exp", deparse(CALL))) < 1) {
-				memb.exp = 1.1
-			}
-			else {
-			memb.exp = CALL$memb.exp				
+			#	was: length(grep("memb.exp", deparse(CALL), fixed = TRUE)) < 1
+			memb.exp <- ifelse(any(names(CALL) == "memb.exp"), CALL$memb.exp, 1.1)			
 			part <- fanny(Xd, k = k, diss = TRUE, memb.exp = memb.exp,
 				# in any case, we save memory allocation time here
 				cluster.only = TRUE, keep.diss = FALSE, keep.data = FALSE)
 				#	irgnore: diss and k 
 				#	stand = FALSE, irgnore we get standardisation from obj
 				#	should accept: iniMem.p = NULL, maxit = 500, tol = 1e-15					
-				#	, ...)				
-			} 			
+				#	, ...)							
+		}, FCM = {
+			#	as with fanny()	we need to take care for m (membership exponent)
+			m <- ifelse(any(names(CALL) == "m"), CALL$m, 1.1)
+			part <- vegclustdist(Xd, mobileMemb = k, method = "FCM", m = m)
+			#	more options available
+			#	, ...)
+		}, KM = {
+			part <- vegclustdist(Xd, mobileMemb = k, method = "KM")
+			#	more options available
+			#	, ...)	
 		}, external = {
 			part <- clustering
 		}
@@ -170,9 +178,16 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		names(grp) <- rownames(obj)
 		#	save memberhsip matrix
 		mm <- part$membership
-		colnames(mm) <- paste0("fanny", 1:k)
+		colnames(mm) <- paste0("M", 1:k)
 		Sites(obj) <- cbind(Sites(obj), mm)
 	}
+	if (inherits(part, "vegclust")) { # & part.meth == "FCM"
+		grp <- as.numeric(as.factor(defuzzify(part)$cluster))
+		if (length(unique(grp)) != k) {
+		grp <- as.numeric(as.factor(defuzzify(part, method = "cut", alpha = 0.5)$cluster))
+		names(grp) <- rownames(obj)
+		}		
+	}	
 	if (inherits(part, "kmeans")) {
 		grp <- part$cluster
 	}
@@ -201,13 +216,12 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		if (verbose) {
 			print(data.frame(clustering = levels(factor(clustering)),
 				assigned = as.numeric(factor(levels(factor(clustering)))) )
-			)
-			
+			)			
 		}
 	}
 	if (k != length(unique(grp)) && class(part) != "isopam") {
-		message("did not converge for requested number of partitions: ", k,
-			"\ntry setting k to ", length(unique(grp)))
+		message("did not converge for ", k, " partitions")#,
+			# "try setting k to ", length(unique(grp))
 	}
 		
 	#	if method returns singleton try to refine clustering

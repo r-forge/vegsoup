@@ -167,36 +167,26 @@ setMethod("summary",
 #	class VegsoupOptimstride
 setMethod("summary",
 	signature(object = "VegsoupOptimstride"),
-		function (object, oc.treshold = 2, silent = FALSE) {
-			#	object <- opt; oc.treshold = 2
-		obj <- object@optimstride
-		args <- obj$settings$args
-		met <- args$method
-		ind <- obj$indicators
-		ftt <- args$ft.treshold
-		oct <- oc.treshold
-		args$oc.treshold <- oct
-
-		oc1 <- t(sapply(ind, function (x) sapply(x, function (x) sum(x))))
-		oc2 <- t(sapply(ind, function (x) sapply(x, function (x) length(which(x >= oct)))))
+		function (object, oc.treshold = 2) {
 		
-		#	not a good guess!
-		best.oc1 <- sapply(obj$ind, function (x) (sapply(x, max)[which.max(sapply(x, max))] ) )
+		res <- list(optimclass1 = optimclass1(object),
+			optimclass2 = optimclass2(object),
+			max.optimclass1 = which.max(object),
+			args = object@optimstride$settings$args)
+	
+		cat("OptimStride results for k:", getK(object))
+		cat("\n\nOptimClass 1 (fisher test treshold: ", treshold(object), "):\n", sep = "")
+		print(res$optimclass1)
 
-		res <- list(optimclass1 = oc1, optimclass2 = oc2, best.optimclass1 = best.oc1, args = args)
-	
-		if (!silent) {
-			cat("OptimStride results for k:", args$k)
-			cat("\n\nOptimClass 1 (fisher test treshold: ", ftt, "):\n", sep = "")
-			print(res$optimclass1)
-	
-			cat("\nOptimClass 2 (occurence treshold: ",
-				oct, "):\n", sep = "")
-			print(res$optimclass2)
-			
-			cat("\nBest OptimClass\n", sep = "")
-			print(res$best.optimclass1)
-		}
+		cat("\nOptimClass 2 (occurence treshold: ",
+			oc.treshold, "):\n", sep = "")
+		print(res$optimclass2)
+		
+		cat("\nPeaks OptimClass k\n", sep = "")
+		print(peaks(object))
+		cat("\nMax OptimClass k\n", sep = "")
+		print(res$max.optimclass1)
+
 		return(invisible(res))
 		}
 )

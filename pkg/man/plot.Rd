@@ -18,8 +18,9 @@ Methods for function \code{plot}.
       Simple ordination plot.
     }
     \item{\code{signature(x = "VegsoupOptimstride", y = "missing")}}{
-     Argument \code{'oc.treshold'} is passed to summary(obj) and controls the
-     threshold value of OptimClass2 (see Tichy 2010)
+     Argument \code{'oc.treshold'} is passed to \code{summary(obj)} and controls the
+     threshold value of OptimClass2. \code{which} can be used to select a subset of
+     computed strides to plot.
     }
   }
 }

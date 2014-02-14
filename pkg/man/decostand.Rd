@@ -33,7 +33,7 @@ This wrapper function provides the standardization methods implemented in functi
 }
 
 \details{
-Standardization is often nessecary before the species matrix is subject to analysis by a multivariate method. This can easyly be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are applied in sequence to the data (order matters). In fact, method \code{'wisconsion'} invokes a dauble standardization (\code{'max'} followed by \code{'total'}).
+Standardization is often necessary before the species matrix is subject to analysis by a multivariate method. This can easily be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are sequentially to the data (order matters). In fact, method \code{'wisconsion'} invokes a double standardization (\code{'max'} followed by \code{'total'}).
 
 Currently only the \code{'method'} argument of \code{vegan::decostand} is implemented. Whereas argument \code{MARGIN} is not.
 }
@@ -47,8 +47,8 @@ Currently only the \code{'method'} argument of \code{vegan::decostand} is implem
 \author{ Roland Kaiser }
 
 \note{
-Manipulation of the sites has to be done by modifing elements of the \code{'sites'} slot, which is represented as \code{data.frame}.
-Use the extract and replace operators \code{\link[=Extract]{"$"}} to modify colums of the sites data. See \code{\link[vegsoup:Extract]{Extract}} for details.
+Manipulation of the sites data has to be performed by modifying elements of the \code{'sites'} slot, which is represented as \code{data.frame}.
+Use the extract and replace operators \code{\link[=Extract]{"$"}} and \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup:Extract]{Extract}} for details.
 }
 
 \seealso{

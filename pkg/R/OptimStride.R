@@ -1,5 +1,5 @@
 #	warning! some how slot sp.points can get messed up?
-OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny"), fast = FALSE, CALL = match.call(), ...) {
+OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
 	if (missing(k)) stop("please supply k for stride")
 
 	cycle <- function (obj, k, ...) {
@@ -10,7 +10,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 	}
 	if (as.logical(fast)) {
 		require(multicore)
-		message("spawn multicore process on ", multicore:::detectCores(), " cores")
+		message("fork multicore process on ", multicore:::detectCores(), " cores")
 	}	
 	
 	#	results list for top level loop
