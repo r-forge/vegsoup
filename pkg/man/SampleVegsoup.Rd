@@ -2,17 +2,21 @@
 \docType{methods}
 
 \alias{SampleVegsoup}
-\alias{SampleVegsoup-methods}
 \alias{SampleVegsoup,Vegsoup-method}
+
+\alias{hcr}
+\alias{hcr,Vegsoup-method}
 
 \title{ Random Samples and Permutations for \code{Vegsoup*} Objects }
 
 \description{
-The method takes a sample of the specified size from the elements of x using either with or without replacement.
+The methods take a sample of the specified size from the elements of \code{x} using either with or without replacement. Permutations and random subsamples of the input object can be performed with method \code{SampleVegsoup}. Heterogeneity-constrained random samples are obtained with method \code{hcr}.
 }
 
 \usage{
 \S4method{SampleVegsoup}{Vegsoup}(x, size, replace = FALSE, prob = NULL)
+
+\S4method{hcr}{Vegsoup}(x, size, nperm = 1000, fast = FALSE, ...)
 }
 
 \arguments{
@@ -20,7 +24,7 @@ The method takes a sample of the specified size from the elements of x using eit
     a \code{Vegsoup*} object.
   }
   \item{ size }{
-    a non-negative integer giving the number of items to choose.
+    Non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{SampleVegsoup} to \code{nrow(x)}.
   }
   \item{ replace }{
     Should sampling be with replacement?
@@ -29,30 +33,48 @@ The method takes a sample of the specified size from the elements of x using eit
     A vector of probability weights for obtaining the elements of the vector
     being sampled.
   }
+  \item{ nperm }{
+    the number of permutations.
+  }
+  \item{ fast }{
+    accelerate computations. Needs package \code{'multicore'}.
+  }
+  \item{ \dots }{
+    additional arguments \code{replace} and \code{prob} passed to \code{\link{sample}}.
+  }
 }
 
 \details{
-  See \code{\link{sample}} for details.
+See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most representative} subsample of specified size by selecting from \code{nperm} independent subsets the one that has lowest mean dissimilarity and highest variance. 
+
+Method \code{hcr} returns a sample that maximizes the mean and minimizes the variance of the paired distances between pairs
 }
 
 \value{
-  An object of same class as the input class.
+  An object of the same class as the input object.
 }
-\author{ Roland Kaiser }
+\author{ Roland Kaiser, method hcr is an speed optimized re-implementation of function hcr in \pkg{vegclust} by Miquel De Cáceres }
 
+\references{
+Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resampling of phytosociological databases. Journal of Vegetation Science 22: 175-183.
+}
 \seealso{
-\code{\linkS4class{Vegsoup}}, \code{\link{seriation}}
+\code{\link[vegclust:hcr]{hcr}} in \pkg{vegclust}, \code{\linkS4class{Vegsoup}}, \code{\link{seriation}}
 }
 
 \examples{
 library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-rownames(dta)
-dta.smp <- SampleVegsoup(dta)
-rownames(dta.smp) # order is permuted
+data(windsfeld)
+r <- SampleVegsoup(windsfeld)
+rownames(r) # order is permuted
 
-rownames(SampleVegsoup(dta, size = 3))
-rownames(SampleVegsoup(dta, replace = TRUE))
+rownames(SampleVegsoup(windsfeld, size = 3))
+rownames(SampleVegsoup(windsfeld, replace = TRUE))
+
+hcr(windsfeld, size = 20)
+
+system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = FALSE))
+system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = TRUE))
+system.time(vegclust::hcr(as.dist(windsfeld), nout = 20, nsampl = 100000))
 }
 \keyword{methods}
