@@ -59,35 +59,37 @@ Borcard, D., Gillet, F., and Legendre, P. (2011). Numerical Ecology with R. Spri
 }
 \examples{
 require(vegsoup)
-data(testdata)
 
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+data(barmstein)
+x <- barmstein
 
-coldiss(dta) # default
+coldiss(x) # default
 
 # other dissimilarity
-vegdist(dta) <- "bray"
-coldiss(dta, 4)
+vegdist(x) <- "bray"
+coldiss(x, 4)
 
 # more colors
 require(RColorBrewer)
 
 cols <- colorRampPalette(brewer.pal(11, "Spectral"))
 
-coldiss(dta, cols(4), byrank = FALSE, diag = TRUE)
+coldiss(x, cols(4), byrank = FALSE, diag = TRUE)
 
 # R-mode analysis, see ?as.dist
 # first collapse layers
-dta.0l <- Layers(dta, aggregate = "layer",
+x.0l <- Layers(x, aggregate = "layer",
                  collapse = "0l", verbose = TRUE)
-decostand(dta.0l) <- "chi.square"
-vegdist(dta.0l) 
+decostand(x.0l) <- "chi.square"
+vegdist(x.0l) 
 
+\dontrun{
 # annotate scientific species names
 # label only the diagonal to avoid cluttered display
-# mode = "R" defunct due to generic dispatch of as.dist
+# mode = "R" defunct due to generic dispatch of as.dist(x)
 coldiss(dta.0l, rev(cols(20)), mode = "R",
     ordered.only = TRUE, translate = TRUE, diag = TRUE)
+}
 }
 \keyword{ methods }
 \keyword{ hplot }

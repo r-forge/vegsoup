@@ -1,15 +1,9 @@
-# rle issuse and initial ordering
-
 # drop
 Association, is defined for nominal variables only?
 
 # Latex.Rd
 document
 system.file("extdata", "template.tex", package = "vegsoup")
-
-# rename
-‘stack.species’ ‘stack.sites’ ‘stack.coordinates’ to
-stackSpecies, stackSites, stackSpatial
 
 cov to abu(dance)
 Species to species and Sites to sites
@@ -22,21 +16,24 @@ if TRUE no method to add strata to unlayered object
 # add?
 decotrans method, better math method e.g. obj^0.2
 decostand method for fidelity, needs to recalculate fidelity if not presence absence
-extend slot partition to contain class dendrogram
+
+generalize slot partition to contain class dendrogram, fuzzy memberships and maybe more?
 
 improve findcoordiantes(), or drop and replace it with coordinates<- method
 
 
-more rigourious tests of coverscale
+more rigorous tests of coverscale
 eg. cov "++" is accepted but must raise errors!
 
 # minor
 improve Spread()
-saerch for 
+search for 
 Species(dta) <-
+
 noquote for print method (e.g. as.matrix)
 order method for Vegsoup object (plot, abbr, layer)?
 
 # package check
 tools::showNonASCII(readLines(f))
 
+# coldiss should accept color

@@ -101,34 +101,35 @@ care! Of course, valid rownames have no duplicates nor missing values.
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # access dimnames of species matrix (class 'matrix')
-colnames(dta) # species-layer replicates
-rownames(dta) # plot names
-dimnames(dta)
+colnames(x) # species-layer replicates
+rownames(x) # plot names
+dimnames(x)
 
 # return names of sites data (class 'data.frame')
-names(dta)
-row.names(dta)
+names(x)
+row.names(x)
 
 # access names of sites data
-dta$rock
+x$rock
 
 # set a name
-names(dta)[1] <- "bar"
+names(x)[1] <- "bar"
 
 # assign a value
-if (any(names(dta) == "rock")) {
-   dta$rock <- sqrt(dta$rock)
+if (any(names(x) == "rock")) {
+   x$rock <- sqrt(x$rock)
 }
 
 # return plot names
-rownames(dta)
+rownames(x)
 
 # assign new rownames
-rownames(dta) <- paste("new", rownames(dta), sep = ".")
+rownames(x) <- paste("new", rownames(x), sep = ".")
 }
 \keyword{ methods }

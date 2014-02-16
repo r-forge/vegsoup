@@ -18,17 +18,14 @@ numeric.
 }
 
 \details{
-Function \code{compass} cuts numeric values of angular degrees into characters of the windrose.
+Function \code{compass} cuts numeric values of angular degrees into characters of the wind-rose.
 }
 
 \value{
 character
 }
 
-\author{
-Roland Kaiser
-}
-
+\author{ Roland Kaiser }
 
 \examples{
 compass(c(0,220))

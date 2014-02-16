@@ -26,12 +26,11 @@ plotPCO(x, display = "sites", ...)
 \author{ Roland Kaiser }
 
 \examples{
-library(vegsoup)
+require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-
-plotPCO(dta, thresh = 0.2)
+data(windsfeld)
+vegdist(windsfeld) <- "bray"
+plotPCO(windsfeld, thresh = 0.2)
 }
 
 \keyword{ plot }

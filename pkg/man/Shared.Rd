@@ -4,7 +4,7 @@
 \alias{shared}
 \alias{shared,VegsoupPartition-method}
 
-\title{ Compare shared species between partitions }
+\title{ Shared Species }
 
 \description{
   Compute a diagonal matrix showing percentages of shared species between partitons.
@@ -16,7 +16,7 @@
 
 \arguments{
   \item{ x }{
-     An \code{VegsoupPartition} object.
+     \code{VegsoupPartition} object.
   }
 }
 
@@ -38,11 +38,11 @@
 library(vegsoup)
 
 # real data
-data(bigtestdata)
+require(vegsoup)
 
-dta <- Vegsoup(spc.big, sts.big, txa.big, "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 3)
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
 
-Shared(prt)
+shared(x)
 }
 \keyword{ methods }

@@ -92,37 +92,35 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # same as as.matrix(prt, typeof = "numeric")
-x <- as(dta, "matrix")
+m <- as(x, "matrix")
 
 # the species matrix as an multi-dimensional array
-x <- as(dta, "array")
+a <- as(x, "array")
 
 # the data stored in slots 'species', 'sites' and 'taxonomy'
-x <- as(dta, "list")
-dim(x)
+l <- as(x, "list")
+length(l)
 
 # coerce to data.list in package multitable
 x <- as(dta, "data.list")
 summary(x)
-class(as.data.list(dta))
 
-# coerce to data.list in package multitable
-x <- as(dta, "mefa")
+# automatic dispatch of Vegsoup* object as argument in S3 function
+# if they internally call as.matrix or as.dist
+decostand(x) <- "hellinger"
+vegdist(x) <- "euclidean"
 
-# dispatch: use Vegsoup* object in S3 function
-decostand(dta) <- "hellinger"
-vegdist(dta) <- "euclidean"
+rda(x) # principal component analysis
+agnes(x) # agglomerative nesting
 
-rda(dta) # principal component analysis
-agnes(dta) # agglomerative nesting
-
-# no call to as.dist(d) in hclust
-hclust(as.dist(dta))
+# no call to as.dist(d) in hclust, no automatic dispatch
+hclust(as.dist(x))
 }
 
 \keyword{ methods }

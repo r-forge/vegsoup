@@ -48,9 +48,8 @@ Interfaced from Roland Kaiser for package vegsoup from function
 \examples{
 require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+data(barmstein)
 
-Indspc(dta)
+Indspc(barmstein)
 }
 \keyword{ methods }

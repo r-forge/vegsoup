@@ -5,7 +5,7 @@
 \alias{seriation,Vegsoup-method}
 \alias{seriation,VegsoupPartition-method}
 
-\title{ Modify an Objects Internal Order as to Reflect a Vegetation Table }
+\title{ Reorder as to Reflect a Vegetation Table }
 
 \description{
 The method rearranges the species matrix according to ordination coordinates, cluster analysis or by species frequencies to achieve a \sQuote{structured} table following phytosociological principles. A modified object is returned as to reflect the order of plots and species as returned by the selected method.
@@ -55,15 +55,22 @@ Currently there are only very limited ways to pass down arguments to functions a
 \seealso{
 \code{\link{vegemite}} in package \pkg{vegan} for the ancestor of all vegetation table functions,
 \code{\link[labdsv:ordtaxa]{ordtaxa}} for an interactive implementation in package \pkg{labdsv},
-and \code{\link{VegsoupPartition}} for a feature-rich interface.
+and \code{\link{VegsoupPartition}} for creating a partitions.
 }
 
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa,
-       coverscale = "braun.blanquet")
-seriation(dta)
-seriation(dta, "packed")    
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
+
+rownames(seriation(x))
+rownames(seriation(x, "packed"))
+
+# use default print method of package Matrix
+require(MAtrix)
+# zero are printed as dots and decimals are truncated to 0
+t(as(seriation(x, "dca"), "sparseMatrix"))
 }
 \keyword{ methods }
 

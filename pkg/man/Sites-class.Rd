@@ -96,25 +96,35 @@
 require(vegsoup)
 showClass("Sites")
 
-showClass("Species")
+data(barmstein)
+x <- barmstein
 
-data(testdata)
+# extract from Vegsoup object for demonstration
+# get sites slot, it is returned in wide format
+s <- Sites(barmstein)
 
-new("Sites", data = sts)
+# add plot names
+s <- cbind(plot = rownames(x), s)
+class(s)
 
-class(sts)
-sites(sts)
-obj <- sites(as.matrix(sts))
+#	promote to class Sites
+s <- stackSites(s)
 
-# get slot data from object
-class(sites(sts))
+# get slot 'data' from object of class 'Sites'
+s.df <- sites(s)
+class(s.df)
+
+# matrix method 
+s.m <- as.matrix(s.df)
+s <- sites(s.m)
 
 # combine objects
-data(bigtestdata)
+data(windsfeld)
 
-obj2 <- sites(sts.big)
+s2 <- stackSites(cbind(plot = rownames(windsfeld), Sites(windsfeld)))
 
-obj <- rbind(obj, obj2)
+rbind(s, s2)
+
 
 }
 

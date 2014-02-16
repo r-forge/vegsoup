@@ -1,4 +1,5 @@
 \name{tile2latlng}
+
 \alias{latlng2tile}
 \alias{tile2latlng}
 \alias{str2latlng}
@@ -73,10 +74,10 @@ Roland Kaiser
 }
 \examples{
 # a unique tile given coordiantes and zoom level 
-(xyz <- latlng2tile(47.00000, 13.00000, 14))
+( xyz <- latlng2tile(47.00000, 13.00000, 14) )
 
 # paste string as it would display in the web development console
-(xyz <- paste0("x=", xyz[1], "&y=", xyz[2], "&z=", xyz[3]))
+( xyz <- paste0("x=", xyz[1], "&y=", xyz[2], "&z=", xyz[3]) )
 
 # center coordinates of tile
 str2latlng(xyz, offset = 0.5)

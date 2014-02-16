@@ -46,10 +46,10 @@
 Roland Kaiser
 }
 \examples{
-library(vegsoup)
+require(vegsoup)
+data(barmstein)
 
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-abbr(dta)
+abbr(barmstein)
 }
 \seealso{
 \code{\link{splitAbbr}}

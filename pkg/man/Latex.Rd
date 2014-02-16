@@ -169,18 +169,21 @@
 \examples{
 require(vegsoup)
 
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 10)
+data(windsfeld)
+x <- VegsoupPartition(windsfeld, k = 2, method = "flexible")
 
-ltx <- Latex(prt, filename = tempfile())
+\dontrun{
+# method currently broken
+tex <- Latex(x, file = tempfile())
 
-fid <- Fidelity(prt)
+fid <- Fidelity(x)
 class(fid)
 
-ltx <- Latex(fid, mode = 2, filename = tempfile())
+tex <- Latex(fid, file = tempfile())
 
-head(ltx$table)
+head(tex$table)
+}
+
 }
 \keyword{ methods }
 

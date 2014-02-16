@@ -60,11 +60,10 @@ Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classi
 \examples{
 require(vegsoup)
 
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+data(windsfeld)
 
-prt1 <- VegsoupPartition(dta, k = 10, method = "flexible")
-prt2 <- VegsoupPartition(dta, k = 10, method = "pam")
+prt1 <- VegsoupPartition(windsfeld, k = 10, method = "flexible")
+prt2 <- VegsoupPartition(windsfeld, k = 10, method = "pam")
 
 Confus(prt1, prt2)
 }

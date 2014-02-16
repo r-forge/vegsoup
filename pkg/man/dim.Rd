@@ -64,13 +64,15 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 \author{ Roland Kaiser }
 
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
 
-dim(dta)
-nrow(dta)  # number of plots
-ncol(dta)  # number of (pseudo-)species
-ncell(dta) # number of cells, short hand for prod(dim(dta))
+data(barmstein)
+x <- barmstein
+
+dim(x)
+nrow(x)  # number of plots
+ncol(x)  # number of (pseudo-)species
+ncell(x) # number of cells, short hand for prod(dim(dta))
 }
 
 \keyword{methods}

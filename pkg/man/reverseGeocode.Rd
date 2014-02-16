@@ -48,7 +48,7 @@ Make sure that the object has a column named \code{"horizontal.precision"} in or
 \code{\link{coordinates}}
 }
 \examples{
-#	Nothing here yet
+# Nothing here yet
 }
 
 \keyword{ spatial }

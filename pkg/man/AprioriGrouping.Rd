@@ -35,11 +35,9 @@ Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
+require(vegsoup)
+data(barmstein)
 
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-
-AprioriGrouping(dta)
+AprioriGrouping(barmstein)
 }
 \keyword{ methods }

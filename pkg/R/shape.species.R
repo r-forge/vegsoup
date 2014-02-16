@@ -1,4 +1,4 @@
-shape.species <- function (obj) {
+shapeSpecies <- function (obj) {
 	if (!inherits(obj, "Vegsoup")) {
 		stop("only defined for Vegsoup* objects")
 	}

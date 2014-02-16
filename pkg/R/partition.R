@@ -101,7 +101,7 @@ setGeneric("PartitioningCombinations",
 	}	
 	cluster <- levels(as.factor(Partitioning(x)))	
 	cl.comb <- function (x) {
-		k <- k <- getK(x)# length(x)
+		k <- length(x) #getK(x)# 
 		ep <- diag(1, k, k)
 		names.ep <- x
 	    for (j in 2:k) {

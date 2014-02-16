@@ -30,7 +30,7 @@ if (method %in% c("r.ind", "r.ind.g", "s.ind", "s.ind.g", "TCR")) {
 	X <- as.numeric(obj)
 } else {
 	if (verbose) {
-		cat("presence/absence based index")
+		cat("presence/absence based index\n")
 	}
 	X <- as.logical(obj)
 	r.ind <- FALSE # Fisher can use matrix X

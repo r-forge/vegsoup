@@ -44,13 +44,15 @@ Simply return the layer for each observation.
 }
 
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # check the number of occurences per layer
-table(Layer(dta))
+table(Layer(x))
 
 # alternative
-table(Species(dta)$layer)
+table(Species(x)$layer)
 }
 \keyword{ methods }

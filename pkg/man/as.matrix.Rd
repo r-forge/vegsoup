@@ -59,7 +59,7 @@ The functions retrieve a species matrix of mode according the methods name and \
 }
 
 \details{
-For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapased with the \code{"@"} gylph (pseudo-species, see \code{\link{Layers}} and \code{\link{splitAbbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
+For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{"matrix"} with dimnames giving plot and species names. The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviations, collapsed with the \code{"@"} glyph (pseudo-species, see \code{\link{Layers}} and \code{\link{splitAbbr}}). The returned object is suitable as input to functions in other packages that require an object of class \code{matrix}. Dispatch is guaranteed if these functions internally coerce objects to class \code{"matrix"} by calling \code{as.matrix}. Besides that, it is possible to supply a \code{Vegsoup*} object directly to a base function (see \sQuote{Examples}). As there is no way to specify the \code{typeof} or \code{mode} arguments in a call to base function the S3 method for \code{as.matrix()} uses \code{typeof = "numeric"} which is suitable for most applications. If the user wants to ensure that presence/absence data should be returned by calls to \code{as.matrix()} inside base functions, simply assign a standardization method beforehand (e.g. \code{decostand(obj) <- "pa"}). See also \code{\link{as.data.frame}} for passing data to model-fitting and plotting functions.
 
 \code{as.numeric} returns a matrix of mode \code{"numeric"} with species abundances coded by \code{coverscale(obj)\$lims}. Absences are zeros. Equals \code{as.matrix(x, typeof = "numeric")}.
 
@@ -69,7 +69,7 @@ For any object inheriting from class \code{Vegsoup} the methods return an object
 
 Note, \code{as.logical} and \code{as.matrix(x, "logical")} do not return a boolean or logical matrix composed of \code{TRUE} and \code{FALSE} but use ones to code presences (\code{TRUE}) and zeros (\code{FALSE}) for absences. The \code{mode} (\code{storage.mode}) of the returned matrix is of type \code{"numeric"} (\code{"integer"}).
 
-As defined above, the some how misleading named argument \code{mode} refers to the type of analysis intended on the returned object (recall, \code{"typeof"} determines \code{mode} (\code{storage.mode}) of the returned matrix). The argument \code{mode} can be passed to all methods and has two possible values. If \code{mode = "Q"} pairs of objects are compared and the analysis is said to be in \emph{Q mode}. This is what users usally want or expect. When pairs of descriptors are compared, the analysis is said to be in \emph{Q mode} (Legendre & Legendre 2012). For example, \code{as.matrix(x, "logical", "R")} returns a transposed presence/absence matrix. Of cource, this can also be written as \code{t(as.matrix(x, "logical"))}.
+As defined above, the some how misleading named argument \code{mode} refers to the type of analysis intended on the returned object (recall, \code{"typeof"} determines \code{mode} (\code{storage.mode}) of the returned matrix). The argument \code{mode} can be passed to all methods and has two possible values. If \code{mode = "Q"} pairs of objects are compared and the analysis is said to be in \emph{Q mode}. This is what users usally want or expect. When pairs of descriptors are compared, the analysis is said to be in \emph{Q mode} (Legendre & Legendre 2012). For example, \code{as.matrix(x, "logical", "R")} returns a transposed presence/absence matrix. Of course, this can also be written as \code{t(as.matrix(x, "logical"))}.
 
 A data set composed of more than one layer might also be represented as a multidimensional dimensional array, where there are as many dimensions as there are layers. Method \code{as.array} returns such an array. Note, the order in which species appear in the column names is alphabetic and there is currently no implementation of the \code{'mode'} argument!
 
@@ -85,7 +85,7 @@ If the object has non \code{NULL} values in its data standardization slot the me
 \author{ Roland Kaiser }
 
 \references{
-Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Developments in environmental modelling, 24.
+Legendre, P. and Legendre, L. (2012). Chapter 7 in Numerical ecology. Developments in environmental modeling, 24.
 }
 \seealso{
 \code{\link{as.data.frame}},
@@ -94,56 +94,60 @@ Legendre, P. and Legendre, L. (2012). Chaper 7 in Numerical ecology. Development
 \code{\link{Coverscale}}
 }
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+data(barmstein)
+
+x <- barmstein
 
 # presence/absence representation
-dta.pa <- as.logical(dta)
+x.pa <- as.logical(x)
 # the same results can be achieved using the classes decostand property
-decostand(dta) <- "pa"
+decostand(x) <- "pa"
 
-# note, that the results of as.numeric() and as.logical()
-# are the same if presence/absence (transformation) is applied
-dta.pa2 <- as.numeric(dta)
+# note, results of as.numeric() and as.logical()
+# are equal if presence/absence (transformation) is applied
+x.pa2 <- as.numeric(x)
 
-#   for a true boolean matrix change mode
-mode(dta.pa) <- "logical"
-head(dta.pa)
-all.equal(dta.pa, dta.pa2, check.attributes = FALSE)
+# for a true boolean matrix change mode
+mode(x.pa) <- "logical"
+head(x.pa)
+all.equal(x.pa, x.pa2, check.attributes = FALSE)
 
-#   using as.matrix and argument mode
-as.matrix(dta, typeof = "character", mode = "R")
+# using as.matrix and argument mode
+as.matrix(x, typeof = "character", mode = "R")
 
-#   compact display
-as(as.matrix(dta, "logical", "R"), "sparseMatrix")
+# compact display
+as(as.matrix(x, "logical", "R"), "sparseMatrix")
 
-
-pro <- protest(as.logical(dta), as.numeric(dta))
+pro <- protest(as.logical(x), as.numeric(x))
 
 # objects of class Vegsoup used in arguments of base functions
 # where an object of class matrix is expected
-decostand(dta) <- "hellinger"
-decorana(dta)
-decostand(dta) <- NULL # reset the default
+decostand(x) <- "hellinger"
+decorana(x)
+decostand(x) <- NULL # reset the default
 
 # species matrix representations and memory demands
 # class "matrix"
-object.size(as.matrix(dta))          # most efficient
+object.size(as.matrix(x))          # most efficient
 # class "list" (pointers and values of all non zero entries)
-object.size(indices(dta))            # almost equal 
-# coercion to class "sparseMatrix" is based on indices()
-object.size(as(dta, "sparseMatrix")) # efficient
-# the long format as stored in Vegsoup objects (slot 'species')
-object.size(Species(dta))            # most general but least efficent
+object.size(indices(x))            # almost equal
+# coercion to class "sparseMatrix" is based on method indices
+object.size(as(x, "sparseMatrix")) # efficient
+# the long format as stored in Vegsoup* objects (slot 'species')
+object.size(Species(x))            # most general but least efficent
 # a multi-dimensional array of layer replicates
-object.size(as.array(dta))           # least efficent
+object.size(as.array(x))           # least efficent
 
-# comparison of objects
-#object.size(as(dta, "mefa"))       # most efficent, but can't cope with strata
-object.size(as.data.list(dta))  # least efficent, but highly generic
-object.size(as.data.frame(dta)) # also efficent
-object.size(dta) - object.size(dta@sp.points) - object.size(dta@sp.polygons) # most general most efficent               
+# comparison of memory demands of objects of differnt classes
+object.size(as(x, "data.list"))  # least efficent, but highly generic
+object.size(as.data.frame(x))    # also efficent
+sp.object.size <- object.size(x@sp.points) + object.size(x@sp.polygons) # for comparison subtract sp slots
+object.size(x) - sp.object.size # most general and most efficent
+\dontrun{
+#   a little bit more to add here
+#   object.size(as(dta, "mefa")) # very efficent, but can't cope with strata
+}
 }
 \keyword{ methods }
 \keyword{ manip }

@@ -44,9 +44,9 @@ This is a wrapper for function
 \examples{
 require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 2)
-Murdoch(prt)
+data(barmstein)
+
+murdoch(VegsoupPartition(barmstein, k = 2))
+
 }
 \keyword{ methods }

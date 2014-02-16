@@ -21,16 +21,16 @@ The methods take a sample of the specified size from the elements of \code{x} us
 
 \arguments{
   \item{ x }{
-    a \code{Vegsoup*} object.
+    \code{Vegsoup*} object.
   }
   \item{ size }{
-    Non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{SampleVegsoup} to \code{nrow(x)}.
+    non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{SampleVegsoup} to \code{nrow(x)}.
   }
   \item{ replace }{
-    Should sampling be with replacement?
+    should sampling be with replacement?
   }
   \item{ prob }{
-    A vector of probability weights for obtaining the elements of the vector
+    vector of probability weights for obtaining the elements of the vector
     being sampled.
   }
   \item{ nperm }{
@@ -45,15 +45,13 @@ The methods take a sample of the specified size from the elements of \code{x} us
 }
 
 \details{
-See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most representative} subsample of specified size by selecting from \code{nperm} independent subsets the one that has lowest mean dissimilarity and highest variance. 
-
-Method \code{hcr} returns a sample that maximizes the mean and minimizes the variance of the paired distances between pairs
+See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most representative} subsample of specified size by selecting from \code{nperm} independent subsets the one that has lowest mean dissimilarity and highest variance.
 }
 
 \value{
   An object of the same class as the input object.
 }
-\author{ Roland Kaiser, method hcr is an speed optimized re-implementation of function hcr in \pkg{vegclust} by Miquel De Cáceres }
+\author{ Roland Kaiser, method \code{hcr} is an re-implementation of function \code{hcr} in package \pkg{vegclust} by Miquel De Cáceres that is capable of forking multicore instances. }
 
 \references{
 Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resampling of phytosociological databases. Journal of Vegetation Science 22: 175-183.
@@ -73,8 +71,10 @@ rownames(SampleVegsoup(windsfeld, replace = TRUE))
 
 hcr(windsfeld, size = 20)
 
+\dontrun{
 system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = FALSE))
 system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = TRUE))
 system.time(vegclust::hcr(as.dist(windsfeld), nout = 20, nsampl = 100000))
+}
 }
 \keyword{methods}

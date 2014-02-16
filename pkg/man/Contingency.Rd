@@ -10,9 +10,6 @@
 \alias{average}
 \alias{average,VegsoupPartition-method}
 
-\alias{imprtance}
-\alias{imprtance,VegsoupPartition-method}
-
 \title{ Summary Tables for \code{"VegsoupPartition"} Objects }
 
 \description{
@@ -50,7 +47,7 @@ Specifying \code{mode = "R"} in \code{Contingency} and \code{Importance} allows 
 }
 
 \value{
-A \code{"matrix"} with as many columns as there are partitions (layers if \code{mode = "R"}) and as many rows as species (or plots). If mode is not specified layer pseudo-species are treated sperately.
+A \code{"matrix"} with as many columns as there are partitions (layers if \code{mode = "R"}) and as many rows as species (or plots). If mode is not specified layer pseudo-species are treated separately.
 }
 
 \author{ Roland Kaiser }
@@ -62,30 +59,21 @@ A \code{"matrix"} with as many columns as there are partitions (layers if \code{
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
+require(vegsoup)
+
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
 
 # constancy table for two partitions
-head(Constancy(prt))
+head(constancy(x))
 
 # equivalent
-head(Contingency(prt) / as.vector(table(Partitioning(prt)))) * 100
-
-# importance table based on class midpoints of braun blanquet scale
-Importance(prt)
-
-# adust to mimic presence/absence data
-decostand(prt) <- "pa"
-
-Importance(prt)
+head(contingency(x) / as.vector(table(Partitioning(x)))) * 100
 
 # R-mode analysis
 # remove presence/absence standardisation
-decostand(prt) <- NULL
-
-Contingency(prt, mode = "R")
-
-Importance(prt, mode = "R")
+decostand(x) <- NULL
+contingency(x, mode = "R")
+average(x, mode = "R")
 }
 \keyword{methods }

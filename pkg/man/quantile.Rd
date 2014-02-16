@@ -50,19 +50,22 @@ An array with as many dimensions as \code{length(probs)} containing the summary 
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\linkS4class{Coverscale}}.
+\code{\link{boxplot.stats}}, \code{\link{fivenum}}, \code{\linkS4class{Coverscale}}, \code{\link{Latex}}.
 }
 
 \examples{
-data(testdata)
-prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
 
-res1 <- quantile(prt, probs = seq(0, 1, 0.25))
-res1[ , , 3]
-probs <- 
-res2 <- quantile(prt, probs = c(0, 0.5, 1), coverscale = TRUE)
+require(vegsoup)
 
-res2[ , , 2] # probs[2]
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
+
+x1 <- quantile(x, probs = seq(0, 1, 0.25))
+x1[ , , 3]
+
+x2 <- quantile(x, probs = c(0, 0.5, 1), coverscale = TRUE)
+
+x2[ , , 2] # probs[2]
 
 }
 

@@ -14,13 +14,14 @@ Revert Braun-Blanquet abundance scale from extended (new) to simple (old).
 
 \arguments{
   \item{ x }{
-    An \code{Vegsoup*} object.
+   \code{Vegsoup*} object.
   }
 }
 
 \details{
-  Converts from 9 and 7 point Braun-Blanquet scale by merging abundance
-  classes "2m", "2a" and "2b" to "2".
+  Converts from 9 to 7 point Braun-Blanquet scale by merging abundance
+  classes "2a" and "2b" to "2" and "2m" to "1". Of course, there is no way
+  to convert from 7 to 9 point scale.
 }
 
 \value{
@@ -36,15 +37,15 @@ Revert Braun-Blanquet abundance scale from extended (new) to simple (old).
 \author{ Roland Kaiser }
 
 \examples{
-library(vegsoup)
+require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+data(barmstein)
+x <- barmstein
 
-red <- BraunBlanquetReduce(dta)
-coverscale(dta)
-coverscale(red)
-class(BraunBlanquetReduce(red))
+xr <- BraunBlanquetReduce(x)
+coverscale(x)
+coverscale(x)
+class(BraunBlanquetReduce(x))
 
 }
 \seealso{

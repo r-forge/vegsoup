@@ -33,7 +33,7 @@ Experimental.
 }
 
 \details{
-\code{mode = 0} looks for species whose abundance is significantly higher in one of the groups. \code{mode = 0} looks for species whose abundance is significantly higher in sites belonging to one group as opposed to sites not belonging to it.
+\code{mode = 0} looks for species whose abundance is significantly higher in one of the groups. \code{mode = 1} looks for species whose abundance is significantly higher in sites belonging to one group as opposed to sites not belonging to it.
 }
 
 \value{
@@ -41,7 +41,7 @@ Experimental.
 }
 
 \author{
-Adapted from function \code{signassoc()} of package \pkg{indicspecies} by Miquel De Cáceres Ainsa.
+Adapted from function \code{signassoc()} of package \pkg{indicspecies} by \emph{Miquel De Cáceres Ainsa}.
 }
 
 \keyword{ methods }

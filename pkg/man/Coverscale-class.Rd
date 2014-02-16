@@ -49,5 +49,6 @@ Roland Kaiser
 }
 \examples{
 showClass("Coverscale")
+Coverscale()
 }
 \keyword{classes}

@@ -58,7 +58,9 @@ The returned object is reordered by plot, abbr and layer!
 
 If there are any \code{NAs} in \code{collapse} all species that occur only on these layers will be dropped from the data set and a warning is issued. This can be useful e.g. if you want to drop cryptogams (bryophytes and/or lichens) from a dataset that has no complete coverage for these taxa and would otherwise influence the analysis (see \sQuote{Examples}).
 }
-
+\references{
+Mucina, L., Schaminee, J., and Rodwell, J. (2000). Common data standards for recording relevés in field survey for vegetation classification. Journal of Vegetation Science, 11: 769–772.
+}
 \value{
 An object depending on the input class.
 }
@@ -67,50 +69,55 @@ An object depending on the input class.
 }
 
 \examples{
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big, "braun.blanquet")
+require(vegsoup)
+
+data(windsfeld)
+x <- windsfeld
+
 #   print layers
-Layers(dta)
+Layers(x)
 
 # change order of layers
-Layers(dta) <- c("ml", "hl", "sl", "tl2", "tl1")
+Layers(x) <- c("ml", "hl", "sl", "tl2", "tl1")
+Layers(x)
+
 # assign wl to sl, tl1 and tl2
-# see ?bigdataset for details
-dta.1 <- Layers(dta, aggregate = "layer",
+# see ?windsfeld for details
+x1 <- Layers(x, aggregate = "layer",
                 collapse = c("hl", "ml", "wl", "wl", "wl"),
                 verbose = TRUE)
-Layers(dta.1)
+Layers(x1)
 # check dimension of data set
 # dim(obj)[1] gives number of sites (unique sample plots)
 # dim(obj)[2] gives number of species
-dim(dta.1)
+dim(x1)
 
 # collpase all layers
-dta.2 <- Layers(dta, aggregate = "layer", collapse = c("ol"),
+x2 <- Layers(x, aggregate = "layer", collapse = c("ol"),
                 verbose = TRUE)
-Layers(dta.2); dim(dta.2)
+Layers(x2); dim(x2)
 
 # ... another way adopting default labeling
-dta.3 <- Layers(dta, aggregate = "layer",
+x3 <- Layers(x, aggregate = "layer",
                 verbose = TRUE)
-Layers(dta.3); dim(dta.3)
+Layers(x3); dim(x3)
 
 # drop layer sl aswell as tl1 and tl2
-dta.4 <- Layers(dta, aggregate = "layer",
+x4 <- Layers(x, aggregate = "layer",
                 collapse = c("hl", NA, "sl", NA, NA),
                 verbose = TRUE)
-Layers(dta.4)
-dim(dta.4)
+Layers(x4)
+dim(x4)
 
 # this way we also loose some plots
-dta.5 <- Layers(dta, aggregate = "layer",
+x5 <- Layers(x, aggregate = "layer",
                 collapse = c(NA, NA, "wl", "wl", "wl"),
                 verbose = TRUE)
-Layers(dta.5)
-dim(dta.5)
+Layers(x5)
+dim(x5)
 
 # subsetting will also extract layers appropiately
-Layers(dta[, grep("@tl", colnames(dta))])
+Layers(x[, grep("@tl", colnames(x))])
 }
 \seealso{
 \code{\link{Layer}},

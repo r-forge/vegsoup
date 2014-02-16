@@ -23,10 +23,10 @@
 }
 
 \details{
-  This a a convinience function for coercion to \code{"data.list"} objects.
+  This a convenience coercion method for translation to \code{"data.list"} objects.
   The current interface is rudimentary and does not accept additional
-  arguments supplied by function \code{\link{dlcast}} which is used to make
-  the conversion.
+  arguments supplied by function \code{\link{dlcast}}, although it is used internaly
+  to perform the conversion.
 }
 
 \author{ Roland Kaiser }
@@ -36,13 +36,16 @@
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+data(barmstein)
 
-x <- as(dta, "data.list")
-x <- as.data.list(dta)
+x <- as(barmstein, "data.list")
 summary(x)
+\dontrun{
+# not yet implemented
+x <- as.data.list(barmstein)
+}
+
 }
 
 \keyword{ methods }

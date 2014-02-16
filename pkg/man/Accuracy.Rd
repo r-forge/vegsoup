@@ -54,10 +54,10 @@ Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe}
 
 \examples{
 require(vegsoup)
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
-prt1 <- VegsoupPartition(dta, k = 10, method = "flexible")
-prt2 <- VegsoupPartition(dta, k = 10, method = "pam")
+data(windsfeld)
+
+prt1 <- VegsoupPartition(windsfeld, k = 10, method = "flexible")
+prt2 <- VegsoupPartition(windsfeld, k = 10, method = "pam")
 
 Accuracy(prt1, prt2)
 }

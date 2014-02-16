@@ -33,7 +33,7 @@
     A \code{VegsoupPartition} object.
   }
   \item{ collapse }{
-    Character be be used as seperator in dimnames. Only characters are
+    Character be be used as separator in dimnames. Only characters are
     allowed that can be identified with \code{grep("[:punct:]", collapse)}.
     See \code{\link{regex}} in package \pkg{base} for details.
   }
@@ -45,7 +45,7 @@
   }
   \item{ PartitioningMatrix }{
     returns a \code{matrix} of zeros and ones where rows are plots and
-    columns are partitons. Ones indicate to which partition a plot belongs.
+    columns are partitions. Ones indicate to which partition a plot belongs.
   }
   \item{ PartitioningCombinations }{
     returns a \code{matrix} of combinations where column names indicate a particular
@@ -60,19 +60,22 @@
 }
 
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa,
-       coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, 2)
+require(vegsoup)
+
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
 
 # number of partitions
-getK(prt)
+getK(x)
+
 # vector of assigments
-Partitioning(prt)
+Partitioning(x)
+
 # matrix of meberships
-PartitioningMatrix(prt)
+PartitioningMatrix(x)
+
 # matrix of possible combinations
-PartitioningCombinations(prt)
+PartitioningCombinations(x)
 }
 \keyword{ methods }
 

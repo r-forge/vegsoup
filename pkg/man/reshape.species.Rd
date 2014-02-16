@@ -1,21 +1,23 @@
 \name{reshape}
 
-\alias{shape.species}
-\alias{reshape.species}
+\alias{shapeSpecies}
+\alias{reshapeSpecies}
 
-\title{ Reshape Stacked Species Matrix With Layers in Separate Columns }
+\title{ Reshape Species Matrix }
 
 \description{
-  \code{reshape.species} is a utility function for conversion of objects of
+  \code{reshapeSpecies} is a utility function for conversion of objects of
   class \code{"data.frame"} to class \code{"Species"}. The format demands
-  cover values for layers to be given in separate columns.
-  \code{shape.species} performs the reverse operation on objects of class
-  \code{Vegsoup*}.
+  cover values for layers to be given in separate columns. Such data structures
+  might be delivered by certain data bases or archives, or are available as
+  digitized field lists. \code{shapeSpecies} performs the reverse operation on
+  objects of class \code{Vegsoup*}. This might be useful for tabular presentation
+  of single relevés.
 }
 
 \usage{
-  reshape.species(x, file, schema, sep = ";", dec = ",", verbose = FALSE)
-  shape.species(obj)
+  reshapeSpecies(x, file, schema, sep = ";", dec = ",", verbose = FALSE)
+  shapeSpecies(obj)
 }
 
 \arguments{
@@ -44,7 +46,7 @@
 }
 
 \details{
-  The current implementation for \code{reshape.species} support only a single
+  The current implementation for \code{reshapeSpecies} support only a single
   case. The values of \code{schema} are seeked in the column names of
   \code{x}, respectively, \code{file} to tabulate observations for layers.
   The first element of \code{schema} identifies plots, the second species
@@ -52,21 +54,21 @@
   observations on a specific layer. Layer codes are assigned based on
  \code{names(x)}. See \sQuote{Examples}.
 
-  \code{shape.species} reverts what is done by \code{reshape.species}. The
+  \code{shapeSpecies} reverts what is done by \code{reshapeSpecies}. The
   main purpose of that function is print a compact and more readable species
   list including when there are more than one layer.
 }
 
 \value{
-  \code{reshape.species} returns an object of class
+  \code{reshapeSpecies} returns an object of class
   \code{\linkS4class{Species}}.
 
-  \code{shape.species} returns an object of class
+  \code{shapeSpecies} returns an object of class
   \code{"data.frame"}.
 }
 
 \note{
-  \code{shape.species} will change the order of taxa based on
+  \code{shapeSpecies} will change the order of taxa based on
   \code{Taxonomy(obj)}. The order of plots equals that of the input object.
   The same is true for the order of layer columns.
 }
@@ -83,12 +85,18 @@ data(testdata)
 
 # create dummy data
 # only a single plot for demonstartion
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # for demonstration, first create format
-spc <- shape.species(dta)
+spc <- shapeSpecies(x)
+class(spc)
+head(spc)
+
 # then stack again
-res <- reshape.species(spc, schema = c("plot", "abbr", "hl", "sl", "ml"))
+r <- reshapeSpecies(spc, schema = c("plot", "abbr", "hl", "sl", "ml"))
 
 }
 

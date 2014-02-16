@@ -26,8 +26,8 @@
   \code{\link[vegsoup:Coverscale-class]{Coverscale}} containing a definition
   for an ordinal scale, or alternatively setting up a \code{Coverscale} object
   representing species abundances on a continuous scale (counts, frequencies
-  or percentages). Objects of this class are mandatory for all classes
-  extending \code{Vegsoup}.
+  or percentages). Objects of this class are mandatory for \code{Vegsoup} and
+  it's extending classes.
 }
 
 \usage{
@@ -60,17 +60,17 @@ Coverscale(name, codes, lims)
     A \code{Vegsoup*} object.
   }
   \item{ value }{
-    A \code{Coverscale} object or a \code{character} specifing a coverscale as accepted by
+    A \code{Coverscale} object or a \code{character} specifying a coverscale as accepted by
 	argument name of function \code{Coverscale}.
   }
 }
 
 \details{
-The constructor Function \code{Coverscale} creates an object of class \code{"Coverscale"}, whereas method \code{coverscale} (lower case letters!) returns the abundance scale set up for an \code{Vegsoup*} object. The corresponding replacement method (\code{"coverscale<-"}) can be used to assign a different scale for an object where it has already been set. Most of the time it is convenient to use one of the built in definitions. Call \code{Coverscale()} without arguments to see which ones are available. Note, a continuous scale can simply be defined by having a value of \code{NULL} for slots \code{'codes'} and \code{'lims'} (cp. \code{Coverscale("percentage")}). %If the later are defined abundance values are broken into intervals and the original data is modified.
+The constructor Function \code{Coverscale} creates an object of class \code{"Coverscale"}, whereas method \code{coverscale} (lower case letters!) returns the abundance scale set up for an \code{Vegsoup*} object. The corresponding replacement method (\code{"coverscale<-"}) can be used to assign a different scale for an object where it has already been set. Most of the time it is convenient to use one of the built in definitions. Call \code{Coverscale()} without arguments to see which ones are available. Note, a continuous scale can simply be defined by having a value of \code{NULL} for slots \code{'codes'} and \code{'lims'} (cf. \code{Coverscale("percentage")}). %If the later are defined abundance values are broken into intervals and the original data is modified.
 
-The methods \code{is.continuous} and \code{is.ordinal} test objects of class \code{"Coverscale"} if they conform to the given type of cover scale. Note, this is just a simple test if slots \code{'codes'} and \code{'lims'} are \code{NULL}. If so, the coverscale is treated as continuous, otherwise as ordinal.
+The methods \code{is.continuous} and \code{is.ordinal} test objects of class \code{"Coverscale"} if they conform to the given type of cover scale. Note, this is just a simple test if slots \code{'codes'} and \code{'lims'} are \code{NULL}. If so, the coverscale is treated as continuous, otherwise as ordinal. There are methods defined for \code{Vegsoup*} object (see \sQuote{examples}).
 
-The replacement function can also be used to transform a continuous scale to an ordinal one. This functionality is restricted to situations where \code{is.continous(obj)} evaluates to \code{TRUE} and the \code{"Coverscale"} object that is assigned (\code{value}) is ordinal (\code{is.ordinal(value)}). When doing so, the cover values stored in the \code{Vegsoup*} object are transformed and a message is issued. Such a type of transformation makes sense, for example, when an output of function \code{link{write.verbatim}} is intended.
+The replacement function can also be used to transform a continuous scale to an ordinal one. This functionality is restricted to situations where \code{is.continous(x)} evaluates to \code{TRUE} and the \code{"Coverscale"} object that is assigned (argument \code{value}) can be treated as ordinal (\code{is.ordinal(value)} evaluates to \code{TRUE}). When doing so, the cover values stored in the \code{Vegsoup*} object are transformed (the original data is lost) and a message is issued. Such a type of transformation makes sense, for example, when an output of function \code{link{write.verbatim}} is intended.
 }
 
 \value{
@@ -94,10 +94,10 @@ Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–8
 \seealso{
   \code{\link{Coverscale-class}},
   \code{\link{BraunBlanquetReduce}},
-  \code{\link{Vegsoup}} in package \code{vegsoup},
+  \code{\link{Vegsoup}} in package \pkg{vegsoup},
   \code{\link[vegdata:tv.coverperc]{tv.coverperc}} in package \pkg{vegdata} and
   \code{\link[vegan:coverscale]{coverscale}} in package \pkg{vegan} for the
-  ancestor of the implementation.
+  ancestor of this implementation.
 }
 
 \examples{
@@ -113,18 +113,27 @@ Coverscale("myscale", codes = LETTERS[1:5], lims = seq(20, 100, 20))
 # define your own continuous scale (e.g. counts)
 Coverscale("myscale.continuous", NULL, NULL)
 
-#   using the coerce method for class Coverscale
+# using the coerce method for class Coverscale
 as(list("myscale", LETTERS[1:5], seq(20, 100, 20)), "Coverscale")
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-is.ordinal(dta)
+# test vegsoup objects
+data(barmstein)
+barmstein
+is.ordinal(barmstein)
+coverscale(barmstein)
 
 # transform coverscale
 sim1 <- sim2 <- coenoflex(100,100)
 is.continuous(sim1)
 coverscale(sim1) <- "ordinal"
 is.ordinal(sim1)
+
+# coverscales are inhertited
+sim1.prt <- VegsoupPartition(sim1, k = 2)
+coverscale(sim1.prt)
+
+sim1.prt.fid <- Fidelity(sim1.prt)
+coverscale(sim1.prt.fid)
 }
 
 \keyword{ methods }

@@ -9,10 +9,9 @@ A survey of grasslands in the National Park Berechtesgaden region.
 A \code{\link{Vegsoup}} object
 }
 \source{
-Subalpine and alpine communities of wind exposed sites.
-
+Grassland in the National Park Berechtesgaden spanning montane and alpine communities.
 Species abundances were recorded using the Domin scale (see \code{\link{Coverscale}}).
-Taxonomy of vascular plants agrees with Fischer et al. (2008),
+Taxonomy of vascular plants agrees with Fischer et al. (2008).
 The data set has two layers \code{hl} and  \code{sl}, where hl means herb layer and sl shrub layer.
 The sites data contains e.\,g. information about stand heights, cover of layers, slope. Precise sampling locations are provided.
 }
@@ -20,12 +19,13 @@ The sites data contains e.\,g. information about stand heights, cover of layers,
 data(berchtesgaden)
 }
 \references{
-Fischer, M., Oswald, K., and Adler, W. (2008). Exkursionsflora für Österreich, Liechtenstein und Sudtirol, Volume 3. Biologiezentrum der Oberösterreichischen Lansdesmuseen.
+Fischer, M., Oswald, K., and Adler, W. (2008). Exkursionsflora für Österreich, Liechtenstein und Südtirol, Volume 3. Biologiezentrum der Oberösterreichischen Lansdesmuseen.
 }
 \seealso{
 \code{\link{testdata}}
 }
 \examples{
 data(berchtesgaden)
+berchtesgaden
 }
 \keyword{datasets}

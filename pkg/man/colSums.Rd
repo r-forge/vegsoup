@@ -71,28 +71,40 @@ A numeric vector of suitable size with names taken from the object.
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}
+\code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}, \code{\link{Layers}}
 }
 
 \examples{
-library(vegsoup)
-data(testdata)        
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
 
-#   number of species including layer duplicates    
-rowSums(dta)
-#   sums of abundances 
-rowSums(dta, typeof = "numeric")
-#   Layers(dta) tells that there is more than one layers
-#   some species occur in two layers
-Layers(dta)
+data(barmstein)
+x <- barmstein
+
+# number of species per plot including layer replication
+# default method defines typeof = "logical"
+rowSums(x)
+
 #   true species richness
-richness(dta, "sample")
+richness(x, "sample")
 
-#   number of occurences for each species
-colSums(dta)
-#   sums of abundances
-colSums(dta, typeof = "numeric")
+#   sums of abundances per plot according to coverscale(x)
+rowSums(x, typeof = "numeric")
+
+# number of occurences for each species (typeof = "logical")
+colSums(x)
+
+# sums of abundances for each species including layer replication
+colSums(x, typeof = "numeric")
+
+# mean abundances, also with layer replication!
+m1 <- colMeans(x)
+
+# combine all strata
+x0 <- Layers(x, collapse = "NA") # note, collapse = NA will not work!
+m2 <- colMeans(x0, typeof = "numeric")
+
+m1[ grep("amel.oval", names(m1)) ]
+m2[ grep("amel.oval", names(m2)) ]
 }
 
 \keyword{methods}

@@ -23,4 +23,7 @@
   A \code{"matrix"} of fidelity (indicator) values.
 }
 \author{ Roland Kaiser }
+\examples{
+
+}
 \keyword{ methods }

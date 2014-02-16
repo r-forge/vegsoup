@@ -77,19 +77,18 @@
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+require(vegsoup)
+
+data(windsfeld)
+x <- windsfeld
 
 # print sites or species
-head(dta, choice = "sites")
-head(dta, choice = "sp") # choice can abbreviated
+head(x, choice = "sites")
+head(x, choice = "sp") # choice can abbreviated
 
-head(dta, "si", n = 3) 
-tail(dta, choice = "sp", typeof = "character", n = 2)
+head(x, "si", n = 3) 
+tail(x, choice = "sp", typeof = "character", n = 2)
 
-prt <- VegsoupPartition(dta, k = 2)
-
-head(prt)
+head(VegsoupPartition(x, k = 2))
 }
 \keyword{methods}

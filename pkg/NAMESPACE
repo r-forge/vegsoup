@@ -6,11 +6,14 @@ importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 
 import(coenoflex)
-importFrom("optpart", optpart, optsil, partana, tabdev, disdiam)
 
+importFrom("optpart", optpart, optsil, partana, tabdev, disdiam, murdoch, stride)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
+
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
+
+importFrom("spatstat", nndist)
 
 importFrom("vegclust", vegclustdist, defuzzify)
 
@@ -42,6 +45,8 @@ export(
     "stackSpecies",
     "stackSites",
     "stackCoordinates",
+    "shapeSpecies",
+    "reshapeSpecies",
     "SpeciesTaxonomy",
     "Vegsoup",
     "coenoflex",
@@ -92,11 +97,13 @@ exportMethods(
     "elevation",
     "extract",
     "fill",
+    "hist",
     "Fidelity",
     "FisherTest",
     "distconnected",
     "getK",
     "getStat",
+    "hcr",
     "QuickMap",	
     "head",
     "coldiss",
@@ -110,6 +117,7 @@ exportMethods(
     "Latex",
     "Layers",
     "Layers<-",
+    "Layer",
     "KML",
     "reverseGeocode",
     "methods",
@@ -196,6 +204,7 @@ S3method(as.array, Vegsoup)
 S3method(as.vector, Vegsoup)
 S3method(points, Vegsoup)
 S3method(as.data.frame, Vegsoup)
+
 
 #S3method(as.SpatialPoints, Vegsoup)
 #S3method(as.SpatialPointsDataFrame, Vegsoup)

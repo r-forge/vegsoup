@@ -58,12 +58,24 @@
 
 \examples{
 require(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+
+data(barmstein)
+x <- barmstein
+
+# index the species matrix and get new objects
+# select rows, the plots
+x[ 1:2, ]
+# select columns (the species) including layer replicates
+x[ , sample(ncol(x), size = 10) ]
+# note, sample may result in an object that holds less then 'size' species
+# because of layer replication
+
+# remove species with equal or less than three occurences,
+# exact if there is no layer replication
+any(colSums(x[, colSums(x) >= 3]) < 3)
 
 # assigment using object slots
-Sites(dta) <- dta@sites[sample(nrow(dta)), ]
-
-# note, in this case summary returns a species list
-dta[1, ]
+rownames(x)
+Sites(x) <- x@sites[sample(nrow(x)), ]
+rownames(x)
 }

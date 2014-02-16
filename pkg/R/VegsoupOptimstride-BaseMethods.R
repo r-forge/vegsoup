@@ -40,6 +40,14 @@ setMethod("stride",
     	    	
 }) 
 
+#	S3 method consitency
+#stride.Vegsoup <- 
+#	function (x, method, ...) stride(x, ...) # as(x, "matrix")
+#	
+#stride <- function (VegsoupOptimstride, ...) {
+#    UseMethod("stride")
+#}	
+	
 setGeneric("treshold",
 	function (x, ...)
 		standardGeneric("treshold")

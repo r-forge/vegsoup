@@ -203,12 +203,10 @@ Antti Arppe, modified for package \code{vegsoup} by Roland Kaiser
 }
 \examples{
 require(vegsoup)
+data(windsfeld)
 
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
-
-prt1 <- VegsoupPartition(dta, k = 10, method = "flexible")
-prt2 <- VegsoupPartition(dta, k = 10, method = "pam")
+prt1 <- VegsoupPartition(windsfeld, k = 10, method = "flexible")
+prt2 <- VegsoupPartition(windsfeld, k = 10, method = "pam")
 
 Association(prt1, prt2)
 }

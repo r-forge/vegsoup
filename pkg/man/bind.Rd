@@ -38,24 +38,29 @@ Roland Kaiser
 \code{\linkS4class{Vegsoup}}
 }
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # split object in three parts
-s1 <- dta[1:2, ]
-s2 <- dta[3:4, ]
-s3 <- dta[5:6, ]
+s1 <- x[1:2, ]
+s2 <- x[3:4, ]
+s3 <- x[5:6, ]
 
 # combine them
-res <- bind(s3, s1, s2)
+xb <- bind(s1, s2, s3)
 
 # equivalent
-ss <- list(s1, s2, s3)
-res <- do.call("bind", ss)
+ss <- list(s3, s1, s2)
+xb <- do.call("bind", ss)
 
 # note, ordering is changed
-rownames(dta) 
-rownames(res)
+( r0 <- rownames(x) )
+( rb <- rownames(xb) )
+# restore the orignal order
+rownames(xb[match(r0, rb), ])
+
 
 }
 \keyword{methods}

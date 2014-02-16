@@ -1,9 +1,10 @@
 \name{fill}
 \docType{methods}
+
 \alias{fill}
 \alias{fill,Vegsoup-method}
 
-\title{ Matrix fill of ASpecies Matrix for \code{Vegsoup*} Objects }
+\title{ Matrix fill of species matrix }
 
 \description{
   Calculates the the proportion (percentage) of all non zero elements in a
@@ -25,10 +26,10 @@
   \code{\link{nestedtemp}} in \pkg{vegan} for nestedess indices.
 }
 \examples{
-library(vegsoup)
+require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-fill(dta)
+data(barmstein)
+
+fill(barmstein)
 }
 \keyword{ methods }

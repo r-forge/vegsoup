@@ -74,10 +74,7 @@ OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
   }
 }
 \details{
-   The implementation follows the method defined in Tíchý et al. (2010) and uses a fisher test (\code{\link{FisherTest}})
-   to identify the number of \sQuote{faithful} species. This statistic can be relaxed by setting a threshold value
-   (argument \code{ft.treshold}). All specifications (method to calculate distance matrix, standardisation) are
-   taken from the input object.
+The implementation follows the method defined in Tíchý et al. (2010) and uses a fisher test (\code{\link{FisherTest}}) to identify the number of \sQuote{faithful} species. This statistic can be relaxed by setting a threshold value (argument \code{ft.treshold}). All specifications (method to calculate distance matrix, standardisation) are taken from the input object.
    
    \code{treshold} retrieves the threshold values set for the Fisher test.
    
@@ -113,33 +110,39 @@ Science, 21(2):287–299.
 require(vegsoup)
 
 # a dummy example using simulated data
-x <- coenoflex(100, 200)
+x <- OptimStride(coenoflex(100, 200), k = 10)
+summary(x)
 
-res <- OptimStride(x, k = 10)
-summary(res)
+# use multicore package
+\dontrun{
+if (require(multicore)) {
+   x <- OptimStride(coenoflex(100, 200), k = 10, fast = TRUE)
+}
+}
 
 # get the computed clustering methods
-methods(res)
+methods(x)
 
 # the treshold of the Fisher test
-treshold(res)
+treshold(x)
 
 # matrix of results for OptimClass1
-optimclass1(res)
+optimclass1(x)
 
 # the number of faithful species for each partition and method
-stride(res)
-stride(res, "flexible") # for method flexible
+# warning, method dispatch will break if package optpart is loaded
+stride(x)
+stride(x, method = "flexible") # for method flexible
 
 # plot method for class VegsoupOptimstride
-plot(res)
-plot(res, method = "FCM")
+plot(x)
+plot(x, method = "FCM")
 
 # get k where the curve peaks
-peaks(res)
+peaks(x)
 
 # get k with the maximum number of faithful species
-which.max(res)
+which.max(x)
 
 }
 \keyword{ multivariate }

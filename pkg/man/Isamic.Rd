@@ -35,10 +35,8 @@ Roberts} in package \pkg{optpart}.
 \examples{
 require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 2)
+data(barmstein)
 
-Isamic(prt)
+Isamic(VegsoupPartition(barmstein, k = 2))
 }
 \keyword{ methods }

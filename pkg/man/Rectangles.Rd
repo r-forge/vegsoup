@@ -40,26 +40,25 @@ Returns a \code{matrix} with two columns as returned by  \code{dim(obj[Partition
 Any warnings that typically arise when a single partition is subsetted from an object are silenced. These warnings are harmless and not of interest at this point.
 }
 \examples{
-data(bigtestdata)
-dta <- Vegsoup(spc.big, sts.big, txa.big,
-               coverscale = "braun.blanquet")
+require(vegsoup)
 
-prt <- VegsoupPartition(dta, k = 20)
-rectangles(prt)
+data(windsfeld)
+x <- VegsoupPartition(windsfeld, k = 20)
+
+rectangles(x)
 #   add color to the boxes
-rectangles(prt, col = rgb(0,0,0,0.2))
-#   returned matrix only
-res <- rectangles(prt, plot = FALSE)
-res
+rectangles(x, col = rgb(0,0,0,0.2))
+#   return matrix only
+r <- rectangles(x, plot = FALSE)
 
 # use polish = TRUE
-prt <- VegsoupPartition(dta, k = 10, polish = TRUE)
+x <- VegsoupPartition(windsfeld, k = 10, polish = TRUE)
 
 #   add fancy colors to the boxes
 require(RColorBrewer)
-rectangles(prt, plot = TRUE,
+rectangles(x, plot = TRUE,
            col = rgb(0,0,0,0.2),
-           border = brewer.pal(getK(prt), "Spectral"),
+           border = brewer.pal(getK(x), "Spectral"),
            lwd = 2)
 }
 \keyword{ methods }

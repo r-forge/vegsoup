@@ -13,6 +13,9 @@
 \alias{Indval}
 \alias{Indval,VegsoupPartition-method}
 
+\alias{getStat}
+\alias{getStat,Vegsoup-method}
+
 \title{ Calculate Fidelity Values }
 
 \description{
@@ -37,6 +40,7 @@
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
 \S4method{Phi}{VegsoupPartition}(obj)
 \S4method{Indval}{VegsoupPartition}(obj, ...)
+\S4method{getStat}{VegsoupPartition}(obj, ...)
 }
 
 \arguments{
@@ -133,10 +137,15 @@ Roland Kaiser, based on code from Miquel De Cáceres Ainsa taken from function \
 }
 \examples{
 require(vegsoup)
-data(testdata)
-prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
 
-fid <- Fidelity(prt)
+data(windsfeld)
+
+x <- VegsoupPartition(windsfeld, k = 2)
+f <- Fidelity(x)
+
+head(getStat(f))
+
+hist(f)
 }
 \keyword{ methods }
 \keyword{ multivariate }

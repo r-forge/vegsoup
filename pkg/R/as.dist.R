@@ -47,7 +47,7 @@ as.dist.Vegsoup <- function (m, ...) {
 }
 
 
-#if (!isGeneric("outlier")) {
+#if (!isGeneric("nndist")) {
 setGeneric("nndist",
 	function (X, ...)
 		standardGeneric("nndist")

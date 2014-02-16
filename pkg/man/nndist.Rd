@@ -38,13 +38,16 @@ Nothing here yet!
 \code{\link{outlier}}, \code{\link{as.dist}}
 }
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
-vegdist(dta) <- "bray"
-(res <- nndist(dta))
+require(vegsoup)
 
-# access nearest neighbour distances 
-attr(res, "neighbour")
+data(barmstein)
+x <- barmstein
+
+vegdist(x) <- "bray"
+( r <- nndist(x) )
+
+# get nearest neighbour plot names
+attr(r, "neighbour")
+
 }
 \keyword{methods}

@@ -59,26 +59,27 @@ Wildi, O. 2013. Data Analysis in Vegetation Ecology. 2nd ed. Wiley-Blackwell, Ch
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
 
-(res1 <- outlier(dta))
-(res2 <- outlier(dta, type = "wildi"))
+data(barmstein)
+x <- barmstein
+
+( o1 <- outlier(x) )
+( o2 <- outlier(x, type = "wildi") )
 
 # access nearest neighbour distances 
-attr(res2, "distances")
+attr(o2, "distances")
 
 # argument thresh triggers type "wildi"
-res3 <- outlier(dta, thresh = 0.3)
+o3 <- outlier(x, thresh = 0.3)
 
 # drop outliers
-dim(dta)
-dim(dta[!res3, ])
+dim(x)
+dim(x[!o3, ])
 
 # outliers marked in diagnostic plots
-plotPCO(dta)
-plotPCO(dta, thresh = 0.2)
+plotPCO(x)
+plotPCO(x, thresh = 0.2)
 
 }
 \keyword{methods}

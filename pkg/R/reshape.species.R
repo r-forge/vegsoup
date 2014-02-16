@@ -1,5 +1,5 @@
 #	reshape tables where layers are in seperate columns
-reshape.species <- function (x, file, schema, sep = ";", dec = ",", verbose = FALSE) {
+reshapeSpecies <- function (x, file, schema, sep = ";", dec = ",", verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frmae or a csv file")	

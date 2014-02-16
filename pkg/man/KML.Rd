@@ -58,5 +58,13 @@
 \seealso{
 \code{\link{QuickMap}}
 }
+\examples{
+require(vegsoup)
 
+data(barmstein)
+
+KML(barmstein, file = tempfile())
+KML(VegsoupPartition(barmstein, k = 2), file = tempfile())
+
+}
 \keyword{ methods }

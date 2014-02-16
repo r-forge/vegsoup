@@ -12,7 +12,7 @@ Get topographic height information from the SRTM3 data set using package \pkg{ge
 }
 
 \details{
-If the SRTM3 data set has missing values a zero elevation is returned for that coordiante.
+If the SRTM3 data set has missing values a zero elevation is returned for that coordinate.
 }
 
 \author{ Roland Kaiser }
@@ -26,11 +26,14 @@ Depending of the size of the input object (number of plots), the query to the \h
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(berchtesgaden)
+x <- berchtesgaden
 
 # fails with package check?
-# dta.srtm <- elevation(dta)
+\dontrun{
+x.srtm <- elevation(x)
+}
 }
 \keyword{ methods }

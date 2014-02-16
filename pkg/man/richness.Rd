@@ -43,19 +43,19 @@ Roland Kaiser
 \examples{
 require(vegsoup)
 
-data(testdata)        
-dta <- Vegsoup(spc, sts, txa,"braun.blanquet")
-    
-richness(dta) # default choice = "dataset"
-richness(dta, "sa") # partial match
+data(barmstein)
+x <- barmstein
+
+richness(x) # default choice = "dataset"
+richness(x, "sa") # partial match
 
 # rowSums counts each species-layer replication (pseudo-species).
 # Because there are 3 layers the numbers are different
 # compared to richness(dta, "sample")!
-rowSums(dta)
+rowSums(x)
 
-prt <- VegsoupPartition(dta, k = 2)
-richness(prt, "partition")
+# extact number of unique species per partition
+richness(VegsoupPartition(x, k = 2), "partition")
 }
 \keyword{ methods }
 

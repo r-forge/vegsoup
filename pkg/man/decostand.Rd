@@ -60,23 +60,23 @@ Use the extract and replace operators \code{\link[=Extract]{"$"}} and \code{\lin
 \examples{
 require(vegsoup)
 
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+data(barmstein)
+x <- barmstein
     
 # no standardization by default
-decostand(dta)
+decostand(x)
 
-decostand(dta) <- "total"
+decostand(x) <- "total"
 
 # retreive a strandardized species matrix
-as.numeric(dta)
+as.numeric(x)
 
 # double strandardization
-decostand(dta) <- c("hellinger", "standardize")
-as.numeric(dta)
+decostand(x) <- c("hellinger", "standardize")
+as.numeric(x)
     
 # remove any standardization
-decostand(dta) <- NULL
+decostand(x) <- NULL
 
 }
 

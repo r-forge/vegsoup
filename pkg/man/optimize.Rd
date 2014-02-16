@@ -67,13 +67,12 @@ Both methods can be very slow when applied to big data sets! \code{Optsil} is us
 require(vegsoup)
 data(windsfeld)
 
-prt <- VegsoupPartition(windsfeld, k = 5)
+x <- VegsoupPartition(windsfeld, k = 5)
 
-# prt.sil <- Optsil(prt, verbose = TRUE)
-prt.ind <- Optindval(prt, verbose = TRUE)
+xs <- Optsil(x, verbose = TRUE)
+xi <- Optindval(x, verbose = TRUE)
 
-# Confus(prt, prt.sil)
-Confus(prt, prt.ind)
+Confus(xs, xi)
 }
 \seealso{
 \code{\link[labdsv:indval]{indval}},
