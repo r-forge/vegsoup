@@ -200,11 +200,13 @@ Roland Kaiser
 \references{
 The demonstration data set used in the example is taken from:
 
-Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen – ein Beitrag zur Klärung eines alten ökologischen Rätsels. Phytocoenologia, 21:91–116.
+Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen – ein Beitrag zur Kla"rung eines alten o"kologischen Ra"tsels. Phytocoenologia, 21:91–116.
 
 The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
 }
 \examples{
+# text encoding issue?
+\dontrun{
 library(vegsoup)
 require(stringr)
 
@@ -270,7 +272,7 @@ df.attr <- df.attr[match(rownames(dta), rownames(df.attr)), ]
 
 # give names and assign
 dta$block <- df.attr$Block
-dta$altitude <- df.attr$Seehöhe
+dta$altitude <- df.attr$Seeho"he
 dta$expo <- df.attr$Exposition
 dta$cov <- df.attr$"Deckung...."
 dta$ph <- df.attr$"ph...10.2."
@@ -291,6 +293,7 @@ Confus(prt.flx, prt.org)
 txt <- write.verbatim(seriation(dta), file = tempfile(),
     select = c(8,7,6,9))
 txt[1:30] # resize console window
+}
 }
 \seealso{
 \code{\link{stackSpecies}}, \code{\link{stackSites}}

@@ -19,7 +19,7 @@ The sites data contains e.\,g. information about stand heights, cover of layers,
 data(berchtesgaden)
 }
 \references{
-Fischer, M., Oswald, K., and Adler, W. (2008). Exkursionsflora für Österreich, Liechtenstein und Südtirol, Volume 3. Biologiezentrum der Oberösterreichischen Lansdesmuseen.
+Fischer, M., Oswald, K., and Adler, W. (2008). Exkursionsflora fu"r O"sterreich, Liechtenstein und Su"dtirol, Volume 3. Biologiezentrum der Obero"sterreichischen Lansdesmuseen.
 }
 \seealso{
 \code{\link{testdata}}

@@ -22,6 +22,7 @@
 \alias{species,matrix-method}
 \alias{species,Species-method}
 \alias{species,VegsoupVerbatim-method}
+\alias{rbind,Species-method}
 
 \title{ Species Class}
 

@@ -86,7 +86,7 @@ Peet, R.K. & Roberts D.W. (2013). Classification of natural and semi-natural veg
 
 Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–87.
 
-%Pfadenhauer, J., Poschlod, P., and Buchwald, R. (1986). Überlegungen zu einem Konzept geobotanischer Dauerbeobachtungsflächen für bayern, Teil I. Berichte der ANL, 10:41–60.
+%Pfadenhauer, J., Poschlod, P., and Buchwald, R. (1986). U"berlegungen zu einem Konzept geobotanischer Dauerbeobachtungsflächen fu"r bayern, Teil I. Berichte der ANL, 10:41–60.
 }
 
 \author{ Roland Kaiser }

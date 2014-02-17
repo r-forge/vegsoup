@@ -25,17 +25,23 @@
 \title{ Retrieve Species Matrix with Specified Storage Mode }
 
 \description{
-The functions retrieve a species matrix of mode according the methods name and \code{as.matrix} returns corresponding types of matrices but specified by its argument \code{mode}.
+The functions retrieve a species matrix of mode according the methods literal name and \code{as.matrix} returns corresponding types of matrices but specified by its argument \code{mode}.
 %cross-classifying factors
 }
 
 \usage{
 \S4method{as.logical}{Vegsoup}(x, mode)
+
 \S4method{as.numeric}{Vegsoup}(x, mode)
+
 \S4method{as.character}{Vegsoup}(x, mode)
+
 \S4method{as.matrix}{Vegsoup}(x, typeof, ...)
+
 \S4method{as.array}{Vegsoup}(x, typeof, ...)
+
 \S4method{indices}{Vegsoup}(x, typeof)
+
 \S4method{as.vector}{Vegsoup}(x, mode)
 }
 
@@ -54,7 +60,7 @@ The functions retrieve a species matrix of mode according the methods name and \
   }
   \item{ \dots }{
     Arguments passed to \code{as.logical} etc. to supply a value for the
-    argument \code{mode}. See argument \code{'mode'} and \sQuote{Details}.
+    argument \code{mode}. See argument \code{mode}.
   }
 }
 

@@ -5,8 +5,6 @@
 \alias{stackCoordinates}
 
 \alias{rbind}
-\alias{rbind,Species-method}
-\alias{rbind,Sites-method}
 
 \title{ Stack Species Matrix, Sites Data or Spatial Coordinates }
 
@@ -45,11 +43,9 @@ stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon")
 
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE)
 
-stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)               
+stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 
-\S4method{rbind}{Species}(..., deparse.level = 1)
-
-\S4method{rbind}{Sites}(..., deparse.level = 1)
+rbind(..., deparse.level = 1)
 }
 
 \arguments{
@@ -86,7 +82,7 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   }
   \item{ \dots }{
     additional arguments passed to \code{readOGR}. For \code{rbind} objects of class
-    \code{Sites}.
+    \code{Species} or \code{Sites}.
   }
 ## Arguments for function rbind  
   \item{ deparse.level }{
