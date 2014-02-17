@@ -142,7 +142,7 @@
     \item{Partana}{
       \code{signature(obj = "VegsoupPartition")}:
       Calculate mean object-to-partition(cluster) similarity.
-      See \code{\link{Partana}}.
+      See \code{\link{partana}}.
     }
     \item{richness}{
       \code{signature(obj = "VegsoupPartition")}:

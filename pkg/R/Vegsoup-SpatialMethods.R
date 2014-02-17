@@ -65,8 +65,8 @@ setReplaceMethod("proj4string",
 setMethod("spTransform",
 	signature(x = "Vegsoup", "CRS"),
 	function (x, CRSobj, ...) {
-		#	Suggests:
-		require(rgdal)
+		#	Depends:
+		#	require(rgdal)
 		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
 		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...)
 		x	

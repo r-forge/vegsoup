@@ -1,7 +1,9 @@
 \name{coerce}
 \docType{methods}
+
 \alias{as,Vegsoup-method}
 
+\alias{coerce}
 \alias{coerce,Vegsoup,matrix-method}
 \alias{coerce,Vegsoup,array-method}
 \alias{coerce,Vegsoup,sparseMatrix-method}
@@ -93,6 +95,7 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 
 \examples{
 require(vegsoup)
+require(cluster)
 
 data(barmstein)
 x <- barmstein
@@ -108,8 +111,8 @@ l <- as(x, "list")
 length(l)
 
 # coerce to data.list in package multitable
-x <- as(dta, "data.list")
-summary(x)
+xdl <- as(x, "data.list")
+summary(xdl)
 
 # automatic dispatch of Vegsoup* object as argument in S3 function
 # if they internally call as.matrix or as.dist
@@ -117,6 +120,7 @@ decostand(x) <- "hellinger"
 vegdist(x) <- "euclidean"
 
 rda(x) # principal component analysis
+
 agnes(x) # agglomerative nesting
 
 # no call to as.dist(d) in hclust, no automatic dispatch

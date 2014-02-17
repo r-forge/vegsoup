@@ -89,24 +89,28 @@ Data representation of taxonomic reference list.
 }
 \examples{
 require(vegsoup)
-showClass("Taxonomy")
 
-data(testdata)
+data(barmstein)
+x <- barmstein
+# from demonstration extract from object
+x <- Taxonomy(x)
 
-new("Taxonomy", data = txa)
+#
+t <- new("Taxonomy", data = x)
 
-class(txa)
-taxonomy(txa)
-obj <- taxonomy(as.matrix(txa))
+# taxonomy method for class 'data.frame'
+( t <- taxonomy(x) )
+# or matrix
+( t <- taxonomy(as.matrix(x)) )
 
 #	get slot data from object
-class(taxonomy(txa))
+head(taxonomy(t))
 
 # combine objects
-data(bigtestdata)
+data(windsfeld)
+x <- windsfeld
+t2 <- taxonomy(Taxonomy(x))
 
-obj2 <- taxonomy(txa.big)
-
-rbind(obj, obj2)
+rbind(t, t2)
 }
 \keyword{ classes }

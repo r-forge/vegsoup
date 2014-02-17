@@ -25,12 +25,31 @@
       Prints additional information.
     }
     \item{\code{signature(object = "VegsoupOptimstride")}}{
-      Prints additional information.
+      Prints results Optimclass 1 and 2, position of peaks, and maxima.
     }
   }
 }
 
 \author{ Roland Kaiser }
+
+\examples{
+require(vegsoup)
+
+data(windsfeld)
+x <- windsfeld
+
+summary(x)
+
+summary(VegsoupPartition(x, k = 2))
+
+summary(Fidelity(VegsoupPartition(x, k = 2)))
+
+\dontrun{
+# save time	
+summary(OptimStride(windsfeld, k = 10))
+}
+
+}
 
 \keyword{ methods }
 

@@ -4,8 +4,6 @@
 \docType{class}
 
 \alias{VegsoupPartitionFidelity-class}
-\alias{getStat,VegsoupPartitionFidelity-method}
-\alias{hist,VegsoupPartitionFidelity-method}
 
 \title{ VegsoupPartitionFidelity Class }
 
@@ -74,12 +72,19 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
 }
 
 \examples{
+require(vegsoup)
+
 showClass("VegsoupPartitionFidelity")
 
-require(vegsoup)
-data(testdata)
-prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
-fid <- Fidelity(prt)
+data(barmstein)
+
+x <- Fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
+
+\dontrun{
+# needs package multicore
+x <- coenoflex(100, 200)
+x <- Fidelity(VegsoupPartition(x, k = 10), method = "IndVal", fast = TRUE)
+}
 }
 
 \keyword{ classes }

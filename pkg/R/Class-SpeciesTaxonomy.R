@@ -9,12 +9,14 @@ setMethod("species",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) species(slot(obj, "species")) # ? slot(obj, "species")
 )
+
 setMethod("taxonomy",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) taxonomy(slot(obj, "taxonomy")) # ? slot(obj, "species")
 )
+
 setGeneric("species<-",
-	function (obj, value, ...)
+	function (obj, value)
 		standardGeneric("species<-")
 )
 setReplaceMethod("species",
@@ -26,6 +28,7 @@ setReplaceMethod("species",
 		taxonomy = taxonomy(taxonomy(obj)[sel, ]))
 	}
 )
+
 setReplaceMethod("species",
 	signature(obj = "SpeciesTaxonomy", value = "data.frame"),
 	function (obj, value) {
@@ -36,10 +39,12 @@ setReplaceMethod("species",
 			taxonomy = taxonomy(taxonomy(obj)[sel, ]))
 	}
 )
+
 setGeneric("taxonomy<-",
-	function (obj, value, ...)
+	function (obj, value)
 		standardGeneric("taxonomy<-")
 )
+
 setReplaceMethod("taxonomy",
 	signature(obj = "SpeciesTaxonomy", value = "Taxonomy"),
 	function (obj, value) {

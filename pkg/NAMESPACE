@@ -20,14 +20,14 @@ importFrom("vegclust", vegclustdist, defuzzify)
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
                  rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
                  SpatialPointsDataFrame, SpatialPolygonsDataFrame)
-importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
-                      proj4string, "proj4string<-", spTransform)
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
+importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
+                      proj4string, "proj4string<-", spTransform)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
-importMethodsFrom(raster, extract, ncell)
+importMethodsFrom(raster, extract, ncell, extent)
 
 importFrom("multitable", data.list)
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
@@ -40,8 +40,10 @@ importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 export(
     "Coverscale",
     "species",
+    "species<-",
     "sites",
     "taxonomy",
+    "taxonomy<-",
     "stackSpecies",
     "stackSites",
     "stackCoordinates",
@@ -95,6 +97,7 @@ exportMethods(
     "dim",
     "disdiam",
     "elevation",
+    "extent",
     "extract",
     "fill",
     "hist",
@@ -133,7 +136,7 @@ exportMethods(
     "Optindval",
     "Optsil",
     "outlier",
-    "Partana",
+    "partana",
     "Partition",
     "Partitioning",
     "PartitioningMatrix",
@@ -169,10 +172,12 @@ exportMethods(
     "Species<-",
     "SpeciesList",	
     "spread",
+    "stable",
     "stride",
 #   "Stride",
     "summary",
-    "Tabdev",
+    "subset",
+    "tabdev",
     "tail",
     "taxon",
     "taxonomy",

@@ -40,14 +40,15 @@ Accessor and replacement methods acting on the \code{'sites'} slot.
 \code{\linkS4class{Vegsoup}}
 }
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # use replacemnet to shuffe order
-(x <- rownames(dta))
-Sites(dta) <- Sites(dta)[sample(rownames(dta)), ]
-(y <- rownames(dta))
-x;y
+rownames(x)
+Sites(x) <- Sites(x)[sample(rownames(x)), ]
+rownames(x)
+
 }
 \keyword{ methods }

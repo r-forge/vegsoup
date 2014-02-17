@@ -95,7 +95,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	if (class(test) == "factor" | class(test) == "character") {
 		convert <- TRUE
 		cat("\n... cover seems to be ordinal: ")
-		cat(names(table(test)))
+		cat(names(table(test)), "\n")
 	} else {
 		if (class(test) == "numeric" | class(test) == "integer") {
 			if (class(test) == "integer" & dim(table(test)) == 2) {

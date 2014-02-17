@@ -1,13 +1,23 @@
 #	warning! some how slot sp.points can get messed up?
-OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
-	if (missing(k)) stop("please supply k for stride")
+OptimStride <- function (x, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
+	if (missing(k)) {
+		stop("please supply k for stride")
+	}
+	else {
+		if (k > nrow(x)) {
+			k = nrow(x) - 1
+			warning("k can't exceed number of plots, set k to nrow(x) - 1")
+		}
+	}	
+	stopifnot(inherits(x, "Vegsoup"))
 
-	cycle <- function (obj, k, ...) {
-		prt <- VegsoupPartition(obj, k = k, ...)
+	cycle <- function (x, k, ...) {
+		prt <- VegsoupPartition(x, k = k, ...)
 		ft <- FisherTest(prt, alternative = alternative)
 		res <- apply(ft < ft.treshold, 2, sum)
 		return(res)
 	}
+	
 	if (as.logical(fast)) {
 		require(multicore)
 		message("fork multicore process on ", multicore:::detectCores(), " cores")
@@ -20,7 +30,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 	for (i in seq(along = method)) {
 		if (fast) {
 			cat(method[i], " ")			
-			res.j <- mclapply(2:k, function (y, ...) cycle(obj, k = y, method = method[i], ...), ...)
+			res.j <- mclapply(2:k, function (y, ...) cycle(x, k = y, method = method[i], ...), ...)
 			res.i[[i]] <- c(0, res.j)
 		} else {
 			res.j <- vector("list", length = k)
@@ -33,7 +43,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 			char = '.', width = 45, style = 3)			
 			for (j in 2:k) {
 				setTxtProgressBar(pb.j, j)
-				res.j[[j]] <- cycle(obj, k = j, method = method[i], ...)
+				res.j[[j]] <- cycle(x, k = j, method = method[i], ...)
 			}
 			res.i[[i]] <- res.j
 			close(pb.j)
@@ -43,7 +53,7 @@ OptimStride <- function (obj, k, ft.treshold = 1e-3, alternative = "two.sided", 
 	}	
 	
 	#	develop class VegsoupOptimstride
-	res <- new("VegsoupOptimstride", obj)
+	res <- new("VegsoupOptimstride", x)
 	
 	os <- list(
 		indicators = res.i,

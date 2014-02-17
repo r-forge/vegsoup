@@ -33,9 +33,20 @@ Accessor method to retrieve the species data in \emph{long format} as stored ins
 \value{
 A \code{"data.frame"} of species occurences and layer replications.
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
 \code{\linkS4class{Vegsoup}}
 }
 
+\examples{
+require(vegsoup)
+
+data(barmstein)
+
+# retrieve data.frame from an Vegsoup object
+spc <- Species(barmstein)
+class(spc)
+}
 \keyword{ methods }

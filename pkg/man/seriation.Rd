@@ -68,7 +68,7 @@ rownames(seriation(x))
 rownames(seriation(x, "packed"))
 
 # use default print method of package Matrix
-require(MAtrix)
+require(Matrix)
 # zero are printed as dots and decimals are truncated to 0
 t(as(seriation(x, "dca"), "sparseMatrix"))
 }

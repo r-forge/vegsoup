@@ -12,6 +12,9 @@
 \alias{bbox}
 \alias{bbox,Vegsoup-method}
 
+\alias{extent}
+\alias{extent,Vegsoup-method}
+
 \alias{proj4string}
 \alias{proj4string,Vegsoup-method}
 
@@ -41,6 +44,8 @@ Spatial methods as defined in package \pkg{sp}.
 
 \S4method{bbox}{Vegsoup}(obj)
 
+\S4method{bbox}{Vegsoup}(x)
+
 \S4method{proj4string}{Vegsoup}(obj)
 
 \S4method{proj4string}{Vegsoup}(obj) <- value
@@ -53,8 +58,8 @@ Spatial methods as defined in package \pkg{sp}.
 }
 
 \arguments{
-  \item{ obj }{
-    an object of class \code{Vegsoup*},
+  \item{ x, obj }{
+    \code{Vegsoup*} object.
   }
   \item{ value }{
     For \code{coordinates} spatial coordinates; either a \code{"matrix"},
@@ -62,7 +67,7 @@ Spatial methods as defined in package \pkg{sp}.
     \code{\link[sp:coordinates]{coordinates}}.
 
     For \code{proj4string} a \code{\linkS4class{CRS}} object, containing a
-    valid Proj.4 string. See \code{\link[sp:proj4string]{proj4string}}.
+    valid \emph{Proj.4} string.
   }
   \item{ CRS }{
     An object of class \code{"CRS"}. See \code{\linkS4class{CRS}}.
@@ -73,25 +78,78 @@ Spatial methods as defined in package \pkg{sp}.
 }
 
 \details{
-\code{coordinates} retrieves or sets the spatial coordinates.
-
-\code{bbox} retrieves the spatial bounding box from \code{coordinates(obj)}
-
-\code{proj4string} retrieves or sets the projection attributes.
-
-\code{spTransform} provides transformation between datum(s) and conversion between projections (also known as projection and/or re-projection).
-
 All methods operate on the spatial slots of an object: \code{SpatialPointsVegsoup} and \code{SpatialPolygonsVegsoup}.
+
+\itemize{
+  \item
+  \code{coordinates} retrieves or sets the spatial coordinates. Note, in
+  contrast to the generic method defined in package \pkg{sp} it is possible
+  to set coordinates, where they have already been set!
+
+  \item
+  \code{bbox} retrieves the spatial extent (extremes) from \code{coordinates(obj)}.
+
+  \item
+  \code{extent} returns the same but as class \code{\linkS4class{Extent}}.
+
+  \item
+  \code{proj4string} retrieves or sets the projection attributes (coordinate
+  reference system). See See \code{\link[sp:proj4string]{proj4string}} and
+  \code{\linkS4class{CRS}} for details.
+
+  \item
+  \code{spTransform} provides transformation between datum(s) and conversion between
+  projections (also known as projection and/or re-projection).
+}
 }
 
 \value{
 An object depending on the input class.
 }
 
-\author{ Roladn Kaiser }
+\author{ Roland Kaiser }
 
 \seealso{
-\code{\link{Spatial}}
+\code{\link{Spatial}},\code{\link{extract}}
+}
+
+\examples{
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
+
+# coordinate refernece system of data set is WGS 84
+proj4string(x)
+
+# transform to WGS 84 / Pseudo Mercator
+xt <- spTransform(x, CRS("+init=epsg:3857"))
+
+# plain matrix of coordiantes
+coordinates(x)
+
+# bounding box, as defined in package 'sp'
+bbox(x)
+
+# extent, the same as above but returned as class 'Extent'
+# as defined in package 'raster'
+extent(x)
+
+# assign new coordinates
+# first create the data as columns
+x$X <- rnorm(nrow(x))
+x$Y <- rnorm(nrow(x))
+Sites(x)
+
+# use the formula interface
+coordinates(x) <- ~X+Y
+coordinates(x)
+
+# get slot 'sp.points' as sp class
+class(SpatialPointsVegsoup(x))
+
+# get slot 'sp.polygons' as sp class
+class(SpatialPolygonsVegsoup(x))
 }
 \keyword{ methods }
 

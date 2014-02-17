@@ -7,7 +7,7 @@
 	for (i in 1:getK(x)) {
 		xy <- as.matrix(coordinates(x)[Partitioning(x) == i,])
 		if (nrow(xy) >= 3) {
-			res[[i]] <- cluster::ellipsoidhull(xy, ...)
+			res[[i]] <- cluster::ellipsoidhull(x = xy, ...)
 		} else {
 			if (ncol(xy) > 1) {
 				res[[i]] <- xy.coords(x = xy[, 1], y = xy[, 2])
@@ -49,5 +49,5 @@ setMethod("ellipsoidhull",
 	signature(x = "VegsoupPartition"),
 	function (x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
 	ret.sqdist = FALSE, ret.pr = FALSE)
-	.ellipsoidhull(x, ...)
+	.ellipsoidhull(x, tol, maxit, ret.wt, ret.sqdist, ret.pr)
 )

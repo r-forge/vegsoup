@@ -2,12 +2,27 @@
 \alias{OptimStride}
 
 \alias{methods}
+\alias{methods,VegsoupOptimstride-method}
+
 \alias{stride}
+\alias{stride,VegsoupOptimstride-method}
+
 \alias{treshold}
+\alias{treshold,VegsoupOptimstride-method}
+
 \alias{optimclass1}
+\alias{optimclass1,VegsoupOptimstride-method}
+
 \alias{optimclass2}
+\alias{optimclass2,VegsoupOptimstride-method}
+
+\alias{getK,VegsoupOptimstride-method}
+
 \alias{peaks}
+\alias{peaks,VegsoupOptimstride-method}
+
 \alias{which.max}
+\alias{which.max,VegsoupOptimstride-method}
 
 \title{ Compute a Series of Partitions/Clusterings }
 
@@ -16,31 +31,30 @@ Compute a series of clusterings by different methods and quantify their quality 
 }
 
 \usage{
-OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
+OptimStride(x, k, ft.treshold = 1e-3, alternative = "two.sided",
             method = c("ward", "flexible", "pam", "kmeans", "wards",
                        "fanny", "FCM", "KM"),
-            fast = FALSE, CALL = match.call(), ...)
-\S4method{methods}{VegsoupOptimstride}(x)
+            fast = FALSE, ...)
+\S4method{methods}{VegsoupOptimstride}(x, ...)
 
 \S4method{stride}{VegsoupOptimstride}(x, method, ...)
 
 \S4method{treshold}{VegsoupOptimstride}(x, ...)
 
-\S4method{optimclass1}{VegsoupOptimstride}(x)
+\S4method{optimclass1}{VegsoupOptimstride}(x, ...)
 
-\S4method{optimclass2}{VegsoupOptimstride}(x, treshold = 2)
+\S4method{optimclass2}{VegsoupOptimstride}(x, treshold = 2, ...)
 
-\S4method{peaks}{VegsoupOptimstride}(x)
+\S4method{getK}{VegsoupOptimstride}(x)
+
+\S4method{peaks}{VegsoupOptimstride}(x, ...)
 
 \S4method{which.max}{VegsoupOptimstride}(x)
 }
 
 \arguments{
-  \item{ obj }{
-    \code{VegsoupPartition} object
-  }
   \item{ x }{
-   \code{VegsoupOptimstride} object
+   for \code{OptimStride} a \code{Vegsoup} object, antherwise \code{VegsoupOptimstride} object
   }
   \item{ k }{
     maximum number of cluster to compute (\code{seq(1:k)})
@@ -69,8 +83,7 @@ OptimStride(obj, k, ft.treshold = 1e-3, alternative = "two.sided",
     \code{fast = TRUE} will significantly reduce run time.
   }
   \item{ \dots }{
-    arguments passed to \code{VegsoupPartition} for additional arguments and
-    details below.)
+    additional arguments passed to \code{VegsoupPartition}, otherwise not used.
   }
 }
 \details{

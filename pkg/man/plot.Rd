@@ -3,6 +3,11 @@
 
 \alias{plot-methods}
 
+\alias{plot,Vegsoup,missing-method}
+\alias{plot,VegsoupPartition,missing-method}
+\alias{plot,VegsoupOptimstride,missing-method}
+
+
 \title{ Plotting methods }
 
 \description{

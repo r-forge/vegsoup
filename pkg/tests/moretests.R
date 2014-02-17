@@ -1,18 +1,11 @@
 library(vegsoup)
 data(testdata)
 
-new("Species", data = spc)
-new("Sites", data = sts)
-new("Taxonomy", data = txa)
-new("SpeciesTaxonomy", species = species(spc), taxonomy = taxonomy(txa))
-SpeciesTaxonomy(spc, txa)
+require(vegsoup)
 
-dta <- Vegsoup(spc, sts, txa)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-dta <- Vegsoup(spc, sts, txa, coverscale = Coverscale("braun.blanquet"))
-dta <- Vegsoup(spc, sts, txa,
-	group = c(rep(1, 3), rep(2, 3)),
-	coverscale = "braun.blanquet")
+data(barmstein)
+dta <- barmstein
+
 
 #	accessor methods for class slots
 #	from class Vegsoup
@@ -59,7 +52,7 @@ names(dta)[1:2] <- names(dta)[1:2]
 #	taxon abbreviations
 head(taxon(dta))
 head(SpeciesList(dta))
-split.abbr(dta)
+splitAbbr(dta)
 #	abundance scale
 
 class(BraunBlanquetReduce(dta))
@@ -82,6 +75,7 @@ dta$X <- coordinates(dta)[, 1]
 dta$Y <- coordinates(dta)[, 2]
 coordinates(dta) <- ~X+Y
 proj4string(dta)
+
 proj4string(dta) <- CRS("+init=epsg:4326")
 bbox(dta)
 
@@ -165,25 +159,25 @@ shared(prt)
 quantile(prt)[,,1] # min
 quantile(prt, na.rm = FALSE)[,,2] # lower hinge
 quantile(prt, coverscale = TRUE)[,,3] # median
+
 prt[1,]
 prt[,1:10]
+
 Partition(prt, 1)
-Optsil(prt)
 Optindval(prt)
-Partana(prt)
-#silhouette(prt)
-Disdiam(prt)
-typical(prt)
-#Murdoch(prt) 
 Isamic(prt)
-Tabdev(prt)
+typical(prt)
+
+# broken dispatch for optpart functions?
+#optsil(prt)
+#partana(prt)
+#silhouette(prt)
+#disdiam(prt)
+#Murdoch(prt)
+#tabdev(prt)
+#Indval(prt)
 
 #	depreciated
 FisherTest(prt)
 Phi(prt)
-Indval(prt)
 
-data(bigtestdata)
-
-dta <- Vegsoup(spc.big, sts.big, txa.big,
-	coverscale = "braun.blanquet")

@@ -1,28 +1,32 @@
-\name{StablePartition}
-\alias{StablePartition}
+\name{stable}
 
-\title{ Classification Stability for \code{VegsoupPartition} Objects }
+\alias{stable}
+\alias{stable,VegsoupPartition-method}
+
+\title{ Classification Stability }
+
 \description{
   Adjusted Goodman-Kruskal's lambda index of classification stability
   calculated from cross-tabulation of partitions (clusters) obtained from the
   data set and the subset selected by without replacement bootstrap.
 }
 \usage{
-  StablePartition(obj, nitr = 200, nitr.lambda = 10, ...)
+\S4method{stable}{VegsoupPartition}(x, nitr = 200, nitr.lambda = 10, ...)
 }
 
 \arguments{
-  \item{ obj }{
-    an object of class \code{\link{VegsoupPartition}}
+  \item{ x }{
+    \code{\link{VegsoupPartition}} object.
   }
   \item{ nitr }{
-    number of iterations
+    number of iterations.
   }
   \item{ nitr.lambda }{
-    number of iteration to calculate random values of lambda
+    number of iteration to calculate random values of lambda.
   }
   \item{ \dots }{
-    arguments passed to \code{\link{VegsoupPartition}}.
+    arguments passed to \code{\link{VegsoupPartition}} except argument \code{method}
+    which is obtained from the object \code{x}.
   }
 }
 \details{
@@ -30,10 +34,10 @@
 }
 \value{
   returns a list with components
-  \item{lambda}{
+  \item{ lambda }{
     lambda statistic
   }
-  \item{modified.lambda}{
+  \item{ modified.lambda }{
     modified lambda statistic
   }
 }
@@ -50,13 +54,12 @@ JUICE software (\url{http://www.sci.muni.cz/botany/juice/})
   This function is experimental!
 }
 \examples{
-data(bigtestdata)
+require(vegsoup)
 
-dta <- Vegsoup(spc.big, sts.big, txa.big, coverscale = "braun.blanquet")
+data(windsfeld)
+x <- VegsoupPartition(windsfeld, k = 10)
 
-prt <- VegsoupPartition(dta, k = 5)
-
-StablePartition(prt, nitr = 100, nitr.lambda = 10)
+stable(x, nitr = 100, nitr.lambda = 10)
 }
 
 \keyword{ multivariate }

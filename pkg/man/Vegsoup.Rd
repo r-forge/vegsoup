@@ -162,13 +162,12 @@ An object of class \code{\linkS4class{Vegsoup}}.
 }
 
 \examples{
-library(vegsoup)
+require(vegsoup)
 
-# real data
-data(testdata)
+data(barmstein)
+x <- barmstein
 
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-dta
+summary(x)
 
 # plot ordinations of simulated data
 plotPCO(coenoflex(100, 100), thresh = 0.2)

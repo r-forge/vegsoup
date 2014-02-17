@@ -22,7 +22,7 @@ setMethod("Optsil",
     	}   	  	
     		
 		cpu.time <- system.time({
-			tmp <- optpart:::optsil(
+			tmp <- optpart::optsil(
 					x = Partitioning(obj), dist = as.dist(obj, ...),
 					maxitr = maxitr)
 			obj@part <- as.integer(tmp$clustering)

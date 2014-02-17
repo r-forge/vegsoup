@@ -2,7 +2,7 @@
 \docType{methods}
 
 \alias{rectangles}
-\alias{rectangles,VegsoupPartiton-method}
+\alias{rectangles,VegsoupPartition-method}
 
 \title{ Plot Matrix Dimensions }
 
@@ -11,7 +11,7 @@
 }
 
 \usage{
-\S4method{rectangles}{VegsoupPartiton}(obj, plot = TRUE, ...)
+\S4method{rectangles}{VegsoupPartition}(obj, plot = TRUE, ...)
 }
 
 \arguments{

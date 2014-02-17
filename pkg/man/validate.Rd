@@ -1,13 +1,13 @@
 \name{validate}
 \docType{methods}
 
-\alias{Tabdev}
-\alias{Tabdev-methods}
-\alias{Tabdev,VegsoupPartition-method}
+\alias{tabdev}
+\alias{tabdev-methods}
+\alias{tabdev,VegsoupPartition-method}
 
-\alias{Partana}
-\alias{Partana-methods}
-\alias{Partana,VegsoupPartition-method}
+\alias{partana}
+\alias{partana-methods}
+\alias{partana,VegsoupPartition-method}
 
 \alias{disdiam}
 \alias{disdiam-methods}
@@ -35,15 +35,15 @@
 \usage{
 \S4method{silhouette}{VegsoupPartition}(x, ...)
 
-\S4method{Partana}{VegsoupPartition}(obj, verbose = FALSE, ...)
+\S4method{partana}{VegsoupPartition}(x, verbose = FALSE, ...)
 
 \S4method{disdiam}{VegsoupPartition}(x, ...)
 
-\S4method{Tabdev}{VegsoupPartition}(obj, numitr = 99, verbose = FALSE, ...)
+\S4method{tabdev}{VegsoupPartition}(x, numitr = 99, verbose = FALSE, ...)
 }
 
 \arguments{
-  \item{ obj, x }{
+  \item{ x }{
     A \code{"VegsoupPartition"} object.
   }
   \item{ numitr }{
@@ -94,10 +94,17 @@ As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a meth
 To prevent 
 }
 \examples{
-library(vegsoup)
-data(testdata)
-prt <- VegsoupPartition(Vegsoup(spc, sts, txa, "braun.blanquet"), k = 2)
-Tabdev(prt)
-Partana(prt)
+require(vegsoup)
+
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
+
+\dontrun{
+# broken dispatch
+silhouette(x)
+disdiam(x)
+tabdev(x)
+partana(x)
+}
 }
 \keyword{ methods }

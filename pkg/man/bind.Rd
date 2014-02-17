@@ -14,11 +14,11 @@ Take a sequence of arguments of objects from class \code{Vegsoup*} and combine t
 
 \arguments{
   \item{ \dots }{
-Objects of class \code{VegsoupData}.
-}
+    \code{Vegsoup} objects.
+  }
   \item{ deparse.level }{
-Not used.
-}
+    Not used.
+  }
 }
 
 \details{

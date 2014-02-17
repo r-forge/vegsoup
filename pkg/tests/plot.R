@@ -1,9 +1,9 @@
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
 
-plot(dta)
-plotPCO(dta)
+data(barmstein)
+x <- barmstein
 
-prt <- VegsoupPartition(dta, k = 2, method = "flexible")
-plot(prt)
+plot(x)
+plotPCO(x)
+plot(VegsoupPartition(x, k = 2, method = "flexible"))
+

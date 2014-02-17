@@ -6,19 +6,25 @@
 \alias{SpeciesTaxonomy-class}
 
 \alias{species,SpeciesTaxonomy-method}
-\alias{species<-,SpeciesTaxonomy,data.frame-method}
+
+\alias{species<-}
 \alias{species<-,SpeciesTaxonomy,Species-method}
+\alias{species<-,SpeciesTaxonomy,data.frame-method}
 
 \alias{taxonomy,SpeciesTaxonomy-method}
-\alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
+
+\alias{taxonomy<-}
+\alias{taxonomy<-,SpeciesTaxonomy,Species-method}
 \alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
+\alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
 
 \alias{rbind,SpeciesTaxonomy-method}
 
 \title{ SpeciesTaxonomy Class }
 
 \description{
-  A super class containing classes \code{"Species"} and \code{"Taxonomy"}.
+  A super class containing classes \code{"Species"} and \code{"Taxonomy"}. The class
+  guarantees that both objects match by their primary key (\code{'abbr'}).
 }
 
 \section{Objects from the Class}{
@@ -37,16 +43,16 @@
 \section{Slots}{
   \describe{
     \item{\code{species}:}{Object of class \code{"Species"},
-      see \code{\linkS4class{Species}} for details.
+      see class \code{\linkS4class{Species}} for details.
     }
     \item{\code{taxonomy}:}{Object of class \code{"Taxonomy"},
-      see \code{\linkS4class{Taxonomy}} for details.
+      see class \code{\linkS4class{Taxonomy}} for details.
     }
   }
 }
 
 \section{Methods}{
-  Unlike for classes \code{"Species"} and \code{"Taxonomy"} there exists no
+  Unlike classes \code{"Species"} and \code{"Taxonomy"} there exists no
   custom initialize method. Therefore, function \code{SpeciesTaxonomy} should
   be used in cases where the data integrity is unsure.
 
@@ -91,9 +97,12 @@
 %\section{Methods for "taxonomy<-"}{
 %  \describe{
     \item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
-      subset slot \code{taxonomy} as to contain anly the taxa given by an
+      subset slot \code{taxonomy} as to contain only the taxa given by an
       object of class \code{"Species"}, which by itself will replace
       slot \code{species}.
+    }
+    \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
+      experimental!
     }
     \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
       subset slot \code{taxonomy} as above, but by an object of class
@@ -115,40 +124,63 @@
 }
 \examples{
 require(vegsoup)
+
 showClass("SpeciesTaxonomy")
+data(barmstein)
+x <- barmstein
 
-data(testdata)
+# extract from object fro demonstration
+s <- Species(x)  # returns a data.frame
+t <- Taxonomy(x) # returns a data.frame
 
-new("SpeciesTaxonomy", species = species(spc), taxonomy = taxonomy(txa))
+# using the new() inititialization method
+st0 <- new("SpeciesTaxonomy")
+slotNames(st0)              # see slots names
+st0@species <- species(s)   # species method for class data.frame, returns a 'Species' object
+st0@taxonomy <- taxonomy(t) # taxonomy method for class data.frame, returns a 'Taxonomy' object
+st0
 
-# equivalent and significantly shorter
-obj <- SpeciesTaxonomy(spc, txa, verbose = TRUE)
+# supply slot in call to new()
+new("SpeciesTaxonomy", species = species(s), taxonomy = taxonomy(t))
+
+# equivalent. preferred and significantly shorter and more transparent interface
+st2 <- SpeciesTaxonomy(s, t, verbose = TRUE)
+identical(st0, st2)
 
 # modify and subset an object by replacing slots
+# in this way we can take subset of species
+obj <- st2
 obj1 <- obj2 <- obj3 <- obj
 
 # the first 10 species
-taxonomy(obj1) <- taxonomy(obj1)[1:10, ]
-obj1
+# note, the taxonomy method for class 'SpeciesTaxonomy' returns a data.frame
+# therefore, we have wrap into a taxonomy() call to get an object of class 'Taxonomy'
+# this might change in the future
+( taxonomy(obj1) <- taxonomy(taxonomy(obj1)[1:10, ]) )
+
 # specific genus
-taxonomy(obj2) <- taxonomy(obj2)[grep("Carex", taxonomy(obj)$taxon), ]
-obj2
-# first three
-species(obj3) <- species(obj3)[c(1:10, 15:20), ]
-obj3
+( taxonomy(obj2) <- taxonomy(taxonomy(obj2)[grep("Carex", taxonomy(obj)$taxon), ]) )
+
+# get a subset of species, e.g. those occuring in the shrub layer 'sl'
+i <- species(obj3)$layer == "sl"
+( species(obj3) <- species(species(obj3)[i, ]) ) 
+
 
 # combine objects
-data(bigtestdata)
+obj1 <- SpeciesTaxonomy(s, t)
 
-obj1 <- SpeciesTaxonomy(spc, txa)
-obj2 <- SpeciesTaxonomy(spc.big, txa.big)
+data(windsfeld)
+x <- windsfeld
+s2 <- Species(x)  # returns a data.frame
+t2 <- Taxonomy(x) # returns a data.frame
+obj2 <- SpeciesTaxonomy(s2, t2)
 
-obj <- rbind(obj1, obj2)
+( obj <- rbind(obj1, obj2) )
 
 # assign object of class SpeciesTaxonomy to an existing Vegsoup* object
-dta <- Vegsoup(obj, sts, coverscale = "braun.blanquet")
-#  not implemented yet!
-## Species(dta) <- obj3
-
+\dontrun{
+# not implemented yet!	
+# Species(x) <- obj3
+}
 }
 \keyword{ classes }

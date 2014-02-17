@@ -23,9 +23,9 @@ Version 0.1-7}
 
 \begin{document}
 %\setkeys{Gin}{width=\textwidth}
-<<prep, echo=FALSE>>=
-options(width=100,digits=2)
-@
+%<<prep, echo=FALSE>>=
+%options(width=100,digits=2)
+%@
 %Sys.setlocale("LC_TIME", "de_AT.UTF-8")
 
 \maketitle
@@ -35,9 +35,9 @@ options(width=100,digits=2)
 \noindent
 An example session to show functionality and usage of R library \texttt{vegsoup}. \\
 After installation of \texttt{vegsoup} you can invoke this PDF with
-<<eval=FALSE>>=
-vignette('vegsoup')
-@
+%<<eval=FALSE>>=
+%vignette('vegsoup')
+%@
 \end{abstract}
 
 \section{Introduction}
@@ -47,20 +47,15 @@ vignette('vegsoup')
 The best way to introduce the functionalities of the package is a session with example code.
 
 We load the library as usual into our R environment.
-<<load, results=hide>>=
-library(vegsoup)
-@
+%<<load, results=hide>>=
+%library(vegsoup)
+%@
 
-<<eval=FALSE>>=
-Vegsoup()
-@
-
-If you want to change this use:
-<<eval=FALSE>>=
-Vegsoup()
-@
+%<<eval=FALSE>>=
+%Vegsoup()
+%@
 
 %\bibliographystyle{ecol_let}
-%\bibliography{vegdata}
+%\bibliography{vegsoup.bib}
 
 \end{document}

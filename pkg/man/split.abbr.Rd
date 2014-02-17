@@ -54,25 +54,38 @@
 }
 
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-x <- splitAbbr(dta)
+require(vegsoup)
 
-head(txa)
-all.equal(rownames(x), colnames(dta))
+data(barmstein)
+x <- barmstein
 
-#   get scientific taxa names
-m <- as.matrix(dta, typeof = "character", mode = "R")
-head(x[rownames(m), ])
+# deparse compund taxon and layer replicates
+a <- splitAbbr(x)
+head(a)
 
-#	similar result but without meaningfull rownames
-head(SpeciesList(dta, layered = TRUE))
+all.equal(rownames(a), colnames(x))
 
-#	species matrix including taxon anmes and layers
-head(cbind(x[rownames(m), ], m))
+# get scientific taxa names for the columns of the species matrix
+# as.matrix returns a species matrix from an 'Vegsoup' object
+# we use mode = "R" for instantaneous matrix transposition 
+m <- as.matrix(x, typeof = "character", mode = "R")
+head(a[rownames(m), ])
 
-res <- dta[, rownames(splitAbbr(dta))[sample(1:ncol(dta), 10)]]
+# for a unique list of taxa
+taxon(x)
+
+# similar result but a matrix
+head(SpeciesList(x, layered = TRUE))
+
+# species matrix including taxon names and layers
+m <- cbind(a[rownames(m), ], m)
+
+# and this can be converted bach to class 'Species'
+( stackSpecies(m) )
+
+# indexing of 'Vegsoup' object by suppling indices of the the species matrix
+# elements according to 'as.matrix' method
+x[, rownames(a)[sample(1:ncol(x), 10)]]
 }
 
 \keyword{ methods }

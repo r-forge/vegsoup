@@ -4,6 +4,10 @@
 \alias{stackSites}
 \alias{stackCoordinates}
 
+\alias{rbind}
+\alias{rbind,Species-method}
+\alias{rbind,Sites-method}
+
 \title{ Stack Species Matrix, Sites Data or Spatial Coordinates }
 
 \description{
@@ -42,6 +46,10 @@ stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon")
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE)
 
 stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)               
+
+\S4method{rbind}{Species}(..., deparse.level = 1)
+
+\S4method{rbind}{Sites}(..., deparse.level = 1)
 }
 
 \arguments{
@@ -77,8 +85,13 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
     Round decimals to given precision. See \sQuote{Details}.
   }
   \item{ \dots }{
-    additional arguments passed to \code{readOGR}.
+    additional arguments passed to \code{readOGR}. For \code{rbind} objects of class
+    \code{Sites}.
   }
+## Arguments for function rbind  
+  \item{ deparse.level }{
+    not used.
+  }  
 }
 
 \details{
@@ -156,7 +169,7 @@ sts$variable
 \seealso{
 \code{\link{Species-class}},
 \code{\link{Sites-class}},
-\code{\link{reshape.species}},
+\code{\link{reshapeSpecies}},
 \code{\link{elevation}},
 \code{\link{tile2latlng}},
 \code{\link{read.csv}},

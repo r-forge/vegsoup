@@ -7,7 +7,7 @@ setMethod("silhouette",
     signature(x = "VegsoupPartition"),
     function (x, ...) {
     	#	Imports:
-    	#	require(cluster)
+    	require(cluster)
 		if (getK(x) == 1)
 			stop("meaningless with k = ", getK(x))
     	

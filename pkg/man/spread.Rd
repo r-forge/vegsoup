@@ -7,7 +7,7 @@
 
 \title{ List Occurences of Species in Partitions }
 \description{
-  The method simply lists all occurences of species in partitions.
+  The method simply lists all occurrences of species in partitions.
 }
 \usage{
   spread(obj)
@@ -18,8 +18,8 @@
   }
 }
 \value{
-  A \code{"list"} with any many components as there are species-layer
-  replicates (\code{ncol(obj)})
+  \code{"list"} with as many components as there are species-layer
+  replicates (\code{ncol(obj)}).
 }
 \author{ Roland Kaiser }
 \seealso{
@@ -27,10 +27,10 @@
 }
 \examples{
 require(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 2)
 
-spread(prt)
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
+
+spread(x)
 }
 \keyword{ methods }

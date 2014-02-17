@@ -8,8 +8,8 @@ Create an object of class \code{"VegsoupPartition"} by selecting a clustering al
 }
 \usage{
 VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
-                 "kmeans", "optpart", "wards", "fanny", "external"), clustering,
-                 polish = FALSE, seed = 1234, verbose = FALSE,
+                 "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"),
+                 clustering, polish = FALSE, seed = 1234, verbose = FALSE,
                  ...)
 }
 
@@ -84,17 +84,18 @@ partition.
 \code{\link{hclust}}
 }
 \examples{
-#	simulate 100 plots and 200 species distributed along a two-dimensional gradient
+require(vegsoup)
+
+# simulate 100 plots and 200 species distributed along a two-dimensional gradient
 x <- coenoflex(100, 200)
 r <- VegsoupPartition(x, k = 2, method = "fanny", memb.exp = 1.5)
 Partitioning(r)
 head(Sites(r))
 
-#	plot membership values against gradient values
+# plot membership values against gradient values
 stars(Sites(r)[grep("M", names(r))],
-	locations = Sites(r)[, 1:2] * 20, len = 1,
-	draw.segments = TRUE, labels = NULL)
-
+      locations = Sites(r)[, 1:2] * 20, len = 1,
+      draw.segments = TRUE, labels = NULL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

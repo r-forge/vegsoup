@@ -14,7 +14,7 @@
 \alias{Indval,VegsoupPartition-method}
 
 \alias{getStat}
-\alias{getStat,Vegsoup-method}
+\alias{getStat,VegsoupPartitionFidelity-method}
 
 \title{ Calculate Fidelity Values }
 
@@ -37,10 +37,14 @@
 
 \usage{
 \S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...)
+
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
+
 \S4method{Phi}{VegsoupPartition}(obj)
+
 \S4method{Indval}{VegsoupPartition}(obj, ...)
-\S4method{getStat}{VegsoupPartition}(obj, ...)
+
+\S4method{getStat}{VegsoupPartitionFidelity}(obj)
 }
 
 \arguments{

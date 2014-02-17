@@ -232,7 +232,7 @@ tail(x)
 dim(x)
 
 # turn into long format
-x.df <- data.frame(abbr = rownames(x), layer = "hl", comment = NA, x,
+x.df <- data.frame(abbr = rownames(x), layer = "hl", taxon = NA, x,
                    check.names = FALSE)
 # promote to class "Species"
 X <- stackSpecies(x.df)
@@ -288,11 +288,11 @@ prt.org <- VegsoupPartition(dta, 3, clustering = "block")
 Confus(prt.flx, prt.org)
 
 # write object of class Vegsoup
-foo <- write.verbatim(seriation(dta), file = tempfile(),
-    select = c(10,7,8,9,11))
-foo[1:30] # resize console window
+txt <- write.verbatim(seriation(dta), file = tempfile(),
+    select = c(8,7,6,9))
+txt[1:30] # resize console window
 }
 \seealso{
-\code{\link{stackSpecies}}, 
+\code{\link{stackSpecies}}, \code{\link{stackSites}}
 }
 \keyword{import}

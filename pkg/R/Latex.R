@@ -108,7 +108,7 @@
 	#	to do!	
 }
 
-.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.treshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose) {
+.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.treshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose) {
 	CALL <- match.call()
 	#	Suggests:
 	require(Hmisc)

@@ -10,7 +10,8 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 }
 
 \usage{
-  SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...)
+SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE,
+                verbose = FALSE, ...)
 }
 
 \arguments{
@@ -56,7 +57,7 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 
   Classes \code{\linkS4class{Species}} and \code{\linkS4class{Taxonomy}}
   allow more columns than the default and mandatory ones. If argument
-  \code{skip = TRUE} all non nessecary columns will be skipped and the
+  \code{skip = TRUE} all non necessary columns will be skipped and the
   minimal set of columns is retained. Set \code{skip} to \code{TRUE} if you
   wish to keep the information of additional columns.
 
@@ -67,7 +68,7 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
   \code{pmatch = TRUE} partial matches are treated as correct
   (see \link{pmatch}). Proceed with fingers crossed! Never the less,
   if you are happy with what \code{pmatch} found and you want to use these
-  matches to overriede your raw data, you might think about saving the object
+  matches to override your raw data, you might think about saving the object
   returned from \code{SpeciesTaxonomy(...)} to disk and run the function again
   on these modified objects. If there are any matching errors or ambiguities
   it is highly advisable, however, to review the data and apply corrections
@@ -94,53 +95,58 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 }
 
 \examples{
-data(dune)
-data(dune.env)
+require(vegsoup)
+require(vegan)
 
-# create species data
-# there are two moss species in the dune data set
-# see vector of taxon names below
+# an example using the dune data set supplied with package 'vegan'
+data(dune)
+
+# prepare and create species data
+# there are two moss species in the dune data set, see vector of taxon names below
+# we assign bryophytes to a moos layer ('ml') vascular palnts to herb layer ('hl')
 x <- data.frame(abbr = names(dune),
-	layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
-	taxon = "", t(dune))
+                layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
+                taxon = "", t(dune))
+
 # groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
 
-spc <- stackSpecies(x)
-spc
+# promote to class 'Species'
+( s <- stackSpecies(x) )
 
-# create taxonomy reference list from scratch
+# build taxonomic reference list from scratch
 # these are the scientific names corresponding to the abbreviations in dune
 # as I understand it
 
 taxon <- c("Bellis perennis", "Leontodon autumnalis", "Poa pratensis",
-	"Trifolium repens", "Achillea millefolium", "Poa trivialis",
-	"Elymus repens", "Lolium perenne", "Alopecuros geniculatuis",
-	"Bormus hordeaceus", "Juncus bufonius", "Ranunculus flammula",
-	"Cheopodium album", "Sagina procumbens", "Agrostis stolonifera",
-	"Brachytethium rutabulum", "Cirsium arvense", "Juncus articulatus",
-	"Eleocharis palustris", "Calliergonella cuspidata", "Rumex acetosa",
-	"Trifolium pratense", "Anthoxanthum odoratum", "Plantago lanceolata",
-	"Aira praecox", "Hypochaeris radicata", "Potentilla palustris",
-	"Vicia latifolia", "Salix repens", "Empetrum nigrum")
+  "Trifolium repens", "Achillea millefolium", "Poa trivialis",
+  "Elymus repens", "Lolium perenne", "Alopecuros geniculatuis",
+  "Bormus hordeaceus", "Juncus bufonius", "Ranunculus flammula",
+  "Cheopodium album", "Sagina procumbens", "Agrostis stolonifera",
+  "Brachytethium rutabulum", "Cirsium arvense", "Juncus articulatus",
+  "Eleocharis palustris", "Calliergonella cuspidata", "Rumex acetosa",
+  "Trifolium pratense", "Anthoxanthum odoratum", "Plantago lanceolata",
+  "Aira praecox", "Hypochaeris radicata", "Potentilla palustris",
+  "Vicia latifolia", "Salix repens", "Empetrum nigrum")
 
-txa <- data.frame(abbr = unique(spc$abbr), taxon)
+# create a data.frame and promote to class 'Taxonomy'
+t <- data.frame(abbr = unique(s$abbr), taxon)
+( t <- taxonomy(t) )
 
-txa <- taxonomy(txa)
+# couple 'Species' and 'Taxonomy' objects
+# we should not get any mismatches
+st <- SpeciesTaxonomy(s, t, verbose = TRUE)
 
-txa
-
-spc.txa <- SpeciesTaxonomy(x = spc, y = txa)
-
-## sites data frame
+# sites data
 data(dune.env)
 x <- data.frame(plot = row.names(dune.env), dune.env)
+
 # groom plot names
 x$plot <- paste("dn", x$plot, sep = "")
 
-sts <- stackSites(x, verbose = TRUE)
+( s <- stackSites(x, verbose = TRUE) )
 
-res <- Vegsoup(spc.txa, sts, coverscale = "ordinal")
+( x <- Vegsoup(st, s, coverscale = "ordinal") )
 
 }
 

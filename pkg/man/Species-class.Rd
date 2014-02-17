@@ -163,18 +163,14 @@ class(spc)
 class(species(spc))
 
 # matrix method
-obj1 <- species(as.matrix(spc))
+s1 <- species(as.matrix(spc))
 
 # get slot data from object, a simple data.frame
-class(species(obj1))
+class(species(s1))
 
 # combine two objects
 data(windsfeld)
-obj2 <- species(Species(windsfeld))
-
-obj <- rbind(obj1, obj2)
-
-obj
-
+s2 <- species(Species(windsfeld))
+( s <- rbind(s1, s2) )
 }
 \keyword{ classes }

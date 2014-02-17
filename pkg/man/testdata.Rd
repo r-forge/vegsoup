@@ -35,8 +35,8 @@ The three objects \code{"spc"} (species), \code{"sts"} (sites) and \code{"txn"} 
 }
 
 \usage{
-data(testdata)
 data(barmstein)
+data(testdata)
 }
 
 \examples{

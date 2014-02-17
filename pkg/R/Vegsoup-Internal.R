@@ -58,7 +58,8 @@
 	require(maptools)
 	
 	n <- length(unique(x$plot)) # must be unique!
-	pts <- runifpoint(n, win = owin(c(0.2, 0.8), c(0.2, 0.8)) )
+	w <- spatstat::owin(c(0.2, 0.8), c(0.2, 0.8))
+	pts <- spatstat::runifpoint(n, win = w)
 	pts <- as.SpatialPoints.ppp(pts)
 	pts <- SpatialPointsDataFrame(pts,
 		data = data.frame(plot = sort(unique(x$plot)),

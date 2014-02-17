@@ -58,7 +58,7 @@ rownames(res.stack) <- 1:nrow(res.stack)
 res <- res.stack
 
 if (verbose) {
-	cat("found variables:", unique(res$variable))
+	cat("found variables:", unique(res$variable), "\n")
 }	
 
 res <- new("Sites", data = res)	

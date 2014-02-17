@@ -34,20 +34,21 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
   The method will not print anything to console.
 }
 \author{ Roland Kaiser }
+
 \examples{
-library(vegsoup)
-data(testdata)
+require(vegsoup)
 
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+data(barmstein)
+x <- barmstein
 
-#	including abbreviations
-sl <- SpeciesList(dta)
-head(sl)
+# including abbreviations
+l <- SpeciesList(x)
+head(l)
 
-sl <- SpeciesList(dta, layered = TRUE)
-head(sl)
+l <- SpeciesList(x, layered = TRUE)
+head(l)
 
-#	scientific taxon names only
-taxon(dta)
+# scientific taxon names only
+taxon(x)
 }
 \keyword{methods}

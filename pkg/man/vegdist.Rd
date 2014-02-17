@@ -92,31 +92,36 @@ Roland Kaiser
 \code{\link[vegan:vegdist]{vegdist}}
 }
 \examples{
-library(vegsoup)
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, "braun.blanquet")
+require(vegsoup)
+
+data(barmstein)
+x <- barmstein
 
 # query disssimlilarity measure set for the object
+vegdist(x)
+
 # change the default distance 'euclidean'
-vegdist(dta) 
+vegdist(x) <- "bray"
 
-vegdist(dta) <- "bray"
-
-d.q <- as.dist(dta, "numeric")
-class(d.q)
-attributes(d.q)
-attr(d.q, "mode")
+d <- as.dist(x, "numeric")
+class(d)
+attributes(d)
+attr(d, "mode")
 
 # R-mode analysis
 # currently disfunct due to missing ... argument in stats:as.dist
 # chi square distances can be obtained
 # by computing euclidean distances on standardized data
-# see ?vegan::vegdist 
-##decostand(dta)  <- "chi.square"
-##d.r <- as.dist(dta, mode = "R")              
-##class(d.r)
-##attr(d.r, "mode")
+# see ?vegan::vegdist
 
-distconnected(dta)
+\dontrun{ 
+# decostand(x)  <- "chi.square"
+# d <- as.dist(dta, mode = "R")
+# class(d)
+# attr(d, "mode")
+}
+
+# connectivity of distances
+distconnected(x)
 }
 \keyword{ methods }

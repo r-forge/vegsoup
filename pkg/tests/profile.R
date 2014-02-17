@@ -1,7 +1,7 @@
 require(vegsoup)
 
 Rprof(tmp <- tempfile())
-dta <- coenoflex(2000, 1000)
+dta <- coenoflex(100, 200)
 Rprof()
 summaryRprof(tmp)
 unlink(tmp)

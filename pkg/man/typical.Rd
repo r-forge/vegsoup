@@ -21,7 +21,8 @@ Identifies samples (plots) that typify clusters in a partition based on dissimil
     integer. Number of typal species/clusters to identify. Defaults to 1.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{as.dist}}.
+    currently not used.
+    %additional arguments passed to \code{\link{as.dist}}. 
   }
 }
 \details{
@@ -44,13 +45,11 @@ A wrapper for function \code{typal} by David W. Roberts in \pkg{optpart}.
 \code{\link{as.dist}}
 }
 \examples{
-library(vegsoup)
-data(testdata)
-        
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
-prt <- VegsoupPartition(dta, k = 2)
+require(vegsoup)
 
-typical(prt)
-typical(prt, typeof = "logical") 
+data(barmstein)
+x <- VegsoupPartition(barmstein, k = 2)
+
+typical(x)
 }
 \keyword{ methods }

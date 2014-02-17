@@ -1,5 +1,9 @@
 \name{hist}
+
 \alias{hist}
+\alias{hist,Vegsoup-method}
+\alias{hist,VegsoupPartition-method}
+\alias{hist,VegsoupPartitionFidelity-method}
 
 \title{ Plot Histogram of Fidelity Values }
 \description{

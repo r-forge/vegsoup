@@ -61,42 +61,46 @@ A \code{Vegsoup*} object.
 \code{\link[vegsoup:extract]{"["}}
 }
 \examples{
-data(testdata)
-dta <- Vegsoup(spc, sts, txa, coverscale = "braun.blanquet")
+require(vegsoup)
 
-head(taxon(dta)) # short-hand for head(Taxonomy(dta)$taxon)
+data(barmstein)
+x <- barmstein
 
-#  subset object using a species scientific name
-#  and use function taxon() for display
-taxon(subset(dta, "Carex"))
-#  pass argument to grep()
-#  note, if invert = TRUE the selected subset is inverted
-#  and all species not matching 'Carex' are retained!
-taxon(subset(dta, "carex", invert = TRUE, ignore.case = TRUE))
+head(taxon(x)) # short-hand for head(Taxonomy(x)$taxon)
 
-#  alternative if Taxonomy(dta)$abbr has meaningful abbreviations
-taxon(dta[, grep("care" , colnames(dta))])
+# subset object using a species scientific name
+# and use function taxon() for display
+taxon(subset(x, "Carex"))
 
-#  numeric index to define subset
-x <- sample(1:length(taxon(dta)), 10)
-colnames(subset(dta, x)) # colnames() displays column names of as.matrix(dta)
+# pass argument to grep()
+# note, if invert = TRUE the selected subset is inverted
+# and all species not matching 'Carex' are retained!
+taxon(subset(x, "carex", invert = TRUE, ignore.case = TRUE))
 
-## some more usage examples
-#  subset object such that only the set of species of the most species rich sample remain
-res <- subset(dta, taxon(dta[which.max(richness(dta, "sample")), ]))
+# alternative if Taxonomy(x)$abbr has meaningful abbreviations
+taxon(x[, grep("care" , colnames(x))])
+
+# numeric index to define subset
+i <- sample(1:length(taxon(x)), 10)
+colnames(subset(x, i)) # colnames() displays column names of as.matrix(x)
+
+# some more usage examples
+# subset object such that only the set of species of the most species rich sample remain
+res <- subset(x, taxon(x[which.max(richness(x, "sample")), ]))
 dim(res)
 
-#  set of species that occur in all relevees (plots)
-res <- subset(dta, taxon(dta[, colSums(dta) == nrow(dta)]))
+# set of species that occur in all relevees (plots)
+res <- subset(x, taxon(x[, colSums(x) == nrow(x)]))
 dim(res)
 
-#  logical index to define subset
-#  get family retrieved from the plant list
+# logical index to define subset
+# get family retrieved from the plant list
+\dontrun{
 library(Taxonstand)
-
-tmp <- TPL(taxon(dta))
-#  Carex is a genus of Cyperaceae, let's see if there are more mebers of this family
-taxon(subset(dta, tmp$Family == "Cyperaceae")) # no, there are not
+tmp <- TPL(taxon(x))
+# Carex is a genus of Cyperaceae, let's see if there are more mebers of this family
+taxon(subset(x, tmp$Family == "Cyperaceae")) # no, there are not
+}
 }
 \keyword{ methods }
 
