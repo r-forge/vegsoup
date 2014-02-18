@@ -53,3 +53,4 @@ data(barmstein)
 Indspc(barmstein)
 }
 \keyword{ methods }
+

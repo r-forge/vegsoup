@@ -56,3 +56,4 @@ table(Layer(x))
 table(Species(x)$layer)
 }
 \keyword{ methods }
+

@@ -77,3 +77,4 @@ contingency(x, mode = "R")
 average(x, mode = "R")
 }
 \keyword{methods }
+

@@ -45,3 +45,4 @@ Adapted from function \code{signassoc()} of package \pkg{indicspecies} by \emph{
 }
 
 \keyword{ methods }
+

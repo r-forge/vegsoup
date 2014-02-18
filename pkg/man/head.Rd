@@ -92,3 +92,4 @@ tail(x, choice = "sp", typeof = "character", n = 2)
 head(VegsoupPartition(x, k = 2))
 }
 \keyword{methods}
+

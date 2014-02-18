@@ -49,3 +49,4 @@ summary(lm(hcov ~ scov, data = Layers(barmstein, collapse = "E")))
 }
 
 \keyword{ methods }
+

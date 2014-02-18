@@ -1,7 +1,7 @@
 #	read OGR data source
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
-	#	Suggests:
-	require(rgdal)
+	#	Depends:
+	#	require(rgdal) will also load (sp)
 	
 	pt <- ogrInfo(dsn, layer)
 	withz <- pt$with_z

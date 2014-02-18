@@ -53,7 +53,7 @@
 \author{ Roland Kaiser }
 
 \seealso{
-  \code{\link[vegsoup:subset]{subset}}
+  \code{\link[vegsoup]{subset}}
 }
 
 \examples{
@@ -79,3 +79,6 @@ rownames(x)
 Sites(x) <- x@sites[sample(nrow(x)), ]
 rownames(x)
 }
+
+\keyword{ methods }
+

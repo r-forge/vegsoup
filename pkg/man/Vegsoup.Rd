@@ -189,3 +189,4 @@ as(as.logical(seriation(coenoflex(10,30)), mode = "R"), "sparseMatrix")
 }
 
 \keyword{ classes }
+

@@ -38,7 +38,7 @@ For objects of class \code{Vegsoup} the default method \code{"dca"} uses functio
 
 The method defined for class \code{"VegsoupPartition"} equals separate calls to subsets defined by \code{Partitioning(obj)}, same as a call to objects of class \code{Vegsoup}, followed by final combination of all subsets into a single object. Note that this orders plots within each group based on the defined method, but the order of species is determined by order they appear in single subsets. So the order of species might not be satisfactory.
 
-Ordering by explicit indexing is available by using the extract method \code{\link[vegsoup:extract]{'['}} for \code{Vegsoup*} objects.
+Ordering by explicit indexing is available by using the method \code{\link[vegsoup]{Extract}} method for \code{Vegsoup*} objects.
 }
 \value{
 An object of class depending of the input class.

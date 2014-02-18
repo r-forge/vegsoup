@@ -125,3 +125,4 @@ attr(d, "mode")
 distconnected(x)
 }
 \keyword{ methods }
+

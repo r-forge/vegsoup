@@ -1,5 +1,5 @@
 #	warning! some how slot sp.points can get messed up?
-OptimStride <- function (x, k, ft.treshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
+OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
 	if (missing(k)) {
 		stop("please supply k for stride")
 	}
@@ -14,13 +14,13 @@ OptimStride <- function (x, k, ft.treshold = 1e-3, alternative = "two.sided", me
 	cycle <- function (x, k, ...) {
 		prt <- VegsoupPartition(x, k = k, ...)
 		ft <- FisherTest(prt, alternative = alternative)
-		res <- apply(ft < ft.treshold, 2, sum)
+		res <- apply(ft < ft.threshold, 2, sum)
 		return(res)
 	}
 	
 	if (as.logical(fast)) {
-		require(multicore)
-		message("fork multicore process on ", multicore:::detectCores(), " cores")
+		require(parallel)
+		message("fork multicore process on ", parallel::detectCores(), " cores")
 	}	
 	
 	#	results list for top level loop
@@ -60,7 +60,7 @@ OptimStride <- function (x, k, ft.treshold = 1e-3, alternative = "two.sided", me
 		settings = list(call = match.call(),
 			args = c(as.list(match.call())[-c(1,2)])))
 	os$settings$args$method <- method
-	os$settings$args$ft.treshold <- ft.treshold
+	os$settings$args$ft.threshold <- ft.threshold
 	os$settings$args$alternative <- alternative
 
 	res@optimstride <- os
@@ -68,7 +68,7 @@ OptimStride <- function (x, k, ft.treshold = 1e-3, alternative = "two.sided", me
 	#	report if any significant indicator
 	#	for at least one of the groups was found
 	if (sum(unlist(os$indicators)) == 0) {
-		warning("ft.treshold of ", ft.treshold, " seems to be too low?")
+		warning("ft.threshold of ", ft.threshold, " seems to be too low?")
 	}
 	return(res)
 }

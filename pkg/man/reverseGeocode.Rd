@@ -52,3 +52,4 @@ Make sure that the object has a column named \code{"horizontal.precision"} in or
 }
 
 \keyword{ spatial }
+

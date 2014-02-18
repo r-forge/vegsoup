@@ -618,8 +618,9 @@ if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run a
 #	init multicore if active
 if (fast) {
 	#	Suggests:
-	require(multicore)
-	if (verbose) message("use multicore")
+	require(parallel)
+	message("fork multicore process on ", parallel::detectCores(), " cores")
+	#if (verbose) message("use multicore")
 }	
 #	create result object for fidelity measure
 nsps <- dim(X)[2]	# dim(obj)[2] 

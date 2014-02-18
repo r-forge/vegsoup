@@ -51,3 +51,4 @@ showClass("VegsoupOptimstride")
 }
 
 \keyword{classes}
+

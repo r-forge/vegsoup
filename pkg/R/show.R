@@ -56,7 +56,7 @@ setMethod("show",
 .spatial.summary <- function (x) {
 	res <- paste(
 		"\nproj4string      :", proj4string(x),
-		"\nbbox             :",
+		"\nextent           :",
 			paste(paste(bbox(x)[1,], bbox(x)[2,]), collapse = " "),
 			" (lng lat / min max)")
 	res
@@ -67,6 +67,7 @@ setMethod("show",
 		"\n", getK(x), " partitions",
 		paste(rep(" ", 17 - (nchar(getK(x)) + 11)), collapse = ""), ": ", sep = "")
 	res <- paste(res, paste(as.vector(table(Partitioning(x))), collapse = " "), sep = "")
+    res <- paste(res, "\npartition method :", x@method)
 	res
 }
 
@@ -167,7 +168,7 @@ setMethod("summary",
 #	class VegsoupOptimstride
 setMethod("summary",
 	signature(object = "VegsoupOptimstride"),
-		function (object, oc.treshold = 2) {
+		function (object, oc.threshold = 2) {
 		
 		res <- list(optimclass1 = optimclass1(object),
 			optimclass2 = optimclass2(object),
@@ -175,11 +176,11 @@ setMethod("summary",
 			args = object@optimstride$settings$args)
 	
 		cat("OptimStride results for k:", getK(object))
-		cat("\n\nOptimClass 1 (fisher test treshold: ", treshold(object), "):\n", sep = "")
+		cat("\n\nOptimClass 1 (fisher test threshold: ", threshold(object), "):\n", sep = "")
 		print(res$optimclass1)
 
-		cat("\nOptimClass 2 (occurence treshold: ",
-			oc.treshold, "):\n", sep = "")
+		cat("\nOptimClass 2 (occurence threshold: ",
+			oc.threshold, "):\n", sep = "")
 		print(res$optimclass2)
 		
 		cat("\nPeaks OptimClass k\n", sep = "")

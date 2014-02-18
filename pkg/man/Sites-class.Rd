@@ -129,3 +129,4 @@ rbind(s, s2)
 }
 
 \keyword{ classes }
+

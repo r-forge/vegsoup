@@ -22,9 +22,8 @@
 \title{ Set or Retrieve an Abundance Scale for \code{Vegsoup*} Objects }
 
 \description{
-  Function \code{Coverscale} creates an object of class
-  \code{\link[vegsoup:Coverscale-class]{Coverscale}} containing a definition
-  for an ordinal scale, or alternatively setting up a \code{Coverscale} object
+  Function \code{Coverscale} creates an object of class \code{\linkS4class{Coverscale}} containing a
+  definition for an ordinal scale, or alternatively setting up a \code{Coverscale} object
   representing species abundances on a continuous scale (counts, frequencies
   or percentages). Objects of this class are mandatory for \code{Vegsoup} and
   it's extending classes.
@@ -95,8 +94,8 @@ Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–8
   \code{\link{Coverscale-class}},
   \code{\link{BraunBlanquetReduce}},
   \code{\link{Vegsoup}} in package \pkg{vegsoup},
-  \code{\link[vegdata:tv.coverperc]{tv.coverperc}} in package \pkg{vegdata} and
-  \code{\link[vegan:coverscale]{coverscale}} in package \pkg{vegan} for the
+  \code{\link[vegdata]{tv.coverperc}} in package \pkg{vegdata} and
+  \code{\link[vegan]{coverscale}} in package \pkg{vegan} for the
   ancestor of this implementation.
 }
 
@@ -137,3 +136,4 @@ coverscale(sim1.prt.fid)
 }
 
 \keyword{ methods }
+

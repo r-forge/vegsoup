@@ -50,3 +50,4 @@ spc <- Species(barmstein)
 class(spc)
 }
 \keyword{ methods }
+

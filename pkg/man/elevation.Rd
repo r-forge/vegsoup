@@ -37,3 +37,4 @@ x.srtm <- elevation(x)
 }
 }
 \keyword{ methods }
+

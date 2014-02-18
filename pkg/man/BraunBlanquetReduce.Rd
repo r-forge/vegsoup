@@ -53,3 +53,4 @@ class(BraunBlanquetReduce(x))
 \code{\link{coverscale}}
 }
 \keyword{ methods }
+

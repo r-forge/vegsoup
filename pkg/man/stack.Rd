@@ -18,20 +18,20 @@
   (i.e., the addition of columns). In contrast, it is common in community
   ecology to store abundance data as spreadsheets with sites as
   rows and species as columns. Such a data storage format is often called
-  \emph{wide format}, because more sampling may result in a widening of the
+  \emph{wide format}, because more sampling may result additionally in a widening of the
   data (e.g., more columns are required as further sampling reveals an increasing
   number of species).
 
   Function \code{stackSpecies} converts a matrix like input object or file
-  into a representation in long format, where each observation on a species
+  into a representation in \emph{long format}, where each observation on a species
   consists of one row in a resulting data frame that has as many rows as there
-  are single species occurrences in the data set (see
+  are single species occurrences, including layer replicates, in the data set (see
   \code{\linkS4class{Species}}). In a similar fashion, function
-  \code{stackSites} can be used to derive the long format from a plot by variable matrix
-  (see \code{\linkS4class{Sites}}). Function \code{stackCoordinates}
+  \code{stackSites} can be used to derive the \emph{long format} from a plot by variable
+  matrix (see \code{\linkS4class{Sites}}). Function \code{stackCoordinates}
   collects spatial coordinates from spatial data stored on disk by calls to
-  \code{\link[rgdal]{readOGR}}. It then reshapes two or three (3D features) columns
-  of spatial coordinates together with a plot identifier to the format defined
+  \code{\link[rgdal]{readOGR}}. It then reshapes two or three columns (in case of 3D features)
+  of spatial coordinates along with a plot identifier to the format defined
   by class \code{"Sites"}. Results of \code{stackSites} and
   \code{stackCoordinates} can be combined using \code{rbind} to associate it with
   spatial information as intended for \code{Vegsoup} objects (see \sQuote{Examples}).
@@ -49,7 +49,7 @@ rbind(..., deparse.level = 1)
 }
 
 \arguments{
-## Arguments to functions
+# Arguments to all functions
   \item{ x }{
      An object converted to a data frame.
   }
@@ -65,12 +65,12 @@ rbind(..., deparse.level = 1)
   \item{ verbose }{
      Prints some diagnostic messages.
   }
-## Arguments for function stackSpecies
+# Arguments for function stackSpecies
   \item{ absences }{
     Character used to code absences. Can be missing, see \sQuote{Details}.
   }
 
-## Arguments for function stackCoordinates
+# Arguments for function stackCoordinates
   \item{ dsn }{
     Data source name. See \code{\link[rgdal]{readOGR}}.
   }
@@ -81,17 +81,17 @@ rbind(..., deparse.level = 1)
     Round decimals to given precision. See \sQuote{Details}.
   }
   \item{ \dots }{
-    additional arguments passed to \code{readOGR}. For \code{rbind} objects of class
-    \code{Species} or \code{Sites}.
+    additional arguments passed to \code{readOGR}. For \code{rbind} method, objects of class
+    \code{Species} respectively \code{Sites}.
   }
-## Arguments for function rbind  
+# Arguments for function rbind  
   \item{ deparse.level }{
     not used.
   }  
 }
 
 \details{
-For \code{stackSpecies} the supported data frame, either read from file, or passed as \code{R} object must have columns corresponding to argument schema. The default schema is 'abbr', 'layer' and 'taxon' (cf. class \code{\linkS4class{Species}}). The column 'taxon' can consist of have \code{NA} or \code{NULL}. This field can be used to store taxonomic or other relevant information (accuracy of determination) on a particular observation, but is not mandatory. The species matrix is assumed to have species in rows and plots in columns. Plot names are derived form \code{names(x)}. If argument file is supplied, all columns are imported using \code{read.csv(..., colClasses = "character")}. This matters if species abundances were recorded on a non-ordinal scale and shall later be treated as continous. The \code{\linkS4class{Coverscale}}) class controls these conversions.
+For \code{stackSpecies} the supported data frame, either read from file, or passed as \code{R} object must have columns corresponding to argument schema. The default schema is 'abbr', 'layer' and 'taxon' (cf. class \code{\linkS4class{Species}}). The column 'taxon' can consist of have \code{NA} or \code{NULL}. This field can be used to store taxonomic or other relevant information (accuracy of determination) on a particular observation, but is not mandatory. The species matrix is assumed to have species in rows and plots in columns. Plot names are derived form \code{names(x)}. If argument file is supplied, all columns are imported using \code{read.csv(..., colClasses = "character")}. This matters if species abundances were recorded on a non-ordinal scale and shall later be treated as continuos. The \code{\linkS4class{Coverscale}}) class controls these conversions.
 
 Internal checking of conversion is performed using \code{\link{type.convert}} to test for appropriate mode of the species abundances vector; setting \code{verbose = TRUE} will report results of this test. If argument \code{absences} is missing an almost save guess is obtained from the data and derived as the most frequent value in the species data matrix. These are usually the species absences.
 
@@ -103,7 +103,7 @@ For \code{stackCoordinates} the first element of schema defines the name of the 
 }
 
 \value{
-\code{stackSpecies} returns an object of class \code{\linkS4class{Species}} \cr
+\code{stackSpecies} returns an object of class \code{\linkS4class{Species}}
 \code{stackSites} and \code{stackCoordinates} returns an object of class \code{\linkS4class{Sites}}.
 }
 
@@ -122,7 +122,9 @@ x <- data.frame(abbr = names(dune),
                 layer = c(rep("hl", 8), "ml",
                           rep("hl", 6), "ml",
                           rep("hl", 14)),
-                taxon = NA, t(dune))
+                taxon = NA, # not mandatory, we don't use it here
+                t(dune))
+
 # groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
 
@@ -132,18 +134,20 @@ spc <- stackSpecies(x,  verbose = TRUE)
 # stack corresponding sites data
 data(dune.env)
 x <- data.frame(plot = row.names(dune.env), dune.env)
+
 # groom plot names too
 x$plot <- paste("dn", x$plot, sep = "")
 
 sts <- stackSites(x, verbose = TRUE)
 
-## create a file of dummy coordiantes in common format for spatial data
+## create a file of dummy coordiantes in a common format for spatial data
 require(sp)
 require(rgdal)
 
 # some random points
 pts <- data.frame(x = rnorm(20), y = rnorm(20),
                   plot = unique(spc$plot))
+
 # promate to class 'SpatialPointsDataFrame'
 coordinates(pts) <- ~x+y
 proj4string(pts) <- CRS("+init=epsg:4326") # WGS84
@@ -156,9 +160,9 @@ writeOGR(pts, dsn, layer, driver = "ESRI Shapefile")
 # read this file and promote to class 'Sites'
 sts.xy <- stackCoordinates(dsn, layer, schema = "plot")
 
-# bind with environmental data
+# rbind with remeining environmental data
 sts <- rbind(sts, sts.xy)
-sts$variable
+unique(sts$variable)
 
 }
 
@@ -173,3 +177,4 @@ sts$variable
 }
 
 \keyword{ import }
+

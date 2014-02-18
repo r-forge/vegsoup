@@ -68,3 +68,4 @@ KML(VegsoupPartition(barmstein, k = 2), file = tempfile())
 
 }
 \keyword{ methods }
+

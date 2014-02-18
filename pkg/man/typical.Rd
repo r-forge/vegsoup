@@ -38,12 +38,15 @@ A \code{data.frame} as above.
 }
 
 }
+
 \author{
-A wrapper for function \code{typal} by David W. Roberts in \pkg{optpart}.
+  A wrapper for function \code{typal} by David W. Roberts in \pkg{optpart}.
 }
+
 \seealso{
 \code{\link{as.dist}}
 }
+
 \examples{
 require(vegsoup)
 
@@ -52,4 +55,6 @@ x <- VegsoupPartition(barmstein, k = 2)
 
 typical(x)
 }
+
 \keyword{ methods }
+

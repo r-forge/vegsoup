@@ -21,7 +21,7 @@
 \usage{
 \S4method{abbr}{Vegsoup}(obj)
 
-\S4method{abbr}{Vegsoup}(obj) <- value
+\S4method{abbr}{Vegsoup}(obj)<-value
 
 \S4method{abbr.layer}{Vegsoup}(obj)
 }

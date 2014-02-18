@@ -1,50 +1,42 @@
-\documentclass[a4paper]{article}
-%\VignetteIndexEntry{vegsoup: Classes and methods for phytosociologyAn R}
-%\VignetteDepends{methods, cluster, vegan, labdsv, Hmisc, optpart, sp, isopam, vegclust, spatstat, rgdal, googleVis}
-%\VignetteKeyword{vegetation}
+\documentclass{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[sort&compress]{natbib}
-\usepackage[german, english]{babel}
-\usepackage{hyperref}
+\usepackage{natbib}
 \usepackage{graphics}
-\usepackage[english=american]{csquotes}
-%\usepackage[left=25mm,right=20mm,top=35mm,bottom=35mm]{geometry}
-\usepackage{tikz}
-\usetikzlibrary{shapes}
-\usepackage{Sweave}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{hanging}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+%\VignetteIndexEntry{Introduction to the vegsoup package}
 
 \author{Roland Kaiser}
 \title{Classes and methods for phytosociology \\
 Version 0.1-7}
 
-
+\DeclareGraphicsExtensions{.png,.pdf,.jpg}
 
 \begin{document}
-%\setkeys{Gin}{width=\textwidth}
-%<<prep, echo=FALSE>>=
-%options(width=100,digits=2)
-%@
-%Sys.setlocale("LC_TIME", "de_AT.UTF-8")
 
+\SweaveOpts{png=TRUE}
+\SweaveOpts{resolution=100}
+\SweaveOpts{keep.source=TRUE}
+
+<<foo,include=FALSE,echo=FALSE>>=
+options(width = 60)
+pD <- packageDescription("vegsoup")
+@
+
+\title{{Introduction to the 'vegsoup' package\\(version \Sexpr{pD$Version})}
+
+\author{Roland Kaiser}
 \maketitle
 
 \begin{abstract}
 
-\noindent
-An example session to show functionality and usage of R library \texttt{vegsoup}. \\
-After installation of \texttt{vegsoup} you can invoke this PDF with
-%<<eval=FALSE>>=
-%vignette('vegsoup')
-%@
-\end{abstract}
-
 \section{Introduction}
 
-%Many data sets do not easily fit into a single data frame. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows.
-
-The best way to introduce the functionalities of the package is a session with example code.
+Many data sets do not easily fit into a single data frame. Manipulating such inherently multiple table data using several data frames can result in long and difficult to read workflows. The best way to introduce the functionalities of the package is a session with example code.
 
 We load the library as usual into our R environment.
 %<<load, results=hide>>=
@@ -55,7 +47,27 @@ We load the library as usual into our R environment.
 %Vegsoup()
 %@
 
-%\bibliographystyle{ecol_let}
-%\bibliography{vegsoup.bib}
+
+\section{Classes}
+There are many classes.
+
+\subsection{Vegsoup}
+A \verb@Vegsoup@ object
+
+\subsection{VegsoupPartition}
+A \verb@VegsoupPartition@ object
+
+\subsection{VegsoupPartitionFidelity}
+A \verb@VegsoupPartitionFidelity@ object
+
+\section{References}
+
+\begin{hangparas}{3em}{1}
+
+\noindent Bivand, R.S., E.J. Pebesma and V. Gomez-Rubio, 2008. Applied Spatial Data Analysis with \R. Springer. 378p.
+
+\noindent Chambers, J.M., 2009. Software for Data Analysis: Programming with \R. Springer. 498p.
+
+\end{hangparas}
 
 \end{document}

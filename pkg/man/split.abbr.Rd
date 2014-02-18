@@ -89,3 +89,4 @@ x[, rownames(a)[sample(1:ncol(x), 10)]]
 }
 
 \keyword{ methods }
+

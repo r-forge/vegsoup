@@ -32,3 +32,4 @@ compass(c(0,220))
 }
 
 \keyword{ spatial }
+

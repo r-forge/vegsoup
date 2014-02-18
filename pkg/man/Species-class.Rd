@@ -175,3 +175,4 @@ s2 <- species(Species(windsfeld))
 ( s <- rbind(s1, s2) )
 }
 \keyword{ classes }
+

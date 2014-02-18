@@ -37,11 +37,11 @@ header(x)
 
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-		  rule, add.lines = FALSE, latex.input = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE)
 
 \S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-  		  rule, add.lines = FALSE, latex.input = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE)
 }
 
 \arguments{
@@ -81,7 +81,7 @@ header(x)
   \item{ verbose }{
     Print diagnostic messages.
   }
-  \cr
+
 ## Arguments to function \code{read.verbatim.append}
   \item{ x }{
     An object of class \code{VegsoupVerbatim} as created by calls to function
@@ -107,7 +107,7 @@ header(x)
     but setting \code{abundance} to any value (e.g. \code{"+"}) will use that
     value.
 }
-\cr
+
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
     An object of class \code{VegsoupData}.
@@ -202,7 +202,7 @@ The demonstration data set used in the example is taken from:
 
 Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen – ein Beitrag zur Kla"rung eines alten o"kologischen Ra"tsels. Phytocoenologia, 21:91–116.
 
-The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}.   \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
+The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}. \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
 }
 \examples{
 # text encoding issue?
@@ -299,3 +299,4 @@ txt[1:30] # resize console window
 \code{\link{stackSpecies}}, \code{\link{stackSites}}
 }
 \keyword{import}
+

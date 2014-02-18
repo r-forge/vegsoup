@@ -1,7 +1,7 @@
 \encoding{UTF-8}
-\name{SpeciesTaxonomy-class}
-\Rdversion{1.1}
 \docType{class}
+
+\name{SpeciesTaxonomy-class}
 
 \alias{SpeciesTaxonomy-class}
 
@@ -37,7 +37,7 @@
   function \code{SpeciesTaxonomy} is called internally in order to ensure data
   integrity. In this way it might be more transparent for users to call
   the constructor function \code{\link{SpeciesTaxonomy}} directly, which will
-  return an object of class \code{"SpeciesTaxonomy"} aswell.
+  return an object of class \code{"SpeciesTaxonomy"} as well.
 }
 
 \section{Slots}{
@@ -51,7 +51,7 @@
   }
 }
 
-\section{Methods}{
+\section{ Methods }{
   Unlike classes \code{"Species"} and \code{"Taxonomy"} there exists no
   custom initialize method. Therefore, function \code{SpeciesTaxonomy} should
   be used in cases where the data integrity is unsure.
@@ -77,11 +77,6 @@
       \code{ signature(x = "SpeciesTaxonomy") }:
       \code{ rbind } method to combine two or more objects.
     }
-%  }
-%}
-
-%\section{Methods for "species<-"}{
-%  \describe{
     \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
       subset slot \code{species} as to contain only the taxa given by an
       object of class \code{"Taxonomy"}, which by itself will replace
@@ -91,11 +86,6 @@
       subset slot \code{species} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
     }
-%  }
-%}
-
-%\section{Methods for "taxonomy<-"}{
-%  \describe{
     \item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
       subset slot \code{taxonomy} as to contain only the taxa given by an
       object of class \code{"Species"}, which by itself will replace
@@ -108,9 +98,7 @@
       subset slot \code{taxonomy} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
     }
-%  }
-%}
-}
+  }
 }
 
 \author{ Roland Kaiser }
@@ -179,8 +167,9 @@ obj2 <- SpeciesTaxonomy(s2, t2)
 
 # assign object of class SpeciesTaxonomy to an existing Vegsoup* object
 \dontrun{
-# not implemented yet!	
+# not implemented yet!
 # Species(x) <- obj3
 }
 }
 \keyword{ classes }
+

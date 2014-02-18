@@ -36,8 +36,8 @@ setMethod("hcr",
 	function (x, size, nperm = 1000, fast = FALSE, ...) {
 
 	if (as.logical(fast)) {
-		require(multicore)
-		message("fork multicore process on ", multicore:::detectCores(), " cores")
+		require(parallel)
+		message("fork multicore process on ", parallel::detectCores(), " cores")
 	}			
 	
 	N <- nrow(x)

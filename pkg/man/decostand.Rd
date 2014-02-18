@@ -48,7 +48,7 @@ Currently only the \code{'method'} argument of \code{vegan::decostand} is implem
 
 \note{
 Manipulation of the sites data has to be performed by modifying elements of the \code{'sites'} slot, which is represented as \code{data.frame}.
-Use the extract and replace operators \code{\link[=Extract]{"$"}} and \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup:Extract]{Extract}} for details.
+Use the extract and replace operators \code{\link[=Extract]{"$"}} and \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup]{Extract}} for details.
 }
 
 \seealso{

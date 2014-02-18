@@ -280,11 +280,16 @@
     }
   }
 }
+
 \author{ Roland Kaiser }
+
 \seealso{
-\code{\linkS4class{Vegsoup}}
+  \code{\linkS4class{Vegsoup}}
 }
+
 \examples{
 showClass("VegsoupPartition")
 }
+
 \keyword{classes}
+

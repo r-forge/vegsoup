@@ -76,3 +76,4 @@ ncell(x) # number of cells, short hand for prod(dim(dta))
 }
 
 \keyword{methods}
+

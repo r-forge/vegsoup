@@ -1,3 +1,6 @@
+\encoding{UTF-8}
+\docType{methods}
+
 \name{OptimStride}
 \alias{OptimStride}
 
@@ -7,8 +10,8 @@
 \alias{stride}
 \alias{stride,VegsoupOptimstride-method}
 
-\alias{treshold}
-\alias{treshold,VegsoupOptimstride-method}
+\alias{threshold}
+\alias{threshold,VegsoupOptimstride-method}
 
 \alias{optimclass1}
 \alias{optimclass1,VegsoupOptimstride-method}
@@ -27,23 +30,25 @@
 \title{ Compute a Series of Partitions/Clusterings }
 
 \description{
-Compute a series of clusterings by different methods and quantify their quality using a Fisher test.
+  Compute a series of clusterings (strides) by different methods and quantify their quality using
+  a Fisher test.
 }
 
 \usage{
-OptimStride(x, k, ft.treshold = 1e-3, alternative = "two.sided",
+OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
             method = c("ward", "flexible", "pam", "kmeans", "wards",
                        "fanny", "FCM", "KM"),
             fast = FALSE, ...)
+
 \S4method{methods}{VegsoupOptimstride}(x, ...)
 
 \S4method{stride}{VegsoupOptimstride}(x, method, ...)
 
-\S4method{treshold}{VegsoupOptimstride}(x, ...)
+\S4method{threshold}{VegsoupOptimstride}(x, ...)
 
 \S4method{optimclass1}{VegsoupOptimstride}(x, ...)
 
-\S4method{optimclass2}{VegsoupOptimstride}(x, treshold = 2, ...)
+\S4method{optimclass2}{VegsoupOptimstride}(x, threshold = 2, ...)
 
 \S4method{getK}{VegsoupOptimstride}(x)
 
@@ -54,16 +59,17 @@ OptimStride(x, k, ft.treshold = 1e-3, alternative = "two.sided",
 
 \arguments{
   \item{ x }{
-   for \code{OptimStride} a \code{Vegsoup} object, antherwise \code{VegsoupOptimstride} object
+   for \code{OptimStride} a \code{'VegsoupPartition'} object, otherwise a
+   \code{VegsoupOptimstride} object
   }
   \item{ k }{
     maximum number of cluster to compute (\code{seq(1:k)})
   }
-  \item{ ft.treshold }{
-    treshold value of Fisher test, defaults to 1e-03
+  \item{ ft.threshold }{
+    threshold value of Fisher test, defaults to \code{1e-03}
   }
-  \item{ treshold }{
-    treshold value for optimclass2
+  \item{ threshold }{
+    threshold value for OptimClass2. See \sQuote{Details}
   }
   \item{ alternative }{
     alternative indicates the alternative hypothesis of the Fisher exact test
@@ -72,12 +78,12 @@ OptimStride(x, k, ft.treshold = 1e-3, alternative = "two.sided",
   }
   \item{ method }{
     any method supported by \code{\link{VegsoupPartition}}. For \code{OptimStride}
-    if method is missing, "ward",  "flexible", "pam", "kmeans", and "wards" are computed,
-    computationally expensive methods, such as "isopam" and "optpart" are
+    if method is missing, "ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", and "KM"
+    are computed. Computationally expensive methods, such as "isopam" and "optpart" are
     omitted to reduce run duration.
   }
   \item{ fast }{
-    accelerate computations. Needs package \code{multicore}. If \code{FALSE} a progress bar
+    accelerate computations using package \code{parallel}. If \code{FALSE} a progress bar
     is printed. Depending on the dimension of the community matrix and the value of k, computations
     may consume a serious amount of time. If the host system provides 4 or more core, setting
     \code{fast = TRUE} will significantly reduce run time.
@@ -87,48 +93,94 @@ OptimStride(x, k, ft.treshold = 1e-3, alternative = "two.sided",
   }
 }
 \details{
-The implementation follows the method defined in Tíchý et al. (2010) and uses a fisher test (\code{\link{FisherTest}}) to identify the number of \sQuote{faithful} species. This statistic can be relaxed by setting a threshold value (argument \code{ft.treshold}). All specifications (method to calculate distance matrix, standardisation) are taken from the input object.
-   
-   \code{treshold} retrieves the threshold values set for the Fisher test.
-   
-   \code{stride} returns the number of faithful species for each partition and number of k.
-   
-   \code{optimclass1} and \code{optimclass2} returns a matrix of faithful species.
-   
-   \code{peaks} finds peaks in the stride
-   
-   \code{which.max} returns the number of k that coincides with the highest number of faithful species.
-   
+  The implementation follows the method of Tichy et al. (2010) and uses a Fisher test
+  (\code{\link{FisherTest}}) to identify the number of \sQuote{faithful} species. This sensitivity
+  of this statistic can be controlled by setting a threshold value. Per default this value
+  (argument \code{ft.threshold}) is set to it's lowest meaningful bound \code{1e-3}.
+  
+  Partitioning/clustering methods, type of distance matrix and standardization are taken from the
+  input object. Generic methods for \code{'VegsoupOptimstride'} are detailed in the
+  \sQuote{Methods} section.
+  
+}
+\section{ Methods }{
+  \describe{
+    \item{ methods }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+         retrieves the names of the computed method(s). These are the method arguments as accepted
+         by \code{VegsoupPartition}.
+    }
+    \item{ stride }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+        returns the number of faithful species for each partition and number of k.
+    }
+    \item{ threshold }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+         retrieves the threshold values set for the Fisher test.
+    }
+    \item{ optimclass1, optimclass2 }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+        returns a matrix with the counts of faithful species, those achieving
+        \code{ft.trshold}.
+    }
+    \item{ getK }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+        the computed maximum value of \code{k}, the length of each stride.
+    }
+    \item{ peaks }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+        the peaks along the stride.
+    }
+    \item{ which.max }{
+      \code{ signature(obj = "VegsoupOptimstride") }:
+        returns the number of k that coincides with the highest number of faithful species,
+        per method.
+    }
+  }
 }
 
 \value{
-  For function \code{Optimstride} an \code{VegsoupOptimstride} object is returned.
-  \code{methods} returns the computed methods as character.
-  \code{stride} returns a list with the number of significant indicator species.
-  If \code{length(methods(x))} is longer than one, a named list of lists is returned.
+  \item{ Optimstride }{
+  \code{VegsoupOptimstride} object
+  }
+  \item{ methods }{
+  character. The computed methods.
+  }
+  \item{ stride }{
+  list. A list with length equal to \code{length(methods(x))}. Each nested list gives the number
+  of significant indicator species (faithful species) for each partition for a particular value
+  of \code{k}.
+  }
+  \item{ optimclass1, optimclass2 }{
+  matrix with dimnames. Rows are methods and columns are the respective values of \code{k}.
+  }
+  \item{ peaks,  }{
+  }
 }
 
 \references{
-Tíchý, L., Chytrý, M., Hájek, M., Talbot, S.S., and Botta-Dukát, Z. (2010).
-Optimclass: Using species-to-cluster fidelity to determine the optimal
-partition in classification of ecological communities. Journal of Vegetation
-Science, 21(2):287–299.
+Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Optimclass: Using species-to-cluster fidelity to determine the optimal partition in classification of ecological communities. Journal of Vegetation Science, 21(2):287–299.
 }
 
+\author{ Roland Kaiser }
+
 \seealso{
-\code{\link{VegsoupPartition}}, \code{\link{Fidelity}}
+\code{\link{VegsoupPartition}},\code{\link{Fidelity}}
 }
 
 \examples{
 require(vegsoup)
 
 # a dummy example using simulated data
-x <- OptimStride(coenoflex(100, 200), k = 10)
+x <- coenoflex(100, 200)
+
+x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam"))
+
 summary(x)
 
-# use multicore package
+# use parallel package
 \dontrun{
-if (require(multicore)) {
+if (require(parallel)) {
    x <- OptimStride(coenoflex(100, 200), k = 10, fast = TRUE)
 }
 }
@@ -136,8 +188,8 @@ if (require(multicore)) {
 # get the computed clustering methods
 methods(x)
 
-# the treshold of the Fisher test
-treshold(x)
+# the threshold of the Fisher test
+threshold(x)
 
 # matrix of results for OptimClass1
 optimclass1(x)
@@ -149,7 +201,7 @@ stride(x, method = "flexible") # for method flexible
 
 # plot method for class VegsoupOptimstride
 plot(x)
-plot(x, method = "FCM")
+plot(x, method = "flexible")
 
 # get k where the curve peaks
 peaks(x)
@@ -158,4 +210,6 @@ peaks(x)
 which.max(x)
 
 }
+\keyword{ methods }
 \keyword{ multivariate }
+

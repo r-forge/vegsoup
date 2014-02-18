@@ -1,10 +1,10 @@
 \encoding{UTF-8}
+\docType{package}
+
 \name{vegsoup-package}
 
 \alias{vegsoup-package}
 \alias{vegsoup}
-
-\docType{package}
 
 \title{ An overview of the functions in this package }
 
@@ -131,6 +131,4 @@ Extensive suggestions were made by \dots and many others.
 \keyword{ multivariate }
 \keyword{ manip }
 \keyword{ spatial }
-
-
 

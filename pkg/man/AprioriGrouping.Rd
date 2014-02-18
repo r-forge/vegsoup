@@ -41,3 +41,4 @@ data(barmstein)
 AprioriGrouping(barmstein)
 }
 \keyword{ methods }
+

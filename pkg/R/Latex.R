@@ -108,7 +108,7 @@
 	#	to do!	
 }
 
-.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.treshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose, ...) {
+.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.threshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose, ...) {
 	CALL <- match.call()
 	#	Suggests:
 	require(Hmisc)
@@ -370,12 +370,12 @@
 			tex[tex == 0] <- "."
 	
 			#	move rare species to table footer
-			footer.species <- row.names(ct)[rowSums(ct) < footer.treshold]
+			footer.species <- row.names(ct)[rowSums(ct) < footer.threshold]
 	
 			#	check if we loose the only typical species in a partition
 			candidates <- footer.species[match(unlist(typ), footer.species, nomatch = 0)]
 			
-			#	for data set with very low species diversity try to reduce footer treshold
+			#	for data set with very low species diversity try to reduce footer threshold
 			#	omit footer and raise a warning
 	
 		if (length(candidates) > 0) {
@@ -408,22 +408,22 @@
 			}
 	
 			#	nice language for low thresholds
-			if (footer.treshold < 4) {
+			if (footer.threshold < 4) {
 				footer <- paste("\\textbf{Occuring only ",
-					c("once", "twice", "thrice")[footer.treshold], " }",
+					c("once", "twice", "thrice")[footer.threshold], " }",
 					paste(tmp, collapse = "\n\n "), sep = "")
 				}
 				else {
 				footer <- paste("\\textbf{Occuring only ",
-					footer.treshold, " times:}",
+					footer.threshold, " times:}",
 					paste(tmp, collapse = "\n\n "), sep = "")
 			}
 			footer <- paste("\\begin{multicols}{", molticols.footer, "}",
 				footer, "\\end{multicols}")
 		}
 		else {
-			message("\nfooter is empty with given treshold: ",
-				footer.treshold, "!")
+			message("\nfooter is empty with given threshold: ",
+				footer.threshold, "!")
 			footer <- ""
 		}
 	
@@ -533,12 +533,12 @@
 				
 			tmp <- cbind(txn[match(rownames(tmp), rownames(txn)), c("taxon", "layer")], tmp,
 					row.names = rownames(tmp))
-			tex[[i]] <- tmp[tmp$cont > footer.treshold | tmp$typical == "yes", ]
+			tex[[i]] <- tmp[tmp$cont > footer.threshold | tmp$typical == "yes", ]
 			
 			#	rare species footer
-			tmp <- tmp[tmp$cont <= footer.treshold & tmp$typical != "yes", ]
+			tmp <- tmp[tmp$cont <= footer.threshold & tmp$typical != "yes", ]
 			tmp <- data.frame(parameter = paste("Occuring only ",
-				c("once", "twice", "thrice")[footer.treshold], sep = ""),
+				c("once", "twice", "thrice")[footer.threshold], sep = ""),
 				values = paste(sort(tmp$taxon), collapse = ", "), stringsAsFactors = FALSE)
 			footer.species[[i]] <- tmp	
 			
@@ -632,7 +632,7 @@
 				tmp <- x
 				#	replace \u00D7
 				tmp[, 1] <- gsub("\u00D7", "$\\times$", tmp[, 1], fixed = TRUE)
-				#	make taxa having cons >= a user defined constancy treshold
+				#	make taxa having cons >= a user defined constancy threshold
 				#	check first if we have a singleton
 				if (any(tmp[, 5] < 100)) {
 				tmp[tmp[, 5] >= constancy.min, 1] <- 
@@ -787,7 +787,7 @@
 
 #	if(!isGeneric("Latex")) {
 setGeneric("Latex",
-	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min = NULL, constancy.min = 95, taxa.width = "60mm", col.width = "5mm", footer.width = "150mm", footer.treshold = 1, molticols.footer = 2, use.letters = FALSE, caption.text = NULL, quantile.select = c(1,3,5), coverscale = FALSE, sep = "/", sites.columns = names(obj), newpage = TRUE, verbose = FALSE, ...)
+	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min = NULL, constancy.min = 95, taxa.width = "60mm", col.width = "5mm", footer.width = "150mm", footer.threshold = 1, molticols.footer = 2, use.letters = FALSE, caption.text = NULL, quantile.select = c(1,3,5), coverscale = FALSE, sep = "/", sites.columns = names(obj), newpage = TRUE, verbose = FALSE, ...)
 		standardGeneric("Latex")
 )
 #}
@@ -816,7 +816,7 @@ setMethod("Latex",
 				res <- .latexVegsoupPartitionSpecies(obj, file = file,
 					mode = mode, p.max = p.max, stat.min = stat.min,
 					constancy.min = constancy.min, taxa.width = taxa.width,
-					col.width = col.width, footer.treshold = footer.treshold,
+					col.width = col.width, footer.threshold = footer.threshold,
 					molticols.footer = molticols.footer, use.letters = use.letters,
 					caption.text = caption.text, quantile.select = quantile.select,
 					coverscale = coverscale, sep = sep, sites.columns = sites.columns,

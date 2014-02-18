@@ -33,3 +33,4 @@ data(barmstein)
 fill(barmstein)
 }
 \keyword{ methods }
+

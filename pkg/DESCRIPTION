@@ -1,18 +1,19 @@
 Package: vegsoup
-Version: 0.1-9
+Version: 0.2-0
 Date: 2013-10-02
 Title: classes and methods for phytosociology
 Author: Roland Kaiser <kardinal.eros@gmail.com>
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, rgdal (>= 0.8-11)
 Imports: methods, cluster, coenoflex, optpart, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat
-Suggests: labdsv, pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, multicore, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand
+Suggests: labdsv, pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, parallel, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
 	Methods are provided for data manipulation, multivariate analysis, Taxonstand
 	indicator species analysis and typesetting of LaTex tables. 
 License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/
+Repository: R-Forge
 Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
@@ -120,5 +121,4 @@ Collate: AAA.R
          plot.R
          misc.R
          ZZZ.R
-Respository: R-Forge
 

@@ -15,8 +15,9 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 }
 
 \usage{
-\S4method{Layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE)
-	   
+\S4method{Layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0,
+verbose = FALSE)
+
 \S4method{Layers}{Vegsoup}(obj)<-value
 }
 
@@ -128,3 +129,4 @@ and class \code{\linkS4class{Vegsoup}}
 
 \keyword{ methods }
 \keyword{ manip }
+

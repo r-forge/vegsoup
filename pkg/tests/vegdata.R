@@ -1,3 +1,6 @@
+if (FALSE){
+# R-forge complains: there is no package called 'vegdata'	
+	
 library(vegsoup)
 library(vegdata)
 
@@ -28,3 +31,4 @@ z <- taxonomy(as.matrix(z[!z[,5], c(2,3)]))
 x <- Vegsoup(x, y, z, coverscale = "percentage")
 coordinates(x) <- ~ LONGITUDE + LATITUDE
 coverscale(x) <- "braun.blanquet2"
+}

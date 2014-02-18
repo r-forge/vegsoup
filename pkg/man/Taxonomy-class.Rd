@@ -114,3 +114,4 @@ t2 <- taxonomy(Taxonomy(x))
 rbind(t, t2)
 }
 \keyword{ classes }
+

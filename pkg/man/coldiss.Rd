@@ -93,3 +93,4 @@ coldiss(dta.0l, rev(cols(20)), mode = "R",
 }
 \keyword{ methods }
 \keyword{ hplot }
+

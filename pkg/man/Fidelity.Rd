@@ -36,7 +36,8 @@
 }
 
 \usage{
-\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE, verbose = TRUE, ...)
+\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE,
+verbose = TRUE, ...)
 
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
 
@@ -67,7 +68,7 @@
     Forgot what that this is?
   }
   \item{ fast }{
-    accelerate computations. Needs package \code{multicore}.
+    accelerate computations using package \code{parallel}.
   }
   \item{ verbose }{
     display computation status bar.
@@ -153,3 +154,4 @@ hist(f)
 }
 \keyword{ methods }
 \keyword{ multivariate }
+

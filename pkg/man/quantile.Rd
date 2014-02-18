@@ -11,7 +11,8 @@ Returns sample quantiles corresponding to the given probabilities for each speci
 }
 
 \usage{
-\S4method{quantile}{VegsoupPartition}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...)
+\S4method{quantile}{VegsoupPartition}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7,
+          coverscale = FALSE, ...)
 }
 
 \arguments{
@@ -70,3 +71,4 @@ x2[ , , 2] # probs[2]
 }
 
 \keyword{ univar }
+

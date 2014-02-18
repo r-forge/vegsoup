@@ -48,16 +48,16 @@ setMethod("stride",
 #    UseMethod("stride")
 #}	
 	
-setGeneric("treshold",
+setGeneric("threshold",
 	function (x, ...)
-		standardGeneric("treshold")
+		standardGeneric("threshold")
 )
 
 
-setMethod("treshold",
+setMethod("threshold",
     signature(x = "VegsoupOptimstride"),
     function (x, ...) {
-    	x@optimstride$settings$args$ft.treshold
+    	x@optimstride$settings$args$ft.threshold
     }
 )
 
@@ -75,15 +75,15 @@ setMethod("optimclass1",
 )
 
 setGeneric("optimclass2",
-	function (x, treshold = 2, ...)
+	function (x, threshold = 2, ...)
 		standardGeneric("optimclass2")
 )
 
 setMethod("optimclass2",
     signature(x = "VegsoupOptimstride"),
-    function (x, treshold, ...) {
+    function (x, threshold, ...) {
     	i <- x@optimstride$indicators
-       	t(sapply(i, function (x) sapply(x, function (x) length(which(x >= treshold)))))
+       	t(sapply(i, function (x) sapply(x, function (x) length(which(x >= threshold)))))
     }
 )
 

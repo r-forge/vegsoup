@@ -29,4 +29,3 @@
 \author{ Roland Kaiser }
 \keyword{ methods }
 
-

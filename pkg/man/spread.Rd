@@ -34,3 +34,4 @@ x <- VegsoupPartition(barmstein, k = 2)
 spread(x)
 }
 \keyword{ methods }
+

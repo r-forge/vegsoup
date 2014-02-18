@@ -51,3 +51,4 @@ attr(r, "neighbour")
 
 }
 \keyword{methods}
+

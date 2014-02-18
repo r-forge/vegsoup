@@ -37,7 +37,7 @@ The methods take a sample of the specified size from the elements of \code{x} us
     the number of permutations.
   }
   \item{ fast }{
-    accelerate computations. Needs package \code{'multicore'}.
+    accelerate computations using package \code{'parallel'}.
   }
   \item{ \dots }{
     additional arguments \code{replace} and \code{prob} passed to \code{\link{sample}}.
@@ -51,7 +51,7 @@ See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most r
 \value{
   An object of the same class as the input object.
 }
-\author{ Roland Kaiser, method \code{hcr} is an re-implementation of function \code{hcr} in package \pkg{vegclust} by Miquel De Cáceres that is capable of forking multicore instances. }
+\author{ Roland Kaiser, method \code{hcr} is an re-implementation of function \code{hcr} in package \pkg{vegclust} by Miquel De Cáceres that is capable of forking parallel processes. }
 
 \references{
 Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resampling of phytosociological databases. Journal of Vegetation Science 22: 175-183.
@@ -78,3 +78,4 @@ system.time(vegclust::hcr(as.dist(windsfeld), nout = 20, nsampl = 100000))
 }
 }
 \keyword{methods}
+

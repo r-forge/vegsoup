@@ -63,3 +63,4 @@ stable(x, nitr = 100, nitr.lambda = 10)
 }
 
 \keyword{ multivariate }
+

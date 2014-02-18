@@ -38,7 +38,7 @@ A numeric vector of suitable size with names taken from the object, except \code
 Roland Kaiser
 }
 \seealso{
-\code{\link[vegsoup:rowSums]{rowSums}},\code{\link[vegsoup:colSums]{colSums}}
+\code{\link[vegsoup]{rowSums}},\code{\link[vegsoup]{colSums}}
 }
 \examples{
 require(vegsoup)

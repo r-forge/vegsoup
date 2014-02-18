@@ -80,3 +80,4 @@ Confus(xs, xi)
 }
 \keyword{ methods }
 \keyword{ cluster }
+

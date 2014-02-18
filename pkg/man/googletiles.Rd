@@ -93,3 +93,4 @@ tile2latlng(17547, 11516, 15, offset = 0)
 
 }
 \keyword{ manip }
+

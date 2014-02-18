@@ -81,10 +81,11 @@ data(barmstein)
 x <- Fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
 
 \dontrun{
-# needs package multicore
+# needs package parallel
 x <- coenoflex(100, 200)
 x <- Fidelity(VegsoupPartition(x, k = 10), method = "IndVal", fast = TRUE)
 }
 }
 
 \keyword{ classes }
+

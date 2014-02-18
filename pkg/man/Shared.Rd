@@ -46,3 +46,4 @@ x <- VegsoupPartition(barmstein, k = 2)
 shared(x)
 }
 \keyword{ methods }
+

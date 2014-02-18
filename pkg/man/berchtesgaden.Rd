@@ -29,3 +29,4 @@ data(berchtesgaden)
 berchtesgaden
 }
 \keyword{datasets}
+

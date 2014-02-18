@@ -1,7 +1,7 @@
 #	plot method
 setMethod("plot",
 	signature(x = "VegsoupOptimstride", y = "missing"),
-	function (x, mode = 1, oc.treshold = 2, method, retain = FALSE, ...) {
+	function (x, mode = 1, oc.threshold = 2, method, retain = FALSE, ...) {
 	#	require(RColorBrewer)
 
 	if (!missing(method)) {
@@ -14,7 +14,7 @@ setMethod("plot",
 	}	
 	
 	k <- getK(x)	
-	ft.treshold <- treshold(x)
+	ft.threshold <- threshold(x)
 	oc1 <- optimclass1(x)
 	oc2 <- optimclass2(x)
 	p <- peaks(x)
@@ -26,8 +26,8 @@ setMethod("plot",
 			type = "n", ylim = c(0, max(oc1)),
 			xlab = "OptimClass1",
 			ylab = "No. of significant indicator species",
-			sub = paste("Fisher's exact test, treshold",
-				format(ft.treshold, scientific = TRUE)), ...)
+			sub = paste("Fisher's exact test, threshold",
+				format(ft.threshold, scientific = TRUE)), ...)
 		#	and add	lines
 		for (i in c(1:nrow(oc1))[m]) {
 				lines(1:k, oc1[i, ], lty = i, col = cols)
@@ -43,9 +43,9 @@ setMethod("plot",
 			type = "n", ylim = c(0, max(oc2)),
 			xlab = "OptimClass2",
 			ylab = paste("No. of cluster with more than",
-				oc.treshold, "significant indicator species"),
-			sub = paste("Fisher's exact test, treshold",
-				format(ft.treshold,scientific = TRUE)), ...)
+				oc.threshold, "significant indicator species"),
+			sub = paste("Fisher's exact test, threshold",
+				format(ft.threshold,scientific = TRUE)), ...)
 			rug(1:k, side = 3)		
 		for (i in 1:nrow(oc2)) {
 			lines(1:k, oc2[i, ], lty = i, col = cols)

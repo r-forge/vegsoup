@@ -63,3 +63,4 @@ rectangles(x, plot = TRUE,
 }
 \keyword{ methods }
 \keyword{ hplot }
+

@@ -148,7 +148,8 @@ object.size(as.array(x))           # least efficent
 # comparison of memory demands of objects of differnt classes
 object.size(as(x, "data.list"))  # least efficent, but highly generic
 object.size(as.data.frame(x))    # also efficent
-sp.object.size <- object.size(x@sp.points) + object.size(x@sp.polygons) # for comparison subtract sp slots
+# for comparison subtract sp slots
+sp.object.size <- object.size(x@sp.points) + object.size(x@sp.polygons)
 object.size(x) - sp.object.size # most general and most efficent
 \dontrun{
 #   a little bit more to add here
@@ -157,3 +158,4 @@ object.size(x) - sp.object.size # most general and most efficent
 }
 \keyword{ methods }
 \keyword{ manip }
+

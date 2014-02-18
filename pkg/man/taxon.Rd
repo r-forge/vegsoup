@@ -23,7 +23,7 @@
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} object.
+    \code{Vegsoup*} object.
   }
   \item{ subset }{
     \code{numeric} index to \code{Taxonomy(x)}, vector of mode \code{character}, or a logical
@@ -37,9 +37,9 @@
 \details{
   Function \code{taxon} retrieves scientific species names from an object.
 
-  Extending the functionality of the \code{\link[vegsoup:extract]{"["}} extract methods for
+  Extending the functionality of the \code{\link[vegsoup]{Extract}} methods for
   vegsoup objects, that allow for a definition of subsets based on abbreviations as
-  returned by \code{\link[vegsoup:colnames]{colnames}}, this set of methods provides other
+  returned by \code{\link[vegsoup]{colnames}}, this set of methods provides other
   means of selecting species.
 
   By using the the \code{subset}-method it becomes possible to select species based on their
@@ -58,7 +58,7 @@ A \code{Vegsoup*} object.
 }
 \author{ Roland Kaiser }
 \seealso{
-\code{\link[vegsoup:extract]{"["}}
+\code{\link[vegsoup]{Extract}}
 }
 \examples{
 require(vegsoup)

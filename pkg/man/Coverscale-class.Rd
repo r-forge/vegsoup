@@ -52,3 +52,4 @@ showClass("Coverscale")
 Coverscale()
 }
 \keyword{classes}
+

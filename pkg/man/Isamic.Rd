@@ -40,3 +40,4 @@ data(barmstein)
 Isamic(VegsoupPartition(barmstein, k = 2))
 }
 \keyword{ methods }
+

@@ -49,3 +49,4 @@ x <- as.data.list(barmstein)
 }
 
 \keyword{ methods }
+

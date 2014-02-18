@@ -39,12 +39,12 @@
     }
     \item{\code{decostand}:}{
       Object of class \code{"decostand"},
-      the method for \code{\link[vegsoup:decostand]{decostand}}. Takes effect
+      the method for \code{\link[vegsoup]{decostand}}. Takes effect
       if \code{\link{as.matrix}} or \code{\link{as.dist}} is called on object.
     }
     \item{\code{dist}:}{
       Object of class \code{"character"},
-      giving a method for \code{\link[vegsoup:vegdist]{vegdist}}.
+      giving a method for \code{\link[vegsoup]{vegdist}}.
       Takes effect in calls or dispatch of \code{\link{as.dist}}.
     }
     \item{\code{layers}:}{
@@ -182,7 +182,7 @@
    species matrix. See \code{\link{as.matrix}}.
 
 %% 7
-  \bold{ 7) Retrieve species matrix.}\cr
+  \bold{ 7) Retrieve species matrix.}
     In fact there are several ways of how to obtain the species matrix from an
     \code{Vegsoup*} object and all are based on the logic of object coercion.
     There are methods focused on a specific storage mode, as well, as a
@@ -225,7 +225,7 @@
     }
 
 %% 9
-  \bold{ 9) Retrieve class slots.}\cr
+  \bold{ 9) Retrieve class slots.}
     Methods to access or replace the \code{'species'}, \code{'sites'}
     or \code{'taxonomy'} slots are:
     \item{Species}{
@@ -240,7 +240,6 @@
       \code{Vegsoup*} object. Not implemented yet! See
       \code{\linkS4class{SpeciesTaxonomy}}.
     }
-    \cr
     \item{Sites}{
       \code{signature(obj = "Vegsoup")}:
       returns slot, an object of class
@@ -252,7 +251,6 @@
       The value object for the replacement function needs to have rownames
       matching \code{rownames(obj)}.
     }
-    \cr
     \item{Taxonomy}{
       \code{signature(obj = "Vegsoup")}:
       returns slot, an object of class
@@ -265,7 +263,6 @@
       \code{Vegsoup*} object. Not implemented yet! See
       \code{\linkS4class{SpeciesTaxonomy}}
     }
-    \cr
     Methods to access or replace the \code{'Spatial*'} slots are:
     \item{SpatialPointsVegsoup}{
       \code{signature(obj = "Vegsoup")}:
@@ -501,3 +498,4 @@ showClass("Vegsoup")
 }
 \keyword{ classes }
 \keyword{ methods }
+

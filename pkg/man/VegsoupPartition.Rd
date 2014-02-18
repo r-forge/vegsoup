@@ -1,11 +1,15 @@
+\encoding{UTF-8}
+
 \name{VegsoupPartition}
 
 \alias{VegsoupPartition}
 
-\title{ Partition/Cluster a \code{Vegsoup*} object}
+\title{ Partition a Vegsoup object }
+
 \description{
-Create an object of class \code{"VegsoupPartition"} by selecting a clustering algorithm.
+  Create an object of class \code{'VegsoupPartition'} by selecting a clustering algorithm.
 }
+
 \usage{
 VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
                  "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"),
@@ -15,74 +19,118 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+    \code{Vegsoup} object.
   }
   \item{ k }{
-    number of partitions to create.
+    number of partitions to create. Note, argument \code{k} can also be 1. In this case the whole object
+    forms a single partition, the partitioning is flat.
   }
   \item{ method }{
     clustering method. See \sQuote{Details}.
   }
   \item{ clustering }{
-    external vector of cluster partitons, or column to be selected from
-    Sites(obj)
+    external vector of cluster partitons, or column to be selected from \code{obj}. See
+    \code{\link{names}}.
   }
   \item{ polish }{
-    apply optimal silhouette widths clustering \code{\link{Optsil}} on
-    possible singletons (single element partitions) to sweep them to an
-    existing multi element partition
+    apply optimization of silhouette widths \code{\link{Optsil}} to merge singletons
+    into an existing multi element partition. Note, this will likely decrease the initial number of
+    \code{k}!
   }
   \item{ seed }{
     set random number generator to make results from methods \code{"kmeans"} and \code{"fanny"}
-    reproducible
+    reproducible.
   }
   \item{ verbose }{
-    additional console output.
+    print diagnostic messages.
   }
   \item{ \dots }{
-    passed to methods
+    passed to methods. Currently not supported!
   }
 }
+
 \details{
-Create a partitioned object of class Vegsoup using several clustering methods.
+  The function creates a partitioned object of class \code{'Vegsoup'} using several clustering methods.
+  All methods except \code{"kmeans"} take a \code{'dist'} object as data argument (\code{as.dist(obj)}).
+  \code{"kmeans"} uses the original data matrix (\code{as.matrix(obj)}), whereas method \code{"KM"}
+  is capable of using a \code{'dist'} objects. Specific implementation details are given below:
 
-%%Elaborate on methods!
+  \describe{
+    \item{ ward }{
+    calls \code{cluster::agnes} with \code{method = "ward"}.
+    }
+    \item{ flexible }{
+    calls \code{cluster::agnes} with \code{method = "flexible"} and
+    \code{par.method = c(alpha, alpha, beta, 0)}, where \code{alpha = 0.625} and
+    \code{beta = 1 - 2 * alpha}.
+    }
+    \item{ pam }{
+    calls \code{cluster::pam} with no specific additional options, except argument \code{k}.
+    }
+    \item{ kmeans }{
+    calls \code{stats::kmeans} with \code{centers = k}. It doesn't use a dissimilarity matrix and proper
+    standardization is required (e.g. Hellinger-distances, \code{decostand(obj) <- "hellinger"} and
+    \code{vegdist(obj) <- "euclidean"}). In most cases method \code{"KM"} is preferred.
+    }
+    \item{ wards }{
+    calls \code{stats::hclust} with \code{method = "ward"}.
+    }
+    \item{ fanny }{
+    calls \code{cluster::fanny} with \code{k = k}, argument \code{memb.exp} is set to \code{1.1}
+    if not supplied.
+    }
+    \item{ FCM, KM }{
+    calls \code{vegclust::vegclustdist} with \code{mobileMemb = k} and \code{method = "FCM"},
+    respectively \code{"KM"}.
+    }
+    \item{ isopam }{
+    calls \code{isopam::isopam} using the \code{'distance'} argument
+    }
+    \item{ external }{
+    simply takes a user (object) supplied partitioning vector \code{'clustering'}. If argument
+    \code{'clustering'} is a \code{"character"} of length 1 the function seeks to select the supplied
+    column from \code{obj}. If it is given as a vector of mode \code{numeric} and of length equal to
+    \code{nrow(obj)} it is treated as the partitioning vector.this will be used. Vectors of mode
+    \code{character} will be coerced using \code{as.numeric(factor(clustering))} to construct the
+    clustering vector. In both cases argument \code{'method'} is ignored and will be set to
+    \code{"external"}.
+    }
+  }
+  
+  Depending on the applied method the partitioning vector is obtained as follows: \code{'agnes'} and
+  \code{'hclust'} objects are sliced by subsequent calls to \code{\link{cutree}} to obtain \emph{k}
+  partitions. Objects of class \code{'pam'}, \code{'fanny'} and \code{'kmeans'} already contain a
+  cluster(ing) attribute. If a hierarchy was estimated for \code{'isopam'} objects the flat attribute
+  is accessed, otherwise the lowest hierarchy level is extracted.
 
-If \code{clustering} is of length 1 and of mode \code{"character"} the function seeks to select the supplied column from \code{Sites(obj)}. If \code{clustering} is given as a vector of mode \code{numeric} and \code{length(clustering) == nrow(obj)} this will be used. A vector of mode\code{character} is coerced using \code{as.numeric(factor(clustering))} to construct the clustering vector. In both cases \code{method} will be set to \code{"external"}.
-
-If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to \code{k^2}.
-}
-\note{
-  If you gain errors using \code{instantsoup}, try to create separate objects
-  for classes \code{"Species"}, \code{"Sites"} and \code{"Taxonomy"}. You may
-  also want to call \code{"SpeciesTaxonomy"} for the first and last objects
-  mentioned. Defaults for \code{sep} and \code{dec} passed to \code{read.csv}
-  are set according to \code{read.csv2}!
+  If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the
+  \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to
+  \code{k^2}.
 }
 
 \section{Warning}{
   Method \code{"fanny"} and \code{fast = TRUE} may hang due to warnings
   issued by fanny and may freeze your R session. Setting \code{memb.exp = 1.1} will in most cases
-  avoid any warning of fanny.
+  avoid any warnings of fanny.
 }
 
 \value{
-Returns an object of class \code{VegsoupPartition}.
-For method fanny the matrix containing the memberships is retained in the sites data.
+  Returns an object of class \code{VegsoupPartition}. For method fanny the matrix containing the
+  memberships is retained in the sites data (additional k columns are added).
 }
+
 \references{
-Missing, there are many!
+  Missing, there are many!
 }
+
 \author{ Roland Kaiser }
-\note{
-Argument \code{k} can also be 1. In this case the whole objects form a single
-partition.
-}
+
 \seealso{
-\code{\linkS4class{VegsoupPartition}}
-\code{\link{OptimStride}}
-\code{\link{hclust}}
+  \code{\linkS4class{VegsoupPartition}}
+  \code{\link{OptimStride}}
+  \code{\link{hclust}}
 }
+
 \examples{
 require(vegsoup)
 
@@ -97,7 +145,6 @@ stars(Sites(r)[grep("M", names(r))],
       locations = Sites(r)[, 1:2] * 20, len = 1,
       draw.segments = TRUE, labels = NULL)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
+\keyword{ multivariate }
+

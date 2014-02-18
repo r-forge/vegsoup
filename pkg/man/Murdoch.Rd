@@ -21,7 +21,7 @@ This is a wrapper for function
     \code{'VegsoupPartition'} object.
   }
   \item{ minplt, type }{
-    see \\code{\link[optpart:murdoch]{murdoch}}
+    see \code{\link[optpart:murdoch]{murdoch}}
   }
   \item{ \dots }{
     not used.
@@ -50,3 +50,4 @@ murdoch(VegsoupPartition(barmstein, k = 2))
 
 }
 \keyword{ methods }
+

@@ -128,3 +128,4 @@ hclust(as.dist(x))
 }
 
 \keyword{ methods }
+

@@ -18,7 +18,7 @@
     taxa.width = "60mm",
     col.width = "10mm",
     footer.width = "150mm",
-    footer.treshold,
+    footer.threshold,
     molticols.footer,
     use.letters = FALSE,
     caption.text = NULL,
@@ -67,13 +67,13 @@
     \acronym{LaTeX} tag to set column width of all other columns. Recycled as necessary.
     See \sQuote{Details}.
   }
-  \item{ footer.treshold }{
+  \item{ footer.threshold }{
     integer. Minimum number of occurences of a species to become excluded from
     the table, defaults to 2.
   }
   \item{ molticols.footer }{
     integer. Number of columns to typeset species meeting conditions implied
-    by \code{footer.treshold}
+    by \code{footer.threshold}
   }
   \item{ footer.width }{
     \acronym{LaTeX} tag to set column width for footer columns.
