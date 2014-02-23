@@ -6,33 +6,33 @@
 \title{ Compare Species Abbreviations to Taxonomic Reference List }
 
 \description{
-Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} and \code{y}) or csv-files  (\code{file.x} and \code{file.y}) as inputs. All meaningful combinations (e. g. \code{x} and \code{file.y})are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initialized as class \code{\linkS4class{Species}} and \code{y} as class \code{\linkS4class{Taxonomy}}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
+Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} and \code{y}) or csv-files  (\code{file.x} and \code{file.y}) as inputs. All meaningful combinations (e. g. \code{x} and \code{file.y}) are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initialized as class \code{\linkS4class{Species}} and \code{y} as class \code{\linkS4class{Taxonomy}}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
 }
 
 \usage{
-SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE,
-                verbose = FALSE, ...)
+SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE,
+                skip = TRUE, verbose = FALSE, ...)
 }
 
 \arguments{
   \item{ x }{
-    A \code{"data.frame"} or \code{"matrix"} conforming to the specifications
+    \code{'data.frame'} or \code{'matrix'} conforming to the specifications
     of class \code{\linkS4class{Species}} or an object of that class.
   }
   \item{ y }{
-    A \code{"data.frame"} or \code{"matrix"} conforming to the specifications
+    as above but conforming to the specifications
     of class \code{\linkS4class{Taxonomy}} or an object of that class.
   }
   \item{ file.x }{
-    Path to a csv-file having species abundances in long format as defined for
+    path to a csv-file having species abundances in \emph{long format} as defined by
     \code{\linkS4class{Species}}.
   }
   \item{ file.y }{
-    Path to a csv-file giving a taxonomic reference list as defined for
+    as above but giving a taxonomic reference list as defined by 
     \code{\linkS4class{Taxonomy}}.
   }
   \item{ sep, dec }{
-    Separators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
+    separators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
     of \code{read.csv2}!
   }
   \item{ pmatch }{
@@ -40,18 +40,18 @@ SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip
     \code{file.x} against the reference. See \sQuote{Details}.
   }
   \item{ skip }{
-    Retain only mandatory columns, defaults to \code{TRUE}.
+    retain only mandatory columns, defaults to \code{TRUE}.
   }
   \item{ verbose }{
-    Prints Diagnostic messages.
+    prints diagnostic messages.
   }
   \item{ \dots }{
-    Not used.
+    currently not used.
   }
 }
 
 \details{
-  Of course the column \code{'abbr'} in the taxonomic reference has to be
+  Of course, the column \code{'abbr'} in the taxonomic reference has to be
   unique. Not only because it is used as rownames, but also as to reference a
   scientific name to only one abbreviation.
 
@@ -62,9 +62,9 @@ SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip
   wish to keep the information of additional columns.
 
   If an abbreviation used in the object representing species observations
-  (class \code{"Species"}) is not found in the reference (class
-  \code{"Taxonomy"}), and vice-versa, the function stops and a
-  \code{"data.frame"} including all ambiguities is returned. If argument
+  (class \code{'Species'}) is not found in the reference (class
+  \code{'Taxonomy'}), and vice-versa, the function stops and a
+  \code{'data.frame'} including all ambiguities is returned. If argument
   \code{pmatch = TRUE} partial matches are treated as correct
   (see \link{pmatch}). Proceed with fingers crossed! Never the less,
   if you are happy with what \code{pmatch} found and you want to use these
@@ -82,16 +82,14 @@ SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip
   Integrity of the taxonomic reference list is crucial to build an object of
   class \code{"SpeciesTaxonomy"} and function \code{Vegsoup} also relies on
   it.  If it's necessary to replace several abbreviations it is handy to save
-  \code{write.table(taxonomy(obj), "foo.txt", quote = FALSE, row.names =
-  FALSE)} to create an object suitable for automatic replacement.
+  \code{write.table(taxonomy(obj), "foo.txt", quote = FALSE, row.names = FALSE)}
+  to create an object suitable for automatic replacement.
 }
 
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\linkS4class{Species}},
-\code{\link{stackSpecies}},
-\code{\linkS4class{Taxonomy}}
+\code{\link{stackSpecies}}
 }
 
 \examples{

@@ -71,7 +71,7 @@ getK(x)
 # vector of assigments
 Partitioning(x)
 
-# matrix of meberships
+# matrix of memberships
 PartitioningMatrix(x)
 
 # matrix of possible combinations

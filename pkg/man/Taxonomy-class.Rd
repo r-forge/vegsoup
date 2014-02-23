@@ -36,7 +36,7 @@ Data representation of taxonomic reference list.
   \itemize{
     \item \code{abbr} contains unique abbreviations of a scientific latin name
       that translate those of class \code{\linkS4class{Species}}.
-    \item \code{taxon} the full scientific latin name.
+    \item \code{taxon} gives the full scientific latin name.
   }
 }
 \section{Slots}{
@@ -75,7 +75,7 @@ Data representation of taxonomic reference list.
       \code{signature(x = "Taxonomy")}:
         \code{rbind} method to combine two or more objects. If there are any
         duplicates in the \code{'abbr'} key column only one instance is kept,
-        the first one!.
+        the first one!
     }
   }
 }
@@ -98,7 +98,7 @@ x <- Taxonomy(x)
 #
 t <- new("Taxonomy", data = x)
 
-# taxonomy method for class 'data.frame'
+# taxonomy method for class data.frame
 ( t <- taxonomy(x) )
 # or matrix
 ( t <- taxonomy(as.matrix(x)) )

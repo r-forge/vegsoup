@@ -98,7 +98,7 @@ dim(res)
 \dontrun{
 library(Taxonstand)
 tmp <- TPL(taxon(x))
-# Carex is a genus of Cyperaceae, let's see if there are more mebers of this family
+# Carex is a genus of Cyperaceae, let's see if there are more members of this family
 taxon(subset(x, tmp$Family == "Cyperaceae")) # no, there are not
 }
 }

@@ -16,7 +16,7 @@
 
 \title{ Distance Matrices from \code{Vegsoup*} Objects }
 \description{
-Compute a distance matrix as specified by \code{vegdist(obj)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
+Compute a distance matrix as specified by \code{vegdist(x)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is a wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
 }
 
 \usage{

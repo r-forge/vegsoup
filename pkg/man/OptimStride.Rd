@@ -68,13 +68,13 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
   \item{ ft.threshold }{
     threshold value of Fisher test, defaults to \code{1e-03}
   }
-  \item{ threshold }{
-    threshold value for OptimClass2. See \sQuote{Details}
-  }
   \item{ alternative }{
     alternative indicates the alternative hypothesis of the Fisher exact test
     and must be one of "two.sided", "greater" or "less" (see
     \code{\link{FisherTest}} and \link{fisher.test}).
+  }
+  \item{ threshold }{
+    threshold value for OptimClass2. See \sQuote{Details}
   }
   \item{ method }{
     any method supported by \code{\link{VegsoupPartition}}. For \code{OptimStride}

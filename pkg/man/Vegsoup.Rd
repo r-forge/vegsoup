@@ -12,13 +12,14 @@
   \code{Vegsoup*} objects from local R objects or from csv files stored on
   disk. A shorthand function is provided to collect data files from a folder.
 
-  \code{Vegsoup} is the recommended user interface rather than direct
-  \code{link{new}}\code{("Vegsoup", ....)} call.
+  \code{Vegsoup(...)} is the recommended user interface rather than direct
+  \code{\link{new("Vegsoup", ....)}} call.
 }
 
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
-        proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE)
+        proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
+        verbose = FALSE)
 
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 
@@ -79,11 +80,8 @@ coenoflex(numplt = 20, numspc = 10, ...)
   \item{ dec }{
     See \code{read.csv}. 
   }
-  \item{ numplt }{
+  \item{ numplt, numspc }{
     See \code{\link[coenoflex:coenoflex]{coenoflex}}.
-  }
-  \item{ numspc }{
-    See \code{"coenoflex"}
   }
   \item{ \dots }{
     Additional arguments passed to coenoflex.
