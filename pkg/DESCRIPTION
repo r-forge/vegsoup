@@ -2,8 +2,8 @@ Package: vegsoup
 Version: 0.2-0
 Date: 2013-10-02
 Title: classes and methods for phytosociology
-Author: Roland Kaiser <kardinal.eros@gmail.com>
-Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
+Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
+                     email = "kardinal.eros@gmail.com"))
 Depends: R (>= 3.0.1), vegan, rgdal (>= 0.8-11)
 Imports: methods, cluster, coenoflex, optpart, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat
 Suggests: labdsv, pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, parallel, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand, vegdata
@@ -35,8 +35,8 @@ Collate: AAA.R
          Taxonomy-methods.R
          SpeciesTaxonomy-Methods.R
          googletiles.R
-         stack.species.R
          reshape.R
+         stack.species.R
          stack.sites.R
          stack.coordinates.R
          verbatim.R
@@ -55,10 +55,10 @@ Collate: AAA.R
          dim.R
          as.matrix.R
          as.dist.R
+         vegdist.R
          as.data.frame.R
          rowSums.R
          decostand.R
-         vegdist.R
          show.R
          outlier.R
          extract.R
