@@ -21,7 +21,9 @@ setGeneric("abbr",
 )
 #}
 
-#	Sites, Taxonomy Vegsoup have also rbind method, reorganize code!
+#	we set the generic here,
+#   classes "Sites", "Taxonomy" and "SpeciesTaxonomy"
+#	then define methods for their classe
 if (!isGeneric("rbind")) {
 setGeneric("rbind",
 		function (..., deparse.level = 1)

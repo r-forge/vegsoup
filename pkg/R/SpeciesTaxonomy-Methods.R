@@ -1,10 +1,3 @@
-#	replace taxonomy including species abbreviations
-
-#setGeneric("SpeciesTaxonomy",
-#	function (x, y, file.x, file.y, sep = sep, dec = dec, pmatch = FALSE, skip = TRUE, verbose = FALSE, ...)
-#		standardGeneric("SpeciesTaxonomy")
-#)
-
 setMethod("taxonomy",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) taxonomy(slot(obj, "taxonomy"))
@@ -38,25 +31,14 @@ setReplaceMethod("taxonomy",
 	}
 )
 
-".rbind.SpeciesTaxonomy" <- function (..., deparse.level = 1) {
-	allargs <- list(...)
-	#allargs <- list(obj1, obj2)
-	x <- do.call("rbind", sapply(lapply(allargs, species), species))
-	z <- do.call("rbind", sapply(lapply(allargs, taxonomy), taxonomy))
-	return(SpeciesTaxonomy(x, z))
-}
-
-#	Sites, Taxonomy Vegsoup have also rbind method
-if (!isGeneric("rbind")) {
-setGeneric("rbind",
-		function (..., deparse.level = 1)
-		standardGeneric("rbind"),
-		signature = "...")
-}
-
 setMethod("rbind",
     signature(... = "SpeciesTaxonomy"),
-	.rbind.SpeciesTaxonomy
+	function (..., deparse.level = 1) {
+		allargs <- list(...)
+		x <- do.call("rbind", sapply(lapply(allargs, species), species))
+		z <- do.call("rbind", sapply(lapply(allargs, taxonomy), taxonomy))
+		return(SpeciesTaxonomy(x, z))
+	}
 )	 	  
 
 #setMethod("[",
@@ -65,10 +47,4 @@ setMethod("rbind",
 #    function (x, i, j, ..., drop = FALSE) {
 #    	species(x@data[i, j, ...])
 #    }
-#)    	
-
-#	initialize method is wrapped in function SpeciesTaxonomy
-
-#setClass("SpeciesTaxonomyVirtual",
-#	representation = representation("VIRTUAL")	
 #)

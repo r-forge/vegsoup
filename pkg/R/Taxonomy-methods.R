@@ -73,26 +73,16 @@ setMethod("abbr",
     }	
 )
 
-".rbind.Taxonomy" <- function (..., deparse.level = 1) {
-	allargs <- list(...)	
-	res <- do.call("rbind", lapply(allargs, taxonomy))
-	
-	if (!length(unique(res$abbr)) == nrow(res)) {
-		message("intersecting taxa abbreviations ('abbr') found.",
-			" Drop what is doubled!")
-		res <- unique(res)
-	}
-	return(taxonomy(res))
-}
-
-if (!isGeneric("rbind")) {
-setGeneric("rbind",
-		function (..., deparse.level = 1)
-		standardGeneric("rbind"),
-		signature = "...")
-}
-
 setMethod("rbind",
     signature(... = "Taxonomy"),
-	.rbind.Taxonomy
+	function (..., deparse.level = 1) {
+		allargs <- list(...)	
+		res <- do.call("rbind", lapply(allargs, taxonomy))		
+		if (!length(unique(res$abbr)) == nrow(res)) {
+			message("intersecting taxa abbreviations ('abbr') found,",
+				" drop what is doubled!")
+			res <- unique(res)
+		}
+		return(taxonomy(res))
+	}
 )	    	
