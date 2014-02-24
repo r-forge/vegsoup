@@ -33,6 +33,8 @@ The package implements classes for vegetation data (see \link{Vegsoup-class}) an
     \item spatial methods
     \item plotting methods
   }
+
+Type \code{vignette("vegsoup")} 
 }
 
 \section{ I. Creating Vegsoup* objects }{

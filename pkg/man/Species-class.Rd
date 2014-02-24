@@ -49,23 +49,27 @@
     type \code{character}. The meaning of these columns is as detailed below:
 
     \itemize{
-    \item \code{plot} contains the plot identifier associated with each
+    \item \code{"plot"} contains the plot identifier associated with each
       species observation, any numeric values are coerced to characters.
-    \item \code{abbr} typically contains unique abbreviations of a scientific
+    \item \code{"abbr"} typically contains unique abbreviations of a scientific
       latin name, although, any character string might be used (the full species name for example).
-      It's handy however, to keep \code{'abbr'} short and intuitive. In any case, syntactic valid
+      It's handy however, to keep \code{abbr} short and intuitive. In any case, syntactic valid
       names are automatically created using \code{\link{make.names}} (e.g. blanks will be dots).
-    \item \code{layer} assigns a stratum/layer to each observation, even if they are all the same
+    \item \code{"layer"} assigns a stratum/layer to each observation, even if they are all the same
       (e.g. the data includes only a single herb layer)
-    \item \code{cov} contains an estimate of species abundance or performance (e.g. plant cover)
+    \item \code{"cov"} contains an estimate of species abundance or performance (e.g. plant cover)
       coerced to as character, regardless if it is ordinal (Braun-Blanquet scale),
       continuous (frequencies or counts) or simple presence.
-    
-    Besides these mandatory columns and their rigid names and order, it is possible
-    for an object of class \code{"Species"} to contain more columns with
-    data. Imagine, for example, additional useful information for an observed species
-    in a particular plot (plant size, flowering/not flowering, etc.) is available.
    }
+   
+   The above outlined data columns must be available in order to create a \code{"Species"} object
+   and the species method below relies they are present, named or in the order above.
+   
+   Besides these mandatory columns and their rigid names and order, it is possible
+   for an object of class \code{"Species"} to contain more columns with
+   data. Imagine, for example, additional useful information for an observed species
+   in a particular plot (plant size, flowering/not flowering, etc.) is available.
+
   }
   }
 }
@@ -76,41 +80,40 @@
       There exists \code{species} methods for a number of R base classes:
 
       \code{signature(obj = "data.frame")}:
-        Promote \code{data.frame} to object of class \code{"Species"}.
+        promote \code{data.frame} to object of class \code{"Species"}.
 
       \code{signature(obj = "matrix")}:
-        Promote \code{matrix} to object of class \code{"Species"}.
+        promote \code{matrix} to object of class \code{"Species"}.
         Note, \code{obj} does not need to have \code{dimnames}, but order matters.
 
       \code{signature(obj = "character")}:
-        Supply a file to be read by \code{read.csv} and promote that object to
+        supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Species"}. Remember to pass appropriate arguments to
         \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
 
       The following classes defined in the vegsoup package have a \code{species} method:
 
       \code{signature(obj = "Vegsoup")}:
-        Accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
+        accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
         an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
         \emph{slot data}. \code{species(obj)@data} should be avoided.
 
       \code{signature(obj = "VergsoupVerbatim")}:
-        Supply an \code{"VegsoupVerbatim"} and promote that object to
-        class \code{"Species"}.
+        promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
     }
     \item{ species<- }{
       \code{signature(obj = "Vegsoup", value = "Species")}:
-        Assign (possibly subset) with object of class \code{"Species"}. 
+        assign (possibly subset) with object of class \code{"Species"}. 
     }
     \item{ [ }{
       \code{signature(x = "Species")}:
-        Subset parts of an object. Note, indexing that will
+        subset parts of an object. Note, indexing that will
         evaluate to an object with less than four columns will fail,
         due to the class inherent data model (see \sQuote{Slots}).
     }
     \item{ $ }{
       \code{signature(x = "Species")}:
-        Retrieve column by name (see \sQuote{Slots}), or perform replacement.
+        retrieve column by name (see \sQuote{Slots}), or perform replacement.
     }
     \item{ rbind }{
       \code{signature(x = "Species")}:
@@ -125,14 +128,14 @@
   integrity. If duplicated species are identified for a specific plot a
   warning is issued and duplicates are dropped automatically. The same applies
   to duplicated species abundances for plots. Finally an ordering of the form
-  and \code{order(plot, layer, data)} is performed. None of the first four
-  columns can contain \code{NA}, as this will not allow a valid object of the
-  class to be built.
+  \code{order(plot, layer, data)} is performed during initialization. None of
+  the first four columns can contain \code{NA}, as this will not allow a valid
+  object of the class to be built.
 
   The design of the the class initialization method allows for data
   that have not been checked for data stringency. Such data might arise when
   field data was digitized without the help of a database system, for example, by
-  using a spread sheet software. The default behavior is to  discard all ambiguities
+  using spread sheet software. The default behavior is to  discard all ambiguities
   in the data (e.g. duplicated observations of species in the same plot
   and/or in the same stratum).
 
@@ -161,8 +164,7 @@ showClass("Species")
 
 data(barmstein)
 
-# for demonstration we first retrieve the slot "Species"
-# of a Vegsoup object
+# for demonstration we first retrieve the slot "Species" of an existing Vegsoup object
 spc <- species(barmstein)
 class(spc)
 

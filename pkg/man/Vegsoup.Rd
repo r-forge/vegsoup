@@ -168,14 +168,14 @@ x <- barmstein
 summary(x)
 
 # plot ordinations of simulated data
-plotPCO(coenoflex(100, 100), thresh = 0.2)
-plot(metaMDS(as.logical(coenoflex(100, 100))))
+plotPCO(coenoflex(100, 200), thresh = 0.2)
+plot(metaMDS(as.logical(coenoflex(100, 200))))
 
 # we can omit 'as-logical'
-plot(decorana(coenoflex(100, 100))) 
+plot(decorana(coenoflex(100, 200))) 
 
 # simulate and promote to ordinal scale
-sim <- coenoflex(100, 100)
+sim <- coenoflex(100, 200)
 coverscale(sim) <- "ordinal"
 table(species(sim)$cov)
 

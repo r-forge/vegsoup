@@ -9,7 +9,7 @@
 
 \description{
   This is a wrapper for function
-  \code{\link[optpart:isamic]{isamic}} in package \pkg{optpart}.
+  \code{\link[labdsv:isamic]{isamic}} in package \pkg{optpart}.
 }
 
 \usage{

@@ -16,8 +16,8 @@
 \title{ Get Abbreviations used to Encode Species and Layer Replicates }
 
 \description{
-  Get the abbreviations (\emph{abbr}) used in species matrix and corresponding
-  taxonomy data frame.
+  Get the abbreviations (\emph{abbr}) used to encode scientific species names. There are methods
+  for \code{"Species"} and \code{"Taxonomy"} classes, as well as for \code{Vegsoup} objects.
 }
 
 \usage{
@@ -41,16 +41,11 @@
   }
 }
 \details{
-  The design of package vegsoup with regard to layer replication is to encode
-  species and layer in a collapsed string which is used then as column names in
-  the species matrix. This so avoids the creation of multi dimensional arrays.
-  Layers build blocks in the species matrix. The order is determined by \code{Layers(obj)}.
-  
-  For \code{'vegsoup'} objects \code{abbr} returns \code{sort(unique(species(obj)$abbr))}
-  For \code{Species} or \code{Taxonomy} objects the method returns column abbr from \emph{slot data}.
+  For \code{'vegsoup'} objects \code{abbr} returns \code{sort(unique(species(obj)$abbr))} and
+  for \code{Species} or \code{Taxonomy} objects the method returns column abbr from \emph{slot data}.
 }
 \value{
-\code{character}. A vector of column names.
+\code{character}.
 }
 \author{
 Roland Kaiser
