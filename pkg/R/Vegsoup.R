@@ -3,6 +3,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	#	Imports:
 	#	require(sp) # otherwise GridTopology in .rpoisppSites() will fail?
 
+	#	x: the species
 	if (missing(x)) {
 		stop("\nspecies are missing!")	
 	}
@@ -20,7 +21,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		else {
 				x <- species(new("Species", data = x))
 		}	
-	}
+	}	
+	#	y: the sites
 	if (missing(y)) {
 		stop("\nsites are missing!")	
 	}
@@ -32,6 +34,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			y <- sites(new("Sites", data = y))
 		}	
 	}	
+	#	z: the taxonomy	
 	if (missing(z)) {
 			stop("\ntaxonomy is missing and x is not of class SpeciesTaxonomy!")
 	}
@@ -45,8 +48,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}	
 	if	(!inherits(proj4string, "character")) {
 		stop("\nproj4string must inhertit from class 'character'")
-	}
-		
+	}		
 	#	intersect x, y and z
 	#	equal length
 	xx <- sort(unique(x$plot))
@@ -64,8 +66,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		warning("unique(x$plot) and unique(y$plot) do not match, ",
 			"had to drop ", length(test), " plots: ",
 			paste(test, collapse = ", "), call. = FALSE)
-	}
-	#	coverscale	
+	}	
+	#	coverscale: the covercale	
 	if (missing(coverscale)) {
 		if (verbose) {
 			("\nno cover scale provided")
@@ -113,7 +115,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			stop("coverscale does not match data", call. = FALSE)
 		}
 	}
-	#	no test need if continuous?
+	#	no test needed if continuous?
 	if (is.continuous(xs)) {
 	}		
 	if (missing(group))	{
@@ -168,7 +170,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	y <- y[match(unique(x$plot), rownames(y)), ]
 	
 	res <- new("Vegsoup",
-		species = x,
+		species = species(x),
 		sites = y, 
 		taxonomy = z,
 		coverscale = xs,

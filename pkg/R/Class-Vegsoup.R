@@ -7,9 +7,9 @@ setClass("decostand", representation(method = "decostand.method"))
 #	class definition
 setClass("Vegsoup",
 	representation(
-	species = "data.frame", # in long format, casting by method
+	species = "Species", # changed
 	sites = "data.frame", # melt method
-	taxonomy = "data.frame", # in long format
+	taxonomy = "data.frame", # change to class "Taxonomy"
 	coverscale = "Coverscale", #renamed
 	decostand = "decostand",
 	dist = "character",

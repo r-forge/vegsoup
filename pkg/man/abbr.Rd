@@ -1,11 +1,13 @@
 \name{abbreviations}
 \docType{methods}
 
-\alias{abbr.layer}
-\alias{abbr.layer,Vegsoup-method}
-
 \alias{abbr}
 \alias{abbr,Vegsoup-method}
+\alias{abbr,Species-method}
+\alias{abbr,Taxonomy-method}
+
+\alias{abbr.layer}
+\alias{abbr.layer,Vegsoup-method}
 
 \alias{abbr<-}
 \alias{abbr<-,Vegsoup-method}
@@ -21,23 +23,31 @@
 \usage{
 \S4method{abbr}{Vegsoup}(obj)
 
-\S4method{abbr}{Vegsoup}(obj)<-value
+\S4method{abbr}{Vegsoup}(obj) <- value
 
 \S4method{abbr.layer}{Vegsoup}(obj)
+
+\S4method{abbr}{Species}(obj)
+
+\S4method{abbr}{Taxonomy}(obj)
 }
 
 \arguments{
   \item{ obj }{
-    a \code{Vegsoup*} object.
+    a \code{Vegsoup*}, \code{Species} or \code{Taxonomy} object.
   }
   \item{ value }{
-    character. Usefull to change abbreviations.
+    character. Useful to change abbreviations.
   }
 }
 \details{
   The design of package vegsoup with regard to layer replication is to encode
-  species and layer in a collpased string that is then used as column names in
+  species and layer in a collapsed string which is used then as column names in
   the species matrix. This so avoids the creation of multi dimensional arrays.
+  Layers build blocks in the species matrix. The order is determined by \code{Layers(obj)}.
+  
+  For \code{'vegsoup'} objects \code{abbr} returns \code{sort(unique(species(obj)$abbr))}
+  For \code{Species} or \code{Taxonomy} objects the method returns column abbr from \emph{slot data}.
 }
 \value{
 \code{character}. A vector of column names.

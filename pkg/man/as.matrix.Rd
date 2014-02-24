@@ -141,7 +141,7 @@ object.size(indices(x))            # almost equal
 # coercion to class "sparseMatrix" is based on method indices
 object.size(as(x, "sparseMatrix")) # efficient
 # the long format as stored in Vegsoup* objects (slot 'species')
-object.size(Species(x))            # most general but least efficent
+object.size(species(x))            # most general but least efficent
 # a multi-dimensional array of layer replicates
 object.size(as.array(x))           # least efficent
 

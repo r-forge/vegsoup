@@ -67,7 +67,7 @@ Coerce object a \code{'Vegsoup*'} object to other class.
   }
 
   Coercion to 'data.frame' returns a \code{"data.frame"} with as many row as
-  there are in \code{Species(x)}.
+  there are in \code{species(x)}.
 
   Coercion to 'array' returns an \code{"array"}.
 

@@ -59,7 +59,7 @@ shapeSpecies <- function (obj) {
 	if (!inherits(obj, "Vegsoup")) {
 		stop("only defined for Vegsoup* objects")
 	}
-	spc <- Species(obj)
+	spc <- species(species(obj)) #! get data slot
 	#	data.frame to store results
 	res <- as.data.frame(
     	     matrix("",

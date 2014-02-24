@@ -84,11 +84,11 @@ setAs(from = "coenoflex", to = "Vegsoup",
 setOldClass("data.list")
 
 #	from Vegsoup to data.list
-as.data.list.Vegsoup <- function (obj) {
+".as.data.list.Vegsoup" <- function (obj) {
 	#	Imports:
 	#	require(multitable)
 
-	xx <- Species(obj)
+	xx <- species(species(obj)) #! get slot data
 	names(xx)[4] <- "abundance"
 	scale <- coverscale(obj)
 	
@@ -118,18 +118,20 @@ as.data.list.Vegsoup <- function (obj) {
 
 setAs(from = "Vegsoup", to = "data.list",
 	def = function (from) {
-		as.data.list.Vegsoup(from)
+		.as.data.list.Vegsoup(from)
 	}
 )
+
+#	as.mefa.Vegsoup <- fucntion(obj) as(obj, "data.list")
 
 #	set S3 class
 setOldClass("mefa")
 
 #	from Vegsoup to mefa
-as.mefa.Vegsoup <- function (obj) {
-	x <- Species(obj)
+".as.mefa.Vegsoup" <- function (obj) {
+	x <- species(species(obj)) #! get slot data
 	if (is.ordinal(coverscale(obj))) {
-		x$cov = as.numeric(as.character(factor(Species(obj)$cov,
+		x$cov = as.numeric(as.character(factor(species(obj)$cov,
 					levels = coverscale(obj)@codes,
 					labels = coverscale(obj)@lims)))
 	}
@@ -141,6 +143,8 @@ as.mefa.Vegsoup <- function (obj) {
 
 setAs(from = "Vegsoup", to = "mefa",
 	def = function (from) {
-		as.mefa.Vegsoup(from)
+		.as.mefa.Vegsoup(from)
 	}
 )
+
+#	as.mefa.Vegsoup <- fucntion(obj) as(obj, "mefa")

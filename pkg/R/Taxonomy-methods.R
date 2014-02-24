@@ -2,10 +2,17 @@ setGeneric("taxonomy",
 	function (obj, ...)
 		standardGeneric("taxonomy")
 )
+
+setGeneric("taxonomy<-",
+	function (obj, value)
+		standardGeneric("taxonomy<-")
+)
+
 setMethod("taxonomy",
     signature(obj = "Taxonomy"),
     function (obj) obj@data
 )
+
 setMethod("taxonomy",
     signature(obj = "character"),
     function (obj, ...) {
@@ -13,12 +20,14 @@ setMethod("taxonomy",
     	data = read.csv(obj, ...))
     }    
 )
+
 setMethod("taxonomy",
     signature(obj = "data.frame"),
     function (obj) {
     	new("Taxonomy", data = obj)
     }    
 )
+
 setMethod("taxonomy",
     signature(obj = "matrix"),
     function (obj) {
@@ -26,6 +35,7 @@ setMethod("taxonomy",
     	data = as.data.frame(obj, stringsAsFactors = FALSE))
     }    
 )
+
 setMethod("show",
     signature(object = "Taxonomy"),
     function (object) {
@@ -37,6 +47,7 @@ setMethod("show",
 		print(head(object@data, n = 6L))
     }
 )
+
 setMethod("[",
     signature(x = "Taxonomy",
     i = "ANY", j = "ANY", drop = "missing"),
@@ -44,7 +55,9 @@ setMethod("[",
     	taxonomy(x@data[i, j, ...])
     }
 )
-setMethod("$", "Taxonomy", 
+
+setMethod("$",
+	signature(x = "Taxonomy"), 
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {
 			stop("no $ method for object without slot data")
@@ -52,6 +65,14 @@ setMethod("$", "Taxonomy",
 		return(x@data[[name]])
 	}
 )
+
+setMethod("abbr",
+    signature(obj = "Taxonomy"),
+    function (obj) {
+    	obj$abbr
+    }	
+)
+
 ".rbind.Taxonomy" <- function (..., deparse.level = 1) {
 	allargs <- list(...)	
 	res <- do.call("rbind", lapply(allargs, taxonomy))
@@ -63,12 +84,14 @@ setMethod("$", "Taxonomy",
 	}
 	return(taxonomy(res))
 }
+
 if (!isGeneric("rbind")) {
 setGeneric("rbind",
 		function (..., deparse.level = 1)
 		standardGeneric("rbind"),
 		signature = "...")
 }
+
 setMethod("rbind",
     signature(... = "Taxonomy"),
 	.rbind.Taxonomy

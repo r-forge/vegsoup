@@ -89,12 +89,18 @@
 
       The following classes defined in the vegsoup package have a \code{species} method:
 
-      \code{signature(obj = "Species")}:
-        Accessor method (slot \code{obj@data}).
+      \code{signature(obj = "Vegsoup")}:
+        Accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
+        an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
+        \emph{slot data}. \code{species(obj)@data} should be avoided.
 
       \code{signature(obj = "VergsoupVerbatim")}:
         Supply an \code{"VegsoupVerbatim"} and promote that object to
         class \code{"Species"}.
+    }
+    \item{ species<- }{
+      \code{signature(obj = "Vegsoup", value = "Species")}:
+        Assign (possibly subset) with object of class \code{"Species"}. 
     }
     \item{ [ }{
       \code{signature(x = "Species")}:
@@ -155,23 +161,25 @@ showClass("Species")
 
 data(barmstein)
 
-# retrieve data.frame from an Vegsoup object
-spc <- Species(barmstein)
-
+# for demonstration we first retrieve the slot "Species"
+# of a Vegsoup object
+spc <- species(barmstein)
 class(spc)
 
-# the data slot
-class(species(spc))
+# the data slot of a Species object can be accessed by
+spc <- species(spc)
+class(spc)
 
-# matrix method
+# this can also be written as
+spc <- species(species(barmstein))
+
+# matrix method to promote to class "Species"
 s1 <- species(as.matrix(spc))
-
-# get slot data from object, a simple data.frame
-class(species(s1))
+class(s1)
 
 # combine two objects
 data(windsfeld)
-s2 <- species(Species(windsfeld))
+s2 <- species(windsfeld)
 ( s <- rbind(s1, s2) )
 }
 \keyword{ classes }

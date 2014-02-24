@@ -29,21 +29,20 @@
 	}
 	#	species 'x'	
 	j <- vapply(allargs,
-		FUN = function (x) nrow(Species(x)),
+		FUN = function (x) nrow(species(species(x))), #! use slot data, need?
 		FUN.VALUE = integer(1))
-	#	todo: now use class Species
-	#	implement rbind method	
+	#	implement rbind method for class Species	
     x <- as.data.frame(matrix("", nrow = sum(j), ncol = 4),
     	rownames = 1:sum(j), stringsAsFactors = FALSE)
     names(x) <- c("plot", "abbr", "layer", "cov")
     x$plot <- unlist(sapply(allargs,
-    	FUN = function (x) Species(x)$plot))
+    	FUN = function (x) species(x)$plot))
     x$abbr <- unlist(sapply(allargs,
-    	FUN = function (x) Species(x)$abbr))    
+    	FUN = function (x) species(x)$abbr))    
     x$layer <- unlist(sapply(allargs,
-    	FUN = function (x) Species(x)$layer))        
+    	FUN = function (x) species(x)$layer))        
     x$cov <- unlist(sapply(allargs,
-    	FUN = function (x) Species(x)$cov))
+    	FUN = function (x) species(x)$cov))
 
 	#	sites 'y'
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
@@ -93,7 +92,7 @@
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	
 	res <- new("Vegsoup",
-		species = x,
+		species = species(x),
 		sites = y, 
 		taxonomy = z,
 		coverscale = scale,

@@ -2,11 +2,7 @@
 setMethod("[",
     signature(x = "Vegsoup",
     i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = TRUE) {
-	    #	debug
-	    #	x = dta; i = 1; j <- c(4,7,9,1,12); j <- rep(TRUE, ncol(x))
-		#	x <- prt; i = Partitioning(x) == 2
-	    
+    function (x, i, j, ..., drop = TRUE) {   
 	    res <- x
 	    
 	    if (missing(i)) {
@@ -35,7 +31,6 @@ setMethod("[",
 		#	remove empty species
 		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
 		#	assign slot species
-		#	res@species <- as.data.frame(tmp, stringsAsFactors = FALSE)
         #	melt to long format
 		cov <- array(t(tmp))
 		plot <- rep(dimnames(tmp)[[1]], each = dim(tmp)[2])
@@ -43,12 +38,14 @@ setMethod("[",
 			rep(dimnames(tmp)[[2]], dim(tmp)[1]), "@", fixed = TRUE)
 		abbr <- unlist(lapply(abbr.layer, "[[", 1))
 		layer <- unlist(lapply(abbr.layer, "[[", 2))
-		#	to do: use class 'species' here!
-		res@species <- data.frame(plot, abbr, layer, cov,
+		
+		spc <- data.frame(plot, abbr, layer, cov,
 			stringsAsFactors = FALSE)
-       	res@species <- res@species[res@species$cov != 0, ]
+		#	currently no species<- method for signature "Vegsoup", "Species"
+		#	must implement in Species-methods.R
+       	res@species <- species(spc[spc$cov != 0, ])
        	#	new layer order
-       	layer <- as.character(unique(res@species$layer))
+       	layer <- as.character(unique(species(res)$layer)) # was : res@species$layer
        	layer <- layer[match(Layers(x), layer)]
        	layer <- layer[!is.na(layer)]
 		#	subset sites

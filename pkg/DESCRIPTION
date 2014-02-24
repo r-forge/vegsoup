@@ -18,30 +18,30 @@ Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
 Collate: AAA.R
+         Class-Species.R
+         Class-Taxonomy.R
+         Class-SpeciesTaxonomy.R
+         Class-Sites.R
+         Class-Coverscale.R
+         Class-Vegsoup.R
+         Class-VegsoupPartition.R
+         Class-VegsoupOptimstride.R
+         Class-VegsoupPartitionFidelity.R
          Vegsoup-Internal.R
          Vegsoup-Import.R
+         Coverscale-Methods.R
+         Coverscale-VegsoupMethods.R
+         Species-methods.R
+         Taxonomy-methods.R
+         SpeciesTaxonomy-Methods.R
          googletiles.R
          stack.species.R
          reshape.R
          stack.sites.R
          stack.coordinates.R
          verbatim.R
-         Class-Species.R
-         Species-methods.R
-         Class-Sites.R
          Sites-methods.R
-         Class-Taxonomy.R
-         Taxonomy-methods.R
-         Class-SpeciesTaxonomy.R
-         SpeciesTaxonomy-Methods.R
          SpeciesTaxonomy.R
-         Class-Coverscale.R
-         Coverscale-Methods.R
-         Class-Vegsoup.R
-         Coverscale-VegsoupMethods.R
-         Class-VegsoupPartition.R
-         Class-VegsoupOptimstride.R
-         Class-VegsoupPartitionFidelity.R
          Vegsoup.R
          coerce.R
          instantsoup.R

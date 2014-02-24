@@ -35,9 +35,9 @@ setMethod("show",
 		"\nsites            : ",
 			dim(x)[1], " (sample plots/relevees)", sep = "")
 	if (dim(x)[1] == 1) {
-		tmp <- Species(x)
+		tmp <- species(species(x)) #! get data slot
 		tmp$taxon <-
-			Taxonomy(x)$taxon[match(tmp$abbr, Taxonomy(x)$abbr)]
+			taxon(x)[match(tmp$abbr, Taxonomy(x)$abbr)]
 		tmp <- tmp[, c(1,5,3,4)]
 		tmp <- tmp[order(tmp$taxon, tmp$layer), ]
 		tmp <- apply(tmp[, -1], 1,

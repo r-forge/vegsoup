@@ -228,15 +228,17 @@
   \bold{ 9) Retrieve class slots.}
     Methods to access or replace the \code{'species'}, \code{'sites'}
     or \code{'taxonomy'} slots are:
-    \item{Species}{
+    \item{species}{
       \code{signature(obj = "Vegsoup")}:
       returns slot, on object of class
-      \code{"data.frame"}, equaling an object of class
       \code{\linkS4class{Species}}.
     }
-    \item{Species<-}{
+    \item{species<-}{
+      \code{signature(obj = "Vegsoup", value = "Species")}:
+      assigns object of class \code{"Species"} to an existing
+      \code{Vegsoup*} object. See \code{\link{species<-}}.
       \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
-      assign object of class \code{"SpeciesTaxonomy"} to an existing
+      assigns object of class \code{"SpeciesTaxonomy"} to an existing
       \code{Vegsoup*} object. Not implemented yet! See
       \code{\linkS4class{SpeciesTaxonomy}}.
     }

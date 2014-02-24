@@ -25,12 +25,12 @@ Simply return the layer for each observation.
 
 \details{
   Simply returns the layer for each observation, equivalent to
-  \code{Species(obj)\$layer}.
+  \code{species(obj)\$layer}.
 }
 
 \value{
   \code{Layer} returns a character vector equal in length to
-  \code{nrow(Species(obj)}}
+  \code{nrow(slot(species(obj), "data"))}}
 
 \author{ Roland Kaiser }
 
@@ -53,7 +53,7 @@ x <- barmstein
 table(Layer(x))
 
 # alternative
-table(Species(x)$layer)
+table(species(x)$layer)
 }
 \keyword{ methods }
 

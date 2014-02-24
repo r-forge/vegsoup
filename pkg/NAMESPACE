@@ -39,8 +39,8 @@ importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 #explicit exports
 export(
     "Coverscale",
-    "species",
-    "species<-",
+    "species",   # also in exportMethods
+    "species<-", # also in exportMethods
     "sites",
     "taxonomy",
     "taxonomy<-",
@@ -162,14 +162,13 @@ exportMethods(
     "SigFidelity",
     "silhouette",
     "species",
-    "Sites",
+    "species<-",
     "sites",
+    "Sites",
     "Sites<-",
     "splitAbbr",
     "SpatialPointsVegsoup",
     "SpatialPolygonsVegsoup",
-    "Species",
-    "Species<-",
     "SpeciesList",	
     "spread",
     "stable",

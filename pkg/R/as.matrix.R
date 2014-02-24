@@ -24,10 +24,10 @@
 #	if (missing(unique)) {
 #    	unique = FALSE	
 #    }
-#    res <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@")
+#    res <- file.path(species(x)$abbr, species(x)$layer, fsep = "@")
 #    if (!unique) {    	
 #    	if (length(Layers(x)) > 1) {
-#   			l <- Species(x)$layer
+#   			l <- species(x)$layer
 #			res <- unique(unlist(sapply(Layers(x), function (x) res[l == x])))
 #		}
 #		else {
@@ -148,7 +148,7 @@ setGeneric("as.array",
 setMethod("as.array",
     signature(x = "Vegsoup"),
     function (x, typeof, ...) {	
-	xx <- Species(x)
+	xx <- species(species(x)) #! get slot data
 	scale <- coverscale(x) # rename local object scale to ?
 	
    	if (missing(typeof)) typeof <- "numeric"    		
@@ -227,10 +227,10 @@ setMethod("indices",
     	
 			cs <- coverscale(x)
 			# was: al <- .abbr.layer(x)			
-			al <- file.path(Species(x)$abbr, Species(x)$layer, fsep = "@") 
+			al <- file.path(species(x)$abbr, species(x)$layer, fsep = "@") 
 			# was: ual <- .abbr.layer(x, TRUE)
 			ual <- colnames(x)			
-			pl <- Species(x)$plot
+			pl <- species(x)$plot
 			upl <- unique(pl)
 						
 			#	i,j vectors of the same length
@@ -240,12 +240,12 @@ setMethod("indices",
 			if (typeof == "numeric" & !is.continuous(x)) {
 				return(list(i = i, j = j, 				
 					x = as.numeric(as.character(
-						factor(Species(x)$cov, cs@codes, cs@lims))),
+						factor(species(x)$cov, cs@codes, cs@lims))),
 					dimnames = list(upl, ual)))
 			}
 			if (typeof == "numeric" & is.continuous(x)) {
 				return(list(i = i, j = j, 				
-					x = as.numeric(Species(x)$cov),
+					x = as.numeric(species(x)$cov),
 					dimnames = list(upl, ual)))				
 			}
 			if (typeof == "character") {
@@ -253,12 +253,12 @@ setMethod("indices",
 					#	message("coverscale has no codes")
 				}
 				return(list(i = i, j = j, 				
-					x = Species(x)$cov,	# is character by definition 
+					x = species(x)$cov,	# is character by definition 
 					dimnames = list(upl, ual)))
 			}
 			if (typeof == "logical") {
 				return(list(i = i, j = j, 				
-					x = rep(1, nrow(Species(x))), 
+					x = rep(1, nrow(species(species(x)))), #! use slot data 
 					dimnames = list(upl, ual)))
 			}		
 		}

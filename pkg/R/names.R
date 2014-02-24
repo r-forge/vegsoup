@@ -7,18 +7,18 @@ setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 setMethod("rownames",
     signature(x = "Vegsoup", do.NULL = "missing", prefix = "missing"),
     function (x) {
-		unique(Species(x)$plot)	
+		unique(species(x)$plot)
 	}
 )
 
-.replace.rownames <- function (x, value) {	
+".replace.rownames" <- function (x, value) {	
 	if (length(value) != nrow(x)) {
 		stop("length of values must match nrow(x)", call. = FALSE)
 	}
 	xy <- list(x = rownames(Sites(x)), y = value)
 	
 	#	species	
-	pl <- factor(Species(x)$plot, ordered = FALSE)
+	pl <- factor(species(x)$plot, ordered = FALSE)
 	sel <- match(levels(pl), xy$x)
 	xy$x <- xy$x[sel]
 	xy$y <- xy$y[sel]
@@ -59,8 +59,8 @@ setGeneric("colnames", function (x, do.NULL = TRUE, prefix = "col")
 setMethod("colnames",
     signature(x = "Vegsoup"),
     function (x) {
-		a <- Species(x)$abbr
-		l <- Species(x)$layer
+		a <- species(x)$abbr
+		l <- species(x)$layer
 		al <- file.path(a, l, fsep = "@") # faster than paste
 		res <- unique(unlist(sapply(Layers(x), function (x) al[l == x])))
 		if (!is.vector(res)) res <- as.vector(res) # to coerce if there is only one layer
@@ -141,25 +141,17 @@ setMethod("splitAbbr",
 	}
 )
 
-#if (!isGeneric("abbr")) {
-#	get or set taxon abbreviation
-setGeneric("abbr",
-	function (obj) {
-		standardGeneric("abbr")
-	}	
-)
-#}
-### which one below?
+#setMethod("abbr",
+#   signature(obj = "Vegsoup"),
+#    function (obj) {
+#    	splitAbbr(obj)$abbr
+#    }	
+#)
+
 setMethod("abbr",
     signature(obj = "Vegsoup"),
     function (obj) {
-    	splitAbbr(obj)$abbr
-    }	
-)
-setMethod("abbr",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-    	sort(unique(Species(obj)$abbr))
+    	sort(unique(species(obj)$abbr))
     }	
 )
 

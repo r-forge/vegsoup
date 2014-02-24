@@ -7,7 +7,6 @@
 
 \alias{species,SpeciesTaxonomy-method}
 
-\alias{species<-}
 \alias{species<-,SpeciesTaxonomy,Species-method}
 \alias{species<-,SpeciesTaxonomy,data.frame-method}
 
@@ -118,7 +117,7 @@ data(barmstein)
 x <- barmstein
 
 # extract from object fro demonstration
-s <- Species(x)  # returns a data.frame
+s <- species(species(x))  # returns a data.frame
 t <- Taxonomy(x) # returns a data.frame
 
 # using the new() inititialization method
@@ -159,7 +158,7 @@ obj1 <- SpeciesTaxonomy(s, t)
 
 data(windsfeld)
 x <- windsfeld
-s2 <- Species(x)  # returns a data.frame
+s2 <- species(x)  # returns a data.frame
 t2 <- Taxonomy(x) # returns a data.frame
 obj2 <- SpeciesTaxonomy(s2, t2)
 

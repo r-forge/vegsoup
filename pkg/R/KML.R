@@ -121,8 +121,8 @@
 		"</kml>")
 		
 	#	obj = sp
-	sl <- Species(obj)
-	sl$taxon <- Taxonomy(obj)$taxon[match(sl$abbr, Taxonomy(obj)$abbr)]
+	sl <- species(species(obj)) #! get slot data
+	sl$taxon <- taxon(obj)[match(sl$abbr, Taxonomy(obj)$abbr)]
 	#	resort to Layers(obj)
 	sl <- sl[order(sl$plot, match(sl$layer, Layers(obj))), ]
 				       	

@@ -89,7 +89,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	#	check data type of abundances
 	#	can become private function used in other places
-	#	useless as long obj@species only supports characters
+	#	useless as long class "Species" only supports characters
 	test <- type.convert(res$cov)
 	
 	if (class(test) == "factor" | class(test) == "character") {

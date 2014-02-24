@@ -35,35 +35,167 @@ Coverscale <- function (name, codes, lims) {
 #	vegan defines:
 #	coverscale(x, scale=c("Braun.Blanquet", "Domin", "Hult", "Hill",
 #	"fix","log"), maxabund)
+
 #if (!isGeneric("coverscale")) {
 setGeneric("coverscale",
 	function (x, scale = c("Braun.Blanquet", "Domin", "Hult", "Hill",
 	"fix","log"), maxabund)
 	standardGeneric("coverscale"))
 #}
+
 #if (!isGeneric("coverscale <-")) {
 setGeneric("coverscale<-",
 	function (x, value)
 		standardGeneric("coverscale<-")
 )
 #}
-#if (!isGeneric("coverscale")) {
+
+#if (!isGeneric("is.ordinal")) {
 setGeneric("is.ordinal", function (x)
 	standardGeneric("is.ordinal"))
 #}
-#if (!isGeneric("coverscale")) {
+
+#if (!isGeneric("is.continuous")) {
 setGeneric("is.continuous", function (x)
 	standardGeneric("is.continuous"))
 #}
+
 setMethod("is.ordinal",
     signature(x = "Coverscale"),
     function (x) {
   		!is.null(x@codes) & !is.null(x@codes)
     }
 )
+
 setMethod("is.continuous",
     signature(x = "Coverscale"),
     function (x) {
   		is.null(x@codes) & is.null(x@codes)
     }
+)
+
+#setMethod("show",
+#  signature(object = "Coverscale"),
+#    function (object) {
+#			print(paste("cover scale:", object@name))
+#			print(rbind(codes = object@codes, lims = object@lims), quote = FALSE)
+#    }
+#)
+#	removeMethod("show", "Coverscale")
+
+setMethod("is.continuous",
+    signature(x = "Vegsoup"),
+    function (x) {
+  		is.continuous(coverscale(x))   	
+    }
+)
+
+setMethod("is.ordinal",
+    signature(x = "Vegsoup"),
+    function (x) {
+  		is.ordinal(coverscale(x))   	
+    }
+)
+
+setMethod("coverscale",
+    signature(x = "Vegsoup"),
+    function (x) {
+  		x@coverscale   	
+    }
+)
+
+#	needs cover scale conversion 
+setReplaceMethod("coverscale",
+	signature(x = "Vegsoup", value = "Coverscale"),
+	function (x, value) {
+#		x <- coenoflex(100,100)
+#		value <- Coverscale("ordinal")			
+		transform <- is.continuous(x) & is.ordinal(value)
+		x@coverscale <- value			
+		if (transform) {
+			x <- as.numeric(species(x)$cov) # we store characters
+			if (max(x) > 100) {
+				stop("highest cover value is bigger than 100")
+			}
+			#	move lowest value into range
+			x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+			
+			x@species$cov <- as.character(
+				cut(x, 
+					breaks = c(coverscale(x)@lims, 100),
+					labels = coverscale(x)@codes,
+					include.lowest = TRUE))					
+			message("transformed cover values!")
+		}
+		test <- any(is.na(
+			factor(species(x)$cov,
+			levels = coverscale(x)@codes,
+			labels = coverscale(x)@lims)))
+		if (test) {
+			stop("coverscale does not match data", call. = FALSE)
+		}		
+		return(x)		
+	}
+)
+
+setReplaceMethod("coverscale",
+	signature(x = "Vegsoup", value = "character"),
+	function (x, value) {		
+		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
+       	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
+		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
+		transform <- is.continuous(coverscale(x)) & is.ordinal(value)
+		x@coverscale <- value			
+		
+		if (transform) {
+			tmp <- as.numeric(species(x)$cov) # as long as we store characters
+			if (max(tmp) > 100) {
+				stop("highest cover value is bigger than 100")
+			}
+
+			#	move lowest value into range
+			tmp[tmp < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+			
+			x@species$cov <- as.character(
+				cut(tmp,
+					breaks = c(coverscale(x)@lims, 100),
+					labels = coverscale(x)@codes,
+					include.lowest = TRUE))
+			message("transformed cover values!")
+		}
+		test <- any(is.na(factor(species(x)$cov,
+			levels = coverscale(x)@codes,
+			labels = coverscale(x)@lims)))
+		if (test) {
+			stop("coverscale does not match data", call. = FALSE)
+		}		
+		return(x)		
+	}
+)
+  
+#	revert abundance scale for Braun-Blanquet scale
+#if (!isGeneric("BraunBlanquetReduce")) {
+setGeneric("BraunBlanquetReduce",
+	function (x)
+		standardGeneric("BraunBlanquetReduce")
+)
+#}
+
+setMethod("BraunBlanquetReduce",
+    signature(x = "Vegsoup"),
+	function (x) {	
+		res <- species(species(x)) #! slot data
+		for (i in c("2m", "2a", "2b")) {
+			if (i == "2m")
+				res$cov[res$cov == i]  <- "1"
+			if (i == "2a")
+				res$cov[res$cov == i]  <- "2"
+			if (i == "2b")
+				res$cov[res$cov == i]  <- "2"
+		}
+		#! now will also work species(obj) <- species(res)
+		x@species <- species(res)
+		coverscale(x) <- Coverscale("braun.blanquet2")
+		return(invisible(x))
+	}
 )

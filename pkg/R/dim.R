@@ -19,7 +19,7 @@ setMethod("ncol",
     signature(x = "Vegsoup"),
     function (x) {
     	if (length(Layers(x)) > 1) {
-    		nrow(unique(Species(x)[, 2:3])) # c("abbr", "layer")
+    		nrow(unique(species(species(x))[, c("abbr", "layer")]))
     	}
     	else {
     		nrow(Taxonomy(x))	

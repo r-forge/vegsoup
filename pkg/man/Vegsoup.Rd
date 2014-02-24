@@ -12,8 +12,8 @@
   \code{Vegsoup*} objects from local R objects or from csv files stored on
   disk. A shorthand function is provided to collect data files from a folder.
 
-  \code{Vegsoup(...)} is the recommended user interface rather than direct
-  \code{\link{new("Vegsoup", ....)}} call.
+  \code{Vegsoup(...)} is the recommended user interface rather than the direct
+  \code{new("Vegsoup", ....)} call.
 }
 
 \usage{
@@ -177,7 +177,7 @@ plot(decorana(coenoflex(100, 100)))
 # simulate and promote to ordinal scale
 sim <- coenoflex(100, 100)
 coverscale(sim) <- "ordinal"
-table(Species(sim)$cov)
+table(species(sim)$cov)
 
 # order and coerce to a sparse matrix representation
 as(seriation(coenoflex(10,30)), "sparseMatrix")
