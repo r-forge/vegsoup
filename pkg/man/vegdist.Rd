@@ -9,7 +9,9 @@
 
 \alias{vegdist<-}
 \alias{vegdist<-,Vegsoup-method}
+\alias{vegdist<-,VegsoupPartition-method}
 \alias{vegdist<-,Vegsoup,character-method}
+\alias{vegdist<-,VegsoupPartition,character-method}
 
 \alias{distconnected}
 \alias{distconnected,Vegsoup-method}
@@ -69,6 +71,10 @@ Compute a distance matrix as specified by \code{vegdist(x)} by internal calls to
   calculation of the distance matrix. Use \code{vegdist(obj)} to query which
   method is active for an object. The \code{print}, \code{show} and
   \code{summary} methods will report this value for a \code{Vegsoup*} object.
+  
+  If \code{vegdist} is rested using the replacement method \code{vegdist<-} for
+  objects of classes \code{"VegsoupPartition"} and \code{"VegsoupPartitionFidelity"}
+  the respective objects are recomputed as to honor the changed distance method.
   %%  The argument \code{mode} controls if the distances are obtained for objects,
   %%  the plots (\emph{Q mode}) or variables, the species (\emph{R mode}).
 
@@ -107,6 +113,17 @@ d <- as.dist(x, "numeric")
 class(d)
 attributes(d)
 attr(d, "mode")
+
+# replace vegdist method for VegsoupPartition object
+x <- VegsoupPartition(barmstein, k = 2)
+vegdist(x)
+p1 <- Partitioning(x)
+
+# change vegdist
+vegdist(x) <- "bray"
+p2 <- Partitioning(x)
+
+table(p1, p2)
 
 # R-mode analysis
 # currently disfunct due to missing ... argument in stats:as.dist

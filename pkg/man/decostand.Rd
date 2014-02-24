@@ -6,8 +6,11 @@
 
 \alias{decostand<-}
 \alias{decostand<-,Vegsoup-method}
+\alias{decostand<-,VegsoupPartition-method}
 \alias{decostand<-,Vegsoup,character-method}
+\alias{decostand<-,VegsoupPartition,character-method}
 \alias{decostand<-,Vegsoup,NULL-method}
+\alias{decostand<-,VegsoupPartition,NULL-method}
 
 \title{ Standardization Methods for \code{Vegsoup*} objects.
 }
@@ -74,10 +77,23 @@ as.numeric(x)
 # double strandardization
 decostand(x) <- c("hellinger", "standardize")
 as.numeric(x)
-    
+
 # remove any standardization
 decostand(x) <- NULL
 
+# replace decostand method for VegsoupPartition object
+x <- barmstein
+decostand(x) <- "pa"
+
+x <- VegsoupPartition(x, k = 2)
+decostand(x) <- NULL
+
+x <- barmstein
+decostand(x) <- "max"
+
+x <- VegsoupPartition(x, k = 2)
+decostand(x)
+decostand(x) <- "wisconsin"
 }
 
 \keyword{methods}
