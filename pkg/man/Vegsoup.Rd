@@ -122,7 +122,9 @@ coenoflex(numplt = 20, numspc = 10, ...)
   The same is true for argument \code{'proj4string'}. The defaults for
   argument \code{'group'} is to create a dummy integer variable of ones.
 
-  Function \code{coenflex} creates a random community.
+  Function \code{coenflex} creates a random community with two gradients
+  and a number of additional default settings. \code{\link[coenoflex:coenoflex]{coenoflex}}
+  offers a lot of options.
 }
 
 \note{

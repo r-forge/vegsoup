@@ -5,6 +5,8 @@
 
 \alias{Taxonomy-class}
 
+\alias{nrow,Taxonomy-method}
+
 \alias{[,Taxonomy,ANY,ANY,missing-method}
 
 \alias{$,Taxonomy-method}
@@ -49,34 +51,43 @@ Data representation of taxonomic reference list.
   \describe{
     \item{ taxonomy }{
       \code{signature(obj = "Taxonomy")}:
-        Accessor function (slot \code{obj@data}).
+        accessor function (\emph{slot "data"}).
       
       \code{signature(obj = "SpeciesTaxonomy")}:
-        Accessor function for objects of class \code{SpeciesTaxonomy}.
+        accessor function for objects of class \code{SpeciesTaxonomy}.
       
       \code{signature(obj = "data.frame")}:
-        Promote \code{data.frame} to object of class \code{"Taxomomy"}.
+        promote \code{data.frame} to object of class \code{"Taxomomy"}.
 
       \code{signature(obj = "matrix")}:
-        Promote \code{matrix} to object of class \code{"Taxomomy"}.
+        promote \code{matrix} to object of class \code{"Taxomomy"}.
         Note, \code{obj} does not need to have \code{dimnames}.
+
       \code{signature(obj = "character")}:
-        Supply a file to be read by \code{read.csv} and promote that object to
+        supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Species"}. Remember to pass appropriate arguments to
         \code{\link{read.csv}} that meet the specifications of your file.
     }
+
+    \item{ nrow }{
+      \code{signature(x = "Taxonomy")}:
+        the number of rows is the number of taxa.
+    }
+
     \item{ [ }{
       \code{signature(x = "Taxonomy")}:
         Subset parts of an object. Note, indexing that will
         evaluate to an object with less than two columns will fail,
         due to the class inherent data model (see \sQuote{Slots}).
     }
+
     \item{ rbind }{
       \code{signature(x = "Taxonomy")}:
         \code{rbind} method to combine two or more objects. If there are any
         duplicates in the \code{'abbr'} key column only one instance is kept,
         the first one!
     }
+
   }
 }
 \author{ Roland Kaiser }

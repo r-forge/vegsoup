@@ -23,15 +23,10 @@ setMethod("initialize",
 	function(.Object, data) {
 		#	for safety and to get rid of factors
 		#	improve speed, efficency
-		data <- as.data.frame(
-			as.matrix(data), stringsAsFactors = FALSE)				
+		data <- as.data.frame(as.matrix(data), stringsAsFactors = FALSE)
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
-		
-		#	needs order, at least block of plots
-		#data$plot <- as.character(data$plot)
-				
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
 		input <- data[ ,c(1,2,3)]
@@ -41,8 +36,7 @@ setMethod("initialize",
 			tmp <- paste(paste(tmp[,1], tmp[,2]), collapse = "\n")
 
 			message("found duplicated species and dropped all duplicates",
-				"\nplease review your data for observations:\n",
-				tmp)
+				"\nplease review your data for observations:\n", tmp)
 			
 			data <- data[!duplicated(data[, c(1,2,3)]), ]
 		}
@@ -59,8 +53,7 @@ setMethod("initialize",
 			stop("missing cover for plots",
 				"\nplease review your data!", call. = FALSE)
 		}
-		#	ensure valid names	
-					
+		#	ensure valid names					
 		rownames(data) <- seq_len(nrow(data))
 		
 	.Object@data <- data	

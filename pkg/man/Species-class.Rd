@@ -5,6 +5,8 @@
 
 \alias{Species-class}
 
+\alias{nrow,Species-method}
+
 \alias{[,Species,ANY,ANY,missing-method}
 
 \alias{species}
@@ -93,6 +95,9 @@
 
       The following classes defined in the vegsoup package have a \code{species} method:
 
+      \code{signature(obj = "Species")}:
+        accessor function (\emph{slot "data"}).
+
       \code{signature(obj = "Vegsoup")}:
         accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
         an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
@@ -100,26 +105,38 @@
 
       \code{signature(obj = "VergsoupVerbatim")}:
         promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
+
     }
+
     \item{ species<- }{
       \code{signature(obj = "Vegsoup", value = "Species")}:
         assign (possibly subset) with object of class \code{"Species"}. 
     }
+
+    \item{ nrow }{
+      \code{signature(x = "Sites")}:
+        the number of rows. Each observation of a species in plot (stratum-replicate)
+        constitutes a row.
+    }
+
     \item{ [ }{
       \code{signature(x = "Species")}:
         subset parts of an object. Note, indexing that will
         evaluate to an object with less than four columns will fail,
         due to the class inherent data model (see \sQuote{Slots}).
     }
+
     \item{ $ }{
       \code{signature(x = "Species")}:
         retrieve column by name (see \sQuote{Slots}), or perform replacement.
     }
+
     \item{ rbind }{
       \code{signature(x = "Species")}:
         \code{rbind} method to combine two or more objects. See \code{\link{verbatim}}
         for an example.
     }
+
   }
 }
 

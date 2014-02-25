@@ -16,7 +16,7 @@
 \alias{ncell}
 \alias{ncell,Vegsoup-method}
 
-\title{ Number or Rows, Columns, and Cells of a Vegsoup* object }   
+\title{ Number or Rows, Columns, and Cells }   
 
 \description{
 Get the number of rows, columns, or cells of the species matrix contained in a Vegsoup* object.
@@ -30,6 +30,8 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 \S4method{dim}{Vegsoup}(x)
 
 \S4method{ncell}{Vegsoup}(x)
+
+\S4method{nrow}{Vegsoup}(x)
 
 ## not yet implemented, subsample to disred dimension
 ## ncol(x) <- value

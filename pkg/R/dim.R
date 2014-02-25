@@ -10,6 +10,28 @@ setMethod("nrow",
 	}
 )
 
+setMethod("nrow",
+    signature(x = "Species"),
+    function (x) {
+		nrow(species(x))
+	}
+)
+
+setMethod("nrow",
+    signature(x = "Sites"),
+    function (x) {
+		nrow(sites(x))
+	}
+)
+
+setMethod("nrow",
+    signature(x = "Taxonomy"),
+    function (x) {
+		nrow(taxonomy(x))
+	}
+)
+
+
 if (!isGeneric("ncol")) {
 setGeneric("ncol", function (x)
 	standardGeneric("ncol"))

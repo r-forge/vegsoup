@@ -7,6 +7,8 @@
 
 \alias{Sites-class}
 
+\alias{nrow,Sites-method}
+
 \alias{$,Sites-method}
 \alias{$<-,Sites-method}
 
@@ -61,26 +63,33 @@
       There exists \code{species} methods for a number of R base classes:
 
       \code{signature(obj = "data.frame")}:
-      Promote \code{data.frame} to object of class \code{"Sites"}
+        promote \code{data.frame} to object of class \code{"Sites"}
 
       \code{signature(obj = "matrix")}:
-      Promote \code{matrix} to object of class \code{"Sites"}
-      Note, \code{obj} does not need to have \code{dimnames}.
+        promote \code{matrix} to object of class \code{"Sites"}
+        Note, \code{obj} does not need to have \code{dimnames}.
 
       \code{signature(obj = "character")}:
-        Supply a file to be read by \code{read.csv} and promote that object to
+        supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Sites"}. Remember to pass appropriate arguments to
         \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
 
       Only the Sites class has a \code{sites} method so far.
 
       \code{signature(obj = "Sites")}:
-      Accessor function (slot \code{obj@data}).
+        accessor function (\emph{slot "data"}).
     }
+
+    \item{ nrow }{
+      \code{signature(x = "Sites")}:
+        the number of rows. Each plot and variable combination constitutes a row.
+    }
+
     \item{ rbind }{
       \code{signature(x = "Sites")}:
         \code{rbind} method to combine two or more objects.
     }
+
   }
 }
 

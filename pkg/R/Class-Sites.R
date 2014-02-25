@@ -23,8 +23,7 @@ setMethod("initialize",
 	"Sites",
 	function(.Object, data) {
 		#	for safety and to ensure validity
-		data <- as.data.frame(
-			as.matrix(data), stringsAsFactors = FALSE)		
+		data <- as.data.frame(as.matrix(data), stringsAsFactors = FALSE)
 		names(data)[1:3] <- c("plot", "variable", "value")
 		#	only one plot variable possible
 		data <- data[!duplicated(data[, 1:2]), ]
