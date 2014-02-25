@@ -2,7 +2,7 @@
 \alias{ windsfeld}
 \docType{data}
 
-\title{ Small Scale Survey of Alpine Vegetation }
+\title{ Alpine Vegetation }
 
 \description{
 A survey of wind exposed alpine vegetation developed on calcareous and siliceous bedrock.
@@ -31,11 +31,13 @@ Ko"ckinger H., Schro"ck C., Krisai, R. and Zechmeister H.G. (2012). Checklist of
 }
 
 \seealso{
-  \code{\link{testdata}}
+  \code{\link{barmstein}}
 }
 
 \examples{
 data(windsfeld)
+windsfeld
 }
-\keyword{datasets}
+
+\keyword{ datasets }
 

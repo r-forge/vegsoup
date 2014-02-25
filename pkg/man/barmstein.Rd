@@ -36,9 +36,11 @@ The three objects \code{"spc"} (species), \code{"sts"} (sites) and \code{"txn"} 
 
 \usage{
 data(barmstein)
-data(testdata)
 }
 
 \examples{
-data(testdata)
+data(barmstein)
+barmstein
 }
+
+\keyword{ datasets }

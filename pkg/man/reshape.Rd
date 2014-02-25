@@ -81,8 +81,6 @@
 }
 
 \examples{
-data(testdata)
-
 # create dummy data
 # only a single plot for demonstartion
 require(vegsoup)
