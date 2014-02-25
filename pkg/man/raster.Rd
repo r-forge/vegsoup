@@ -48,7 +48,10 @@ require(raster)
 # RasterLayer
 r1 <- raster(ncol = 10, nrow = 10, xmn = 0, xmx = 1, ymn = 0, ymx = 1)
 r1[] <- sample(1:ncell(r1))
-x <- coenoflex()
+
+# 
+data(sim100)
+x <- sim100
 
 
 plot(r1)

@@ -172,7 +172,8 @@ Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Opti
 require(vegsoup)
 
 # a dummy example using simulated data
-x <- coenoflex(100, 200)
+data(sim100)
+x <- sim100
 
 x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam"))
 
@@ -181,7 +182,7 @@ summary(x)
 # use parallel package
 \dontrun{
 if (require(parallel)) {
-   x <- OptimStride(coenoflex(100, 200), k = 10, fast = TRUE)
+   x <- OptimStride(sim100, k = 10, fast = TRUE)
 }
 }
 

@@ -100,39 +100,7 @@ Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–8
 }
 
 \examples{
-# shows the built in cover scales provided with package vegsoup
-Coverscale()
-
-# creates an object of class Coverscale by selecting a built in definition
-Coverscale("braun.blanquet")
-
-# define your own ordianl scale
-Coverscale("myscale", codes = LETTERS[1:5], lims = seq(20, 100, 20))
-
-# define your own continuous scale (e.g. counts)
-Coverscale("myscale.continuous", NULL, NULL)
-
-# using the coerce method for class Coverscale
-as(list("myscale", LETTERS[1:5], seq(20, 100, 20)), "Coverscale")
-
-# test vegsoup objects
-data(barmstein)
-barmstein
-is.ordinal(barmstein)
-coverscale(barmstein)
-
-# transform coverscale
-sim1 <- sim2 <- coenoflex(100,100)
-is.continuous(sim1)
-coverscale(sim1) <- "ordinal"
-is.ordinal(sim1)
-
-# coverscales are inhertited
-sim1.prt <- VegsoupPartition(sim1, k = 2)
-coverscale(sim1.prt)
-
-sim1.prt.fid <- Fidelity(sim1.prt)
-coverscale(sim1.prt.fid)
+sim100
 }
 
 \keyword{ methods }

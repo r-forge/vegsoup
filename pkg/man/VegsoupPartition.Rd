@@ -135,14 +135,15 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
 require(vegsoup)
 
 # simulate 100 plots and 200 species distributed along a two-dimensional gradient
-x <- coenoflex(100, 200)
-r <- VegsoupPartition(x, k = 2, method = "fanny", memb.exp = 1.5)
+data(sim100)
+
+r <- VegsoupPartition(sim100, k = 2, method = "fanny", memb.exp = 1.5)
 Partitioning(r)
 head(Sites(r))
 
 # plot membership values against gradient values
 stars(Sites(r)[grep("M", names(r))],
-      locations = Sites(r)[, 1:2] * 20, len = 1,
+      locations = Sites(r)[, grep("X", names(r))] * 20, len = 1,
       draw.segments = TRUE, labels = NULL)
 }
 

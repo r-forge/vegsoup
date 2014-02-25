@@ -82,8 +82,10 @@ x <- Fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
 
 \dontrun{
 # needs package parallel
-x <- coenoflex(100, 200)
-x <- Fidelity(VegsoupPartition(x, k = 10), method = "IndVal", fast = TRUE)
+if (require(parallel)) {
+data(sim100)
+x <- Fidelity(VegsoupPartition(sim100, k = 10), method = "IndVal", fast = TRUE)
+}
 }
 }
 
