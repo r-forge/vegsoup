@@ -1,71 +1,74 @@
-#	doubled indices should fail?!
 setMethod("[",
     signature(x = "Vegsoup",
     i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = TRUE) {   
-	    res <- x
-	    
-	    if (missing(i)) {
-	    	i <- rep(TRUE, nrow(res))
-	    }	
-	    if (missing(j)) {
-	    	j <- rep(TRUE, ncol(res))
-	    }	
-	    
-	    #i[is.na(i)] <- FALSE	
-	  	#j[is.na(j)] <- FALSE		    
-	    
-	    #	change to as.logical(x)[i, j, ...]
-		#	when slot species is dropped
-		tmp <- as.character(x)[i, j, drop = FALSE]
-		#	validity
-		if (all(unlist(tmp) == 0)) {
-			stop("subset does not contain any species!", call. = FALSE)
-		}
-		#	if single plot "[" method will return class character
-		if (class(tmp) == "character") {
-			tmp <- t(matrix(tmp, dimnames = list(colnames(tmp), rownames(x)[i])))
-		}	
-		#	remove empty plots
-		tmp <- tmp[rowSums(tmp != 0) > 0, , drop = FALSE]		
-		#	remove empty species
-		tmp <- tmp[, colSums(tmp != 0) > 0, drop = FALSE]
-		#	assign slot species
-        #	melt to long format
-		cov <- array(t(tmp))
-		plot <- rep(dimnames(tmp)[[1]], each = dim(tmp)[2])
-		abbr.layer <- strsplit(
-			rep(dimnames(tmp)[[2]], dim(tmp)[1]), "@", fixed = TRUE)
-		abbr <- unlist(lapply(abbr.layer, "[[", 1))
-		layer <- unlist(lapply(abbr.layer, "[[", 2))
+    function (x, i, j, ..., drop = TRUE) {
+    	#	check arguments
+    	if (missing(i))	    	
+	    	i <- !logical(nrow(x)) # ?faster than rep(TRUE, nrow(x))
+	    else
+	    	if (is.null(i)) i <- !logical(nrow(x))
+	    	else	
+	    	if (any(is.na(i)))
+	    		stop("NAs not allowed in indices", call. = FALSE)
+			if (is.logical(i))
+				stopifnot(length(i) == nrow(x))	    	
+	
+	    if (missing(j))	    	
+	    	j <- !logical(ncol(x)) 
+	    else
+	    	if (is.null(j)) j <- !logical(ncol(x))
+	    	else	
+	    	if (any(is.na(i)))
+	    		stop("NAs not allowed in indices", call. = FALSE)
+	    	if (is.logical(j))
+	    		stopifnot(length(j) == ncol(x))
 		
-		spc <- data.frame(plot, abbr, layer, cov,
-			stringsAsFactors = FALSE)
-		#	currently no species<- method for signature "Vegsoup", "Species"
-		#	must implement in Species-methods.R
-       	res@species <- species(spc[spc$cov != 0, ])
-       	#	new layer order
-       	layer <- as.character(unique(species(res)$layer)) # was : res@species$layer
-       	layer <- layer[match(Layers(x), layer)]
-       	layer <- layer[!is.na(layer)]
-		#	subset sites
-		res@sites <- res@sites[match(rownames(tmp),	rownames(Sites(res))), ]
+		#	rely on dimnames method
+		ij <- dimnames(x)
 		
-		if (length(res@group) != 0) {
-			res@group <- res@group[names(res@group) %in% rownames(tmp)]
-		}
-		#	method abbr relies on already subsetted taxonomy!
-		abbr <- unlist(lapply(strsplit(colnames(res), "@", fixed = TRUE), "[[", 1))
- 		#	finaly subset taxonomy, layers and spatial slots
-		res@taxonomy <- res@taxonomy[res@taxonomy$abbr %in% abbr, ]
-		res@layers <- layer 
+		if (is.numeric(i) | is.logical(i))
+			i <- ij[[1]][i]
+		else
+			if (is.character(i))
+				i <- ij[[1]][ match(i, ij[[1]]) ]
+			else
+				stop("index must be one of numeric, logical or character")		
+		
+		if (is.numeric(j) | is.logical(j))
+			j <- ij[[2]][j]	
+		else
+			if (is.character(j))
+				j <- ij[[2]][ match(j, ij[[2]]) ]
+			else
+				stop("index must be one of numeric, logical or character")
+		
+		ij <- list(i, j)
+								
+		IJ <- dimnames(species(x))				
+		ij <- (IJ[[1]] %in% ij[[1]] * IJ[[2]] %in% ij[[2]]) > 0
+		
+		X <- species(x)[ij, ]
+		if (nrow(X) < 1) stop("empty subset!", call. = FALSE)	    
+		
+		#	reorder?
+		#	X <- X[order(X$plot, X$layer, X$abbr), ]
+		
+		#	not to be replaced with species<- because
+		#	of a recursive call to "["
+		x@species <- X
+		#	subset remaining slots
+		i <- unique(X$plot)
+		
+		x@sites <- x@sites[match(i, rownames(Sites(x))), ]		
+		x@taxonomy <- x@taxonomy[x@taxonomy$abbr %in% abbr(X), ]
+		
+		x@layers <- Layers(x)[Layers(x) %in% unique(X$layer)]
+		if (length(x@group) != 0) x@group <- x@group[names(x@group) %in% i]
 
-		res@sp.points <- res@sp.points[match(rownames(tmp),
-			res@sp.points$plot), ]
-		res@sp.polygons <- res@sp.polygons[match(rownames(tmp),
-			res@sp.polygons$plot), ]
+		x@sp.points <- x@sp.points[match(i, x@sp.points$plot), ]
+		x@sp.polygons <- x@sp.polygons[match(i, x@sp.polygons$plot), ]
 
-	    return(res)
+	    return(x)
     }
 )
 

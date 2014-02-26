@@ -5,11 +5,12 @@
 
 \alias{Species-class}
 
+\alias{species}
+
 \alias{nrow,Species-method}
+\alias{dimnames,Species-method}
 
 \alias{[,Species,ANY,ANY,missing-method}
-
-\alias{species}
 
 \alias{$,Species-method}
 
@@ -114,9 +115,14 @@
     }
 
     \item{ nrow }{
-      \code{signature(x = "Sites")}:
+      \code{signature(x = "Species")}:
         the number of rows. Each observation of a species in plot (stratum-replicate)
         constitutes a row.
+    }
+    \item{ dimanmes }{
+      \code{signature(x = "Species")}:
+        non unique dimnames. The dimnames that are constructed by pasting plot and layer collapsed
+        with \code{@}. Not to be called by the user.
     }
 
     \item{ [ }{

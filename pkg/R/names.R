@@ -75,6 +75,17 @@ setMethod("dimnames",
 	}
 )
 
+setMethod("dimnames",
+    signature(x = "Species"),
+    function (x) {
+    	p <- species(x)$plot
+    	a <- species(x)$abbr
+		l <- species(x)$layer	
+		al <- file.path(a, l, fsep = "@") # faster than paste
+		return(list(p, al))
+	}
+)
+
 #	for sites data frame
 setMethod("names",
     signature(x = "Vegsoup"),

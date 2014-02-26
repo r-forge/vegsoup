@@ -31,7 +31,7 @@
     Elements to extract or replace.
   }
   \item{ drop }{
-    Not used. The method will allways return a valid \code{Vegsoup*} object!
+    Not used. The method will always return a valid \code{Vegsoup*} object!
   }
   \item{ value }{
     An \code{integer} defining a partiton to be subseted.
@@ -42,6 +42,8 @@
 \details{
   If only one plot is requested for indexing (e.g. \code{x[1,]}) the \code{summary} and
   \code{show} methods additionally print a species list.
+  
+  Any doubled numerical indices are silently ignored.
 }
 
 \note{
