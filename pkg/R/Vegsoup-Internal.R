@@ -20,9 +20,8 @@
 }
 
 #	helper function for VegsoupPartition
-
-.VegsoupPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) 
-{
+#	credits go to Dave Roberts
+.VegsoupPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) {
     if (class(dist) != "dist") {
         stop("bestopt is only defined for objects of class dist")
     }
@@ -82,13 +81,7 @@
 }
 
 #	try to find coordinates, otherwise generate random points
-
-#	y <- Y@data
-#	foo <- reshape(y[, 1:3],
-#		direction = "wide",
-#		timevar = "variable",
-#		idvar = "plot")
-	
+#	working and reliable code, 	
 .find.coordinates <- function (y, proj4string, ...) {
 	#	Imports:
 	#	rewuire(sp)
@@ -222,3 +215,83 @@
 	}
 	return(x)
 }
+
+#	a little bit of old materials
+
+#N <- nrow(obj)						# number of plots
+#n.i <- colSums(getBin(obj))			# species frequencies
+#N_pi <- table(Partitioning(obj))	# number of plots in partition
+#n_pi <- Contingency(obj)			# number of occurences in partition
+
+#	notation follows Bruelheide (1995, 2000)
+#	cited in Chytry et al 2002:80
+
+#	N: number of plots in the data set
+#	N_p: number of plots in partition
+#	n: number of occurences in the data set
+#	n_p: number of occurences in parttion 
+
+#ObservedFreqencyTable <- function (N, N_p, n, n_p) { # f(o)_i
+#	res <- matrix(c(
+#		n_p,			# n_pi[i,j] for the the i species
+#		N_p - n_p,
+#		n - n_p,
+#		N - N_p - n + n_p), 2, 2)	
+#	res[is.nan(res)] <- 0			# f(o)_i
+#   return(res)	
+#}
+
+#ExpectedFreqencyTable <- function (N, N_p, n, n_p) { # f(e)_i
+#	res <- matrix(c(
+#		n * N_p / N,
+#		(N - n) * N_p / N,
+#		n * (N - N_p) / N,
+#		(N -n) * (N - N_p) / N), 2, 2)	
+#	res[is.nan(res)] <- 0
+#   return(res)
+#}
+
+#for (i in 1:ncol(obj)) { # loop over species
+#	n <- n.i[i]						# n	
+#   for (j in 1:length(N_pi)) {		# loop over partitions
+#		N_p <- N_pi[j]				# N_p
+#		n_p <- n_pi[i,j]    	
+#    foi <- ObservedFreqencyTable(N, N_p, n, n_p)
+#    fei <- ExpectedFreqencyTable(N, N_p, n, n_p)
+#    res1 <- 2 * sum(foi * log(foi / fei), na.rm = T)
+#    res2 <- g.statistic(fei, correction = "none")
+#    }
+#}	
+
+
+#".sidak" <- function(vecP) {
+#
+# This function corrects a vector of probabilities for multiple testing
+# using the Bonferroni (1935) and Sidak (1967) corrections.
+#
+# References: Bonferroni (1935), Sidak (1967), Wright (1992).
+#
+# Bonferroni, C. E. 1935. Il calcolo delle assicurazioni su gruppi di teste. 
+# Pp. 13-60 in: Studi in onore del Professore Salvatore Ortu Carboni. Roma.
+#
+# Sidak, Z. 1967. Rectangular confidence regions for the means of multivariate 
+# normal distributions. Journal of the American Statistical Association 62:626-633.
+#
+# Wright, S. P. 1992. Adjusted P-values for simultaneous inference. 
+# Biometrics 48: 1005-1013. 
+#
+#                  Pierre Legendre, May 2007
+#	k = length(vecP)
+#	
+#	vecPB = 0
+#	vecPS = 0
+#	
+#	for(i in 1:k) {
+#	   bonf = vecP[i]*k
+#	   if(bonf > 1) bonf=1
+#	   vecPB = c(vecPB, bonf)
+#	   vecPS = c(vecPS, (1-(1-vecP[i])^k))
+#	   }
+#	#
+#	return(list(OriginalP=vecP, BonfP=vecPB[-1], SidakP=vecPS[-1]))
+#}

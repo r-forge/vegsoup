@@ -30,7 +30,7 @@ setMethod("show",
 		"\nvegdist          : ",
 			x@dist,	   				
 			ifelse(length(x@taxonomy) > 0,
-		"\nreference list   : valid ",
+		"\ntaxonomy         : valid ",
 	       "\nreference list   : non matching taxa!"),
 		"\nsites            : ",
 			dim(x)[1], " (sample plots/relevees)", sep = "")

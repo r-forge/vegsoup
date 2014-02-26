@@ -45,12 +45,17 @@ setReplaceMethod("decostand",
             "wisconsin")            
         value <- match.arg(value, METHODS, several.ok = TRUE)
  		
- 		if (value != decostand(x)) {	
-			x@decostand <- new("decostand", method = value)		
-			#	recompute
-			x <- VegsoupPartition(x, k = getK(x), method = x@method)
-			message("recomputed partitoning")
-		}       		
+ 		if (is.null(decostand(i.prt))) {
+ 			x@decostand <- new("decostand", method = value)	
+ 		}
+ 		else {	
+	 		if (value != decostand(x)) {	
+				x@decostand <- new("decostand", method = value)		
+				#	recompute
+				x <- VegsoupPartition(x, k = getK(x), method = x@method)
+				message("recomputed partitoning")
+			}
+		}	   		
 		return(x)		
 	}
 )
