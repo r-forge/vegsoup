@@ -52,7 +52,7 @@
 }
 
 
-#if (!isGeneric("Optsil"))) {
+#if (!isGeneric("stable"))) {
 setGeneric("stable",
 	function (x, nitr = 200, nitr.lambda = 10, ...)
 		standardGeneric("stable")

@@ -45,7 +45,7 @@ setReplaceMethod("decostand",
             "wisconsin")            
         value <- match.arg(value, METHODS, several.ok = TRUE)
  		
- 		if (is.null(decostand(i.prt))) {
+ 		if (is.null(decostand(x))) {
  			x@decostand <- new("decostand", method = value)	
  		}
  		else {	

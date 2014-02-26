@@ -1,19 +1,20 @@
 #useDynLib(vegsoup)
 
 import(methods)
+
 importFrom("graphics", plot, hist)
 importFrom("stats", as.dist, quantile)
 importFrom("utils", head, tail)
 
 import(coenoflex)
 
-importFrom("optpart", optpart, optsil, partana, tabdev, disdiam, murdoch, stride)
+importFrom("optpart", optsil,  optindval, disdiam, tabdev, partana)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)
 
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
 
-importFrom("spatstat", nndist)
+importFrom("spatstat", nndist, owin, runifpoint)
 
 importFrom("vegclust", vegclustdist, defuzzify)
 
@@ -24,6 +25,8 @@ importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
                       proj4string, "proj4string<-", spTransform)
+
+import(rgdal)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
@@ -114,7 +117,7 @@ exportMethods(
     "Indpower",
     "Indspc",
     "Indval",
-    "Isamic",
+    "isamic",
     "is.continuous",
     "is.ordinal",
     "Latex",
@@ -133,8 +136,8 @@ exportMethods(
     "nrow",
     "optimclass1",
     "optimclass2",
-    "Optindval",
-    "Optsil",
+    "optindval",
+    "optsil",
     "outlier",
     "partana",
     "Partition",

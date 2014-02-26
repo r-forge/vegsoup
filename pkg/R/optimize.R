@@ -1,18 +1,21 @@
 #	optimise partitioning using Dave Roberts optsil procedure
-#if (!isGeneric("Optsil"))) {
-setGeneric("Optsil",
-	function (obj, maxitr = 100, verbose = FALSE, ...)
-		standardGeneric("Optsil")
+#	optpart defines: function (x, dist, maxitr, ...)
+#if (!isGeneric("optsil"))) {
+setGeneric("optsil",
+	function (x, maxitr = 100, verbose = FALSE, ...)
+		standardGeneric("optsil")
 )
 #}
-setMethod("Optsil",
-    signature(obj = "VegsoupPartition"),
-    function (obj, maxitr = 100, verbose = FALSE, ...) {
-		#	Imports:
-		require(optpart)
-		if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
+
+setMethod("optsil",
+    signature(x = "VegsoupPartition"),
+    function (x, maxitr = 100, verbose = FALSE, ...) {
+		#	Imports: optpart
+		#	require(optpart)
+		
+		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
     	
-    	nam <- names(obj@part) # save names    	
+    	nam <- names(x@part) # save names    	
     	cl <- match.call()
     	    	
     	if (any(names(cl) == "mode")) {
@@ -23,40 +26,41 @@ setMethod("Optsil",
     		
 		cpu.time <- system.time({
 			tmp <- optpart::optsil(
-					x = Partitioning(obj), dist = as.dist(obj, ...),
+					x = Partitioning(x), dist = as.dist(x), #, ...
 					maxitr = maxitr)
-			obj@part <- as.integer(tmp$clustering)
+			x@part <- as.integer(tmp$clustering)
 			numitr <- tmp$numitr			
 		})
 
 		if (verbose) {
-			cat("\n time to optimise species matrix of", ncell(obj), "cells",
-				"and", getK(obj), "partitions:",
+			cat("\n time to optimise species matrix of", ncell(x), "cells",
+				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
 			cat("\n number of iterations performed:", numitr)	
 		}	
 	
-		names(obj@part) <- nam
-		return(obj)
+		names(x@part) <- nam
+		return(x)
 	}
 )
 
 #	optimise partitioning using Dave Roberts optindval procedure
-#if (!isGeneric("Optindval"))) {
-setGeneric("Optindval",
-	function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
-		standardGeneric("Optindval")
+#	optpart defines: function (veg,clustering,maxitr=100,minsiz=5, ...) 
+#if (!isGeneric("optindval"))) {
+setGeneric("optindval",
+	function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
+		standardGeneric("optindval")
 )
 #}
-setMethod("Optindval",
-    signature(obj = "VegsoupPartition"),
-    function (obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
-		#	Imports:
+setMethod("optindval",
+    signature(x = "VegsoupPartition"),
+    function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
+		#	Imports: optpart
 		#	require(optpart)
 		
-    	if (getK(obj) == 1) stop("meaningless with k = ", getK(obj))
+    	if (getK(x) == 1) stop("meaningless with k = ", getK(x))
 
-    	nam <- names(obj@part) # save names		
+    	nam <- names(x@part) # save names		
 		cl <- match.call()
 		
     	if (any(names(cl) == "mode")) {
@@ -67,19 +71,19 @@ setMethod("Optindval",
 
 		cpu.time <- system.time({
 			tmp <- optpart::optindval(
-					as.matrix(obj, ...), Partitioning(obj),
+					as.matrix(x, ...), Partitioning(x),
 					maxitr = maxitr,
 					minsiz = minsiz)
-			obj@part <- as.integer(tmp$clustering)		
+			x@part <- as.integer(tmp$clustering)		
 			numitr <- tmp$numitr		
 		})
 		if (verbose) {
-			cat("\n time to optimise species matrix of", ncell(obj), "cells",
-				"and", getK(obj), "partitions:",
+			cat("\n time to optimise species matrix of", ncell(x), "cells",
+				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
 			cat("\n number of iterations performed:", numitr)	
 		}					
-		names(obj@part) <- nam
-		return(obj)
+		names(x@part) <- nam
+		return(x)
     }
 )

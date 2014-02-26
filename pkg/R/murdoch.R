@@ -7,7 +7,7 @@ setGeneric("murdoch",
 setMethod("murdoch",
     signature(x = "VegsoupPartition"),
     function (x, minplt, type, ...) {
-    	#	Imports:
+    	#	Imports: optpart
     	#	require(optpart)
     	if (getK(x) == 1)
 			stop("meaningless with k = ", getK(x))

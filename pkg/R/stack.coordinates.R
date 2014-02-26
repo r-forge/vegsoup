@@ -1,6 +1,6 @@
 #	read OGR data source
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
-	#	Depends:
+	#	Depends: rgdal
 	#	require(rgdal) will also load (sp)
 	
 	pt <- ogrInfo(dsn, layer)
@@ -34,7 +34,7 @@ stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, 
 	
 	pt <- readOGR(dsn, layer, ...)
 	
-	pt <- spTransform(pt, CRS("+init=epsg:4326")) # rgdal::
+	pt <- spTransform(pt, CRS("+init=epsg:4326"))
 	
 	#	can be simplified!
 	if (!withz & length(schema) == 1) {

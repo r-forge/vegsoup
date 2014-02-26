@@ -33,12 +33,12 @@ prt[1,]
 prt[,1:10]
 
 Partition(prt, 1)
-Optindval(prt)
-Isamic(prt)
-typical(prt)
 
-# broken dispatch for optpart functions?
+#	wait until optpart registers S3methods
+#isamic(prt)
+#typical(prt)
 #optsil(prt)
+#optindval(prt)
 #partana(prt)
 #silhouette(prt)
 #disdiam(prt)
@@ -51,21 +51,20 @@ FisherTest(prt)
 Phi(prt)
 
 #	test to compare nummerical stability of implementation
-if (FALSE) {
-	data(sim100)
-	i.prt <- VegsoupPartition(sim100, k = 2)
-	require(indicspecies)
-	is <- strassoc(as.logical(i.prt),
-		Partitioning(i.prt),
-		func = "IndVal.g")
-	head(is)
+
+#	data(sim100)
+#	i.prt <- VegsoupPartition(sim100, k = 2)
+#	require(indicspecies)
+#	is <- strassoc(as.logical(i.prt),
+#		Partitioning(i.prt),
+#		func = "IndVal.g")
+#	head(is)
 	
-	require(labdsv)
-	ld <- indval(as.logical(i.prt),
-		Partitioning(i.prt))
-	head(sqrt(ld$indval))
+#	require(labdsv)
+#	ld <- indval(as.logical(i.prt),
+#		Partitioning(i.prt))
+#	head(sqrt(ld$indval))
 	
-	decostand(i.prt) <- "pa"
-	vb <- Fidelity(i.prt, method = "IndVal.g")	
-	head(sqrt(getStat(vb)))
-}
+#	decostand(i.prt) <- "pa"
+#	vb <- Fidelity(i.prt, method = "IndVal.g")	
+#	head(sqrt(getStat(vb)))

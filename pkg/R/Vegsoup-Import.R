@@ -1,6 +1,3 @@
-#	reverse geocoding
-#	readLines(url("http://maps.google.com/maps/geo?q=1600+Straßham+Wilhering+CA&output=csv&key=abcdefg"), n=1, warn=FALSE)
-
 .make.names <- function (x)  {
     x <- make.names(x, unique = FALSE)
     x <- lapply(strsplit(x, "\\."),

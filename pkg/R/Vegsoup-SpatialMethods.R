@@ -65,13 +65,13 @@ setReplaceMethod("proj4string",
 setMethod("spTransform",
 	signature(x = "Vegsoup", "CRS"),
 	function (x, CRSobj, ...) {
-		#	Depends:
-		#	require(rgdal)
+	#	Depends: rgdal
+	#	require(rgdal) will also load (sp)
+
 		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
 		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...)
 		x	
-	}
-	
+	}	
 )
 #	get spatial points
 setGeneric("SpatialPointsVegsoup",

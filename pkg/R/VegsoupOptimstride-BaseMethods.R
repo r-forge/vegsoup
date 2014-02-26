@@ -98,7 +98,7 @@ setMethod("which.max",
 
 .peaks <- function (x) {	
 	.turnpoints <- function (x) {
-		# insirped from function turnpoints by Frédéric Ibanez in library pastecs
+		# insirped from function turnpoints by Fr\'{e}d\'{e}ric Ibanez in library pastecs
 	
 	    n <- length(x)
 	    #	differences

@@ -36,22 +36,29 @@ This wrapper function provides the standardization methods implemented in functi
 }
 
 \details{
-Standardization is often necessary before the species matrix is subject to analysis by a multivariate method. This can easily be achieved by setting the \code{'decostand'} slot of the object. The standardization method will be applied when a method for that object requests a species matrix. It is possible to supply more than one method and these are sequentially to the data (order matters). In fact, method \code{'wisconsion'} invokes a double standardization (\code{'max'} followed by \code{'total'}).
-
-Currently only the \code{'method'} argument of \code{vegan::decostand} is implemented. Whereas argument \code{MARGIN} is not.
+  Standardization is often necessary before the species matrix is subject to analysis by a multivariate
+  method. This can easily be achieved by setting \emph{slot decostand} using the method of the same name.
+  The standardization method will be applied when any method for that object requests a species matrix
+  (see \code{\link{as.matrix}}). It is possible to supply more than one method and these are sequentially
+  to the data (order matters). In fact, method \code{"wisconsion"} invokes a double standardization
+  (\code{"max"} followed by \code{"total"}) as it is the case in \pkg{vegan}. Currently only the
+  \code{"method"} argument of \code{vegan::decostand} is implemented. Whereas argument
+  \code{MARGIN} is not.
 }
 
 \value{
-\code{decostand(obj)} returns a character vector depending on the number of methods.
+\code{decostand(x)} returns a character vector depending on the number of methods.
 
-\code{decostand(obj) <- value} sets the standardization method(s).
+\code{decostand(x) <- value} sets the standardization method(s).
 }
 
 \author{ Roland Kaiser }
 
 \note{
-Manipulation of the sites data has to be performed by modifying elements of the \code{'sites'} slot, which is represented as \code{data.frame}.
-Use the extract and replace operators \code{\link[=Extract]{"$"}} and \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup]{Extract}} for details.
+  Manipulation of the sites data has to be performed by modifying elements of \emph{slot sites}, which is
+  represented as \code{data.frame}. Use the extract and replace operators \code{\link[=Extract]{"$"}} and
+  \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup]{Extract}}
+  for details.
 }
 
 \seealso{
@@ -71,12 +78,12 @@ decostand(x)
 
 decostand(x) <- "total"
 
-# retreive a strandardized species matrix
-as.numeric(x)
+# retrieve a strandardized species matrix
+range(as.numeric(x))
 
-# double strandardization
+# double standardization
 decostand(x) <- c("hellinger", "standardize")
-as.numeric(x)
+range(as.numeric(x))
 
 # remove any standardization
 decostand(x) <- NULL

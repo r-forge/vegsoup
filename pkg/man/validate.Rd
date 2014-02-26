@@ -87,8 +87,8 @@ As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a meth
 }
 
 \seealso{
-\code{\link{Optsil}},
-\code{\link{Optindval}}
+\code{\link{optsil}},
+\code{\link{optindval}}
 }
 \note{
 To prevent 
@@ -100,7 +100,7 @@ data(barmstein)
 x <- VegsoupPartition(barmstein, k = 2)
 
 \dontrun{
-# broken dispatch
+## wait until optpart registers S3methods
 silhouette(x)
 disdiam(x)
 tabdev(x)

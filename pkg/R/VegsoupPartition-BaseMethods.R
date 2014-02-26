@@ -126,19 +126,3 @@ return(res)
 #		return(res)
 #	}
 #)
-
-#	Indicator value minimizing intermediate occurrences
-setGeneric("Isamic",
-	function (obj)
-		standardGeneric("Isamic")
-)
-setMethod("Isamic",
-	signature(obj = "VegsoupPartition"),
-	function (obj) { 	
-	   	tmp <- constancy(obj) / 100
-    	res <- apply(tmp, 1, function (x) {
-    			2 * sum(abs(as.numeric(x) - 0.5)) / ncol(tmp)
-    		})
-    	return(res)
-    }
-)

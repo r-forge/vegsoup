@@ -1,23 +1,23 @@
-\name{Isamic}
+\name{isamic}
 \docType{methods}
 
-\alias{Isamic}
-\alias{Isamic-methods}
-\alias{Isamic,VegsoupPartition-method}
+\alias{isamic}
+\alias{isamic-methods}
+\alias{isamic,VegsoupPartition-method}
 
 \title{ Indicator Species Analysis to Minimize Intermediate Constancy }
 
 \description{
   This is a wrapper for function
-  \code{\link[labdsv:isamic]{isamic}} in package \pkg{optpart}.
+  \code{\link[labdsv:isamic]{isamic}} in package \pkg{labdsv}.
 }
 
 \usage{
-  \S4method{Isamic}{VegsoupPartition}(obj)
+  \S4method{isamic}{VegsoupPartition}(x)
 }
 
 \arguments{
-  \item{obj}{
+  \item{x}{
     A \code{VegsoupPartition} object.
   }
 }
@@ -25,8 +25,8 @@
 a vector of indictor values.
 }
 \author{
-  Implemented for vegsoup from function \code{isamic} by \emph{David W.
-Roberts} in package \pkg{optpart}.
+  Implemented for vegsoup from function \code{isamic} by \emph{David W. Roberts}
+  in package \pkg{labdsv}.
 }
 \seealso{
 \code{\linkS4class{VegsoupPartition}},
@@ -37,7 +37,7 @@ require(vegsoup)
 
 data(barmstein)
 
-Isamic(VegsoupPartition(barmstein, k = 2))
+isamic(VegsoupPartition(barmstein, k = 2))
 }
 \keyword{ methods }
 

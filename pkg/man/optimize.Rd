@@ -1,13 +1,13 @@
 \name{optimize}
 \docType{methods}
 
-\alias{Optsil}
-\alias{Optsil-methods}
-\alias{Optsil,VegsoupPartition-method}
+\alias{optsil}
+\alias{optsil-methods}
+\alias{optsil,VegsoupPartition-method}
 
-\alias{Optindval}
-\alias{Optindval-methods}
-\alias{Optindval,VegsoupPartition-method}
+\alias{optindval}
+\alias{optindval-methods}
+\alias{optindval,VegsoupPartition-method}
 
 \title{ Optimize Partitioning }
 
@@ -16,34 +16,35 @@ Modify the partitioning of an object as to optimize silhouette widths (distance 
 }
 
 \usage{
-\S4method{Optsil}{VegsoupPartition}(obj, maxitr = 100, verbose = FALSE, ...)
-\S4method{Optindval}{VegsoupPartition}(obj, maxitr = 100, minsiz = 5, verbose = FALSE, ...) 
+\S4method{optsil}{VegsoupPartition}(x, maxitr = 100, verbose = FALSE, ...)
+
+\S4method{optindval}{VegsoupPartition}(x, maxitr = 100, minsiz = 5, verbose = FALSE, ...) 
 }
 
 \arguments{
-  \item{ obj }{
-    A \code{'VegsoupPartition'} object.
+  \item{ x }{
+    \code{VegsoupPartition} object.
   }
   \item{ maxitr }{
-    The maximum number of iterations to perform.
+    integer. The maximum number of iterations to perform.
   }
   \item{ verbose }{
-    Print CPU time used.
+    logical. Print elapsed CPU time.
   } 
   \item{ minsiz }{
-    The minimum size of the partition to consider reassigning a sample out of.
+    integer. The minimum size of the partition to consider reassigning a sample out of.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{as.dist}} (\code{Optsil}) or
-    \code{link{as.matrix}} (\code{Optindval}).
+    arguments passed to \code{\link{as.dist}} (\code{optsil}) or
+    \code{link{as.matrix}} (\code{optindval}).
   }
 }
 
 \details{
-\code{Optsil} is a simple wrapper for function \code{\link[optpart:optsil]{optsil}} in package \pkg{optpart} to polish an existing clustering.
+\code{optsil} is a simple wrapper for function \code{\link[optpart:optsil]{optsil}} in package \pkg{optpart} to polish an existing clustering.
 %% Argument \code{maxitr} can be set to a lower value to speed up calculations, but should be set to a higher value.
 
-\code{Optindval} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximises the Dufrene and Legendre's indicator value (Indval).
+\code{optindval} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximizes the Dufrene and Legendre's indicator value (Indval).
 }
 
 \value{
@@ -60,7 +61,7 @@ Rousseeuw, P. (1987). Silhouettes: A graphical aid to the interpretation and val
 }
 
 \note{
-Both methods can be very slow when applied to big data sets! \code{Optsil} is usually faster.
+Both methods can be very slow when applied to big data sets! \code{optsil} is usually faster.
 }
 
 \examples{
@@ -69,10 +70,12 @@ data(windsfeld)
 
 x <- VegsoupPartition(windsfeld, k = 5)
 
-xs <- Optsil(x, verbose = TRUE)
-xi <- Optindval(x, verbose = TRUE)
-
+\dontrun{
+## wait until optpart registers S3methods
+xs <- optsil(x, verbose = TRUE)
+xi <- optindval(x, verbose = TRUE)
 Confus(xs, xi)
+}
 }
 \seealso{
 \code{\link[labdsv:indval]{indval}},

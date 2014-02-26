@@ -7,7 +7,7 @@ Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 Author: Roland Kaiser
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, rgdal (>= 0.8-11)
-Imports: methods, cluster, coenoflex, optpart, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat
+Imports: methods, optpart, cluster, coenoflex, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat 
 Suggests: labdsv, pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, parallel, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
@@ -72,6 +72,7 @@ Collate: AAA.R
          bind.R
          indpower.R
          indspc.R
+         isamic.R
          table.R
          fivenum.R
          quantile.R

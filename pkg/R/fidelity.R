@@ -1,4 +1,4 @@
-#	adapted and extended from strassoc.R by Miquel De Cáceres in package(indicspecies)
+#	adapted and extended from strassoc.R by Miquel De C\'{a}ceres in package(indicspecies)
 
 #	Fidelity measures
 #	gmv group membership vector (clusters)

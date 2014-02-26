@@ -170,22 +170,24 @@ x <- barmstein
 summary(x)
 
 # plot ordinations of simulated data
-plotPCO(coenoflex(100, 200), thresh = 0.2)
-plot(metaMDS(as.logical(coenoflex(100, 200))))
+data(sim100)
+plotPCO(sim100, thresh = 0.2)
+plot(metaMDS(as.logical(sim100)))
 
 # we can omit 'as-logical'
-plot(decorana(coenoflex(100, 200))) 
+plot(decorana(sim100))
 
-# simulate and promote to ordinal scale
-sim <- coenoflex(100, 200)
-coverscale(sim) <- "ordinal"
-table(species(sim)$cov)
+# promote to ordinal scale
+coverscale(sim100) <- "ordinal"
+table(species(sim100)$cov)
 
 # order and coerce to a sparse matrix representation
-as(seriation(coenoflex(10,30)), "sparseMatrix")
+vegdist(barmstein) <- "bray"
+decostand(barmstein) <- "wisconsin"
+as(seriation(barmstein, method = "packed"), "sparseMatrix")
 
-#	R-mode analysis using mode argument, one of 'Q' or 'R'
-as(as.logical(seriation(coenoflex(10,30)), mode = "R"), "sparseMatrix")
+# R-mode analysis using mode argument, one of 'Q' or 'R'
+as(as.logical(barmstein, mode = "R"), "sparseMatrix")
 }
 
 \keyword{ classes }

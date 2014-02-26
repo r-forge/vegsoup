@@ -243,7 +243,8 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 	} 
 	if (out.G && polish) {
 		if (verbose) cat("\n... try to resolve using function optsil")
-		#	Imports: require(optpart)
+		#	Imports: optpart
+		#	require(optpart)
 		G.opt <- optpart::optsil(G, Xd, k^2)$clustering
 		names(G.opt) <- rownames(obj)
 		if (any(as.vector(table(G.opt)) == 1)) {

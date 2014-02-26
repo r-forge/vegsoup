@@ -33,7 +33,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
     \code{\link{names}}.
   }
   \item{ polish }{
-    apply optimization of silhouette widths \code{\link{Optsil}} to merge singletons
+    apply optimization of silhouette widths \code{\link{optsil}} to merge singletons
     into an existing multi element partition. Note, this will likely decrease the initial number of
     \code{k}!
   }
@@ -104,7 +104,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
   is accessed, otherwise the lowest hierarchy level is extracted.
 
   If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the
-  \code{\link{Optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to
+  \code{\link{optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to
   \code{k^2}.
 }
 

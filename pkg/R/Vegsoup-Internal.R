@@ -25,13 +25,16 @@
     if (class(dist) != "dist") {
         stop("bestopt is only defined for objects of class dist")
     }
+    #	Imports: optpart
+    #	require(optpart)
+    
     best <- 0
     ratios <- rep(0, numitr)
     for (i in 1:numitr) {
     	if (verbose) cat(".")
-		tmp <- optpart(k, dist)        
+		tmp <- optpart::optpart(k, dist)        
         while (max(tmp$clustering) != k) {
-        	tmp <- optpart(k, dist)
+        	tmp <- optpart::optpart(k, dist)
         	}
         ratios[i] <- max(tmp$ratio)
         if (ratios[i] > best) {
@@ -51,15 +54,8 @@
 #	random points and polygons in unit square
 #	
 .rpoisppSites <- function (x) {
-	#	Suggests:
-	require(spatstat)
-	#	Suggests:
-	require(maptools)
-	
 	n <- length(unique(x$plot)) # must be unique!
-	w <- spatstat::owin(c(0.2, 0.8), c(0.2, 0.8))
-	pts <- spatstat::runifpoint(n, win = w)
-	pts <- as.SpatialPoints.ppp(pts)
+	pts <- round(cbind(runif(n), runif(n)), 6)
 	pts <- SpatialPointsDataFrame(pts,
 		data = data.frame(plot = sort(unique(x$plot)),
 			stringsAsFactors = FALSE))

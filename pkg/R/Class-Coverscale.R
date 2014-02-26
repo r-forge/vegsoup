@@ -57,7 +57,7 @@ setClass("Coverscale",
 	lims =  c( 1,   2,   3,   4,   8,  18,   38,  68,   88)) 
 
 #	Domin (sensu curral 1987)
-#	Currall, J. (1987). A transformation of the Domin scale. Vegetatio, 72(2):81–87.
+#	Currall , J. (1987). A transformation of the Domin scale. Vegetatio 72:81-87
 .domin <- list(
 	name = "Domin",
 	codes = c("+", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X"),
@@ -101,16 +101,16 @@ setClass("Coverscale",
 	codes = c("r", "+", "1", "A", "B", "3", "4", "5"),
 	lims =  c(0.5,  1.8, 3.8, 7.5,17.5,37.5,62.5,87.5))
 
-#	Pfadenhauer et al 1986
-#	Pfadenhauer, J., Poschlod, P., and Buchwald, R. (1986). Überlegungen zu einem Konzept geobotanischer Dauerbeobachtungsflächen für bayern, Teil I. Berichte der ANL, 10:41–60.
+#	Pfadenhauer et al. 
+#	Pfadenhauer, J. Poschlod, P. and Buchwald, R. (1986). U"berlegungen zu einem Konzept geobotanischer Dauerbeobachtungsfa"chen fu"r Bayern, Teil I. Berichte der ANL 10:41-60
 .pfadenhauer <- list(
 	name = "Pfadenhauer",
 	codes = c("+", "1a", "1b", "2a", "2b", "3", "4", "5"),
 	lims =  c( 1,   2,    4,   10,   20,   38,  63,  88)) 
 
-#	Ebert Klopfer et Pötsch
+#	Ebert Klopfer et Po"tsch
 #ebert.klopfer.poetsch <- list(
-#	name = "Ebert Klopfer et Pötsch",
+#	name = "Ebert Klopfer et Poetsch",
 #	codes = c("8", "7", "6", "2", "5", "3", "2", "1"),
 #	lims =  c( 1,   2,   4,   6,   8,  38,  68,  88)) 
 #with(ebert.klopfer.poetsch, length(codes) == length(lims))	

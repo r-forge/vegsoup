@@ -94,16 +94,16 @@
     }
 %% 5
   \bold{ 5) Cluster optimization methods }
-    \item{Optindval}{
+    \item{optindval}{
       \code{signature(obj = "VegsoupPartition")}:
       Optimize partition by maximizing Dufrene and Legendre's Indicator
       value.
-      See \code{\link{Optindval}}.   
+      See \code{\link{optindval}}.   
     }
-    \item{Optsil}{
+    \item{optsil}{
       \code{signature(obj = "VegsoupPartition")}:
       Optimize partition by maximizing mean silhouette width of partitions.
-      See \code{\link{Optsil}}.
+      See \code{\link{optsil}}.
     }
 %% 6
   \bold{ 6) Table Summaries }
@@ -213,10 +213,10 @@
       Dufrene-Legendre Indicator Species Analysis
       See \code{\link{Indval}}.
     }
-    \item{Isamic}{
+    \item{isamic}{
       \code{signature(obj = "VegsoupPartition")}:
       Indicator species analysis to minimize intermediate constancy
-      See \code{\link{Isamic}}.
+      See \code{\link{isamic}}.
     }
     \item{murdoch}{
       \code{signature(obj = "VegsoupPartition")}:

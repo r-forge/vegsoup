@@ -9,8 +9,9 @@ setGeneric("partana",
 setMethod("partana",
     signature(x = "VegsoupPartition"),
     function (x, verbose = FALSE, ...) {
-    	#	Imports:
-		require(optpart)
+    	#	Imports: optpart
+		#	require(optpart)
+		
 		if (getK(x) == 1)	stop("meaningless with k = ", getK(x))
     	Xd <- as.dist(x)# , ...)   	
 
@@ -37,8 +38,8 @@ setGeneric("tabdev",
 setMethod("tabdev",
 	signature(x = "VegsoupPartition"),
 	function (x, numitr = 99, verbose = FALSE, ...) {
-		#	Imports:
-		require(optpart)
+		#	Imports: optpart
+		#	require(optpart)
 
 		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
 
