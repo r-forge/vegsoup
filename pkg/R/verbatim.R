@@ -7,33 +7,34 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	if (missing(file)) {
 		stop("plaese supply a path to a file")
 	}
-	
+		
 	if (!missing(layers)) {
-		if (!is.list(layers) & !is.character(layers)) {
+		if (!is.list(layers) & !is.character(layers) & !is.logical(layers)) {
 			stop("layers must be a list or character vector")
 		}
 		else {
 			if (is.list(layers)) {
 				stopifnot(length(names(layers)) == length(layers))
-				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))	
-				paste.layers <- TRUE
+				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))				
 			}
 			else {
 				if (is.character(layers)) {
-					l <- layers
-					paste.layers <- TRUE
+					if (length(layers) == 1)
+						at <- "@"			
+					else
+						l <- layers
 				}
 			}
+			paste.layers <- TRUE
 			with.layers <- TRUE
 		}
-	}
-	else {
+	} else {
 		with.layers <- FALSE	
 	}
-	
+
 	#	read file
 	txt <- readLines(file.path(file))
-	
+		
 	#	get and test keywords
 	hb <- grep("BEGIN HEAD", txt)
 	he <- grep("END HEAD", txt)
@@ -41,14 +42,11 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	te <- grep("END TABLE", txt)
 	hks <- c(hb, he, tb, te)
 	
-	if (length(hks) != 4) {
-		stop("did not find all keywords!")
-	}
-	
+	if (length(hks) != 4) stop("did not find all keywords!")
+
 	#	test tabs
-	if (length(grep("\t", txt) > 0)) {
-		stop("detected tab characters, please review your data.")	
-	}
+	if (length(grep("\t", txt) > 0))
+		stop("detected tab characters, please review your data.")
 	
 	#	replace
 	if (length(replace) > 0) {
@@ -145,14 +143,18 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			lay <- paste("  ", l, sep = "") # add two! leading spaces
 			lay <- sapply(lay, function (x) grep(x, txa, fixed = TRUE))
 			names(lay) <- layers
-			if (length(unlist(lay)) != length(txa)) {
+			if (length(unlist(lay)) != length(txa))
 				stop("did not find all layer codes in all rows")
-			}
-			for (i in layers) {
+			for (i in layers)
 				txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
-			}
+			l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]			
 			txa	<- str_trim(txa, side = "right")
-			l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]
+		}
+		else {
+			if (length(layers) == 1) {			
+				l <- str_trim(sapply(strsplit(txa, at), "[[", 2), side = "right")
+				txa	<- str_trim(sapply(strsplit(txa, at), "[[", 1), side = "right")			
+			}
 		}
 	}
 	
@@ -163,28 +165,25 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	additional check for data integrity
 	test <- which(n.space != nrow(t.m) & n.space != 0)
 	
-	if (verbose) {
-		cat("found", nrow(t.m), "species")
-	}
+	if (verbose) cat("found", nrow(t.m), "species")
 		
 	if (length(test) > 0) {
 		message("some mono type character columns deviate from the expected pattern")
 		for (i in test) {
 			#	missing dot
 			if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
-				cat("\nmissing dot in species",
+				message("missing dot in species",
 					txa[which(val[,i] == " ")],
 					"in column", i + (first.dot - 1))	
 			}
 			#	misplaced value
 			else {
-				cat("\nmisplaced value",
-					"in species",
+				message("misplaced value in species",
 					txa[which(val[,i] != " ")],
 					"in column", i + (first.dot - 1))			
 			}		
 		}
-		stop("\nplease review your data and apply necessary changes")
+		stop("please review your data and apply necessary changes")
 	}
 	else {
 		if (verbose) {
@@ -276,14 +275,17 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			" is the data structured in layers?",
 			"\nreturn vector of species instead of matrix")
 		x <- txa	
-	} else {
+	}
+	else {
 		if (species.only) {
 			x <- txa		
-		} else {
+		}
+		else {
 			#	paste layers
 			if (with.layers) {
 				rownames(x) <- paste(x[, 1], l, sep = "@")	
-			} else {
+			}
+			else {
 				rownames(x) <- x[, 1]
 			}
 			x <- x[, -1]
@@ -299,11 +301,11 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				}
 				dimnames(x)[[2]] <- cn
 				attributes(x) <- c(attributes(x), attr)
-			} else {
+			}
+			else {
 				dimnames(x)[[2]] <- NULL
 				attributes(x) <- c(attributes(x), attr)
-			}
-	
+			}	
 			class(x) <- c("VegsoupVerbatim", "matrix")
 		}
 	}

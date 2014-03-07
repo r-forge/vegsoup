@@ -47,36 +47,39 @@ header(x)
 \arguments{
 ## Arguments to functions
   \item{ file }{
-    A character string. A path to a plain text file.
+    character. Path to a plain text file (text array).
 }
 ## Arguments to function \code{read.verbatim}
   \item{ colnames }{
-    A character string to be searched for in the header section and used to
+    character. String to be searched for in the header section and used to
     assign plot names. Note, do not use any characters defined for argument
-    replace in the header section! See \sQuote{Details}.
+    \code{replace} in the header section of the input file! See \sQuote{Details}.
   }
   \item{ layers }{
-    A named list giving start and end indices of to assign a layer to each
-    species, or a vector of characters of length according to the number of
-    species in the data set. See \sQuote{Examples}.
+    list or character. If \code{layers} is a named list, it defines start and end indices to
+    assign a layer to each species observation. \code{layers} can also be of mode character.
+    If length of the supplied vector agrees to the number of species in the data set it
+    defines the layer of each species observation. If layers are already present in the
+    input file, layers can be a single character used to prune layers from taxa
+    abbreviations. See \sQuote{Examples}.
   }
   \item{ replace }{
-    A vector of characters to be replaced by blanks. Note, both the hyphen and
+    logical. Vector of characters to be replaced by blanks. Note, both the hyphen and
     dash characters are defined in default set. See \sQuote{Details}.
   }
   \item{ schema }{
-    A vector of characters of length 3 to be used to split character strings.
+    character. Vector of characters of length 3 to be used to split character strings.
     Element one gives the separator to prune the plot identifier.
     Element two is the separator in the taxon and abundance value part.
     Element three is used to prune abundance values associated with each taxon.
     See \sQuote{Details}.
   }
   \item{ first }{
-    If \code{TRUE} abundance value precede taxon names, if \code{FALSE} abundance
+    logical. If \code{TRUE} abundance value precede taxon names, if \code{FALSE} abundance
     values are given after taxon names.
   }
   \item{ species.only }{
-    Just return a vector of species extracted from the data set.
+    logical. Just return a vector of species extracted from the data set.
   }
   \item{ verbose }{
     Print diagnostic messages.
@@ -84,16 +87,15 @@ header(x)
 
 ## Arguments to function \code{read.verbatim.append}
   \item{ x }{
-    An object of class \code{VegsoupVerbatim} as created by calls to function
+    \code{VegsoupVerbatim} object. Usually created by calls to function
     \code{read.verbatim}.
   }
   \item{ mode }{
-    Character, defining how the species occurrences in rows are organized.
+    character. Defines how the species occurrences in rows are organized.
     See \sQuote{Details}.
   }
   \item{ sep }{
-    Character, the separator between successive species.
-    Defaults to \code{","}.
+    character. Separator between successive species. Defaults to \code{","}.
   }
   \item{ abundance }{
     For \code{mode = "species"} a single \code{character} recycled for all
@@ -110,11 +112,11 @@ header(x)
 
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
-    An object of class \code{VegsoupData}.
+    \code{Vegsoup} object.
   }
   \item{ select }{
-    Character vector matching \code{names(obj)} or indices to columns in
-    Sites(obj) to select information to be incorporated in the header section.
+    character. Vector matching \code{names(obj)} or indices to columns in
+    \code{Sites(obj)} to select information to be incorporated in the header section.
     Beware, this only makes sense for numeric (e.g. elevation) or short string
     variables (e.g. slope aspect)!
   }

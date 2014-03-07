@@ -136,6 +136,7 @@
 		if (any(xx == "")) xx[xx == ""] <-  " "
 		z[i,] <- xx				
 	}
+	
 	#	clean first two columns
 	z[, 1] <- format("", width = nchar(taxon[1]))
 	z[, 2] <- format("", width = nchar(layer[1]))
