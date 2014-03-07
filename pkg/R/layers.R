@@ -1,3 +1,10 @@
+#	see Ewald 2013, Tuexina 33
+#l <- c(75,15,55)
+#names(ll) <- c("tl1", "tl2", "sl")
+#ll <- l/100
+
+#r0 <- ((ll[1] + ll[2]) - ll[1] * ll[2]) * 100
+#(r0/100 + ll[3]) - (r0/100 * ll[3])
 
 #	Layers method
 ".layers.Vegsoup" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {

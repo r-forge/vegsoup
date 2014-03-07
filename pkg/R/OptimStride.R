@@ -1,4 +1,4 @@
-#	warning! some how slot sp.points can get messed up?
+ #	warning! some how slot sp.points can get messed up?
 OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
 	if (missing(k)) {
 		stop("please supply k for stride")
@@ -11,6 +11,8 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 	}	
 	stopifnot(inherits(x, "Vegsoup"))
 
+	#	define function ".VegsoupPartition" that accepts argument dist to speed up!
+	#	use that in cycle to speed up
 	cycle <- function (x, k, ...) {
 		prt <- VegsoupPartition(x, k = k, ...)
 		ft <- FisherTest(prt, alternative = alternative)
@@ -29,7 +31,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 	
 	for (i in seq(along = method)) {
 		if (fast) {
-			cat(method[i], " ")			
+			message(method[i], " ")			
 			res.j <- mclapply(2:k, function (y, ...) cycle(x, k = y, method = method[i], ...), ...)
 			res.i[[i]] <- c(0, res.j)
 		} else {

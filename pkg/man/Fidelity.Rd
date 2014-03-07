@@ -21,23 +21,24 @@
 \description{
   Method \code{Fidelity} calculates fidelity values for objects inheriting
   \code{"VegsoupPartition"} and returns an extended object of class
-  \code{\linkS4class{VegsoupPartitionFidelity}}.
+  \code{\linkS4class{VegsoupPartitionFidelity}}. Fidelity is based on the implementation
+  of function \code{\link[indicspecies]{strassoc}} in \pkg{indicspecies} and offers
+  all it's methods plus some more (see \sQuote{Details}).
 
-  Functions \code{Phi} and \code{Indval} calculates the phi and Indval
-  statistics acording to \code{\link[optpart:phi]{phi}} in package
+  Functions \code{Phi} and \code{Indval} calculates the \emph{phi} and \emph{Indval}
+  statistics according to \code{\link[optpart:phi]{phi}} in package
   \pkg{optpart}, respectively, \code{\link[labdsv:indval]{indval}} of package
-  \pkg{labdsv}.
-  
-  Function \code{FisherTest} is a slightly faster alternative to
+  \pkg{labdsv}. Function \code{FisherTest} is a slightly faster alternative to
   \code{Fidelity(obj, method = "fisher")}. \code{Phi} and \code{Indval} are
-  also faster implementations compared to \code{\link{Fidelity}}. All three do
-  not return an \code{"VegsoupPartitionFidelity"} object, but the requested
-  statistic!
+  also faster implementations compared to \code{\link{Fidelity}} without option
+  \code{fast = TRUE}. All three methods do not return an \code{"VegsoupPartitionFidelity"}
+  object, but the requested statistic as a \code{"data.frame"}! Take \code{sqrt(Indval(x))}
+  to obtain comparable results with \code{Fidelity(x, method = "IndVal.g")}.
 }
 
 \usage{
-\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, fast = FALSE,
-verbose = TRUE, ...)
+\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1,
+         fast = FALSE, verbose = TRUE, ...)
 
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
 
@@ -83,9 +84,9 @@ verbose = TRUE, ...)
 }
 
 \details{
-Methods currently implemented include the following:
+Methods currently implemented for method \code{Fidelity }include the following:
 
-  \enumerate{
+  \itemize{
      \item \code{r:} phi (point-biserial correlation coefficient)
      \item \code{r.g:} phi, group equalised
      \item \code{cos:} cosine (Ochiai index)
@@ -99,14 +100,14 @@ Methods currently implemented include the following:
      \item \code{A.g:} Indval A, group equalised
      \item \code{A:} Indval A
      \item \code{B:} Indval B
-     \item \code{u.hyp:} Bruelheide's corrected u value
-     \item \code{u.binB:} Bruelheide's corrected u value uBinB
-     \item \code{u.binA:} Bruelheide's corrected u value uBinA
+     \item \code{u.hyp:} Bruelheide's corrected u value (Bruelheide 2000)
+     \item \code{u.binB:} Bruelheide's corrected u value uBinB (Bruelheide 2000)
+     \item \code{u.binA:} Bruelheide's corrected u value uBinA (Bruelheide 2000)
      \item \code{g:} G statistic
      \item \code{chi:} chi-square statistic with Yates correction
-     \item \code{Fisher:} Fisher test
-     \item \code{CR:} Willner's constancy ratio
-     \item \code{TCR:} Willner's total cover ratio
+     \item \code{Fisher:} Fisher test (Chytry et al. 2002)
+     \item \code{CR:} Willner's constancy ratio (Willner 2006)
+     \item \code{TCR:} Willner's total cover ratio (Willner 2006)
   }
 }
 \value{
@@ -121,7 +122,7 @@ Willner, W. (2006). The association concept revisited. Phytocoenologia, 36(1):67
 
 Tichy, L. and M. Chytry. 2006. Statistical determination of diagnostic species for site groups of unequal size. Journal of Vegetation Science 17:809-818.
 
-Chytry, M., Tichy, L., Holt, J., and Botta-Dukat, Z. (2002). Determination of diag- nostic species with statistical fidelity measures. Journal of Vegetation Science, 13(1):79–90.
+Chytry, M., Tichy, L., Holt, J., and Botta-Dukat, Z. (2002). Determination of diagnostic species with statistical fidelity measures. Journal of Vegetation Science, 13(1):79–90.
 
 De Caceres, M., Font, X., and Oliva, F. (2008). Assessing species diagnostic value in large data sets: A comparison between phi-coefficient and ochiai index. Journal of Vegetation Science, 19(6):779–788.
 

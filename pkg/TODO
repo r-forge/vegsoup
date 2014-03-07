@@ -16,6 +16,8 @@ if TRUE no method to add strata to unlayered object
 cov to abu(dance)? or val(ue)?
 
 # add?
+show: class Species bring abundant/freqent to top
+peaks: if curve bends down return no peaks with option
 decotrans method, better math method e.g. obj^0.2
 decostand method for fidelity, needs to recalculate fidelity if not presence absence
 

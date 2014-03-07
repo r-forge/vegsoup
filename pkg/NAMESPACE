@@ -8,6 +8,8 @@ importFrom("utils", head, tail)
 
 import(coenoflex)
 
+importFrom("labdsv", indval)
+
 importFrom("optpart", optsil,  optindval, disdiam, tabdev, partana)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected)

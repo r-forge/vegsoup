@@ -7,11 +7,11 @@ Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 Author: Roland Kaiser
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, rgdal (>= 0.8-11)
-Imports: methods, optpart, cluster, coenoflex, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat 
-Suggests: labdsv, pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, parallel, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand, vegdata
+Imports: methods, optpart, cluster, coenoflex, vegclust (>= 1.5.1), sp (>= 1.0-9), raster, multitable, Matrix, spatstat, labdsv
+Suggests: pbapply, Hmisc, RColorBrewer, stringr, googleVis, gclus, misc3d, parallel, maptools, isopam, ggmap, geonames, mefa, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
-	Methods are provided for data manipulation, multivariate analysis, Taxonstand
+	Methods are provided for data manipulation, multivariate analysis,
 	indicator species analysis and typesetting of LaTex tables. 
 License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/

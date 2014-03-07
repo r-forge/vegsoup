@@ -8,7 +8,8 @@ setGeneric("Indval",
 setMethod("Indval",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
-		res <- indval(as.logical(obj), Partitioning(obj), ...)$indval
+		#require(labdsv)
+		res <- labdsv::indval(as.logical(obj), Partitioning(obj), ...)$indval
 		return(res)
 	}
 )

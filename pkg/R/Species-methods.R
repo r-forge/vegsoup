@@ -5,7 +5,7 @@ setGeneric("species",
 )
 #}
 
-#if (!isGeneric("rbind")) {
+#if (!isGeneric("species<-")) {
 setGeneric("species<-",
 	function (obj, value)
 		standardGeneric("species<-")
@@ -209,7 +209,7 @@ setMethod("species",
 			r$abbr <- sapply(a, "[[", 1)		
 			r$layer <- sapply(a, "[[", 2)			
 		}
-		r <- stackSpecies(r)
+		r <- stackSpecies(r)[, 1:4]
 		return(r)
 	}
 )
