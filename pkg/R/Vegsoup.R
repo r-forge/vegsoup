@@ -167,7 +167,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	rownames(y) <- y$plot 
 	y <- y[, -grep("plot", names(y))]
 	#	order to x
-	y <- y[match(unique(x$plot), rownames(y)), ]
+	y <- y[match(unique(x$plot), rownames(y)), ]	
+	sp.points <- sp.points[match(rownames(y), sp.points$plot), ]
+	sp.polygons <- sp.polygons[match(rownames(y), sp.polygons$plot), ]
 	
 	res <- new("Vegsoup",
 		species = species(x),
