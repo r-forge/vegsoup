@@ -58,6 +58,7 @@ export(
     "Vegsoup",
     "coenoflex",
     "instantsoup",
+    "plainsoup",
     "OptimStride",
     "VegsoupPartition",
     "plotPCO",
