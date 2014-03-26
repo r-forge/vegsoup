@@ -64,8 +64,9 @@ setGeneric("Partition",
 
 setMethod("Partition",
 	signature(x = "VegsoupPartition"),
-	function (x, value) {	
-		x[x@part == value, ]
+	function (x, value) {
+			stopifnot(!any(value > getK(x)))	
+			x[x@part %in% value, ]
 	}		
 )
 
