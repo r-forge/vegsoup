@@ -17,6 +17,10 @@ prt <- VegsoupPartition(dta, k = 2)
 fid <- Fidelity(prt, verbose = TRUE)
 fid <- Fidelity(prt, verbose = TRUE, fast = TRUE)
 
+ft1 <- FisherTest(prt, alternative = "two.sided")
+ft2 <- getStat(Fidelity(prt, method = "Fisher", alternative = "two.sided"))
+all.equal(ft1, ft2)
+
 head(prt)
 getK(prt)
 Partitioning(prt)
