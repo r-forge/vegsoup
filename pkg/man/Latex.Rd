@@ -139,11 +139,10 @@
   latter class by internally calling \code{\link{Fidelity}} with it's default
   arguments.
 
-  The \code{choice = "species"} and \code{recursive = FALSE} form currently provides two
-  differnt types of output. \code{mode = 1} builds an ordered vegetation table based on a
-  fidelity (indicator species) statistic. \code{mode = 2} creates descripive summaries for each
-  partition (cluster) of an object. It embeds it's ouput using \acronym{LaTeX} package subfloat
-  (put usepackage{subflota} in the LaTex preamble).
+  The \code{choice = "species"} and \code{recursive = FALSE} usage currently provides two
+  different types of output. With \code{mode = 1} an ordered vegetation table based on a
+  fidelity (indicator species) statistic is created. With \code{mode = 2} descriptive summaries
+  for each partition (cluster) are returned. It embeds it's ouput using \acronym{LaTeX} package subfloat.
 }
 \value{
   A \code{"list"} containing the lines written to the file:
@@ -175,7 +174,6 @@ data(windsfeld)
 x <- VegsoupPartition(windsfeld, k = 2, method = "flexible")
 
 \dontrun{
-# method currently broken
 tex <- Latex(x, file = tempfile())
 
 fid <- Fidelity(x)

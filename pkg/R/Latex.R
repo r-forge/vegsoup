@@ -136,7 +136,6 @@
 		use.letters = TRUE
 	}
 	if (is.null(stat.min)) {
-		message("here")
 		if (obj@method == "r.g") {
 			#	automatic guess adapted from isopam()
 			stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
