@@ -9,24 +9,27 @@ Coverscale <- function (name, codes, lims) {
 	if (missing(name)) {
 		cat("buitin coverscales are:\n",
 		paste(names(.COVERSCALES), collapse = "\n"))
-	} else {
-	if (missing(codes) & missing(lims)) {
-		res <- .COVERSCALES[[match.arg(name, names(.COVERSCALES))]]
-	} else {
-		if (missing(codes) | missing(lims))	{
-			stop("need both codes and lims", call. = FALSE)
-		} else {
-			if (length(codes) != length(lims)) {
-				stop("length of codes and lims are not the same", call. = FALSE)
-			} else {
-				res <- list(
-					name = as.character(name),
-					codes = as.character(codes),
-					lims = as.numeric(lims)
-					)	
+	}
+	else {
+		if (missing(codes) & missing(lims)) {
+			res <- .COVERSCALES[[match.arg(name, names(.COVERSCALES))]]
+		}
+		else {
+			if (missing(codes) | missing(lims))	{
+				stop("need both codes and lims", call. = FALSE)
+			}
+			else {
+				if (length(codes) != length(lims)) {
+					stop("length of codes and lims are not the same", call. = FALSE)
+				}
+				else {
+					res <- list(
+						name = as.character(name),
+						codes = as.character(codes),
+						lims = as.numeric(lims))	
+				}
 			}
 		}
-	}
 	res <- as(res, "Coverscale")
 	return(res)
 	}
