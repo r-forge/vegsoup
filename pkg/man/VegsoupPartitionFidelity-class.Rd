@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \name{VegsoupPartitionFidelity-class}
 \Rdversion{1.1}
 \docType{class}

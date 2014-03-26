@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{tile2latlng}
 
 \alias{latlng2tile}

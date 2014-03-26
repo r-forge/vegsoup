@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{ Grasslands National Park Berechtesgaden }
 
 \alias{berchtesgaden}

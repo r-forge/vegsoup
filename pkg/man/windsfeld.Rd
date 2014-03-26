@@ -1,6 +1,9 @@
+\encoding{UTF-8}
+
 \name{ Windsfeld }
-\alias{ windsfeld}
 \docType{data}
+
+\alias{ windsfeld}
 
 \title{ Alpine Vegetation }
 

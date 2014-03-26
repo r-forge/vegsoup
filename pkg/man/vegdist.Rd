@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{vegdist}
 \docType{methods}
 
@@ -16,9 +18,9 @@
 \alias{distconnected}
 \alias{distconnected,Vegsoup-method}
 
-\title{ Distance Matrices from \code{Vegsoup*} Objects }
+\title{ Dissimilarity Matrices from \code{Vegsoup*} Objects }
 \description{
-Compute a distance matrix as specified by \code{vegdist(x)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is a wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
+Compute a dissimilarity matrix as specified by \code{vegdist(x)} by internal calls to \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}. Method \code{distconnected} is a wrapper for function \code{\link[vegan:distconnected]{distconnected}} also found in package vegan.
 }
 
 \usage{
@@ -63,10 +65,6 @@ Compute a distance matrix as specified by \code{vegdist(x)} by internal calls to
   }
 }
 \details{
-  %% If the resulting \code{"dist"} object is not a dissimilarity matrix
-  %% (\code{max > 1}), it will be divided by \code{max(D)} to obtain
-  %% dissimilarities.
-
   Note, the method returned by \code{decostand(obj)} will be applied before
   calculation of the distance matrix. Use \code{vegdist(obj)} to query which
   method is active for an object. The \code{print}, \code{show} and
@@ -81,6 +79,12 @@ Compute a distance matrix as specified by \code{vegdist(x)} by internal calls to
   Method \code{distconnected} is a simple wrapper for function
   \code{\link[vegan:distconnected]{distconnected}} in package
   \pkg{vegan} and checks for connectedness of dissimilarities.
+}
+\note{
+  As \code{vegan::vegdist}, \code{as.dist} returns dissimilarities not distances.
+  If the resulting \code{"dist"} object is not a dissimilarity matrix
+  (\code{max(D) > 1}), it will be divided by \code{max(D)} to obtain
+  dissimilarities.
 }
 \value{
 \code{as.dist} returns an object of class \code{"dist"} with an additional attribute \code{"mode"}. % one of \code{"Q"} or \code{"R"}.

@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{verbatim}
 \docType{methods}
 
@@ -202,7 +204,7 @@ Roland Kaiser
 \references{
 The demonstration data set used in the example is taken from:
 
-Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen – ein Beitrag zur Kla"rung eines alten o"kologischen Ra"tsels. Phytocoenologia, 21:91–116.
+Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen -- ein Beitrag zur \enc{Klärung}{Klaerung} eines alten \enc{ökologischen}{oekologischen} \enc{Rätsels}{Raetsels}. Phytocoenologia, 21:91-116.
 
 The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}. \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
 }

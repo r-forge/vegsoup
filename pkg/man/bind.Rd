@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{bind}
 
 \alias{bind}

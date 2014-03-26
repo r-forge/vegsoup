@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \docType{class}
 
 \name{SpeciesTaxonomy-class}

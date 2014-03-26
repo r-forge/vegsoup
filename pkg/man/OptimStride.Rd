@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \docType{methods}
 
 \name{OptimStride}
@@ -159,7 +160,7 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
 }
 
 \references{
-Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Optimclass: Using species-to-cluster fidelity to determine the optimal partition in classification of ecological communities. Journal of Vegetation Science, 21(2):287–299.
+Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Optimclass: Using species-to-cluster fidelity to determine the optimal partition in classification of ecological communities. Journal of Vegetation Science, 21(2):287-299.
 }
 
 \author{ Roland Kaiser }

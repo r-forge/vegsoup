@@ -1,4 +1,7 @@
+\encoding{UTF-8}
+
 \name{Taxonomy-class}
+
 \Rdversion{1.1}
 \docType{class}
 \alias{taxonomy}

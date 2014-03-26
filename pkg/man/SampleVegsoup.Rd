@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{SampleVegsoup}
 \docType{methods}
 
@@ -51,7 +53,7 @@ See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most r
 \value{
   An object of the same class as the input object.
 }
-\author{ Roland Kaiser, method \code{hcr} is an re-implementation of function \code{hcr} in package \pkg{vegclust} by Miquel De Cáceres that is capable of forking parallel processes. }
+\author{ Roland Kaiser, method \code{hcr} is an re-implementation of function \code{hcr} in package \pkg{vegclust} by Miquel De \enc{Cáceres}{Caceres} that is capable of forking parallel processes. }
 
 \references{
 Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resampling of phytosociological databases. Journal of Vegetation Science 22: 175-183.

@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{reshape}
 
 \alias{shapeSpecies}
@@ -12,7 +14,7 @@
   might be delivered by certain data bases or archives, or are available as
   digitized field lists. \code{shapeSpecies} performs the reverse operation on
   objects of class \code{Vegsoup*}. This might be useful for tabular presentation
-  of single relevés.
+  of single \enc{relevées}{relevees}.
 }
 
 \usage{

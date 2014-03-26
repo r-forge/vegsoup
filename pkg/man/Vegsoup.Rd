@@ -1,7 +1,12 @@
+\encoding{UTF-8}
+
 \name{Vegsoup}
+
 \alias{Vegsoup}
 
 \alias{instantsoup}
+
+\alias{plainsoup}
 
 \alias{coenoflex}
 
@@ -9,8 +14,12 @@
 
 \description{
   The provided creator functions build the basic data structures of
-  \code{Vegsoup*} objects from local R objects or from csv files stored on
-  disk. A shorthand function is provided to collect data files from a folder.
+  \code{Vegsoup*} objects from local R objects. Shorthand functions
+  are provided to collect data files from a folder or build an object
+  from a simple community matrix only, with dummy variables created
+  for missing data structures (taxonomic reference list, sites data and/or
+  coordinates). To simulate a data set an interface to the \emph{coenoflex}
+  package is provided.
 
   \code{Vegsoup(...)} is the recommended user interface rather than the direct
   \code{new("Vegsoup", ....)} call.
@@ -21,25 +30,30 @@ Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
         verbose = FALSE)
 
-instantsoup(folder, sep = ";", dec = ",", coverscale)
-
 coenoflex(numplt = 20, numspc = 10, ...)
+
+plainsoup(m, coverscale, layer = "0l", verbose = TRUE)
+
+instantsoup(folder, sep = ";", dec = ",", coverscale)
 }
 
 \arguments{
   \item{ x }{
-    Object of class \code{\linkS4class{Species}} or
+    object of class \code{\linkS4class{Species}} or
     \code{\linkS4class{SpeciesTaxonomy}}.
   }
   \item{ y }{
-    Object of class \code{\linkS4class{Sites}}.
+    object of class \code{\linkS4class{Sites}}.
   }
   \item{ z }{
-    Object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
+    object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
     is of class \code{"SpeciesTaxonomy"}.
   }
-  \item{ stringsAsFactors }{
-    Convert character strings in \code{y} to factors.
+  \item{ m }{
+    object that can be coereced to as matrix with plots as rows and species as columns.
+  }
+  \item{ layer }{
+    layer code to be assigned.
   }
   \item{ folder }{
     Path to a folder with three csv files. One file named \code{species.csv}
@@ -52,7 +66,8 @@ coenoflex(numplt = 20, numspc = 10, ...)
   }
   \item{ coverscale }{
     Abundance scale of the observations. Possible choices include all
-    definitions given by \code{\link{Coverscale}}.
+    definitions given by \code{\link{Coverscale}}. For \code{plainsoup}
+	currently only an object of class \code{Coverscale} is accepted.
   }
   \item{ group }{
     A-priori grouping, if any and can be missing.
@@ -73,6 +88,9 @@ coenoflex(numplt = 20, numspc = 10, ...)
     a random polygon pattern is generated based on \code{'sp.points'} equal to
     the number of plots (samples).
   }
+  \item{ stringsAsFactors }{
+    Convert character strings in \code{y} to factors.
+  }
   \item{ sep }{
     See \code{\link{read.csv}} for parsing of csv files. Defaults are set
     according to \code{read.csv2}, also regarding \code{dec}!
@@ -92,7 +110,7 @@ coenoflex(numplt = 20, numspc = 10, ...)
 }
 
 \details{
-  \code{Vegsoup()} is the generic constructor function to create a prototype
+  \code{Vegsoup()} is the constructor function to create a prototype
   object of class \code{Vegsoup}. The first four arguments
   (\code{x, y, z, coverscale}) have to be specified. However, if argument
   \code{'x'} inherits from class "SpeciesTaxonomy", argument \code{'z'} can be
@@ -101,7 +119,7 @@ coenoflex(numplt = 20, numspc = 10, ...)
   The creator function does not allow to specify all slots of an
   \code{Vegsoup*} object, but rather tries to guess some of it's contents.
   For example, if the sites data has variables exactly named longitude and
-  latitude those will be used to extract coordinates. For coordinates
+  latitude those will be used to extract coordinates from. For coordinates
   conforming to \code{proj4string = "+init=epsg:4326"} those have to be
   formatted as decimal degrees! See e.g. \code{\link{char2dms}} to convert
   between formats.
@@ -112,11 +130,23 @@ coenoflex(numplt = 20, numspc = 10, ...)
 %%to \code{as.numeric} (e.\,g. in x\$cov if abundance is not ordinal, or for
 %%all in y that represent continuous measurement on plot.).
 
+  Function \code{plainsoup} is a utility function that demands a community matrix
+  but nothing more. This function is suitable if there is no further
+  information on sample plots (sites or environmental data) and the taxonomic concept used.
+  In order to build a \code{Vegsoup} object dummy values have to be created.
+  Note, those will not be informative! To be exact, the function will create
+  a single site variable named \code{"X1"} with all values set to zero.
+  \code{colnames(m)} are used as abbreviations (see \code{\link{abbr}}) as well as
+  full scientific latin names (see \code{\linkS4class{Taxonomy}}).
+  All observations are put on a single layer encoded by argument \code{layer}.
+  Because the cover (abundance) scale can not be guessed from argument \code{m}
+  a suitable cover scale as object \code{\linkS4class{Coverscale}} needs to be assigned.
+  
   Function \code{instantsoup} is a shorthand when data files are guaranteed to
   conform to some format that can be interpreted by the import functions
   \code{stackSpecies}, respectively \code{stackSites} or are valid to simple
   calls to class creator methods \code{\link{species}}, \code{\link{sites}}
-  and \code{\link{taxonomy}} for signature \code{'character'}. Arguments
+  and \code{\link{taxonomy}} all with signature \code{'character'}. Arguments
   \code{'coverscale'} and \code{'decostand'} can be specified afterwards
   if needed, defaults of class \code{\linkS4class{Vegsoup}} apply otherwise.
   The same is true for argument \code{'proj4string'}. The defaults for

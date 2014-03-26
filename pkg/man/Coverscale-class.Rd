@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \name{Coverscale-class}
 \Rdversion{1.1}
 \docType{class}
@@ -33,9 +34,9 @@ Contains the defintion for a cover scale (abundance scale) associated with an \c
   }
 }
 \references{
-Peet, R.K. & Roberts D.W. (2013). Classification of natural and semi-natural
-vegetation. In Vegetation Ecology (van der Maarel, E. & Franklin, J. eds).
-Wiley-Blackwell.
+Peet, R.K. & Roberts, D.W. (2013). Classification of natural and semi-natural vegetation. In Vegetation Ecology (van der Maarel, E. & Franklin, J. eds). Wiley-Blackwell.
+
+Barkman, J.J., Doing, H. & Segal, S. Kritische Bemerkungen und \enc{Vorschläge}{Vorschlaege} zur quantitativen Vegetationsanalyse. Acta Botanica Neerlandica, 13:394-419, 1964.
 
 Certainly, more references are needed here!
 }

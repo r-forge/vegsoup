@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{BraunBlanquetReduce}
 \alias{BraunBlanquetReduce}
 \alias{BraunBlanquetReduce,Vegsoup-method}

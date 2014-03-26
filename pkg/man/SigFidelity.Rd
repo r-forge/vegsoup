@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{SigFidelity}
 \docType{methods}
 
@@ -41,7 +43,7 @@ Experimental.
 }
 
 \author{
-Adapted from function \code{signassoc()} of package \pkg{indicspecies} by \emph{Miquel De Cáceres Ainsa}.
+Adapted from function \code{signassoc()} of package \pkg{indicspecies} by \emph{Miquel De \enc{Cáceres}{Caceres} Ainsa}.
 }
 
 \keyword{ methods }

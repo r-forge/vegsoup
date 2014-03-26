@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \name{Vegsoup-class}
 \Rdversion{1.1}
 

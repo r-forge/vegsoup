@@ -7,7 +7,7 @@
 \title{ Partition a Vegsoup object }
 
 \description{
-  Create an object of class \code{'VegsoupPartition'} by selecting a clustering algorithm.
+  Create an object of class \code{'VegsoupPartition'} by selecting a predefined clustering algorithm or by supplying a function.
 }
 
 \usage{
@@ -81,7 +81,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
     }
     \item{ FCM, KM }{
     calls \code{vegclust::vegclustdist} with \code{mobileMemb = k} and \code{method = "FCM"},
-    respectively \code{"KM"}.
+    respectively \code{"KM"}. If you need further argument use the function interface (see FUN below).
     }
     \item{ isopam }{
     calls \code{isopam::isopam} using the \code{'distance'} argument
@@ -95,13 +95,24 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
     clustering vector. In both cases argument \code{'method'} is ignored and will be set to
     \code{"external"}.
     }
+    \item{ FUN }{
+	If method is a function, \code{VegsoupPartition} will internally create a distance matrix
+	by calling \code{Xd <- as.dist(obj)}. The raw data matrix, possibly standardized,
+	is available with \code{X <- as.matrix(obj)}. Argument \code{k} is queried from the
+	function's argument \code{k}. These object are evaluated with FUN by a call to
+	\code{do.call(FUN, args = list(Xd = Xd, X = X, k = k))}. All other arguments
+	must are defined inside FUN. The output of FUN needs to be nothing but a partitioning vector
+	of integers!
+	}	
   }
   
   Depending on the applied method the partitioning vector is obtained as follows: \code{'agnes'} and
   \code{'hclust'} objects are sliced by subsequent calls to \code{\link{cutree}} to obtain \emph{k}
   partitions. Objects of class \code{'pam'}, \code{'fanny'} and \code{'kmeans'} already contain a
   cluster(ing) attribute. If a hierarchy was estimated for \code{'isopam'} objects the flat attribute
-  is accessed, otherwise the lowest hierarchy level is extracted.
+  is accessed, otherwise the lowest hierarchy level is extracted. When using the function interface to
+  \code{method} the returned partitioning vector of FUN should not be reordered in any way. The function
+  must not assign names to the results vector, this is performed automatically.
 
   If \code{polish} is \code{TRUE} the function tries to groom singletons (single member group) using the
   \code{\link{optsil}} procedure. This may take some time to complete. Argument \code{maxitr} is set to

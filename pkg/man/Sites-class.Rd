@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \name{Sites-class}
 \Rdversion{1.1}
 \docType{class}
@@ -34,8 +35,8 @@
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("Sites", ...)},
   where \code{...} expands to slot \code{'data'}. Using the
-  \code{sites} method with appropriate objects is also convenient.
-  (see \sQuote{Methods}). The \code{\link{stackSites}} is appropriate
+  \code{sites} method with appropriate objects is also convenient
+  (see \sQuote{Methods}). Function \code{\link{stackSites}} is usefull
   when the data is in \emph{wide} format (plot by variable matrix).
 }
 

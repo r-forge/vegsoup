@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{Fidelity}
 \docType{methods}
 
@@ -38,9 +40,9 @@
 
 \usage{
 \S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1,
-         fast = FALSE, verbose = TRUE, ...)
+         alternative = "greater", fast = FALSE, verbose = TRUE, ...)
 
-\S4method{FisherTest}{VegsoupPartition}(obj, alternative = "two.sided")
+\S4method{FisherTest}{VegsoupPartition}(obj, alternative = "greater")
 
 \S4method{Phi}{VegsoupPartition}(obj)
 
@@ -75,7 +77,7 @@
     display computation status bar.
   }
   \item{ alternative }{
-    alternative hypothesis.
+    alternative hypothesis. For \code{Fidelity} takes effect only for \code{method = "Fisher"}
   }
   \item{ \dots }{
     For \code{Fidelity} additional arguments for \code{method = "fisher.s"}
@@ -116,24 +118,24 @@ For \code{Fidelity} an object of class \code{"VegsoupPartitionFidelity"}.
 For \code{FisherTest} and \code{Phi} a \code{"matrix"} of values with species as rows and partitions as columns.
 }
 \references{
-Willner, W., Tichy, L., and Chytry, M. (2009). Effects of different fidelity measures and contexts on the determination of diagnostic species. Journal of Vegetation Science, 20(1):130–137.
+Willner, W., Tichy, L., and Chytry, M. (2009). Effects of different fidelity measures and contexts on the determination of diagnostic species. Journal of Vegetation Science, 20(1):130-137.
 
-Willner, W. (2006). The association concept revisited. Phytocoenologia, 36(1):67–76.
+Willner, W. (2006). The association concept revisited. Phytocoenologia, 36(1):67-76.
 
 Tichy, L. and M. Chytry. 2006. Statistical determination of diagnostic species for site groups of unequal size. Journal of Vegetation Science 17:809-818.
 
-Chytry, M., Tichy, L., Holt, J., and Botta-Dukat, Z. (2002). Determination of diagnostic species with statistical fidelity measures. Journal of Vegetation Science, 13(1):79–90.
+Chytry, M., Tichy, L., Holt, J., and Botta-Dukat, Z. (2002). Determination of diagnostic species with statistical fidelity measures. Journal of Vegetation Science, 13(1):79-90.
 
-De Caceres, M., Font, X., and Oliva, F. (2008). Assessing species diagnostic value in large data sets: A comparison between phi-coefficient and ochiai index. Journal of Vegetation Science, 19(6):779–788.
+De \enc{Cáceres}{Caceres}, M., Font, X., and Oliva, F. (2008). Assessing species diagnostic value in large data sets: A comparison between phi-coefficient and ochiai index. Journal of Vegetation Science, 19(6):779-788.
 
-De Caceres, M. and Legendre, P. (2009). Associations between species and groups of sites: indices and statistical inference. Ecology, 90(12):3566–3574.
+De \enc{Cáceres}{Caceres}, M. and Legendre, P. (2009). Associations between species and groups of sites: indices and statistical inference. Ecology, 90(12):3566-3574.
 
-De Caceres, M., Legendre, P., and Moretti, M. (2010). Improving indicator species analysis by combining groups of sites. Oikos, 119(10):1674–1684.
+De \enc{Cáceres}{Caceres}, M., Legendre, P., and Moretti, M. (2010). Improving indicator species analysis by combining groups of sites. Oikos, 119(10):1674-1684.
 
-Bruelheide, H. (2000). A new measure of fidelity and its application to defining species groups. Journal of Vegetation Science, 11(2):167–178.
+Bruelheide, H. (2000). A new measure of fidelity and its application to defining species groups. Journal of Vegetation Science, 11(2):167-178.
 }
 \author{
-Roland Kaiser, based on code from Miquel De Cáceres Ainsa taken from function \code{\link[indicspecies:strassoc]{strassoc}} in package \pkg{indicspecies}.
+Roland Kaiser, based on code from Miquel De \enc{Cáceres}{Caceres} Ainsa taken from function \code{\link[indicspecies:strassoc]{strassoc}} in package \pkg{indicspecies}.
 }
 \seealso{
 \code{\linkS4class{VegsoupPartitionFidelity}}

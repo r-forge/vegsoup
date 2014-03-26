@@ -1,7 +1,7 @@
 \encoding{UTF-8}
-\docType{package}
 
 \name{vegsoup-package}
+\docType{package}
 
 \alias{vegsoup-package}
 \alias{vegsoup}
@@ -9,7 +9,7 @@
 \title{ An overview of the functions in this package }
 
 \description{
-The vegsoup package provides classes and methods to manipulate vegetation (community composition) data. It can be viewed as a data base system. Vegetation data consists of at least of two related tables -- a species matrix and a table of measurements taken at a site (sampling unit or releveé). If taxonomic identity, or traits of species is a concern an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case we end up with up to five independent R objects. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects.
+The vegsoup package provides classes and methods to manipulate vegetation (community composition) data. It can be viewed as a data base system. Vegetation data consists of at least of two related tables -- a species matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). If taxonomic identity, or traits of species is a concern an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case we end up with up to five independent R objects. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects.
 
 The package should be particularly useful when \dots.
 

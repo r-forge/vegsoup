@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{coldiss}
 
 \alias{coldiss}
@@ -10,7 +12,7 @@ Plots of the Dissimilarity Matrix of an Object of class Vegsoup*
 The method returns two plots corresponding to an unordered and an ordered colored matrix of dissimilarities. 
 }
 \usage{
-\S4method{coldiss}{Vegsoup}(obj, colors, byrank = TRUE, diag = FALSE, method,
+\S4method{coldiss}{Vegsoup}(obj, colors, byrank = TRUE, diag = FALSE, method = "dca",
         ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{

@@ -1,4 +1,5 @@
 \encoding{UTF-8}
+
 \name{Indpower}
 \docType{methods}
 
@@ -34,9 +35,9 @@ Indicator power calculation of Halme et al. (2009) or the congruence between ind
 }
 
 \references{
-Halme, P., \enc{Mönkkönen}{Monkkonen}, M., Kotiaho, J. S, 
-\enc{Ylisirniö}{Ylisirnio}, A-L. 2009. Quantifying the indicator power
-of an indicator species. \emph{Conservation Biology} 23: 1008--1016.
+Halme, P., M"onkk"onen, M., Kotiaho, J. S, 
+Ylisirni"o, A-L. 2009. Quantifying the indicator power
+of an indicator species. Conservation Biology 23: 1008-1016.
 }
 
 \author{

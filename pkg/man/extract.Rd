@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{Extract by Index}
 \docType{methods}
 \alias{Extract}
@@ -25,7 +27,7 @@
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} object or for \code{Partition} a \code{VegsoupPartition} object.
+    \code{Vegsoup*} object, for \code{Partition} a \code{VegsoupPartition} object.
   }
    \item{ i, j, \dots }{
     Elements to extract or replace.
@@ -34,7 +36,7 @@
     Not used. The method will always return a valid \code{Vegsoup*} object!
   }
   \item{ value }{
-    An \code{integer} defining a partiton to be subseted.
+    integer. An \code{integer} defining a partition to be subsetted. Can also be a vector.
   }
 
 }

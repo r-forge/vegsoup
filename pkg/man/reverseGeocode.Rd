@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{reverseGeocode}
 \alias{reverseGeocode}
 \alias{reverseGeocode,Vegsoup-method}

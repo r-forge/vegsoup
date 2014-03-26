@@ -1,3 +1,5 @@
+\encoding{UTF-8}
+
 \name{Layers}
 \docType{methods}
 
@@ -82,7 +84,7 @@ Modify an object's layer structure by suppling a layer combination vector as a c
   would otherwise influence the analysis (see \sQuote{Examples}).
 }
 \references{
-Mucina, L., Schaminee, J., and Rodwell, J. (2000). Common data standards for recording relevés in field survey for vegetation classification. Journal of Vegetation Science, 11: 769–772.
+Mucina, L., Schaminee, J., and Rodwell, J. (2000). Common data standards for recording \enc{relevées}{relevees} in field survey for vegetation classification. Journal of Vegetation Science, 11: 769-772.
 }
 \value{
 An object depending on the input class.
