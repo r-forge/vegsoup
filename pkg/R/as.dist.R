@@ -26,7 +26,9 @@ setMethod("as.dist",
 		Xd <- vegan::vegdist(as.matrix(m), method = vegdist(m)) # ...
 		
 		#	ensure dissimilarities
-		if (max(Xd) > 1) Xd <- Xd / max(Xd)
+		#if (vegdist(m) != "manhattan" & vegdist(m) != "euclidean") {
+		#	if (max(Xd) > 1) Xd <- Xd / max(Xd)
+		#}
 		
 		#	assign attribute
 		attributes(Xd) <- c(attributes(Xd), mode = toupper(mode))

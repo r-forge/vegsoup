@@ -11,7 +11,10 @@ setMethod("Indspc",
     function (obj, method, ...) {
     	#	Suggests:
     	require(labdsv)
-    	res <- indspc(as.logical(obj), dis = as.dist(obj), ...)
+    	Xd <- as.dist(obj)
+    	#	ensure dissimilarities
+    	if (max(Xd) > 1) Xd <- Xd / max(Xd)
+    	res <- indspc(as.logical(obj), dis = Xd, ...)
 		return(res)    	
     }
 )
