@@ -144,7 +144,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}
 
 	#	drop coordiates from data frame	they will be stored in spatial object
-	y <- y[y$variable != "longitude" & y$variable != "latitude", ]
+	y <- y[y$variable != "longitude" & y$variable != "latitude", , drop = FALSE]
 	#	check missing values, not very rigid!
 	if (any(y[, 3] == "")) {
 		y[y[, 3] == "", 3] <- NA
@@ -165,9 +165,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}	
     #	assign row names
 	rownames(y) <- y$plot 
-	y <- y[, -grep("plot", names(y))]
+	y <- y[, -grep("plot", names(y)), drop = FALSE]
 	#	order to x
-	y <- y[match(unique(x$plot), rownames(y)), ]	
+	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
 	sp.points <- sp.points[match(rownames(y), sp.points$plot), ]
 	sp.polygons <- sp.polygons[match(rownames(y), sp.polygons$plot), ]
 	
