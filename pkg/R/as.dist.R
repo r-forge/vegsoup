@@ -23,10 +23,10 @@ setMethod("as.dist",
 		#if (missing(mode)) {
 			mode = "Q"
 		#}
-		Xd <- vegan::vegdist(as.matrix(m), method = m@dist) # ...
+		Xd <- vegan::vegdist(as.matrix(m), method = vegdist(m)) # ...
 		
 		#	ensure dissimilarities
-		if (max(Xd) > 1) Xd <- Xd / max(Xd)	
+		if (max(Xd) > 1) Xd <- Xd / max(Xd)
 		
 		#	assign attribute
 		attributes(Xd) <- c(attributes(Xd), mode = toupper(mode))

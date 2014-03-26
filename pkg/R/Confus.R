@@ -10,18 +10,19 @@ setMethod("Confus",
     	obj2 = "VegsoupPartition"),
 	function (obj1, obj2) {
 
-	if (getK(obj1) != getK(obj2)) {
-		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
-			"and obj2 (", getK(obj1), ")!", sep = "")
-	}
-	#	reference (observed) as row margins, comparison (predicted) as column margins
+		if (getK(obj1) != getK(obj2))
+			stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
+				"and obj2 (", getK(obj1), ")!", sep = "")
+		stopifnot(all.equal(dim(obj1), dim(obj2)))
+		
+		#	reference (observed) as row margins, comparison (predicted) as column margins
     	N <- length(Partitioning(obj1))
 	    nc <- getK(obj1)
 	        	
 		res <- table(Partitioning(obj1), Partitioning(obj2))
 		
     	correct <- sum(diag(res))
-	    percent <- correct / N
+	    percent <- correct / N * 100
 		sum <- sum(rowSums(res) * colSums(res))
 		
 		#	calculate kappa
@@ -37,7 +38,7 @@ setMethod("Confus",
 		lambda <- (q1 + q2 - q3 - q4) / (q5 - q3 - q4)    
 	    
     	res <- list(confus = res,
-    		correct = correct,
+    		correct = percent,
         	kappa = kappa,
         	lambda = lambda)
 	    return(res)

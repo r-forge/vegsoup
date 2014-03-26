@@ -149,7 +149,7 @@
 		grep("precision", sites.columns)
 	)
 	#	drop all columns constant at zero
-	drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric)], 2, sum) == 0)
+	drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric), drop = FALSE], 2, sum) == 0)
 	drp <- c(drp, drp.zeros)
 	sites.columns <- sites.columns[ -drp ]
 
@@ -422,8 +422,8 @@
 				footer, "\\end{multicols}")
 		}
 		else {
-			message("\nfooter is empty with given threshold: ",
-				footer.threshold, "!")
+			#! message("\nfooter is empty with given threshold: ",
+			#!	footer.threshold, "!")
 			footer <- ""
 		}
 	
@@ -590,6 +590,7 @@
 		#	times glyph in hybrid combinations
 		#	taxon is always in first position in the table
 		tex[, 1] <- gsub("\u00D7", "$\\times$", tex[, 1], fixed = TRUE)
+		tex[, 1] <- gsub("_", ".", tex[, 1], fixed = TRUE)
 		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)
 		#	& gylph used in Sites(obj)
 		footer <- gsub("&", "\\&", footer, fixed = TRUE)

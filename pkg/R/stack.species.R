@@ -65,9 +65,11 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	test <- match(absences, unique(cov))
 	if (any(is.na(test))) {
-		stop("character \"", absences, "\" to code absences not found, but have: ", unique(cov))
-	} else {
-		cat("\n... absences are", absences)	
+		stop("character \"", absences,
+			"\" to code absences not found, but have: ", unique(cov))
+	}
+	else {
+		if (verbose) cat("\n... absences are", absences)	
 		ij <- cov != absences
 	}
 	
@@ -82,7 +84,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	if (length(grep(",", res$cov)) > 0) {
 		res$cov <- gsub(",", ".", res$cov)
 		if (verbose) {
-			"\n... groomed decimals, replaced colons with dots"
+			cat("\n... groomed decimals, replaced colons with dots")
 		}
 	
 	}
@@ -94,40 +96,51 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	if (class(test) == "factor" | class(test) == "character") {
 		convert <- TRUE
-		cat("\n... cover seems to be ordinal: ")
-		cat(names(table(test)), "\n")
-	} else {
+		if (verbose) {
+			cat("\n... cover seems to be ordinal: ")
+			cat(names(table(test)), "\n")
+		}
+	}
+	else {
 		if (class(test) == "numeric" | class(test) == "integer") {
 			if (class(test) == "integer" & dim(table(test)) == 2) {
-				cat("\n... cover seems to be logical (presence/absence)")
-				cat(names(table(test)))
-				convert <- TRUE			
-			} else {
+				convert <- TRUE
+				if (verbose) {
+					cat("\n... cover seems to be logical (presence/absence)")
+					cat(names(table(test)))
+				}			
+			}
+			else {
 				if (class(test) == "numeric" & dim(table(test)) > 2) {
 					convert <- TRUE
-					cat("\n... cover seems to be continous: ")
-					cat("\n    Tukey's five number summary:", fivenum(test), "\n")
-				} else {
+					if (verbose) {
+						cat("\n... cover seems to be continous: ")
+						cat("\n    Tukey's five number summary:", fivenum(test), "\n")
+					}
+				}
+				else {
 					if (class(test) == "integer" & dim(table(test)) > 2) {
 						convert <- TRUE
-						cat("\n... cover seems to be ordinal, coded with integers: ")
-						cat(names(table(test)))		
+						if (verbose) {
+							cat("\n... cover seems to be ordinal, coded with integers: ")
+							cat(names(table(test)))
+						}		
 					}			
 				}	
 			}			
+		convert <- TRUE
 		}
 	}
 	
-	if (convert) {
+	if (convert)
 		res$cov <- test
-	} else {
+	else
 		warning("unable to determine data type of species abundances", .call = FALSE)
-	}	
 	
 	if (verbose) {
 		cat("\n... data has", length(unique(res$layer)),
 			"layer(s):", unique(res$layer))
-		}
+	}
 	
 	#	leading spaces due to character conversion?
 	res$cov <- gsub("[[:blank:]]", "", res$cov)

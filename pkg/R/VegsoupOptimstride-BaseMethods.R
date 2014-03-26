@@ -30,14 +30,10 @@ setMethod("stride",
     	r <- x@optimstride$indicators
     	m <- match(method, names(r))
     	if (any(is.na(m))) stop("method ", m[is.na(m)], " not found")
-    	if (length(m) > 1) {
+    	if (length(m) > 1)
     		return(r[m])	
-    	}
-    	else {
-    		return(r[[m]])
-    	}
-    	
-    	    	
+    	else
+    		return(r[m]) #! not needed    	
 }) 
 
 #	S3 method consitency
@@ -91,8 +87,10 @@ setMethod("optimclass2",
 setMethod("which.max",
     signature(x = "VegsoupOptimstride"),
     function (x) {    	
-    	s <- sapply(stride(x), function (y) sapply(y, sum))
-    	apply(s, 2, which.max)
+    	r <- sapply(stride(x), function (y) sapply(y, sum))
+    	r <- apply(r, 2, which.max)
+    	
+    	return(r)
     }
 )
 
@@ -126,9 +124,11 @@ setMethod("which.max",
 		stop("no calculation for k less than 3")
 	}
 
-	s <- sapply(stride(x), function (y) sapply(y, sum))
-	res <- apply(s, 2, .turnpoints)
-	return(res)
+	r <- sapply(stride(x), function (y) sapply(y, sum))
+	r <- apply(r, 2, .turnpoints)
+	
+	if (length(r) < 1) r <- NULL
+	return(r)
 }
 
 setGeneric("peaks",

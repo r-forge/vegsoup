@@ -8,7 +8,7 @@ setGeneric("FisherTest",
 )
 setMethod("FisherTest",
 	signature(obj = "VegsoupPartition"),
-	function (obj, alternative = "two.sided") {
+	function (obj, alternative = "greater") {
 
 #	apapted from isotab.R (package 'isopam')
 #	which borrowed by itself from fisher.test

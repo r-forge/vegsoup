@@ -9,19 +9,21 @@ setMethod("contingency",
     	    	
     	if (any(names(cl) == "mode")) {
     		if (cl$mode == "R") {
-				res <- t(aggregate(as.logical(obj, ...),
+				r <- t(aggregate(as.logical(obj, ...),
 					by = list(splitAbbr(obj)$layer),
 					FUN = sum)[, -1])
-				colnames(res) <- Layers(obj)
-			} else {
+				colnames(r) <- Layers(obj)
+			}
+			else {
 				stop("omit mode argument for standard behaviour")
 			}
-    	} else {  
-			res <- t(aggregate(as.logical(obj),
-				by = list(Partitioning(obj)), FUN = sum))[-1, ]
-				colnames(res) <- unique(Partitioning(obj))
-				rownames(res) <- colnames(obj)
+    	}
+    	else {  
+			r <- aggregate(as.logical(obj), by = list(Partitioning(obj)), FUN = sum)
+			k <- r[, 1]
+			r <- t(r[, -1])			
+			colnames(r) <- k
 		}	
-		return(res)
+		return(r)
 	}	
 )

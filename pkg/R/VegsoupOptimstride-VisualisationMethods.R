@@ -30,7 +30,7 @@ setMethod("plot",
 				format(ft.threshold, scientific = TRUE)), ...)
 		#	and add	lines
 		for (i in c(1:nrow(oc1))[m]) {
-				lines(1:k, oc1[i, ], lty = i, col = cols)
+				lines(1:k, oc1[i, ], lty = i, col = cols)			
 				rug(p[[i]], side = 3, lwd = 5, col = "grey80", ticksize = -0.03)
 		}			
 		#	add rug axes to help eye-balling curve peaks

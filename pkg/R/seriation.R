@@ -21,10 +21,8 @@ setMethod("seriation",
 	
 	if (method != "dca" | method != "packed") {
 	si.dis <- as.dist(obj, "logical")
-	#	as.dist lost argument mode = "R", generic is missing
-	#	... argument
-	#	but, as.matrix has a dots ... argument!
-	#	we use this
+	#	as.dist lost argument mode = "R", generic is missing ... argument,
+	#	as.matrix has a dots ... argument, we use it!
 	sp.dis <- vegan::vegdist(as.matrix(obj, "logical", mode = "R"),
 		method = vegdist(obj))	
 	#sp.dis <- as.dist(obj, "logical", mode = "R")	

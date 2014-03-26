@@ -2,7 +2,7 @@
 # Color plots of a dissimilarity matrix, without and with ordering
 # argument nc renamed to colors with extended meaning	
 
-".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) { 
+".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method = "packed", ordered.only = FALSE, translate = FALSE, ...) { 
 	#	Suggests
 	require(gclus)
 
@@ -67,7 +67,8 @@
 				main = "Ordered Dissimilarity Matrix")			
 		}	
 		title(sub = sub)				
-	} else {
+	}
+	else {
 		if (!ordered.only) {
 			plotcolors(D.cr, rlabels = D.labels, 
 				main = "Dissimilarity Matrix")
@@ -90,5 +91,5 @@ setGeneric("coldiss",
 #}
 setMethod("coldiss",
     signature(obj = "Vegsoup"),
-    function (obj, colors, byrank = TRUE, diag = FALSE, method, ordered.only = FALSE, translate = FALSE, ...) .coldiss(obj, ...)
+    function (obj, colors, byrank = TRUE, diag = FALSE, method = "dca", ordered.only = FALSE, translate = FALSE, ...) .coldiss(obj, method = method, ...)
 )
