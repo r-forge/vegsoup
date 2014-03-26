@@ -14,7 +14,7 @@ setMethod("[",
 				stopifnot(length(i) == nrow(x))	    	
 	
 	    if (missing(j))	    	
-	    	j <- !logical(ncol(x)) 
+	    	j <- !logical(ncol(x))
 	    else
 	    	if (is.null(j)) j <- !logical(ncol(x))
 	    	else	
@@ -35,32 +35,39 @@ setMethod("[",
 				stop("index must be one of numeric, logical or character")		
 		
 		if (is.numeric(j) | is.logical(j))
-			j <- ij[[2]][j]	
+			j <- ij[[2]][j]
 		else
 			if (is.character(j))
 				j <- ij[[2]][ match(j, ij[[2]]) ]
 			else
 				stop("index must be one of numeric, logical or character")
-		
+
+		#	subsetted and/or permuted		
 		ij <- list(i, j)
-								
-		IJ <- dimnames(species(x))				
-		ij <- (IJ[[1]] %in% ij[[1]] * IJ[[2]] %in% ij[[2]]) > 0
+		IJ <- dimnames(species(x))
+		X <- species(x)
 		
-		X <- species(x)[ij, ]
+		#	subset but plots not permuted
+		X <- X[(IJ[[1]] %in% ij[[1]] * IJ[[2]] %in% ij[[2]]) > 0, ]
+		IJ <- dimnames(X)		
+		
+		#	permute plots		
+		ii <- unlist(lapply(ij[[1]], function (i) which(i == IJ[[1]])))
+		X <- X[ii, ]
+				
+		#!	don't permute species?
+			
 		if (nrow(X) < 1) stop("empty subset!", call. = FALSE)	    
-		
-		#	reorder?
-		#	X <- X[order(X$plot, X$layer, X$abbr), ]
-		
-		#	not to be replaced with species<- because
-		#	of a recursive call to "["
+				
+		#	can not to be replaced with species<- because
+		#	of a recursive call to "[" !
 		x@species <- X
+
 		#	subset remaining slots
 		i <- unique(X$plot)
 		
-		x@sites <- x@sites[match(i, rownames(Sites(x))), ]		
-		x@taxonomy <- x@taxonomy[x@taxonomy$abbr %in% abbr(X), ]
+		x@sites <- x@sites[match(i, rownames(Sites(x))), ,drop = FALSE]
+		x@taxonomy <- x@taxonomy[x@taxonomy$abbr %in% abbr(X), ,drop = FALSE]
 		
 		x@layers <- Layers(x)[Layers(x) %in% unique(X$layer)]
 		if (length(x@group) != 0) x@group <- x@group[names(x@group) %in% i]
