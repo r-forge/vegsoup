@@ -60,9 +60,9 @@ header(x)
   \item{ layers }{
     list or character. If \code{layers} is a named list, it defines start and end indices to
     assign a layer to each species observation. \code{layers} can also be of mode character.
-    If length of the supplied vector agrees to the number of species in the data set it
-    defines the layer of each species observation. If layers are already present in the
-    input file, layers can be a single character used to prune layers from taxa
+    If the length of the supplied vector agrees with the number of species in the data set,
+    it assigns a the vaule of layer to each species observation. If layers are present
+    in the input file, argument layers can be a single character used to prune layers from taxa
     abbreviations. See \sQuote{Examples}.
   }
   \item{ replace }{
