@@ -1,4 +1,4 @@
-stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon"), absences, verbose = FALSE) {
+stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon"), discard = "comment", absences, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {
 		stop("please supply either a data.frame or a csv file")	
@@ -25,7 +25,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	abbr <- grep(schema[1], names(x)) #"abbr"
 	layer <- grep(schema[2], names(x)) # "layer"
 	taxon <- grep(schema[3], names(x)) # "taxon"
-	
+		
 	#	test schema
 	test <- length(abbr) > 0 & length(layer) > 0 & length(taxon) > 0
 	
@@ -41,10 +41,24 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 		}
 		stop("can't stack object")
 	}
+
+	#	do we have other colums except schema, e.g. comment?
+	j0 <- grep(discard[1], names(x))
+	if (length(discard) > 0) {
+			if (verbose) cat("discard column", discard[1])
+			jj <- c(abbr, layer, taxon)
+			if (max(jj) < j0) {
+				j1 <- j0 + 1
+			}
+			else {
+				stop("got confused with columns: ",
+				paste(names(x)[sort(c(jj, j0))], collapse = " "))
+			}
+	}	
 	
-	#	only species abundances
-	sel <- c(max(c(abbr, layer, taxon)) + 1):ncol(x)
-	xx <- x[, sel]
+	#	susbet only species abundances
+	j <- c(j1:ncol(x))
+	xx <- x[, j]
 	
 	#	check unique column labels
 	if (!length(unique(names(xx)) == ncol(xx)))	{

@@ -41,7 +41,7 @@
 
 \usage{
 stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon"),
-              absences, verbose = FALSE)
+              discard = "comment", absences, verbose = FALSE)
 
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE)
 
@@ -71,7 +71,9 @@ rbind(..., deparse.level = 1)
   \item{ absences }{
     Character used to code absences. Can be missing, see \sQuote{Details}.
   }
-
+  \item{ discard }{
+     Names of additinal columns to be discarded.
+  }
 # Arguments for function stackCoordinates
   \item{ dsn }{
     Data source name. See \code{\link[rgdal]{readOGR}}.
