@@ -78,8 +78,10 @@
 	#	test collapse vector
 	if (any(is.na(collapse[,2]))) {
 		message("NA in collapse, dropped all species on these layers")
-		ld <- collapse[is.na(collapse[,2 ]), 1]
+		ld <- collapse[is.na(collapse[, 2]), 1]
 		collapse <- collapse[!is.na(collapse[,2 ]), ]
+		#	if we loose dimension
+		if (!is.matrix(collapse)) collapse <- t(collapse)
 		#	drop all occurences on these layers
 		X <- X[!X$layer %in% ld, ]
 		#	also drop from taxonomy

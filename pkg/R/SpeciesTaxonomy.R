@@ -1,7 +1,7 @@
 SpeciesTaxonomy <- function (x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE, skip = TRUE, verbose = FALSE, ...) {
 
 #	x = X
-#	y = txa
+#	y.file = file
 #	tmp <- c(x = F, y = T, file.x = T, file.y = F)
 
 #	test inputs
