@@ -154,6 +154,7 @@ exportMethods(
     "proj4string<-",
     "quantile",
     "rbind",
+    "relevee",
     "richness",
     "rectangles",
     "rownames",

@@ -239,3 +239,47 @@ setMethod("SpeciesList",
     	return(invisible(res))	
 	}
 )
+
+#if (!isGeneric("SpeciesList")) {
+setGeneric("relevee",
+	function (obj, plot)
+		standardGeneric("relevee")
+)
+#}
+setMethod("relevee",
+    signature(obj = "Vegsoup"),
+    function (obj, plot) {
+    	if (missing(plot)) {
+    		i <- 1
+    		message("return first plot in data set: ", rownames(obj)[i])    		
+    	} else {
+    		if (is.numeric(plot)) {
+    			stopifnot(plot %in% 1:nrow(obj))
+    			i <- plot
+    		}
+    		if (inherits(plot, "character")) {
+    			stopifnot(plot %in% rownames(obj))
+    			i <- which(rownames(obj) == plot)
+    		}
+    	}
+    	x <- obj[i, ]
+
+		#	header
+	    h <- cbind(coordinates(x), Sites(x))
+	    
+	    h <- data.frame(variable = names(h), value = t(h)[, 1])
+	    rownames(h) <- seq_len(nrow(h))
+		
+		#	species
+		l <- species(species(x))
+    	l$taxon <- Taxonomy(obj)[l$abbr, ]$taxon
+	    l <- l[order(l$layer, l$taxon), ]	    				
+    	l <- l[, c("taxon", "layer", "cov")]
+    	rownames(l) <- seq_len(nrow(l))
+    	l$layer[duplicated(l$layer)] <- ""
+    	
+    	r <- list(sites = h, species = l)
+    	return(r)	
+	}
+)
+
