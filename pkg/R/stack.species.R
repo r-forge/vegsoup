@@ -1,4 +1,4 @@
-stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer", "taxon"), discard = "comment", absences, verbose = FALSE) {
+stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer"), discard = c("taxon", "comment"), absences, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {
 		stop("please supply either a data.frame or a csv file")	
@@ -18,46 +18,31 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 				stop("please supply a data.frame")	
 		}
 	}
-	
+
+	#	for safety
 	x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
+	n <- names(x)
 	
 	#	check schema
-	abbr <- grep(schema[1], names(x)) #"abbr"
-	layer <- grep(schema[2], names(x)) # "layer"
-	taxon <- grep(schema[3], names(x)) # "taxon"
+	test <- sapply(schema, function (y) any(y == n))
 		
-	#	test schema
-	test <- length(abbr) > 0 & length(layer) > 0 & length(taxon) > 0
-	
-	if (!test) {
-		if (length(abbr) < 1) {
-			warning("did not find column", schema[1])		
-		}
-		if (length(layer) < 1) {
-			warning("did not find column", schema[2])		
-		}
-		if (length(taxon) < 1) {
-			warning("did not find column", schema[1])		
-		}
-		stop("can't stack object")
+	if (!all(test)) {
+		stop("can't stack object, did not find column(s): ",
+			paste(schema[!test], collapse = " + "))
 	}
-
-	#	do we have other colums except schema, e.g. comment?
-	j0 <- grep(discard[1], names(x))
-	if (length(discard) > 0) {
-			if (verbose) cat("discard column", discard[1])
-			jj <- c(abbr, layer, taxon)
-			if (max(jj) < j0) {
-				j1 <- j0 + 1
-			}
-			else {
-				stop("got confused with columns: ",
-				paste(names(x)[sort(c(jj, j0))], collapse = " "))
-			}
+	
+	#	first guess of starting point of taxa block	
+	j1 <- max(sapply(schema, function (y) which(y == n)))
+			
+	#	do we have other colums except schema, e.g. comment?	
+	test <- sapply(discard, function (y) any(y == n))
+	if (any(test)) {
+		j0 <- unlist(sapply(discard, function (y) which(y == n)))
+		if (max(j0) > j1) j1 <- j0
 	}	
 	
-	#	susbet only species abundances
-	j <- c(j1:ncol(x))
+	#	subset only species abundances
+	j <- c(c(j1 + 1):ncol(x))
 	xx <- x[, j]
 	
 	#	check unique column labels
@@ -66,8 +51,8 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	}
 	
 	plot <- rep(names(xx), each = nrow(xx))
-	abbr <- rep(as.character(x$abbr), ncol(xx))
-	layer <- rep(as.character(x$layer), ncol(xx))
+	abbr <- rep(as.character(x[[schema[1]]]), ncol(xx))  # we've tested schema
+	layer <- rep(as.character(x[[schema[2]]]), ncol(xx))
 	cov <- as.vector(as.matrix(xx))
 	
 	#	test absences
