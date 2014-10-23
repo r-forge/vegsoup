@@ -53,6 +53,7 @@ x <-  barmstein
 # retrieve data.frame from an Vegsoup object
 spc <- species(x)
 class(spc)
+barplot(table(spc$cov))
 
 # this is the number of all species observations over all plots and strata
 n <- nrow(species(species(x)))
