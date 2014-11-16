@@ -65,6 +65,7 @@
 	
 	res <- obj
 	
+	ii <- rownames(obj)
 	X <- species(species(res)) #! get slot data
 	Y <- coverscale(res)
 	
@@ -136,7 +137,7 @@
 		}		
 	})
 	
-	#	must bring into order
+	#	must bring into order!
 	X <- X[order(X$plot, X$layer, X$abbr), ]
 	
 	if (!is.null(Y@codes)) {
@@ -155,9 +156,14 @@
 	
 	res@species <- species(X)
 	res@layers <- unique(collapse[, 2])
-	#	ensure order
+	
+	#	ensure order to X
+	res@sites <- res@sites[match(rownames(res), rownames(res@sites)), ]
 	res@sp.points <- res@sp.points[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
 	res@sp.polygons <- res@sp.polygons[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
+	
+	#	restore original order
+	res <- res[match(ii, rownames(res)), ]
 	
 	return(invisible(res))
 }
