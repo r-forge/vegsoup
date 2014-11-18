@@ -8,3 +8,11 @@ compass  <- function (x) {
 	r[is.na(r)] <- "N"
 	return(as.character(r))
 }
+
+singletons <- function (obj) {
+	any(table(Partitioning(obj)) == 1)	
+}
+
+singleton <- function (obj) {
+	as.vector(which(table(Partitioning(obj)) == 1))
+}

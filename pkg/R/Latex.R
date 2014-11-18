@@ -588,6 +588,7 @@
 		#	check species characters
 		#	times glyph in hybrid combinations
 		#	taxon is always in first position in the table
+		tex[, 1] <- gsub("\u2715", "$\\times$", tex[, 1], fixed = TRUE)
 		tex[, 1] <- gsub("\u00D7", "$\\times$", tex[, 1], fixed = TRUE)
 		tex[, 1] <- gsub("_", ".", tex[, 1], fixed = TRUE)
 		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)

@@ -191,7 +191,8 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 			if (length(unique(G)) != k) {
 			G <- as.numeric(as.factor(defuzzify(P, method = "cut", alpha = 0.5)$cluster))
 			names(G) <- rownames(obj)
-			}		
+			}
+			if (is.null(names(G))) names(G) <- rownames(obj) # for KM!
 		}	
 		if (inherits(P, "kmeans")) {
 			G <- P$cluster

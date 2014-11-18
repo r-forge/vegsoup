@@ -160,7 +160,7 @@ if (missing(add.label)) {
 	add.label = FALSE
 }	
 if (missing(file)) {
-	file <- paste(getwd(), "/partitions.kml", sep = "")
+	file <- file.path(getwd(), "partitions.kml")
 	message("\nargument file missing, drop KML to folder ",
 		getwd(), " as ./partitions partition.kml")
 }
@@ -271,10 +271,9 @@ if (max(Partitioning(obj)) > 10) {
 			"\nuse alphabet as alternative to numbers")
 		paddle.file <- LETTERS[unique(Partitioning(obj))]
 		paddle.identifier <- LETTERS[Partitioning(obj)]
-		Partitioning(obj)
-	} else {
-		stop("styled KML ouput is currently limited to 26 groups (letter coding)")
-	}
+		} else {
+			stop("styled KML ouput is currently limited to 26 groups (letter coding)")
+		}
 	} else {	
 		paddle.file <- unique(Partitioning(obj))
 		paddle.identifier <- Partitioning(obj)
@@ -287,7 +286,7 @@ stylemap <- c(sapply(paddle.file, .stylemap.numbers))
 #	to do! order folders!
 
 points <- data.frame(partitioning = paddle.identifier,
-	coordinates(obj), plot = names(Partitioning(obj)), stringsAsFactors = FALSE)
+	coordinates(obj), plot = rownames(obj), stringsAsFactors = FALSE)
 
 points$website.url <- paste(website.url.path, points$plot, sep = "")
 points$thumbnail.url <- paste(thumbnail.url.path, points$plot, sep = "")

@@ -70,6 +70,7 @@ export(
     "latlng2tile",
     "whatshere2lnglat",
     "compass",
+    "singletons",
     "castFooter",
     "header"
 )
