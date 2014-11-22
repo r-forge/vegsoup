@@ -73,7 +73,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
     \code{vegdist(obj) <- "euclidean"}). In most cases method \code{"KM"} is preferred.
     }
     \item{ wards }{
-    calls \code{stats::hclust} with \code{method = "ward"}.
+    calls \code{stats::hclust} with \code{method = "ward.D"}.
     }
     \item{ fanny }{
     calls \code{cluster::fanny} with \code{k = k}, argument \code{memb.exp} is set to \code{1.1}

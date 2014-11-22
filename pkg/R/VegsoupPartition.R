@@ -124,7 +124,7 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 					#	iter.max = 10, nstart = 1, algorithm and irgnore trace
 					#	, ...)		
 			}, wards = {
-				P <- hclust(Xd, method = "ward")
+				P <- hclust(Xd, method = "ward.D")
 					#	members != NULL, dissimilarity matrix between clusters
 					#	instead of dissimilarities between singletons is not
 					#	meaningful
