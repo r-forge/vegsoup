@@ -3,7 +3,7 @@
 import(methods)
 
 importFrom("graphics", plot, hist)
-importFrom("stats", as.dist, quantile)
+importFrom("stats", as.dist, quantile, as.dendrogram)
 importFrom("utils", head, tail)
 
 import(coenoflex)
@@ -87,6 +87,8 @@ exportMethods(
     "as.logical",
     "as.numeric",
     "as.dist",
+    "as.hclust",
+    "as.dendrogram",
     "average",
     "bind",
     "BraunBlanquetReduce",

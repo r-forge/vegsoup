@@ -58,6 +58,7 @@ Collate: AAA.R
          dim.R
          as.matrix.R
          as.dist.R
+         as.dendrogram.R
          vegdist.R
          as.data.frame.R
          rowSums.R
