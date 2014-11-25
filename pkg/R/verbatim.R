@@ -437,13 +437,26 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
 		}
 	
 	#	seperate abundance value from species string
-	.seperate <- function (x, y) {
+	.seperateFirst <- function (x, y) {
 		require(stringr)
 		m <- regexpr(y, x) # first schema match
 		v <- str_trim(substring(x, 1, m))	# value
 		s <- str_trim(substring(x, m + 1, nchar(x))) # species
 		r <- cbind(v, s)
 		colnames(r) <- NULL
+		return(r)	
+	}
+
+	.seperateLast <- function (x, y) {
+		require(stringr)
+		r <- matrix("", nrow = length(x), ncol = 2)
+		for (i in seq_along(x)) {
+			p <- max(gregexpr(y, x[i])[[1]]) # position of last schema match
+			v <- str_trim(substring(x[i], p + 1, nchar(x[i]))) # value
+			s <- str_trim(substring(x[i], 1, p))	# species
+			r[i, 1] <- v
+			r[i, 2] <- s
+		}
 		return(r)	
 	}
 	
@@ -472,12 +485,12 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
 	
 	#	cast string to values and species
 	if (first) {
-	x <- sapply(x, function (y) .seperate(y, schema[3]))
-	x <- do.call("rbind", x)	
-	} else {
-		stop("first = FALSE not implemented")
+		x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))		
 	}
-	
+	else {
+		x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
+	}
+	x <- do.call("rbind", x)
 	r <- cbind(p, x)
 	test <- nchar(r[,2])
 	if (sum(test) != length(test)) {
