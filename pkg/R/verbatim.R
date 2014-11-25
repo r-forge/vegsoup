@@ -174,13 +174,13 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
 				message("missing dot in species",
 					txa[which(val[,i] == " ")],
-					"in column", i + (first.dot - 1))	
+					"in column", i + (jj - 1))	
 			}
 			#	misplaced value
 			else {
 				message("misplaced value in species",
 					txa[which(val[,i] != " ")],
-					"in column", i + (first.dot - 1))			
+					"in column", i + (jj - 1))			
 			}		
 		}
 		stop("please review your data and apply necessary changes")
@@ -224,9 +224,9 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	h.m[] <- unlist(vals)
 	h.m <- t(h.m)
 	
-	par <- str_trim(apply(h.m[, 1:(first.dot -1)], 1,
+	par <- str_trim(apply(h.m[, 1:(jj -1)], 1,
 		function (x) paste(x, collapse = "")), side = "right")
-	val <- h.m[, first.dot: ncol(h.m)]
+	val <- h.m[, jj: ncol(h.m)]
 	
 	#	check for spaces as seperators
 	#	hopefully less typos as in species matrix
