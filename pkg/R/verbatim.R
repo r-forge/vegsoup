@@ -40,9 +40,9 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	he <- grep("END HEAD", txt)
 	tb <- grep("BEGIN TABLE", txt)
 	te <- grep("END TABLE", txt)
-	hks <- c(hb, he, tb, te)
+	ii <- c(hb, he, tb, te)
 	
-	if (length(hks) != 4) stop("did not find all keywords!")
+	if (length(ii) != 4) stop("did not find all keywords!")
 
 	#	test tabs
 	if (length(grep("\t", txt) > 0))
@@ -64,7 +64,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	for example, lines consisting only of spaces
 	ul <- el < median(el) & el != 0
 	#	hook keywords
-	ul[hks] <- FALSE
+	ul[ii] <- FALSE
 	el <- el == 0
 	el[ul] <- TRUE
 	
@@ -128,14 +128,14 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	
 	#	search for the beginning of the data block
 	#	crude!
-	n.dots <- apply(t.m, 2,
-		function (x) sum(sapply(x, function (y) y == ".")) )
-	first.dot <- which(n.dots != 0)[1]
+	a <- apply(t.m, 2, function (x) length(grep("[[:alpha:]]", x)))
+	d <- apply(t.m, 2, function (x) length(grep("[[:punct:]]", x)))
+	jj <- which(c(d - a) > 0)[1]
 	
 	#	split species (txa) and data blocks	(val)
-	txa <- str_trim(apply(t.m[, 1:(first.dot -1)], 1,
+	txa <- str_trim(apply(t.m[, 1:(jj -1)], 1,
 		function (x) paste(x, collapse = "")), side = "right")
-	val <- t.m[, first.dot: ncol(t.m)]
+	val <- t.m[, jj: ncol(t.m)]
 	
 	#	prune layer from taxa
 	if (with.layers) {
