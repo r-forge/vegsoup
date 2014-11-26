@@ -23,9 +23,10 @@
 	#	test for overlapping plot ids
 	tmp <- test <- unlist(sapply(allargs, rownames))
 	test <- length(test) == length(unique(test))
-	if (!test) {
-		noquote(tmp[duplicated(tmp)])
-		stop("\n there are overlapping plot names")
+	if (!test) {		
+		message("there are overlapping plot names")
+		message(paste(tmp[duplicated(tmp)], collapse = " "))
+		stop()
 	}
 	#	species 'x'	
 	j <- vapply(allargs,
