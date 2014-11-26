@@ -198,7 +198,6 @@ setOldClass("VegsoupVerbatim")
 setMethod("species",
     signature(obj = "VegsoupVerbatim"),
     function (obj) {
-		#stopifnot(inherits(x, "VegsoupVerbatim"))
 		r <- data.frame(abbr = rownames(x),
 				layer = NA,
 				taxon = NA, x,
@@ -242,13 +241,13 @@ setMethod("SpeciesList",
 
 #if (!isGeneric("SpeciesList")) {
 setGeneric("relevee",
-	function (obj, plot)
+	function (obj, plot, format = FALSE)
 		standardGeneric("relevee")
 )
 #}
 setMethod("relevee",
     signature(obj = "Vegsoup"),
-    function (obj, plot) {
+    function (obj, plot, format) {
     	if (missing(plot)) {
     		i <- 1
     		message("return first plot in data set: ", rownames(obj)[i])    		
@@ -264,6 +263,7 @@ setMethod("relevee",
     	}
     	x <- obj[i, ]
 
+
 		#	header
 	    h <- cbind(coordinates(x), Sites(x))
 	    
@@ -278,8 +278,31 @@ setMethod("relevee",
     	rownames(l) <- seq_len(nrow(l))
     	l$layer[duplicated(l$layer)] <- ""
     	
-    	r <- list(sites = h, species = l)
-    	return(r)	
+    	r <- list(sites = h, species = l)    		
+    	
+    	if (format) {
+    		r1 <- as.matrix(r$species)
+			r2 <- as.matrix(r$sites)
+			
+			w <- apply(apply(r1, 2, nchar), 2, max)
+			w1 <- sapply(colnames(r1), nchar)
+			w1 > w
+			w[w1 > w] <- w1[w1 > w]
+			
+			r1 <- rbind(colnames(r1), r1)
+			dimnames(r1) <- NULL
+			r1[, 1] <- str_pad(r1[, 1], w[1] + 1, side = "right", pad = " ")
+			r1[, 2] <- str_pad(r1[, 2], w[2] + 1, side = "right")
+			r1[, 3] <- str_pad(r1[, 3], w[3], side = "right")
+			
+			r1 <- apply(r1, 1, function (x) paste(x, collapse = ""))
+			r2 <- paste(apply(r2, 1, function (x) paste (x, collapse = ": ")), collapse = ", ")
+			
+			r <- c(r1, " ", r2)	
+    	}    	
+
+    	return(r)
+    		
 	}
 )
 

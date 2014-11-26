@@ -15,7 +15,8 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		else {
 			if (is.list(layers)) {
 				stopifnot(length(names(layers)) == length(layers))
-				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))				
+				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))
+				stop("use @ assignment in inputfile")
 			}
 			else {
 				if (is.character(layers)) {
@@ -24,11 +25,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 					else
 						l <- layers
 				}
+			paste.layers <- TRUE # add layers to taxa
+			with.layers <- TRUE  # prune layer from taxa		
 			}
-			paste.layers <- TRUE
-			with.layers <- TRUE
 		}
-	} else {
+	}
+	else {
 		with.layers <- FALSE	
 	}
 
@@ -131,6 +133,15 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	a <- apply(t.m, 2, function (x) length(grep("[[:alpha:]]", x)))
 	d <- apply(t.m, 2, function (x) length(grep("[[:punct:]]", x)))
 	jj <- which(c(d - a) > 0)[1]
+	
+	#	if we have layers at the end of taxa
+	if (with.layers) {
+		jat <- which(apply(t.m, 2, function (x) all(x == at)))
+		#	next blank
+		t.at <- t.m[, jat:ncol(t.m)]
+		s <- apply(t.at, 2, function (x) length(grep("[[:space:]]", x)))
+		jj <- min(which(s > 0)) + jat		
+	}
 	
 	#	split species (txa) and data blocks	(val)
 	txa <- str_trim(apply(t.m[, 1:(jj -1)], 1,

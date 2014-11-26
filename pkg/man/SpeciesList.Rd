@@ -19,6 +19,8 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 
 \usage{
 \S4method{SpeciesList}{Vegsoup}(obj, layered)
+
+\S4method{relevee}{Vegsoup}(obj, plot, format = FALSE)
 }
 
 \arguments{
@@ -29,6 +31,9 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
     Return species list with layers, defaults to \code{FALSE}. See
     \sQuote{Details}.
   }  
+  \item{ format }{
+    logical. Format output.
+  }
   \item{ plot }{
     Index or character giving a rowname (\code{rownames(obj)}), defaults to \code{1}, the first plot
     in the data set.
@@ -72,6 +77,8 @@ taxon(x)
 relevee(x, 1)
 
 relevee(x, "bs01") # equal to the above
+
+relevee(x, 1, format = TRUE)
 }
 \keyword{methods}
 
