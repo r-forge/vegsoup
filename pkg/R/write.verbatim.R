@@ -1,5 +1,5 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE) {
+.write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE) {
 
 	#	Suggests:
 	require(stringr)
@@ -60,6 +60,10 @@
 			rule.col <- cumsum(rle(Partitioning(obj))$lengths)
 			rule <- TRUE
 		}	
+	}
+	
+	if (table.nr) {
+		rownames(obj) <- sprintf(paste0("%0", nchar(nrow(obj)), "d"), 1:nrow(obj))
 	}
 	
 	singleton <- nrow(obj) == 1
@@ -194,7 +198,7 @@
 
 #if (!inGeneric("write.verbatim")) {
 setGeneric("write.verbatim",
-	function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE)
+	function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
 		standardGeneric("write.verbatim")
 )
 #}

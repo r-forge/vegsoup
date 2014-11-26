@@ -39,7 +39,7 @@ header(x)
 
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
 
 \S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
@@ -151,6 +151,10 @@ header(x)
   \item{ latex.input }{
     Warp output in LaTex verbatim environment.
   }
+  \item{ table.nr }{
+    Create a short running number.
+  }
+  
 }
 
 \details{
