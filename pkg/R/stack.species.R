@@ -38,7 +38,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	test <- sapply(discard, function (y) any(y == n))
 	if (any(test)) {
 		j0 <- unlist(sapply(discard, function (y) which(y == n)))
-		if (max(j0) > j1) j1 <- j0
+		if (any(max(j0) > j1)) j1 <- max(j0)
 	}	
 	
 	#	subset only species abundances
