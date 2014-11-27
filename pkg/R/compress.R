@@ -23,7 +23,7 @@ setMethod("compress",
 		}
 		
 		x <- Layers(x, collapse = "0l")
-		x@taxonomy <- Taxonomy(x)[c("abbr", "taxon")]
+		x@taxonomy <- Taxonomy(x)[c("abbr", "taxon", "family")]
 	return(x)	
     }
 )
