@@ -126,6 +126,7 @@ exportMethods(
     "isamic",
     "is.continuous",
     "is.ordinal",
+    "is.occurence",
     "Latex",
     "Layers",
     "Layers<-",

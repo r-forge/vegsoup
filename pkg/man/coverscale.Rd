@@ -20,6 +20,9 @@
 \alias{is.continuous,Coverscale-method}
 \alias{is.continuous,Vegsoup-method}
 
+\alias{is.occurence}
+\alias{is.occurence,Coverscale-method}
+\alias{is.occurence,Vegsoup-method}
 
 \title{ Set or Retrieve an Abundance Scale for \code{Vegsoup*} Objects }
 
@@ -43,6 +46,8 @@ Coverscale(name, codes, lims)
 \S4method{is.ordinal}{Vegsoup}(x)
 
 \S4method{is.continuous}{Vegsoup}(x)
+
+\S4method{is.occurence}{Vegsoup}(x)
 }
 
 \arguments{

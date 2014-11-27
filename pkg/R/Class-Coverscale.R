@@ -21,13 +21,15 @@ setClass("Coverscale",
 )
 
 #	cover scale definitions
-#	validity for neagtive entries in class Vegsoup*!
+#	validity method for negative entries in class Vegsoup!
+
 #	continous scales 
-.percentage <- .counts <- .frequency <- .as.is <- list(
+.pa <- .percentage <- .counts <- .frequency <- .as.is <- list(
 	name = "percentage", codes = NULL, lims = NULL)
 .counts$name <- "counts"
 .frequency$name <- "frequency"
 .as.is$name <- "as.is"
+.pa$name <- "pa"
 
 #	ordinal scales	
 #	Braun-Blanquet new
@@ -136,7 +138,8 @@ setClass("Coverscale",
 	percentage = .percentage,
 	frequency = .frequency,
 	counts = .counts,
-	as.is = .as.is)
+	as.is = .as.is,
+	pa = .pa)
 	
 #.builtin <- c(
 #	"Braun-Blanquet", "Braun-Blanquet 2",

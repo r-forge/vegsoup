@@ -63,6 +63,11 @@ setGeneric("is.continuous", function (x)
 	standardGeneric("is.continuous"))
 #}
 
+#if (!isGeneric("is.occurence")) {
+setGeneric("is.occurence", function (x)
+	standardGeneric("is.occurence"))
+#}
+
 setMethod("is.ordinal",
     signature(x = "Coverscale"),
     function (x) {
@@ -74,6 +79,13 @@ setMethod("is.continuous",
     signature(x = "Coverscale"),
     function (x) {
   		is.null(x@codes) & is.null(x@codes)
+    }
+)
+
+setMethod("is.occurence",
+    signature(x = "Coverscale"),
+    function (x) {
+  		x@name == "pa"
     }
 )
 
@@ -112,31 +124,39 @@ setReplaceMethod("coverscale",
 	signature(x = "Vegsoup", value = "Coverscale"),
 	function (x, value) {
 #		x <- coenoflex(100,100)
-#		value <- Coverscale("ordinal")			
-		transform <- is.continuous(x) & is.ordinal(value)
-		x@coverscale <- value			
+#		value <- Coverscale("ordinal")
+		
+		transform <- is.continuous(x) & is.ordinal(value) | is.occurence(value)
+		x@coverscale <- value
+					
 		if (transform) {
-			x <- as.numeric(species(x)$cov) # we store characters
-			if (max(x) > 100) {
-				stop("highest cover value is bigger than 100")
+			if (is.occurence(value)) {
+				x@species$cov <- as.character(1)
 			}
-			#	move lowest value into range
-			x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
-			
-			x@species$cov <- as.character(
-				cut(x, 
-					breaks = c(coverscale(x)@lims, 100),
-					labels = coverscale(x)@codes,
-					include.lowest = TRUE))					
-			message("transformed cover values!")
+			else {
+				x <- as.numeric(species(x)$cov) # we store characters
+				if (max(x) > 100) {
+					stop("highest cover value is bigger than 100")
+				}
+				#	move lowest value into range
+				x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+				
+				x@species$cov <- as.character(
+					cut(x, 
+						breaks = c(coverscale(x)@lims, 100),
+						labels = coverscale(x)@codes,
+						include.lowest = TRUE))					
+				message("transformed cover values!")				
+			test <- any(is.na(
+				factor(species(x)$cov,
+				levels = coverscale(x)@codes,
+				labels = coverscale(x)@lims)))
+
+			if (test) stop("coverscale does not match data", call. = FALSE)
+			}
+		
 		}
-		test <- any(is.na(
-			factor(species(x)$cov,
-			levels = coverscale(x)@codes,
-			labels = coverscale(x)@lims)))
-		if (test) {
-			stop("coverscale does not match data", call. = FALSE)
-		}		
+		
 		return(x)		
 	}
 )
@@ -146,32 +166,10 @@ setReplaceMethod("coverscale",
 	function (x, value) {		
 		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
        	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
-		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")		
-		transform <- is.continuous(coverscale(x)) & is.ordinal(value)
-		x@coverscale <- value			
+		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")
 		
-		if (transform) {
-			tmp <- as.numeric(species(x)$cov) # as long as we store characters
-			if (max(tmp) > 100) {
-				stop("highest cover value is bigger than 100")
-			}
-
-			#	move lowest value into range
-			tmp[tmp < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+		coverscale(x) <- value
 			
-			x@species$cov <- as.character(
-				cut(tmp,
-					breaks = c(coverscale(x)@lims, 100),
-					labels = coverscale(x)@codes,
-					include.lowest = TRUE))
-			message("transformed cover values!")
-		}
-		test <- any(is.na(factor(species(x)$cov,
-			levels = coverscale(x)@codes,
-			labels = coverscale(x)@lims)))
-		if (test) {
-			stop("coverscale does not match data", call. = FALSE)
-		}		
 		return(x)		
 	}
 )
