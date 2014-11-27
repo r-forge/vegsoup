@@ -112,6 +112,14 @@ setMethod("is.ordinal",
     }
 )
 
+setMethod("is.occurence",
+    signature(x = "Vegsoup"),
+    function (x) {
+  		is.occurence(coverscale(x))
+    }
+)
+
+
 setMethod("coverscale",
     signature(x = "Vegsoup"),
     function (x) {
@@ -135,23 +143,23 @@ setReplaceMethod("coverscale",
 				message("transformed cover values!")
 			}
 			else {
-				x <- as.numeric(species(x)$cov) # we store characters
-				if (max(x) > 100) {
+				xx <- as.numeric(species(x)$cov) # we store characters
+				if (max(xx) > 100) {
 					stop("highest cover value is bigger than 100")
 				}
 				#	move lowest value into range
-				x[x < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
+				xx[xx < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
 				
 				x@species$cov <- as.character(
-					cut(x, 
+					cut(xx, 
 						breaks = c(coverscale(x)@lims, 100),
 						labels = coverscale(x)@codes,
 						include.lowest = TRUE))
 				message("transformed cover values!")											
-			test <- any(is.na(
-				factor(species(x)$cov,
-				levels = coverscale(x)@codes,
-				labels = coverscale(x)@lims)))
+				test <- any(is.na(
+					factor(species(x)$cov,
+					levels = coverscale(x)@codes,
+					labels = coverscale(x)@lims)))
 
 			if (test) stop("coverscale does not match data", call. = FALSE)
 			}			

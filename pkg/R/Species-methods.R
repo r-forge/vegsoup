@@ -181,9 +181,9 @@ setMethod("abbr",
 		message("duplicates found: ")
 		print(x[duplicated(x), ])
 	}
+	#	explicit ordering!
 	x <- x[order(x$plot, x$layer, x$abbr), ]	
 	return(species(x))
-
 }
 
 

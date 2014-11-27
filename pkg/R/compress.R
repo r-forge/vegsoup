@@ -11,13 +11,19 @@ setMethod("compress",
 		
 		if (!missing(retain)) {
 			j <- match(retain, names(x))
-			if (any(j))	x@sites <- data.frame(compress = Sites(x)[, j],
-				row.names = rownames(x))
+			if (any(j))	x@sites <- data.frame(
+				compress = Sites(x)[, j],
+				row.names = rownames(Sites(x))) # rownames(x)
 		}
 		else {
-			x@sites <- data.frame(compress = rep(TRUE, nrow(x)),
-				row.names = rownames(x))
-		}			
+			x@sites <- data.frame(
+				compress = rep(TRUE, nrow(x)),
+				cols = ncol(x),
+				row.names = rownames(Sites(x)))  # rownames(x)
+		}
+		
+		x <- Layers(x, collapse = "0l")
+		x@taxonomy <- Taxonomy(x)[c("abbr", "taxon")]
 	return(x)	
     }
 )

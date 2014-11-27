@@ -7,7 +7,7 @@
 \title{ Compress object and retain minimal information }
 
 \description{
-Sets \code{Coverscale("pa")} and reduces columns of sites.
+Sets \code{Coverscale("pa")}, reduces columns of sites, collapses all layers (if present), and reduces taxonomy to only the mandatory columns.
 }
 
 \usage{

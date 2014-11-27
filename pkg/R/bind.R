@@ -11,7 +11,7 @@
 			function (x) coverscale(x)@name))))
 	if (test != 1) {
 		stop("\n cover scale is not the same for all objects")
-	}  else {
+	} else {
 		#	fails!
 		scale <- coverscale(allargs[[1]])
 		#scale <- sapply(allargs, coverscale, simplify = FALSE)[[1]]
@@ -28,24 +28,12 @@
 		message(paste(tmp[duplicated(tmp)], collapse = " "))
 		stop()
 	}
-	#	species 'x'	
-	j <- vapply(allargs,
-		FUN = function (x) nrow(species(species(x))), #! use slot data, need?
-		FUN.VALUE = integer(1))
-	#	implement rbind method for class Species	
-    x <- as.data.frame(matrix("", nrow = sum(j), ncol = 4),
-    	rownames = 1:sum(j), stringsAsFactors = FALSE)
-    names(x) <- c("plot", "abbr", "layer", "cov")
-    x$plot <- unlist(sapply(allargs,
-    	FUN = function (x) species(x)$plot))
-    x$abbr <- unlist(sapply(allargs,
-    	FUN = function (x) species(x)$abbr))    
-    x$layer <- unlist(sapply(allargs,
-    	FUN = function (x) species(x)$layer))        
-    x$cov <- unlist(sapply(allargs,
-    	FUN = function (x) species(x)$cov))
+	
+	#	species
+	#	invokes	explicit ordering!
+	x <- do.call("rbind", sapply(allargs, species))		
 
-	#	sites 'y'
+	#	sites
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
 	#	copied from Vegsoup.R!
 	y <- reshape(y,	direction = "wide",
@@ -57,17 +45,18 @@
     #	assign row names
 	rownames(y) <- y$plot 
 	y <- y[, -grep("plot", names(y))]
-	#	set NAs
-	# y[is.na(y)] <- 0
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
+	#	test <- all(unique(x$plot) == unique(y$plot))
 	#	change longitude column!
 	sel <- grep("longitude", names(y))
 	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
+    
     #	taxonomy
-	z <- do.call("rbind", sapply(allargs, Taxonomy, simplify = FALSE))
-	z <- unique(z)
-	z <- z[order(z$abbr), ]
+    #	complicated as long as we don't have slot taxonomy as class "Taxonomy"
+    z <- sapply(sapply(allargs, Taxonomy, simplify = FALSE), taxonomy)
+	z <- taxonomy(do.call("rbind", z))
+	
 	#	spatial points, taken from sp::rbind.SpatialPointsDataFrame because
 	#	of dispatch issue
     pts <- sapply(allargs, SpatialPointsVegsoup, simplify = FALSE)
@@ -93,7 +82,7 @@
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	
 	res <- new("Vegsoup",
-		species = species(x),
+		species = x,
 		sites = y, 
 		taxonomy = z,
 		coverscale = scale,

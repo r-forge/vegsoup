@@ -77,12 +77,19 @@ setMethod("rbind",
     signature(... = "Taxonomy"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)	
-		res <- do.call("rbind", lapply(allargs, taxonomy))		
-		if (!length(unique(res$abbr)) == nrow(res)) {
-			message("intersecting taxa abbreviations ('abbr') found,",
-				" drop what is doubled!")
-			res <- unique(res)
+		r <- do.call("rbind", lapply(allargs, taxonomy))
+		r <- unique(r)
+		#	explicit ordering!
+		r <- r[order(r$abbr), ]
+		#	we might find differnt spelling of taxon for the same abbr!
+		test <- duplicated(r$abbr)
+		if (any(test)) {
+			a <- r$abbr[which(test)]
+			print(r[r$abbr == a[[1]], ])
+			stop("found duplicates in abbr/taxon pair", call. = FALSE)
 		}
-		return(taxonomy(res))
+		rownames(r) <- r$abbr
+	
+		return(taxonomy(r))
 	}
 )	    	

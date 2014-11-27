@@ -15,7 +15,12 @@
 	}
 	#	if there is nothing to do
 	if (length(obj@layers) < 2) {
-		message("obj has already only a single layer: ", obj@layers)
+		if (verbose) {
+			message("obj has already only a single layer: ",
+			obj@layers, ", set to: ", collapse)
+		}	
+		species(obj)$layer <- collapse
+		obj@layers <- collapse
 		return(obj)
 	}
 	

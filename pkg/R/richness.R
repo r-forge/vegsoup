@@ -3,6 +3,7 @@ setGeneric("richness",
 	function (obj, ...)
 		standardGeneric("richness")
 )
+
 setMethod("richness",
     signature(obj = "Vegsoup"),
 	function (obj, choice = c("dataset", "sample")) {
@@ -20,7 +21,7 @@ setMethod("richness",
 			res <- length(unique(splitAbbr(obj)$abbr))
 		}, "sample" = {
 			#	slow but reliable	
-			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
+			res <- rowSums(Layers(obj, collapse = "0l", verbose = FALSE))
 			#	ensure order
 			res <- res[match(rownames(obj), names(res))]
 		})
@@ -42,12 +43,12 @@ setMethod("richness",
 			res <- length(unique(splitAbbr(obj)$abbr))
 		}, "sample" = {
 			#	slow but reliable	
-			res <- rowSums(Layers(obj, aggregate = "layer", verbose = FALSE))
+			res <- rowSums(Layers(obj, collapse = "0l", verbose = FALSE))
 			#	ensure order
 			res <- res[match(rownames(obj), names(res))]			
 		}, "partition" = {
 		#	also not very fast?	
-			res <- as.logical(Layers(obj, aggregate = "layer", verbose = FALSE))
+			res <- as.logical(Layers(obj, collapse = "0l", verbose = FALSE))
 			res <- sapply(1:getK(obj),
 				function (x) {
 					tmp <- res[Partitioning(obj) == x, ]
