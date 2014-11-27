@@ -95,6 +95,7 @@ exportMethods(
 #   "coerce",
     "colSums",
     "colMeans",
+    "compress",
     "Confus",
     "constancy",
     "contingency",

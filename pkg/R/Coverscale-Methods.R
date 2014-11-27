@@ -132,6 +132,7 @@ setReplaceMethod("coverscale",
 		if (transform) {
 			if (is.occurence(value)) {
 				x@species$cov <- as.character(1)
+				message("transformed cover values!")
 			}
 			else {
 				x <- as.numeric(species(x)$cov) # we store characters
@@ -145,19 +146,17 @@ setReplaceMethod("coverscale",
 					cut(x, 
 						breaks = c(coverscale(x)@lims, 100),
 						labels = coverscale(x)@codes,
-						include.lowest = TRUE))					
-				message("transformed cover values!")				
+						include.lowest = TRUE))
+				message("transformed cover values!")											
 			test <- any(is.na(
 				factor(species(x)$cov,
 				levels = coverscale(x)@codes,
 				labels = coverscale(x)@lims)))
 
 			if (test) stop("coverscale does not match data", call. = FALSE)
-			}
-		
+			}			
+		return(x)
 		}
-		
-		return(x)		
 	}
 )
 
