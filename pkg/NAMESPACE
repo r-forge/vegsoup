@@ -26,7 +26,8 @@ importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
-                      proj4string, "proj4string<-", spTransform)
+                      proj4string, "proj4string<-", spTransform,
+                      over)
 
 import(rgdal)
 
@@ -147,6 +148,7 @@ exportMethods(
     "optindval",
     "optsil",
     "outlier",
+    "over",
     "partana",
     "Partition",
     "Partitioning",

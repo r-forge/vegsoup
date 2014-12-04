@@ -33,6 +33,9 @@
 \alias{SpatialPolygonsVegsoup}
 \alias{SpatialPolygonsVegsoup,Vegsoup-method}
 
+\alias{over}
+\alias{over,Vegsoup,SpatialPolygonsDataFrame-method}
+
 \title{ Spatial Methods for \code{Vegsoup*} Objects } 
 
 \description{
@@ -57,11 +60,16 @@ Spatial methods as defined in package \pkg{sp}.
 \S4method{SpatialPointsVegsoup}{Vegsoup}(obj)
 
 \S4method{SpatialPolygonsVegsoup}{Vegsoup}(obj)
+
+\S4method{over}{Vegsoup}(x, y, returnList = FALSE, fn = NULL, ...)
 }
 
 \arguments{
   \item{ x, obj }{
-    \code{Vegsoup*} object.
+    \code{Vegsoup} object.
+  }
+  \item{ y }{
+    \code{SpatialPolygonsDataFrame} object.
   }
   \item{ value }{
     For \code{coordinates} spatial coordinates; either a \code{"matrix"},
@@ -76,6 +84,9 @@ Spatial methods as defined in package \pkg{sp}.
   }
   \item{ \dots }{
     Additional arguments, not used.
+  }
+  \item{ returnList, fn }{
+    See \code{\link{over}} in \pkg{sp}.
   }
 }
 
@@ -96,12 +107,15 @@ All methods operate on the spatial slots of an object: \code{SpatialPointsVegsou
 
   \item
   \code{proj4string} retrieves or sets the projection attributes (coordinate
-  reference system). See See \code{\link[sp:proj4string]{proj4string}} and
+  reference system). See \code{\link[sp:proj4string]{proj4string}} and
   \code{\linkS4class{CRS}} for details.
 
   \item
   \code{spTransform} provides transformation between datum(s) and conversion between
   projections (also known as projection and/or re-projection).
+
+  \item
+  \code{over} provides an overlay method for spatial polygons.
 }
 }
 
