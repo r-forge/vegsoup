@@ -32,7 +32,12 @@ setMethod("compress",
 		}
 		
 		x <- Layers(x, collapse = "0l")
-		x@taxonomy <- Taxonomy(x)[c("abbr", "taxon", "family")]
+		
+		z <- Taxonomy(x)
+		j <- c("abbr", "taxon", "family", "level")
+		j <- match(j, names(z))
+		
+		x@taxonomy <- z[, j[!is.na(j)]]
 	return(x)	
     }
 )

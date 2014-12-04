@@ -23,8 +23,9 @@ Sets \code{Coverscale("pa")}, reduces columns of sites, collapses all layers (if
   }
 }
 
-%\details{
-%}
+\details{
+The method tries to retain columns \code{family} and \code{level} from \code{Taxonomy(x)} if present and it will otherwise just return the mandatory columns \code{abbr} and \code{taxon}.
+}
 
 \value{
   returns an object depending on the input class. 
