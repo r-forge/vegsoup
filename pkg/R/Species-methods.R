@@ -198,12 +198,12 @@ setOldClass("VegsoupVerbatim")
 setMethod("species",
     signature(obj = "VegsoupVerbatim"),
     function (obj) {
-		r <- data.frame(abbr = rownames(x),
+		r <- data.frame(abbr = rownames(obj),
 				layer = NA,
-				taxon = NA, x,
+				taxon = NA, obj,
 				check.names = FALSE, stringsAsFactors = FALSE)
 						
-		if (length(grep("@", rownames(x))) > 0 ) {
+		if (length(grep("@", rownames(obj))) > 0 ) {
 			a <- strsplit(as.character(r$abbr), "@")			
 			r$abbr <- sapply(a, "[[", 1)		
 			r$layer <- sapply(a, "[[", 2)			
