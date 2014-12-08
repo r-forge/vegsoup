@@ -1,5 +1,5 @@
 #	function to import monospaced commuity tables
-read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), species.only = FALSE, verbose = TRUE) {
+read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), species.only = FALSE, vertical = TRUE, verbose = TRUE) {
 
 	#	Suggests:
 	require(stringr)
@@ -21,7 +21,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			else {
 				if (is.character(layers)) {
 					if (length(layers) == 1)
-						at <- "@"			
+						at <- "@"
 					else
 						l <- layers
 				}
@@ -65,7 +65,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	find also uncomplete lines not representing data
 	#	for example, lines consisting only of spaces
 	ul <- el < median(el) & el != 0
-	#	hook keywords
+	#	keywords
 	ul[ii] <- FALSE
 	el <- el == 0
 	el[ul] <- TRUE
@@ -74,47 +74,33 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	txt <- str_trim(txt, side = "right")
 	
 	#	select elements with species abundances
-	sel1 <- rep(FALSE, length(txt))
+	#	and header entries
+	sel1 <- sel2 <- rep(FALSE, length(txt))
 	sel1[(tb + 1) : (te - 1)] <- TRUE
-	sel1[el] <- FALSE # omit empty lines
-	
-	#	select elements with header entries
-	sel2 <- rep(FALSE, length(txt))
 	sel2[(hb + 1) : (he - 1)] <- TRUE
-	sel2[el] <- FALSE # omit empty lines
-	
+	sel1[el] <- sel2[el] <- FALSE # omit empty lines
+		
 	#	the table as a vector
 	#	of strings for each line
-	t.txt <- txt[sel1]
-	a.txt <- txt[sel2]
+	t.txt <- txt[sel1] # taxa
+	h.txt <- txt[sel2] # header
 	
 	#	test what we have done so far
 	#	header may have trimming errors
-	nc <- nchar(a.txt)
+	nc <- nchar(h.txt)
 	test <- nc < median(nc)
 	
-	if (any(test)) {
-		a.txt[test] <- str_pad(a.txt[test], max(nc), side = "right")	
-	}
+	if (any(test)) h.txt[test] <- str_pad(h.txt[test], max(nc), side = "right")
 	
-	#	there might still remain inconsistencies in taxa block
-	test <- nchar(t.txt)
-	if (length(unique(test)) > 1) {
-		stop("length of characters",
-			" is not the same for all lines!",
-			call. = FALSE)
-	}
+	#	there might still remain inconsistencies
+	#	test taxa block
+	test1 <- length(unique(nchar(t.txt))) > 1
+	error <- "length of characters is not the same on all lines!"
+	if (test1) stop(, call. = FALSE)
 	
-	#	test header again 
-	test <- nchar(a.txt)
-	if (length(unique(test)) > 1) {
-		stop("length of characters",
-			" is not the same for all lines!",
-			"\n please inspect line(s) ",
-			which(test != median(test)),
-			" in HEADER",
-			call. = FALSE)
-	}
+	#	test header
+	test2 <- length(unique(nchar(h.txt))) > 1
+	if (test2) stop(error, which(nchar(h.txt) != median(nchar(h.txt))),	call. = FALSE)
 	
 	#	a mono spaced type matrix
 	#	each cell is a single glyph, space or dot
@@ -129,7 +115,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	t.m <- t(t.m)
 	
 	#	search for the beginning of the data block
-	#	crude!
+	#	crude and prone to error!
 	a <- apply(t.m, 2, function (x) length(grep("[[:alpha:]]", x)))
 	d <- apply(t.m, 2, function (x) length(grep("[[:punct:]]", x)))
 	jj <- which(c(d - a) > 0)[1]
@@ -187,7 +173,6 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 					txa[which(val[,i] == " ")],
 					"in column", i + (jj - 1))	
 			}
-			#	misplaced value
 			else {
 				message("misplaced value in species",
 					txa[which(val[,i] != " ")],
@@ -207,76 +192,87 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	}
 	
 	#	and omit 
-	if (any(n.space == 0)) {
-		val <- val[, n.space == 0]
-	}
+	if (any(n.space == 0)) val <- val[, n.space == 0]
 	
 	if (verbose) {
 		cat("\ncharacters found in the species data block:",
 		sort(unique(as.vector(val))), "\n")
 	}
 	
-	###	the species data block
+	#	the species
 	x <- data.frame(abbr = txa, val, stringsAsFactors = FALSE)
 	
-	#	attributes
-	#	test string length
-	ne <- sapply(a.txt, nchar)
-	if (any(ne < median(ne))) {
-		a.txt[ne < median(ne)] <-
-			str_pad(a.txt[ne < median(ne)], width = median(ne), side = "right")
+	#	header	
+	if (!vertical) {
+		#	we use object 'jj' here and hope that fits?
+		par <- str_trim(substring(h.txt, 1, jj -1), "right")
+		
+		val <- substring(h.txt, jj, unique(nchar(h.txt)))
+		val <- sapply(val, function (x) strsplit(x, "[[:space:]]"))
+		val <- t(sapply(val, function (x) x[x != ""]))
+		dimnames(val) <- NULL
+
+		#	the header
+		y <- data.frame(par, val, stringsAsFactors = FALSE)
+		attr <- vector("list", length = length(par))
+		names(attr) <- par
+		
+		stopifnot(ncol(x) == ncol(y))
 	}
 	
-	h.m <- matrix(" ", ncol = length(a.txt),
-		nrow = max(sapply(a.txt, nchar)))
-	vals <- sapply(a.txt, function (x) {
-		sapply(1:nchar(x), function (y) substring(x, y, y), USE.NAMES = FALSE)
-	}, simplify = FALSE, USE.NAMES = FALSE)
-	h.m[] <- unlist(vals)
-	h.m <- t(h.m)
-	
-	par <- str_trim(apply(h.m[, 1:(jj -1)], 1,
-		function (x) paste(x, collapse = "")), side = "right")
-	val <- h.m[, jj: ncol(h.m)]
-	
-	#	check for spaces as seperators
-	#	hopefully less typos as in species matrix
-	n.space <- apply(val, 2,
-		function (x) sum(sapply(x, function (y) y == " ")) )
-	#	and omit
-	#	needs a second condition because there
-	#	might be a blank in each column
-	if (any(n.space == 0) | any(n.space == nrow(val))) {
-		val <- val[, n.space != nrow(val)]
-	}
-	
-	#	for sanity
-	if (dim(val)[2] != (dim(x)[2] - 1)) {
-		stop("\nplease check your header data for misplaced characters")
-	}
-	
-	#	header blocking variable
-	for (i in 1:length(par)) {	
-		if (par[i] == "") {
-			par[i] <- last
-		} else {
-			last <- par[i]
+	if (vertical) {
+		ne <- sapply(h.txt, nchar)
+		if (any(ne < median(ne))) {
+			h.txt[ne < median(ne)] <-
+				str_pad(h.txt[ne < median(ne)], width = median(ne), side = "right")
 		}
+		
+		h.m <- matrix(" ", ncol = length(h.txt),
+			nrow = max(sapply(h.txt, nchar)))
+		vals <- sapply(h.txt, function (x) {
+			sapply(1:nchar(x), function (y) substring(x, y, y), USE.NAMES = FALSE)
+		}, simplify = FALSE, USE.NAMES = FALSE)
+		h.m[] <- unlist(vals)
+		h.m <- t(h.m)
+		
+		par <- str_trim(apply(h.m[, 1:(jj -1)], 1,
+			function (x) paste(x, collapse = "")), side = "right")
+		val <- h.m[, jj: ncol(h.m)]
+		
+		#	check for spaces as seperators
+		#	hopefully less typos as in species matrix
+		n.space <- apply(val, 2,
+			function (x) sum(sapply(x, function (y) y == " ")) )
+		#	and omit
+		#	needs a second condition because there
+		#	might be a blank in each column
+		if (any(n.space == 0) | any(n.space == nrow(val))) {
+			val <- val[, n.space != nrow(val)]
+		}
+		
+		#	for sanity
+		if (dim(val)[2] != (dim(x)[2] - 1)) {
+			stop("\nplease check your header data for misplaced characters")
+		}
+		
+		#	header blocking variable
+		for (i in 1:length(par)) {	
+			if (par[i] == "")	par[i] <- last else last <- par[i]
+		}
+		
+		#	the header
+		y <- data.frame(par, val, stringsAsFactors = FALSE)
+		attr <- vector("list", length = length(unique(par)))
+		names(attr) <- unique(par)
 	}
-	
-	### the header attributes	
-	y <- data.frame(par, val, stringsAsFactors = FALSE)
-	attr <- vector("list", length = length(unique(par)))
-	names(attr) <- unique(par)
-	
+
+	#	string grooming and type convert		
 	for (i in par) {
 		#	i = unique(par)[3]
-		tmp <- str_trim(
-			apply(y[y[, 1] == i, -1], 2, function (x) {
-				paste(x, collapse = "")			
-			}))
-		#	remove dots and drop leading zeros!		
-		attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE))	
+		tmp <- str_trim(apply(y[y[, 1] == i, -1], 2, paste, collapse = ""))
+		#	remove dots and drop leading zeros,
+		#	but not for colnames (we preserve what is in the file)
+		if (i == colnames)	attr[[i]] <- tmp else attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE))	
 	}
 	
 	#	finally assign abbr to rownames and turn into matrix
@@ -310,7 +306,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 					stop("duplicated colnames not allowed: ",
 					paste(as.character(cn[duplicated(cn)]), collapse = " & "))				
 				}
-				dimnames(x)[[2]] <- cn
+				dimnames(x)[[2]] <- as.character(cn)
 				attributes(x) <- c(attributes(x), attr)
 			}
 			else {

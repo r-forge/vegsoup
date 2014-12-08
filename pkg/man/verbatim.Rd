@@ -28,7 +28,7 @@
 
 \usage{
 read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
-         species.only = FALSE, verbose = TRUE)
+         species.only = FALSE, vertical = TRUE, verbose = TRUE)
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
          collapse = ",", abundance)
@@ -82,6 +82,9 @@ header(x)
   }
   \item{ species.only }{
     logical. Just return a vector of species extracted from the data set.
+  }
+  \item{ vertical }{
+    logical. Set to \code{FALSE} if numbers are not stacked vertically.
   }
   \item{ verbose }{
     Print diagnostic messages.
