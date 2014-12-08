@@ -197,6 +197,7 @@ exportMethods(
     "Taxonomy",
     "Taxonomy<-",
     "threshold",
+#   "translate", as species<- data.fame method
     "typical",
     "vegdist",
     "vegdist<-",

@@ -64,6 +64,24 @@ setMethod("species",
     
 )
 
+setReplaceMethod("species",
+	signature(obj = "Species", value = "data.frame"),
+	function (obj, value) {
+		value <- value[, c("abbr", "taxon")]
+		
+		r <- species(obj)
+		a <- factor(r$abbr)
+		levels(a) <- value$abbr[match(levels(a), value$taxon)]
+		r$abbr <- a
+		
+		stopifnot(!any(is.na(r$abbr)))
+		
+		r <- species(r)
+		
+		return(r)
+	}
+)
+
 setMethod("species",
     signature(obj = "SpeciesTaxonomy"),
     function (obj) species(slot(obj, "species")) # ? slot(obj, "species")
