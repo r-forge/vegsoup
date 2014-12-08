@@ -33,7 +33,7 @@ read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
          collapse = ",", abundance)
 
-castFooter(file, schema = c(":", ",", " "), first = TRUE)
+castFooter(file, schema = c(":", ",", " "), first = TRUE, layers)
 
 header(x)
 
@@ -115,6 +115,10 @@ header(x)
     value.
 }
 
+## Arguments to function \code{read.verbatim}
+  \item{ layers }{
+    character. Separator used for trailing layer value (e.g. genus species@hl).
+  }
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
     \code{Vegsoup} object.
@@ -196,7 +200,7 @@ The print method for objects of class \code{VegsoupVerbatim} uses \code{as.data.
 
 \code{write.verbatim} writes a file to disk and invisibly returns the vector of characters written to the file.
 
-\code{castFooter} returns a matrix with three columns.
+\code{castFooter} returns a matrix with three or four columns, depending on argument \code{layers}.
 }
 
 \note{

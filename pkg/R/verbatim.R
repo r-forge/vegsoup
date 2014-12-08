@@ -437,11 +437,18 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 }
 
 #	cast species (and abundances) given in table footers
-castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
+castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) {
 	require(stringr)
 		if (missing(file)) {
 			stop("need a file name")
 		}
+	if (!missing(layers)) {
+		at <- layers[1]
+		layers = TRUE
+	}
+	else {
+		layers = FALSE
+	}
 	
 	#	seperate abundance value from species string
 	.seperateFirst <- function (x, y) {
@@ -504,7 +511,14 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE) {
 		message("at least abundance values are not speperated properly")
 	}
 	colnames(r) <- c("plot", "cov", "taxon")
-	return(r)
+	
+	if (layers) {
+		x <- strsplit(r[,3], at)
+		x2 <- 
+		x2 <- 
+		r <- cbind(r[, 1:2], taxon = sapply(x, "[", 1), layer = paste0(at, sapply(x, "[", 2)))
+	}
+	return(as.data.frame(r))
 }
 
 #	accesor to get header data from VegsoupVerbatim objects
