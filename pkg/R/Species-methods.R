@@ -71,11 +71,16 @@ setReplaceMethod("species",
 		
 		r <- species(obj)
 		a <- factor(r$abbr)
-		levels(a) <- value$abbr[match(levels(a), value$taxon)]
-		r$abbr <- a
+		i <- match(levels(a), value$taxon)
+				
+		if (any(is.na(i))) {
+			stop("value does not match for:\n", levels(a)[nas],
+				"\npmatch returns:\n", value$taxon[pmatch(levels(a)[nas], value$taxon)],
+				call. = FALSE)	
+		}
 		
-		stopifnot(!any(is.na(r$abbr)))
-		
+		levels(a) <- value$abbr[i]
+		r$abbr <- a		
 		r <- species(r)
 		
 		return(r)
