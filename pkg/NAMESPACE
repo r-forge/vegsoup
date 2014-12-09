@@ -125,6 +125,7 @@ exportMethods(
     "Indpower",
     "Indspc",
     "Indval",
+    "identical",
     "isamic",
     "is.continuous",
     "is.ordinal",

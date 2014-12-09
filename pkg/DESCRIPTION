@@ -36,6 +36,7 @@ Collate: AAA.R
          Species-methods.R
          Taxonomy-methods.R
          SpeciesTaxonomy-Methods.R
+         identical.R
          compress.R
          googletiles.R
          reshape.R
