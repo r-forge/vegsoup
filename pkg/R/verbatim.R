@@ -516,7 +516,9 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 		x <- strsplit(r[,3], at)
 		x2 <- 
 		x2 <- 
-		r <- cbind(r[, 1:2], taxon = sapply(x, "[", 1), layer = paste0(at, sapply(x, "[", 2)))
+		r <- cbind(r[, 1:2],
+			taxon = sapply(x, "[", 1),
+			layer = gsub(at, "", paste0(at, sapply(x, "[", 2))))
 	}
 	return(as.data.frame(r))
 }
