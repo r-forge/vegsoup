@@ -208,7 +208,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		par <- str_trim(substring(h.txt, 1, jj -1), "right")
 		
 		val <- substring(h.txt, jj, unique(nchar(h.txt)))
-		val <- sapply(val, function (x) strsplit(x, "[[:space:]]"))
+		val <- sapply(val, function (x) strsplit(x, "[[:blank:]]"))
 		val <- t(sapply(val, function (x) x[x != ""]))
 		dimnames(val) <- NULL
 
@@ -217,7 +217,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		attr <- vector("list", length = length(par))
 		names(attr) <- par
 		
-		stopifnot(ncol(x) == ncol(y))
+		if (ncol(x) != ncol(y)) stop("error parsing header with option vertical", vertical)
 	}
 	
 	if (vertical) {
