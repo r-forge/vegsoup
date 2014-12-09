@@ -61,18 +61,19 @@
 			stringsAsFactors = FALSE))
 
 	cents <- coordinates(pts)
-	ids <- pts$plot
+	ids <- as.character(pts$plot) # leading zeros!
 
 	pgs <- vector("list", nrow(cents))
 	for (i in 1:nrow(cents)) {
 		pg <- coordinates(sp::GridTopology(cents[i,] - 0.05  /2, c(0.05, 0.05), c(2,2)))
-		pg <- sp::Polygons(list(sp::Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), i)
+		pg <- sp::Polygons(list(sp::Polygon(rbind(pg[c(1, 3 ,4 , 2),], pg[1, ]))), pts$plot[i]) # ID
 		pgs[[i]] <- pg
 	}
 
 	pgs <- sp::SpatialPolygons(pgs)
-	pgs <- sp::SpatialPolygonsDataFrame(pgs,
-		data = data.frame(plot = as.character(sort(unique(x$plot)))))
+	df <- data.frame(plot = pts$plot, row.names = pts$plot)
+	pgs <- sp::SpatialPolygonsDataFrame(pgs, data = data.frame(plot = df))
+	 ## as.character(sort(unique(x$plot)))))
 	return(list(pts, pgs))
 }
 
