@@ -40,10 +40,13 @@
 		timevar = "variable",
 		idvar = "plot")
 	#	groome names
-	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
+	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+	#	leading zeros in plot names!
+	#	save plot names
+	ii <- y$plot
 	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
     #	assign row names
-	rownames(y) <- y$plot 
+	rownames(y) <- ii
 	y <- y[, -grep("plot", names(y))]
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
