@@ -44,6 +44,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		}
 		else {
 			z <- taxonomy(new("Taxonomy", data = z))
+			zi <- TRUE # must subset
 		}			
 	}	
 	if	(!inherits(proj4string, "character")) {
@@ -172,6 +173,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
 	sp.points <- sp.points[match(rownames(y), sp.points$plot), ]
 	sp.polygons <- sp.polygons[match(rownames(y), sp.polygons$plot), ]
+	
+	#	subset taxonomy if not supplied as class SpeciesTaxonomy
+	if (zi)	z <- z[match(unique(x$abbr), z$abbr), ]
 	
 	res <- new("Vegsoup",
 		species = species(x),
