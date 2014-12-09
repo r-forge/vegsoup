@@ -41,9 +41,9 @@
 
 \usage{
 stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer"),
-              discard = c("taxon", "comment"), absences, verbose = FALSE)
+              discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
 
-stackSites(x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE)
+stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE)
 
 stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 
@@ -56,13 +56,16 @@ rbind(..., deparse.level = 1)
      An object converted to a data frame.
   }
   \item{ file }{
-     Path to a csv-file
+     character. Path to a csv-file
   }
   \item{ sep, dec }{
-    See \code{\link{read.csv}}.
+    character. See \code{\link{read.csv}}.
   }
   \item{ schema }{
-     Names of columns to be searched for. See \sQuote{Details}.
+     character. Names of columns to be searched for. See \sQuote{Details}.
+  }
+  \item{ zeros }{
+     logical. If \code{TRUE}, drop leading zeros in plot names.
   }
   \item{ verbose }{
      Prints some diagnostic messages.

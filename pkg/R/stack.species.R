@@ -1,4 +1,4 @@
-stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer"), discard = c("taxon", "comment"), absences, verbose = FALSE) {
+stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer"), discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {
 		stop("please supply either a data.frame or a csv file")	
@@ -18,7 +18,9 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 				stop("please supply a data.frame")	
 		}
 	}
-
+	
+	if (zeros) message("not implemented yet!")
+	
 	#	for safety
 	x <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE)
 	n <- names(x)
@@ -143,6 +145,10 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	#	leading spaces due to character conversion?
 	res$cov <- gsub("[[:blank:]]", "", res$cov)
+	
+	#	leading zeros!
+	#if (zeros) res[, 1] <- as.character(res[, 1]) else res[, 1] <- type.convert(res[, 1])
+	#if (is.factor(res[,1])) res[, 1] <- as.character(res[, 1])
 	
 	res <- new("Species", data = res)	
 	return(invisible(res))

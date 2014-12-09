@@ -156,7 +156,10 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	y <- reshape(y,	direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
-	names(y) <- gsub("value.", "", names(y), fixed = TRUE)		
+	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
+	#	save row names
+	ii <- as.character(y$plot) # leading zeros!
+	y <- y[, names(y) != "plot", drop = FALSE] 
 	y <- as.data.frame(sapply(y,
 		function (x) type.convert(x), simplify = FALSE))	
 	if (!stringsAsFactors) {
@@ -164,8 +167,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			stringsAsFactors = FALSE)
 	}	
     #	assign row names
-	rownames(y) <- y$plot 
-	y <- y[, -grep("plot", names(y)), drop = FALSE]
+	rownames(y) <- ii # leading zeros! 
 	#	order to x
 	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
 	sp.points <- sp.points[match(rownames(y), sp.points$plot), ]

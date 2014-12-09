@@ -1,6 +1,6 @@
 #	stack sites data frame to match database structure
 #	rename to Sites
-stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", verbose = FALSE) {
+stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE) {
 
 if (missing(x) & missing(file)) {
 	stop("please supply either a data frame or a csv file")	
@@ -24,19 +24,15 @@ if (length(schema) > 1) {
 
 stopifnot(!is.na(match(schema, names(x))))	
 
-if (!length(unique(x[[schema]])) == nrow(x))	{
-	stop("schema column is not unique")
-}
+if (!length(unique(x[[schema]])) == nrow(x)) stop("schema column is not unique")
+
 #	all columns must be of mode character to use stack()
 res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
 	colClasses = "character")
 
 #	leading zeros!
-res[,1] <- type.convert(res[,1])
-
-if (is.factor(res[,1])) {
-	res[,1] <- as.character(res[,1])
-}
+if (zeros) res[, 1] <- as.character(res[,1]) else res[, 1] <- type.convert(res[, 1])
+if (is.factor(res[, 1])) res[, 1] <- as.character(res[, 1])
 	
 res.stack <- stack(res, stringsAsFactors = FALSE)
 

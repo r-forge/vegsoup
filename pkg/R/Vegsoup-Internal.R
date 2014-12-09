@@ -57,7 +57,7 @@
 	n <- length(unique(x$plot)) # must be unique!
 	pts <- round(cbind(runif(n), runif(n)), 6)
 	pts <- SpatialPointsDataFrame(pts,
-		data = data.frame(plot = sort(unique(x$plot)),
+		data = data.frame(plot = as.character(sort(unique(x$plot))), # leading zeros!
 			stringsAsFactors = FALSE))
 
 	cents <- coordinates(pts)
@@ -72,7 +72,7 @@
 
 	pgs <- sp::SpatialPolygons(pgs)
 	pgs <- sp::SpatialPolygonsDataFrame(pgs,
-		data = data.frame(plot = sort(unique(x$plot))))
+		data = data.frame(plot = as.character(sort(unique(x$plot)))))
 	return(list(pts, pgs))
 }
 
