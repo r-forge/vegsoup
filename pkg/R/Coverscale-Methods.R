@@ -133,11 +133,24 @@ setReplaceMethod("coverscale",
 	function (x, value) {
 #		x <- coenoflex(100,100)
 #		value <- Coverscale("ordinal")
-		
-		transform <- is.continuous(x) & is.ordinal(value) | is.occurence(value)
+		oo <- is.ordinal(x) & is.ordinal(value)
+		bb <- coverscale(x)@name == "Braun-Blanquet" & value@name == "Braun-Blanquet 2"
+		co <- is.continuous(x) & is.ordinal(value) | is.occurence(value)
+		if (oo & bb) {
+			r <- species(species(x)) #! slot data
+			for (i in c("2m", "2a", "2b")) {
+				if (i == "2m") r$cov[r$cov == i]  <- "1"
+				if (i == "2a") r$cov[r$cov == i]  <- "2"
+				if (i == "2b") r$cov[r$cov == i]  <- "2"
+				species(x) <- species(r)	
+			}
+		species(x) <- species(r)
 		x@coverscale <- value
-					
-		if (transform) {
+		}
+		
+		x@coverscale <- value
+			
+		if (co) {
 			if (is.occurence(value)) {
 				x@species$cov <- as.character(1)
 				message("transformed cover values!")
@@ -163,8 +176,9 @@ setReplaceMethod("coverscale",
 
 			if (test) stop("coverscale does not match data", call. = FALSE)
 			}			
-		return(x)
+		
 		}
+	return(x)
 	}
 )
 
@@ -192,18 +206,7 @@ setGeneric("BraunBlanquetReduce",
 setMethod("BraunBlanquetReduce",
     signature(x = "Vegsoup"),
 	function (x) {	
-		res <- species(species(x)) #! slot data
-		for (i in c("2m", "2a", "2b")) {
-			if (i == "2m")
-				res$cov[res$cov == i]  <- "1"
-			if (i == "2a")
-				res$cov[res$cov == i]  <- "2"
-			if (i == "2b")
-				res$cov[res$cov == i]  <- "2"
-		}
-		#! now will also work species(obj) <- species(res)
-		x@species <- species(res)
 		coverscale(x) <- Coverscale("braun.blanquet2")
-		return(invisible(x))
+		return(x)
 	}
 )
