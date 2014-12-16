@@ -3,8 +3,12 @@
 ".reverseGeocode" <- function (lnglat, pm = 100, route = FALSE, ...) {
 	#	Suggests:
 	require(ggmap)
-	#	Suggests
-	require(geonames)	
+	#	Suggests	
+	require(geonames) # now requires users name
+	
+	if (is.null(options()$geonamesUsername)) {
+		stop("set geonames user name, see ?geonames")
+	}
 	
 	lnglat <- as.numeric(as.character(lnglat))
 	r <- revgeocode(lnglat, output = c("more"))

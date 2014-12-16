@@ -28,6 +28,8 @@ not used.
 
 \details{
 The function returns a formatted string of coordinates including elevation (as returned by \code{\link[geonames:GNsrtm3]{GNsrtm3}} of package \pkg{geonames}.) and a locality description based on administrative units. The SpatialPointsDataFrame method seeks variables \code{"accuracy"} or \code{"precision"} from the object.
+
+In order to be able to use the geonames package you will need to create a user (see \code{\link{geonames}}). In the authorization step, don't forget to activate free web services!
 }
 
 \value{
