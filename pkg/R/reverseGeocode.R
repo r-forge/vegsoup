@@ -6,26 +6,38 @@
 	#	Suggests	
 	require(geonames) # now requires users name
 	
-	if (is.null(options()$geonamesUsername)) {
+	if (is.null(options()$geonamesUsername))
 		stop("set geonames user name, see ?geonames")
-	}
 	
 	lnglat <- as.numeric(as.character(lnglat))
 	r <- revgeocode(lnglat, output = c("more"))
 	r <- as.data.frame(as.matrix(r), stringsAsFactors = FALSE)
 	
+	#	country
 	r1 <- r[, grep("country", names(r))]
-	r2 <- paste(unique(as.character(r[, rev(grep("administrative", names(r)))])), collapse = ", ")
-	#	eithetr one should be returned?
+	
+	#	first addministrative levels should always be present
+	r21 <- unlist(r[, grep("administrative_area_level_1", names(r))])
+	r22 <- paste(unlist(r[, grep("administrative_area_level_2", names(r))]), "(district)")
+	r23 <- unlist(r[, grep("administrative_area_level_3", names(r))])
+	
+	#	either one should be returned?
 	r31 <- unlist(r[, grep("locality", names(r))])
 	r32 <- unlist(r[, grep("route", names(r))])
-	#	r32 mostly not meaningful
+	
+	#	might be identical
+	if (!is.null(r31) & !is.null(r32)) if (r31 == r32) r32 <- NULL
+	if (!is.null(r23) & !is.null(r31)) if (r23 == r31) r31 <- NULL
+	
+	#	route (r32) is mostly not meaningful
 	if (is.null(r31)) {
 		if (!is.null(r32)) r3 <- if (route) r32 else NA else r3 <- NA
 	} else {
-		r3 <- r31
+		r3 <- if (route) paste(r31, r32, sep = ", ") else r31
 	}
-	locality <- paste(r1, ", ",	r2,
+	
+	locality <- paste(r1, ", ",	
+		ifelse(!is.null(r23), paste(r21, r22, r23, sep = ", "), paste(r21, r22, sep = ", ")),
 		ifelse(!is.na(r3), paste(", ", r3, sep = ""), ""),
 		collapse = ", ", sep = "")
 	options(warn = -1)
@@ -66,7 +78,7 @@ setMethod("reverseGeocode",
     		message("variable horizontal.precision not found")
     	}
     	ll <- apply(cbind(m, p), 1, function (x) {
-    		.reverseGeocode(x[1:2], x[3])	
+    		.reverseGeocode(x[1:2], x[3], ...)	
     	}
     	)
 		x$coordinate.string <- sapply(ll, "[[", 1)
@@ -102,7 +114,7 @@ setMethod("reverseGeocode",
     		p <- rep(NA, nrow(x))
     	}
     	ll <- apply(cbind(m, p), 1, function (x) {
-    		.reverseGeocode(x[1:2], x[3])	
+    		.reverseGeocode(x[1:2], x[3], ...)	
     	}
     	)
 		coordinate.string <- sapply(ll, "[[", 1)
