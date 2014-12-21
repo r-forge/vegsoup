@@ -23,6 +23,7 @@
 	
 	#	either one should be returned?
 	r31 <- unlist(r[, grep("locality", names(r))])
+	if (!is.null(r31)) if (length(r31) > 1) r31 <- paste(rev(r31), collapse = ", ")
 	r32 <- unlist(r[, grep("route", names(r))])
 	
 	#	might be identical
