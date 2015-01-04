@@ -134,17 +134,22 @@ setReplaceMethod("species",
 	function (obj, value) {
 		#! if taxonomy(obj) is renamed
 		# test <- any(is.element(abbr(taxonomy(obj)), unique(abbr(value)))) 
-		test1 <- is.element(unique(abbr(value)), Taxonomy(obj)$abbr)
-		test2 <- is.element(unique(value$plot), rownames(obj))
-		stopifnot(any(test1) & any(test1))
+		t1 <- is.element(unique(abbr(value)), Taxonomy(obj)$abbr)
+		t2 <- is.element(unique(value$plot), rownames(obj))
+		stopifnot(any(t1) & any(t2))
 		
 		#	if we need a subset of plots
 		obj <- obj[match(unique(value$plot), rownames(obj)), ]
 		
 		obj@species <- value
+		
+		#	if we loose layers
+		obj@layers <- unique(value$layer)
+						
+		#	at least we need to subset taxonomy
 		value <- Taxonomy(obj)[Taxonomy(obj)$abbr %in% unique(abbr(obj)), ]
 		obj@taxonomy <- value #! if slots becomes class "Taxonomy" taxonomy(value)		 
-		return(obj)		
+		return(obj)
 	}
 )
 

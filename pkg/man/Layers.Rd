@@ -25,7 +25,7 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 
 \arguments{
   \item{ obj }{
-    a \code{Vegsoup*} object.
+    \code{Vegsoup*} object.
   }
   \item{ collapse }{
     character. Vector defining a combination of layers. The order of strings
@@ -129,20 +129,27 @@ Layers(x3); dim(x3)
 
 # drop layer sl aswell as tl1 and tl2
 x4 <- Layers(x, aggregate = "layer",
-                collapse = c("hl", NA, "sl", NA, NA),
+                collapse = c("ml", "hl", NA, NA, NA),
                 verbose = TRUE)
 Layers(x4)
 dim(x4)
 
-# this way we also loose some plots
+# this way we loose most of the plots
 x5 <- Layers(x, aggregate = "layer",
-                collapse = c(NA, NA, "wl", "wl", "wl"),
+                collapse = c(NA, NA, NA, "wl", "wl"),
                 verbose = TRUE)
 Layers(x5)
 dim(x5)
 
 # subsetting will also extract layers appropiately
 Layers(x[, grep("@tl", colnames(x))])
+
+# the species<– replacement method provides another means of subsetting
+x6 <- x
+species(x6) <- species(x)[species(x)$layer == Layers(x)[1], ]
+Layers(x6)
+# plots without cryptogams
+rownames(x)[-match(rownames(x6), rownames(x))]
 }
 \seealso{
 \code{\link{Layer}},

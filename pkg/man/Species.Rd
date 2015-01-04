@@ -70,6 +70,16 @@ species(x)[i, ]
 # now assign to Vegsoup object
 species(x) <- species(x)[i, ]
 richness(x)
+
+# subset Vegsoup object by Species object
+x <- y<- barmstein
+n <- nrow(species(x))
+# random subsample of 10 % of all recorded occurences
+species(y) <- species(x)[sample(1:n, ceiling(n * 0.1))]
+
+dim(x)
+dim(y)
+
 }
 \keyword{ methods }
 

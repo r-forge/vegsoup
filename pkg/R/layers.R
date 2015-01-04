@@ -8,12 +8,13 @@
 
 #	Layers method
 ".layers.Vegsoup" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
-	#	return object 
-	#	if missing mandatory arguments
+	
+	#	return object if mandatory arguments are missing
 	if (missing(collapse) & missing(aggregate)) {
 		return(obj@layers)	
 	}
-	#	if there is nothing to do
+	
+	#	return object if there is nothing to do
 	if (length(obj@layers) < 2) {
 		if (verbose) {
 			message("obj has already only a single layer: ",
@@ -25,33 +26,22 @@
 	}
 	
 	#	check 'aggregate' argument or set defaults
-	if (missing(aggregate)) {
-		aggregate <- "layer"
-	}
-	else{
-		aggregate <- match.arg(aggregate)	
-	}
+	if (missing(aggregate)) aggregate <- "layer" else aggregate <- match.arg(aggregate)
 	
 	#	'collapse' missing or of length 1 (full collapse)	
 	if (missing(collapse) || length(collapse) == 1) {
-		if (verbose) {
-			message("collapse to a single layer")
-		}
-		if (missing(collapse)) {
-			collapse <- rep("0l", length(obj@layers)) # use default in doc
-		}
-		else{
-			collapse <- rep(collapse, length(obj@layers))
-		}
-	}
-	else{
-		if (length(collapse) > length(obj@layers)) {
-			stop("length of collapse vector must match length(Layers(obj))")
-		}
+		if (verbose) message("collapse to a single layer")	
+		if (missing(collapse)) { L <- "0l" } else { L <- collapse }
+		L <- rep(L, length(Layers(obj)))
+	} else {
+	#	'collapse' not of correct length	
+		stopifnot(length(collapse) <= length(Layers(obj)))
+	#	'collapse' statsifies basic assuptions	
+		stopifnot(length(collapse) == length(Layers(obj)))
+		L <- collapse
 	}
 	
-	#	check 'dec' argument
-	
+	#	check 'dec' argument	
 	if (is.ordinal(obj)) { 		
 		if (dec == 0 & trunc(min(coverscale(obj)@lims)) == 0) {
 			for (dec in 0:5) {
@@ -64,43 +54,35 @@
 			}	
 		}
 	}
-	#	debug
-	#	obj = dta; verbose = TRUE; aggregate = "layer"; dec = 0; collapse = "0l"; collapse <- rep(collapse, length(obj@layers))
-	#	collapse = c(NA, NA, "sl", "tl", "tl")
+
+	ii <- rownames(obj)	# original order
+	X <- species(species(obj))
+	Y <- coverscale(obj)
 	
-	res <- obj
-	
-	ii <- rownames(obj)
-	X <- species(species(res)) #! get slot data
-	Y <- coverscale(res)
-	
-	collapse <- matrix(c(res@layers, collapse),
-		ncol = 2, nrow = length(res@layers),
-		byrow = FALSE,
-		dimnames = list(NULL, c("original", "collapsed")))
+	L <- matrix(c(Layers(obj), L),
+		ncol = 2, nrow = length(Layers(obj)),
+		byrow = FALSE, dimnames = list(NULL, c("original", "collapsed")))
 		
-	if (verbose) print(collapse)
+	if (verbose) print(L)
 	
-	#	test collapse vector
-	if (any(is.na(collapse[,2]))) {
-		message("NA in collapse, dropped all species on these layers")
-		ld <- collapse[is.na(collapse[, 2]), 1]
-		collapse <- collapse[!is.na(collapse[,2 ]), ]
+	#	test collapse vector, especially concerning NAs
+	nas <- is.na(L[, 2])
+	if (any(nas)) {
+		if (verbose) message("NA in collapse, dropped all species on these layers")
+		ld <- L[nas, 1] # layers to drop
+		L <- L[!nas, ]
 		#	if we loose dimension
-		if (!is.matrix(collapse)) collapse <- t(collapse)
+		if (!is.matrix(L)) L <- t(L)
 		#	drop all occurences on these layers
 		X <- X[!X$layer %in% ld, ]
-		#	also drop from taxonomy
-		res@taxonomy <- Taxonomy(res)[Taxonomy(res)$abbr %in% unique(X$abbr), ]
 	
-		if (length(res@sites$plot) > length(unique(X$plot))) {
-			message("also some plots will be dropped")
-			res@sites <- res@sites[res@sites$plot %in% X$plot, ]
+		if (length(rownames(obj@sites)) > length(unique(X$plot))) {
+			if (verbose) message("also some plots will be dropped")
 		}
 	}	
 	
 	X$layer <- factor(X$layer)
-	levels(X$layer) <- collapse[match(levels(X$layer), collapse[, 1]), 2]
+	levels(X$layer) <- L[match(levels(X$layer), L[, 1]), 2]
 	X$layer <- as.character(X$layer)
 	
 	#	convert original abundance scale to numeric to allow calculations
@@ -159,31 +141,26 @@
 		X$cov <- as.character(cut(X$cov, breaks = c(0, Y@lims), labels = Y@codes))
 	}
 	
-	res@species <- species(X)
-	res@layers <- unique(collapse[, 2])
-	
-	#	ensure order to X
-	res@sites <- res@sites[match(rownames(res), rownames(res@sites)), ]
-	res@sp.points <- res@sp.points[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
-	res@sp.polygons <- res@sp.polygons[match(rownames(res), SpatialPointsVegsoup(res)$plot), ]
-	
-	#	restore original order
-	res <- res[match(ii, rownames(res)), ]
-	
-	return(invisible(res))
+	#	use replace method (keeps order of obj)
+	species(obj) <- species(X)
+		
+	return(invisible(obj))
 }
 
 setGeneric("Layers",
 	function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE)
 	standardGeneric("Layers")
 )
+
 setGeneric("Layers<-", function (obj, value)
 	standardGeneric("Layers<-")
 )
+
 setMethod("Layers",
    signature(obj = "Vegsoup"),
     .layers.Vegsoup
 )
+
 setReplaceMethod("Layers",
 	signature(obj = "Vegsoup", value = "ANY"),
 	function (obj, value) {
