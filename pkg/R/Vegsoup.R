@@ -40,7 +40,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}
 	else {
 		if (class(z) == "Taxonomy" | class(z) == "SpeciesTaxonomy") {
-			z <- taxonomy(z)	
+			z <- taxonomy(z)
+			zi <- FALSE	# no subset needed
 		}
 		else {
 			z <- taxonomy(new("Taxonomy", data = z))
@@ -109,14 +110,14 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			}
 		}
 	}
-	#	test coverscale if ordinal
+	#	test if coverscale is ordinal
 	if (is.ordinal(xs)) {
 		test <- any(is.na(factor(x$cov,	xs@codes, xs@lims)))
 		if (test) {
 			stop("coverscale does not match data", call. = FALSE)
 		}
 	}
-	#	no test needed if continuous?
+	#	test needed if continuous?
 	if (is.continuous(xs)) {
 	}		
 	if (missing(group))	{
@@ -149,9 +150,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	#	check missing values, not very rigid!
 	if (any(y[, 3] == "")) {
 		y[y[, 3] == "", 3] <- NA
-		if (verbose) {
-			message("\n empty fields (\"\") in sites data set as NA")
-		}
+		if (verbose) message("\n empty fields (\"\") in sites data set as NA")
 	}  	
    	#	copied to bind.R!
 	y <- reshape(y,	direction = "wide",
