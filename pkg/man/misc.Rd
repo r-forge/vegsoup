@@ -2,6 +2,8 @@
 
 \name{miscellaneous functions}
 \alias{compass}
+\alias{singleton}
+\alias{singletons}
 
 \title{ Utility functions }
 
@@ -12,15 +14,17 @@ Simple minded functions for regular data precessing tasks.
 \usage{
 compass(x)
 
-singleon(obj)
+singleton(obj)
+
+singletons(obj)
 }
 
 \arguments{
   \item{ x }{
-numeric.
+    numeric.
 }
   \item{ obj }{
-VegsoupPartition object.
+    VegsoupPartition object.
 }
 
 }

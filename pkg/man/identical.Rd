@@ -3,8 +3,10 @@
 \docType{methods}
 
 \alias{identical}
-\alias{identical,Species-method}
-\alias{identical,Sites-method}
+\alias{identical,Sites-method,Species}
+\alias{identical,Species-method,Sites}
+\alias{identical,Sites,Species}
+\alias{identical,Species,Sites}
 
 \title{ 
 Intersect plot names
@@ -15,9 +17,9 @@ Intersects Species and Sites objects if they have matching plots. Returns \code{
 }
 
 \usage{
-\S4method{identical}{Species}(x, y)
+\S4method{identical}{Sites,Species}(x, y)
 
-\S4method{identical}{Sites}(x, y)
+\S4method{identical}{Species,Sites}(x, y)
 }
 
 \arguments{

@@ -34,6 +34,7 @@
 \alias{SpatialPolygonsVegsoup,Vegsoup-method}
 
 \alias{over}
+\alias{over,Vegsoup-method}
 \alias{over,Vegsoup,SpatialPolygonsDataFrame-method}
 
 \title{ Spatial Methods for \code{Vegsoup*} Objects } 

@@ -6,7 +6,7 @@ importFrom("graphics", plot, hist)
 importFrom("stats", as.dist, quantile, as.dendrogram)
 importFrom("utils", head, tail)
 
-import(coenoflex)
+#import(coenoflex)
 
 importFrom("labdsv", indval)
 
@@ -57,7 +57,7 @@ export(
     "reshapeSpecies",
     "SpeciesTaxonomy",
     "Vegsoup",
-    "coenoflex",
+#   "coenoflex",
     "instantsoup",
     "plainsoup",
     "OptimStride",

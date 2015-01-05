@@ -43,7 +43,7 @@ header(x)
 
 \S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
 }
 
 \arguments{
@@ -64,6 +64,7 @@ header(x)
     it assigns a the vaule of layer to each species observation. If layers are present
     in the input file, argument layers can be a single character used to prune layers from taxa
     abbreviations. See \sQuote{Examples}.
+    For \code{read.verbatim}, Separator used for trailing layer value (e.g. genus species@hl).
   }
   \item{ replace }{
     logical. Vector of characters to be replaced by blanks. Note, both the hyphen and
@@ -115,10 +116,6 @@ header(x)
     value.
 }
 
-## Arguments to function \code{read.verbatim}
-  \item{ layers }{
-    character. Separator used for trailing layer value (e.g. genus species@hl).
-  }
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
     \code{Vegsoup} object.

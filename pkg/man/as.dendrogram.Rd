@@ -25,7 +25,7 @@ The functions compute a contingency table (\code{\link{contingency}(object)}) an
   \item{ x, object }{
     \code{VegsoupPartition} object. 
   }
-  \item{ constancy }{
+  \item{ table }{
     character. Either \code{\link{contingency}}, \code{\link{constancy}} or
      \code{\link{average}}.
   }

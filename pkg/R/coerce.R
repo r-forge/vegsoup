@@ -8,77 +8,77 @@ setAs("list", "Coverscale", def = function (from) {
 			lims = as.numeric(from[[3]]))
 	}		
 	#	continous
-	if (is.null(from[[2]]) & is.null(from[[3]])) { # 			
+	if (is.null(from[[2]]) & is.null(from[[3]])) {
 		res <- new("Coverscale",
 			name = as.character(from[[1]]),
 			codes = NULL,
-			lims = NULL						
+			lims = NULL
 			)			
 	}
 	return(res)
 })
 
 #	set S3 class
-setOldClass("coenoflex")
+#setOldClass("coenoflex")
 #	from coenoflex to Vegsoup
-as.Vegsoup.coenoflex <- function (obj) {
-	
-	spc <- obj$veg
-	sts <- obj$site
-	ns <- ncol(spc)
-	np <- nrow(spc)
-	
+#as.Vegsoup.coenoflex <- function (obj) {
+
+#	spc <- obj$veg
+#	sts <- obj$site
+#	ns <- ncol(spc)
+#	np <- nrow(spc)
+
 	#	groome decimals
-	spc[spc > 0 & spc <= 0.1] <- 0.1 #! document this
+#	spc[spc > 0 & spc <= 0.1] <- 0.1 #! document this
 
 	#	coenoflex behaves unexpected for low numbers of 'numplt' and 'numspc'
 	#	so we need to cure empty species
-	test <- colSums(spc) == 0
-	if (any(test)) {
-		for (i in which(test)) {
-			spc[sample(1:nrow(spc), size = 1), i] <- 0.1
-		}
-	}	
+#	test <- colSums(spc) == 0
+#	if (any(test)) {
+#		for (i in which(test)) {
+#			spc[sample(1:nrow(spc), size = 1), i] <- 0.1
+#		}
+#	}	
 	#	and empty sites
-	test <- rowSums(spc) == 0
-	if (any(test)) {
-		for (i in which(test)) {
-			spc[i, sample(1:ncol(spc), size = 1)] <- 0.1
-		}
-	}	
+#	test <- rowSums(spc) == 0
+#	if (any(test)) {
+#		for (i in which(test)) {
+#			spc[i, sample(1:ncol(spc), size = 1)] <- 0.1
+#		}
+#	}	
 	
 	#	meaningful names
-	abbr <- sprintf(paste0("spc%0", nchar(ns), ".0f"), 1:ns)
-	taxon <- sprintf(paste0("Species %0", nchar(ns), ".0f"), 1:ns)
-	plot <- sprintf(paste0("plt%0", nchar(np), ".0f"), 1:np)
+#	abbr <- sprintf(paste0("spc%0", nchar(ns), ".0f"), 1:ns)
+#	taxon <- sprintf(paste0("Species %0", nchar(ns), ".0f"), 1:ns)
+#	plot <- sprintf(paste0("plt%0", nchar(np), ".0f"), 1:np)
 	
 	#	row-wise index to as.vector()
-	ij <- c(t(matrix(seq_len(np * ns), nrow = np, ncol = ns)))
+#	ij <- c(t(matrix(seq_len(np * ns), nrow = np, ncol = ns)))
 	#	pointer to non-zero values
-	z <- spc[ij] != 0
+#	z <- spc[ij] != 0
 	
-	spc <- matrix(c(
-		rep(plot, each = ns)[z],	# plot
-		rep.int(abbr, np)[z],		# abbr
-		rep("0l", length(which(z))),# layer
-		round(spc[ij[z]], 1)),		# cov
-		ncol = 4, nrow = table(z)[2])
+#	spc <- matrix(c(
+#		rep(plot, each = ns)[z],	# plot
+#		rep.int(abbr, np)[z],		# abbr
+#		rep("0l", length(which(z))),# layer
+#		round(spc[ij[z]], 1)),		# cov
+#		ncol = 4, nrow = table(z)[2])
 	
-	sts <- stackSites(data.frame(plot = plot, sts))
+#	sts <- stackSites(data.frame(plot = plot, sts))
 	
-	txa <- taxonomy(cbind(abbr, taxon))
+#	txa <- taxonomy(cbind(abbr, taxon))
 	
-	res <- Vegsoup(spc, sts, txa, "percentage")
+#	res <- Vegsoup(spc, sts, txa, "percentage")
 	
-	return(res)
+#	return(res)
 
-}
+#}
 
-setAs(from = "coenoflex", to = "Vegsoup",
-	def = function (from) {
-		as.Vegsoup.coenoflex(from)
-	}
-)
+#setAs(from = "coenoflex", to = "Vegsoup",
+#	def = function (from) {
+#		as.Vegsoup.coenoflex(from)
+#	}
+#)
 
 #	set S3 class
 setOldClass("data.list")
