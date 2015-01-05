@@ -11,7 +11,7 @@
 \alias{species<-,Vegsoup,Species-method}
 \alias{species<-,Vegsoup,SpeciesTaxonomy-method}
 \alias{species<-,Vegsoup,data.frame-method}
-\alias{species<-,Species,data.frame}
+\alias{species<-,Species,data.frame-method}
 
 \title{ Methods to Retrieve or Manipulate the Species Slot of \code{Vegsoup*} Objects }
 \description{

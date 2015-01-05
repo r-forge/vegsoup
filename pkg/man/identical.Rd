@@ -3,10 +3,8 @@
 \docType{methods}
 
 \alias{identical}
-\alias{identical,Sites-method,Species}
-\alias{identical,Species-method,Sites}
-\alias{identical,Sites,Species}
-\alias{identical,Species,Sites}
+\alias{identical,Sites,Species-method}
+\alias{identical,Species,Sites-method}
 
 \title{ 
 Intersect plot names
