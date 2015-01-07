@@ -150,6 +150,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	#if (zeros) res[, 1] <- as.character(res[, 1]) else res[, 1] <- type.convert(res[, 1])
 	#if (is.factor(res[,1])) res[, 1] <- as.character(res[, 1])
 	
-	res <- new("Species", data = res)	
-	return(invisible(res))
+	r <- new("Species", data = res)
+	
+	if (class(r) == "try-error") return(res) else return(r)	
 }
