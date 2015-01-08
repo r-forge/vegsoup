@@ -129,5 +129,6 @@ Collate: AAA.R
          Latex.R
          plot.R
          misc.R
+         templates.R
          ZZZ.R
 

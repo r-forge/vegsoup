@@ -3,10 +3,6 @@
 # drop
 Association, is defined for nominal variables only?
 
-# Latex.Rd
-document
-system.file("extdata", "template.tex", package = "vegsoup")
-
 # rename
 Sites to sites
 layer to stratum

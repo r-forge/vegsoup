@@ -29,6 +29,7 @@
     sep = "/",
     sites.columns,
     newpage = TRUE,
+	template = FASLE,
     verbose, ...)
 }
 
@@ -112,6 +113,9 @@
   \item{ newpage }{
     logical. Insert LaTex newpage command.
   }  
+  \item{ template }{
+    logical. Enclose in Latex template.
+  }  
   \item{ \dots }{
     arguments passed to \code{\link{Fidelity}} if object is not of class
     \code{"VegsoupPartitionFidelity"}.
@@ -143,6 +147,8 @@
   different types of output. With \code{mode = 1} an ordered vegetation table based on a
   fidelity (indicator species) statistic is created. With \code{mode = 2} descriptive summaries
   for each partition (cluster) are returned. It embeds it's ouput using \acronym{LaTeX} package subfloat.
+  
+  Set \code{template = TRUE} to wrap output in LaTex template preamble.
 }
 \value{
   A \code{"list"} containing the lines written to the file:

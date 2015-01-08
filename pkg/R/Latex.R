@@ -108,7 +108,7 @@
 	#	to do!	
 }
 
-.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.threshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, verbose, ...) {
+.latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.threshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, template, verbose, ...) {
 	CALL <- match.call()
 	#	Suggests:
 	require(Hmisc)
@@ -618,8 +618,7 @@
 			here = TRUE,
 			col.just = col.just)
 	
-		# append footer to LaTex table in file
-	
+		# append footer to LaTex table in file	
 		con <- file(file, open = "a")
 			writeLines(footer, con)
 		close(con)
@@ -674,7 +673,7 @@
 			tmp <- readLines(con)
 			hook <- max(grep("bottomrule", tmp))
 	
-			tmp.bgn <- 1: c(hook -1) # begin
+			tmp.bgn <- 1: c(hook -1)    # begin
 			tmp.end <- hook:length(tmp) # end
 			
 			tmp.ins1 <- footer.species[[i]] # insert 1
@@ -684,7 +683,7 @@
 					"{p{", footer.width, "}}",
 					"{", x[2], "}", "\\tabularnewline", sep = "")	
 			})
-			tmp.ins2 <- footer.sites[[i]] # insert 2
+			tmp.ins2 <- footer.sites[[i]]   # insert 2
 			tmp.ins2 <- apply(tmp.ins2, 1, function (x) {
 				paste(x[1], "& \\multicolumn{",
 					dim(tex.out[[i]])[2] - 1, "}",
@@ -694,15 +693,25 @@
 			
 			tmp <- c(tmp[tmp.bgn], "\\midrule", tmp.ins1, "\\midrule", tmp.ins2, tmp[tmp.end])
 			
-			if (newpage) {
-				tmp <- c(tmp, "\n\\newpage")
-			}
+			if (newpage) tmp <- c(tmp, "\n\\newpage")
+
 			writeLines(tmp, con)
 		close(con)		
-		}
-			
-}
+		}			
+	}
 	# end if (mode == 2)
+	
+	if (template) {
+		con <- file(file)
+			tmp <- readLines(con)
+			pre <- template()
+			bgn <- grep("begin{document}", pre, fixed = TRUE)
+			end <- grep("end{document}", pre, fixed = TRUE)			
+			tmp <- c(pre[1:bgn], "", tmp, "", pre[end])
+			writeLines(tmp, con)
+		close(con)
+	}			
+	
 	return(invisible(list(
 		table = tex.out, footer.sites = footer.sites,
 		footer.species = footer.species)))
@@ -788,7 +797,7 @@
 
 #	if(!isGeneric("Latex")) {
 setGeneric("Latex",
-	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min = NULL, constancy.min = 95, taxa.width = "60mm", col.width = "5mm", footer.width = "150mm", footer.threshold = 1, molticols.footer = 2, use.letters = FALSE, caption.text = NULL, quantile.select = c(1,3,5), coverscale = FALSE, sep = "/", sites.columns = names(obj), newpage = TRUE, verbose = FALSE, ...)
+	function (obj, choice = "species", recursive = FALSE, file, mode = 1, p.max = .05, stat.min = NULL, constancy.min = 95, taxa.width = "60mm", col.width = "5mm", footer.width = "150mm", footer.threshold = 1, molticols.footer = 2, use.letters = FALSE, caption.text = NULL, quantile.select = c(1,3,5), coverscale = FALSE, sep = "/", sites.columns = names(obj), newpage = TRUE, template = FALSE, verbose = FALSE, ...)
 		standardGeneric("Latex")
 )
 #}
@@ -817,11 +826,11 @@ setMethod("Latex",
 				res <- .latexVegsoupPartitionSpecies(obj, file = file,
 					mode = mode, p.max = p.max, stat.min = stat.min,
 					constancy.min = constancy.min, taxa.width = taxa.width,
-					col.width = col.width, footer.threshold = footer.threshold,
+					col.width = col.width, footer.width = footer.width, footer.threshold = footer.threshold,
 					molticols.footer = molticols.footer, use.letters = use.letters,
 					caption.text = caption.text, quantile.select = quantile.select,
 					coverscale = coverscale, sep = sep, sites.columns = sites.columns,
-					newpage = newpage, verbose = verbose, ...)
+					newpage = newpage, template = template, verbose = verbose, ...) # understands template
 			}
 			if (choice == "sites" & recursive) {
 				if (missing(file)) file = "SitesTables"
