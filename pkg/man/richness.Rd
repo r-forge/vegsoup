@@ -4,23 +4,25 @@
 \docType{methods}
 
 \alias{richness}
+\alias{richness,Species-method}
 \alias{richness,Vegsoup-method}
 \alias{richness,VegsoupPartition-method}
 
 \title{ Species Richness }
 
 \description{
-Retrieve dataset, sample or grouped species richness.
+Retrieve dataset, sample or pooled species richness by partition.
 }
 
 \usage{
+\S4method{richness}{Species}(obj, choice = c("dataset", "sample"))
 \S4method{richness}{Vegsoup}(obj, choice = c("dataset", "sample"))
 \S4method{richness}{VegsoupPartition}(obj, choice = c("dataset", "sample", "partition"))
 }
 
 \arguments{
   \item{ obj }{
-    \code{Vegsoup*} object.
+    \code{Vegsoup*} or \code{Species}object.
   }
   \item{ choice }{
     Return either dataset or sample richness, defaults to \code{dataset}.
@@ -30,7 +32,7 @@ Retrieve dataset, sample or grouped species richness.
 }
 
 \details{
-Dataset richness is defined as the number of species (discarding layer replicates) found in the data set. Sample richness is the number of species per sample (plot) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed to one.
+Dataset richness is defined as the number of species (discarding layer replicates) found in the object. Sample richness is the number of species per sample (plot, relevé) and partition richness is the pooled species richness per partition. In order to calculate correct species richness, in cases when the object has more than one layer, all occurrences of a particular species in different layers are collapsed.
 }
 
 \value{
@@ -50,6 +52,9 @@ x <- barmstein
 
 richness(x) # default choice = "dataset"
 richness(x, "sa") # partial match
+
+
+richnes(species)
 
 # rowSums counts each species-layer replication (pseudo-species).
 # Because there are 3 layers the numbers are different
