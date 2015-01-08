@@ -9,7 +9,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 	X <- as.matrix(x)
 	Xd <- as.dist(x)
 	
-	if (missing(k)) 
+	if (missing(k)) { 
 		stop("please supply k for stride")
 	}
 	else {
