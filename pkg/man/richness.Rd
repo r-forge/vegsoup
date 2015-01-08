@@ -53,8 +53,8 @@ x <- barmstein
 richness(x) # default choice = "dataset"
 richness(x, "sa") # partial match
 
-
-richnes(species)
+#	method for class Species
+richness(species(x))
 
 # rowSums counts each species-layer replication (pseudo-species).
 # Because there are 3 layers the numbers are different
