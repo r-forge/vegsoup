@@ -1,15 +1,16 @@
-#	generating function
+# 	http://www.r-bloggers.com/use-hidden-advanced-arguments-for-user-friendly-functions/
 #	to do: implement formula interface for method, high priority
-VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
+
+#	low level function to allow distance matrix as argument Xd and raw species matrix as argument X
+#	this speeds up calculation in OptimStride() 
+.VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, X, Xd, ...) {
 
 	CALL <- match.call()
 	
 	#	set seed
 	set.seed(seed)
 				
-	if (!inherits(obj, "Vegsoup")) {
-		stop("Need object of class Vegsoup")
-	}
+	if (!inherits(obj, "Vegsoup"))	stop("Need object of class Vegsoup")
 
 	#	for class(obj) VegsoupOptimstride
 	if ((missing(k) & missing(clustering)) & !inherits(obj, "VegsoupOptimstride")) {
@@ -17,7 +18,6 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 		message("argument k missing, set to ", k)
 	}	
 	if (missing(k) & inherits(obj, "VegsoupOptimstride")) {
-		#	warning! no sensible results so far!
 		k = summary(obj)$best.optimclass1
 	}
 
@@ -80,10 +80,24 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 	}		
 
 	#	species and distance matrices
-	X <- as.matrix(obj)	
-	if (M != "external") { # saves time
-		Xd <- as.dist(obj)
+	#	use supplied arguments if available
+		
+	if (any(names(CALL) == "X")) { #missing(X)
+		stopifnot(inherits(X, "matrix"))	# message("use X")
 	}
+	else {
+		X <- as.matrix(obj)					
+	}	
+	
+	if (M != "external") { # need Xd
+		if (any(names(CALL) == "Xd")) {
+			stopifnot(inherits(Xd, "dist")) # message("use Xd")
+		}
+		else {
+			Xd <- as.dist(obj) # saves time		
+		}		
+	}
+	 
 
 	#	method switch
 	if (k > 1) {	
@@ -276,4 +290,11 @@ VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "iso
 	r@k <- length(unique(G))
 	
 	return(r)
+}
+
+#	exported function
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
+	
+	.VegsoupPartition(obj = obj, k = k, method = method, clustering = clustering, polish = polish,
+		seed = seed, verbose = verbose, ...)
 }

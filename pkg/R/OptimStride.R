@@ -1,11 +1,15 @@
- #	warning! some how slot sp.points can get messed up?
+#	warning! some how slot sp.points can get messed up?
 OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
 
 	stopifnot(inherits(x, "Vegsoup"))
-	
+
 	CALL <- match.call()
+		
+	#	species and distance matrices
+	X <- as.matrix(x)
+	Xd <- as.dist(x)
 	
-	if (missing(k)) {
+	if (missing(k)) 
 		stop("please supply k for stride")
 	}
 	else {
@@ -20,10 +24,10 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 		message("fork multicore process on ", parallel::detectCores(), " cores")
 	}	
 
-	#!	define function ".VegsoupPartition" that accepts dist argument
-	#	use that in cycle to speed up
-	cycle <- function (x, k, ...) {
-		P <- VegsoupPartition(x, k = k, ...)
+	#	supply matrix and dist argument to speed up
+	#	we don't need to calculate this in each step
+	cycle <- function (x, k, X, Xd, ...) {
+		P <- VegsoupPartition(x, k = k, X = X, Xd = Xd, ...)
 		r <- FisherTest(P, alternative = alternative)
 		r <- apply(r < ft.threshold, 2, sum)
 		return(r)
@@ -32,7 +36,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 	#	results list for top level loop
 	ri <- vector("list", length = length(method))
 	if (inherits(method, "function"))
-		#	keep in snc with VegsoupPartition
+		#	keep in sync with VegsoupPartition
 		M <- paste(CALL$method, "<-", deparse(method)[1])
 	else
 		M <- method
@@ -46,7 +50,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 		
 		if (as.logical(fast)) {
 			message(M[ i ], " ")			
-			rj <- mclapply(2:k, function (y, ...) cycle(x, k = y, method = m, ...), ...)
+			rj <- mclapply(2:k, function (y, ...) cycle(x, k = y, method = m, X = X, Xd = Xd, ...), ...)
 			ri[[ i ]] <- c(0, rj)
 		}
 		else {
@@ -58,7 +62,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 			pb.j <- txtProgressBar(min = 2, max = k, char = '.', width = 45, style = 3)
 			for (j in 2:k) {
 				setTxtProgressBar(pb.j, j)
-				rj[[ j ]] <- cycle(x, k = j, method = m, ...)
+				rj[[ j ]] <- cycle(x, k = j, method = m, , X = X, Xd = Xd, ...)
 			}
 			ri[[ i ]] <- rj
 			close(pb.j)
