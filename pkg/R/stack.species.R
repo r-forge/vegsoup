@@ -30,7 +30,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 		
 	if (!all(test)) {
 		stop("can't stack object, did not find column(s): ",
-			paste(schema[!test], collapse = " + "))
+			paste(schema[!test], collapse = " + "), ", maybe wrong sep argument")
 	}
 	
 	#	first guess of starting point of taxa block	
