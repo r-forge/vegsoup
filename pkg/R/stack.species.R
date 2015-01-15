@@ -45,7 +45,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	#	subset only species abundances
 	j <- c(c(j1 + 1):ncol(x))
-	xx <- x[, j]
+	xx <- x[, j, drop = FALSE]
 	
 	#	check unique column labels
 	if (!length(unique(names(xx)) == ncol(xx)))	{
