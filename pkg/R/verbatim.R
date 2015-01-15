@@ -209,18 +209,22 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	if (!vertical) {
 		#	we use object 'jj' here and hope that fits?
 		par <- str_trim(substring(h.txt, 1, jj -1), "right")
-		
 		val <- substring(h.txt, jj, unique(nchar(h.txt)))
 		val <- sapply(val, function (x) strsplit(x, "[[:blank:]]"))
 		val <- t(sapply(val, function (x) x[x != ""]))
 		dimnames(val) <- NULL
 
 		#	the header
-		y <- data.frame(par, val, stringsAsFactors = FALSE)
+		if (nrow(val) > 1) {
+			y <- data.frame(par, val, stringsAsFactors = FALSE)
+		} else {
+			y <- data.frame(par, X1 = as.vector(val), stringsAsFactors = FALSE)
+		}	
+		
 		attr <- vector("list", length = length(par))
 		names(attr) <- par
 		
-		if (ncol(x) != ncol(y)) stop("error parsing header with option vertical", vertical)
+		if (ncol(x) != ncol(y)) stop("error parsing header with option vertical = ", vertical)
 	}
 	
 	if (vertical) {
@@ -271,8 +275,10 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 
 	#	string grooming and type convert		
 	for (i in par) {
+		if (any(duplicated(par)))
+			stop("duplicates in header entries")
 		#	i = unique(par)[3]
-		tmp <- str_trim(apply(y[y[, 1] == i, -1], 2, paste, collapse = ""))
+		tmp <- str_trim(apply(y[y[, 1] == i, -1, drop = FALSE], 2, paste, collapse = ""))
 		#	remove dots and drop leading zeros,
 		#	but not for colnames (we preserve what is in the file)
 		if (i == colnames)	attr[[i]] <- tmp else attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE))	
@@ -298,7 +304,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			else {
 				rownames(x) <- x[, 1]
 			}
-			x <- x[, -1]
+			x <- x[, -1, drop = FALSE]
 			x <- as.matrix(x)
 	
 			#	assign header as attribute
