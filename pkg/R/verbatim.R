@@ -504,16 +504,22 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 			}, USE.NAMES = FALSE)
 		}, USE.NAMES = FALSE)
 	# expand plot vector
-	p <- rep(p, time = sapply(x, length))
+	if (length(p) == 1)
+		p <- rep(p, times = sum(sapply(x, length)))
+	else
+		p <- rep(p, times = sapply(x, length))
 	
 	#	cast string to values and species
-	if (first) {
+	if (first)
 		x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))		
-	}
-	else {
+	else
 		x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
-	}
-	x <- do.call("rbind", x)
+
+	#	single relevee
+	if (is.list(x))
+		x <- do.call("rbind", x)
+	else	
+		x <- t(x)
 	r <- cbind(p, x)
 	test <- nchar(r[,2])
 	if (sum(test) != length(test)) {
@@ -529,7 +535,7 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 			taxon = sapply(x, "[", 1),
 			layer = gsub(at, "", paste0(at, sapply(x, "[", 2))))
 	}
-	return(as.data.frame(r))
+	return(as.data.frame(r)[, c(1,3,4,2)])
 }
 
 #	accesor to get header data from VegsoupVerbatim objects
