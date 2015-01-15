@@ -94,9 +94,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	
 	#	there might still remain inconsistencies
 	#	test taxa block
-	test1 <- length(unique(nchar(t.txt))) > 1
-	error <- "length of characters is not the same on all lines!"
-	if (test1) stop(, call. = FALSE)
+	test0 <- nchar(t.txt)
+	test1 <- unique(test0)
+	error1 <- "length of characters is not the same on all lines!"
+	error2 <- " check line(s) in taxa block: "
+	if (length(test1) > 1)	
+		stop(error1, error2, paste(which(max(test1) == test0)), call. = FALSE)
 	
 	#	test header
 	test2 <- length(unique(nchar(h.txt))) > 1
