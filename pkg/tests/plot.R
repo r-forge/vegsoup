@@ -1,9 +1,9 @@
-require(vegsoup)
+#require(vegsoup)
 
-data(barmstein)
-x <- barmstein
+#data(barmstein)
+#x <- barmstein
 
-plot(x)
-plotPCO(x)
-plot(VegsoupPartition(x, k = 2, method = "flexible"))
+#plot(x)
+#plotPCO(x)
+#plot(VegsoupPartition(x, k = 2, method = "flexible"))
 
