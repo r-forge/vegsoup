@@ -16,17 +16,14 @@
 
 \alias{rbind,Taxonomy-method}
 
-\alias{Taxonomy<-}
-\alias{Taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
-
-\alias{Taxonomy}
-\alias{Taxonomy,Vegsoup-method}
-
 \alias{taxonomy}
+\alias{taxonomy,Vegsoup-method}
 \alias{taxonomy,character-method}
 \alias{taxonomy,data.frame-method}
 \alias{taxonomy,matrix-method}
 \alias{taxonomy,Taxonomy-method}
+
+\alias{taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 
 \title{Class \code{"Taxonomy"}}
 \description{
@@ -107,9 +104,8 @@ require(vegsoup)
 data(barmstein)
 x <- barmstein
 # from demonstration extract from object
-x <- Taxonomy(x)
+x <- taxonomy(taxonomy(x)) # returns object of class 'data.frame'
 
-#
 t <- new("Taxonomy", data = x)
 
 # taxonomy method for class data.frame
@@ -118,12 +114,12 @@ t <- new("Taxonomy", data = x)
 ( t <- taxonomy(as.matrix(x)) )
 
 #	get slot data from object
-head(taxonomy(t))
+taxonomy(t)               # returns object of class 'data.frame'
 
 # combine objects
 data(windsfeld)
 x <- windsfeld
-t2 <- taxonomy(Taxonomy(x))
+t2 <- taxonomy(x)
 
 rbind(t, t2)
 }

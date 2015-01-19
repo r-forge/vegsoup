@@ -13,7 +13,7 @@
 
 \description{
   Retrieve a \code{character} vector of scientific taxon names as defined by
-  \code{Taxonomy(x)} or subset an object based on these names such that
+  \code{taxonomy(x)} or subset an object based on these names such that
   only a subset of species remain.
 }
 
@@ -28,7 +28,7 @@
     \code{Vegsoup*} object.
   }
   \item{ subset }{
-    \code{numeric} index to \code{Taxonomy(x)}, vector of mode \code{character}, or a logical
+    \code{numeric} index to \code{taxonomy(x)}, vector of mode \code{character}, or a logical
     expression.
   }
   \item{ \dots }{
@@ -48,7 +48,7 @@
   taxonomic classification or other traits that go along with species names.
 
   If subset is of mode \code{character} the string is passed to function \code{grep} and seeked
-  in column \code{'taxon'} of \code{Taxonomy(x)}. Argument \code{"subset"} can be a vector of
+  in column \code{'taxon'} of \code{taxonomy(x)}. Argument \code{"subset"} can be a vector of
   length 1 or more.
   
 %%The design of package vegsoup with regard to layer replication is to encode
@@ -68,7 +68,7 @@ require(vegsoup)
 data(barmstein)
 x <- barmstein
 
-head(taxon(x)) # short-hand for head(Taxonomy(x)$taxon)
+head(taxon(x)) # short-hand for head(taxonomy(x)$taxon)
 
 # subset object using a species scientific name
 # and use function taxon() for display
@@ -79,7 +79,7 @@ taxon(subset(x, "Carex"))
 # and all species not matching 'Carex' are retained!
 taxon(subset(x, "carex", invert = TRUE, ignore.case = TRUE))
 
-# alternative if Taxonomy(x)$abbr has meaningful abbreviations
+# alternative if taxonomy(x)$abbr has meaningful abbreviations
 taxon(x[, grep("care" , colnames(x))])
 
 # numeric index to define subset

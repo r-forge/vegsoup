@@ -127,6 +127,7 @@ exportMethods(
     "Indspc",
     "Indval",
     "identical",
+    "intersect",
     "isamic",
     "is.continuous",
     "is.ordinal",
@@ -196,10 +197,11 @@ exportMethods(
     "tail",
     "taxon",
     "taxonomy",
-    "Taxonomy",
-    "Taxonomy<-",
+#   "Taxonomy",
+#   "Taxonomy<-",
     "threshold",
     "typical",
+    "variable",
     "vegdist",
     "vegdist<-",
     "which.max",
@@ -224,7 +226,7 @@ S3method(as.array, Vegsoup)
 S3method(as.vector, Vegsoup)
 S3method(points, Vegsoup)
 S3method(as.data.frame, Vegsoup)
-
+S3method(as.data.frame, Sites)
 
 #S3method(as.SpatialPoints, Vegsoup)
 #S3method(as.SpatialPointsDataFrame, Vegsoup)

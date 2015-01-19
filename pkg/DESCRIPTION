@@ -1,6 +1,6 @@
 Package: vegsoup
-Version: 0.2-2
-Date: 2013-10-02
+Version: 0.2-3
+Date: 2015-01-19
 Title: classes and methods for phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
                      email = "kardinal.eros@gmail.com"))
@@ -37,6 +37,7 @@ Collate: AAA.R
          Taxonomy-methods.R
          SpeciesTaxonomy-Methods.R
          identical.R
+         intersect.R
          compress.R
          googletiles.R
          reshape.R

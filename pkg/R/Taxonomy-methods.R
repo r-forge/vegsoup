@@ -52,7 +52,8 @@ setMethod("[",
     signature(x = "Taxonomy",
     i = "ANY", j = "ANY", drop = "missing"),
     function (x, i, j, ..., drop = FALSE) {
-    	taxonomy(x@data[i, j, ...])
+		x@data <- x@data[i, j, ...]
+		return(x)
     }
 )
 
@@ -78,6 +79,7 @@ setMethod("rbind",
 	function (..., deparse.level = 1) {
 		allargs <- list(...)	
 		r <- do.call("rbind", lapply(allargs, taxonomy))
+		#	make unique
 		r <- unique(r)
 		#	explicit ordering!
 		r <- r[order(r$abbr), ]
@@ -88,8 +90,27 @@ setMethod("rbind",
 			print(r[r$abbr == a[[1]], ])
 			stop("found duplicates in abbr/taxon pair", call. = FALSE)
 		}
-		rownames(r) <- r$abbr
-	
 		return(taxonomy(r))
 	}
-)	    	
+)
+
+	
+setMethod("taxonomy",
+    signature(obj = "Vegsoup"),
+    function (obj) obj@taxonomy
+)
+
+setGeneric("taxonomy<-", function (obj, value)
+	standardGeneric("taxonomy<-")
+)
+
+setReplaceMethod("taxonomy",
+	signature(obj = "Vegsoup", value = "SpeciesTaxonomy"),
+	function (obj, value) {
+		#	to do: needs checking against Sites(obj) and Spatial*(obj)
+#		obj@taxonomy <- value
+		warning("method not implemented yet")		
+		return(obj)		
+	}
+)
+	    	

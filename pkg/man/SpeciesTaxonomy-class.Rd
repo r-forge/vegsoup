@@ -18,6 +18,10 @@
 \alias{taxonomy<-,SpeciesTaxonomy,Taxonomy-method}
 \alias{taxonomy<-,SpeciesTaxonomy,data.frame-method}
 
+\alias{[,SpeciesTaxonomy,ANY,ANY,missing-method}
+
+\alias{$,SpeciesTaxonomy-method}
+
 \alias{rbind,SpeciesTaxonomy-method}
 
 \title{ SpeciesTaxonomy Class }
@@ -63,37 +67,55 @@
   (see \sQuote{Methods for "species<-"} and \sQuote{Methods for "taxonomy<-"}).
 
   \describe{
+ 
     \item{ species }{
       \code{ signature(obj = "SpeciesTaxonomy") }:
         Accessor method for slot \code{species}
         returning a \code{data.frame}
     }
+
     \item{ taxonomy }{
       \code{ signature(obj = "SpeciesTaxonomy") }:
         Accessor method for slot \code{taxonomy}
         returning a \code{data.frame}.
     }
+
     \item{ rbind }{
       \code{ signature(x = "SpeciesTaxonomy") }:
       \code{ rbind } method to combine two or more objects.
     }
+
+    \item{ $ }{
+      \code{signature(x = "SpeciesTaxonomy")}:
+        retrieve column name of slot species (see \code{\linkS4class{Species}}).
+    }	
+
+    \item{ [ }{
+      \code{signature(x = "SpeciesTaxonomy")}:
+        subset parts of an object (see \code{\linkS4class{Species}}).
+    }
+	
     \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
       subset slot \code{species} as to contain only the taxa given by an
       object of class \code{"Taxonomy"}, which by itself will replace
       slot \code{taxonomy}.
     }
+
     \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
       subset slot \code{species} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
     }
+ 
     \item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
       subset slot \code{taxonomy} as to contain only the taxa given by an
       object of class \code{"Species"}, which by itself will replace
       slot \code{species}.
     }
+ 
     \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
       experimental!
     }
+
     \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
       subset slot \code{taxonomy} as above, but by an object of class
       \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
@@ -117,9 +139,9 @@ showClass("SpeciesTaxonomy")
 data(barmstein)
 x <- barmstein
 
-# extract from object fro demonstration
-s <- species(species(x))  # returns a data.frame
-t <- Taxonomy(x) # returns a data.frame
+# extract from object for demonstration
+s <- species(species(x))    # returns a data.frame
+t <- taxonomy(taxonomy(x))  # returns a data.frame
 
 # using the new() inititialization method
 st0 <- new("SpeciesTaxonomy")
@@ -141,17 +163,14 @@ obj <- st2
 obj1 <- obj2 <- obj3 <- obj
 
 # the first 10 species
-# note, the taxonomy method for class 'SpeciesTaxonomy' returns a data.frame
-# therefore, we have wrap into a taxonomy() call to get an object of class 'Taxonomy'
-# this might change in the future
-( taxonomy(obj1) <- taxonomy(taxonomy(obj1)[1:10, ]) )
+( taxonomy(obj1) <- taxonomy(obj1)[1:10, ] )
 
 # specific genus
-( taxonomy(obj2) <- taxonomy(taxonomy(obj2)[grep("Carex", taxonomy(obj)$taxon), ]) )
+( taxonomy(obj2) <- taxonomy(obj2)[grep("Carex", taxonomy(obj)$taxon), ] )
 
 # get a subset of species, e.g. those occuring in the shrub layer 'sl'
 i <- species(obj3)$layer == "sl"
-( species(obj3) <- species(species(obj3)[i, ]) ) 
+( species(obj3) <- species(obj3)[i, ] )
 
 
 # combine objects
@@ -159,8 +178,8 @@ obj1 <- SpeciesTaxonomy(s, t)
 
 data(windsfeld)
 x <- windsfeld
-s2 <- species(x)  # returns a data.frame
-t2 <- Taxonomy(x) # returns a data.frame
+s2 <- species(x)  # returns a class 'Species'
+t2 <- taxonomy(x) # returns a class 'Taxonomy'
 obj2 <- SpeciesTaxonomy(s2, t2)
 
 ( obj <- rbind(obj1, obj2) )

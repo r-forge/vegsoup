@@ -139,7 +139,7 @@ setMethod("splitAbbr",
 	abbr.layer <- colnames(obj)	
 	abbr <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 1))
 	layer <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 2))
-	taxon <- Taxonomy(obj)$taxon[match(abbr, Taxonomy(obj)$abbr)]
+	taxon <- taxonomy(obj)$taxon[match(abbr, taxonomy(obj)$abbr)]
 	
 	res <- data.frame(abbr, layer, taxon, stringsAsFactors = FALSE)
 	rownames(res) <- abbr.layer
@@ -176,7 +176,7 @@ setGeneric("taxon",
 setMethod("taxon",
     signature(obj = "Vegsoup"),
     function (obj) {
-    	Taxonomy(obj)$taxon
+    	taxonomy(obj)$taxon
     }	
 )
 

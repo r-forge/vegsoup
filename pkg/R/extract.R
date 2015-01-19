@@ -66,8 +66,9 @@ setMethod("[",
 		#	subset remaining slots
 		i <- unique(X$plot)
 		
+		###
 		x@sites <- x@sites[match(i, rownames(Sites(x))), ,drop = FALSE]
-		x@taxonomy <- x@taxonomy[x@taxonomy$abbr %in% abbr(X), ,drop = FALSE]
+		x@taxonomy <- taxonomy(x)[taxonomy(x)$abbr %in% abbr(X), ]
 		
 		x@layers <- Layers(x)[Layers(x) %in% unique(X$layer)]
 		if (length(x@group) != 0) x@group <- x@group[names(x@group) %in% i]

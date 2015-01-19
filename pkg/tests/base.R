@@ -1,133 +1,149 @@
 require(vegsoup)
 
 data(barmstein)
-dta <- barmstein
-dta
+X <- barmstein
 
 #	accessor methods for class slots
 #	from class Vegsoup
-species(dta)
-Sites(dta)
-decostand(dta)
-vegdist(dta)
-AprioriGrouping(dta)
-Taxonomy(dta)
-SpatialPointsVegsoup(dta)
-SpatialPolygonsVegsoup(dta)
-Layers(dta)
-coverscale(dta)
+species(X)
+Sites(X)
+decostand(X)
+vegdist(X)
+AprioriGrouping(X)
+taxonomy(X)
+SpatialPointsVegsoup(X)
+SpatialPolygonsVegsoup(X)
+Layers(X)
+coverscale(X)
 
 #	matrix dimensions
-dim(dta)
-ncol(dta)
-nrow(dta)
-ncell(dta)
-fill(dta)
+dim(X)
+ncol(X)
+nrow(X)
+ncell(X)
+fill(X)
+
+#	from class Species
+x <- species(X)
+species(x)
+
+#	from class Sites
+y <- Sites(X)
+#	is data.frame, hence not defined
+
+#	from class Taxonomy
+z <- taxonomy(X)
+taxonomy(z)
+
+#	from class SpeciesTaxonomy
+xz <- SpeciesTaxonomy(x, z)
+species(xz)
+taxonomy(xz)
 
 #	print, show and summary
-head(dta)
-head(dta, typeof = "logical")
-head(dta, typeof = "numeric")
-head(dta, typeof = "character")
-head(dta, "si")
-tail(dta, n=3)
-summary(dta)
-show(dta)
-outlier(dta)
-outlier(dta, thresh = 0.2)
+head(X)
+head(X, typeof = "logical")
+head(X, typeof = "numeric")
+head(X, typeof = "character")
+head(X, "si")
+tail(X, n=3)
+summary(X)
+show(X)
+outlier(X)
+outlier(X, thresh = 0.2)
 
 #	dimnames and names
-colnames(dta)
-old.rownames <- rownames(dta)
-rownames(dta) <- 1:nrow(dta)   # value = "integer"
-row.names(dta) <- old.rownames # value = "character"
-all.equal(rownames(Sites(dta)), rownames(dta))
+colnames(X)
+old.rownames <- rownames(X)
+rownames(X) <- 1:nrow(X)   # value = "integer"
+row.names(X) <- old.rownames # value = "character"
+all.equal(rownames(Sites(X)), rownames(X))
 
-names(dta)
-names(dta)[1:2] <- names(dta)[1:2]
+names(X)
+names(X)[1:2] <- names(X)[1:2]
 
 #	taxon abbreviations
-head(taxon(dta))
-head(SpeciesList(dta))
-(splitAbbr(dta))
+head(taxon(X))
+head(SpeciesList(X))
+(splitAbbr(X))
 
 #	abundance scale
-class(BraunBlanquetReduce(dta))
-coverscale((BraunBlanquetReduce(dta)))
-coverscale(dta)
+class(BraunBlanquetReduce(X))
+coverscale((BraunBlanquetReduce(X)))
+coverscale(X)
 #	both should fail!
-#	coverscale(dta) <- "braun.blanquet2"
-#	coverscale(dta) <- Coverscale("braun.blanquet2")
+#	coverscale(X) <- "braun.blanquet2"
+#	coverscale(X) <- Coverscale("braun.blanquet2")
 
 #	assign what is already assigned, works
-coverscale(dta) <- "braun.blanquet"
+coverscale(X) <- "braun.blanquet"
 
 #	Layers
-Layers(dta)
-dim(dta)
-dim(Layers(dta, collapse = c("hl", "sl", NA)))
+Layers(X)
+dim(X)
+dim(Layers(X, collapse = c("hl", "sl", NA)))
 
 #	spatial methods
-coordinates(dta)
-dta$X <- coordinates(dta)[, 1]
-dta$Y <- coordinates(dta)[, 2]
-coordinates(dta) <- ~X+Y
-proj4string(dta)
+coordinates(X)
+X$X <- coordinates(X)[, 1]
+X$Y <- coordinates(X)[, 2]
+coordinates(X) <- ~X+Y
+proj4string(X)
 
-proj4string(dta) <- CRS("+init=epsg:4326")
-bbox(dta)
+proj4string(X) <- CRS("+init=epsg:4326")
+bbox(X)
 
-spTransform(dta, CRS("+init=epsg:3857"))
-SpatialPointsVegsoup(dta)
-SpatialPolygonsVegsoup(dta)
+spTransform(X, CRS("+init=epsg:3857"))
+SpatialPointsVegsoup(X)
+SpatialPolygonsVegsoup(X)
 
 #	as.matrix
-as.logical(dta)
-as.logical(dta, mode = "q")
-as.numeric(dta)
-as.numeric(dta, mode = "q")
-as.character(dta)
-as.character(dta)
-as.character(dta, mode = "q")
-head(as.matrix(dta, "character", "q"))
-tail(as.matrix(dta, "character", "q"))
-head(t(as.character(dta)))
-indices(dta)
-indices(dta, "character")
+as.logical(X)
+as.logical(X, mode = "q")
+as.numeric(X)
+as.numeric(X, mode = "q")
+as.character(X)
+as.character(X)
+as.character(X, mode = "q")
+head(as.matrix(X, "character", "q"))
+tail(as.matrix(X, "character", "q"))
+head(t(as.character(X)))
+indices(X)
+indices(X, "character")
 
 
 #	row & column sums, means and richness
-rowSums(dta)
-rowSums(dta, typeof = "numeric")
-rowMeans(dta)
+rowSums(X)
+rowSums(X, typeof = "numeric")
+rowMeans(X)
 
-colSums(dta)
-colSums(dta, typeof = "numeric")
-colMeans(dta)
+colSums(X)
+colSums(X, typeof = "numeric")
+colMeans(X)
 
-richness(dta, "da")
-richness(dta, "sa")
+richness(X, "da")
+richness(X, "sa")
 
 #	standardization
-decostand(dta)  <- c("hellinger")
-as.numeric(dta)
-decostand(dta)  <- c("hellinger", "standardize")
-as.numeric(dta)
-decostand(dta)  <- c("wisconsin")
-as.numeric(dta)                  
+decostand(X)  <- c("hellinger")
+as.numeric(X)
+decostand(X)  <- c("hellinger", "standardize")
+as.numeric(X)
+decostand(X)  <- c("wisconsin")
+as.numeric(X)                  
 
 #	subsetting
-dta[1:3,]
-dta[1,]
-dim(dta[1:3,2:3])
-Layers(dta[, grep("@sl", colnames(dta))])
+X[1:3,]
+X[1,]
+dim(X[1:3,2:3])
+Layers(X[, grep("@sl", colnames(X))])
 
 #	subsample
-rownames(SampleVegsoup(dta))
+rownames(SampleVegsoup(X))
 
 #	bind
-s1 <- dta[1:2, ]
-s2 <- dta[3:4, ]
-s3 <- dta[5:6, ]
+s1 <- X[1:2, ]
+s2 <- X[3:4, ]
+s3 <- X[5:6, ]
 
 try(rownames(bind(s3, s1, s2)))

@@ -7,7 +7,7 @@ setMethod("bbox",
     function (obj) bbox(obj@sp.points)
 )
 
-#	coordinates method
+#	coordinates method for class Vegsoup*
 setMethod("coordinates",
 	signature(obj = "Vegsoup"),
     function (obj) coordinates(obj@sp.points)
@@ -44,6 +44,100 @@ setMethod("proj4string",
 	function (obj) proj4string(obj@sp.points)
 )
 
+#	hidden function to find coordinates, otherwise generate random points	
+".coordinatesSites" <- function (obj) {				
+	#	Imports:
+	#	require(sp)
+	
+	#	objects of class Sites are ordered by plot and variable
+	p <- unique(obj$plot)
+	n <- length(p)
+	#	we may get NAs, but, if at least one instance of the variable
+	#	was found, we get a vector of length p, otherwise variable returns NULL
+	#	we can safely proceed with the following steps in this case
+	x <- variable(obj, "longitude")
+	y <- variable(obj, "latitude")
+			
+	#	strip of N, E and any blanks
+	x <- gsub("[[:alpha:][:blank:]]", "", x)
+	y <- gsub("[[:alpha:][:blank:]]", "", y)
+	
+	#	check decimal and change mode
+	x <- as.numeric(gsub("[[:punct:]]", ".", x))
+	y <- as.numeric(gsub("[[:punct:]]", ".", y))
+	
+	#	test success
+	test0 <- !(length(x) == 0 | length(x) == 0) # if variables could not be found 
+	test1 <- !any(is.na(x), is.na(y))           # returns TRUE if test0 == TRUE
+	test2 <- all(is.numeric(x), is.numeric(x))  # we must obtain numbers
+
+	if (test0 & test1 & test2) {
+		r <- cbind(x,y)
+	} else {
+		message("NAs introduced, use random pattern")		
+		r <- cbind(x = runif(n), y = runif(n))
+	}
+	dimnames(r)[[1]] <- p
+	return(r)
+}	
+
+#	coordinates method for class Sites
+setMethod("coordinates",
+	signature(obj = "Sites"),
+    .coordinatesSites
+)
+
+#	hidden function to construct polygons around plot centers	
+".polygonsSites" <- function (obj, x) {
+	#	obj: Sites object
+	#	x: matrix, as returned by coordiantes(Y)
+	
+	#	corner lengths of polygons
+	a <- variable(obj, "plsx") # variable returns NULL is column is missing
+	b <- variable(obj, "plsy")
+	
+	#	test if we got the variables and if they can be converted to numeric
+	#	otherwise, apply default of 10 m
+	ab <- rep(10, nrow(x))
+	if (is.null(a) | is.null(b)) a <- b <- ab
+	if (any(is.na(a)) | any(is.na(b))) a <- b <- ab
+	
+	#	now we ensure numeric
+	a <- as.numeric(a)
+	b <- as.numeric(b)
+	
+	#	corner length in decimal degrees
+	#	1 degree of latitude in meters is
+	#	assuming short distances this should be sufficently accurate
+	m <- (2 * pi * (6371) / 360) * 1000
+	a <- a/m
+	b <- b/m	
+		
+	n <- nrow(x)	
+	ids <- rownames(x)
+		
+	r <- sapply(1:n, function (i) {
+		#	corners of the polygon
+		xi <- x[rep(i, 5), ]
+		ai <- a[i]
+		bi <- b[i]
+		#	signs for a and b, clock wise
+		sa <- c(-1,+1,+1,-1,-1)
+		sb <- c(+1,+1,-1,-1,+1)
+		#	
+		xi[] <- xi + c((ai * sa), (bi * sb))
+		
+		sp::Polygons(list(sp::Polygon(xi)), ids[i])
+	}
+	)
+	
+	d <- data.frame(plot = ids, row.names = ids, stringsAsFactors = FALSE)
+	r <- sp::SpatialPolygonsDataFrame(sp::SpatialPolygons(r), data = d)
+	return(r)
+}
+
+
+
 #setReplaceMethod("proj4string",
 #	signature(obj = "Vegsoup", value = "character"),
 #	function (obj, value) {
@@ -67,10 +161,9 @@ setMethod("spTransform",
 	function (x, CRSobj, ...) {
 	#	Depends: rgdal
 	#	require(rgdal)# will also load (sp)
-
 		x@sp.points <- spTransform(x@sp.points, CRSobj, ...)
 		x@sp.polygons <- spTransform(x@sp.polygons, CRSobj, ...)
-		x	
+		return(x)	
 	}	
 )
 #	get spatial points

@@ -27,7 +27,7 @@ setMethod("nrow",
 setMethod("nrow",
     signature(x = "Taxonomy"),
     function (x) {
-		nrow(taxonomy(x))
+		nrow(slot(x, "data"))
 	}
 )
 
@@ -44,7 +44,7 @@ setMethod("ncol",
     		nrow(unique(species(species(x))[, c("abbr", "layer")]))
     	}
     	else {
-    		nrow(Taxonomy(x))	
+    		nrow(taxonomy(x))	
     	}
 	}
 )

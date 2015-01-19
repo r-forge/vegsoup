@@ -1,0 +1,10 @@
+--- 2015-01-19, version: 0.2-3
+
+initialize method for class "Sites" now performs ordering
+added coordinates method for class "Sites"
+added as.data.frame method for class Sites
+added "[" method for classes "SpeciesTaxonomy" and "Sites"
+slot taxonomy of class Vegsoup is now of class "Taxonomy"
+renamed Taxonomy method to taxonomy
+
+

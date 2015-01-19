@@ -1,75 +1,93 @@
+#	x <- XZ
+#	y <- Y[Y$plot != "bs06", ]
+
 #	generating function
 Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE) {
-	#	Imports:
-	#	require(sp) # otherwise GridTopology in .rpoisppSites() will fail?
+	if (missing(x))
+		stop("species are missing!")	
+	if (missing(y))
+		stop("sites are missing!")
+	if (missing(z) & class(x) != "SpeciesTaxonomy")
+		stop("taxonomy is missing and x is not of class SpeciesTaxonomy!")	
+	if (!inherits(proj4string, "character"))
+		stop("proj4string must be of class 'character'")
 
-	#	x: the species
-	if (missing(x)) {
-		stop("\nspecies are missing!")	
-	}
-	else {
-		# get taxonomy from class SpeciesTaxonomy
-		if (class(x) == "Species" | class(x) == "SpeciesTaxonomy") {
-			if (!missing(z)) {
-				x <- species(x)
-			}
-			else {
-				z <- taxonomy(x)
-				x <- species(x)				 
-			}
-		}
-		else {
-				x <- species(new("Species", data = x))
-		}	
-	}	
-	#	y: the sites
-	if (missing(y)) {
-		stop("\nsites are missing!")	
-	}
-	else {
-		if (class(y) == "Sites") {
-			y <- sites(y)
-		}
-		else {
-			y <- sites(new("Sites", data = y))
-		}	
-	}	
-	#	z: the taxonomy	
-	if (missing(z)) {
-			stop("\ntaxonomy is missing and x is not of class SpeciesTaxonomy!")
-	}
-	else {
-		if (class(z) == "Taxonomy" | class(z) == "SpeciesTaxonomy") {
-			z <- taxonomy(z)
-			zi <- FALSE	# no subset needed
-		}
-		else {
-			z <- taxonomy(new("Taxonomy", data = z))
-			zi <- TRUE # must subset
-		}			
-	}	
-	if	(!inherits(proj4string, "character")) {
-		stop("\nproj4string must inhertit from class 'character'")
-	}		
-	#	intersect x, y and z
-	#	equal length
-	xx <- sort(unique(x$plot))
-	yy <- sort(unique(y$plot))
-	test <- !isTRUE(identical(xx, yy))	
-		
-	if (test) {
-		sel <- intersect(xx, yy) # was <- xx[xx == yy]
-		x <- x[which(x$plot %in% sel), ]
-		y <- y[which(y$plot %in% sel), ]
-		z <- z[match(unique(x$abbr), z$abbr), ]
-		
-		test <- sort(unique(c(xx, yy)))
-		test <- test[!test %in% sel]
-		warning("unique(x$plot) and unique(y$plot) do not match, ",
-			"had to drop ", length(test), " plots: ",
+	#	if arguments are not of the desired class
+	#	try to promote to class
+	if (class(x) != "Species" & class(x) != "SpeciesTaxonomy")
+		x <- new("Species", data = x)
+	if (class(y) != "Sites")
+		y <- new("Sites", data = y)						
+	if (!missing(z)) if (class(z) != "Taxonomy")		
+		z <- new("Taxonomy", data = z)	
+	if (missing(z) & class(x) == "SpeciesTaxonomy")
+		z <- taxonomy(x)		
+	if (class(z) != "Taxonomy" & class(z) != "SpeciesTaxonomy")	
+		z <- new("Taxonomy", data = z)
+				
+	#	intersect x, y (and z)
+	if (!identical(x, y)) {
+		i <- intersect(x, y)
+		test <- sort(unique(c(x$plot, y$plot)))
+		test <- test[!test %in% i]
+
+		warning("identical(x, y) is FALSE, ",
+			"had to drop ", length(test), " plot",
+			ifelse(length(test) > 1, "s: ", " "),
 			paste(test, collapse = ", "), call. = FALSE)
+	
+		x <- x[which(x$plot %in% i), ] # [-method for class SpeciesTaxonomy
+		y <- y[which(y$plot %in% i), ]
+		
+		if (inherits(x, "SpeciesTaxonomy")) {
+			# we have already subsetted the object and it's slots
+			z <- taxonomy(x)
+			x <- species(x)                        
+		}
+		else			
+			z <- z[match(unique(x$abbr), z$abbr), ] # subset
+	}
+	
+	#	intersect x and z
+	if (!identical(x, z) & class(x) != "SpeciesTaxonomy") {
+		i <- intersect(x, z)		
+		z <- z[which(z$abbr %in% i), ]					
+		z <- z[match(unique(x$abbr), z$abbr), ]
 	}	
-	#	coverscale: the covercale	
+	
+	#	all identical
+	if (class(x) == "SpeciesTaxonomy") {
+		z <- taxonomy(x)
+		x <- species(x)		
+	}
+	
+	stopifnot(identical(x, y))
+	stopifnot(identical(x, z))	
+				
+	#	spatial
+	if (missing(sp.points) & missing(sp.polygons))	{
+		xy <- coordinates(y)
+		d <- data.frame(plot = rownames(xy), row.names = rownames(xy),
+			stringsAsFactors = FALSE)
+		pt <- SpatialPointsDataFrame(xy, d, proj4string = CRS(proj4string))
+		pg <- .polygonsSites(y, xy)
+		
+		#	drop coordiates from object
+		y <- y[y$variable != "longitude" & y$variable != "latitude", ]
+	}
+
+	#	missing values, not very rigid!
+	if (any(y$value == ""))
+		y$value[y$value == ""] <- NA
+	
+	#	coerce to data.frame
+	y <- as.data.frame(y)
+	#	order to x
+	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
+	pt <- pt[match(rownames(y), pt$plot), ]
+	pg <- pg[match(rownames(y), pg$plot), ]
+		
+	#	coverscale: the coverscale	
 	if (missing(coverscale)) {
 		if (verbose) {
 			("\nno cover scale provided")
@@ -113,13 +131,12 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	#	test if coverscale is ordinal
 	if (is.ordinal(xs)) {
 		test <- any(is.na(factor(x$cov,	xs@codes, xs@lims)))
-		if (test) {
-			stop("coverscale does not match data", call. = FALSE)
-		}
+		if (test) stop("coverscale does not match data", call. = FALSE)
 	}
 	#	test needed if continuous?
 	if (is.continuous(xs)) {
 	}		
+	#	grouping
 	if (missing(group))	{
 		group <- as.integer(rep(1, length(unique(x$plot))))
 		names(group) <- unique(x$plot)
@@ -137,47 +154,9 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			stop("argument group must be of mode integer", call. = FALSE)	
 		}
 	}
-
-	#	sites data		
-	if (missing(sp.points) & missing(sp.polygons))	{
-		sp <- .find.coordinates(y, proj4string = proj4string)
-		sp.points <- sp[[1]]
-		sp.polygons <- sp[[2]]
-	}
-
-	#	drop coordiates from data frame	they will be stored in spatial object
-	y <- y[y$variable != "longitude" & y$variable != "latitude", , drop = FALSE]
-	#	check missing values, not very rigid!
-	if (any(y[, 3] == "")) {
-		y[y[, 3] == "", 3] <- NA
-		if (verbose) message("\n empty fields (\"\") in sites data set as NA")
-	}  	
-   	#	copied to bind.R!
-	y <- reshape(y,	direction = "wide",
-		timevar = "variable",
-		idvar = "plot")
-	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
-	#	save row names
-	ii <- as.character(y$plot) # leading zeros!
-	y <- y[, names(y) != "plot", drop = FALSE] 
-	y <- as.data.frame(sapply(y,
-		function (x) type.convert(x), simplify = FALSE))	
-	if (!stringsAsFactors) {
-		y <- as.data.frame(as.matrix(y),
-			stringsAsFactors = FALSE)
-	}	
-    #	assign row names
-	rownames(y) <- ii # leading zeros! 
-	#	order to x
-	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
-	sp.points <- sp.points[match(rownames(y), sp.points$plot), ]
-	sp.polygons <- sp.polygons[match(rownames(y), sp.polygons$plot), ]
-	
-	#	subset taxonomy if not supplied as class SpeciesTaxonomy
-	if (zi)	z <- z[match(unique(x$abbr), z$abbr), ]
-	
-	res <- new("Vegsoup",
-		species = species(x),
+		
+	r <- new("Vegsoup",
+		species = x,
 		sites = y, 
 		taxonomy = z,
 		coverscale = xs,
@@ -185,8 +164,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		decostand = new("decostand", method = NULL),
 		dist = "euclidean",		
 		group = group,
-		sp.points = sp.points,
-		sp.polygons = sp.polygons
-		)		
-	return(res)
+		sp.points = pt,
+		sp.polygons = pg)
+				
+	return(r)
 }	

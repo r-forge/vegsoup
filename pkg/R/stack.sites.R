@@ -7,9 +7,19 @@ stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = 
 	}
 	if (!missing(file)) {
 		if (is.character(file)) {
+			#	find schema column first
+			x <- scan(file, what = "character", nlines = 1)
+			n <- unlist(strsplit(x, sep))
+			j <- match(schema, n)
+			
+			cc <- rep(NA, length(j))
+			cc[j] <- "character"
+			if (is.na(j)) stop("schema not found, may try other sep argument")
+			
+			#	we will loose leading zeros if we don't set colClasses = "character"	
 			x <- read.csv(file, sep = sep, dec = dec,
 				stringsAsFactors = FALSE, check.names = FALSE,
-				colClasses = "character") # we don't loose leading zeros!
+				colClasses = cc)
 		}
 	}
 	else {

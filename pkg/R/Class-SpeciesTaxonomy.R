@@ -4,3 +4,7 @@ setClass("SpeciesTaxonomy",
 		taxonomy = "Taxonomy"
 	)
 )
+
+#setClassUnion("SpeciesTaxonomy",
+#	c("Species", "Taxonomy")
+#)

@@ -6,10 +6,10 @@ setGeneric("taxon",
 setMethod("taxon",
 	signature = "Vegsoup",
 	function (x) {
-		Taxonomy(x)$taxon	
+		taxonomy(x)$taxon	
 	}
 )	
-#	subset = c("Warnstorfia", "Philonotis")
+#	subset = c("Carex")
 .taxon.Taxonomy <- function (x, subset, ...) {
 	#	subset ="Carex"
 	allargs <- list(...)
@@ -25,14 +25,14 @@ setMethod("taxon",
 	
 	if (is.logical(subset)) {
 		stopifnot(length(subset) == length(taxon(x)))
-		j <- Taxonomy(x)[subset, 1, drop = TRUE]	
+		j <- taxonomy(x)[subset, 1]	
 	}
 	if (is.numeric(subset)) {
 		if (length(unique(subset)) != length(subset)) {
 			stop("numeric index must be unique, duplicated items: ",
 				paste(subset[duplicated(subset)], collapse = " "), call. = FALSE)
 		}
-		j <- Taxonomy(x)[subset, 1, drop = TRUE]
+		j <- taxonomy(taxonomy(x))[subset, 1]
 	}
 	if (is.character(subset)) {
 		xx <- taxon(x)
@@ -48,9 +48,9 @@ setMethod("taxon",
 			for (i in seq(along = j)) {
 				tmp[j[[i]]] <- tmp[j[[i]]] + 1
 			}
-			j <- which(tmp == max(tmp))			
+			j <- which(tmp == max(tmp))		
 		}	
-		j <- Taxonomy(x)[j, 1, drop = TRUE]
+		j <- taxonomy(taxonomy(x))[j, 1]
 	}
 	jj <- colnames(x)
 	j <- unlist(sapply(j, simplify = FALSE, USE.NAMES = FALSE,

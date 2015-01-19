@@ -10,8 +10,13 @@
 
 \alias{nrow,Sites-method}
 
+\alias{[,Sites,ANY,ANY,missing-method}
+
 \alias{$,Sites-method}
 \alias{$<-,Sites-method}
+
+\alias{variable}
+\alias{variable,Sites-method}
 
 \alias{rbind,Sites-method}
 
@@ -29,7 +34,8 @@
 \description{
   Data representation of sites data in \emph{long format} where
   each observation on a particular plot (environmental variables,
-  stand parameters) is represented by one row.
+  stand parameters) is represented by one row. Note, the initialize method
+  of the class performs ordering first by plot and then by variable.
 }
 
 \section{Objects from the Class}{
@@ -73,7 +79,8 @@
       \code{signature(obj = "character")}:
         supply a file to be read by \code{read.csv} and promote that object to
         class \code{"Sites"}. Remember to pass appropriate arguments to
-        \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
+        \code{\link{read.csv}} that meet the specifications of your file
+        (e.g. argument \code{sep}).
 
       Only the Sites class has a \code{sites} method so far.
 
@@ -81,6 +88,26 @@
         accessor function (\emph{slot "data"}).
     }
 
+    \item{ $ }{
+      \code{signature(x = "Sites")}:
+        retrieve column by name (see \sQuote{Slots}).
+    }
+    
+	\item{ [ }{
+      \code{signature(x = "Sites")}:
+        subset parts of an object. Note, only subsetting by rows
+		is currently implemented due to the class inherent data model
+		(see \sQuote{Slots}).
+    }
+	
+    \item{ variable }{
+      \code{signature(x = "Sites")}:
+        retrieves the values for a given variable. The method returns \code{NA}
+		for plots missing that variable. If the variable is not present, the
+		method returns \code{NULL}.	The class stores the values for each
+		variable as mode \code{character}. Therefore, you may want to use
+		\code{type.convert(variable(obj, name))}.
+    }	
     \item{ nrow }{
       \code{signature(x = "Sites")}:
         the number of rows. Each plot and variable combination constitutes a row.
@@ -91,6 +118,12 @@
         \code{rbind} method to combine two or more objects.
     }
 
+    \item{ coordinates }{
+      \code{signature(x = "Sites")}:
+        method to retrieve matrix of coordinates from object.
+        The method assumes to find values for variables \code{longitude} and
+        \code{latitude}. If not present a random pattern is returned.
+    }
   }
 }
 

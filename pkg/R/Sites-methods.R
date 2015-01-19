@@ -1,4 +1,3 @@
-#	get slot
 setGeneric("sites",
 	function (obj, ...)
 		standardGeneric("sites")
@@ -50,11 +49,48 @@ setReplaceMethod("$",
 	}
 )
 
+#if (isGeneric("variable")) {
+setGeneric("variable",
+	function (obj, name, ...)
+		standardGeneric("variable")
+)
+#}
+
+setMethod("variable",
+    signature(obj = "Sites"),
+    function (obj, name) {
+    	p <- unique(obj$plot)
+    	n <- length(p)
+    	i <- which(obj$variable == name)
+		r <- structure(obj$value[i], names = obj$plot[i])
+		
+		#	return NULL if variable is not present
+		if (length(r) == 0) return(NULL)
+		
+		if (length(r) != n) {
+			x <- structure(rep(NA, n), names = p)
+			x[names(r)] <- r
+			r <- x
+		}
+		return(r)
+    }
+)
+
+setMethod("[",
+    signature(x = "Sites",
+    i = "ANY", j = "ANY", drop = "missing"),
+    function (x, i, j, ..., drop = FALSE) {
+		if (!missing(j)) message("ignore argument j")
+    	j <- rep(TRUE, ncol(sites(x)))    	
+    	sites(x@data[i, j, ...])
+    }
+)
+
 setMethod("show",
     signature(object = "Sites"),
     function (object) {
 		cat("object of class     :", class(object))
-		cat("\nnumber of variables : ",
+		cat("\nnumber of variables :",
 			length(unique(object$variable)))
 		cat("\nnumber of sites     :",
 			length(unique(object$plot)))

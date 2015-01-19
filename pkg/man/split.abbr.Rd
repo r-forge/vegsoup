@@ -28,7 +28,7 @@
   components. The first giving the taxon abbreviation only (\code{'abbr'}),
   the second the layer code (\code{'layer'}) and the last component
   corresponds to the full taxon name (\code{'taxon'}) as queried from
-  \code{Taxonomy(obj)}.
+  \code{taxonomy(obj)}.
 
   The compound taxon key (\code{'abbr.layer'}) can be accessed from the
   \code{rownames} of the resulting object. This is advantageous as it provides 

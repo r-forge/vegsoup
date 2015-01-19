@@ -17,7 +17,7 @@ setMethod("show",
 .species.summary <- function (x) {
 	res <- paste(
 		"\nspecies          : ",
-			nrow(Taxonomy(x)), " (discarding layer/stratum duplicates)",
+			nrow(taxonomy(x)), " (discarding layer/stratum duplicates)",
 		"\nmatrix fill      : ",
 			round(fill(x), 0), " %",			
 		"\nlayers           : ",
@@ -37,7 +37,7 @@ setMethod("show",
 	if (dim(x)[1] == 1) {
 		tmp <- species(species(x)) #! get data slot
 		tmp$taxon <-
-			taxon(x)[match(tmp$abbr, Taxonomy(x)$abbr)]
+			taxon(x)[match(tmp$abbr, taxonomy(x)$abbr)]
 		tmp <- tmp[, c(1,5,3,4)]
 		tmp <- tmp[order(tmp$taxon, tmp$layer), ]
 		tmp <- apply(tmp[, -1], 1,

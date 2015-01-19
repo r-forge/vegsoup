@@ -71,7 +71,7 @@
 
 \note{
   \code{shapeSpecies} will change the order of taxa based on
-  \code{Taxonomy(obj)}. The order of plots equals that of the input object.
+  \code{taxonomy(obj)}. The order of plots equals that of the input object.
   The same is true for the order of layer columns.
 }
 

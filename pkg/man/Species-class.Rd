@@ -99,7 +99,12 @@
 
       \code{signature(obj = "Species")}:
         accessor function (\emph{slot "data"}).
+		Returns class \code{data.frame}.
 
+      \code{signature(obj = "SpeciesTaxonomy")}:
+        accessor function (\emph{slot "taxonomy"}).
+		Returns class \code{Species}.
+		
       \code{signature(obj = "Vegsoup")}:
         accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
         an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
@@ -120,7 +125,8 @@
         the number of rows. Each observation of a species in plot (stratum-replicate)
         constitutes a row.
     }
-    \item{ dimanmes }{
+
+    \item{ dimnames }{
       \code{signature(x = "Species")}:
         non unique dimnames. The dimnames that are constructed by pasting plot and layer collapsed
         with \code{@}. Not to be called by the user.

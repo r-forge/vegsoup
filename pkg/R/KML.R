@@ -122,7 +122,7 @@
 		
 	#	obj = sp
 	sl <- species(species(obj)) #! get slot data
-	sl$taxon <- taxon(obj)[match(sl$abbr, Taxonomy(obj)$abbr)]
+	sl$taxon <- taxon(obj)[match(sl$abbr, taxonomy(obj)$abbr)]
 	#	resort to Layers(obj)
 	sl <- sl[order(sl$plot, match(sl$layer, Layers(obj))), ]
 				       	

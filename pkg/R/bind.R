@@ -3,19 +3,14 @@
 ".bind.Vegsoup" <- function (..., deparse.level = 1) {
 
 	allargs <- list(...)
-	
-	#	allargs <- list(eckkrammer2003tab1, eckkrammer2003tab2)
-	
+		
 	#	test if all objects have the same abundance scale
 	test <- length(unique((sapply(allargs,
 			function (x) coverscale(x)@name))))
-	if (test != 1) {
+	if (test != 1)
 		stop("\n cover scale is not the same for all objects")
-	} else {
-		#	fails!
+	else
 		scale <- coverscale(allargs[[1]])
-		#scale <- sapply(allargs, coverscale, simplify = FALSE)[[1]]
-	}
 	
 	#	test if all objects have the same distance set
 	#	if FALSE fall back to default eucliden
@@ -24,9 +19,9 @@
 	tmp <- test <- unlist(sapply(allargs, rownames))
 	test <- length(test) == length(unique(test))
 	if (!test) {		
-		message("there are overlapping plot names")
-		message(paste(tmp[duplicated(tmp)], collapse = " "))
-		stop()
+		error1 <- ("there are overlapping plot names")
+		error2 <- message(paste(tmp[duplicated(tmp)], collapse = " "))
+		stop(error1, error2)
 	}
 	
 	#	species
@@ -35,30 +30,13 @@
 
 	#	sites
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
-	#	copied from Vegsoup.R!
-	y <- reshape(y,	direction = "wide",
-		timevar = "variable",
-		idvar = "plot")
-	#	groome names
-	names(y) <- gsub("value.", "", names(y), fixed = TRUE)
-	#	leading zeros in plot names!
-	#	save plot names
-	ii <- y$plot
-	y <- as.data.frame(sapply(y, type.convert, simplify = FALSE))
-    #	assign row names
-	rownames(y) <- ii
-	y <- y[, -grep("plot", names(y))]
+	y <- as.data.frame(sites(y))
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
-	#	test <- all(unique(x$plot) == unique(y$plot))
-	#	change longitude column!
-	sel <- grep("longitude", names(y))
-	y[, sel] <- paste(as.character(y[, sel]), "E", sep = "")
     
     #	taxonomy
-    #	complicated as long as we don't have slot taxonomy as class "Taxonomy"
-    z <- sapply(sapply(allargs, Taxonomy, simplify = FALSE), taxonomy)
-	z <- taxonomy(do.call("rbind", z))
+    z <- sapply(allargs, taxonomy, simplify = FALSE)
+	z <- do.call("rbind", z)
 	
 	#	spatial points, taken from sp::rbind.SpatialPointsDataFrame because
 	#	of dispatch issue
@@ -76,12 +54,7 @@
     sp <- do.call(sp::rbind.SpatialPolygons, lapply(pgs, function(x) as(x, "SpatialPolygons")))
     df <- do.call(rbind, lapply(pgs, function(x) x@data))
     pgs <- sp::SpatialPolygonsDataFrame(sp, df, match.ID = FALSE)
-	#	polygon IDs
-	#ids <- unlist(sapply(allargs, function (x) { 
-	#	sapply(slot(SpatialPolygonsVegsoup(x), "polygons"),
-	#		function (x) slot(x, "ID")) # "Polygons"
-	#}, simplify = FALSE))		
-	#	order pgs to x
+
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	
 	res <- new("Vegsoup",

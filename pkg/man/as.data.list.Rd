@@ -43,8 +43,9 @@ data(barmstein)
 
 x <- as(barmstein, "data.list")
 summary(x)
+
 \dontrun{
-# not yet implemented
+# not implemented yet
 x <- as.data.list(barmstein)
 }
 

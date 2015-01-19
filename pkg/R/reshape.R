@@ -70,7 +70,7 @@ shapeSpecies <- function (obj) {
 
 	res$plot <- rep(rownames(obj), richness(obj, "sample"))
 	res$abbr <- unlist(sapply(rownames(obj), function (x) {
-		Taxonomy(obj[rownames(obj) == x, ])$abbr}))
+		taxonomy(obj[rownames(obj) == x, ])$abbr}))
 	#	slow
 	for (i in 1:nrow(res)) {
 		tmp <- res[i, ]

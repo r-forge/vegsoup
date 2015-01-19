@@ -5,6 +5,7 @@
 
 \alias{coordinates}
 \alias{coordinates,Vegsoup-method}
+\alias{coordinates,Sites-method}
 
 \alias{coordinates<-}
 \alias{coordinates<-,Vegsoup-method}
@@ -45,6 +46,7 @@ Spatial methods as defined in package \pkg{sp}.
 
 \usage{
 \S4method{coordinates}{Vegsoup}(obj)
+\S4method{coordinates}{Sites}(obj)
 
 \S4method{coordinates}{Vegsoup}(obj) <- value
 
@@ -92,13 +94,18 @@ Spatial methods as defined in package \pkg{sp}.
 }
 
 \details{
-All methods operate on the spatial slots of an object: \code{SpatialPointsVegsoup} and \code{SpatialPolygonsVegsoup}.
+All methods operate on the spatial slots of an object:
+\code{SpatialPointsVegsoup} and \code{SpatialPolygonsVegsoup}.
 
 \itemize{
   \item
   \code{coordinates} retrieves or sets the spatial coordinates. Note, in
   contrast to the generic method defined in package \pkg{sp} it is possible
-  to set coordinates, where they have already been set!
+  to set coordinates, where they have already been set (accounts for class
+  Vegsoup only)! The coordinates method for class \code{\linkS4class{Sites}}
+  tries to get coordinates from named variables longitude and latitude,
+  otherwise simulated coordinates in the unit square
+  (\code{runif(length(unique(obj$plot)), min = 0, max = 1)}) are returned.
 
   \item
   \code{bbox} retrieves the spatial extent (extremes) from \code{coordinates(obj)}.

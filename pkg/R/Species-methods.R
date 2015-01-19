@@ -72,7 +72,8 @@ setReplaceMethod("species",
 		r <- species(obj)
 		a <- factor(r$abbr)
 		i <- match(levels(a), value$taxon)
-		nas <- is.na(i)		
+		nas <- is.na(i)
+
 		if (any(nas)) {
 			stop("value does not match for:\n", levels(a)[nas],
 				"\npmatch returns:\n", value$taxon[pmatch(levels(a)[nas], value$taxon)],
@@ -80,7 +81,7 @@ setReplaceMethod("species",
 		}
 		
 		levels(a) <- value$abbr[i]
-		r$abbr <- a		
+		r$abbr <- as.character(a)
 		r <- species(r)
 		
 		return(r)
@@ -89,7 +90,7 @@ setReplaceMethod("species",
 
 setMethod("species",
     signature(obj = "SpeciesTaxonomy"),
-    function (obj) species(slot(obj, "species")) # ? slot(obj, "species")
+    function (obj) slot(obj, "species")
 )
 
 setReplaceMethod("species",
@@ -99,7 +100,7 @@ setReplaceMethod("species",
 		sel <- match(unique(value$abbr), taxonomy(obj)$abbr)
 		new("SpeciesTaxonomy",
 			species = value,
-			taxonomy = taxonomy(taxonomy(obj)[sel, ]))
+			taxonomy = taxonomy(obj)[sel, ])
 	}
 )
 
@@ -109,7 +110,7 @@ setReplaceMethod("species",
 		sel <- match(unique(value$abbr), taxonomy(obj)$abbr)
 		new("SpeciesTaxonomy",
 		species = value,
-		taxonomy = taxonomy(taxonomy(obj)[sel, ]))
+		taxonomy = taxonomy(obj)[sel, ])
 	}
 )
 
@@ -128,13 +129,13 @@ setReplaceMethod("species",
 	}
 )
 
-#	only if value intersects Taxonomy(obj)
+#	only if value intersects taxonomy(obj)
 setReplaceMethod("species",
 	signature(obj = "Vegsoup", value = "Species"),
 	function (obj, value) {
 		#! if taxonomy(obj) is renamed
 		# test <- any(is.element(abbr(taxonomy(obj)), unique(abbr(value)))) 
-		t1 <- is.element(unique(abbr(value)), Taxonomy(obj)$abbr)
+		t1 <- is.element(unique(abbr(value)), taxonomy(obj)$abbr)
 		t2 <- is.element(unique(value$plot), rownames(obj))
 		stopifnot(any(t1) & any(t2))
 		
@@ -147,8 +148,8 @@ setReplaceMethod("species",
 		obj@layers <- unique(value$layer)
 						
 		#	at least we need to subset taxonomy
-		value <- Taxonomy(obj)[Taxonomy(obj)$abbr %in% unique(abbr(obj)), ]
-		obj@taxonomy <- value #! if slots becomes class "Taxonomy" taxonomy(value)		 
+		value <- taxonomy(obj)[taxonomy(obj)$abbr %in% unique(abbr(obj)), ]
+		obj@taxonomy <- value		 
 		return(obj)
 	}
 )
@@ -202,22 +203,19 @@ setMethod("abbr",
     }	
 )
 
-".rbind.Species" <- function (..., deparse.level = 1) {
-	allargs <- list(...)	
-	x <- do.call("rbind", lapply(allargs, species))
-	if (any(duplicated(x))) {
-		message("duplicates found: ")
-		print(x[duplicated(x), ])
-	}
-	#	explicit ordering!
-	x <- x[order(x$plot, x$layer, x$abbr), ]	
-	return(species(x))
-}
-
-
 setMethod("rbind",
     signature(... = "Species"),
-	.rbind.Species
+	function (..., deparse.level = 1) {
+		allargs <- list(...)	
+		x <- do.call("rbind", lapply(allargs, species))
+		if (any(duplicated(x))) {
+			message("duplicates found: ")
+			print(x[duplicated(x), ])
+		}
+		#	explicit ordering!
+		x <- x[order(x$plot, x$layer, x$abbr), ]	
+		return(species(x))
+	}
 )
 
 #	VegsoupVerbatim methods
@@ -250,17 +248,20 @@ setGeneric("SpeciesList",
 setMethod("SpeciesList",
     signature(obj = "Vegsoup"),
     function (obj, layered = FALSE) {
-    	if (missing(layered)) {
+    	if (missing(layered))
     		layered <- FALSE
-    	}
+
     	if (layered) {
 	    	res <- species(species(obj)) #! get slot data
     		res <- unique(res[c("abbr", "layer")])
-    		res$taxon <- Taxonomy(obj)[res$abbr, ]$taxon
+    		# we can't use the [-method because we want layer replicates
+    		# these can easily by obtained by indexing rownames with characters
+    		res$taxon <- taxonomy(taxonomy(obj))[res$abbr, ]$taxon
 	    	res <- res[, c("abbr", "taxon", "layer")]
 	    	res <- res[order(res$layer, res$taxon),]	    				
-    	} else {
-    		res <- Taxonomy(obj)[]	
+    	}
+		else {
+    		res <- taxonomy(taxonomy(obj))
     	}
     	rownames(res) <- seq_len(nrow(res))
     	return(invisible(res))	
@@ -302,7 +303,7 @@ setMethod("relevee",
 		
 		#	species
 		l <- species(species(x))
-    	l$taxon <- Taxonomy(obj)[l$abbr, ]$taxon
+    	l$taxon <- taxonomy(taxonomy(obj))[l$abbr, ]$taxon # see SpeciesList
 	    l <- l[order(l$layer, l$taxon), ]	    				
     	l <- l[, c("taxon", "layer", "cov")]
     	rownames(l) <- seq_len(nrow(l))

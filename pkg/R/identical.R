@@ -7,10 +7,22 @@ if (!isGeneric("identical")) {
 setMethod("identical", signature(x = "Species", y = "Sites"), 
 function (x, y) {
 	r <- sort(unique(x$plot)) == sort(unique(y$plot))
-	if (all(r)) TRUE else sort(unique(x$plot))[r]
+	if (all(r)) TRUE else FALSE
 } )
 
 setMethod("identical", signature(x = "Sites", y = "Species"), 
 function (x, y) {
-	intersect(y, x)
+	identical(y, x)
+} )
+
+setMethod("identical", signature(x = "SpeciesTaxonomy", y = "Sites"), 
+function (x, y) {
+	r <- sort(unique(species(x)$plot)) %in% sort(unique(y$plot))
+	if (all(r)) TRUE else FALSE
+} )
+
+setMethod("identical", signature(x = "Species", y = "Taxonomy"), 
+function (x, y) {
+	r <- sort(unique(x$abbr)) %in% sort(unique(y$abbr))
+	if (all(r)) TRUE else FALSE
 } )

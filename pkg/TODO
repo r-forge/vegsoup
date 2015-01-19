@@ -7,6 +7,8 @@ Association, is defined for nominal variables only?
 Sites to sites
 layer to stratum
 Layers to strata
+SpeciesList to taxalist
+
 add strata(obj) <- value logical-method
 if FALSE collapse all strata
 if TRUE no method to add strata to unlayered object 

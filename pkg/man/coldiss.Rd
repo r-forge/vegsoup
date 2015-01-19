@@ -36,7 +36,7 @@ The method returns two plots corresponding to an unordered and an ordered colore
     Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
   }
   \item{ translate }{
-    Dispaly scientific taxon names as defined in \code{Taxonomy(obj)}. Defaults to \code{FALSE}
+    Display scientific taxon names as defined in \code{taxonomy(obj)}. Defaults to \code{FALSE}
     and only applies if additional argument \code{mode} is supplied and it's value is
     \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
   }

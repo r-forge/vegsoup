@@ -15,29 +15,30 @@ setMethod("compress",
 				x@sites <- data.frame(
 					compress = rep(TRUE, nrow(x)),
 					Sites(x)[, j[!is.na(j)], drop = FALSE],
-					row.names = rownames(Sites(x))) # rownames(x)
+					row.names = rownames(Sites(x)))
 			}
 			else {
 				x@sites <- data.frame(
 					compress = rep(TRUE, nrow(x)),
 					cols = ncol(x),
-					row.names = rownames(Sites(x)))  # rownames(x)				
+					row.names = rownames(Sites(x)))
 			}
 		}
 		else {
 			x@sites <- data.frame(
 				compress = rep(TRUE, nrow(x)),
-				cols = ncol(x),
-				row.names = rownames(Sites(x)))  # rownames(x)
+				cols = ncol(Sites(x)),
+				row.names = rownames(Sites(x)))     
 		}
 		
 		x <- Layers(x, collapse = "0l")
 		
-		z <- Taxonomy(x)
+		z <- taxonomy(taxonomy(x)) 
 		j <- c("abbr", "taxon", "family", "level")
 		j <- match(j, names(z))
-		
-		x@taxonomy <- z[, j[!is.na(j)]]
+		z <- z[, j[!is.na(j)]]
+
+		x@taxonomy <- taxonomy(z)
 	return(x)	
     }
 )
