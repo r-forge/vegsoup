@@ -12,7 +12,7 @@ Coverscale <- function (name, codes, lims) {
 	}
 	else {
 		if (missing(codes) & missing(lims)) {
-			res <- .COVERSCALES[[match.arg(name, names(.COVERSCALES))]]
+			r <- .COVERSCALES[[match.arg(name, names(.COVERSCALES))]]
 		}
 		else {
 			if (missing(codes) | missing(lims))	{
@@ -23,15 +23,21 @@ Coverscale <- function (name, codes, lims) {
 					stop("length of codes and lims are not the same", call. = FALSE)
 				}
 				else {
-					res <- list(
+					r <- list(
 						name = as.character(name),
 						codes = as.character(codes),
 						lims = as.numeric(lims))	
 				}
 			}
-		}
-	res <- as(res, "Coverscale")
-	return(res)
+		}		
+	r <- as(r, "Coverscale")
+	
+	#	order to lims	
+	i <- order(r@lims)
+	r@codes <- r@codes[i]
+	r@lims <- r@lims[i]
+	
+	return(r)
 	}
 }
 

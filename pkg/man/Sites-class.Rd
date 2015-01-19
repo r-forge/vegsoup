@@ -17,6 +17,8 @@
 
 \alias{variable}
 \alias{variable,Sites-method}
+\alias{variables}
+\alias{variables,Sites-method}
 
 \alias{rbind,Sites-method}
 
@@ -107,7 +109,14 @@
 		method returns \code{NULL}.	The class stores the values for each
 		variable as mode \code{character}. Therefore, you may want to use
 		\code{type.convert(variable(obj, name))}.
-    }	
+    }
+    
+	\item{ variables }{
+      \code{signature(x = "Sites")}:
+        retrieves the unique set of variables as a character vector.
+		Useful for inspectino of the objects contents.
+    }
+			
     \item{ nrow }{
       \code{signature(x = "Sites")}:
         the number of rows. Each plot and variable combination constitutes a row.

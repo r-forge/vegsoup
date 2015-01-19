@@ -1,12 +1,17 @@
 #useDynLib(vegsoup)
 
 import(methods)
+#import(coenoflex)
 
 importFrom("graphics", plot, hist)
+
 importFrom("stats", as.dist, quantile, as.dendrogram)
+
 importFrom("utils", head, tail)
 
-#import(coenoflex)
+importFrom("XML", xmlRoot, xmlTreeParse, xmlApply, xmlSApply, xmlValue, xmlAttrs)
+
+import(rgdal)
 
 importFrom("labdsv", indval)
 
@@ -23,19 +28,19 @@ importFrom("vegclust", vegclustdist, defuzzify)
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
                  rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
                  SpatialPointsDataFrame, SpatialPolygonsDataFrame)
+
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
                       proj4string, "proj4string<-", spTransform,
                       over)
 
-import(rgdal)
-
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell, extent)
 
 importFrom("multitable", data.list)
+
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 
 #importFrom("Hmisc", latex)
@@ -65,6 +70,7 @@ export(
     "plotPCO",
     "read.verbatim",
     "read.verbatim.append",
+    "read.XML",
     "write.verbatim",
     "str2latlng",
     "tile2latlng",
@@ -76,6 +82,7 @@ export(
     "header",
     "template"
 )
+
 exportMethods(
     "[",
     "$",
@@ -197,11 +204,10 @@ exportMethods(
     "tail",
     "taxon",
     "taxonomy",
-#   "Taxonomy",
-#   "Taxonomy<-",
     "threshold",
     "typical",
     "variable",
+    "variables",
     "vegdist",
     "vegdist<-",
     "which.max",

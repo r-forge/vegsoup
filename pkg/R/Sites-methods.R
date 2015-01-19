@@ -76,6 +76,21 @@ setMethod("variable",
     }
 )
 
+#if (isGeneric("variable")) {
+setGeneric("variables",
+	function (obj, ...)
+		standardGeneric("variables")
+)
+#}
+
+setMethod("variables",
+    signature(obj = "Sites"),
+    function (obj) {
+    	r <- unique(obj$variable)
+		return(r)
+    }
+)
+
 setMethod("[",
     signature(x = "Sites",
     i = "ANY", j = "ANY", drop = "missing"),
