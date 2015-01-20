@@ -1,7 +1,3 @@
-#	x <- XZ
-#	y <- Y[Y$plot != "bs06", ]
-
-#	generating function
 Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE) {
 	if (missing(x))
 		stop("species are missing!")	
@@ -50,8 +46,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	
 	#	intersect x and z
 	if (!identical(x, z) & class(x) != "SpeciesTaxonomy") {
-		i <- intersect(x, z)		
-		z <- z[which(z$abbr %in% i), ]					
+		i <- intersect(x, z)
+		z <- z[which(z$abbr %in% i), ]
 		z <- z[match(unique(x$abbr), z$abbr), ]
 	}	
 	
@@ -60,7 +56,8 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		z <- taxonomy(x)
 		x <- species(x)		
 	}
-	
+
+	#	final test	
 	stopifnot(identical(x, y))
 	stopifnot(identical(x, z))	
 				
@@ -77,13 +74,12 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	}
 
 	#	missing values, not very rigid!
-	if (any(y$value == ""))
-		y$value[y$value == ""] <- NA
+	if (any(y$value == ""))	y$value[y$value == ""] <- NA
 	
-	#	coerce to data.frame
+	#	coerce to data.frame ...
 	y <- as.data.frame(y)
-	#	order to x
-	y <- y[match(unique(x$plot), rownames(y)), ,drop = FALSE]	
+	#	... and order to x
+	y <- y[match(unique(x$plot), rownames(y)), , drop = FALSE]	
 	pt <- pt[match(rownames(y), pt$plot), ]
 	pg <- pg[match(rownames(y), pg$plot), ]
 		

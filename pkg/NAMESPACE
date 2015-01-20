@@ -207,6 +207,7 @@ exportMethods(
     "threshold",
     "typical",
     "variable",
+    "variable<-",
     "variables",
     "vegdist",
     "vegdist<-",

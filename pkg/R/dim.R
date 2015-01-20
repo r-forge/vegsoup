@@ -44,7 +44,7 @@ setMethod("ncol",
     		nrow(unique(species(species(x))[, c("abbr", "layer")]))
     	}
     	else {
-    		nrow(taxonomy(x))	
+    		nrow(taxonomy(x)) # !	
     	}
 	}
 )

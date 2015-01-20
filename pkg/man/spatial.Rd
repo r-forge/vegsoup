@@ -46,6 +46,7 @@ Spatial methods as defined in package \pkg{sp}.
 
 \usage{
 \S4method{coordinates}{Vegsoup}(obj)
+
 \S4method{coordinates}{Sites}(obj)
 
 \S4method{coordinates}{Vegsoup}(obj) <- value

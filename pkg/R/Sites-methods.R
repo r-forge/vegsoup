@@ -51,42 +51,64 @@ setReplaceMethod("$",
 
 #if (isGeneric("variable")) {
 setGeneric("variable",
-	function (obj, name, ...)
+	function (x, name, ...)
 		standardGeneric("variable")
 )
 #}
 
 setMethod("variable",
-    signature(obj = "Sites"),
-    function (obj, name) {
-    	p <- unique(obj$plot)
+    signature(x = "Sites"),
+    function (x, name) {
+    	p <- unique(x$plot)
     	n <- length(p)
-    	i <- which(obj$variable == name)
-		r <- structure(obj$value[i], names = obj$plot[i])
+    	i <- which(x$variable == name)
+		r <- structure(x$value[i], names = x$plot[i])
 		
 		#	return NULL if variable is not present
 		if (length(r) == 0) return(NULL)
 		
 		if (length(r) != n) {
-			x <- structure(rep(NA, n), names = p)
-			x[names(r)] <- r
-			r <- x
+			xx <- structure(rep(NA, n), names = p)
+			xx[names(r)] <- r
+			r <- xx
 		}
 		return(r)
     }
 )
 
+#if (!isGeneric("variable<-")) {
+setGeneric("variable<-",
+	function (x, name, value)
+		standardGeneric("variable<-")
+)
+#}
+
+setReplaceMethod("variable",
+	signature(x = "Sites", name = "character", value = "ANY"),
+	function (x, name, value) {
+		i <- x$variable == name
+		test1 <- !any(i)
+		test2 <- length(variable(x, name)) != length(value) & length(value) != 1
+
+		if (test1) stop("variable not found")
+		if (test2) stop("length of value must match length variable(x, name)")
+				
+		x@data[i, 3] <- as.character(value)
+		return(x)
+	}
+)
+
 #if (isGeneric("variable")) {
 setGeneric("variables",
-	function (obj, ...)
+	function (x, ...)
 		standardGeneric("variables")
 )
 #}
 
 setMethod("variables",
-    signature(obj = "Sites"),
-    function (obj) {
-    	r <- unique(obj$variable)
+    signature(x = "Sites"),
+    function (x) {
+    	r <- unique(x$variable)
 		return(r)
     }
 )

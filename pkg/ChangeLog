@@ -1,11 +1,13 @@
 --- todo
 
 we must rebuild polygons for coordintes<- method
+more rigorous test for identical methods
 
 --- 2015-01-19, version: 0.2-3x
 
 added variables method for class "Sites" extending existing variable
-Coverscale objects are now ordered by lims
+added variable<- method to aid in replacing values
+Coverscale objects are now ordered by 'lims' if present
 added read.XML function to read from turboveg XML files
 
 --- 2015-01-19, version: 0.2-3

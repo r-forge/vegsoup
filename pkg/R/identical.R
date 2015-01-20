@@ -23,6 +23,11 @@ function (x, y) {
 
 setMethod("identical", signature(x = "Species", y = "Taxonomy"), 
 function (x, y) {
-	r <- sort(unique(x$abbr)) %in% sort(unique(y$abbr))
-	if (all(r)) TRUE else FALSE
+	x <- sort(unique(x$abbr)) # do we really need sort here?
+	y <- sort(unique(y$abbr))
+	test <- x %in% y
+	if (all(test))
+		if (length(x) == length(y)) TRUE else FALSE
+	else
+		FALSE
 } )

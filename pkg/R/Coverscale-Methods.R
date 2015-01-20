@@ -32,11 +32,12 @@ Coverscale <- function (name, codes, lims) {
 		}		
 	r <- as(r, "Coverscale")
 	
-	#	order to lims	
-	i <- order(r@lims)
-	r@codes <- r@codes[i]
-	r@lims <- r@lims[i]
-	
+	#	order to lims
+	if (! is.null(r@lims)) {		
+		i <- order(r@lims)
+		r@codes <- r@codes[i]
+		r@lims <- r@lims[i]
+	}
 	return(r)
 	}
 }

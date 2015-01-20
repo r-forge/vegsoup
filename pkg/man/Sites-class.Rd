@@ -17,6 +17,10 @@
 
 \alias{variable}
 \alias{variable,Sites-method}
+
+\alias{variable<-}
+\alias{variable<-,Sites,character,ANY-method}
+
 \alias{variables}
 \alias{variables,Sites-method}
 
@@ -110,6 +114,15 @@
 		variable as mode \code{character}. Therefore, you may want to use
 		\code{type.convert(variable(obj, name))}.
     }
+ 
+ \item{ variable<- }{
+   \code{signature(x = "Sites")}:
+     retrieves the values for a given variable. The method returns \code{NA}
+	for plots missing that variable. If the variable is not present, the
+	method returns \code{NULL}.	The class stores the values for each
+	variable as mode \code{character}. Therefore, you may want to use
+	\code{type.convert(variable(obj, name))}.
+ }
     
 	\item{ variables }{
       \code{signature(x = "Sites")}:

@@ -1,6 +1,6 @@
 \encoding{UTF-8}
 
-\name{verbatim}
+\name{ Turboveg }
 
 \alias{read.XML}
 
@@ -23,6 +23,7 @@ read.XML(file)
 
 \details{
 The way \emph{turboveg} exports to XML is very similar to the data model of a Vegsoup object.
+The function tries to format the date field that is in the \emph{standard_record} tag.
 }
 
 \value{

@@ -21,7 +21,7 @@ function (x, y) {
 
 setMethod("intersect", signature(x = "Species", y = "Taxonomy"), 
 function (x, y) {
-	intersect(sort(unique(species(x)$abbr)), sort(unique(z$abbr)))
+	intersect(sort(unique(species(x)$abbr)), sort(unique(y$abbr)))
 } )
 
 

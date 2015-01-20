@@ -2,8 +2,6 @@
 #	as.dist dispatach for generic with additional argument mode
 
 #	vectorized internal function 
-#	replacing .cast() in Vegsoup-Internal.R which is slower 
-
 .cast2 <- function (x, typeof) {
 	ij <- indices(x, typeof)
 	nc <- ncol(x)
@@ -17,26 +15,6 @@
 	return(matrix(cv, ncol = ncol(x), nrow = nrow(x),
 		dimnames = ij$dimnames, byrow = TRUE))
 }
-
-#	essentially the same as colnames method,
-#	but has unique argument needed by indices method!
-#.abbr.layer <- function (x, unique) {
-#	if (missing(unique)) {
-#    	unique = FALSE	
-#    }
-#    res <- file.path(species(x)$abbr, species(x)$layer, fsep = "@")
-#    if (!unique) {    	
-#    	if (length(Layers(x)) > 1) {
-#   			l <- species(x)$layer
-#			res <- unique(unlist(sapply(Layers(x), function (x) res[l == x])))
-#		}
-#		else {
-#			res <- unique(res)	
-#		}
-#   }
-#   return(res)
-#}
-
 
 #	return species matrix
 setMethod("as.numeric",
