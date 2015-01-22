@@ -17,13 +17,18 @@ function (x, y) {
 
 setMethod("identical", signature(x = "SpeciesTaxonomy", y = "Sites"), 
 function (x, y) {
-	r <- sort(unique(species(x)$plot)) %in% sort(unique(y$plot))
-	if (all(r)) TRUE else FALSE
+	x <- sort(unique(species(x)$plot)) # do we really need call sort here?
+	y <- sort(unique(y$plot))
+	test <- x %in% y
+	if (all(test))
+		if (length(x) == length(y)) TRUE else FALSE
+	else
+		FALSE
 } )
 
 setMethod("identical", signature(x = "Species", y = "Taxonomy"), 
 function (x, y) {
-	x <- sort(unique(x$abbr)) # do we really need sort here?
+	x <- sort(unique(x$abbr)) # do we really need call sort here?
 	y <- sort(unique(y$abbr))
 	test <- x %in% y
 	if (all(test))

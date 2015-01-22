@@ -17,7 +17,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 	if (!missing(z)) if (class(z) != "Taxonomy")		
 		z <- new("Taxonomy", data = z)	
 	if (missing(z) & class(x) == "SpeciesTaxonomy")
-		z <- taxonomy(x)		
+		z <- taxonomy(x)
 	if (class(z) != "Taxonomy" & class(z) != "SpeciesTaxonomy")	
 		z <- new("Taxonomy", data = z)
 				
@@ -68,6 +68,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 			stringsAsFactors = FALSE)
 		pt <- SpatialPointsDataFrame(xy, d, proj4string = CRS(proj4string))
 		pg <- .polygonsSites(y, xy)
+		proj4string(pg) <- CRS(proj4string)
 		
 		#	drop coordiates from object
 		y <- y[y$variable != "longitude" & y$variable != "latitude", ]

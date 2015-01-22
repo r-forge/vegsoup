@@ -95,12 +95,18 @@ setMethod("coordinates",
 	#	corner lengths of polygons
 	a <- variable(obj, "plsx") # variable returns NULL is column is missing
 	b <- variable(obj, "plsy")
-	
+		
 	#	test if we got the variables and if they can be converted to numeric
 	#	otherwise, apply default of 10 m
 	ab <- rep(10, nrow(x))
-	if (is.null(a) | is.null(b)) a <- b <- ab
-	if (any(is.na(a)) | any(is.na(b))) a <- b <- ab
+	if ( is.null(a) | is.null(b) )       a <- b <- ab
+	if ( any(is.na(a)) | any(is.na(b)) ) a <- b <- ab
+	if ( any(a == "") | any(b == "") )   a <- b <- ab
+	#if (length(a) == 0 | length(a) == 0) a <- b <- ab	
+	
+	#	nasty decimals
+	a <- gsub(",", ".", a)
+	b <- gsub(",", ".", b)
 	
 	#	now we ensure numeric
 	a <- as.numeric(a)
@@ -128,8 +134,7 @@ setMethod("coordinates",
 		xi[] <- xi + c((ai * sa), (bi * sb))
 		
 		sp::Polygons(list(sp::Polygon(xi)), ids[i])
-	}
-	)
+	} )
 	
 	d <- data.frame(plot = ids, row.names = ids, stringsAsFactors = FALSE)
 	r <- sp::SpatialPolygonsDataFrame(sp::SpatialPolygons(r), data = d)

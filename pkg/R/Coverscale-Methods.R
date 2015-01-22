@@ -1,9 +1,23 @@
-#	Vegsoup validity check
-#	!any(is.na(factor(x$cov, levels = scale$codes, labels = scale$lims)))
-#	x$cov <- as.numeric(x$cov)
-#	if (any(is.na(x$cov))) {
-#	str(x$cov)
-#	stop("there seems to be digits mixed with characters?")
+#	internal validity check
+.validityCoverscale <- function (obj) {
+	test <- is.na(
+		factor(species(obj)$cov,
+		levels = coverscale(obj)@codes,
+		labels = coverscale(obj)@lims))
+	if (any(test)) FALSE else TRUE
+	#stop("coverscale does not match data", call. = FALSE)	 				
+}			
+
+#	internal function
+#	if just slot 'name' differs
+.identicalCoverscale <- function (x, y) {
+	test1 <- length(x@codes) == length(y@codes)
+	test2 <- length(x@lims) == length(y@lims)
+	if (test1 & test2)
+		if (all(x@codes == y@codes) & all(x@lims == y@lims)) TRUE else FALSE
+	else
+		FALSE
+}
 
 Coverscale <- function (name, codes, lims) {
 	if (missing(name)) {
@@ -138,52 +152,56 @@ setMethod("coverscale",
 setReplaceMethod("coverscale",
 	signature(x = "Vegsoup", value = "Coverscale"),
 	function (x, value) {
-#		x <- coenoflex(100,100)
-#		value <- Coverscale("ordinal")
+
+		ss <- .identicalCoverscale(coverscale(x), value) # same, same
+		pa <- is.occurence(value)                        # presence/absence
+		bb <- coverscale(x)@name == "Braun-Blanquet" & value@name == "Braun-Blanquet 2"		
 		oo <- is.ordinal(x) & is.ordinal(value)
-		bb <- coverscale(x)@name == "Braun-Blanquet" & value@name == "Braun-Blanquet 2"
-		co <- is.continuous(x) & is.ordinal(value) | is.occurence(value)
-		if (oo & bb) {
-			r <- species(species(x)) #! slot data
+		co <- is.continuous(x) & is.ordinal(value)
+		
+		if (ss)	x@coverscale@name <- value@name
+		
+		if (pa) {
+			species(x)$cov <- "1"
+			x@coverscale <- value
+		}
+
+		if ( (oo & !bb) & (oo | co) & !ss & !pa ) {
+			#	not implemented yet
+		}
+			
+		if ( (oo & bb) & !ss & !pa ) {
+			r <- species(x) #! slot data
 			for (i in c("2m", "2a", "2b")) {
 				if (i == "2m") r$cov[r$cov == i]  <- "1"
 				if (i == "2a") r$cov[r$cov == i]  <- "2"
 				if (i == "2b") r$cov[r$cov == i]  <- "2"
-				species(x) <- species(r)	
 			}
-		species(x) <- species(r)
-		x@coverscale <- value
-		}
+			species(x) <- r
+			x@coverscale <- value
+		}					
 		
-		x@coverscale <- value
-			
-		if (co) {
-			if (is.occurence(value)) {
-				x@species$cov <- as.character(1)
-				message("transformed cover values!")
-			}
-			else {
-				xx <- as.numeric(species(x)$cov) # we store characters
-				if (max(xx) > 100) {
-					stop("highest cover value is bigger than 100")
-				}
-				#	move lowest value into range
-				xx[xx < coverscale(x)@lims[1]] <- coverscale(x)@lims[1]
-				
-				x@species$cov <- as.character(
-					cut(xx, 
-						breaks = c(coverscale(x)@lims, 100),
-						labels = coverscale(x)@codes,
-						include.lowest = TRUE))
-				message("transformed cover values!")											
-				test <- any(is.na(
-					factor(species(x)$cov,
-					levels = coverscale(x)@codes,
-					labels = coverscale(x)@lims)))
+		if ( (oo | co) & !ss & !bb & !pa ) {
+			xx <- as.numeric(species(x)$cov) # we store characters
 
-			if (test) stop("coverscale does not match data", call. = FALSE)
-			}			
-		
+			if (max(xx) > 100) stop("highest cover value is bigger than 100")
+
+			#	move lowest value into range
+			xx[xx < value@lims[1]] <- value@lims[1]
+								
+			x@species$cov <- as.character(
+				cut(xx, 
+					breaks = c(value@lims, 100),
+					labels = value@codes,
+					include.lowest = TRUE, right = FALSE))
+					
+			x@coverscale <- value
+
+			test <- .validityCoverscale(x)
+			if (test)
+				message("transformed cover values!")
+			else
+				stop("coverscale does not match data", call. = FALSE)
 		}
 	return(x)
 	}
@@ -202,7 +220,6 @@ setReplaceMethod("coverscale",
 	}
 )
   
-#	revert abundance scale for Braun-Blanquet scale
 #if (!isGeneric("BraunBlanquetReduce")) {
 setGeneric("BraunBlanquetReduce",
 	function (x)

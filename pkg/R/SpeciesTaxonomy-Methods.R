@@ -56,7 +56,7 @@ setMethod("[",
     i = "ANY", j = "ANY", drop = "missing"),
     function (x, i, j, ..., drop = FALSE) {
     	if (!missing(j)) message("ignore argument j")
-    	j <- rep(TRUE, ncol(species(x)))
+    	j <- rep(TRUE, ncol(species(species(x)))) # ! slot data
     	return(SpeciesTaxonomy(x@species[i, j], x@taxonomy))		    	
     }
 )

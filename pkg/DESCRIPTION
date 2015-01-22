@@ -44,7 +44,8 @@ Collate: AAA.R
          stack.species.R
          stack.sites.R
          stack.coordinates.R
-         verbatim.R
+         read.verbatim.R
+	 verbatim.R
          read.XML.R
          Sites-methods.R
          SpeciesTaxonomy.R

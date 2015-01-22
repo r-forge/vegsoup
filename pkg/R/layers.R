@@ -10,9 +10,8 @@
 ".layers.Vegsoup" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 	
 	#	return object if mandatory arguments are missing
-	if (missing(collapse) & missing(aggregate)) {
+	if (missing(collapse) & missing(aggregate))
 		return(obj@layers)	
-	}
 	
 	#	return object if there is nothing to do
 	if (length(obj@layers) < 2) {
@@ -33,10 +32,11 @@
 		if (verbose) message("collapse to a single layer")	
 		if (missing(collapse)) { L <- "0l" } else { L <- collapse }
 		L <- rep(L, length(Layers(obj)))
-	} else {
+	}
+	else {
 	#	'collapse' not of correct length	
 		stopifnot(length(collapse) <= length(Layers(obj)))
-	#	'collapse' statsifies basic assuptions	
+	#	'collapse' statisfies basic assuptions	
 		stopifnot(length(collapse) == length(Layers(obj)))
 		L <- collapse
 	}
@@ -46,7 +46,7 @@
 		if (dec == 0 & trunc(min(coverscale(obj)@lims)) == 0) {
 			for (dec in 0:5) {
 				if (round(min(coverscale(obj)@lims), dec) != 0) break
-			}	
+			}
 			if (verbose) {
 				message("set dec to ", dec,
 					", min of coverscale(obj)@lims is ",
@@ -134,7 +134,12 @@
 			X$cov[X$cov > max(Y@lims)] <- max(Y@lims)
 		}
 	}
-	X$cov <- ceiling(X$cov)
+
+	#	round to dec, do we really need this?
+	if (dec == 0)
+		X$cov <- ceiling(X$cov)
+	else
+		X$cov <- round(X$cov, dec)
 	
 	#	back convert to original abundance scale if it was character
 	if (is.ordinal(coverscale(obj))) {
@@ -148,7 +153,7 @@
 }
 
 setGeneric("Layers",
-	function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE)
+	function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 1, verbose = FALSE)
 	standardGeneric("Layers")
 )
 
@@ -169,8 +174,7 @@ setReplaceMethod("Layers",
 		}
 		if (any(!Layers(obj) %in% value)) {
 			stop("items of value do not match layers of object",
-				"\n use Layers(obj, collapse = value),",
-				" where layers to be dropped are coded as NA") 
+				"\n use Layers(obj, collapse = value)") 
 		}
 		obj@layers <- value
 		return(obj)		

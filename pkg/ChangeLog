@@ -1,14 +1,20 @@
 --- todo
 
-we must rebuild polygons for coordintes<- method
+we must rebuild polygons for coordinates<- method
 more rigorous test for identical methods
 
---- 2015-01-19, version: 0.2-3x
+--- 2015-01-21, version: 0.2-3 Patched
 
 added variables method for class "Sites" extending existing variable
 added variable<- method to aid in replacing values
 Coverscale objects are now ordered by 'lims' if present
 added read.XML function to read from turboveg XML files
+extended coverscale<- conversion
+changed lowest two limit of Braun-Blanquet scale(s) to 0.3 and 0.7, as to fit Turboveg definition
+reactivated validity method for class "Coverscale"
+fix bug related to dec argument in in Layers method
+improved default plot method for Vegsoup objects
+performed rigorous tests on read.verbatim and improved error messages
 
 --- 2015-01-19, version: 0.2-3
 

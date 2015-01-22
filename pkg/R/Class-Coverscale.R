@@ -8,16 +8,10 @@ setClass("Coverscale",
 	representation(
 	name = "character",
 	codes = "codes",
-	lims = "lims")
-	#,
-#	validity = function (object) {
-#		if (length(codes) != length(lims)) {
-#			cat("length of codes and lims must")
-#			FALSE
-#		} else {
-#			TRUE
-#		}
-#	}
+	lims = "lims"),
+	validity = function (object) {
+		if (length(object@codes) == length(object@lims)) TRUE else FALSE 
+		}
 )
 
 #	cover scale definitions
@@ -36,39 +30,39 @@ setClass("Coverscale",
 .braun.blanquet <- list(
 	name = "Braun-Blanquet", 
 	codes = c("r", "+", "1", "2m", "2a", "2b", "3", "4", "5"),
-	lims = c(  0.1, 1,   3,   4,    8,   18,   38,  68,  88))
+	lims = c(  0.3,0.7,   3,   4,    8,    18,   38,  68,  88))
 
 #	Braun-Blanquet old
 .braun.blanquet2 <- list(
 	name = "Braun-Blanquet 2", 
 	codes = c("r", "+", "1", "2", "3", "4", "5"),
-	lims = c(  0.1, 1,   3,  13,  38,  68,  88))
+	lims = c(  0.3,0.7,   3,  13,  38,  68,  88))
 
 #	Hult, Sernander, Du Rietz
 #	reference
 .hult <- list(
 	name = "Hult, Sernander, Du Rietz",
 	codes = c("1", "2", "3", "4", "5"),
-	lims =  c( 3,   9,  19,  37.5,75)) 
+	lims =  c( 3,   9,   19,  37.5,75)) 
 
 #	ordinal
 .ordinal <- list(
 	name = "ordinal",
 	codes = c("1", "2", "3", "4", "5", "6",  "7", "8", "9"),
-	lims =  c( 1,   2,   3,   4,   8,  18,   38,  68,   88)) 
+	lims =  c( 1,   2,   3,   4,   8,   18,   38,  68,  88)) 
 
 #	Domin (sensu curral 1987)
 #	Currall , J. (1987). A transformation of the Domin scale. Vegetatio 72:81-87
 .domin <- list(
 	name = "Domin",
 	codes = c("+", "1", "2", "3", "4", "5", "6", "7", "8", "9", "X"),
-	lims =  c( 0.1, 0.25,0.5, 2.5, 7,  17,  28.5,41,  62,  84.5,97.5)) 
+	lims =  c( 0.1, 0.25,0.5, 2.5, 7,   17,  28.5,41,  62,  84.5,97.5)) 
 
 #	North-Carolina
 .carolina <- list(
 	name = "Carolina",
 	codes = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "X"),
-	lims =  c( 0.1, 0.5, 1.5, 3.5, 7.5,17.5,37.5,62.5,85,  97.5)) 
+	lims =  c( 0.1, 0.5, 1.5, 3.5, 7.5, 17.5,37.5,62.5,85,  97.5)) 
 
 #	Doing
 .doing <- list(
@@ -100,14 +94,14 @@ setClass("Coverscale",
 .dengler <- list(
 	name = "Dengler",
 	codes = c("r", "+", "1", "A", "B", "3", "4", "5"),
-	lims =  c(0.5,  1.8, 3.8, 7.5,17.5,37.5,62.5,87.5))
+	lims =  c(0.5,  1.8, 3.8, 7.5, 17.5,37.5,62.5,87.5))
 
 #	Pfadenhauer et al. 
 #	Pfadenhauer, J. Poschlod, P. and Buchwald, R. (1986). U"berlegungen zu einem Konzept geobotanischer Dauerbeobachtungsfa"chen fu"r Bayern, Teil I. Berichte der ANL 10:41-60
 .pfadenhauer <- list(
 	name = "Pfadenhauer",
 	codes = c("+", "1a", "1b", "2a", "2b", "3", "4", "5"),
-	lims =  c( 1,   2,    4,   10,   20,   38,  63,  88)) 
+	lims =  c( 1,   2,    4,    10,   20,   38,  63,  88)) 
 
 #	Ebert Klopfer et Po"tsch
 #ebert.klopfer.poetsch <- list(
@@ -140,16 +134,3 @@ setClass("Coverscale",
 	counts = .counts,
 	as.is = .as.is,
 	pa = .pa)
-	
-#.builtin <- c(
-#	"Braun-Blanquet", "Braun-Blanquet 2",
-#	"Hult", "ordinal", "Domin", "North-Carolina",
-#	"Doing", "Barkman Doing et Segal",
-#	"Londo", "Londo 2",
-#	"Dengler", "Pfadenhauer",
-#	"braun.blanquet", "braun.blanquet2",
-#	"hult", "ordinal", "domin", "north.carolina",
-#	"doing", "doing2",
-#	"londo", "londo2",
-#	"dengler", "pfadenhauer"
-#	)
