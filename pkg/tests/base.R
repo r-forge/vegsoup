@@ -71,12 +71,13 @@ head(SpeciesList(X))
 class(BraunBlanquetReduce(X))
 coverscale((BraunBlanquetReduce(X)))
 coverscale(X)
-#	both should fail!
-#	coverscale(X) <- "braun.blanquet2"
-#	coverscale(X) <- Coverscale("braun.blanquet2")
+
+#	both way work
+coverscale(X) <- "braun.blanquet2"
+coverscale(X) <- Coverscale("braun.blanquet2")
 
 #	assign what is already assigned, works
-coverscale(X) <- "braun.blanquet"
+#coverscale(X) <- "braun.blanquet"
 
 #	Layers
 Layers(X)
