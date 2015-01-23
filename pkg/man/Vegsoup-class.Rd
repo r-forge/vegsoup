@@ -494,7 +494,7 @@ Give notes!
 \code{\linkS4class{Taxonomy}},
 \code{\linkS4class{Vegsoup}},
 \code{\link{instantsoup}}
-\code{\link{coenoflex}}
+%\code{\link{coenoflex}}
 }
 \examples{
 showClass("Vegsoup")

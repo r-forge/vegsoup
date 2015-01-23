@@ -9,7 +9,8 @@
 \title{ Simulated Test Data }
 
 \description{
-An object created by \code{\link{coenoflex}} with 100 plots and 200 species for testing purposes.
+An object created by \code{coenoflex} with 100 plots and 200 species for testing purposes.
+
 }
 
 \format{
