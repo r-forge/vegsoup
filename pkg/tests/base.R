@@ -10,7 +10,7 @@ sites(X)
 taxonomy(X)
 decostand(X)
 vegdist(X)
-Layers(X)
+layers(X)
 coverscale(X)
 AprioriGrouping(X)
 SpatialPointsVegsoup(X)
@@ -28,7 +28,7 @@ x <- species(X)
 species(x)
 
 #	from class Sites
-y <- Sites(X)
+y <- sites(X)
 #	is data.frame, hence not defined
 
 #	from class Taxonomy
@@ -79,10 +79,10 @@ coverscale(X) <- Coverscale("braun.blanquet2")
 #	assign what is already assigned, works
 #coverscale(X) <- "braun.blanquet"
 
-#	Layers
-Layers(X)
+#	layers
+layers(X)
 dim(X)
-dim(Layers(X, collapse = c("hl", "sl", NA)))
+dim(layers(X, collapse = c("hl", "sl", NA)))
 
 #	spatial methods
 coordinates(X)
@@ -137,7 +137,7 @@ as.numeric(X)
 X[1:3,]
 X[1,]
 dim(X[1:3,2:3])
-Layers(X[, grep("@sl", colnames(X))])
+layers(X[, grep("@sl", colnames(X))])
 
 #	subsample
 rownames(SampleVegsoup(X))

@@ -185,7 +185,7 @@ s <- sites(s.m)
 # combine objects
 data(windsfeld)
 
-s2 <- stackSites(cbind(plot = rownames(windsfeld), Sites(windsfeld)))
+s2 <- stackSites(cbind(plot = rownames(windsfeld), sites(windsfeld)))
 
 bind(s, s2)
 
