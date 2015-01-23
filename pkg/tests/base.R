@@ -57,7 +57,7 @@ colnames(X)
 old.rownames <- rownames(X)
 rownames(X) <- 1:nrow(X)   # value = "integer"
 row.names(X) <- old.rownames # value = "character"
-all.equal(rownames(Sites(X)), rownames(X))
+all.equal(rownames(sites(X)), rownames(X))
 
 names(X)
 names(X)[1:2] <- names(X)[1:2]
