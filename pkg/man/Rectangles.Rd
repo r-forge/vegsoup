@@ -60,7 +60,7 @@ x <- VegsoupPartition(windsfeld, k = 10, polish = TRUE)
 require(RColorBrewer)
 rectangles(x, plot = TRUE,
            col = rgb(0,0,0,0.2),
-           border = brewer.pal(getK(x), "Spectral"),
+           border = RColorBrewer::brewer.pal(getK(x), "Spectral"),
            lwd = 2)
 }
 \keyword{ methods }

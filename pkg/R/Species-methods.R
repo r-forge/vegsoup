@@ -277,8 +277,7 @@ setGeneric("relevee",
 setMethod("relevee",
     signature(obj = "Vegsoup"),
     function (obj, plot, format) {
-    	require(stringr)
-    	
+
     	if (missing(plot)) {
     		i <- 1
     		message("return first plot in data set: ", rownames(obj)[i])    		

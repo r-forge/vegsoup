@@ -88,7 +88,7 @@
 	col.just <- c(rep(p.col, ncol(tex)))
 	#col.just[ncol(num.cols.agg) + 1] <- paste("|", col.just[ncol(num.cols.agg) + 1], sep = "")
 	
-	latex(tex,
+	Hmisc::latex(tex,
 		file = file,
 		caption = caption,
 		rowname = NULL,
@@ -103,15 +103,11 @@
 	}
 	
 .latexVegsoupPartitionSitesRecursive <- function (obj, choice = "sites", recursive = TRUE, file, ...) {
-	#	Suggests:
-	require(Hmisc)
-	#	to do!	
+	#	to do!
 }
 
 .latexVegsoupPartitionSpecies <- function (obj, file, mode, p.max, stat.min, constancy.min, taxa.width, col.width, footer.width, footer.threshold, molticols.footer, use.letters, caption.text, quantile.select, coverscale, sep, sites.columns, newpage, template, verbose, ...) {
 	CALL <- match.call()
-	#	Suggests:
-	require(Hmisc)
 	if (class(obj) != "VegsoupPartitionFidelity") {
 			cat("apply default indicator species statistic")
 		obj <- Fidelity(obj, ...)
@@ -608,7 +604,7 @@
 			cat("\nprint LaTex table to", file)	
 		}
 
-		latex(tex,
+		Hmisc::latex(tex,
 			file = file,
 			caption = caption,
 			rowname = NULL,
@@ -654,7 +650,7 @@
 		close(con)	
 	
 		for (i in 1:getK(obj)) {
-			latex(as.matrix(tex.out[[i]]),
+			Hmisc::latex(as.matrix(tex.out[[i]]),
 				file = file,
 				append = TRUE,
 				caption = paste("Partion summary for cluster ", i,
@@ -719,10 +715,7 @@
 
 #	\dots passed to seriation()
 .latexVegsoupPartitionSpeciesRecursive <- function (obj, choice = "species", recursive = TRUE, file, col.width, taxa.width, caption.text, verbose, ...) {
-	#	Suggests:
-	require(Hmisc)
-		
-	#	obj  <- prt
+
 	if (missing(file)) {
 		message("no path supplied for LaTex files")
 	}	
@@ -774,7 +767,7 @@
 		
 		col.heads = c("Taxon", "Layer", paste("\\rotatebox{90}{", dimnames(i.tex)[[2]][-c(1,2)], "}"))
 		
-		latex(i.tex,
+		Hmisc::latex(i.tex,
 		file = file,
 		caption = paste(caption, caption.text, collapse = " "),
 		rowname = NULL,
@@ -806,8 +799,6 @@ setGeneric("Latex",
 setMethod("Latex",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
-			#	Suggests:		
-			require(Hmisc)
 			CALL <- match.call()
 
 			CHOICES <- c("species", "sites")

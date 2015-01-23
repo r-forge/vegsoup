@@ -1,39 +1,74 @@
+#import(coenoflex) is missing from CRAN
 #useDynLib(vegsoup)
 
-import(methods)
-#import(coenoflex)
+#	also in Depends
+import(rgdal)
 
-importFrom("graphics", plot, hist)
+
+#	imports from base pacakges
+
+import(methods)
+
+import(parallel)
 
 importFrom("stats", as.dist, quantile, as.dendrogram)
 
 importFrom("utils", head, tail)
 
+importFrom("graphics", plot, hist)
+
+
+#	used in several places
+
+importFrom("stringr", str_trim, str_pad)
+
+importFrom("Hmisc", latex) # also as Hmisc::latex
+
+
+#	used in a single function/method
+
+#importFrom("ggmap", revgeocode) # as ggmap::revgeocode
+
+importFrom("RColorBrewer", brewer.pal) # also as RColorBrewer::brewer.pal
+
+importFrom("pbapply", pboptions, pbapply) # also as pbapply::pboptions and pbapply::pbapply
+
 importFrom("XML", xmlRoot, xmlTreeParse, xmlApply, xmlSApply, xmlValue, xmlAttrs)
 
-import(rgdal)
+importFrom("geonames", GNsrtm3)
+
+importFrom("googleVis", gvisMap)
+
+importFrom("isopam", isopam)
+
+importFrom("mefa", mefa, stcs)
+
+importFrom("gclus", dmat.color, plotcolors, order.single)
+
+
+#	imports the package really needs
 
 importFrom("labdsv", indval)
 
 importFrom("optpart", optsil,  optindval, disdiam, tabdev, partana)
 
-importFrom("vegan", coverscale, vegdist, decostand, distconnected)
+importFrom("vegan", coverscale, vegdist, decostand, distconnected,
+           capscale, scores, ordiplot, ordiellipse, ordispider,
+           wisconsin, decorana, wascores)
 
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
-
-importFrom("spatstat", nndist, owin, runifpoint)
 
 importFrom("vegclust", vegclustdist, defuzzify)
 
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
                  rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
                  SpatialPointsDataFrame, SpatialPolygonsDataFrame)
-
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
                       proj4string, "proj4string<-", spTransform,
                       over)
+importFrom("sp", identicalCRS, CRS)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
@@ -42,10 +77,6 @@ importMethodsFrom(raster, extract, ncell, extent)
 importFrom("multitable", data.list)
 
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
-
-#importFrom("Hmisc", latex)
-#importFrom("googleVis", gvisMap)
-#importFrom("isopam", isopam)
 
 #explicit exports
 export(

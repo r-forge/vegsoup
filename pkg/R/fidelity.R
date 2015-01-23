@@ -608,8 +608,7 @@
 	
 	#	init multicore if active
 	if (fast) {
-		#	Suggests:
-		require(parallel)
+		#	parallel is in imports
 		message("fork multicore process on ", parallel::detectCores(), " cores")
 		#if (verbose) message("use multicore")
 	}	
@@ -625,9 +624,7 @@
 	cpu.time.dm <- system.time({	
 	
 		if (verbose) {
-			#	Suggests:
-			require(pbapply)
-			pboptions(char = ".")
+			pbapply::pboptions(char = ".")
 		}	
 		if (fast) {
 			dm <- mclapply(as.data.frame(X),
@@ -679,9 +676,7 @@
 	
 	cpu.time.ft <- system.time({
 	if (verbose) {
-		#	Suggests:
-		require(pbapply)
-		pboptions(char = ".")
+		pbapply::pboptions(char = ".")
 	}	
 	if (fast) {
 		ft <- mclapply(as.data.frame(X),
@@ -691,7 +686,7 @@
 			dimnames = list(names(ft), levels(cluster)), byrow = TRUE)
 	}
 	else {
-		ft <- t(pbapply(X, 2,
+		ft <- t(pbapply::pbapply(X, 2,
 			function (x, ...) fidelity.method(
 			x, cluster, "Fisher", group, alternative = alternative)))		
 	}

@@ -74,7 +74,7 @@ coldiss(x, 4)
 # more colors
 require(RColorBrewer)
 
-cols <- colorRampPalette(brewer.pal(11, "Spectral"))
+cols <- colorRampPalette(RColorBrewer::brewer.pal(11, "Spectral"))
 
 coldiss(x, cols(4), byrank = FALSE, diag = TRUE)
 

@@ -1,16 +1,14 @@
 #	implement route option in method!
 
 ".reverseGeocode" <- function (lnglat, pm = 100, route = FALSE, ...) {
-	#	Suggests:
-	require(ggmap)
-	#	Suggests	
-	require(geonames) # now requires users name
+	#	Suggests
+	#	message("geonames requires users name")
 	
 	if (is.null(options()$geonamesUsername))
 		stop("set geonames user name, see ?geonames")
 	
 	lnglat <- as.numeric(as.character(lnglat))
-	r <- revgeocode(lnglat, output = c("more"))
+	r <- ggmap::revgeocode(lnglat, output = c("more"))
 	r <- as.data.frame(as.matrix(r), stringsAsFactors = FALSE)
 	
 	#	country

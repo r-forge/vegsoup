@@ -1,9 +1,6 @@
 #	function to import monospaced commuity tables
 read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), species.only = FALSE, vertical = TRUE, verbose = TRUE) {
 
-	#	Suggests:
-	require(stringr)
-	
 	if (missing(file))
 		stop("plaese supply a path to a file")
 		
@@ -346,8 +343,6 @@ print.VegsoupVerbatim <- function (x) {
 #	function to append to class VegsoupVerbatim
 read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"), collapse = ",", abundance) {
 
-	require(stringr)
-	
 	if (!inherits(x, "VegsoupVerbatim")) {
 		stop("plaese supply an object of class VegsoupVerbatim")	
 	}
@@ -457,7 +452,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 
 #	cast species (and abundances) given in table footers
 castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) {
-	require(stringr)
+
 		if (missing(file)) {
 			stop("need a file name")
 		}
@@ -471,7 +466,6 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 	
 	#	seperate abundance value from species string
 	.seperateFirst <- function (x, y) {
-		require(stringr)
 		m <- regexpr(y, x) # first schema match
 		v <- str_trim(substring(x, 1, m))	# value
 		s <- str_trim(substring(x, m + 1, nchar(x))) # species
@@ -481,7 +475,6 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 	}
 
 	.seperateLast <- function (x, y) {
-		require(stringr)
 		r <- matrix("", nrow = length(x), ncol = 2)
 		for (i in seq_along(x)) {
 			p <- max(gregexpr(y, x[i])[[1]]) # position of last schema match

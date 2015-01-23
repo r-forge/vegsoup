@@ -20,7 +20,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 	}	
 
 	if (as.logical(fast)) {
-		require(parallel)
+		#	parallel is in imports
 		message("fork multicore process on ", parallel::detectCores(), " cores")
 	}	
 

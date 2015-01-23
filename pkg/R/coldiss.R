@@ -1,10 +1,8 @@
 # adapted for vegsoup from function coldiss() by Francois Gillet
 # Color plots of a dissimilarity matrix, without and with ordering
-# argument nc renamed to colors with extended meaning	
+# argument nc renamed to colors with extended meaning
 
 ".coldiss" <- function (obj, colors, byrank = TRUE, diag = FALSE, method = "packed", ordered.only = FALSE, translate = FALSE, ...) { 
-	#	Suggests
-	require(gclus)
 
 	cl <- match.call()
 	
@@ -60,23 +58,23 @@
 			plotcolors(D.cr.order,
 				#rlabels = NULL,
 				dlabels = D.labels[D.order],
-				main = "Ordered Dissimilarity Matrix")			
+				main = "Ordered Dissimilarity Matrix")
 		} else {
 			plotcolors(D.cr.order,
 				rlabels = D.labels[D.order], dlabels = D.labels[D.order],
-				main = "Ordered Dissimilarity Matrix")			
+				main = "Ordered Dissimilarity Matrix")
 		}	
-		title(sub = sub)				
+		title(sub = sub)
 	}
 	else {
 		if (!ordered.only) {
 			plotcolors(D.cr, rlabels = D.labels, 
 				main = "Dissimilarity Matrix")
 			title(sub = sub)
-		}				
+		}
 		plotcolors(D.cr.order, rlabels = D.labels[D.order], 
 			main = "Ordered Dissimilarity Matrix")
-		title(sub = sub)			
+		title(sub = sub)
 	}
 
 	if (!ordered.only) par(op)

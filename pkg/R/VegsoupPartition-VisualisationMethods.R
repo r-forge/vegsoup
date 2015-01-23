@@ -42,9 +42,7 @@
 		cat("\nremoved some sites!")
 		grp <- grp[match(rownames(scs), names(grp)),1]
 		if (getK(x) <= 11) {
-			#	Suggests:
-			require(RColorBrewer)
-			pal <- brewer.pal(getK(x), "Spectral")
+			pal <- RColorBrewer::brewer.pal(getK(x), "Spectral")
 		} else {
 			pal <- rep(rgb(0,0,0,.2), getK(x))
 		}

@@ -1,9 +1,6 @@
 #	complements verbatim() in Vegsoup-Import.R
 .write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE) {
 
-	#	Suggests:
-	require(stringr)
-		
 	if (class(obj) != "Vegsoup" & class(obj) != "VegsoupPartition") {
 		stop("verbatim is currently only implemented for class Vegsoup and VegsoupPartition?")
 	}

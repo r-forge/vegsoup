@@ -1,6 +1,4 @@
 ".elevation" <- function (obj) {
-	#	Suggests:
-	require(geonames)
 	#	cat("request heights for", nrow(obj), "coordinates")
 	options(warn = -1)
 	res <- unlist(apply(coordinates(obj), 1,

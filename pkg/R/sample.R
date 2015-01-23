@@ -36,7 +36,7 @@ setMethod("hcr",
 	function (x, size, nperm = 1000, fast = FALSE, ...) {
 
 	if (as.logical(fast)) {
-		require(parallel)
+		#	parallel is in imports
 		message("fork multicore process on ", parallel::detectCores(), " cores")
 	}			
 	

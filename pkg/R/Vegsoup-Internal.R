@@ -1,8 +1,6 @@
 #	internal function to melt sites data frame
 .melt <- function (obj) {
-	#	Suggests:
-	require(stringr)
-	#	obj = allargs[[10]]
+
 	res <- data.frame(plot = rownames(slot(obj, "sites")),
 				as.matrix(slot(obj, "sites")), stringsAsFactors = FALSE)
 	res <- reshape(res, direction = "long",
@@ -11,7 +9,7 @@
 		timevar = "variable",
 		times = names(res)[-1],
 		idvar = "plot", new.row.names = NULL)
-	#	order by plot and create sequential rownames!	
+	#	order by plot and create sequential rownames!
 	res <- res[order(res$plot), ]
 	rownames(res) <- 1:nrow(res)
 	#	width of numbers
@@ -32,7 +30,7 @@
     ratios <- rep(0, numitr)
     for (i in 1:numitr) {
     	if (verbose) cat(".")
-		tmp <- optpart::optpart(k, dist)        
+		tmp <- optpart::optpart(k, dist)
         while (max(tmp$clustering) != k) {
         	tmp <- optpart::optpart(k, dist)
         	}
@@ -45,7 +43,7 @@
     }
     cat("\nRatios for respective partitions \n")
     print(format(ratios, digits = 4))
-    cat(paste("\nChoosing # ", itr, " ratio = ", format(best, 
+    cat(paste("\nChoosing # ", itr, " ratio = ", format(best,
         digits = 4), "\n"))
     invisible(result)
 }

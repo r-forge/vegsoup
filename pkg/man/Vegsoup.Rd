@@ -99,7 +99,8 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     See \code{read.csv}. 
   }
   \item{ numplt, numspc }{
-    See \code{\link[coenoflex:coenoflex]{coenoflex}}.
+    %See \code{\link[coenoflex:coenoflex]{coenoflex}}.
+    See \code{coenoflex}.
   }
   \item{ \dots }{
     Additional arguments passed to coenoflex.
@@ -141,7 +142,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   All observations are put on a single layer encoded by argument \code{layer}.
   Because the cover (abundance) scale can not be guessed from argument \code{m}
   a suitable cover scale as object \code{\linkS4class{Coverscale}} needs to be assigned.
-  
+
   Function \code{instantsoup} is a shorthand when data files are guaranteed to
   conform to some format that can be interpreted by the import functions
   \code{stackSpecies}, respectively \code{stackSites} or are valid to simple
@@ -152,9 +153,11 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   The same is true for argument \code{'proj4string'}. The defaults for
   argument \code{'group'} is to create a dummy integer variable of ones.
 
-  Function \code{coenflex} creates a random community with two gradients
-  and a number of additional default settings. \code{\link[coenoflex:coenoflex]{coenoflex}}
-  offers a lot of options.
+  Function \code{'coenflex'} (\emph{disfunct}) creates a random community
+  with two gradients with some undocumented default settings.
+  The \code{coenoflex} function in package \pkg{coenoflex} offers a complete
+  interfacea. Currently the package is missing from CRAN!
+  %\code{\link[coenoflex:coenoflex]{coenoflex}}
 }
 
 \note{

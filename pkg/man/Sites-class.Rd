@@ -19,6 +19,7 @@
 \alias{variable,Sites-method}
 
 \alias{variable<-}
+\alias{variable<-,Sites,character-method}
 \alias{variable<-,Sites,character,ANY-method}
 
 \alias{variables}
