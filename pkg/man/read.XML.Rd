@@ -43,7 +43,7 @@ x <- read.XML(file)
 coordinates(x) <-  ~ e_coord + n_coord
 }
 \seealso{
-\code{\link{read.verabatim}}, \code{\link{plainsoup}} and \code{\link{instantsoup}}
+\code{\link{read.verbatim}}, \code{\link{plainsoup}} and \code{\link{instantsoup}}
 }
 \keyword{ import }
 
