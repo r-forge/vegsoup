@@ -452,7 +452,7 @@
 
 %% 18
   \bold{ 18) Combine objects.}
-    \item{rbind}{
+    \item{bind}{
       \code{signature(... = "Vegsoup")}:
       combine/merge objects.
     }

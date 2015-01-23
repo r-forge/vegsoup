@@ -25,7 +25,7 @@
 \alias{variables}
 \alias{variables,Sites-method}
 
-\alias{rbind,Sites-method}
+\alias{bind,Sites-method}
 
 \alias{sites,Sites-method}
 
@@ -34,7 +34,7 @@
 \alias{sites,data.frame-method}
 \alias{sites,matrix-method}
 \alias{sites,Sites-method}
-\alias{sites,rbind-method}
+\alias{sites,bind-method}
 
 \title{ Sites Class }
 
@@ -136,9 +136,9 @@
         the number of rows. Each plot and variable combination constitutes a row.
     }
 
-    \item{ rbind }{
+    \item{ bind }{
       \code{signature(x = "Sites")}:
-        \code{rbind} method to combine two or more objects.
+        \code{bind} method to combine two or more objects.
     }
 
     \item{ coordinates }{
@@ -189,8 +189,7 @@ data(windsfeld)
 
 s2 <- stackSites(cbind(plot = rownames(windsfeld), Sites(windsfeld)))
 
-rbind(s, s2)
-
+bind(s, s2)
 
 }
 

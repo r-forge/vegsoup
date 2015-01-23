@@ -14,7 +14,7 @@
 
 \alias{$,Taxonomy-method}
 
-\alias{rbind,Taxonomy-method}
+\alias{bind,Taxonomy-method}
 
 \alias{taxonomy}
 \alias{taxonomy,Vegsoup-method}
@@ -81,9 +81,9 @@ Data representation of taxonomic reference list.
         due to the class inherent data model (see \sQuote{Slots}).
     }
 
-    \item{ rbind }{
+    \item{ bind }{
       \code{signature(x = "Taxonomy")}:
-        \code{rbind} method to combine two or more objects. If there are any
+        \code{bind} method to combine two or more objects. If there are any
         duplicates in the \code{'abbr'} key column only one instance is kept,
         the first one!
     }
@@ -121,7 +121,7 @@ data(windsfeld)
 x <- windsfeld
 t2 <- taxonomy(x)
 
-rbind(t, t2)
+bind(t, t2)
 }
 \keyword{ classes }
 

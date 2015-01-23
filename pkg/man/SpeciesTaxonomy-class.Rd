@@ -22,7 +22,7 @@
 
 \alias{$,SpeciesTaxonomy-method}
 
-\alias{rbind,SpeciesTaxonomy-method}
+\alias{bind,SpeciesTaxonomy-method}
 
 \title{ SpeciesTaxonomy Class }
 
@@ -80,9 +80,9 @@
         returning a \code{data.frame}.
     }
 
-    \item{ rbind }{
+    \item{ bind }{
       \code{ signature(x = "SpeciesTaxonomy") }:
-      \code{ rbind } method to combine two or more objects.
+      \code{ bind } method to combine two or more objects.
     }
 
     \item{ $ }{
@@ -182,7 +182,7 @@ s2 <- species(x)  # returns a class 'Species'
 t2 <- taxonomy(x) # returns a class 'Taxonomy'
 obj2 <- SpeciesTaxonomy(s2, t2)
 
-( obj <- rbind(obj1, obj2) )
+( obj <- bind(obj1, obj2) )
 
 # assign object of class SpeciesTaxonomy to an existing Vegsoup* object
 \dontrun{

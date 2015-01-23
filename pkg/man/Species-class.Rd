@@ -17,7 +17,7 @@
 
 \alias{$<-,Species-method}
 
-\alias{rbind,Species-method}
+\alias{bind,Species-method}
 
 \alias{species,Species-method}
 
@@ -26,7 +26,7 @@
 \alias{species,matrix-method}
 \alias{species,Species-method}
 \alias{species,VegsoupVerbatim-method}
-\alias{rbind,Species-method}
+\alias{bind,Species-method}
 
 \title{ Species Class}
 
@@ -144,9 +144,9 @@
         retrieve column by name (see \sQuote{Slots}), or perform replacement.
     }
 
-    \item{ rbind }{
+    \item{ bind }{
       \code{signature(x = "Species")}:
-        \code{rbind} method to combine two or more objects. See \code{\link{verbatim}}
+        \code{bind} method to combine two or more objects. See \code{\link{verbatim}}
         for an example.
     }
 
@@ -212,7 +212,7 @@ class(s1)
 # combine two objects
 data(windsfeld)
 s2 <- species(windsfeld)
-( s <- rbind(s1, s2) )
+( s <- bind(s1, s2) )
 }
 \keyword{ classes }
 

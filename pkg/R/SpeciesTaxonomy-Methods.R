@@ -31,15 +31,15 @@ setReplaceMethod("taxonomy",
 	}
 )
 
-setMethod("rbind",
+setMethod("bind",
     signature(... = "SpeciesTaxonomy"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)
-		x <- do.call("rbind", lapply(allargs, species))
-		z <- do.call("rbind", lapply(allargs, taxonomy))
+		x <- do.call("bind", lapply(allargs, species))  # get Species object
+		z <- do.call("bind", lapply(allargs, taxonomy)) # get Taxonomy object
 		return(SpeciesTaxonomy(x, z))
 	}
-)	 	  
+)
 
 setMethod("$",
     signature(x = "SpeciesTaxonomy"),

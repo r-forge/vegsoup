@@ -136,7 +136,7 @@ setMethod("show",
     }
 )
 
-setMethod("rbind",
+setMethod("bind",
     signature(... = "Sites"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)

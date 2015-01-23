@@ -306,7 +306,7 @@
 				rownames(tmp) <- c(i, paste("typical", i, sep =""))
 				tmp[1, 1] <- ""
 				tmp[2, 1] <-
-					paste("\\textbf{Nothing particularly typical for ", i, "}",sep = "")	
+					paste("\\textbf{Nothing particularly typical for ", i, "}",sep = "")
 				tmp[1:2, 2:ncol(tmp)] <- ""
 			}
 		tex.typical.seperated <- rbind(tex.typical.seperated, tmp)

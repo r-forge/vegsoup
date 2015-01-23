@@ -333,7 +333,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		}
 	}
 	
-	return(x)	
+	return(x)
 }
 
 print.VegsoupVerbatim <- function (x) {
@@ -344,14 +344,14 @@ print.VegsoupVerbatim <- function (x) {
 read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"), collapse = ",", abundance) {
 
 	if (!inherits(x, "VegsoupVerbatim")) {
-		stop("plaese supply an object of class VegsoupVerbatim")	
+		stop("plaese supply an object of class VegsoupVerbatim")
 	}
 	if (missing(file)) {
 		stop("please supply a path to a file")
 	}
 	if (missing(mode)) {
 		mode = "plots"
-		message("missing mode, but set mode to ", mode)	
+		message("missing mode, but set mode to ", mode)
 	}
 	else {
 		MODES <- c("plots", "species", "layers")
@@ -363,11 +363,11 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 	if (!missing(abundance)) {
 		stopifnot(length(abundance) == 1)
 		if (mode == "species") {
-			abundance <- as.character(abundance)	
+			abundance <- as.character(abundance)
 		}
 		if (mode == "plots") {
 			if (!is.logical(abundance)) {
-				abundance <- as.logical(abundance)				
+				abundance <- as.logical(abundance)
 			}
 			abundance <- ifelse(is.na(abundance), TRUE, FALSE)
 		}
@@ -434,20 +434,20 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 				ii <- match(tmp[[ i ]][[1]][ j ], rownames(y))
 				jj <- match(names(tmp)[[ i ]], colnames(y))
 				y[ii, jj] <- tmp[[ i ]][[2]][j]
-			} 
-		}		
-	}	
-	
+			}
+		}
+	}
+
 	test <- intersect(rownames(x), rownames(y))
 	if (length(test) != 0) {
 		stop("some species in file are already present in object x: ", test)
 	}
 	x <- rbind(x, y)
-	
+
 	class(x) <- c("VegsoupVerbatim", "matrix")
 	attributes(x) <- c(attributes(x), attr[-c(1:2)])
-	
-	return(x)	
+
+	return(x)
 }
 
 #	cast species (and abundances) given in table footers
@@ -512,23 +512,23 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 	
 	#	cast string to values and species
 	if (first)
-		x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))		
+		x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))
 	else
 		x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
 
 	#	single relevee
 	if (is.list(x))
 		x <- do.call("rbind", x)
-	else	
+	else
 		x <- t(x)
-		
+
 	r <- cbind(p, x)
 	test <- nchar(r[,2])
 	if (sum(test) != length(test)) {
 		message("at least abundance values are not speperated properly")
 	}
 	colnames(r) <- c("plot", "cov", "taxon")
-	
+
 	if (layers) {
 		x <- strsplit(r[,3], at)
 		x2 <- 

@@ -6,8 +6,6 @@
 \alias{stackSites}
 \alias{stackCoordinates}
 
-\alias{rbind}
-
 \title{ Stack Species Matrix, Sites Data or Spatial Coordinates }
 
 \description{
@@ -35,7 +33,7 @@
   \code{\link[rgdal]{readOGR}}. It then reshapes two or three columns (in case of 3D features)
   of spatial coordinates along with a plot identifier to the format defined
   by class \code{"Sites"}. Results of \code{stackSites} and
-  \code{stackCoordinates} can be combined using \code{rbind} to associate the sites with
+  \code{stackCoordinates} can be combined using \code{bind} to associate the sites with
   spatial information as intended for \code{Vegsoup} objects (see \sQuote{Examples}).
 }
 
@@ -47,7 +45,7 @@ stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbos
 
 stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 
-rbind(..., deparse.level = 1)
+bind(..., deparse.level = 1)
 }
 
 \arguments{
@@ -88,10 +86,10 @@ rbind(..., deparse.level = 1)
     Round decimals to given precision. See \sQuote{Details}.
   }
   \item{ \dots }{
-    additional arguments passed to \code{readOGR}. For \code{rbind} method, objects of class
+    additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
     \code{Species} respectively \code{Sites}.
   }
-# Arguments for function rbind  
+# Arguments for function bind
   \item{ deparse.level }{
     not used.
   }  
@@ -165,13 +163,14 @@ writeOGR(pts, dsn, layer, driver = "ESRI Shapefile")
 # read this file and promote to class 'Sites'
 sts.xy <- stackCoordinates(dsn, layer, schema = "plot")
 
-# rbind with remeining environmental data
-sts <- rbind(sts, sts.xy)
+# bind with remaining environmental data
+sts <- bind(sts, sts.xy)
 unique(sts$variable)
 
 }
 
 \seealso{
+\code{\link{bind}},
 \code{\link{Species-class}},
 \code{\link{Sites-class}},
 \code{\link{reshapeSpecies}},

@@ -79,7 +79,7 @@
 		if (short.names) {
 			taxon <- gsub(".", " ", txa$abbr, fixed = TRUE)
 		} else {
-			taxon <- txa$taxon 
+			taxon <- txa$taxon
 		}
 		#	pad space to taxa (right) and layer (both sides)
 		#	this also ensures equal widths 
@@ -98,7 +98,7 @@
 			if (width > 1) {
 				x[, -c(1,2)] <- apply(x[, -c(1,2)], 2,
 					function (x) abbreviate(x, minlength = 1, strict = TRUE)
-				)				
+				)
 			}
 		}
 		#	sparse layer annotation

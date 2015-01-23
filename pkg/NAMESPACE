@@ -131,6 +131,7 @@ exportMethods(
     "as.dendrogram",
     "average",
     "bind",
+#   "rbind", removed
     "BraunBlanquetReduce",
 #   "coerce",
     "colSums",
@@ -201,7 +202,6 @@ exportMethods(
     "proj4string",
     "proj4string<-",
     "quantile",
-    "rbind",
     "relevee",
     "richness",
     "rectangles",

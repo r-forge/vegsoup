@@ -74,7 +74,7 @@ setMethod("abbr",
     }	
 )
 
-setMethod("rbind",
+setMethod("bind",
     signature(... = "Taxonomy"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)	

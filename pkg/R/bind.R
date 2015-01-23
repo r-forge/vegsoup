@@ -18,25 +18,25 @@
 	#	test for overlapping plot ids
 	tmp <- test <- unlist(sapply(allargs, rownames))
 	test <- length(test) == length(unique(test))
-	if (!test) {		
+	if (!test) {
 		error1 <- ("there are overlapping plot names")
 		error2 <- message(paste(tmp[duplicated(tmp)], collapse = " "))
 		stop(error1, error2)
 	}
-	
+
 	#	species
 	#	invokes	explicit ordering!
-	x <- do.call("rbind", sapply(allargs, species))		
+	x <- do.call("bind", sapply(allargs, species))
 
 	#	sites
 	y <- do.call("rbind", sapply(allargs, .melt, simplify = FALSE))
 	y <- as.data.frame(sites(y))
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
-    
+
     #	taxonomy
-    z <- sapply(allargs, taxonomy, simplify = FALSE)
-	z <- do.call("rbind", z)
+    z <- sapply(allargs, taxonomy)
+	z <- do.call("bind", z)
 	
 	#	spatial points, taken from sp::rbind.SpatialPointsDataFrame because
 	#	of dispatch issue
@@ -59,20 +59,22 @@
 	
 	res <- new("Vegsoup",
 		species = x,
-		sites = y, 
+		sites = y,
 		taxonomy = z,
 		coverscale = scale,
-		dist = dist, 
+		dist = dist,
 		layers = as.character(unique(x$layer)),
 		group = rep(integer(1), nrow(y)),
 		sp.points = pts,
 		sp.polygons = pgs
 		)
-	return(res)	    
+	return(res)
 }
 
-#	Sites, Taxonomy Vegsoup have also rbind method
-#if (!isGeneric("rbind")) {
+#	we set the generic here,
+#   classes "Species", "Sites", "Taxonomy" and "SpeciesTaxonomy"
+#	then define methods for their classes
+#if (!isGeneric("bind")) {
 setGeneric("bind",
 		function (..., deparse.level = 1)
 		standardGeneric("bind"),

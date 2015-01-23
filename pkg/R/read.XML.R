@@ -109,8 +109,8 @@ read.XML <- function (file) {
 	xy <- xmlApply(doc1, xmlPlots)
 	zz <- xmlLookup(doc2)
 	
-	x <- do.call("rbind", lapply(xy, "[[", 1)) # species
-	y <- do.call("rbind", lapply(xy, "[[", 2)) # sites
+	x <- do.call("bind", lapply(xy, "[[", 1)) # species
+	y <- do.call("bind", lapply(xy, "[[", 2)) # sites
 	z <- zz[[3]]                               # taxonomy
 	s <- zz[[1]]                               # cover scale
 	p <- zz[[2]]                               # project attributes

@@ -1,4 +1,4 @@
-#if (!isGeneric("rbind")) {
+#if (!isGeneric("species")) {
 setGeneric("species",
 	function (obj, ...)
 		standardGeneric("species")
@@ -17,25 +17,16 @@ setGeneric("species<-",
 setGeneric("abbr",
 	function (obj) {
 		standardGeneric("abbr")
-	}	
+	}
 )
 #}
 
-#	we set the generic here,
-#   classes "Sites", "Taxonomy" and "SpeciesTaxonomy"
-#	then define methods for their classe
-if (!isGeneric("rbind")) {
-setGeneric("rbind",
-		function (..., deparse.level = 1)
-		standardGeneric("rbind"),
-		signature = "...")
-}
 
 setMethod("species",
     signature(obj = "Species"),
     function (obj) {
     	obj@data
-    }	
+    }
 )
 
 setMethod("species",
@@ -43,7 +34,6 @@ setMethod("species",
     function (obj) {
     	new("Species", data = obj)
     }
-    
 )
 
 setMethod("species",
@@ -52,7 +42,6 @@ setMethod("species",
     	new("Species",
     	data = as.data.frame(obj, stringsAsFactors = FALSE))
     }
-    
 )
 
 setMethod("species",
@@ -61,7 +50,6 @@ setMethod("species",
     	new("Species",
     	data = read.csv(obj, ...))
     }
-    
 )
 
 setReplaceMethod("species",
@@ -200,20 +188,20 @@ setMethod("abbr",
     signature(obj = "Species"),
     function (obj) {
     	obj$abbr
-    }	
+    }
 )
 
-setMethod("rbind",
+setMethod("bind",
     signature(... = "Species"),
 	function (..., deparse.level = 1) {
-		allargs <- list(...)	
+		allargs <- list(...)
 		x <- do.call("rbind", lapply(allargs, species))
 		if (any(duplicated(x))) {
 			message("duplicates found: ")
 			print(x[duplicated(x), ])
 		}
 		#	explicit ordering!
-		x <- x[order(x$plot, x$layer, x$abbr), ]	
+		x <- x[order(x$plot, x$layer, x$abbr), ]
 		return(species(x))
 	}
 )
@@ -303,12 +291,12 @@ setMethod("relevee",
 		#	species
 		l <- species(species(x))
     	l$taxon <- taxonomy(taxonomy(obj))[l$abbr, ]$taxon # see SpeciesList
-	    l <- l[order(l$layer, l$taxon), ]	    				
+	    l <- l[order(l$layer, l$taxon), ]
     	l <- l[, c("taxon", "layer", "cov")]
     	rownames(l) <- seq_len(nrow(l))
     	l$layer[duplicated(l$layer)] <- ""
     	
-    	r <- list(sites = h, species = l)    		
+    	r <- list(sites = h, species = l)
     	
     	if (format) {
     		r1 <- as.matrix(r$species)
@@ -329,7 +317,7 @@ setMethod("relevee",
 			r2 <- paste(apply(r2, 1, function (x) paste (x, collapse = ": ")), collapse = ", ")
 			
 			r <- c(r1, " ", r2)	
-    	}    	
+    	}
 
     	return(r)
     		
