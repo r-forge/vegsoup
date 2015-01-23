@@ -199,7 +199,7 @@ setGeneric("head", function (x, ...)
 
 setMethod("head",
     signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {    	
+    function (x, n = 6L, choice, typeof, ...) {
 	    if (missing(choice)) choice = "species"
     	CHOICES <- c("species", "sites")
     	choice <- CHOICES[pmatch(choice, CHOICES)]
@@ -207,9 +207,9 @@ setMethod("head",
     	if (choice == "species")
 			res <- head(as.matrix(x, typeof = typeof), n, ...)
     	if (choice == "sites")
-    		res <- head(Sites(x), n, ...)
+    		res <- head(sites(x), n, ...)
     	return(res)
-    }    	    
+    }
 )
 
 #	head like print function based on identification of
@@ -225,12 +225,12 @@ setMethod("head",
 	    	sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
 	    		rownames(x))
 		    if (choice == "species") res <- as.character(x)[sel,]
-	    	if (choice == "sites") res <- Sites(x)[sel,]	
+	    	if (choice == "sites") res <- sites(x)[sel,]	
 		}
 	    	if (choice == "species")
     			res <- head(as.matrix(x, typeof = typeof), n, ...)
 	    	if (choice == "sites")
-    			res <- head(Sites(x), n, ...)	
+    			res <- head(sites(x), n, ...)	
     
     	return(res)
     }    	    
@@ -255,7 +255,7 @@ setMethod("tail",
 		if (choice == "species")
 			res <- tail(as.matrix(x, typeof), n, ...)
     	if (choice == "sites")
-    		res <- tail(Sites(x), n, ...)
+    		res <- tail(sites(x), n, ...)
     	return(res)
     }    	    
 )

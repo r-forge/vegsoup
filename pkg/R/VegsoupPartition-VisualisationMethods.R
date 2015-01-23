@@ -10,7 +10,7 @@
 	#	capscale has difficulties when using community matrix in the formula
 #	tmp <- 
 	#cat(class(tmp))
-	ord <- capscale(as.logical(x) ~ 1, data = Sites(x))
+	ord <- capscale(as.logical(x) ~ 1, data = sites(x))
 	#	number of axes shown in plot, default to frist 3
 	axs <- matrix(c(1,2,1,3,2,3), 3,2, byrow = TRUE)
 	

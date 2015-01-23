@@ -6,7 +6,7 @@ setGeneric("nrow", function (x)
 setMethod("nrow",
     signature(x = "Vegsoup"),
     function (x) {
-		nrow(Sites(x))
+		nrow(sites(x))
 	}
 )
 

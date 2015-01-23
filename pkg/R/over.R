@@ -3,7 +3,7 @@ setMethod("over",
 		function(x, y, returnList = FALSE, fn = NULL, ...) {
 			stopifnot(identicalCRS(x, y))
 			p <- SpatialPointsVegsoup(x)
-			Sites(x) <- cbind(Sites(x), over(p, y))
+			sites(x) <- cbind(sites(x), over(p, y))
 			return(x)
 		}
 )

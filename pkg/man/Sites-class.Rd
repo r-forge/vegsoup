@@ -4,8 +4,6 @@
 \Rdversion{1.1}
 \docType{class}
 
-\alias{sites}
-
 \alias{Sites-class}
 
 \alias{nrow,Sites-method}
@@ -167,7 +165,7 @@ x <- barmstein
 
 # extract from Vegsoup object for demonstration
 # get sites slot, it is returned in wide format
-s <- Sites(barmstein)
+s <- sites(barmstein)
 
 # add plot names
 s <- cbind(plot = rownames(x), s)

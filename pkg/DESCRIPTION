@@ -48,7 +48,6 @@ Collate: AAA.R
          read.verbatim.R
          verbatim.R
          read.XML.R
-         Sites-methods.R
          SpeciesTaxonomy.R
          Vegsoup.R
          coerce.R
@@ -59,6 +58,7 @@ Collate: AAA.R
          taxon.R
          species.R
          sites.R
+         Sites-methods.R
          taxonomy.R
          grouping.R
          dim.R

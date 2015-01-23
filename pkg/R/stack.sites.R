@@ -1,5 +1,4 @@
 #	stack sites data frame to match database structure
-#	rename to Sites
 stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {

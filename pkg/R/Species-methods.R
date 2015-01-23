@@ -283,7 +283,7 @@ setMethod("relevee",
 
 
 		#	header
-	    h <- cbind(coordinates(x), Sites(x))
+	    h <- cbind(coordinates(x), sites(x))
 	    
 	    h <- data.frame(variable = names(h), value = t(h)[, 1])
 	    rownames(h) <- seq_len(nrow(h))

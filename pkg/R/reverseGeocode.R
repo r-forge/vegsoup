@@ -64,7 +64,7 @@ setMethod("reverseGeocode",
     	m <- coordinates(x)[, 1:2]
     	p <- grep("horizontal.precision", names(x))
     	if (length(p) == 1) {
-    		p <- Sites(x)[,p]
+    		p <- sites(x)[,p]
     		if (!is.numeric(p)) {
     			p <- as.numeric(p)
     			if (any(is.na(p))) {

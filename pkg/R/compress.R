@@ -14,21 +14,21 @@ setMethod("compress",
 			if (any(!is.na(j)))	{
 				x@sites <- data.frame(
 					compress = rep(TRUE, nrow(x)),
-					Sites(x)[, j[!is.na(j)], drop = FALSE],
-					row.names = rownames(Sites(x)))
+					sites(x)[, j[!is.na(j)], drop = FALSE],
+					row.names = rownames(sites(x)))
 			}
 			else {
 				x@sites <- data.frame(
 					compress = rep(TRUE, nrow(x)),
 					cols = ncol(x),
-					row.names = rownames(Sites(x)))
+					row.names = rownames(sites(x)))
 			}
 		}
 		else {
 			x@sites <- data.frame(
 				compress = rep(TRUE, nrow(x)),
-				cols = ncol(Sites(x)),
-				row.names = rownames(Sites(x)))     
+				cols = ncol(sites(x)),
+				row.names = rownames(sites(x)))     
 		}
 		
 		x <- Layers(x, collapse = "0l")

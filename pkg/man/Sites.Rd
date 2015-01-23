@@ -1,14 +1,14 @@
 \encoding{UTF-8}
 
-\name{Sites}
+\name{sites Vegsoup}
 \docType{methods}
 
-\alias{Sites}
-\alias{Sites,Vegsoup-method}
+\alias{sites}
+\alias{sites,Vegsoup-method}
 
-\alias{Sites<-}
-\alias{Sites<-,Vegsoup-method}
-\alias{Sites<-,Vegsoup,data.frame-method}
+\alias{sites<-}
+\alias{sites<-,Vegsoup-method}
+\alias{sites<-,Vegsoup,data.frame-method}
 
 \title{ Methods for the Sites Slot of \code{Vegsoup*} Objects }
 
@@ -16,8 +16,8 @@
 Accessor and replacement methods acting on the \code{'sites'} slot.
 }
 \usage{
-\S4method{Sites}{Vegsoup}(obj)
-\S4method{Sites}{Vegsoup}(obj) <- value
+\S4method{sites}{Vegsoup}(obj)
+\S4method{sites}{Vegsoup}(obj) <- value
 }
 
 \arguments{
@@ -35,7 +35,8 @@ Accessor and replacement methods acting on the \code{'sites'} slot.
   object to which the value object is assigned.
 }
 \value{
-  An object of class depending on the input class.
+  For \code{sites(obj)} a data.frame,
+  and for the replacement method an object depending on the input class.
 }
 \author{ Roland Kaiser }
 \seealso{
@@ -49,7 +50,7 @@ x <- barmstein
 
 # use replacemnet to shuffe order
 rownames(x)
-Sites(x) <- Sites(x)[sample(rownames(x)), ]
+sites(x) <- sites(x)[sample(rownames(x)), ]
 rownames(x)
 
 }

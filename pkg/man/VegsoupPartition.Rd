@@ -150,11 +150,11 @@ data(sim100)
 
 r <- VegsoupPartition(sim100, k = 2, method = "fanny", memb.exp = 1.5)
 Partitioning(r)
-head(Sites(r))
+head(sites(r))
 
 # plot membership values against gradient values
-stars(Sites(r)[grep("M", names(r))],
-      locations = Sites(r)[, grep("X", names(r))] * 20, len = 1,
+stars(sites(r)[grep("M", names(r))],
+      locations = sites(r)[, grep("X", names(r))] * 20, len = 1,
       draw.segments = TRUE, labels = NULL)
 }
 

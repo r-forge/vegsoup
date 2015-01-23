@@ -33,11 +33,11 @@ instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
 	}
 
 	if (length(grep("wide", files[y.file])) > 0) {
-		y <- stackSites(file = paths[y.file])		
+		y <- stackSites(file = paths[y.file])
 	} else {
 		y <- sites(paths[y.file], sep = sep, dec = dec)
 	}
-    
+
     if (length(z.file) == 0) {
     	xz <- SpeciesTaxonomy(x = x,
     	file.y = z)
@@ -45,7 +45,7 @@ instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
     	z <- taxonomy(z,sep = sep, dec = dec)
 		xz <- SpeciesTaxonomy(x, z)	
     }
-	 
+
 	res <- Vegsoup(xz, y, coverscale = coverscale)
 	return(res)		
 	

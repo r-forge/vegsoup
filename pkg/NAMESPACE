@@ -219,8 +219,9 @@ exportMethods(
     "species",
     "species<-",
     "sites",
-    "Sites",
-    "Sites<-",
+#   "Sites", # renamed to sites
+#   "Sites<-", # renamed to sites–
+    "sites<-",
     "splitAbbr",
     "SpatialPointsVegsoup",
     "SpatialPolygonsVegsoup",

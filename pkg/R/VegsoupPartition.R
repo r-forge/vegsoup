@@ -54,15 +54,15 @@
 
 			M <- method <- "external"
 			
-			if (length(clustering) == 1) {		
+			if (length(clustering) == 1) {
 				sel <- pmatch(clustering, names(obj))
-				if (!is.na(sel)) {			
-					clustering <- as.vector(Sites(obj)[, sel]) 			
+				if (!is.na(sel)) {
+					clustering <- as.vector(sites(obj)[, sel])
 				}
 				else {
 					stop("if length of clustering is 1",
-					" the argument has to match a column name of Sites(obj)")
-				}				
+					" the argument has to match a column name of sites(obj)")
+				}
 			}
 			
 			if (length(clustering) == nrow(obj)) {
@@ -198,7 +198,7 @@
 			#	save memberhsip matrix
 			mm <- P$membership
 			colnames(mm) <- paste0("M", 1:k)
-			Sites(obj) <- cbind(Sites(obj), mm)
+			sites(obj) <- cbind(sites(obj), mm)
 		}
 		if (inherits(P, "vegclust")) { # & M == "FCM"
 			G <- as.numeric(as.factor(defuzzify(P)$cluster))

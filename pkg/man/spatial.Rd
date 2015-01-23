@@ -164,7 +164,7 @@ extent(x)
 # first create the data as columns
 x$X <- rnorm(nrow(x))
 x$Y <- rnorm(nrow(x))
-Sites(x)
+sites(x)
 
 # use the formula interface
 coordinates(x) <- ~X+Y

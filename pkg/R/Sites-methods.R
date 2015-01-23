@@ -1,7 +1,4 @@
-setGeneric("sites",
-	function (obj, ...)
-		standardGeneric("sites")
-)
+#	generic is set in sites.R
 
 setMethod("sites",
     signature(obj = "Sites"),
@@ -32,7 +29,8 @@ setMethod("sites",
     }    
 )
 
-setMethod("$", "Sites", 
+setMethod("$",
+    signature(x = "Sites"),
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {
 			stop("no $ method for object without slot data")

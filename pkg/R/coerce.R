@@ -104,7 +104,7 @@ setOldClass("data.list")
 		xx$cov <- as.numeric(xx$cov)
 	}
 	
-	yy <- data.frame(plot = rownames(obj), Sites(obj))
+	yy <- data.frame(plot = rownames(obj), sites(obj))
 		
 	zz <- taxonomy(taxonomy(obj)) # slot data
 
@@ -138,7 +138,7 @@ setOldClass("mefa")
 	if (is.continuous(coverscale(obj))) {
 		x$cov <- as.numeric(x$cov)	
 	}			
-	return(mefa(stcs(x[, c(1,2,4,3)]), Sites(obj), taxonomy(obj), nested = FALSE))
+	return(mefa(stcs(x[, c(1,2,4,3)]), sites(obj), taxonomy(obj), nested = FALSE))
 }
 
 setAs(from = "Vegsoup", to = "mefa",

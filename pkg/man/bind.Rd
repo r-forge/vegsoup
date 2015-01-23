@@ -6,6 +6,7 @@
 \alias{bind,Vegsoup-method}
 
 \title{ Combine \code{Vegsoup*} objects }
+
 \description{
 Take a sequence of arguments of objects from class \code{Vegsoup*} and combine them into a single object.
 }

@@ -6,15 +6,15 @@ X <- barmstein
 #	accessor methods for class slots
 #	from class Vegsoup
 species(X)
-Sites(X)
+sites(X)
+taxonomy(X)
 decostand(X)
 vegdist(X)
-AprioriGrouping(X)
-taxonomy(X)
-SpatialPointsVegsoup(X)
-SpatialPolygonsVegsoup(X)
 Layers(X)
 coverscale(X)
+AprioriGrouping(X)
+SpatialPointsVegsoup(X)
+SpatialPolygonsVegsoup(X)
 
 #	matrix dimensions
 dim(X)

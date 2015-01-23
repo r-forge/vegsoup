@@ -1,5 +1,5 @@
 plotPCO <- function (x, display = "sites", ...) {
-	ord <- capscale(as.matrix(x) ~ 1, data = Sites(x))	
+	ord <- capscale(as.matrix(x) ~ 1, data = sites(x))	
 	fig <- ordiplot(ord, display = display, type = "n") # , ...
 	ol <- outlier(x, ...)
 	points(fig, select = !ol, col = 1)

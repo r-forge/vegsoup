@@ -67,7 +67,7 @@ setMethod("[",
 		i <- unique(X$plot)
 		
 		###
-		x@sites <- x@sites[match(i, rownames(Sites(x))), ,drop = FALSE]
+		x@sites <- x@sites[match(i, rownames(sites(x))), ,drop = FALSE]
 		x@taxonomy <- taxonomy(x)[taxonomy(x)$abbr %in% abbr(X), ]
 		
 		x@layers <- Layers(x)[Layers(x) %in% unique(X$layer)]
@@ -134,7 +134,7 @@ setMethod("$", "Vegsoup",
 			stop("no $ method for object without slot sites")
 		}
 		return(x@sites[[name]])
-		#do.call("$", list = (Sites(x), name))
+		#do.call("$", list = (sites(x), name))
 	}
 )
 

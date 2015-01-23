@@ -243,10 +243,11 @@
       \code{Vegsoup*} object. Not implemented yet! See
       \code{\linkS4class{SpeciesTaxonomy}}.
     }
-    \item{Sites}{
+    \item{sites}{
       \code{signature(obj = "Vegsoup")}:
       returns slot, an object of class
-      \code{"data.frame"}.
+      \code{"data.frame"}. Note, the sites slot of Vegsoup objects
+      is of class data.frame not \code{"Sites"}.
       %% equaling an object of class \code{\linkS4class{Sites}}.
     }
     \item{Sites<-}{

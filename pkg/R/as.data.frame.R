@@ -3,8 +3,8 @@ setAs(from = "Vegsoup", to = "data.frame",
 		i <- rep(1:nrow(from), rle(species(from)$plot)$lengths)
 	
 		res <- data.frame(
-		    species(species(from)), #! use slot data
-			Sites(from)[i, ],
+			species(species(from)), #! use slot data
+			sites(from)[i, ],
 			coordinates(from)[i, ],
 			taxonomy(taxonomy(from))[species(from)$abbr, -1, drop = FALSE]
 		)

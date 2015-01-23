@@ -2,7 +2,7 @@
 .latexVegsoupPartitionSites <- function (obj, choice = "sites", recursive = TRUE, file, ...) {
 #	obj  <- fid
 
-	sites <- Sites(obj)
+	sites <- sites(obj)
 	
 	#	variables to drop for summary table	
 	drop <- grep("date", names(sites), fixed = TRUE)
@@ -144,7 +144,7 @@
 		grep("precision", sites.columns)
 	)
 	#	drop all columns constant at zero
-	drp.zeros <- which(apply(Sites(obj)[, sapply(Sites(obj), is.numeric), drop = FALSE], 2, sum) == 0)
+	drp.zeros <- which(apply(sites(obj)[, sapply(sites(obj), is.numeric), drop = FALSE], 2, sum) == 0)
 	drp <- c(drp, drp.zeros)
 	sites.columns <- sites.columns[ -drp ]
 
@@ -475,7 +475,7 @@
 	
 			
 		#	sites summary	
-		sts <- Sites(obj)
+		sts <- sites(obj)
 		sts$part <- Partitioning(obj)
 		sts <- sts[, c("part", sites.columns)]
 	
@@ -566,7 +566,7 @@
 			tmp <- data.frame(parameter = unlist(names(tmp[,1])),
 				values = unlist(tmp[,1]), stringsAsFactors = FALSE)
 			
-			#	& glyph that might be used in Sites(obj)
+			#	& glyph that might be used in sites(obj)
 			sel <- which(apply(tmp, 2, function (x) (length(grep("&", x)) > 0)))
 			if (length(sel) > 0) {
 				for (j in sel) {
@@ -588,7 +588,7 @@
 		tex[, 1] <- gsub("\u00D7", "$\\times$", tex[, 1], fixed = TRUE)
 		tex[, 1] <- gsub("_", ".", tex[, 1], fixed = TRUE)
 		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)
-		#	& gylph used in Sites(obj)
+		#	& gylph used in sites(obj)
 		footer <- gsub("&", "\\&", footer, fixed = TRUE)
 		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)
 		tex <- gsub("%", "\\%", tex, fixed = TRUE)

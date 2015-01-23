@@ -122,7 +122,7 @@ header(x)
   }
   \item{ select }{
     character. Vector matching \code{names(obj)} or indices to columns in
-    \code{Sites(obj)} to select information to be incorporated in the header section.
+    \code{sites(obj)} to select information to be incorporated in the header section.
     Beware, this only makes sense for numeric (e.g. elevation) or short string
     variables (e.g. slope aspect)!
   }
@@ -289,7 +289,7 @@ dta$expo <- df.attr$Exposition
 dta$cov <- df.attr$"Deckung...."
 dta$ph <- df.attr$"ph...10.2."
 
-names(Sites(dta))
+names(sites(dta))
 
 # plot of the dissimilarity matrix
 coldiss(dta, diag = T)

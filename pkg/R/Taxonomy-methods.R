@@ -107,7 +107,7 @@ setGeneric("taxonomy<-", function (obj, value)
 setReplaceMethod("taxonomy",
 	signature(obj = "Vegsoup", value = "SpeciesTaxonomy"),
 	function (obj, value) {
-		#	to do: needs checking against Sites(obj) and Spatial*(obj)
+		#	to do: needs checking against sites(obj) and Spatial*(obj)
 #		obj@taxonomy <- value
 		warning("method not implemented yet")		
 		return(obj)		

@@ -21,7 +21,7 @@
 		message("think about selecting sites varibales? ",
 			"try to use all numeric columns")
 		#	select all numeric columns
-		tmp <- as.matrix(Sites(obj))
+		tmp <- as.matrix(sites(obj))
 		mode(tmp) <- "character"
 		select <- apply(tmp, 2,
 			function (x) is.numeric(type.convert(x, as.is = FALSE)))
@@ -34,13 +34,13 @@
 	else {
 		if (is.numeric(select)) {
 			if (any(is.na(names(obj)[select]))) {
-				stop("select must match columns in Sites(obj)")
+				stop("select must match columns in sites(obj)")
 			}
 		}
 		if (is.character(select)) {
 			select <- match(select, names(obj))
 			if (any(is.na(select))) {
-				stop("select must match columns in Sites(obj)")
+				stop("select must match columns in sites(obj)")
 			}
 		}
 	}
@@ -105,7 +105,7 @@
 		x[duplicated(x[,2]), 2] <- format("", width = nchar(layer[1]))
 		
 		#	sites ('attributes') data block
-		y <- t(Sites(obj)[, select, drop = FALSE]) #names(obj)[select]
+		y <- t(sites(obj)[, select, drop = FALSE]) #names(obj)[select]
 		labels <- rownames(y)
 		m <- vector("list", length(labels))
 		names(m) <- labels

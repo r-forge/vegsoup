@@ -16,7 +16,7 @@ setMethod("initialize",
 		#	order
 		data <- data[order(data$plot, data$variable), ]
 
-		.Object@data <- data	
+		.Object@data <- data
 	return(invisible(.Object))
 	}
 )

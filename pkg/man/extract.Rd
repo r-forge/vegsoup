@@ -80,7 +80,7 @@ any(colSums(x[, colSums(x) >= 3]) < 3)
 
 # assigment using object slots
 rownames(x)
-Sites(x) <- x@sites[sample(nrow(x)), ]
+sites(x) <- x@sites[sample(nrow(x)), ]
 rownames(x)
 }
 

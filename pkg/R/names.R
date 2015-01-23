@@ -15,7 +15,7 @@ setMethod("rownames",
 	if (length(value) != nrow(x)) {
 		stop("length of values must match nrow(x)", call. = FALSE)
 	}
-	xy <- list(x = rownames(Sites(x)), y = value)
+	xy <- list(x = rownames(sites(x)), y = value)
 	
 	#	species	
 	pl <- factor(species(x)$plot, ordered = FALSE)
@@ -26,7 +26,7 @@ setMethod("rownames",
 	x@species$plot <- as.character(pl)
 	
 	#	sites
-	sel <- match(rownames(Sites(x)), xy$x)
+	sel <- match(rownames(sites(x)), xy$x)
 	rownames(x@sites) <- xy$y[sel]
 
 	#	points
@@ -90,7 +90,7 @@ setMethod("dimnames",
 setMethod("names",
     signature(x = "Vegsoup"),
     function (x) {
-    	names(Sites(x))
+    	names(sites(x))
     }
 )
 
@@ -110,7 +110,7 @@ setGeneric("row.names", function (x)
 setMethod("row.names",
     signature(x = "Vegsoup"),
     function (x) {
-		row.names(Sites(x))	
+		row.names(sites(x))	
 	}
 )
 

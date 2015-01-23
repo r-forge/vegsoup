@@ -21,7 +21,7 @@ setReplaceMethod("coordinates",
 		if (!inherits(value, "formula")) {
 			stop("only formula method is implemented (e.g. coordinates(x) <- ~X+Y", call. = FALSE)
 		}	
-		xy <- model.frame(value, Sites(object))
+		xy <- model.frame(value, sites(object))
 		if (dim(xy)[2] == 2) {
 			jj <- as.character(as.list(value)[[2]])[2:3]
 			j <- match(jj, names(object))
@@ -29,12 +29,12 @@ setReplaceMethod("coordinates",
 			jj <- c(as.character(as.list((as.list(value)[[2]])[2])[[1]])[2:3],
 				as.character(as.list(value)[[2]])[3])
 			j <- match(j, names(object))
-		}		
+		}
 		object@sp.points <- SpatialPointsDataFrame(
 			coords = xy, data = slot(slot(object, "sp.points"), "data"),
 			match.ID = FALSE)
-		Sites(object) <- Sites(object)[, -j]
-		return(object)			
+		sites(object) <- sites(object)[, -j]
+		return(object)
 	}
 )
 		
@@ -45,19 +45,16 @@ setMethod("proj4string",
 )
 
 #	hidden function to find coordinates, otherwise generate random points	
-".coordinatesSites" <- function (obj) {				
-	#	Imports:
-	#	require(sp)
-	
+".coordinatesSites" <- function (obj) {
 	#	objects of class Sites are ordered by plot and variable
 	p <- unique(obj$plot)
 	n <- length(p)
 	#	we may get NAs, but, if at least one instance of the variable
-	#	was found, we get a vector of length p, otherwise variable returns NULL
+	#	was found, we get a vector of length p, otherwise variable() returns NULL
 	#	we can safely proceed with the following steps in this case
 	x <- variable(obj, "longitude")
 	y <- variable(obj, "latitude")
-			
+
 	#	strip of N, E and any blanks
 	x <- gsub("[[:alpha:][:blank:]]", "", x)
 	y <- gsub("[[:alpha:][:blank:]]", "", y)

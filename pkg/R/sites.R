@@ -1,22 +1,22 @@
-#if (!isGeneric("Sites")) {
-setGeneric("Sites",
-	function (obj)
-		standardGeneric("Sites")
+#if (!isGeneric("sites")) {
+setGeneric("sites",
+	function (obj, ...)
+		standardGeneric("sites")
 )
 #}
-setMethod("Sites",
+setMethod("sites",
     signature(obj = "Vegsoup"),
     function (obj) obj@sites
 )
-#if (!isGeneric("Sites<-")) {
-setGeneric("Sites<-",
+#if (!isGeneric("sites<-")) {
+setGeneric("sites<-",
 	function (obj, value)
-		standardGeneric("Sites<-")
+		standardGeneric("sites<-")
 )
 #}
 
-#	Sites<-
-setReplaceMethod("Sites",
+#	sites<-
+setReplaceMethod("sites",
 	signature(obj = "Vegsoup", value = "data.frame"),
 	function (obj, value) {
 		sel <- match(rownames(obj), rownames(value))
@@ -24,7 +24,7 @@ setReplaceMethod("Sites",
 			stop("non matching rownames not allowed")
 		}
 		obj <- obj[sel, ]
-		obj@sites <- value				
-		return(obj)		
+		obj@sites <- value
+		return(obj)
 	}
 )
