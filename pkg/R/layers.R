@@ -6,7 +6,7 @@
 #r0 <- ((ll[1] + ll[2]) - ll[1] * ll[2]) * 100
 #(r0/100 + ll[3]) - (r0/100 * ll[3])
 
-#	Layers method
+#	layers method
 ".layers.Vegsoup" <- function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 0, verbose = FALSE) {
 	
 	#	return object if mandatory arguments are missing
@@ -27,17 +27,17 @@
 	#	check 'aggregate' argument or set defaults
 	if (missing(aggregate)) aggregate <- "layer" else aggregate <- match.arg(aggregate)
 	
-	#	'collapse' missing or of length 1 (full collapse)	
+	#	'collapse' missing or of length 1 (full collapse)
 	if (missing(collapse) || length(collapse) == 1) {
-		if (verbose) message("collapse to a single layer")	
+		if (verbose) message("collapse to a single layer")
 		if (missing(collapse)) { L <- "0l" } else { L <- collapse }
-		L <- rep(L, length(Layers(obj)))
+		L <- rep(L, length(layers(obj)))
 	}
 	else {
-	#	'collapse' not of correct length	
-		stopifnot(length(collapse) <= length(Layers(obj)))
-	#	'collapse' statisfies basic assuptions	
-		stopifnot(length(collapse) == length(Layers(obj)))
+	#	'collapse' not of correct length
+		stopifnot(length(collapse) <= length(layers(obj)))
+	#	'collapse' statisfies basic assuptions
+		stopifnot(length(collapse) == length(layers(obj)))
 		L <- collapse
 	}
 	
@@ -59,8 +59,8 @@
 	X <- species(species(obj))
 	Y <- coverscale(obj)
 	
-	L <- matrix(c(Layers(obj), L),
-		ncol = 2, nrow = length(Layers(obj)),
+	L <- matrix(c(layers(obj), L),
+		ncol = 2, nrow = length(layers(obj)),
 		byrow = FALSE, dimnames = list(NULL, c("original", "collapsed")))
 		
 	if (verbose) print(L)
@@ -152,32 +152,32 @@
 	return(invisible(obj))
 }
 
-setGeneric("Layers",
+setGeneric("layers",
 	function (obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"), dec = 1, verbose = FALSE)
-	standardGeneric("Layers")
+	standardGeneric("layers")
 )
 
-setGeneric("Layers<-", function (obj, value)
-	standardGeneric("Layers<-")
+setGeneric("layers<-", function (obj, value)
+	standardGeneric("layers<-")
 )
 
-setMethod("Layers",
+setMethod("layers",
    signature(obj = "Vegsoup"),
     .layers.Vegsoup
 )
 
-setReplaceMethod("Layers",
+setReplaceMethod("layers",
 	signature(obj = "Vegsoup", value = "ANY"),
 	function (obj, value) {
-		if (length(value) != length(Layers(obj))) {
+		if (length(value) != length(layers(obj))) {
 			stop("length of value does not match length layers of object")
 		}
-		if (any(!Layers(obj) %in% value)) {
+		if (any(!layers(obj) %in% value)) {
 			stop("items of value do not match layers of object",
-				"\n use Layers(obj, collapse = value)") 
+				"\n use layers(obj, collapse = value)") 
 		}
 		obj@layers <- value
-		return(obj)		
+		return(obj)
 	}
 )
 

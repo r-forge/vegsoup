@@ -4,8 +4,6 @@
 Association, is defined for nominal variables only?
 
 # rename
-layer to stratum
-Layers to strata
 SpeciesList to taxalist
 
 add strata(obj) <- value logical-method
@@ -28,8 +26,6 @@ eg. cov "++" is accepted but must raise errors!
 
 # minor
 improve Spread()
-search for 
-Species(dta) <-
 
 noquote for print method (e.g. as.matrix)
 order method for Vegsoup object (plot, abbr, layer)?

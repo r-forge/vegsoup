@@ -31,7 +31,7 @@ setMethod("compress",
 				row.names = rownames(sites(x)))     
 		}
 		
-		x <- Layers(x, collapse = "0l")
+		x <- layers(x, collapse = "0l")
 		
 		z <- taxonomy(taxonomy(x)) 
 		j <- c("abbr", "taxon", "family", "level")

@@ -54,7 +54,7 @@ class(as(barmstein, "data.frame"))
 class(as.data.frame(barmstein))
 
 #	automatic dispatch
-summary(lm(hcov ~ scov, data = Layers(barmstein, collapse = "E")))
+summary(lm(hcov ~ scov, data = layers(barmstein, collapse = "E")))
 
 #	for Sites obejcts
 #	create a dummy object first

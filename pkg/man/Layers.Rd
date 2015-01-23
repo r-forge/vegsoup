@@ -1,14 +1,14 @@
 \encoding{UTF-8}
 
-\name{Layers}
+\name{layers}
 \docType{methods}
 
-\alias{Layers}
-\alias{Layers,Vegsoup-method}
+\alias{layers}
+\alias{layers,Vegsoup-method}
 
-\alias{Layers<-}
-\alias{Layers<-,Vegsoup-method}
-\alias{Layers<-,Vegsoup,character-method}
+\alias{layers<-}
+\alias{layers<-,Vegsoup-method}
+\alias{layers<-,Vegsoup,character-method}
 
 \title{ Get or Modify Layers }
 
@@ -17,10 +17,10 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 }
 
 \usage{
-\S4method{Layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
+\S4method{layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
        dec = 0, verbose = FALSE)
 
-\S4method{Layers}{Vegsoup}(obj) <- value
+\S4method{layers}{Vegsoup}(obj) <- value
 }
 
 \arguments{
@@ -40,7 +40,7 @@ Modify an object's layer structure by suppling a layer combination vector as a c
     necessary.
   }
   \item{ value }{
-    character. Permutation of \code{Layers(obj)} to reorder layers.
+    character. Permutation of \code{layers(obj)} to reorder layers.
   }
   \item{ verbose }{
     logical. Prints messages.
@@ -56,13 +56,13 @@ Modify an object's layer structure by suppling a layer combination vector as a c
   The design of package vegsoup with regard to layer replication is to encode
   species and layer in a collapsed string which is used then as column names in
   the species matrix. This so avoids the creation of multi dimensional arrays.
-  Layers build blocks in the species matrix. The order is determined by \code{Layers(obj)}.
+  \code{layers} build blocks in the species matrix. The order is determined by \code{layers(obj)}.
   
   For practical issues, the vegsoup package collapses the species and layer dimension into a single
   dimension by using the special mark-up character \code{'@'}. This concatenation takes place if a
   species matrix is requested from the object, column names a built ad-hoc based on the \code{"Species"}
   object stored in \emph{slot species}. The order in which the collapsed dimension (layer replicates)
-  appears in the column names of the resulting matrix is controlled by the order of \code{Layers(obj)}.
+  appears in the column names of the resulting matrix is controlled by the order of \code{layers(obj)}.
   Permuting this reorder also orders the blocks of layers.
  
   In stage of aggregating several data sources it might be necessary to homogenize the various layers
@@ -72,7 +72,7 @@ Modify an object's layer structure by suppling a layer combination vector as a c
   cover values of all layers (see \code{\link[vegdata:tv.veg]{tv.veg}}). If \code{collapse} is missing,
   or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or
   \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to
-  match \code{length(Layers(obj))} (see \sQuote{Examples}).
+  match \code{length(layers(obj))} (see \sQuote{Examples}).
 }
 
 \note{
@@ -100,54 +100,54 @@ data(windsfeld)
 x <- windsfeld
 
 #   print layers
-Layers(x)
+layers(x)
 
 # change order of layers
-Layers(x) <- c("ml", "hl", "sl", "tl2", "tl1")
-Layers(x)
+layers(x) <- c("ml", "hl", "sl", "tl2", "tl1")
+layers(x)
 
 # assign wl to sl, tl1 and tl2
 # see ?windsfeld for details
-x1 <- Layers(x, aggregate = "layer",
+x1 <- layers(x, aggregate = "layer",
                 collapse = c("hl", "ml", "wl", "wl", "wl"),
                 verbose = TRUE)
-Layers(x1)
+layers(x1)
 # check dimension of data set
 # dim(obj)[1] gives number of sites (unique sample plots)
 # dim(obj)[2] gives number of species
 dim(x1)
 
 # collpase all layers
-x2 <- Layers(x, aggregate = "layer", collapse = c("ol"),
+x2 <- layers(x, aggregate = "layer", collapse = c("ol"),
                 verbose = TRUE)
-Layers(x2); dim(x2)
+layers(x2); dim(x2)
 
 # ... another way adopting default labeling
-x3 <- Layers(x, aggregate = "layer",
+x3 <- layers(x, aggregate = "layer",
                 verbose = TRUE)
-Layers(x3); dim(x3)
+layers(x3); dim(x3)
 
 # drop layer sl aswell as tl1 and tl2
-x4 <- Layers(x, aggregate = "layer",
+x4 <- layers(x, aggregate = "layer",
                 collapse = c("ml", "hl", NA, NA, NA),
                 verbose = TRUE)
-Layers(x4)
+layers(x4)
 dim(x4)
 
 # this way we loose most of the plots
-x5 <- Layers(x, aggregate = "layer",
+x5 <- layers(x, aggregate = "layer",
                 collapse = c(NA, NA, NA, "wl", "wl"),
                 verbose = TRUE)
-Layers(x5)
+layers(x5)
 dim(x5)
 
 # subsetting will also extract layers appropiately
-Layers(x[, grep("@tl", colnames(x))])
+layers(x[, grep("@tl", colnames(x))])
 
 # the species<– replacement method provides another means of subsetting
 x6 <- x
-species(x6) <- species(x)[species(x)$layer == Layers(x)[1], ]
-Layers(x6)
+species(x6) <- species(x)[species(x)$layer == layers(x)[1], ]
+layers(x6)
 # plots without cryptogams
 rownames(x)[-match(rownames(x6), rownames(x))]
 }

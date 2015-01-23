@@ -12,18 +12,19 @@ added read.XML function to read from turboveg XML files
 extended coverscale<- conversion
 changed lowest two limits of Braun-Blanquet scale(s) to 0.3 and 0.7, as to fit Turboveg definition
 reactivated validity method for class "Coverscale"
-fix bug related to dec argument in in Layers method
+fix bug related to dec argument in in Layers (layers) method
 improved default plot method for Vegsoup objects
 performed rigorous tests on read.verbatim and improved error messages
-renamed rbind to bind
-renamed Sites to sites
+renamed rbind method to bind
+renamed Sites method to sites
+renamed Layers method to layers
 
 --- 2015-01-19, version: 0.2-3
 
 initialize method for class "Sites" now performs ordering
 added coordinates method for class "Sites"
 added variable method for class "Sites"
-added as.data.frame method for class Sites
+added as.data.frame method for class "Sites"
 added "[" method for classes "SpeciesTaxonomy" and "Sites"
 slot taxonomy of class Vegsoup is now of class "Taxonomy"
 renamed Taxonomy method to taxonomy

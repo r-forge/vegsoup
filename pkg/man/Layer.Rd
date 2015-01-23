@@ -37,12 +37,12 @@ Simply return the layer for each observation.
 \author{ Roland Kaiser }
 
 \note{
-  The function will be renamed to avoid typos with method \code{Layers} or
+  The function will be renamed to avoid typos with method \code{layers} or
   even dropped -- it is not very useful and simple minded?.
 }
 
 \seealso{
-\code{\link{Layers}}, \code{\linkS4class{Vegsoup}}
+\code{\link{layers}}, \code{\linkS4class{Vegsoup}}
 }
 
 \examples{

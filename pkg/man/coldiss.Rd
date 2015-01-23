@@ -80,7 +80,7 @@ coldiss(x, cols(4), byrank = FALSE, diag = TRUE)
 
 # R-mode analysis, see ?as.dist
 # first collapse layers
-x.0l <- Layers(x, aggregate = "layer",
+x.0l <- layers(x, aggregate = "layer",
                  collapse = "0l", verbose = TRUE)
 decostand(x.0l) <- "chi.square"
 vegdist(x.0l) 

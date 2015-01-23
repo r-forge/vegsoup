@@ -44,8 +44,6 @@ stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer"),
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE)
 
 stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
-
-bind(..., deparse.level = 1)
 }
 
 \arguments{
@@ -89,10 +87,6 @@ bind(..., deparse.level = 1)
     additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
     \code{Species} respectively \code{Sites}.
   }
-# Arguments for function bind
-  \item{ deparse.level }{
-    not used.
-  }  
 }
 
 \details{

@@ -73,7 +73,7 @@ A numeric vector of suitable size with names taken from the object.
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}, \code{\link{Layers}}
+\code{\link[base:colSums]{colSums}} in package \pkg{base}, \code{\link{as.matrix}} in package \pkg{vegsoup}, \code{\link{richness}}, \code{\link{layers}}
 }
 
 \examples{
@@ -102,7 +102,7 @@ colSums(x, typeof = "numeric")
 m1 <- colMeans(x)
 
 # combine all strata
-x0 <- Layers(x, collapse = "NA") # note, collapse = NA will not work!
+x0 <- layers(x, collapse = "NA") # note, collapse = NA will not work!
 m2 <- colMeans(x0, typeof = "numeric")
 
 m1[ grep("amel.oval", names(m1)) ]

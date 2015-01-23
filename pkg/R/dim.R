@@ -40,7 +40,7 @@ setGeneric("ncol", function (x)
 setMethod("ncol",
     signature(x = "Vegsoup"),
     function (x) {
-    	if (length(Layers(x)) > 1) {
+    	if (length(layers(x)) > 1) {
     		nrow(unique(species(species(x))[, c("abbr", "layer")]))
     	}
     	else {

@@ -160,7 +160,7 @@ setMethod("as.array",
 	
 	#	ensure layer order
 	#	order of species is alphabetic due to a call to table()
-	return(res[, , Layers(x)])
+	return(res[, , layers(x)])
 	}
 )
 	

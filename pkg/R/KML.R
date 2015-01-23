@@ -119,13 +119,13 @@
 	end.kml <- c(
 		"</Document>",
 		"</kml>")
-		
+	
 	#	obj = sp
 	sl <- species(species(obj)) #! get slot data
 	sl$taxon <- taxon(obj)[match(sl$abbr, taxonomy(obj)$abbr)]
-	#	resort to Layers(obj)
-	sl <- sl[order(sl$plot, match(sl$layer, Layers(obj))), ]
-				       	
+	#	resort to layers(obj)
+	sl <- sl[order(sl$plot, match(sl$layer, layers(obj))), ]
+	
 	sl <- sl[, c(1,5,3,4)]
 	sl <- split(sl, sl$plot)
 	

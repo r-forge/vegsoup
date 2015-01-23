@@ -70,7 +70,7 @@
 	}
 	else {	
 		#	width of layer codes
-		nchar.layer <- max(sapply(Layers(obj), nchar))
+		nchar.layer <- max(sapply(layers(obj), nchar))
 		
 		m <- as.matrix(obj, typeof = "character", mode = "R")
 		txa <- splitAbbr(obj)[rownames(m), ]

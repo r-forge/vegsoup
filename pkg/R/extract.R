@@ -57,7 +57,7 @@ setMethod("[",
 				
 		#!	don't permute species?
 			
-		if (nrow(X) < 1) stop("empty subset!", call. = FALSE)	    
+		if (nrow(X) < 1) stop("empty subset!", call. = FALSE)
 				
 		#	can not to be replaced with species<- because
 		#	of a recursive call to "[" !
@@ -70,7 +70,7 @@ setMethod("[",
 		x@sites <- x@sites[match(i, rownames(sites(x))), ,drop = FALSE]
 		x@taxonomy <- taxonomy(x)[taxonomy(x)$abbr %in% abbr(X), ]
 		
-		x@layers <- Layers(x)[Layers(x) %in% unique(X$layer)]
+		x@layers <- layers(x)[layers(x) %in% unique(X$layer)]
 		if (length(x@group) != 0) x@group <- x@group[names(x@group) %in% i]
 
 		x@sp.points <- x@sp.points[match(i, x@sp.points$plot), ]

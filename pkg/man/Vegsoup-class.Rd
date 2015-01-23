@@ -106,12 +106,12 @@
       \code{signature(obj = "Vegsoup")}:
       returns the layer for each species observation.
     }
-    \item{Layers}{
+    \item{layers}{
       \code{signature(obj = "Vegsoup")}:
       modifies an object's layer structure by suppling a layer combination
       rule as a \code{"character"} vector \code{'collapse'}.
     }
-    \item{Layers<-}{
+    \item{layers<-}{
       \code{signature(obj = "Vegsoup")}:
       modifies the order of layers. This has effects on \code{as.matrix} and
       similar.

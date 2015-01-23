@@ -62,11 +62,11 @@ shapeSpecies <- function (obj) {
 	spc <- species(species(obj)) #! get data slot
 	#	data.frame to store results
 	res <- as.data.frame(
-    	     matrix("",
-        	   ncol = length(Layers(obj)) + 2, # we need 2 more columns
-	           nrow = sum(richness(obj, "sample"))),
-    	   stringsAsFactors = FALSE)
-	names(res) <- c("plot", "abbr", Layers(obj))
+			matrix("",
+				ncol = length(layers(obj)) + 2, # we need 2 more columns
+				nrow = sum(richness(obj, "sample"))),
+			stringsAsFactors = FALSE)
+	names(res) <- c("plot", "abbr", layers(obj))
 
 	res$plot <- rep(rownames(obj), richness(obj, "sample"))
 	res$abbr <- unlist(sapply(rownames(obj), function (x) {

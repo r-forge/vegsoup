@@ -7,19 +7,19 @@ setMethod("average",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		cl <- match.call()
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
+		if (any(names(cl) == "mode")) {
+			if (cl$mode == "R") {
 				res <- t(aggregate(as.matrix(obj, ...),
 					by = list(splitAbbr(obj)$layer),
 					FUN = sum)[, -1])
 				res <- res / contingency(obj, ...)
 				#	division by zero
 				res[is.na(res)] <- 0
-				colnames(res) <- Layers(obj)									
+				colnames(res) <- layers(obj)
 			} else {
-				stop("omit mode argument for standard behaviour")					
+				stop("omit mode argument for standard behaviour")
 			}
-    	} else {  		
+		} else {
 			res <- t(aggregate(as.matrix(obj, ...),
 				by = list(Partitioning(obj)), FUN = sum))[-1, ]
 			res <- res / contingency(obj)

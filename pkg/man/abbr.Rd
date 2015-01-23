@@ -60,7 +60,7 @@ abbr(barmstein)
 }
 \seealso{
 \code{\link{splitAbbr}}
-\code{\link{Layers}}
+\code{\link{layers}}
 \code{\link{as.array}}
 }
 \keyword{ method }

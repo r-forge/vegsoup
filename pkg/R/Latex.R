@@ -241,7 +241,7 @@
 		#	rownames(txn) <- txn$abbr.layer
 		txn.top <- txn[rownames(diag), ]
 		tmp.i <- c()
-		for (i in Layers(obj)) {
+		for (i in layers(obj)) {
 			tmp.i <- rbind(tmp.i, txn.top[txn.top$layer == i, ])
 		}
 		txn.top <- tmp.i
@@ -250,7 +250,7 @@
 		#	bottom of table, remaining species
 		txn.bottom <- txn[-match(rownames(diag), rownames(tmp$tab)), ]
 		tmp.i <- c()
-		for (i in Layers(obj)) {
+		for (i in layers(obj)) {
 			tmp.i <- rbind(tmp.i, txn.bottom[txn.bottom$layer == i, ])
 		}
 		txn.bottom <- tmp.i
@@ -332,12 +332,12 @@
 			rep(p.col, getK(obj)))
 		col.names <- c("Taxon", "Layer", 1:getK(obj))
 	
-		if (length(Layers(obj)) < 2) {
+		if (length(layers(obj)) < 2) {
 			tex <- tex[, -2]
 			col.just <- col.just[-2]
 			col.names <- col.names[-2]
 			add2caption  <- paste("All species in the same layer ",
-				Layers(obj),
+				layers(obj),
 				". ",
 				"Fidelity measure: ", obj@method, ". ",
 				sep = "")
@@ -748,7 +748,7 @@
 		#	obj = prt; i = 2
 		i.part <- obj[Partitioning(obj) == i, ]
 		i.part <- seriation(i.part, ...)
-		#	table will be order according to Layers(obj)
+		#	table will be order according to layers(obj)
 		
 		res[[i]] <- i.part
 		
