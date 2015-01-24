@@ -128,7 +128,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 %%\code{Vegsoup} will discard any alphanumeric characters by calling
 %%\code{gsub(pattern = "[[:alpha:]]", replacement = "", ...}. Decimals (","
 %%and ".") are handled to yield numeric values for columns that can be coerced
-%%to \code{as.numeric} (e.\,g. in x\$cov if abundance is not ordinal, or for
+%%to \code{as.numeric} (e.\,g. in x$cov if abundance is not ordinal, or for
 %%all in y that represent continuous measurement on plot.).
 
   Function \code{plainsoup} is a utility function that demands a community matrix

@@ -27,7 +27,7 @@ Simply return the layer for each observation.
 
 \details{
   Simply returns the layer for each observation, equivalent to
-  \code{species(obj)\$layer}.
+  \code{species(obj)$layer}.
 }
 
 \value{
