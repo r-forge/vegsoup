@@ -371,7 +371,7 @@
       \code{signature(obj = "Vegsoup")}:
       modifies order as to reflect a vegetation table.
     }
-    \item{SampleVegsoup}{
+    \item{sample}{
       \code{signature(x = "Vegsoup")}:
       random samples and permutations.
     }

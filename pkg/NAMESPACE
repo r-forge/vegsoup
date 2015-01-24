@@ -211,7 +211,7 @@ exportMethods(
     "row.names<-",
     "rowSums",
     "rowMeans",
-    "SampleVegsoup",
+    "sample",
     "seriation",
     "shared",
     "SigFidelity",

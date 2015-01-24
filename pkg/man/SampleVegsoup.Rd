@@ -1,10 +1,10 @@
 \encoding{UTF-8}
 
-\name{SampleVegsoup}
+\name{sample}
 \docType{methods}
 
-\alias{SampleVegsoup}
-\alias{SampleVegsoup,Vegsoup-method}
+\alias{sample}
+\alias{sample,Vegsoup-method}
 
 \alias{hcr}
 \alias{hcr,Vegsoup-method}
@@ -12,11 +12,11 @@
 \title{ Random Samples and Permutations for \code{Vegsoup*} Objects }
 
 \description{
-The methods take a sample of the specified size from the elements of \code{x} using either with or without replacement. Permutations and random subsamples of the input object can be performed with method \code{SampleVegsoup}. Heterogeneity-constrained random samples are obtained with method \code{hcr}.
+The methods take a sample of the specified size from the elements of \code{x} using either with or without replacement. Permutations and random subsamples of the input object can be performed with method \code{sample}. Heterogeneity-constrained random samples are obtained with method \code{hcr}.
 }
 
 \usage{
-\S4method{SampleVegsoup}{Vegsoup}(x, size, replace = FALSE, prob = NULL)
+\S4method{sample}{Vegsoup}(x, size, replace = FALSE, prob = NULL)
 
 \S4method{hcr}{Vegsoup}(x, size, nperm = 1000, fast = FALSE, ...)
 }
@@ -26,7 +26,7 @@ The methods take a sample of the specified size from the elements of \code{x} us
     \code{Vegsoup*} object.
   }
   \item{ size }{
-    non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{SampleVegsoup} to \code{nrow(x)}.
+    non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{sample} to \code{nrow(x)}.
   }
   \item{ replace }{
     should sampling be with replacement?
@@ -65,11 +65,11 @@ Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resa
 \examples{
 library(vegsoup)
 data(windsfeld)
-r <- SampleVegsoup(windsfeld)
+r <- sample(windsfeld)
 rownames(r) # order is permuted
 
-rownames(SampleVegsoup(windsfeld, size = 3))
-rownames(SampleVegsoup(windsfeld, replace = TRUE))
+rownames(sample(windsfeld, size = 3))
+rownames(sample(windsfeld, replace = TRUE))
 
 hcr(windsfeld, size = 20)
 

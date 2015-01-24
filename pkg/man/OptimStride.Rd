@@ -5,8 +5,8 @@
 \name{OptimStride}
 \alias{OptimStride}
 
-\alias{methods}
-\alias{methods,VegsoupOptimstride-method}
+\alias{method}
+\alias{method,VegsoupOptimstride-method}
 
 \alias{stride}
 \alias{stride,VegsoupOptimstride-method}

@@ -1,19 +1,15 @@
+setGeneric("sample")
+
+#	sample data, usally without replacement
 #if (!isGeneric("sample")) {
 #setGeneric("sample", function (x, size, replace = FALSE, prob = NULL)
 #	standardGeneric("sample"))
 #}
 
-setGeneric("sample")
-
-#	sample data, usally without replacement
-#if (!isGeneric("SampleVegsoup")) {
-setGeneric("SampleVegsoup", function (x, size, replace = FALSE, prob = NULL)
-	standardGeneric("SampleVegsoup"))
-#}
 #	warning: does not behave as expected for the user
 #	StablePartition() relies on this method
 #	think about a method for class (VegsoupPartition) to sample conditional on Partitioning(obj)
-setMethod("SampleVegsoup",
+setMethod("sample",
 	signature(x = "Vegsoup"),
 	function (x, size, replace = FALSE, prob = NULL) {
 		#	for sample the default for size is the number of items inferred from the first argument
@@ -33,7 +29,7 @@ setMethod("SampleVegsoup",
 )
 
 #	Heterogeneity-constrained random samples
-#if (!isGeneric("SampleVegsoup")) {
+#if (!isGeneric("hcr")) {
 setGeneric("hcr", function (x, size, nperm = 1000, fast = FALSE, ...)
 	standardGeneric("hcr"))
 #}

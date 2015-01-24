@@ -50,7 +50,7 @@ JUICE software (\url{http://www.sci.muni.cz/botany/juice/})
 \author{ original authors, Roland Kaiser }
 \seealso{
 \code{\link{OptimStride}},
-\code{\link{SampleVegsoup}},
+\code{\link{sample}},
 }
 \note{
   This function is experimental!

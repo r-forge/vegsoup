@@ -140,7 +140,7 @@ dim(X[1:3,2:3])
 layers(X[, grep("@sl", colnames(X))])
 
 #	subsample
-rownames(SampleVegsoup(X))
+rownames(sample(X))
 
 #	bind
 s1 <- X[1:2, ]
