@@ -182,10 +182,10 @@ setReplaceMethod("layers",
 )
 
 #	return just the layer columns from species(obj)
-setGeneric("Layer",
+setGeneric("layer",
 	function (obj, ...)
-		standardGeneric("Layer"))
-setMethod("Layer",
+		standardGeneric("layer"))
+setMethod("layer",
    signature(obj = "Vegsoup"),
 	function (obj, ...) species(obj)$layer
 )

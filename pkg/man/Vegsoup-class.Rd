@@ -102,7 +102,7 @@
 %% 2
   \bold{ 2) Layer structure.}
 
-    \item{Layer}{
+    \item{layer}{
       \code{signature(obj = "Vegsoup")}:
       returns the layer for each species observation.
     }

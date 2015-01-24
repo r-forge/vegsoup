@@ -1,10 +1,10 @@
 \encoding{UTF-8}
 
-\name{Layer}
+\name{layer}
 \docType{methods}
 
-\alias{Layer}
-\alias{Layer,Vegsoup-method}
+\alias{layer}
+\alias{layer,Vegsoup-method}
 
 \title{ Return Stratum/Layer }
 
@@ -13,7 +13,7 @@ Simply return the layer for each observation.
 }
 
 \usage{
-\S4method{Layer}{Vegsoup}(obj, ...)
+\S4method{layer}{Vegsoup}(obj, ...)
 }
 
 \arguments{
@@ -31,14 +31,14 @@ Simply return the layer for each observation.
 }
 
 \value{
-  \code{Layer} returns a character vector equal in length to
+  \code{layer} returns a character vector equal in length to
   \code{nrow(slot(species(obj), "data"))}}
 
 \author{ Roland Kaiser }
 
 \note{
   The function will be renamed to avoid typos with method \code{layers} or
-  even dropped -- it is not very useful and simple minded?.
+  even dropped -- it is not very useful and simple minded?
 }
 
 \seealso{
@@ -52,7 +52,7 @@ data(barmstein)
 x <- barmstein
 
 # check the number of occurences per layer
-table(Layer(x))
+table(layer(x))
 
 # alternative
 table(species(x)$layer)

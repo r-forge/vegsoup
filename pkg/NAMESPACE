@@ -174,7 +174,7 @@ exportMethods(
     "Latex",
     "layers",
     "layers<-",
-    "Layer",
+    "layer",
     "KML",
     "reverseGeocode",
     "methods",

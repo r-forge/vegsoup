@@ -152,7 +152,7 @@ layers(x6)
 rownames(x)[-match(rownames(x6), rownames(x))]
 }
 \seealso{
-\code{\link{Layer}},
+\code{\link{layer}},
 \code{\link{abbr.layer}},
 \code{\link{Vegsoup}}
 and class \code{\linkS4class{Vegsoup}}
