@@ -148,7 +148,7 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
   character. The computed methods.
   }
   \item{ stride }{
-  list. A list with length equal to \code{length(methods(x))}. Each nested list gives the number
+  list. A list with length equal to \code{length(method(x))}. Each nested list gives the number
   of significant indicator species (faithful species) for each partition for a particular value
   of \code{k}.
   }
@@ -188,7 +188,7 @@ if (require(parallel)) {
 }
 
 # get the computed clustering methods
-methods(x)
+method(x)
 
 # the threshold of the Fisher test
 threshold(x)

@@ -5,7 +5,7 @@
 import(rgdal)
 
 
-#	imports from base pacakges
+#	imports from base packages
 
 import(methods)
 
@@ -58,7 +58,7 @@ importFrom("vegan", coverscale, vegdist, decostand, distconnected,
 
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
 
-importFrom("vegclust", vegclustdist, defuzzify)
+importFrom("vegclust", vegclustdist, defuzzify, hcr)
 
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
                  rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
@@ -177,7 +177,7 @@ exportMethods(
     "layer",
     "KML",
     "reverseGeocode",
-    "methods",
+    "method",
     "murdoch",
     "names",
     "names<-",

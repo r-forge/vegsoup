@@ -18,6 +18,8 @@ performed rigorous tests on read.verbatim and improved error messages
 renamed rbind method to bind
 renamed Sites method to sites
 renamed Layers method to layers
+renamed Layer method to layer
+renamed methods to method
 
 --- 2015-01-19, version: 0.2-3
 

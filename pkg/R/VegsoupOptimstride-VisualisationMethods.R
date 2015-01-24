@@ -2,23 +2,22 @@
 setMethod("plot",
 	signature(x = "VegsoupOptimstride", y = "missing"),
 	function (x, mode = 1, oc.threshold = 2, method, retain = FALSE, ...) {
-	#	require(RColorBrewer)
 
 	if (!missing(method)) {
-		METHODS <- methods(x)
+		METHODS <- vegsoup::method(x) # for dispatch to work
 		m <- match.arg(method, METHODS, several.ok = TRUE)
-		m <- match(m, methods(x))
+		m <- match(m, vegsoup::method(x))
 	}
 	else {
-		m <- 1:length(methods(x))
+		m <- 1:length(vegsoup::method(x))
 	}	
 	
-	k <- getK(x)	
+	k <- getK(x)
 	ft.threshold <- threshold(x)
 	oc1 <- optimclass1(x)
 	oc2 <- optimclass2(x)
 	p <- peaks(x)
-	cols = 1	
+	cols = 1
 
 	if (mode == 1) {
 		#	open plot
@@ -53,7 +52,7 @@ setMethod("plot",
 	}
 	legend("bottomright",
 		lty = 1:length(m),
-		legend = methods(x)[m], col = cols,
+		legend = vegsoup::method(x)[m], col = cols,
 		inset = 0.04, bty = "n")
 }
 
