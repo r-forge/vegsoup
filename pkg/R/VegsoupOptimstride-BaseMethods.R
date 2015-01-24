@@ -85,6 +85,8 @@ setMethod("optimclass2",
 	}
 )
 
+setGeneric("which.max")
+
 #	from base
 setMethod("which.max",
 	signature(x = "VegsoupOptimstride"),

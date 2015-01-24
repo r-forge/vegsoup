@@ -3,7 +3,7 @@
 we must rebuild polygons for coordinates<- method
 more rigorous test for identical methods
 
---- 2015-01-21, version: 0.2-3 Patched
+--- 2015-01-24, version: 0.2-4
 
 added variables method for class "Sites" extending existing variable
 added variable<- method to aid in replacing values
