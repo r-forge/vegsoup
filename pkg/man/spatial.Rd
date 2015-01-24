@@ -121,7 +121,8 @@ All methods operate on the spatial slots of an object:
 
   \item
   \code{spTransform} provides transformation between datum(s) and conversion between
-  projections (also known as projection and/or re-projection).
+  projections (also known as projection and/or re-projection). Note, load package
+  rgdal for spTransform method to work.
 
   \item
   \code{over} provides an overlay method for spatial polygons.
@@ -144,10 +145,11 @@ require(vegsoup)
 data(barmstein)
 x <- barmstein
 
-# coordinate refernece system of data set is WGS 84
+# coordinate reference system of data set is WGS 84
 proj4string(x)
 
 # transform to WGS 84 / Pseudo Mercator
+require(rgdal)
 xt <- spTransform(x, CRS("+init=epsg:3857"))
 
 # plain matrix of coordiantes

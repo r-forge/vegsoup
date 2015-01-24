@@ -41,7 +41,7 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
                        "fanny", "FCM", "KM"),
             fast = FALSE, ...)
 
-\S4method{methods}{VegsoupOptimstride}(x, ...)
+\S4method{method}{VegsoupOptimstride}(x, ...)
 
 \S4method{stride}{VegsoupOptimstride}(x, method, ...)
 
@@ -106,7 +106,7 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
 }
 \section{ Methods }{
   \describe{
-    \item{ methods }{
+    \item{ method }{
       \code{ signature(obj = "VegsoupOptimstride") }:
          retrieves the names of the computed method(s). These are the method arguments as accepted
          by \code{VegsoupPartition}.
@@ -144,7 +144,7 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
   \item{ Optimstride }{
   \code{VegsoupOptimstride} object
   }
-  \item{ methods }{
+  \item{ method }{
   character. The computed methods.
   }
   \item{ stride }{

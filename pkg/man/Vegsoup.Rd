@@ -166,15 +166,16 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   also want to call \code{"SpeciesTaxonomy"} for the first and last objects
   mentioned. Defaults for \code{sep} and \code{dec} passed to \code{read.csv}
   are set according to \code{read.csv2}!
+  
+  Package coenoflex is currently missing from CRAN.
 }
 
-\section{Warning}{
+\section{ Warning }{
   All missing values that might result when casting \code{y} will be replaced
-  with zeros, not \code{NA}!
+  by \code{NA}!
 
-  If sp.points and/or sp.polygons are supplied the data slot
-  (\code{SpatialPointsDataFrame@data}) must have a column named plot. The same
-  is mandatory of slot \code{sp.polygons}.
+  If sp.points and/or sp.polygons arguments are supplied,
+  the objects must have a column named plot.
 
   When suppling argument \code{proj4string} ensure that
  \code{CRS(proj4string)} works.

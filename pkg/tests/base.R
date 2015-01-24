@@ -1,3 +1,4 @@
+require(rgdal)
 require(vegsoup)
 
 data(barmstein)
@@ -93,6 +94,7 @@ proj4string(X)
 
 proj4string(X) <- CRS("+init=epsg:4326")
 bbox(X)
+
 
 spTransform(X, CRS("+init=epsg:3857"))
 SpatialPointsVegsoup(X)

@@ -128,9 +128,9 @@
 
 	file <- .texfile(file)
 	
-	if (getK(obj) > 10) {
+	if (getK(obj) > 10)
 		use.letters = TRUE
-	}
+
 	if (is.null(stat.min)) {
 		if (obj@method == "r.g") {
 			#	automatic guess adapted from isopam()
@@ -172,18 +172,18 @@
 	frq.ft <- data.frame(frq.ft)
 	colnames(frq.ft) <- 1:nc
 	rownames(frq.ft) <- colnames(obj)
-	  
+	
 	#	fidelity measure
 	stat <- getStat(obj)
 	
 	#	sort table
-	# 	which cluster has highest fidelity
+	#	which cluster has highest fidelity
 	stat.idx <- apply(stat, 1, which.max)
 	frq.ord <- stat.idx
 	
 	for (i in 1:length(frq.ord)) {
 		frq.ord[i] <- cs[i, stat.idx[i]]
-	}	
+	}
 	
 	#	sort frequency table
 	#	first by fidelity measure and then by constancy
@@ -202,12 +202,12 @@
 	
 	if (length(dia) > 0) {
 		diag <- frq.ft.top[names(dia), ]
-	}	
+	}
 	
 	#	for later use in the bottom part of the tables
 	ord.bot <- names(as.matrix(frq)[order(-frq), ])
 	frq.ft.b <- frq.ft[ord.bot, ]
-	    
+	
 	#	move diagnostic species to top
 	if (length(dia) > 0) {
 		tmp <- rbind(diag,
@@ -226,7 +226,7 @@
 			typ[[i]] <- c(names(dig2)[dig2 == i])
 		} else {
 			typ[[i]] <- "Nothing particularly typical"
-		}	
+		}
 	}
 	names(typ) <- colnames(cs)
 	
@@ -298,7 +298,7 @@
 				tmp <- tex.typical[sel[rep(1,2)], ]
 				rownames(tmp) <- c(i, paste("typical", i, sep =""))
 				tmp[1, 1] <- ""
-				tmp[2, 1] <- paste("\\textbf{typical for ", i, "}", sep = "")	
+				tmp[2, 1] <- paste("\\textbf{typical for ", i, "}", sep = "")
 				tmp[1:2, 2:ncol(tmp)] <- ""
 				tmp <- rbind(tmp, tex.typical[sel, ])
 			} else {
@@ -357,9 +357,9 @@
 			". ",
 			sep = "")
 			# additional user supplied text
-			caption <- paste(caption, caption.text, collapse = " ")	
+			caption <- paste(caption, caption.text, collapse = " ")
 	
-			#	prepare intermediate result for formating	
+			#	prepare intermediate result for formating
 			names(tex) <- col.names
 			tex <- as.matrix(tex)
 			tex[tex == 0] <- "."
@@ -387,7 +387,7 @@
 			footer <- ct[match(row.names(tex.footer), row.names(ct)), ]
 	
 			txn <- splitAbbr(obj)
-			txn <- txn[match(rownames(footer), rownames(txn)), ] #	dropped $abbr.layer
+			txn <- txn[match(rownames(footer), rownames(txn)), ]
 			footer <- as.data.frame(footer, stringsAsFactors = FALSE)
 			footer$taxon <- txn$taxon
 			tmp <- c()
@@ -402,7 +402,7 @@
 					}
 			}
 	
-			#	nice language for low thresholds
+			#	good language for low thresholds
 			if (footer.threshold < 4) {
 				footer <- paste("\\textbf{Occuring only ",
 					c("once", "twice", "thrice")[footer.threshold], " }",
@@ -474,12 +474,12 @@
 			}))
 	
 			
-		#	sites summary	
+		#	sites summary
 		sts <- sites(obj)
 		sts$part <- Partitioning(obj)
 		sts <- sts[, c("part", sites.columns)]
 	
-		#	resort to match order of intermediate result table  
+		#	resort to match order of intermediate result table
 		fn <- fn[match(rownames(tex), rownames(fn)), , ]
 		fn.m <- fn.m[match(rownames(tex), rownames(fn.m)), ]
 		cs <- cs[match(rownames(tex), rownames(cs)), ]
@@ -491,9 +491,9 @@
 		#	identical(rownames(fn), rownames(fn.m))
 		#	identical(rownames(fn), rownames(cs))
 		#	identical(rownames(fn), rownames(ct))
-		#	identical(rownames(fn), rownames(stat))				
+		#	identical(rownames(fn), rownames(stat))
 		#	identical(rownames(fn), names(sprd))
-					
+		
 		tex <- footer.sites <- footer.species <- vector("list", length = getK(obj))
 		names(tex) <- names(footer.sites) <- names(footer.species) <- 1:getK(obj)
 		
@@ -535,13 +535,13 @@
 			tmp <- data.frame(parameter = paste("Occuring only ",
 				c("once", "twice", "thrice")[footer.threshold], sep = ""),
 				values = paste(sort(tmp$taxon), collapse = ", "), stringsAsFactors = FALSE)
-			footer.species[[i]] <- tmp	
+			footer.species[[i]] <- tmp
 			
-			#	sites summary footer		
+			#	sites summary footer
 			tmp <- sts[sts$part == i, -1]
 			num <- apply(tmp, 2, function (x) is.numeric(type.convert(x)))
 		
-			#	string varibales			
+			#	string varibales
 			tmp.str <- apply(tmp[, !num, drop = FALSE], 2, table)
 			tmp.str <- sapply(tmp.str, function (x) x[order(x, decreasing = TRUE)])
 			tmp.str <- sapply(tmp.str, function (x) paste(names(x), x, sep = ": ", collapse = "; "))
@@ -552,7 +552,7 @@
 			tmp.num <- sapply(as.data.frame(
 				apply(tmp[, num], 2, function (x) fivenum(x, na.rm = TRUE))), list)
 			#	reduce constant varibales
-			sel <- sapply(tmp.num, function (x) length(unique(x))) <= 1			
+			sel <- sapply(tmp.num, function (x) length(unique(x))) <= 1
 			tmp.num[names(sel)[sel]] <- "."
 			tmp.num <- sapply(tmp.num, function (x) {
 				if (length(x) == 5) {# median of fivenum bold
@@ -570,8 +570,8 @@
 			sel <- which(apply(tmp, 2, function (x) (length(grep("&", x)) > 0)))
 			if (length(sel) > 0) {
 				for (j in sel) {
-					tmp[, j] <- gsub("&", "\\&", tmp[,j ], fixed = TRUE)			
-				}  
+					tmp[, j] <- gsub("&", "\\&", tmp[,j ], fixed = TRUE)
+				}
 			}
 			footer.sites[[i]] <- tmp
 		}
@@ -584,7 +584,9 @@
 		#	check species characters
 		#	times glyph in hybrid combinations
 		#	taxon is always in first position in the table
+		#	MUTIPLICATION X
 		tex[, 1] <- gsub("\u2715", "$\\times$", tex[, 1], fixed = TRUE)
+		#	MUTIPLICATION SIGN
 		tex[, 1] <- gsub("\u00D7", "$\\times$", tex[, 1], fixed = TRUE)
 		tex[, 1] <- gsub("_", ".", tex[, 1], fixed = TRUE)
 		footer <- gsub("\u00D7", "$\\times$", footer, fixed = TRUE)

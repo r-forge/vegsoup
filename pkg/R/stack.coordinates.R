@@ -1,9 +1,6 @@
 #	read OGR data source
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
-	#	Depends: rgdal
-	#	require(rgdal) will also load (sp)
-	
-	pt <- ogrInfo(dsn, layer)
+	pt <- rgdal::ogrInfo(dsn, layer)
 	withz <- pt$with_z
 	
 	if (missing(schema)) {
@@ -29,10 +26,10 @@ stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, 
 				"... nothing?",
 				paste0(pt.names[test[!is.na(test)]], collapse = " ")))
 		cat("\n")
-		stop("\nif specified both elements have to match")		
+		stop("\nif specified both elements have to match")
 	}
 	
-	pt <- readOGR(dsn, layer, ...)
+	pt <- rgdal::readOGR(dsn, layer, ...)
 	
 	pt <- spTransform(pt, CRS("+init=epsg:4326"))
 	

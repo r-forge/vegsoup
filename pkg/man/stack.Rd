@@ -2,6 +2,7 @@
 
 \name{stack}
 
+\alias{stack}
 \alias{stackSpecies}
 \alias{stackSites}
 \alias{stackCoordinates}
@@ -96,7 +97,7 @@ Internal checking of type conversion is performed using \code{\link{type.convert
 
 For \code{stackSites} there are no specific requirements about the form of the object, except that one column must be specified which will then be used as the plot identifier. The default is to search for a column named \code{'plot'}, but an other column name can be specified by argument \code{schema}. 
 
-For \code{stackCoordinates} the first element of schema defines the name of the column in the OGR data source that identifies unique plots. This argument is mandatory and must match a column name in the spatial attributes data. A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements. If absent and the geometry is 3D the function reads the third (z) dimension of the data source. If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot. In case of irregular polygons the centroid so obtained must not be accurate. If the coordinate reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
+For \code{stackCoordinates} the rgdal package needs to be loaded first. The first element of argument schema defines the name of the column in the OGR data source that identifies unique plots. This argument is mandatory and must match a column name in the spatial attributes data. A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements. If absent and the geometry is 3D the function reads the third (z) dimension of the data source. If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot. In case of irregular polygons the centroid so obtained must not be accurate. If the coordinate reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
 }
 
 \value{

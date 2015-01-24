@@ -26,6 +26,8 @@ data(sim100)
 # when calling the coenoflex function (implemented in Fortran) from package coenoflex
 # so we use this fixed output instead of a call coenoflex(100, 200) in the examples.
 
+# coenoflex is missing from CRAN at the moment!
+
 data(sim100)
 sim100
 }

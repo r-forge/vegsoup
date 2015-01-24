@@ -1,8 +1,6 @@
 #import(coenoflex) is missing from CRAN
-#useDynLib(vegsoup)
 
-#	also in Depends
-import(rgdal)
+#useDynLib(vegsoup) dropped at the moment
 
 
 #	imports from base packages
@@ -62,13 +60,15 @@ importFrom("vegclust", vegclustdist, defuzzify, hcr)
 
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
                  rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
-                 SpatialPointsDataFrame, SpatialPolygonsDataFrame)
+                 SpatialPointsDataFrame, SpatialPolygonsDataFrame,
+                 identicalCRS, CRS)
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
                       SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
                       proj4string, "proj4string<-", spTransform,
                       over)
-importFrom("sp", identicalCRS, CRS)
+
+importFrom("rgdal", ogrInfo)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
