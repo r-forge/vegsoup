@@ -117,7 +117,7 @@
     logical. Enclose in Latex template.
   }  
   \item{ \dots }{
-    arguments passed to \code{\link{Fidelity}} if object is not of class
+    arguments passed to \code{\link{fidelity}} if object is not of class
     \code{'VegsoupPartitionFidelity'}.
   }
 }
@@ -140,7 +140,7 @@
 
   The method accepts both a \code{'VegsoupPartition'} as well as a
   \code{'VegsoupPartitionFidelity'} object. The first class is promoted to the
-  latter class by internally calling \code{\link{Fidelity}} with it's default
+  latter class by internally calling \code{\link{fidelity}} with it's default
   arguments.
 
   The \code{choice = "species"} and \code{recursive = FALSE} usage currently provides two
@@ -182,7 +182,7 @@ x <- VegsoupPartition(windsfeld, k = 2, method = "flexible")
 \dontrun{
 tex <- Latex(x, file = tempfile())
 
-fid <- Fidelity(x)
+fid <- fidelity(x)
 class(fid)
 
 tex <- Latex(fid, file = tempfile())

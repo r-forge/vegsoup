@@ -43,7 +43,7 @@ Interfaced from Roland Kaiser for package vegsoup from function
 }
 
 \seealso{
-\code{\link{Fidelity}}
+\code{\link{fidelity}}
 }
 
 \examples{

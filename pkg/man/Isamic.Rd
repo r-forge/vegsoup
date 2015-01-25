@@ -32,7 +32,7 @@ a vector of indictor values.
 }
 \seealso{
 \code{\linkS4class{VegsoupPartition}},
-\code{\link{Fidelity}}
+\code{\link{fidelity}}
 }
 \examples{
 require(vegsoup)

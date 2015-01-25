@@ -149,7 +149,7 @@ exportMethods(
     "extract",
     "fill",
     "hist",
-    "Fidelity",
+    "fidelity",
     "FisherTest",
     "distconnected",
     "getK",

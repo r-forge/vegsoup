@@ -39,7 +39,7 @@ Experimental.
 }
 
 \value{
-  An object of class \code{"VegsoupPartitionFidelity"}
+  An object of class \code{'VegsoupPartitionFidelity'}
 }
 
 \author{

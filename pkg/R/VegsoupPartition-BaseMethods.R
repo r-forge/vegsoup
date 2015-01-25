@@ -1,6 +1,5 @@
 #	Fisher Test
-#	depreciated
-#	use Fidelity(obj, "Fisher") instead
+#	depreciated, use fidelity(obj, "Fisher") instead
 
 setGeneric("FisherTest",
 	function (obj, ...)

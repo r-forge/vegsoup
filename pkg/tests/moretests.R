@@ -14,11 +14,11 @@ as.data.frame(as.matrix(seriation(dta, "packed"), "character", "r"))
 #	partitioning methods
 prt <- VegsoupPartition(dta, k = 2)
 
-fid <- Fidelity(prt, verbose = TRUE)
-fid <- Fidelity(prt, verbose = TRUE, fast = TRUE)
+fid <- fidelity(prt, verbose = TRUE)
+fid <- fidelity(prt, verbose = TRUE, fast = TRUE)
 
 ft1 <- FisherTest(prt, alternative = "two.sided")
-ft2 <- getStat(Fidelity(prt, method = "Fisher", alternative = "two.sided"))
+ft2 <- getStat(fidelity(prt, method = "Fisher", alternative = "two.sided"))
 all.equal(ft1, ft2)
 
 head(prt)
@@ -70,5 +70,5 @@ Phi(prt)
 #	head(sqrt(ld$indval))
 	
 #	decostand(i.prt) <- "pa"
-#	vb <- Fidelity(i.prt, method = "IndVal.g")	
+#	vb <- fidelity(i.prt, method = "IndVal.g")	
 #	head(sqrt(getStat(vb)))

@@ -1,8 +1,6 @@
 #	standardised Phi statistic
-#	depreciated, maybe usefull to speed up things where Fidelity() is too slow
-#	preferred method is Fidelity(obj, func = "r.g")
-#	to do: documentation
-#	See also \code{\link{Fidelity}}, \code{\link{Indval}} and \code{\link{FisherTest}}
+#	depreciated, maybe usefull to speed up things where fidelity() is too slow
+#	preferred method is fidelity(obj, func = "r.g")
 
 setGeneric("Phi",
 	function (obj)

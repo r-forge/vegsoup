@@ -71,7 +71,7 @@ Compute a dissimilarity matrix as specified by \code{vegdist(x)} by internal cal
   \code{summary} methods will report this value for a \code{Vegsoup*} object.
   
   If \code{vegdist} is rested using the replacement method \code{vegdist<-} for
-  objects of classes \code{"VegsoupPartition"} and \code{"VegsoupPartitionFidelity"}
+  objects of classes \code{'VegsoupPartition'} and \code{'VegsoupPartitionFidelity'}
   the respective objects are recomputed as to honor the changed distance method.
   %%  The argument \code{mode} controls if the distances are obtained for objects,
   %%  the plots (\emph{Q mode}) or variables, the species (\emph{R mode}).

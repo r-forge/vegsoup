@@ -192,11 +192,11 @@
     }
 %% 9
   \bold{ 9) Indicator species (fidelity) methods}
-    \item{Fidelity}{
+    \item{fidelity}{
       \code{signature(obj = "VegsoupPartition")}:
       Calculate fidelity values and promote to class
       \code{"VegsoupPartitionFidelity"}.
-      See \code{\link{Fidelity}} and
+      See \code{\link{fidelity}} and
       \code{\linkS4class{VegsoupPartitionFidelity}}.
     }
     \item{SigFidelity}{

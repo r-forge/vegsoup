@@ -166,7 +166,8 @@ Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Opti
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link{VegsoupPartition}},\code{\link{Fidelity}}
+\code{\link{VegsoupPartition}},
+\code{\link{fidelity}}
 }
 
 \examples{

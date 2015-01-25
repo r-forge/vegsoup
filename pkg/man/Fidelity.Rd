@@ -3,8 +3,8 @@
 \name{Fidelity}
 \docType{methods}
 
-\alias{Fidelity}
-\alias{Fidelity,VegsoupPartition-method}
+\alias{fidelity}
+\alias{fidelity,VegsoupPartition-method}
 
 \alias{FisherTest}
 \alias{FisherTest,VegsoupPartition-method}
@@ -21,9 +21,9 @@
 \title{ Calculate Fidelity Values }
 
 \description{
-  Method \code{Fidelity} calculates fidelity values for objects inheriting
+  Method \code{fidelity} calculates fidelity values for objects inheriting
   \code{'VegsoupPartition'} and returns an extended object of class
-  \code{\linkS4class{VegsoupPartitionFidelity}}. Fidelity is based on the implementation
+  \code{\linkS4class{VegsoupPartitionFidelity}}. Function \code{fidelity} is based on the implementation
   of function \code{\link[indicspecies]{strassoc}} in \pkg{indicspecies} and offers
   all it's methods plus some more (see \sQuote{Details}).
 
@@ -31,15 +31,15 @@
   statistics according to \code{\link[optpart:phi]{phi}} in package
   \pkg{optpart}, respectively, \code{\link[labdsv:indval]{indval}} of package
   \pkg{labdsv}. Function \code{FisherTest} is a slightly faster alternative to
-  \code{Fidelity(obj, method = "fisher")}. \code{Phi} and \code{Indval} are
-  also faster implementations compared to \code{\link{Fidelity}} without option
+  \code{fidelity(obj, method = "fisher")}. \code{Phi} and \code{Indval} are
+  also faster implementations compared to \code{fidelity} without option
   \code{fast = TRUE}. All three methods do not return an \code{'VegsoupPartitionFidelity'}
   object, but the requested statistic as a \code{"data.frame"}! Take \code{sqrt(Indval(x))}
-  to obtain comparable results with \code{Fidelity(x, method = "IndVal.g")}.
+  to obtain comparable results with \code{fidelity(x, method = "IndVal.g")}.
 }
 
 \usage{
-\S4method{Fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1,
+\S4method{fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1,
          alternative = "greater", fast = FALSE, verbose = TRUE, ...)
 
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "greater")
@@ -77,16 +77,16 @@
     display computation status bar.
   }
   \item{ alternative }{
-    alternative hypothesis. For \code{Fidelity} takes effect only for \code{method = "Fisher"}
+    alternative hypothesis. For \code{fidelity} takes effect only for \code{method = "Fisher"}
   }
   \item{ \dots }{
-    For \code{Fidelity} additional arguments for \code{method = "fisher.s"}
+    For \code{fidelity} additional arguments for \code{method = "fisher.s"}
     and for \code{Indval} arguments passed to \code{\link[labdsv:indval]{indval}}.
   }
 }
 
 \details{
-Methods currently implemented for method \code{Fidelity }include the following:
+Methods currently implemented for method \code{fidelity} include the following:
 
   \itemize{
      \item \code{r:} phi (point-biserial correlation coefficient)
@@ -113,7 +113,7 @@ Methods currently implemented for method \code{Fidelity }include the following:
   }
 }
 \value{
-For \code{Fidelity} an object of class \code{'VegsoupPartitionFidelity'}.
+For \code{fidelity} an object of class \code{'VegsoupPartitionFidelity'}.
 
 For \code{FisherTest} and \code{Phi} a \code{'matrix'} of values with species as rows and partitions as columns.
 }
@@ -149,7 +149,7 @@ require(vegsoup)
 data(windsfeld)
 
 x <- VegsoupPartition(windsfeld, k = 2)
-f <- Fidelity(x)
+f <- fidelity(x)
 
 head(getStat(f))
 

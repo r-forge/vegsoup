@@ -41,7 +41,7 @@ This is a wrapper for function
 
 \seealso{
 \code{\linkS4class{VegsoupPartition}},
-\code{\link{Fidelity}}
+\code{\link{fidelity}}
 }
 \examples{
 require(vegsoup)

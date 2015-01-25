@@ -13,7 +13,7 @@ A class extending calss \code{"VegsoupPartition"}.
 }
 
 \section{ Objects from the Class }{
-Objects can be by calls to the fucntion \code{Fidelity}.
+Objects can be by calls to the function \code{\link{fidelity}}.
 
 }
 
@@ -30,7 +30,7 @@ Objects can be by calls to the fucntion \code{Fidelity}.
     \item{\code{lowerCI}:}{
       Object of class \code{"matrix"} containing boot strap confidence
       intervals. All values are \code{NA} if no bootstrap was performed
-      by a call to \code{\link{Fidelity}}.
+      by a call to \code{\link{fidelity}}.
     }
     \item{\code{upperCI}:}{
       Same as \code{lowerCI}
@@ -69,7 +69,8 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link{Fidelity}}, \code{\linkS4class{VegsoupOptimstride}}
+\code{\link{fidelity}},
+\code{\linkS4class{VegsoupOptimstride}}
 }
 
 \examples{
@@ -79,13 +80,12 @@ showClass("VegsoupPartitionFidelity")
 
 data(barmstein)
 
-x <- Fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
+x <- fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
 
 \dontrun{
-# needs package parallel
 if (require(parallel)) {
-data(sim100)
-x <- Fidelity(VegsoupPartition(sim100, k = 10), method = "IndVal", fast = TRUE)
+	data(sim100)
+	x <- fidelity(VegsoupPartition(sim100, k = 10), method = "IndVal", fast = TRUE)
 }
 }
 }

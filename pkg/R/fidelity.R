@@ -780,13 +780,13 @@ return(invisible(res))
 
 }
 
-setGeneric("Fidelity",
+setGeneric("fidelity",
 	function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, alternative = "two.sided", fast = FALSE, verbose = TRUE, ...)
-		standardGeneric("Fidelity")
+		standardGeneric("fidelity")
 )
-setMethod("Fidelity",
+setMethod("fidelity",
 	signature(obj = "VegsoupPartition"),
-	.fidelityVegsoupPartition	
+	.fidelityVegsoupPartition
 )
 
 .SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE) {
@@ -884,5 +884,5 @@ setGeneric("SigFidelity",
 )
 setMethod("SigFidelity",
 	signature(obj = "VegsoupPartition"),
-	.SigFidelityVegsoupPartition	
+	.SigFidelityVegsoupPartition
 )

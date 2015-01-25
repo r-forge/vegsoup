@@ -110,7 +110,7 @@
 	CALL <- match.call()
 	if (class(obj) != "VegsoupPartitionFidelity") {
 			cat("apply default indicator species statistic")
-		obj <- Fidelity(obj, ...)
+		obj <- fidelity(obj, ...)
 	}
 	
 	#	inspired by Sebastian Schmidtlein's isotab() in package isopam

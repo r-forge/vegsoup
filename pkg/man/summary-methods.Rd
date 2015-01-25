@@ -3,6 +3,7 @@
 \name{summary-methods}
 \docType{methods}
 
+\alias{summary}
 \alias{summary-methods}
 \alias{summary,Vegsoup-method}
 \alias{summary,VegsoupPartition-method}
@@ -44,12 +45,9 @@ summary(x)
 
 summary(VegsoupPartition(x, k = 2))
 
-summary(Fidelity(VegsoupPartition(x, k = 2)))
+summary(fidelity(VegsoupPartition(x, k = 2)))
 
-\dontrun{
-# save time	
-summary(OptimStride(windsfeld, k = 10))
-}
+summary(OptimStride(x, k = 4, method = c("flexible", "pam")))
 
 }
 

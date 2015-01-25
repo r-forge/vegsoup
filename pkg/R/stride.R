@@ -35,7 +35,7 @@ for (i in 1:stride) {
 		setTxtProgressBar(pb.stride, i)
 	}
 	i.prt <- VegsoupPartition(obj, k = i, method = partition.method)
-	i.fid <- Fidelity(i.prt, method = fidelity.method, verbose = FALSE)
+	i.fid <- fidelity(i.prt, method = fidelity.method, verbose = FALSE)
 	stat.fid <- apply(getStat(i.fid), 1, sum)#, 2)
 
 	if (i > 1) {
