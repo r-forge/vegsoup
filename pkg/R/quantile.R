@@ -14,7 +14,7 @@ setGeneric("quantile",
 	tmp <- as.numeric(x)
 	#	speed issuse?
 	tmp <- aggregate(as.numeric(x),
-		by = list(Partitioning(x)),
+		by = list(partitioning(x)),
 		FUN = function (x) stats::quantile(x), simplify = FALSE) # , ...
 	part <- tmp[, 1]
 	tmp <- tmp[, -1]	
@@ -39,16 +39,16 @@ setGeneric("quantile",
 			mode(tmp.i) <- "character"
 			tmp.i[] <- vals
 			res[, , i] <- tmp.i
-		}			
+		}
 	}
 	else {
 		if (coverscale & is.continuous(x)) {
-			message("coverscale is not ordinal")			
+			message("coverscale is not ordinal")
 		}
 	}
-	res	
+	res
 }
-	
+
 setMethod("quantile",
 	signature(x = "VegsoupPartition"),
 	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) .quantile.Vegsoup(x, ...)

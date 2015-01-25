@@ -9,7 +9,7 @@ setMethod("Indval",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {
 		#require(labdsv)
-		res <- labdsv::indval(as.logical(obj), Partitioning(obj), ...)$indval
+		res <- labdsv::indval(as.logical(obj), partitioning(obj), ...)$indval
 		return(res)
 	}
 )

@@ -27,12 +27,12 @@ setReplaceMethod("decostand",
 	signature(x = "Vegsoup", value = "character"),
 	function (x, value) {
 		#	taken from vegan
-	    METHODS <- c("total", "max", "frequency", "normalize", "range", 
-            "standardize", "pa", "chi.square", "hellinger", "log",
-            "wisconsin")            
-        value <- match.arg(value, METHODS, several.ok = TRUE)		
+		METHODS <- c("total", "max", "frequency", "normalize", "range", 
+			"standardize", "pa", "chi.square", "hellinger", "log",
+			"wisconsin")
+		value <- match.arg(value, METHODS, several.ok = TRUE)
 		x@decostand <- new("decostand", method = value)
-		return(x)		
+		return(x)
 	}
 )
 
@@ -40,23 +40,23 @@ setReplaceMethod("decostand",
 	signature(x = "VegsoupPartition", value = "character"),
 	function (x, value) {
 		#	taken from vegan
-	    METHODS <- c("total", "max", "frequency", "normalize", "range", 
-            "standardize", "pa", "chi.square", "hellinger", "log",
-            "wisconsin")            
-        value <- match.arg(value, METHODS, several.ok = TRUE)
- 		
- 		if (is.null(decostand(x))) {
- 			x@decostand <- new("decostand", method = value)	
- 		}
- 		else {	
-	 		if (value != decostand(x)) {	
-				x@decostand <- new("decostand", method = value)		
+		METHODS <- c("total", "max", "frequency", "normalize", "range", 
+			"standardize", "pa", "chi.square", "hellinger", "log",
+			"wisconsin")
+		value <- match.arg(value, METHODS, several.ok = TRUE)
+		
+		if (is.null(decostand(x))) {
+			x@decostand <- new("decostand", method = value)
+		}
+		else {
+			if (value != decostand(x)) {
+				x@decostand <- new("decostand", method = value)
 				#	recompute
 				x <- VegsoupPartition(x, k = getK(x), method = x@method)
 				message("recomputed partitoning")
 			}
-		}	   		
-		return(x)		
+		}
+		return(x)
 	}
 )
 
@@ -70,9 +70,9 @@ setReplaceMethod("decostand",
 
 setReplaceMethod("decostand",
 	signature(x = "VegsoupPartition", value = "NULL"),
- 	function (x, value) {
- 		  if (!is.null(decostand(x))) {	
-			x@decostand <- new("decostand", method = NULL)		
+	function (x, value) {
+		if (!is.null(decostand(x))) {	
+			x@decostand <- new("decostand", method = NULL)
 			#	recompute
 			x <- VegsoupPartition(x, k = getK(x))
 			message("recomputed partitoning")

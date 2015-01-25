@@ -10,9 +10,9 @@ compass  <- function (x) {
 }
 
 singletons <- function (obj) {
-	any(table(Partitioning(obj)) == 1)	
+	any(table(partitioning(obj)) == 1)	
 }
 
 singleton <- function (obj) {
-	as.vector(which(table(Partitioning(obj)) == 1))
+	as.vector(which(table(partitioning(obj)) == 1))
 }

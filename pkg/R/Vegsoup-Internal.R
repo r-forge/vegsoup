@@ -65,7 +65,7 @@
 
 #N <- nrow(obj)						# number of plots
 #n.i <- colSums(getBin(obj))			# species frequencies
-#N_pi <- table(Partitioning(obj))	# number of plots in partition
+#N_pi <- table(partitioning(obj))	# number of plots in partition
 #n_pi <- Contingency(obj)			# number of occurences in partition
 
 #	notation follows Bruelheide (1995, 2000)

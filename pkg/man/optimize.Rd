@@ -25,7 +25,7 @@ Modify the partitioning of an object as to optimize silhouette widths (distance 
 
 \arguments{
   \item{ x }{
-    \code{VegsoupPartition} object.
+    \code{'VegsoupPartition'} object.
   }
   \item{ maxitr }{
     integer. The maximum number of iterations to perform.

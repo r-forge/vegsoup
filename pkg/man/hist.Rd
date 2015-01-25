@@ -16,7 +16,7 @@
 }
 \arguments{
   \item{x}{
-    A \code{"VegsoupPartitionFidelity"} object.
+    \code{'VegsoupPartitionFidelity'} object.
   }
   \item{\dots}{
     arguments passed to \code{\link{hist}}

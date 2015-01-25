@@ -10,13 +10,13 @@ setMethod("Fivenum",
 	function (obj, na.rm = TRUE, recode = FALSE) {
 		if (recode & !is.null(decostand(obj))) {
 			message("disregard decostand method for calculations")
-		 	decostand(obj) <- NULL
-		} 
+			decostand(obj) <- NULL
+		}
 		tmp <- as.numeric(obj)
 		#	if (!na.rm)
 		#tmp[tmp == 0] <- NA
 		tmp <- aggregate(tmp,
-			by = list(Partitioning(obj)),
+			by = list(partitioning(obj)),
 			FUN = function (x) stats::fivenum(x, na.rm = TRUE), simplify = FALSE)
 		part <- tmp[, 1]
 		tmp <- tmp[, -1]

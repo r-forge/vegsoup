@@ -7,13 +7,11 @@ setGeneric("disdiam",
 }
 
 setMethod("disdiam",
-    signature(x = "VegsoupPartition"),
-    function (x, ...) {
-    	#	Imports: optpart
-    	#	require(optpart)
+	signature(x = "VegsoupPartition"),
+	function (x, ...) {
 		if (getK(x) == 1)
-			stop("meaningless with k = ", getK(x))    	
-		r <- optpart::disdiam(Partitioning(x), as.dist(x))
-		return(r)    	
-    }
+			stop("meaningless with k = ", getK(x))
+		r <- optpart::disdiam(partitioning(x), as.dist(x))
+		return(r)
+	}
 )

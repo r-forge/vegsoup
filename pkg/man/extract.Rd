@@ -9,10 +9,10 @@
 \alias{[,Vegsoup,ANY,ANY,missing-method}
 \alias{[,VegsoupPartition,ANY,ANY,missing-method}
 
-\alias{Partition}
-\alias{Partition,Vegsoup-method}
-\alias{Partition,VegsoupPartition-method}
-\alias{[,Partition,ANY,ANY,missing-method}
+\alias{partition}
+\alias{partition,Vegsoup-method}
+\alias{partition,VegsoupPartition-method}
+\alias{[,partition,ANY,ANY,missing-method}
 
 \title{ Indexing to Extract Values of a Vegsoup* Object }
 
@@ -22,12 +22,12 @@
 
 \usage{
 \S4method{[}{Vegsoup}(x, i, j, ... , drop = TRUE)
-\S4method{Partition}{Vegsoup}(x, value)
+\S4method{partition}{Vegsoup}(x, value)
 }
 
 \arguments{
   \item{ x }{
-    \code{Vegsoup*} object, for \code{Partition} a \code{VegsoupPartition} object.
+    \code{'Vegsoup*'} object, for \code{partition} a \code{'VegsoupPartition'} object.
   }
    \item{ i, j, \dots }{
     Elements to extract or replace.
@@ -50,7 +50,7 @@
 
 \note{
   When objects of class \code{VegsoupPartition} are subsetted it is likely that the
-  partitioning vector (\code{Partitioning(obj)}) has to be subsetted too. If this is the case,
+  partitioning vector (\code{partitioning(obj)}) has to be subsetted too. If this is the case,
   the number of partitions \code{k} (\code{getK(obj)}) is changed (lowered) accordingly.
 }
 

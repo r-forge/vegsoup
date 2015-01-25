@@ -23,7 +23,7 @@
 		col.width <- "10mm"
 #	}
 	
-	part <- Partitioning(obj)
+	part <- partitioning(obj)
 	
 	num.cols <- sapply(sites, is.numeric)
 	str.cols <- sapply(sites, is.character)
@@ -81,8 +81,8 @@
 			"partitions.",
 			"Median and median absolute deviation in parentheses.",
 			"Relevees per partition: ",
-			paste(names(table(Partitioning(obj))),
-				table(Partitioning(obj)), sep = ":", collapse = ", ")
+			paste(names(table(partitioning(obj))),
+				table(partitioning(obj)), sep = ":", collapse = ", ")
 			)
 	p.col <- paste("|p{", col.width, "}", sep = "")
 	col.just <- c(rep(p.col, ncol(tex)))
@@ -124,7 +124,7 @@
 	N  <- nrow(obj)
 	
 	frq <- colSums(obj)
-	siz <- table(Partitioning(obj))
+	siz <- table(partitioning(obj))
 
 	file <- .texfile(file)
 	
@@ -352,8 +352,8 @@
 			add2caption,
 			"Statistics threshold: ", stat.min, ". ",
 			"Relevees per partition: ",
-			paste(names(table(Partitioning(obj))),
-				table(Partitioning(obj)), sep = ":", collapse = ", "),
+			paste(names(table(partitioning(obj))),
+				table(partitioning(obj)), sep = ":", collapse = ", "),
 			". ",
 			sep = "")
 			# additional user supplied text
@@ -472,11 +472,11 @@
 				res <- paste(res, collapse = sep)
 				res
 			}))
-	
-			
+		
+		
 		#	sites summary
 		sts <- sites(obj)
-		sts$part <- Partitioning(obj)
+		sts$part <- partitioning(obj)
 		sts <- sts[, c("part", sites.columns)]
 	
 		#	resort to match order of intermediate result table
@@ -598,9 +598,9 @@
 		tex <- gsub("\u00D7", "$\\times$", tex, fixed = TRUE)
 		
 		if (use.letters) {
-			sel <- match(sort(unique(Partitioning(obj))), dimnames(tex)[[2]])
+			sel <- match(sort(unique(partitioning(obj))), dimnames(tex)[[2]])
 			dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
-				" (", LETTERS[sort(unique(Partitioning(obj)))], ")", sep = "")
+				" (", LETTERS[sort(unique(partitioning(obj)))], ")", sep = "")
 		}
 		if (verbose) {
 			cat("\nprint LaTex table to", file)	
@@ -656,7 +656,7 @@
 				file = file,
 				append = TRUE,
 				caption = paste("Partion summary for cluster ", i,
-					" consisting out of ", table(Partitioning(obj))[i], " plots.",
+					" consisting out of ", table(partitioning(obj))[i], " plots.",
 					ifelse(length(caption.text) > 0, paste(" ", caption.text, ".", sep = ""), ""),
 					sep = ""),
 				rowname = NULL,
@@ -740,7 +740,7 @@
 		caption.text <- ""
 		if (verbose) {
 			message("caption.text missing, set to", caption.text)
-		}	
+		}
 	}
 	
 	res <- vector("list", length = getK(obj))
@@ -748,7 +748,7 @@
 	
 	for (i in 1:getK(obj)) {
 		#	obj = prt; i = 2
-		i.part <- obj[Partitioning(obj) == i, ]
+		i.part <- obj[partitioning(obj) == i, ]
 		i.part <- seriation(i.part, ...)
 		#	table will be order according to layers(obj)
 		

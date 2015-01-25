@@ -1,4 +1,3 @@
-# 	http://www.r-bloggers.com/use-hidden-advanced-arguments-for-user-friendly-functions/
 #	to do: implement formula interface for method, high priority
 
 #	low level function to allow distance matrix as argument Xd and raw species matrix as argument X
@@ -9,7 +8,7 @@
 	
 	#	set seed
 	set.seed(seed)
-				
+	
 	if (!inherits(obj, "Vegsoup"))	stop("Need object of class Vegsoup")
 
 	#	for class(obj) VegsoupOptimstride
@@ -27,7 +26,7 @@
 	}
 
 	#	test function arguments
-	if (missing(method) & missing(clustering)) {	
+	if (missing(method) & missing(clustering)) {
 		# the default
 		M <- method <- "flexible"
 		if (verbose) cat("... Set default option", M)
@@ -77,7 +76,7 @@
 					dim(obj), length(clustering))
 			}
 		}
-	}		
+	}
 
 	#	species and distance matrices
 	#	use supplied arguments if available
@@ -86,7 +85,7 @@
 		stopifnot(inherits(X, "matrix"))	# message("use X")
 	}
 	else {
-		X <- as.matrix(obj)					
+		X <- as.matrix(obj)
 	}	
 	
 	if (M != "external") { # need Xd
@@ -94,32 +93,32 @@
 			stopifnot(inherits(Xd, "dist")) # message("use Xd")
 		}
 		else {
-			Xd <- as.dist(obj) # saves time		
-		}		
+			Xd <- as.dist(obj) # saves time
+		}
 	}
-	 
-
+	
+	
 	#	method switch
-	if (k > 1) {	
+	if (k > 1) {
 		switch(M,
-			   ward = {
-			   	P <- agnes(Xd, method = "ward",
-			   		keep.diss = FALSE, keep.data = FALSE) # save time and memory
-			   		#	no meaningful additional arguments, because of inherits(Xd, "dist")
-			   		#	method is defined by switch itself,
-			   		#	there is switch flexible for setting par.method		   		
-			   		#	, ...)	   
-			 }, flexible = {
-			   	alpha <- 0.625
-			   	beta = 1 - 2 * alpha
-			   	P <- agnes(Xd, method = "flexible",
-			   		keep.diss = FALSE, keep.data = FALSE, # save time and memory
-			   		par.method = c(alpha, alpha, beta, 0))
-			   		#	as.above because of inherits(Xd, "dist")
-			   		#	, ...) 
+			ward = {
+				P <- agnes(Xd, method = "ward",
+					keep.diss = FALSE, keep.data = FALSE) # save time and memory
+					#	no meaningful additional arguments, because of inherits(Xd, "dist")
+					#	method is defined by switch itself,
+					#	there is switch flexible for setting par.method
+					#	, ...)
+			}, flexible = {
+				alpha <- 0.625
+				beta = 1 - 2 * alpha
+				P <- agnes(Xd, method = "flexible",
+					keep.diss = FALSE, keep.data = FALSE, # save time and memory
+					par.method = c(alpha, alpha, beta, 0))
+					#	as.above because of inherits(Xd, "dist")
+					#	, ...)
 			}, pam = {
 				P <- pam(Xd, k = k, diss = TRUE)
-			   		#	as above, exept do.swap = FALSE
+					#	as above, exept do.swap = FALSE
 					#	, ...)
 			}, isopam = {
 				if (verbose) cat("\nrun isopam, ignoring k=", k)
@@ -136,7 +135,7 @@
 				if (verbose) cat("kmeans doesn't use distance matrices, ignore", vegdist(obj))
 				P <- kmeans(X, centers = k)
 					#	iter.max = 10, nstart = 1, algorithm and irgnore trace
-					#	, ...)		
+					#	, ...)
 			}, wards = {
 				P <- hclust(Xd, method = "ward.D")
 					#	members != NULL, dissimilarity matrix between clusters
@@ -149,14 +148,14 @@
 				#	complaining about "memberships are all very close to 1/k"
 				#	we keep the value very crisp at 1.1
 				#	was: length(grep("memb.exp", deparse(CALL), fixed = TRUE)) < 1
-				m <- ifelse(any(names(CALL) == "memb.exp"), CALL$memb.exp, 1.1)			
+				m <- ifelse(any(names(CALL) == "memb.exp"), CALL$memb.exp, 1.1)
 				P <- fanny(Xd, k = k, diss = TRUE, memb.exp = m,
 					# in any case, we save memory allocation time here
 					cluster.only = TRUE, keep.diss = FALSE, keep.data = FALSE)
 					#	irgnore: diss and k 
 					#	stand = FALSE, irgnore we get standardisation from obj
-					#	should accept: iniMem.p = NULL, maxit = 500, tol = 1e-15					
-					#	, ...)							
+					#	should accept: iniMem.p = NULL, maxit = 500, tol = 1e-15
+					#	, ...)
 			}, FCM = {
 				#	as with fanny()	we need to take care for m (membership exponent)
 				m <- ifelse(any(names(CALL) == "m"), CALL$m, 1.1)
@@ -166,7 +165,7 @@
 			}, KM = {
 				P <- vegclustdist(Xd, mobileMemb = k, method = "KM")
 				#	more options available
-				#	, ...)	
+				#	, ...)
 			}, external = {
 				P <- clustering
 			}, FUN = {
@@ -176,7 +175,7 @@
 	}
 	else {
 	  P <- NULL
-	  M <- ""	
+	  M <- ""
 	} # end if (k > 1)
 
 	#	retrieve partitioning vector
@@ -236,7 +235,7 @@
 			if (verbose) {
 				print(data.frame(clustering = levels(factor(clustering)),
 					assigned = as.numeric(factor(levels(factor(clustering)))) )
-				)			
+				)
 			}
 		}
 		if (k != length(unique(G)) && class(P) != "isopam") {
@@ -277,16 +276,16 @@
 			message("did not succeed in reallocation")
 		}
 		else {
-			method <- c(method, "optsil")	
+			method <- c(method, "optsil")
 			G <- G.opt
-		}	
+		}
 	}
 	
 	#	develop class VegsoupPartition from class Vegsoup
 	r <- new("VegsoupPartition", obj)
 	#	assign class slots
 	r@part <- G
-	r@method <- ifelse(M != "FUN", M, paste(CALL$method, "<-", deparse(method)[1]))	
+	r@method <- ifelse(M != "FUN", M, paste(CALL$method, "<-", deparse(method)[1]))
 	r@k <- length(unique(G))
 	
 	return(r)

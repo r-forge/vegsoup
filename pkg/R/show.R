@@ -1,16 +1,16 @@
 #	show and summary methods
 setMethod("show",
-    signature(object = "Vegsoup"),
-    function (object) {
+	signature(object = "Vegsoup"),
+	function (object) {
 			do.call("summary", list(object))
-    }
+	}
 )
 
 setMethod("show",
-    signature(object = "VegsoupOptimstride"),
-    function (object) {
+	signature(object = "VegsoupOptimstride"),
+	function (object) {
 			summary(object)
-    }
+	}
 )
 
 #	partial summary functions
@@ -19,14 +19,14 @@ setMethod("show",
 		"\nspecies          : ",
 			nrow(taxonomy(x)), " (discarding layer/stratum duplicates)",
 		"\nmatrix fill      : ",
-			round(fill(x), 0), " %",			
+			round(fill(x), 0), " %",
 		"\nlayers           : ",
 			length(layers(x)), " (", paste(layers(x), collapse = ", "), ")",
 		"\ncoverscale       : ",
 			coverscale(x)@name,
 			ifelse(is.null(decostand(x)),
 			paste("\ndecostand method : undefined (NULL)"),
-			paste("\ndecostand method : ", decostand(x), sep = "")),		
+			paste("\ndecostand method : ", decostand(x), sep = "")),
 		"\nvegdist          : ",
 			x@dist,	   				
 			ifelse(length(x@taxonomy) > 0,
@@ -45,7 +45,7 @@ setMethod("show",
 		res <- paste(res, "\nspecies list     :", paste(tmp, collapse = ""))
 	}
 		
-	res		
+	res
 } 
 
 .sites.summary <- function (x) {
@@ -66,8 +66,8 @@ setMethod("show",
 	res <- paste(
 		"\n", getK(x), " partitions",
 		paste(rep(" ", 17 - (nchar(getK(x)) + 11)), collapse = ""), ": ", sep = "")
-	res <- paste(res, paste(as.vector(table(Partitioning(x))), collapse = " "), sep = "")
-    res <- paste(res, "\npartition method :", x@method)
+	res <- paste(res, paste(as.vector(table(partitioning(x))), collapse = " "), sep = "")
+	res <- paste(res, "\npartition method :", x@method)
 	res
 }
 
@@ -83,12 +83,12 @@ setMethod("show",
 #if (!isGeneric("summary")) {
 setGeneric("summary", function (object, ...)
 	standardGeneric("summary"))
-#}	
+#}
 
 #	class Vegsoup
 setMethod("summary",
-    signature(object = "Vegsoup"),
-    function (object, choice = c("all", "species", "sites"), ...) {
+	signature(object = "Vegsoup"),
+	function (object, choice = c("all", "species", "sites"), ...) {
 		if (missing(choice)) choice <- "all"
 		CHOICES <- c("all", "species", "sites")
 		choice <- CHOICES[pmatch(choice, CHOICES)]
@@ -110,28 +110,28 @@ setMethod("summary",
 
 #	class VegsoupPartition
 setMethod("summary",
-    signature(object = "VegsoupPartition"),
+	signature(object = "VegsoupPartition"),
 	function (object, choice = c("all", "species", "sites", "partition"), ...) {
 		if (missing(choice)) choice <- "all"
 		CHOICES <- c("all", "species", "sites", "partition")
 		choice <- CHOICES[pmatch(choice, CHOICES)]
 		if (is.na(choice)) stop("invalid choice", call. = FALSE)
-    	if (choice == -1) stop("ambiguous choice", call. = FALSE)
+		if (choice == -1) stop("ambiguous choice", call. = FALSE)
 		s1 <- .species.summary(object)
 		s2 <- .sites.summary(object)
 		s3 <- .spatial.summary(object)
-		s4 <- .partition.summary(object)        	
-		cat("object of class  :", class(object))		
+		s4 <- .partition.summary(object)
+		cat("object of class  :", class(object))
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3, s4, "\n")			
+			cat(s1, s2, s3, s4, "\n")
 		}, "species" = {
 			cat(s1, s3, s4, "\n")
 		}, "sites" = {
 			cat(s2, s3, s4)
 		}, "partition" = {
 			cat(s4, "\n")
-		})	
+		})
 	}
 )
 
@@ -143,16 +143,16 @@ setMethod("summary",
 		CHOICES <- c("all", "species", "sites", "partition", "fidelity")
 		choice <- CHOICES[pmatch(choice, CHOICES)]
 		if (is.na(choice)) stop("invalid choice", call. = FALSE)
-    	if (choice == -1) stop("ambiguous choice", call. = FALSE)
+		if (choice == -1) stop("ambiguous choice", call. = FALSE)
 		s1 <- .species.summary(object)
 		s2 <- .sites.summary(object)
 		s3 <- .spatial.summary(object)
 		s4 <- .partition.summary(object)
-		s5 <- .fidelity.summary(object)        	
-		cat("object of class  :", class(object))		
+		s5 <- .fidelity.summary(object)
+		cat("object of class  :", class(object))
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3, s4, "\n")			
+			cat(s1, s2, s3, s4, "\n")
 		}, "species" = {
 			cat(s1, s3, s4, "\n")
 		}, "sites" = {
@@ -161,7 +161,7 @@ setMethod("summary",
 			cat(s4, "\n")
 		}, "fidelity" = {
 			cat(s5, "\n")
-		})	
+		})
 	}
 )
 
@@ -198,42 +198,42 @@ setGeneric("head", function (x, ...)
 }
 
 setMethod("head",
-    signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(choice)) choice = "species"
-    	CHOICES <- c("species", "sites")
-    	choice <- CHOICES[pmatch(choice, CHOICES)]
-	    if (missing(typeof)) typeof = "logical"
-    	if (choice == "species")
+	signature(x = "Vegsoup"),
+	function (x, n = 6L, choice, typeof, ...) {
+		if (missing(choice)) choice = "species"
+		CHOICES <- c("species", "sites")
+		choice <- CHOICES[pmatch(choice, CHOICES)]
+		if (missing(typeof)) typeof = "logical"
+		if (choice == "species")
 			res <- head(as.matrix(x, typeof = typeof), n, ...)
-    	if (choice == "sites")
-    		res <- head(sites(x), n, ...)
-    	return(res)
-    }
+		if (choice == "sites")
+			res <- head(sites(x), n, ...)
+		return(res)
+	}
 )
 
 #	head like print function based on identification of
 #	typal samples in a partition
 
 setMethod("head",
-    signature(x = "VegsoupPartition"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(typeof)) typeof = "logical"
-    	if (missing(choice)) choice = "species"	    	
+	signature(x = "VegsoupPartition"),
+	function (x, n = 6L, choice, typeof, ...) {
+		if (missing(typeof)) typeof = "logical"
+		if (missing(choice)) choice = "species"
 
-	    if (n != 6L) {
-	    	sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
-	    		rownames(x))
-		    if (choice == "species") res <- as.character(x)[sel,]
-	    	if (choice == "sites") res <- sites(x)[sel,]	
+		if (n != 6L) {
+			sel <- match(c(as.matrix(typical(x, ...)$silhouette)),
+				rownames(x))
+			if (choice == "species") res <- as.character(x)[sel,]
+			if (choice == "sites") res <- sites(x)[sel,]
 		}
-	    	if (choice == "species")
-    			res <- head(as.matrix(x, typeof = typeof), n, ...)
-	    	if (choice == "sites")
-    			res <- head(sites(x), n, ...)	
-    
-    	return(res)
-    }    	    
+			if (choice == "species")
+				res <- head(as.matrix(x, typeof = typeof), n, ...)
+			if (choice == "sites")
+				res <- head(sites(x), n, ...)
+	
+		return(res)
+	}
 )
 
 if (!isGeneric("tail")) {
@@ -242,20 +242,20 @@ setGeneric("tail", function (x, ...)
 }
 
 setMethod("tail",
-    signature(x = "Vegsoup"),
-    function (x, n = 6L, choice, typeof, ...) {
-	    if (missing(choice))
-	    	choice = "species"
-    	CHOICES <- c("species", "sites")
-    	choice <- CHOICES[pmatch(choice, CHOICES)]
+	signature(x = "Vegsoup"),
+	function (x, n = 6L, choice, typeof, ...) {
+		if (missing(choice))
+			choice = "species"
+		CHOICES <- c("species", "sites")
+		choice <- CHOICES[pmatch(choice, CHOICES)]
 		if (missing(typeof))
-		    typeof = "logical"
-	    if (missing(n))
+			typeof = "logical"
+		if (missing(n))
 			n = 6L
 		if (choice == "species")
 			res <- tail(as.matrix(x, typeof), n, ...)
-    	if (choice == "sites")
-    		res <- tail(sites(x), n, ...)
-    	return(res)
-    }    	    
+		if (choice == "sites")
+			res <- tail(sites(x), n, ...)
+		return(res)
+	}
 )

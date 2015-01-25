@@ -265,18 +265,18 @@ end.kml <- c(
 		
 #obj = prt
 
-if (max(Partitioning(obj)) > 10) {
-	if (max(Partitioning(obj)) < 26) {
+if (max(partitioning(obj)) > 10) {
+	if (max(partitioning(obj)) < 26) {
 		message("numbered styled KML ouput is currently limited to 10 groups",
 			"\nuse alphabet as alternative to numbers")
-		paddle.file <- LETTERS[unique(Partitioning(obj))]
-		paddle.identifier <- LETTERS[Partitioning(obj)]
+		paddle.file <- LETTERS[unique(partitioning(obj))]
+		paddle.identifier <- LETTERS[partitioning(obj)]
 		} else {
 			stop("styled KML ouput is currently limited to 26 groups (letter coding)")
 		}
 	} else {	
-		paddle.file <- unique(Partitioning(obj))
-		paddle.identifier <- Partitioning(obj)
+		paddle.file <- unique(partitioning(obj))
+		paddle.identifier <- partitioning(obj)
 }
 
 styles.normal <- c(sapply(paddle.file, .style.numbers.normal))

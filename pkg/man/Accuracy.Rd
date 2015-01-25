@@ -10,7 +10,7 @@
 
 \description{
   \code{Accuracy} takes two objects inheriting from class
-  \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj1}) and computes a
+  \code{'VegsoupPartition'} (\code{obj1} and \code{obj1}) and computes a
   cross-tabulation (contingency table) of reference (observed) (\code{obj1})
   vs. compoarison (predicted) class memberships (\code{obj2}), and calculates
   a range of statistics about prediction accuracy.
@@ -21,8 +21,12 @@
 }
 
 \arguments{
-    \item{obj1}{an object of class \code{\link{VegsoupPartition}}. }
-    \item{obj2}{a second object of class \code{\link{VegsoupPartition}} to compare to \code{obj1}. }
+    \item{obj1}{
+      an object of class \code{'VegsoupPartition'}.
+    }
+    \item{obj2}{
+      a second object of class \code{'VegsoupPartition‘} to compare to \code{obj1}.
+    }
 }
 
 \value{

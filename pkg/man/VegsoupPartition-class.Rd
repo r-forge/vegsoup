@@ -46,10 +46,10 @@
   \describe{
 %% 1
   \bold{ 1) Getter methods }
-   \item{Partitioning}{
+   \item{partitioning}{
      \code{signature(obj = "VegsoupPartition")}:
      Return partitioning (clustering) vector.
-     See \code{\link{Partitioning}}.
+     See \code{\link{partitioning}}.
     }
     \item{getK}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -64,10 +64,10 @@
       affect class slots \code{'part'}, \code{'method'} and
       \code{'k'} if necessary.
     }
-    \item{Partition}{
+    \item{partition}{
       \code{signature(obj = "VegsoupPartition")}:
       Retrieve a single partition by it's value.
-      See \code{\link{Partition}}.
+      See \code{\link{partition}}.
     }
     \item{seriation}{
       \code{signature(obj = "VegsoupPartition")}:
@@ -76,10 +76,10 @@
     }
 %% 3
   \bold{ 3) Replacement }
-    \item{Partitioning<-}{
+    \item{partitioning<-}{
       \code{signature(obj = "VegsoupPartition", value = "numeric")}:
       Experimental.
-      See \code{\link{Partitioning}}. %%!
+      See \code{\link{partitioning}}. %%!
     }
 %% 4
   \bold{ 4) Object summary and print methods }
@@ -137,7 +137,7 @@
     }
     \item{Tabdev}{
       \code{signature(obj = "VegsoupPartition")}:
-      Partitioning (classification) validity assessment by table deviance.
+      Partition (classification) validity assessment by table deviance.
 %     See \code{\link{}}.    
     }
     \item{Partana}{
@@ -168,15 +168,15 @@
       dissimilarity.
       See \code{\link{typal}}.
     }
-    \item{PartitioningMatrix}{
+    \item{partitioningMatrix}{
       \code{signature(obj = "VegsoupPartition")}:
       Create a matrix of memberships of plots to partitions.
-      See \code{\link{PartitioningMatrix}}.
+      See \code{\link{partitioningMatrix}}.
     }
-    \item{PartitioningCombinations}{
+    \item{partitioningCombinations}{
       \code{signature(obj = "VegsoupPartition")}:
       Tabulate all possible combination of partitions.
-      See \code{\link{PartitioningCombinations}}.
+      See \code{\link{partitioningCombinations}}.
     }
 %% 8
   \bold{ 8) Cluster validation }

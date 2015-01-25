@@ -5,12 +5,12 @@ setGeneric("as.hclust",
 
 setMethod("as.hclust",
 	signature(x = "VegsoupPartition"),
-	function (x, table = "constancy", ...) {		
+	function (x, table = "constancy", ...) {
 		switch(table,
 			   constancy = {
-			hclust(vegdist(t(constancy(x)), vegdist(x)), ...)					   	
+			hclust(vegdist(t(constancy(x)), vegdist(x)), ...)
 			   }, contingency = {
-			hclust(vegdist(t(contingency(x)), vegdist(x)), ...)			   	
+			hclust(vegdist(t(contingency(x)), vegdist(x)), ...)
 			   }, average = {
 			hclust(vegdist(t(average(x)), vegdist(x)), ...)
 			   })

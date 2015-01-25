@@ -24,7 +24,7 @@ singletons(obj)
     numeric.
 }
   \item{ obj }{
-    VegsoupPartition object.
+    \code{'VegsoupPartition'} object.
 }
 
 }

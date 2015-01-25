@@ -85,14 +85,14 @@ setMethod("seriation",
 )
 
 setMethod("seriation",
-    signature(obj = "VegsoupPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, method, mode, ...) {
-		res <- lapply(1:getK(obj), function (x) obj[Partitioning(obj) == x, ])
+		res <- lapply(1:getK(obj), function (x) obj[partitioning(obj) == x, ])
 		res <- sapply(res, function (x) seriation(as(x, "Vegsoup"), ...))
 		res <- new("VegsoupPartition", do.call("rbind", res))
 		res@k <- getK(obj)
 		# this seems to be save based on lapply(1:getK(obj), ...)
-		res@part <- sort(Partitioning(obj))
+		res@part <- sort(partitioning(obj))
 		return(res)
 	}
 )

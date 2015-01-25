@@ -1,27 +1,27 @@
 setMethod("[",
-    signature(x = "Vegsoup",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = TRUE) {
-    	#	check arguments
-    	if (missing(i))	    	
-	    	i <- !logical(nrow(x)) # ?faster than rep(TRUE, nrow(x))
-	    else
-	    	if (is.null(i)) i <- !logical(nrow(x))
-	    	else	
-	    	if (any(is.na(i)))
-	    		stop("NAs not allowed in indices", call. = FALSE)
+	signature(x = "Vegsoup",
+	i = "ANY", j = "ANY", drop = "missing"),
+	function (x, i, j, ..., drop = TRUE) {
+		#	check arguments
+		if (missing(i))
+			i <- !logical(nrow(x)) # ?faster than rep(TRUE, nrow(x))
+		else
+			if (is.null(i)) i <- !logical(nrow(x))
+			else
+			if (any(is.na(i)))
+				stop("NAs not allowed in indices", call. = FALSE)
 			if (is.logical(i))
-				stopifnot(length(i) == nrow(x))	    	
+				stopifnot(length(i) == nrow(x))
 	
-	    if (missing(j))	    	
-	    	j <- !logical(ncol(x))
-	    else
-	    	if (is.null(j)) j <- !logical(ncol(x))
-	    	else	
-	    	if (any(is.na(i)))
-	    		stop("NAs not allowed in indices", call. = FALSE)
-	    	if (is.logical(j))
-	    		stopifnot(length(j) == ncol(x))
+		if (missing(j))
+			j <- !logical(ncol(x))
+		else
+			if (is.null(j)) j <- !logical(ncol(x))
+			else
+			if (any(is.na(i)))
+				stop("NAs not allowed in indices", call. = FALSE)
+			if (is.logical(j))
+				stopifnot(length(j) == ncol(x))
 		
 		#	rely on dimnames method
 		ij <- dimnames(x)
@@ -32,7 +32,7 @@ setMethod("[",
 			if (is.character(i))
 				i <- ij[[1]][ match(i, ij[[1]]) ]
 			else
-				stop("index must be one of numeric, logical or character")		
+				stop("index must be one of numeric, logical or character")
 		
 		if (is.numeric(j) | is.logical(j))
 			j <- ij[[2]][j]
@@ -42,23 +42,23 @@ setMethod("[",
 			else
 				stop("index must be one of numeric, logical or character")
 
-		#	subsetted and/or permuted		
+		#	subsetted and/or permuted
 		ij <- list(i, j)
 		IJ <- dimnames(species(x))
 		X <- species(x)
 		
 		#	subset but plots not permuted
 		X <- X[(IJ[[1]] %in% ij[[1]] * IJ[[2]] %in% ij[[2]]) > 0, ]
-		IJ <- dimnames(X)		
+		IJ <- dimnames(X)
 		
-		#	permute plots		
+		#	permute plots
 		ii <- unlist(lapply(ij[[1]], function (i) which(i == IJ[[1]])))
 		X <- X[ii, ]
-				
+			
 		#!	don't permute species?
 			
 		if (nrow(X) < 1) stop("empty subset!", call. = FALSE)
-				
+			
 		#	can not to be replaced with species<- because
 		#	of a recursive call to "[" !
 		x@species <- X
@@ -76,24 +76,24 @@ setMethod("[",
 		x@sp.points <- x@sp.points[match(i, x@sp.points$plot), ]
 		x@sp.polygons <- x@sp.polygons[match(i, x@sp.polygons$plot), ]
 
-	    return(x)
-    }
+		return(x)
+	}
 )
 
 setMethod("[",
-    signature(x = "VegsoupPartition",
-    i = "ANY", j = "ANY", drop = "missing"),
+	signature(x = "VegsoupPartition",
+	i = "ANY", j = "ANY", drop = "missing"),
 	function (x, i, j, ..., drop = TRUE) {
-		#	x <- prt; i = Partitioning(prt) %in% c(1,10)
-	    part <- Partitioning(x)
-	    
-	    if (missing(i)) i <- rep(TRUE, nrow(x))
-	    if (missing(j)) j <- rep(TRUE, ncol(x))
-	    
-	    tmp <- as(x, "Vegsoup")
-	    tmp <- tmp[i, j, ...]
-        
-        if (FALSE) {  # a little bit too verbose         	
+		#	x <- prt; i = partitioning(prt) %in% c(1,10)
+		part <- partitioning(x)
+		
+		if (missing(i)) i <- rep(TRUE, nrow(x))
+		if (missing(j)) j <- rep(TRUE, ncol(x))
+		
+		tmp <- as(x, "Vegsoup")
+		tmp <- tmp[i, j, ...]
+		
+		if (FALSE) {  # a little bit too verbose
 			if (length(unique(part[names(part) %in% rownames(tmp)])) != getK(x)) {
 				message(" Partitioning vector was subsetted!",
 					" k was changed accordingly")
@@ -102,7 +102,7 @@ setMethod("[",
 		
 		#	develop class VegsoupPartition from class Vegsoup
 		res <- new("VegsoupPartition", tmp)
-		#	and reassign class slots		
+		#	and reassign class slots
 		res@part <- part[names(part) %in% rownames(tmp)]
 		k <- length(unique(res@part))
 		res@part[] <- as.integer(as.character(factor(res@part, labels = 1:k)))
@@ -114,8 +114,8 @@ setMethod("[",
 		if (!identical(names(res@part), rownames(tmp))) {
 			stop("inconsistency when subsetting partitioning vector")
 		}
-	    return(res)
-    }
+		return(res)
+	}
 )
 
 #setReplaceMethod("[", c("Vegsoup", "ANY", "missing", "ANY"), 
@@ -128,7 +128,7 @@ setMethod("[",
 #)
 
 #	indexing method
-setMethod("$", "Vegsoup", 
+setMethod("$", "Vegsoup",
 	function(x, name) {
 		if (!("sites" %in% slotNames(x))) {
 			stop("no $ method for object without slot sites")
@@ -142,8 +142,8 @@ setReplaceMethod("$",
 	signature(x = "Vegsoup"),
 	function (x, name, value) {
 		if (!("sites" %in% slotNames(x)))
-			stop("no $<- method for object without attributes")		
- 			x@sites[[name]] <- value 	
-		return(x)		
+			stop("no $<- method for object without attributes")
+ 			x@sites[[name]] <- value
+		return(x)
 	}
 )

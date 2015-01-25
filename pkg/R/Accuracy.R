@@ -28,10 +28,10 @@ setMethod("Accuracy",
 	#	reference (observed) as row margins, comparison (predicted) as column margins
 	# 	according to Menard (1995: 24-32)
 	
-   	N <- length(Partitioning(obj1))
+	N <- length(partitioning(obj1))
 	
 	#	contingency table
-	X <- table(Partitioning(obj1), Partitioning(obj2))
+	X <- table(partitioning(obj1), partitioning(obj2))
 	
 	sum_r <- apply(X, 1, sum) # sum of rows
 	sum_c <- apply(X, 2, sum) # sum of columns

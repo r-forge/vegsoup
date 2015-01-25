@@ -8,7 +8,7 @@ setMethod("shared",
 	signature(x = "VegsoupPartition"),
 	function (x) {
 		X <- constancy(x) > 0
-		mode(X) <- "numeric"		
+		mode(X) <- "numeric"
 		res <- vegan::designdist(t(X), method = "J/(A+B)*100", terms = "binary")
 	return(res)
 	}

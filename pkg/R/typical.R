@@ -7,26 +7,24 @@ setGeneric("typical",
 )
 
 setMethod("typical",
-    signature(obj = "VegsoupPartition"),
-    function (obj, k = 1, ...) {
-    	#	Imports: optpart
-    	#	require(optpart)
-    	    	
-    	cl <- match.call()    	
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
-    			stop("\n method not defined for R mode", call. = FALSE)
-    		}
-    	}
+	signature(obj = "VegsoupPartition"),
+	function (obj, k = 1, ...) {
+		
+		cl <- match.call()
+		if (any(names(cl) == "mode")) {
+			if (cl$mode == "R") {
+				stop("\n method not defined for R mode", call. = FALSE)
+			}
+		}
 		if (getK(obj) == 1) {
 			message("results are meaningless with k = ", getK(obj))
 			return(NULL)
 		}
 		else {
 			d <- as.dist(obj, ...)
-			p <- Partitioning(obj)
-   			res <- optpart::typal(clustering = p, dist = d, k = k)
-	   		return(res)
-   		}
-    }
+			p <- partitioning(obj)
+			res <- optpart::typal(clustering = p, dist = d, k = k)
+			return(res)
+		}
+	}
 )

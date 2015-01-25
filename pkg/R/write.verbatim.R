@@ -7,7 +7,7 @@
 	
 	if (class(obj) == "VegsoupPartition") {
 		#	obj = prt
-		obj <- obj[order(Partitioning(obj)), ]
+		obj <- obj[order(partitioning(obj)), ]
 	}
 	if (missing(file)) {
 		no.save <- TRUE
@@ -54,7 +54,7 @@
 			rule <- TRUE
 		}	
 		if (class(obj) == "VegsoupPartition" & missing(rule)) {
-			rule.col <- cumsum(rle(Partitioning(obj))$lengths)
+			rule.col <- cumsum(rle(partitioning(obj))$lengths)
 			rule <- TRUE
 		}	
 	}

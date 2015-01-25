@@ -6,33 +6,33 @@
 \alias{getK}
 \alias{getK,VegsoupPartition-method}
 
-\alias{Partitioning}
-\alias{Partitioning,VegsoupPartition-method}
+\alias{partitioning}
+\alias{partitioning,VegsoupPartition-method}
 
-\alias{PartitioningMatrix}
-\alias{PartitioningMatrix,VegsoupPartition-method}
+\alias{partitioningMatrix}
+\alias{partitioningMatrix,VegsoupPartition-method}
 
-\alias{PartitioningCombinations}
-\alias{PartitioningCombinations,VegsoupPartition-method}
+\alias{partitioningCombinations}
+\alias{partitioningCombinations,VegsoupPartition-method}
 
-\title{ Partitioning vector of \code{VegsoupPartition} objects }
+\title{ Partitioning Vector of VegsoupPartition objects }
 
 \description{
-  Retrieve number of partitions (\code{getK}), partitioning vector (\code{Partitioning}),
-  create a matrix of memberships of plots to partitions (\code{PartitioningMatrix})
-  or tabulate all possibele combinations of partitions (\code{PartitioningCombinations}).
+  Retrieve number of partitions (\code{getK}), partitioning vector (\code{partitioning}),
+  create a matrix of memberships of plots to partitions (\code{partitioningMatrix})
+  or tabulate all possibele combinations of partitions (\code{partitioningCombinations}).
 }
 
 \usage{
 \S4method{getK}{VegsoupPartition}(x)
-\S4method{Partitioning}{VegsoupPartition}(x)
-\S4method{PartitioningMatrix}{VegsoupPartition}(x)
-\S4method{PartitioningCombinations}{VegsoupPartition}(x, collapse)
+\S4method{partitioning}{VegsoupPartition}(x)
+\S4method{partitioningMatrix}{VegsoupPartition}(x)
+\S4method{partitioningCombinations}{VegsoupPartition}(x, collapse)
 }
 
 \arguments{
   \item{ x }{
-    A \code{VegsoupPartition} object.
+    \code{'VegsoupPartition'} object.
   }
   \item{ collapse }{
     Character be be used as separator in dimnames. Only characters are
@@ -42,14 +42,14 @@
 }
 
 \value{
-  \item{ Partitioning }{
+  \item{ partitioning }{
     returns the running partitioning vector.
   }
-  \item{ PartitioningMatrix }{
+  \item{ partitioningMatrix }{
     returns a \code{matrix} of zeros and ones where rows are plots and
     columns are partitions. Ones indicate to which partition a plot belongs.
   }
-  \item{ PartitioningCombinations }{
+  \item{ partitioningCombinations }{
     returns a \code{matrix} of combinations where column names indicate a particular
     combination.
   }
@@ -71,13 +71,13 @@ x <- VegsoupPartition(barmstein, k = 2)
 getK(x)
 
 # vector of assigments
-Partitioning(x)
+partitioning(x)
 
 # matrix of memberships
-PartitioningMatrix(x)
+partitioningMatrix(x)
 
 # matrix of possible combinations
-PartitioningCombinations(x)
+partitioningCombinations(x)
 }
 \keyword{ methods }
 

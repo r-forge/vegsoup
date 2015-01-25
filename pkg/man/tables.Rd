@@ -70,7 +70,7 @@ x <- VegsoupPartition(barmstein, k = 2)
 head(constancy(x))
 
 # equivalent
-head(contingency(x) / as.vector(table(Partitioning(x)))) * 100
+head(contingency(x) / as.vector(table(partitioning(x)))) * 100
 
 # R-mode analysis
 # remove presence/absence standardisation

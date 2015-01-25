@@ -33,7 +33,7 @@ A lying box indicates species poor and an upright box highlights species rich pa
 }
 
 \value{
-Returns a \code{matrix} with two columns as returned by  \code{dim(obj[Partitioning(obj) == i,])}, where \code{i} is a specific partition. The first column shows number of plots and the second column shows number of species.
+Returns a \code{matrix} with two columns as returned by  \code{dim(obj[partitioning(obj) == i,])}, where \code{i} is a specific partition. The first column shows number of plots and the second column shows number of species.
 }
 
 \author{ Roland Kaiser }

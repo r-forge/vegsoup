@@ -23,7 +23,7 @@ all.equal(ft1, ft2)
 
 head(prt)
 getK(prt)
-Partitioning(prt)
+partitioning(prt)
 spread(prt)
 contingency(prt)
 constancy(prt)
@@ -36,7 +36,7 @@ quantile(prt, coverscale = TRUE)[,,3] # median
 prt[1,]
 prt[,1:10]
 
-Partition(prt, 1)
+partition(prt, 1)
 
 #	wait until optpart registers S3methods
 #isamic(prt)
@@ -60,13 +60,13 @@ Phi(prt)
 #	i.prt <- VegsoupPartition(sim100, k = 2)
 #	require(indicspecies)
 #	is <- strassoc(as.logical(i.prt),
-#		Partitioning(i.prt),
+#		partitioning(i.prt),
 #		func = "IndVal.g")
 #	head(is)
 	
 #	require(labdsv)
 #	ld <- indval(as.logical(i.prt),
-#		Partitioning(i.prt))
+#		partitioning(i.prt))
 #	head(sqrt(ld$indval))
 	
 #	decostand(i.prt) <- "pa"

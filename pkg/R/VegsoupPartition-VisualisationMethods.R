@@ -23,7 +23,7 @@
 
 	if (missing(y)) {
 		#	nuse slot partition
-		grp <- as.factor(Partitioning(x))
+		grp <- as.factor(partitioning(x))
 	}
 	else {
 		stop("no method yet")

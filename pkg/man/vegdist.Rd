@@ -121,11 +121,11 @@ attr(d, "mode")
 # replace vegdist method for VegsoupPartition object
 x <- VegsoupPartition(barmstein, k = 2)
 vegdist(x)
-p1 <- Partitioning(x)
+p1 <- partitioning(x)
 
 # change vegdist
 vegdist(x) <- "bray"
-p2 <- Partitioning(x)
+p2 <- partitioning(x)
 
 table(p1, p2)
 

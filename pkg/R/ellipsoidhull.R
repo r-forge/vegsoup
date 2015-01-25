@@ -5,14 +5,14 @@
 	
 	res <- vector("list", length = getK(x))
 	for (i in 1:getK(x)) {
-		xy <- as.matrix(coordinates(x)[Partitioning(x) == i,])
+		xy <- as.matrix(coordinates(x)[partitioning(x) == i,])
 		if (nrow(xy) >= 3) {
 			res[[i]] <- cluster::ellipsoidhull(x = xy, ...)
 		} else {
 			if (ncol(xy) > 1) {
 				res[[i]] <- xy.coords(x = xy[, 1], y = xy[, 2])
 			} else {
-				res[[i]] <- xy.coords(x = t(xy)[, 1], y = t(xy)[, 2])		
+				res[[i]] <- xy.coords(x = t(xy)[, 1], y = t(xy)[, 2])
 			}
 		}
 	}

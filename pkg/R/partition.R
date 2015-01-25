@@ -7,37 +7,37 @@ setMethod("getK",
 	signature(x = "VegsoupPartition"),
 	function (x) {
 		x@k
-	}	
+	}
 )
 
 #	retrieve partitions
-if (!isGeneric("Partitioning")) {
-setGeneric("Partitioning",
+if (!isGeneric("partitioning")) {
+setGeneric("partitioning",
 	function (x)
-		standardGeneric("Partitioning")
+		standardGeneric("partitioning")
 )
 }
 
-setMethod("Partitioning",
+setMethod("partitioning",
 	signature(x = "VegsoupPartition"),
 	function (x) x@part
 )
 
 #	replace partitions
-if (!isGeneric("Partitioning<-")) {
-setGeneric("Partitioning<-",
+if (!isGeneric("partitioning<-")) {
+setGeneric("partitioning<-",
 	function (x, value)
-		standardGeneric("Partitioning<-")
+		standardGeneric("partitioning<-")
 )
 }
 
-setReplaceMethod("Partitioning",
+setReplaceMethod("partitioning",
 	signature(x = "VegsoupPartition", value = "numeric"),
 	function (x, value) {
-		if (length(value) != length(Partitioning(x))) {
+		if (length(value) != length(partitioning(x))) {
 			stop("replacement does not match in length", call. = FALSE)
 		}
-		if (is.null(names(value))) {		
+		if (is.null(names(value))) {
 			names(value) <- rownames(x)
 		}
 		else {
@@ -49,66 +49,66 @@ setReplaceMethod("Partitioning",
 			}
 		}
 		x@part <- value
-		x@k <- length(unique(value))		
-		return(x)		
+		x@k <- length(unique(value))
+		return(x)
 	}
 )
 
 #	subset by partiton
-if (!isGeneric("Partition")) {
-setGeneric("Partition",
+if (!isGeneric("partition")) {
+setGeneric("partition",
 	function (x, value, ...)
-		standardGeneric("Partition")
+		standardGeneric("partition")
 )
 }
 
-setMethod("Partition",
+setMethod("partition",
 	signature(x = "VegsoupPartition"),
 	function (x, value) {
-			stopifnot(!any(value > getK(x)))	
+			stopifnot(!any(value > getK(x)))
 			x[x@part %in% value, ]
-	}		
+	}
 )
 
 #	tabulate partition vector to matrix
-if (!isGeneric("PartitioningMatrix")) {
-setGeneric("PartitioningMatrix",
+if (!isGeneric("partitioningMatrix")) {
+setGeneric("partitioningMatrix",
 	function (x)
-		standardGeneric("PartitioningMatrix")
+		standardGeneric("partitioningMatrix")
 )
 }
 
-setMethod("PartitioningMatrix",
-    signature(x = "VegsoupPartition"),
+setMethod("partitioningMatrix",
+	signature(x = "VegsoupPartition"),
 	function (x) {
-		res <- t(sapply(Partitioning(x),
+		res <- t(sapply(partitioning(x),
 			function (y) {
-				as.numeric(y == levels(factor(Partitioning(x))))
+				as.numeric(y == levels(factor(partitioning(x))))
 			}))
-		dimnames(res)[2] <- list(levels(factor(Partitioning(x))))
-    return(res)                                                                                                                              
+		dimnames(res)[2] <- list(levels(factor(partitioning(x))))
+	return(res)
 	}
 )
 
 #	matrix of possible partition combinations
-setGeneric("PartitioningCombinations",
+setGeneric("partitioningCombinations",
 	function (x, collapse)
-		standardGeneric("PartitioningCombinations")
+		standardGeneric("partitioningCombinations")
 )
 
-.PartitioningCombinations <- function (x, collapse) {	
+.partitioningCombinations <- function (x, collapse) {
 	if (missing(collapse)) {
 		collapse = "+"
 	}	
-	cluster <- levels(as.factor(Partitioning(x)))	
+	cluster <- levels(as.factor(partitioning(x)))
 	cl.comb <- function (x) {
 		k <- length(x) #getK(x)# 
 		ep <- diag(1, k, k)
 		names.ep <- x
-	    for (j in 2:k) {
-	    	nco <- choose(k, j)
-	    	co <- combn(k, j)
-	    	epn <- matrix(0, ncol = nco, nrow = k)
+		for (j in 2:k) {
+			nco <- choose(k, j)
+			co <- combn(k, j)
+			epn <- matrix(0, ncol = nco, nrow = k)
 			for (i in 1:ncol(co)) {
 				epn[co[, i], i] <- 1
 				names.ep <- c(names.ep, paste(x[co[,i]], collapse = collapse))
@@ -122,7 +122,7 @@ setGeneric("PartitioningCombinations",
 	return(res)
 }
 
-setMethod("PartitioningCombinations",
+setMethod("partitioningCombinations",
 	signature(x = "VegsoupPartition"),
-	.PartitioningCombinations
+	.partitioningCombinations
 )

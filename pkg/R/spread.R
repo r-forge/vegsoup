@@ -5,9 +5,9 @@ setGeneric("spread",
 )
 
 setMethod("spread",
-    signature(obj = "VegsoupPartition"),
-	function (obj) {	
-    part  <- Partitioning(obj)
+	signature(obj = "VegsoupPartition"),
+	function (obj) {
+	part  <- partitioning(obj)
 	X <- as.logical(obj)
 	
 	if (getK(obj) == 1) {

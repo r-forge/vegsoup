@@ -118,7 +118,7 @@
   }  
   \item{ \dots }{
     arguments passed to \code{\link{Fidelity}} if object is not of class
-    \code{"VegsoupPartitionFidelity"}.
+    \code{'VegsoupPartitionFidelity'}.
   }
 }
 \details{
@@ -138,8 +138,8 @@
   flavours (see above). Some usages have many arguments, most of which
   have some sensible default values.
 
-  The method accepts both a \code{"VegsoupPartition"} as well as a
-  \code{"VegsoupPartitionFidelity"} object. The first class is promoted to the
+  The method accepts both a \code{'VegsoupPartition'} as well as a
+  \code{'VegsoupPartitionFidelity'} object. The first class is promoted to the
   latter class by internally calling \code{\link{Fidelity}} with it's default
   arguments.
 

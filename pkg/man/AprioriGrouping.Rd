@@ -33,7 +33,7 @@ Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link{Partitioning}}
+\code{\link{partitioning}}
 }
 
 \examples{

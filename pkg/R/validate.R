@@ -7,26 +7,26 @@ setGeneric("partana",
 )
 
 setMethod("partana",
-    signature(x = "VegsoupPartition"),
-    function (x, verbose = FALSE, ...) {
-    	#	Imports: optpart
+	signature(x = "VegsoupPartition"),
+	function (x, verbose = FALSE, ...) {
+		#	Imports: optpart
 		#	require(optpart)
 		
 		if (getK(x) == 1)	stop("meaningless with k = ", getK(x))
-    	Xd <- as.dist(x)# , ...)   	
+		Xd <- as.dist(x)# , ...)
 
-		cpu.time <- system.time({		
-			res <- optpart::partana(c = Partitioning(x), dist = Xd)
+		cpu.time <- system.time({
+			res <- optpart::partana(c = partitioning(x), dist = Xd)
 		})
 		if (verbose) {
 			cat("\n time to permute species matrix of", ncell(x), "cells",
 				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
 			cat("\n within-cluster to among-cluster similarity ratio:",
-				round(res$ratio, 1))		
-		}					
-		return((res)) #invisible   	
-    }
+				round(res$ratio, 1))
+		}
+		return((res))
+	}
 )
 
 #	table deviance
@@ -38,23 +38,19 @@ setGeneric("tabdev",
 setMethod("tabdev",
 	signature(x = "VegsoupPartition"),
 	function (x, numitr = 99, verbose = FALSE, ...) {
-		#	Imports: optpart
-		#	require(optpart)
-
 		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
 
 		cpu.time <- system.time({
 			res <- optpart::tabdev(as.matrix(x, ...),
-				Partitioning(x), nitr = numitr, ...)
+				partitioning(x), nitr = numitr, ...)
 		})
 		if (verbose) {
 			cat("\n time to permute species matrix of", ncell(x), "cells",
 				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
-			cat("\n total deviance:", res$totdev)	
-			cat("\n number of iterations performed:", numitr)	
-		}			
+			cat("\n total deviance:", res$totdev)
+			cat("\n number of iterations performed:", numitr)
+		}
 		return(res)
-		#return((res$spcdev)) #invisible
 	}
 )

@@ -32,7 +32,7 @@
 		r.ind <- FALSE # Fisher can use matrix X
 	}
 
-	cluster <- as.factor(Partitioning(obj))
+	cluster <- as.factor(partitioning(obj))
 	
 	if (!is.null(group)) {
 		if (group > getK(obj)) stop("group must be within getK(obj)")
@@ -798,7 +798,7 @@ X <- as.matrix(obj)
 
 n.species <- ncol(X)
 n.sites <- nrow(X)  
-U <- PartitioningMatrix(obj) 
+U <- partitioningMatrix(obj) 
 k = getK(obj)
 
 cdm = matrix(1, nrow = n.species, ncol = k)

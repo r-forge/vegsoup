@@ -8,35 +8,35 @@ setGeneric("optsil",
 #}
 
 setMethod("optsil",
-    signature(x = "VegsoupPartition"),
-    function (x, maxitr = 100, verbose = FALSE, ...) {
+	signature(x = "VegsoupPartition"),
+	function (x, maxitr = 100, verbose = FALSE, ...) {
 		#	Imports: optpart
 		#	require(optpart)
 		
 		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
-    	
-    	nam <- names(x@part) # save names    	
-    	cl <- match.call()
-    	    	
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
-    			stop("\n method not defined for R mode", call. = FALSE)
-    		}
-    	}   	  	
-    		
+		
+		nam <- names(x@part) # save names
+		cl <- match.call()
+		
+		if (any(names(cl) == "mode")) {
+			if (cl$mode == "R") {
+				stop("\n method not defined for R mode", call. = FALSE)
+			}
+		}
+		
 		cpu.time <- system.time({
 			tmp <- optpart::optsil(
-					x = Partitioning(x), dist = as.dist(x), #, ...
+					x = partitioning(x), dist = as.dist(x), #, ...
 					maxitr = maxitr)
 			x@part <- as.integer(tmp$clustering)
-			numitr <- tmp$numitr			
+			numitr <- tmp$numitr
 		})
 
 		if (verbose) {
 			cat("\n time to optimise species matrix of", ncell(x), "cells",
 				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)	
+			cat("\n number of iterations performed:", numitr)
 		}	
 	
 		names(x@part) <- nam
@@ -53,37 +53,37 @@ setGeneric("optindval",
 )
 #}
 setMethod("optindval",
-    signature(x = "VegsoupPartition"),
-    function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
+	signature(x = "VegsoupPartition"),
+	function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
 		#	Imports: optpart
 		#	require(optpart)
 		
-    	if (getK(x) == 1) stop("meaningless with k = ", getK(x))
+		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
 
-    	nam <- names(x@part) # save names		
+		nam <- names(x@part) # save names
 		cl <- match.call()
 		
-    	if (any(names(cl) == "mode")) {
-    		if (cl$mode == "R") {
-    			stop("\n method not defined for R mode", call. = FALSE)
-    		}
-    	}
+		if (any(names(cl) == "mode")) {
+			if (cl$mode == "R") {
+				stop("\n method not defined for R mode", call. = FALSE)
+			}
+		}
 
 		cpu.time <- system.time({
 			tmp <- optpart::optindval(
-					as.matrix(x, ...), Partitioning(x),
+					as.matrix(x, ...), partitioning(x),
 					maxitr = maxitr,
 					minsiz = minsiz)
-			x@part <- as.integer(tmp$clustering)		
-			numitr <- tmp$numitr		
+			x@part <- as.integer(tmp$clustering)
+			numitr <- tmp$numitr
 		})
 		if (verbose) {
 			cat("\n time to optimise species matrix of", ncell(x), "cells",
 				"and", getK(x), "partitions:",
 				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)	
-		}					
+			cat("\n number of iterations performed:", numitr)
+		}
 		names(x@part) <- nam
 		return(x)
-    }
+	}
 )

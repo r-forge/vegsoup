@@ -20,10 +20,10 @@
 
 \arguments{
   \item{ obj }{
-   A \code{"Vegsoup"} or \code{"VegsoupPartition"} object.
+   \code{'Vegsoup'} or \code{'VegsoupPartition'} object.
    }
   \item{ file }{
-    A path to a file, can be missing.
+    path to a file, can be missing.
   }
   \item{ add.label }{
     Show labels of push-pins in KML.

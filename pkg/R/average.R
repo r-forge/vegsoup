@@ -21,11 +21,11 @@ setMethod("average",
 			}
 		} else {
 			res <- t(aggregate(as.matrix(obj, ...),
-				by = list(Partitioning(obj)), FUN = sum))[-1, ]
+				by = list(partitioning(obj)), FUN = sum))[-1, ]
 			res <- res / contingency(obj)
 			#	division by zero
 			res[is.na(res)] <- 0
-			colnames(res) <- unique(Partitioning(obj))
+			colnames(res) <- unique(partitioning(obj))
 			rownames(res) <- colnames(obj)
 		}
 		return(res)

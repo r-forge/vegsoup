@@ -81,25 +81,25 @@ setMethod("FisherTest",
 			n_p,
 			N_p - n_p,
 			n - n_p,
-			N - N_p - n + n_p), 2, 2)	
+			N - N_p - n + n_p), 2, 2)
 		r[is.nan(r)] <- 0
-    	return(r)	
+		return(r)
 	}
 
 	N <- nrow(obj)						# number of plots
 	n_i <- colSums(as.logical(obj))		# species frequencies
-	N_pi <- table(Partitioning(obj))	# number of plots in partition
+	N_pi <- table(partitioning(obj))	# number of plots in partition
 	n_pi <- contingency(obj)			# number of occurences in partition
 
 	r <- n_pi
 
 	for (i in 1:ncol(obj)) { # loop over species
 		n <- n_i[i]						# n	
-	    for (j in 1:length(N_pi)) {		# loop over partitions
+		for (j in 1:length(N_pi)) {		# loop over partitions
 			N_p <- N_pi[j]
-			n_p <- n_pi[i, j]    	
-    		r[i, j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
-    	}
+			n_p <- n_pi[i, j]
+			r[i, j] <- FisherPval(ObservedFreqencyTable(N, N_p, n, n_p))
+		}
 	}
  
 	return(r)

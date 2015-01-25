@@ -149,7 +149,7 @@ require(vegsoup)
 data(sim100)
 
 r <- VegsoupPartition(sim100, k = 2, method = "fanny", memb.exp = 1.5)
-Partitioning(r)
+partitioning(r)
 head(sites(r))
 
 # plot membership values against gradient values

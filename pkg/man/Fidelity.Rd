@@ -22,7 +22,7 @@
 
 \description{
   Method \code{Fidelity} calculates fidelity values for objects inheriting
-  \code{"VegsoupPartition"} and returns an extended object of class
+  \code{'VegsoupPartition'} and returns an extended object of class
   \code{\linkS4class{VegsoupPartitionFidelity}}. Fidelity is based on the implementation
   of function \code{\link[indicspecies]{strassoc}} in \pkg{indicspecies} and offers
   all it's methods plus some more (see \sQuote{Details}).
@@ -33,7 +33,7 @@
   \pkg{labdsv}. Function \code{FisherTest} is a slightly faster alternative to
   \code{Fidelity(obj, method = "fisher")}. \code{Phi} and \code{Indval} are
   also faster implementations compared to \code{\link{Fidelity}} without option
-  \code{fast = TRUE}. All three methods do not return an \code{"VegsoupPartitionFidelity"}
+  \code{fast = TRUE}. All three methods do not return an \code{'VegsoupPartitionFidelity'}
   object, but the requested statistic as a \code{"data.frame"}! Take \code{sqrt(Indval(x))}
   to obtain comparable results with \code{Fidelity(x, method = "IndVal.g")}.
 }
@@ -113,9 +113,9 @@ Methods currently implemented for method \code{Fidelity }include the following:
   }
 }
 \value{
-For \code{Fidelity} an object of class \code{"VegsoupPartitionFidelity"}.
+For \code{Fidelity} an object of class \code{'VegsoupPartitionFidelity'}.
 
-For \code{FisherTest} and \code{Phi} a \code{"matrix"} of values with species as rows and partitions as columns.
+For \code{FisherTest} and \code{Phi} a \code{'matrix'} of values with species as rows and partitions as columns.
 }
 \references{
 Willner, W., Tichy, L., and Chytry, M. (2009). Effects of different fidelity measures and contexts on the determination of diagnostic species. Journal of Vegetation Science, 20(1):130-137.

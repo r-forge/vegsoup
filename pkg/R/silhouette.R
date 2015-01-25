@@ -4,14 +4,12 @@ setGeneric("silhouette",
 )
 
 setMethod("silhouette",
-    signature(x = "VegsoupPartition"),
-    function (x, ...) {
-    	#	Imports: cluster
-    	#	require(cluster)
+	signature(x = "VegsoupPartition"),
+	function (x, ...) {
 		if (getK(x) == 1)
 			stop("meaningless with k = ", getK(x))
-    	
-		res <- cluster::silhouette(Partitioning(x), dist = as.dist(x, ...))
-		return(res)    	
-    }
+		
+		res <- cluster::silhouette(partitioning(x), dist = as.dist(x, ...))
+		return(res)
+	}
 )

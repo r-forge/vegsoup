@@ -29,7 +29,7 @@
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} or for ellipsoidhull a \code{VegsoupPartition} object.
+    \code{Vegsoup*} or for ellipsoidhull a \code{'VegsoupPartition'} object.
   }
   \item{ database }{
     Character string naming a geographical database. See \code{\link[maps:map]{map}}.

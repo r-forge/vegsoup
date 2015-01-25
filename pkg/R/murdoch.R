@@ -5,16 +5,15 @@ setGeneric("murdoch",
 		standardGeneric("murdoch")
 )
 setMethod("murdoch",
-    signature(x = "VegsoupPartition"),
-    function (x, minplt, type, ...) {
-    	#	Imports: optpart
-    	#	require(optpart)
-    	if (getK(x) == 1)
+	signature(x = "VegsoupPartition"),
+	function (x, minplt, type, ...) {
+
+		if (getK(x) == 1)
 			stop("meaningless with k = ", getK(x))
-    	if (missing(minplt))
-    		minplt <- 1
+		if (missing(minplt))
+			minplt <- 1
 		if (missing(type))
-			part <- Partitioning(x)
+			part <- partitioning(x)
 			
 		if (any(table(part) == 1)) {
 			stop("singleton present")

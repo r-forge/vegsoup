@@ -42,20 +42,20 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", m
 		M <- method
 	names(ri) <- M
 	
-	for (i in seq(along = method)) {		
+	for (i in seq(along = method)) {
 		if (inherits(method, "function"))
 			m <- list(method)[[ i ]]
 		else
 			m <- method[ i ]
 		
 		if (as.logical(fast)) {
-			message(M[ i ], " ")			
+			message(M[ i ], " ")
 			rj <- mclapply(2:k, function (y, ...) cycle(x, k = y, method = m, X = X, Xd = Xd, ...), ...)
 			ri[[ i ]] <- c(0, rj)
 		}
 		else {
 			rj <- vector("list", length = k)
-	 		names(rj) <- 1:k
+			names(rj) <- 1:k
 			rj[[ 1 ]] <- 0
 			names(rj[[ 1 ]]) <- 1
 

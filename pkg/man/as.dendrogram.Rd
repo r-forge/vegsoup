@@ -67,7 +67,7 @@ plot(as.hclust(x, "contingency"))
 
 # resetting invokes recalculation of the partitioning vector!
 # we will regenreate it afterwards
-p <- Partitioning(x)
+p <- partitioning(x)
 vegdist(x) <- "bray"
 x <- VegsoupPartition(x, method = "external", clustering = p)
 

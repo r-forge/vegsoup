@@ -33,11 +33,11 @@ setReplaceMethod("vegdist",
 		"kulczynski", "gower", "morisita", "horn", "mountford",
 		"jaccard", "raup", "binomial", "chao", "altGower", "cao")
 		method <- METHODS[pmatch(value, METHODS)]
-    	
-    	if (is.na(method)) 
-        	stop("invalid distance method")
-    	if (method == -1) 
-        	stop("ambiguous distance method")
+		
+		if (is.na(method))
+			stop("invalid distance method")
+		if (method == -1) 
+			stop("ambiguous distance method")
 		x@dist <- method
 
 		return(x)
@@ -52,14 +52,14 @@ setReplaceMethod("vegdist",
 		"kulczynski", "gower", "morisita", "horn", "mountford",
 		"jaccard", "raup", "binomial", "chao", "altGower", "cao")
 		method <- METHODS[pmatch(value, METHODS)]
-    	
-    	if (is.na(method)) 
-        	stop("invalid distance method")
-    	if (method == -1) 
-        	stop("ambiguous distance method")
-        
-        if (method != x@method) {	
-			x@dist <- method		
+		
+		if (is.na(method))
+			stop("invalid distance method")
+		if (method == -1)
+			stop("ambiguous distance method")
+		
+		if (method != x@method) {
+			x@dist <- method
 			#	recompute
 			x <- VegsoupPartition(x, k = getK(x), method = x@method)
 			message("recomputed partitoning")
@@ -69,7 +69,7 @@ setReplaceMethod("vegdist",
 )
 
 #	vegan defines:
-#   distconnected(dis, toolong = 1, trace = TRUE)		
+#   distconnected(dis, toolong = 1, trace = TRUE)
 #	connectedness of dissimilarities
 
 #if (!isGeneric("distconnected<-")) {

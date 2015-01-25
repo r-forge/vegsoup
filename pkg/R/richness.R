@@ -34,7 +34,7 @@ setMethod("richness",
     signature(obj = "Vegsoup"),
 	function (obj, choice = c("dataset", "sample")) {
 		if (missing(choice)) choice <- "dataset"
-		r <- richness(species(obj), choice = choice) # use Species-method		
+		r <- richness(species(obj), choice = choice) # use Species-method
 		return(r)
 	}
 )
@@ -53,12 +53,12 @@ setMethod("richness",
 		if (choice == -1)  stop("ambiguous choice", call. = FALSE)
 		
 		switch(choice, "dataset" = {
-			r <- richness(species(obj), choice = "dataset") # use Species-method		
+			r <- richness(species(obj), choice = "dataset") # use Species-method
 		}, "sample" = {
 			r <- richness(species(obj), choice = "sample")  # use Species-method
 		}, "partition" = {
 			r <- sapply(1:getK(obj), function (x) {
-				richness(Partition(obj, x), "dataset")	
+				richness(partition(obj, x), "dataset")
 			})
 		})
 		return(r)

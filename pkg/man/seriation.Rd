@@ -38,7 +38,7 @@ The method rearranges the species matrix according to ordination coordinates, cl
 \details{
 For objects of class \code{Vegsoup} the default method \code{"dca"} uses function \code{\link{decorana}} in \pkg{vegan} with default settings. Method \code{"hclust"} uses \code{\link{hclust}} with argument \code{method = "ward"}, \code{"ward"} calls \code{\link{agnes}} with argument \code{method = "ward"} and \code{"flexible"} invokes \code{agnes} with arguments \code{method = "flexible"} and \code{par.method = c(0.625, 0.625, 1 - 2 * 0.625, 0)}. Finally, method \code{"packed"} simply performs ordering by row and col sums.
 
-The method defined for class \code{"VegsoupPartition"} equals separate calls to subsets defined by \code{Partitioning(obj)}, same as a call to objects of class \code{Vegsoup}, followed by final combination of all subsets into a single object. Note that this orders plots within each group based on the defined method, but the order of species is determined by order they appear in single subsets. So the order of species might not be satisfactory.
+The method defined for class \code{"VegsoupPartition"} equals separate calls to subsets defined by \code{partitioning(obj)}, same as a call to objects of class \code{Vegsoup}, followed by final combination of all subsets into a single object. Note that this orders plots within each group based on the defined method, but the order of species is determined by order they appear in single subsets. So the order of species might not be satisfactory.
 
 Ordering by explicit indexing is available by using the method \code{\link[vegsoup]{Extract}} method for \code{Vegsoup*} objects.
 }

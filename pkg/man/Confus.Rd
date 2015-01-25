@@ -36,7 +36,7 @@
   \describe{
     \item{ confus }{
       the cross tabulation of \code{obj1} (rows) and \code{obj2} (columns).
-      % (\code{table(Partitioning(obj1), Partitioning(obj1))}).
+      % (\code{table(partitioning(obj1), partitioning(obj1))}).
     }
     \item{ correct }{
       the percentage of correctly predicted samples.

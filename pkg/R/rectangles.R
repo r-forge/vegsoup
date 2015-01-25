@@ -14,7 +14,7 @@ setMethod("rectangles",
 	if (missing(plot)) {
 		plot = TRUE	
 	}
-	p <- unique(Partitioning(obj))
+	p <- unique(partitioning(obj))
 	d <- dim(obj)
 	
 	#	subsetting will issue a warning
@@ -22,14 +22,14 @@ setMethod("rectangles",
 	op <- options()
 	options(warn = -1)
 	res <- t(sapply(sort(p), function(x) {
-		dim(obj[Partitioning(obj) == x, ])
+		dim(obj[partitioning(obj) == x, ])
 	}))
 	options(op)
 	
 	res <- cbind(res, p)
 	if (plot) {
 		#	order
-		r <- res[order(res[, 1], res[,2]), ]		
+		r <- res[order(res[, 1], res[,2]), ]
 		plot(max(r[, 1]), max(r[, 2]),
 			xlim = c(0, max(r[, 1])), ylim = c(0, max(r[, 2])),
 			type = "n", bty = "n",
