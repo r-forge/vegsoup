@@ -264,15 +264,15 @@
 	}
 %% 13
   \bold{ 1) Comparisons of two objects.}
-	\item{Accuracy}{
+	\item{accuracy}{
 	  \code{signature(obj1 = "VegsoupPartition", obj2 = "VegsoupPartition")}:
 	  Accuracy Statistics of two objects under comparison.
-	  See \code{\link{Accuracy}}.
+	  See \code{\link{accuracy}}.
 	}
-	\item{Confus}{
+	\item{confusion}{
 	  \code{signature(obj1 = "VegsoupPartition", obj2 = "VegsoupPartition")}:
-	  Confusion matrix of two objects.
-	  See \code{\link{Confus}}.
+	  confusionion matrix of two objects.
+	  See \code{\link{confusion}}.
 	}
   }
 }

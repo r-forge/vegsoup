@@ -1,10 +1,10 @@
 \encoding{UTF-8}
 
-\name{AprioriGrouping}
+\name{apriori}
 \docType{methods}
 
-\alias{AprioriGrouping}
-\alias{AprioriGrouping,Vegsoup-method}
+\alias{apriori}
+\alias{apriori,Vegsoup-method}
 
 \title{ Grouping Variable of \code{Vegsoup*} Objects }
 \description{
@@ -12,7 +12,7 @@ Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 }
 
 \usage{
-\S4method{AprioriGrouping}{Vegsoup}(obj)
+\S4method{apriori}{Vegsoup}(obj)
 }
 
 \arguments{
@@ -40,7 +40,7 @@ Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 require(vegsoup)
 data(barmstein)
 
-AprioriGrouping(barmstein)
+apriori(barmstein)
 }
 \keyword{ methods }
 

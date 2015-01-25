@@ -13,7 +13,7 @@ decostand(X)
 vegdist(X)
 layers(X)
 coverscale(X)
-AprioriGrouping(X)
+apriori(X)
 SpatialPointsVegsoup(X)
 SpatialPolygonsVegsoup(X)
 

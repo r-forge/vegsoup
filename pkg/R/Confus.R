@@ -1,11 +1,11 @@
-#if(!isGeneric("Confus")) {
-setGeneric("Confus",
+#if(!isGeneric("confusion")) {
+setGeneric("confusion",
 	function (obj1, obj2)
-		standardGeneric("Confus")
+		standardGeneric("confusion")
 )
 #}
 
-setMethod("Confus",
+setMethod("confusion",
 	signature(obj1 = "VegsoupPartition",
 		obj2 = "VegsoupPartition"),
 	function (obj1, obj2) {

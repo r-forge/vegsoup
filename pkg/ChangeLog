@@ -5,7 +5,8 @@ decostand method for fidelity, needs to recalculate fidelity if not presence abs
 more rigorous test for identical methods
 generalize slot partition to contain class dendrogram, fuzzy memberships and maybe more?
 peaks, if curve bends down return no peaks with option
-implemnet math method e.g. obj^0.2
+implement math methods e.g. obj^0.2
+implement CAP as decostand method
 more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
 add layers(obj) <- value logical-method, if FALSE collapse all layers
 
@@ -18,7 +19,10 @@ renamed Partitioning to partitioning
 renamed PartitioningMatrix partitioningMatrix
 renamed PartitioningCombinations to partitioningCombinations
 renamed Fidelity to fidelity
-rename SpeciesList to taxalist
+renamed SpeciesList to taxalist
+renamed AprioriGrouping to apriori
+renamed Confus to confusion
+renamed QuickMap to quicklook
 
 --- 2015-01-24, version: 0.2-4
 

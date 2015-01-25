@@ -299,7 +299,7 @@ prt.flx <- VegsoupPartition(dta, 3, "wards")
 prt.org <- VegsoupPartition(dta, 3, clustering = "block")
 
 # block/group 3 is ambigously assigned
-Confus(prt.flx, prt.org)
+confusion(prt.flx, prt.org)
 
 # write object of class Vegsoup
 txt <- write.verbatim(seriation(dta), file = tempfile(),

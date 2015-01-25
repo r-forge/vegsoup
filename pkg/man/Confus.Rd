@@ -1,13 +1,13 @@
 \encoding{UTF-8}
 
-\name{Confus}
+\name{confusion}
 \docType{methods}
 
-\alias{Confus}
-\alias{Confus,VegsoupPartition-method}
-\alias{Confus,VegsoupPartition,VegsoupPartition-method}
+\alias{confusion}
+\alias{confusion,VegsoupPartition-method}
+\alias{confusion,VegsoupPartition,VegsoupPartition-method}
 
-\title{ Confusion Matrix for Objects of class VegsoupPartition }
+\title{ confusionion Matrix for Objects of class VegsoupPartition }
 
 \description{
   Cross-classifies each partition (clustering) by actual class membership and
@@ -16,7 +16,7 @@
 }
 
 \usage{
-  \S4method{Confus}{VegsoupPartition,VegsoupPartition}(obj1, obj2)
+  \S4method{confusion}{VegsoupPartition,VegsoupPartition}(obj1, obj2)
 }
 
 \arguments{
@@ -25,7 +25,7 @@
 	}
 }
 \details{
-  Method \code{Confus} takes two objects inheriting from class
+  Method \code{confusion} takes two objects inheriting from class
   \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj2}) and computes a
   cross-tabulation (contingency table) of reference (observed) (\code{obj1})
   vs. comparison (predicted) class memberships (\code{obj2}), and calculates
@@ -55,7 +55,7 @@ Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classi
 \author{ Roland Kaiser }
 \seealso{
 \code{\link{VegsoupPartition}},
-\code{\link{Accuracy}} in package '\pkg{vegsoup}.
+\code{\link{accuracy}} in package '\pkg{vegsoup}.
 \code{\link{confus}} in package \pkg{optpart} and
 \code{\link[polytomous:crosstable.statistics]{crosstable.statistics}} and \code{\link[polytomous:associations]{associations}} in package \pkg{polytomous}.
 }
@@ -67,7 +67,7 @@ data(windsfeld)
 prt1 <- VegsoupPartition(windsfeld, k = 10, method = "flexible")
 prt2 <- VegsoupPartition(windsfeld, k = 10, method = "pam")
 
-Confus(prt1, prt2)
+confusion(prt1, prt2)
 }
 \keyword{ methods }
 \keyword{ multivariate }

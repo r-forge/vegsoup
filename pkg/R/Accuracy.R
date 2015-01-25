@@ -1,12 +1,12 @@
 #	calculate prediction accuracy statistics for two partitionings
-#if(!isGeneric("Accuracy")) {
-setGeneric("Accuracy",
+#if(!isGeneric("accuracy")) {
+setGeneric("accuracy",
 	function (obj1, obj2)
-		standardGeneric("Accuracy")
+		standardGeneric("accuracy")
 )
 #}
 
-setMethod("Accuracy",
+setMethod("accuracy",
 	signature(obj1 = "VegsoupPartition",
 		obj2 = "VegsoupPartition"),
 	function (obj1, obj2) {
@@ -18,7 +18,7 @@ setMethod("Accuracy",
 	#	this is a slightly modified copy of function crosstable.statistics in package polytomous
 
 	#	original author
-	#	(C) Antti Arppe 2007-2011	
+	#	(C) Antti Arppe 2007-2011
 	#	E-mail: antti.arppe@helsinki.fi
 
 	#	Menard, S. (1995). Applied Logistic Regression Analysis.

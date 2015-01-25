@@ -1,15 +1,15 @@
 \encoding{UTF-8}
 
-\name{Accuracy}
+\name{accuracy}
 
-\alias{Accuracy}
-\alias{Accuracy,VegsoupPartition-method}
-\alias{Accuracy,VegsoupPartition,VegsoupPartition-method}
+\alias{accuracy}
+\alias{accuracy,VegsoupPartition-method}
+\alias{accuracy,VegsoupPartition,VegsoupPartition-method}
 
 \title{ Accuracy Statistics for Objects of class VegsoupPartition }
 
 \description{
-  \code{Accuracy} takes two objects inheriting from class
+  \code{accuracy} takes two objects inheriting from class
   \code{'VegsoupPartition'} (\code{obj1} and \code{obj1}) and computes a
   cross-tabulation (contingency table) of reference (observed) (\code{obj1})
   vs. compoarison (predicted) class memberships (\code{obj2}), and calculates
@@ -17,7 +17,7 @@
 }
 
 \usage{
-  Accuracy(obj1, obj2)
+  accuracy(obj1, obj2)
 }
 
 \arguments{
@@ -66,7 +66,7 @@ data(windsfeld)
 prt1 <- VegsoupPartition(windsfeld, k = 10, method = "flexible")
 prt2 <- VegsoupPartition(windsfeld, k = 10, method = "pam")
 
-Accuracy(prt1, prt2)
+accuracy(prt1, prt2)
 }
 \keyword{ methods }
 \keyword{ multivariate }

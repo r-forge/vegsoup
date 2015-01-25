@@ -276,7 +276,7 @@
 	  \code{signature(obj = "Vegsoup")}:
 	  returns object of class \code{\linkS4class{SpatialPolygonsDataFrame}}.
 	}
-	\item{AprioriGrouping}{
+	\item{apriori}{
 	  \code{signature(obj = "Vegsoup")}:
 	  returns a vector of a-priori group assignments. If not defined an
 	  \code{"integer"} vector of length equal to \code{nrow(obj)}.
@@ -403,7 +403,7 @@
 	  \code{signature(obj = "Vegsoup")}:
 	  queries elevation for plot coordinates from the SRTM3 data set.
 	}
-	\item{QuickMap}{
+	\item{quicklook}{
 	  \code{signature(obj = "Vegsoup")}:
 	  open a map in browser window.
 	}

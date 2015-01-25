@@ -58,7 +58,7 @@
 \author{ Roland Kaiser }
 
 \seealso{
-\code{\link{QuickMap}}
+\code{\link{quicklook}}
 }
 \examples{
 require(vegsoup)

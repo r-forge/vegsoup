@@ -76,7 +76,7 @@ x <- VegsoupPartition(windsfeld, k = 5)
 ## wait until optpart registers S3methods
 xs <- optsil(x, verbose = TRUE)
 xi <- optindval(x, verbose = TRUE)
-Confus(xs, xi)
+confusion(xs, xi)
 }
 }
 \seealso{

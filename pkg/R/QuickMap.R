@@ -1,13 +1,13 @@
 #	inherited visulalisation method
 #if (!isGeneric("gvisMap")) {
-setGeneric("QuickMap",
+setGeneric("quicklook",
 	function (x)
-		standardGeneric("QuickMap")
+		standardGeneric("quicklook")
 )
 #}
 
 #	gvisMap package
-setMethod("QuickMap",
+setMethod("quicklook",
 	signature(x = "Vegsoup"),
 	function (x) {
 		# suppressPackageStartupMessages(require(googleVis))

@@ -24,7 +24,7 @@
 		Y <- x[rownames(x) %in% rownames(X), ]
 		
 	#	raw lambda calculation
-		lambda[i] <- Confus(X, Y)$lambda
+		lambda[i] <- confusion(X, Y)$lambda
 		
 	#	random lambda calculation
 		r.nitr.lambda <- sapply(1:nitr.lambda, function (x) {

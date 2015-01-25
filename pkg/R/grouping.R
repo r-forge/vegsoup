@@ -1,9 +1,9 @@
 #	get predefined grouping vector
-setGeneric("AprioriGrouping",
+setGeneric("apriori",
 	function (obj)
-		standardGeneric("AprioriGrouping")
+		standardGeneric("apriori")
 )
-setMethod("AprioriGrouping",
+setMethod("apriori",
 	signature(obj = "Vegsoup"),
 	function (obj) obj@group
 )
