@@ -68,7 +68,7 @@ importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
                       proj4string, "proj4string<-", spTransform,
                       over)
 
-importFrom("rgdal", ogrInfo)
+# importFrom("rgdal", ogrInfo)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
                           RasterBrick, RasterStack, RasterStackBrick)
