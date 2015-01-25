@@ -671,7 +671,7 @@
 			tmp <- readLines(con)
 			hook <- max(grep("bottomrule", tmp))
 	
-			tmp.bgn <- 1: c(hook -1)    # begin
+			tmp.bgn <- 1: c(hook -1)	# begin
 			tmp.end <- hook:length(tmp) # end
 			
 			tmp.ins1 <- footer.species[[i]] # insert 1

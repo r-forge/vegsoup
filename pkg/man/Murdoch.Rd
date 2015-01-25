@@ -20,13 +20,13 @@ This is a wrapper for function
 
 \arguments{
   \item{ x }{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
   }
   \item{ minplt, type }{
-    see \code{\link[optpart:murdoch]{murdoch}}
+	see \code{\link[optpart:murdoch]{murdoch}}
   }
   \item{ \dots }{
-    not used.
+	not used.
   }
 }
 

@@ -200,8 +200,8 @@ setGeneric("write.verbatim",
 )
 #}
 setMethod("write.verbatim",
-    signature(obj = "Vegsoup"),
-	    .write.verbatimVegsoup
+	signature(obj = "Vegsoup"),
+		.write.verbatimVegsoup
 )
 
 #	move this somewhere else!

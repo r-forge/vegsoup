@@ -27,10 +27,10 @@ Accessor method to retrieve the species data in \emph{long format} as stored as 
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ value }{
-    Not yet implemented.
+	Not yet implemented.
   }  
 }
 \details{

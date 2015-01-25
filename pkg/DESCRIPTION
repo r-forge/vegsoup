@@ -3,20 +3,20 @@ Version: 0.2-4
 Date: 2015-01-24
 Title: classes and methods for phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
-                     email = "kardinal.eros@gmail.com"))
+					 email = "kardinal.eros@gmail.com"))
 Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, sp (>= 1.0-9)
 Imports: methods, parallel,
-    raster,
-    optpart, labdsv, cluster, vegclust (>= 1.5.1), isopam,
-    multitable, mefa, gclus,
-    Hmisc, pbapply, Matrix, XML, stringr,
-    geonames, googleVis, ggmap, RColorBrewer
+	raster,
+	optpart, labdsv, cluster, vegclust (>= 1.5.1), isopam,
+	multitable, mefa, gclus,
+	Hmisc, pbapply, Matrix, XML, stringr,
+	geonames, googleVis, ggmap, RColorBrewer
 Suggests: rgdal (>= 0.8-11), misc3d, maptools, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
-    community samples, sites data, taxonomy and spatial representation.
-    Methods are provided for data manipulation, multivariate analysis,
-    indicator species analysis and typesetting of LaTex tables. 
+	community samples, sites data, taxonomy and spatial representation.
+	Methods are provided for data manipulation, multivariate analysis,
+	indicator species analysis and typesetting of LaTex tables. 
 License: GPL (>= 2)
 URL: http://vegsoup.r-forge.r-project.org/
 Repository: R-Forge
@@ -24,116 +24,116 @@ Encoding: UTF-8
 LazyLoad: yes
 LazyData: yes
 Collate: AAA.R
-         Class-Species.R
-         Class-Taxonomy.R
-         Class-SpeciesTaxonomy.R
-         Class-Sites.R
-         Class-Coverscale.R
-         Class-Vegsoup.R
-         Class-VegsoupPartition.R
-         Class-VegsoupOptimstride.R
-         Class-VegsoupPartitionFidelity.R
-         Vegsoup-Internal.R
-         Vegsoup-Import.R
-         Coverscale-Methods.R
-         Coverscale-VegsoupMethods.R
-         bind.R
-         Species-methods.R
-         Taxonomy-methods.R
-         SpeciesTaxonomy-Methods.R
-         identical.R
-         intersect.R
-         compress.R
-         googletiles.R
-         reshape.R
-         stack.species.R
-         stack.sites.R
-         stack.coordinates.R
-         read.verbatim.R
-         verbatim.R
-         read.XML.R
-         SpeciesTaxonomy.R
-         Vegsoup.R
-         coerce.R
-         instantsoup.R
-         plainsoup.R
-         coenoflex.R
-         names.R
-         taxon.R
-         species.R
-         sites.R
-         Sites-methods.R
-         taxonomy.R
-         grouping.R
-         dim.R
-         as.matrix.R
-         as.dist.R
-         as.dendrogram.R
-         vegdist.R
-         as.data.frame.R
-         rowSums.R
-         decostand.R
-         show.R
-         outlier.R
-         extract.R
-         over.R
-         layers.R
-         sample.R
-         seriation.R
-         richness.R
-         stride.R
-         indpower.R
-         indspc.R
-         isamic.R
-         table.R
-         fivenum.R
-         quantile.R
-         shared.R
-         fidelity.R
-         fisher.test.R
-         Phi.R
-         Indval.R
-         elevation.R
-         KML.R
-         map.R
-         QuickMap.R
-         coldiss.R
-         reverseGeocode.R
-         Vegsoup-SpatialMethods.R
-         Vegsoup-RasterMethods.R
-         Vegsoup-OutputMethods.R
-         Vegsoup-VisualisationMethods.R
-         VegsoupPartition.R
-         VegsoupPartition-BaseMethods.R
-         partition.R
-         validate.R
-         optimize.R
-         typical.R
-         spread.R
-         Confus.R
-         Accuracy.R
-         Contingency.R
-         Constancy.R
-         average.R
-         rectangles.R
-         ellipsoidhull.R
-         write.verbatim.R
-         silhouette.R
-         disdiam.R
-         murdoch.R
-         stable.R
-         VegsoupPartition-FidelityMethods.R
-         VegsoupPartition-ClassificationStabilityMethods.R
-         VegsoupPartition-OutputMethods.R
-         VegsoupPartition-OutputMethodsMore.R
-         VegsoupPartition-VisualisationMethods.R
-         VegsoupPartitionFidelity-BaseMethods.R
-         OptimStride.R
-         VegsoupOptimstride-BaseMethods.R
-         VegsoupOptimstride-VisualisationMethods.R
-         Latex.R
-         plot.R
-         misc.R
-         templates.R
-         ZZZ.R
+		 Class-Species.R
+		 Class-Taxonomy.R
+		 Class-SpeciesTaxonomy.R
+		 Class-Sites.R
+		 Class-Coverscale.R
+		 Class-Vegsoup.R
+		 Class-VegsoupPartition.R
+		 Class-VegsoupOptimstride.R
+		 Class-VegsoupPartitionFidelity.R
+		 Vegsoup-Internal.R
+		 Vegsoup-Import.R
+		 Coverscale-Methods.R
+		 Coverscale-VegsoupMethods.R
+		 bind.R
+		 Species-methods.R
+		 Taxonomy-methods.R
+		 SpeciesTaxonomy-Methods.R
+		 identical.R
+		 intersect.R
+		 compress.R
+		 googletiles.R
+		 reshape.R
+		 stack.species.R
+		 stack.sites.R
+		 stack.coordinates.R
+		 read.verbatim.R
+		 verbatim.R
+		 read.XML.R
+		 SpeciesTaxonomy.R
+		 Vegsoup.R
+		 coerce.R
+		 instantsoup.R
+		 plainsoup.R
+		 coenoflex.R
+		 names.R
+		 taxon.R
+		 species.R
+		 sites.R
+		 Sites-methods.R
+		 taxonomy.R
+		 grouping.R
+		 dim.R
+		 as.matrix.R
+		 as.dist.R
+		 as.dendrogram.R
+		 vegdist.R
+		 as.data.frame.R
+		 rowSums.R
+		 decostand.R
+		 show.R
+		 outlier.R
+		 extract.R
+		 over.R
+		 layers.R
+		 sample.R
+		 seriation.R
+		 richness.R
+		 stride.R
+		 indpower.R
+		 indspc.R
+		 isamic.R
+		 table.R
+		 fivenum.R
+		 quantile.R
+		 shared.R
+		 fidelity.R
+		 fisher.test.R
+		 Phi.R
+		 Indval.R
+		 elevation.R
+		 KML.R
+		 map.R
+		 QuickMap.R
+		 coldiss.R
+		 reverseGeocode.R
+		 Vegsoup-SpatialMethods.R
+		 Vegsoup-RasterMethods.R
+		 Vegsoup-OutputMethods.R
+		 Vegsoup-VisualisationMethods.R
+		 VegsoupPartition.R
+		 VegsoupPartition-BaseMethods.R
+		 partition.R
+		 validate.R
+		 optimize.R
+		 typical.R
+		 spread.R
+		 Confus.R
+		 Accuracy.R
+		 Contingency.R
+		 Constancy.R
+		 average.R
+		 rectangles.R
+		 ellipsoidhull.R
+		 write.verbatim.R
+		 silhouette.R
+		 disdiam.R
+		 murdoch.R
+		 stable.R
+		 VegsoupPartition-FidelityMethods.R
+		 VegsoupPartition-ClassificationStabilityMethods.R
+		 VegsoupPartition-OutputMethods.R
+		 VegsoupPartition-OutputMethodsMore.R
+		 VegsoupPartition-VisualisationMethods.R
+		 VegsoupPartitionFidelity-BaseMethods.R
+		 OptimStride.R
+		 VegsoupOptimstride-BaseMethods.R
+		 VegsoupOptimstride-VisualisationMethods.R
+		 Latex.R
+		 plot.R
+		 misc.R
+		 templates.R
+		 ZZZ.R
 

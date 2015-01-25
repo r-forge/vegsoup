@@ -163,7 +163,7 @@ setGeneric("layers<-", function (obj, value)
 
 setMethod("layers",
    signature(obj = "Vegsoup"),
-    .layers.Vegsoup
+	.layers.Vegsoup
 )
 
 setReplaceMethod("layers",

@@ -18,10 +18,10 @@
 
 \arguments{
   \item{ X }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ \dots }{
-    Not used.
+	Not used.
   }
 }
 

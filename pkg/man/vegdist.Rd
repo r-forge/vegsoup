@@ -36,32 +36,32 @@ Compute a dissimilarity matrix as specified by \code{vegdist(x)} by internal cal
 
 \arguments{
   \item{ x, m, dis }{
-    \code{Vegsoup*} object.
+	\code{Vegsoup*} object.
   }
   %% \item{ mode }{
   %%   Compute distances in \emph{Q} or \emph{R} mode. See
   %%   \code{\link{as.matrix}}.
   %% }
   \item{ value }{
-    A single character valid as argument \code{method} to function
-    \code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
+	A single character valid as argument \code{method} to function
+	\code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
   }
   \item{ diag, upper, na.rm }{
-    Not used.
+	Not used.
   }
   \item{ method, binary }{
-    Not used.
+	Not used.
   }
   \item{ \dots }{
-    For \code{vegdist} additional arguments passed to \code{vegan::vegdist},
-    except argument \code{method} which is inherited from the \code{Vegsoup*} object.
-    For \code{distconnected} arguments passed to \code{\link[vegan:vegdist]{vegdist}}.
+	For \code{vegdist} additional arguments passed to \code{vegan::vegdist},
+	except argument \code{method} which is inherited from the \code{Vegsoup*} object.
+	For \code{distconnected} arguments passed to \code{\link[vegan:vegdist]{vegdist}}.
   }
   \item{ toolong }{
-    Shortest dissimilarity regarded as NA. See \code{\link[vegan:distconnected]{vegdist}}.
+	Shortest dissimilarity regarded as NA. See \code{\link[vegan:distconnected]{vegdist}}.
   }
   \item{ trace }{
-    Summarize results.
+	Summarize results.
   }
 }
 \details{

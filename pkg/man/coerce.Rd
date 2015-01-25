@@ -36,10 +36,10 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 
 \arguments{
   \item{ from }{
-    A Vegsoup* object.
+	A Vegsoup* object.
   }
   \item{ to }{
-    class to coerce to.
+	class to coerce to.
   }
 }
 
@@ -59,13 +59,13 @@ Coerce object a \code{'Vegsoup*'} object to other class.
   Coercion to \code{'matrix'} and \code{'sparseMatrix'} returns an object of the corresponding class.
   Coercion to 'list' returns a list with three components.
   \item{ species }{
-     object of class \code{'matrix'}
+	 object of class \code{'matrix'}
   }
   \item{ sites }{
-     object of class \code{'data.frame'}
+	 object of class \code{'data.frame'}
   }
   \item{ taxonomy }{
-    object of class \code{'data.frame'}
+	object of class \code{'data.frame'}
   }
 
   Coercion to 'data.frame' returns a \code{"data.frame"} with as many row as

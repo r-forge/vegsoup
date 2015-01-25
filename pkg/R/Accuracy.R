@@ -7,9 +7,9 @@ setGeneric("Accuracy",
 #}
 
 setMethod("Accuracy",
-    signature(obj1 = "VegsoupPartition",
-    	obj2 = "VegsoupPartition"),
-    function (obj1, obj2) {
+	signature(obj1 = "VegsoupPartition",
+		obj2 = "VegsoupPartition"),
+	function (obj1, obj2) {
 
 	if (getK(obj1) != getK(obj2)) {
 		stop("Numbers of k differ for obj1 (", getK(obj1), ") ",

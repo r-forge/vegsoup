@@ -49,20 +49,20 @@ The functions retrieve a species matrix of mode according the methods literal na
 
 \arguments{
   \item{ x }{
-    \code{'Vegsoup'} object.
+	\code{'Vegsoup'} object.
   }
   \item{ mode }{
-    character. If \code{mode = "R"} return the transposed matrix. If missing, defaults to
-    \code{"Q"} no transposition. Lower and upper case letters are treated the same.
-    See \sQuote{Details}.
+	character. If \code{mode = "R"} return the transposed matrix. If missing, defaults to
+	\code{"Q"} no transposition. Lower and upper case letters are treated the same.
+	See \sQuote{Details}.
   }
   \item{ typeof }{
-    character. Selectes the desired storage mode or type of the object.
-    Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
+	character. Selectes the desired storage mode or type of the object.
+	Can be one of \code{"character"}, \code{"numeric"} or \code{"logical"}.
   }
   \item{ \dots }{
-    Arguments passed to \code{as.logical} etc. to supply a value for the
-    argument \code{mode}. See argument \code{mode}.
+	Arguments passed to \code{as.logical} etc. to supply a value for the
+	argument \code{mode}. See argument \code{mode}.
   }
 }
 
@@ -137,19 +137,19 @@ decostand(x) <- NULL # reset the default
 
 # species matrix representations and memory demands
 # class "matrix"
-object.size(as.matrix(x))          # most efficient
+object.size(as.matrix(x))		  # most efficient
 # class "list" (pointers and values of all non zero entries)
-object.size(indices(x))            # almost equal
+object.size(indices(x))			# almost equal
 # coercion to class "sparseMatrix" is based on method indices
 object.size(as(x, "sparseMatrix")) # efficient
 # the long format as stored in Vegsoup* objects (slot 'species')
-object.size(species(x))            # most general but least efficent
+object.size(species(x))			# most general but least efficent
 # a multi-dimensional array of layer replicates
-object.size(as.array(x))           # least efficent
+object.size(as.array(x))		   # least efficent
 
 # comparison of memory demands of objects of differnt classes
 object.size(as(x, "data.list"))  # least efficent, but highly generic
-object.size(as.data.frame(x))    # also efficent
+object.size(as.data.frame(x))	# also efficent
 # for comparison subtract sp slots
 sp.object.size <- object.size(x@sp.points) + object.size(x@sp.polygons)
 object.size(x) - sp.object.size # most general and most efficent

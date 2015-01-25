@@ -19,13 +19,13 @@ Extract the values of the cells of a \code{Raster} object for the locations (\co
 
 \arguments{
   \item{ x }{
-    A \code{Raster*} object.
+	A \code{Raster*} object.
   }
   \item{ y }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ \dots }{
-    Additional arguments passed to \code{\link[raster:extract]{extract}}.
+	Additional arguments passed to \code{\link[raster:extract]{extract}}.
   }
 }
 

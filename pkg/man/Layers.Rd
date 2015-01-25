@@ -18,32 +18,32 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 
 \usage{
 \S4method{layers}{Vegsoup}(obj, collapse, aggregate = c("layer", "mean", "min", "max", "sum"),
-       dec = 0, verbose = FALSE)
+	   dec = 0, verbose = FALSE)
 
 \S4method{layers}{Vegsoup}(obj) <- value
 }
 
 \arguments{
   \item{ obj }{
-    \code{Vegsoup*} object.
+	\code{Vegsoup*} object.
   }
   \item{ collapse }{
-    character. Vector defining a combination of layers. The order of strings
-    matters!
+	character. Vector defining a combination of layers. The order of strings
+	matters!
   }
   \item{ aggregate }{
-    character. Layer aggregation mode, defaults to \code{aggregate = "layer"}.
+	character. Layer aggregation mode, defaults to \code{aggregate = "layer"}.
   }
   \item{ dec }{
-    integer. Number of decimals for calculation, defaults to \code{0}. If this
-    is not appropriate for \code{coverscale(obj)}, the value is increased as
-    necessary.
+	integer. Number of decimals for calculation, defaults to \code{0}. If this
+	is not appropriate for \code{coverscale(obj)}, the value is increased as
+	necessary.
   }
   \item{ value }{
-    character. Permutation of \code{layers(obj)} to reorder layers.
+	character. Permutation of \code{layers(obj)} to reorder layers.
   }
   \item{ verbose }{
-    logical. Prints messages.
+	logical. Prints messages.
   }
 }
 
@@ -109,8 +109,8 @@ layers(x)
 # assign wl to sl, tl1 and tl2
 # see ?windsfeld for details
 x1 <- layers(x, aggregate = "layer",
-                collapse = c("hl", "ml", "wl", "wl", "wl"),
-                verbose = TRUE)
+				collapse = c("hl", "ml", "wl", "wl", "wl"),
+				verbose = TRUE)
 layers(x1)
 # check dimension of data set
 # dim(obj)[1] gives number of sites (unique sample plots)
@@ -119,25 +119,25 @@ dim(x1)
 
 # collpase all layers
 x2 <- layers(x, aggregate = "layer", collapse = c("ol"),
-                verbose = TRUE)
+				verbose = TRUE)
 layers(x2); dim(x2)
 
 # ... another way adopting default labeling
 x3 <- layers(x, aggregate = "layer",
-                verbose = TRUE)
+				verbose = TRUE)
 layers(x3); dim(x3)
 
 # drop layer sl aswell as tl1 and tl2
 x4 <- layers(x, aggregate = "layer",
-                collapse = c("ml", "hl", NA, NA, NA),
-                verbose = TRUE)
+				collapse = c("ml", "hl", NA, NA, NA),
+				verbose = TRUE)
 layers(x4)
 dim(x4)
 
 # this way we loose most of the plots
 x5 <- layers(x, aggregate = "layer",
-                collapse = c(NA, NA, NA, "wl", "wl"),
-                verbose = TRUE)
+				collapse = c(NA, NA, NA, "wl", "wl"),
+				verbose = TRUE)
 layers(x5)
 dim(x5)
 

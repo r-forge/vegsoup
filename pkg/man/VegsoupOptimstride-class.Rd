@@ -23,7 +23,7 @@
 
 \section{ Slots }{
   \describe{
-    \item{\code{optimstride}:}{Object of class \code{"list"} ~~ }
+	\item{\code{optimstride}:}{Object of class \code{"list"} ~~ }
   }
 }
 
@@ -33,7 +33,7 @@ Class \code{"\linkS4class{Vegsoup}"}, directly.
 
 \section{ Methods }{
   \describe{
-    \item{summary}{\code{signature(object = "VegsoupOptimstride")}: ... }
+	\item{summary}{\code{signature(object = "VegsoupOptimstride")}: ... }
 	 }
 }
 

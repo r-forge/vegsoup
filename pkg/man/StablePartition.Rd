@@ -18,17 +18,17 @@
 
 \arguments{
   \item{ x }{
-    \code{\link{VegsoupPartition}} object.
+	\code{\link{VegsoupPartition}} object.
   }
   \item{ nitr }{
-    number of iterations.
+	number of iterations.
   }
   \item{ nitr.lambda }{
-    number of iteration to calculate random values of lambda.
+	number of iteration to calculate random values of lambda.
   }
   \item{ \dots }{
-    arguments passed to \code{\link{VegsoupPartition}} except argument \code{method}
-    which is obtained from the object \code{x}.
+	arguments passed to \code{\link{VegsoupPartition}} except argument \code{method}
+	which is obtained from the object \code{x}.
   }
 }
 \details{
@@ -37,10 +37,10 @@
 \value{
   returns a list with components
   \item{ lambda }{
-    lambda statistic
+	lambda statistic
   }
   \item{ modified.lambda }{
-    modified lambda statistic
+	modified lambda statistic
   }
 }
 \references{

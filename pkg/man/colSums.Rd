@@ -36,27 +36,27 @@ Form row and column sums for the the species matrix based on presence/absence an
 
 \arguments{
   \item{ x }{
-    An \code{Vegsoup*} object.
+	An \code{Vegsoup*} object.
   }
   \item{ na.rm }{
-    logical. Should missing values (including NaN) be omitted from the
-    calculations?
+	logical. Should missing values (including NaN) be omitted from the
+	calculations?
   }
   \item{ dims }{
-    Not used.
+	Not used.
   }
   \item{ typeof }{
-    The mode of the species matrix to compute values from, defaults to
-    \code{"logical"} for \code{rowSums} and \code{colSums}. See
-    \code{\link{as.matrix}} for details about argument \code{'typeof'}. The
-    \code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"}
-    as the default and \code{typeof = "character"} is not supported by neither
-    of the functions.
+	The mode of the species matrix to compute values from, defaults to
+	\code{"logical"} for \code{rowSums} and \code{colSums}. See
+	\code{\link{as.matrix}} for details about argument \code{'typeof'}. The
+	\code{rowMeans} and \code{colMeans} methods use \code{typeof = "numeric"}
+	as the default and \code{typeof = "character"} is not supported by neither
+	of the functions.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link[base:rowSums]{rowSums}},
-    \code{\link[base:rowSums]{rowSums}}, \code{\link[base:colSums]{colSums}}
-    and \code{\link[base:colMeans]{colMeans}}, respectively.
+	Arguments passed to \code{\link[base:rowSums]{rowSums}},
+	\code{\link[base:rowSums]{rowSums}}, \code{\link[base:colSums]{colSums}}
+	and \code{\link[base:colMeans]{colMeans}}, respectively.
   }
 }
 

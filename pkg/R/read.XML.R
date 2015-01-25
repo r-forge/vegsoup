@@ -6,7 +6,7 @@ read.XML <- function (file) {
 	#	names(doc) # we don't carry about node 'Template'
 	
 	#	split root into 2 nodes
-	doc1 <- doc[["Plots"]]         # with two parent nodes, plots are children thereof
+	doc1 <- doc[["Plots"]]		 # with two parent nodes, plots are children thereof
 	doc2 <- doc[["Lookup_tables"]] # additional data, nodes to be converted into tables
 	
 	#	two functions to access content of parent nodes
@@ -61,10 +61,10 @@ read.XML <- function (file) {
 		#	this node has five children
 		#	we denote them x1, x2, ... x5, respectively
 		x1 <- x[["Coverscale_list"]] # important
-		x2 <- x[["Country_list"]]    # 
-		x3 <- x[["Author_list"]]     #
-		x4 <- x[["Project_list"]]    #
-		x5 <- x[["Species_list"]]    # the most important
+		x2 <- x[["Country_list"]]	# 
+		x3 <- x[["Author_list"]]	 #
+		x4 <- x[["Project_list"]]	#
+		x5 <- x[["Species_list"]]	# the most important
 		
 		#	coverscale (Coverscale_list)
 		if (length(x1) == 1) {
@@ -111,9 +111,9 @@ read.XML <- function (file) {
 	
 	x <- do.call("bind", lapply(xy, "[[", 1)) # species
 	y <- do.call("bind", lapply(xy, "[[", 2)) # sites
-	z <- zz[[3]]                               # taxonomy
-	s <- zz[[1]]                               # cover scale
-	p <- zz[[2]]                               # project attributes
+	z <- zz[[3]]							   # taxonomy
+	s <- zz[[1]]							   # cover scale
+	p <- zz[[2]]							   # project attributes
 	
 	#	we need to worry about coverscale, if the data set apllies more than one
 	if (length(s) > 1) {

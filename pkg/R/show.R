@@ -16,23 +16,23 @@ setMethod("show",
 #	partial summary functions
 .species.summary <- function (x) {
 	res <- paste(
-		"\nspecies          : ",
+		"\nspecies		  : ",
 			nrow(taxonomy(x)), " (discarding layer/stratum duplicates)",
-		"\nmatrix fill      : ",
+		"\nmatrix fill	  : ",
 			round(fill(x), 0), " %",
-		"\nlayers           : ",
+		"\nlayers		   : ",
 			length(layers(x)), " (", paste(layers(x), collapse = ", "), ")",
-		"\ncoverscale       : ",
+		"\ncoverscale	   : ",
 			coverscale(x)@name,
 			ifelse(is.null(decostand(x)),
 			paste("\ndecostand method : undefined (NULL)"),
 			paste("\ndecostand method : ", decostand(x), sep = "")),
-		"\nvegdist          : ",
+		"\nvegdist		  : ",
 			x@dist,	   				
 			ifelse(length(x@taxonomy) > 0,
-		"\ntaxonomy         : valid ",
-	       "\nreference list   : non matching taxa!"),
-		"\nsites            : ",
+		"\ntaxonomy		 : valid ",
+		   "\nreference list   : non matching taxa!"),
+		"\nsites			: ",
 			dim(x)[1], " (sample plots/relevees)", sep = "")
 	if (dim(x)[1] == 1) {
 		tmp <- species(species(x)) #! get data slot
@@ -42,7 +42,7 @@ setMethod("show",
 		tmp <- tmp[order(tmp$taxon, tmp$layer), ]
 		tmp <- apply(tmp[, -1], 1,
 			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ", "))
-		res <- paste(res, "\nspecies list     :", paste(tmp, collapse = ""))
+		res <- paste(res, "\nspecies list	 :", paste(tmp, collapse = ""))
 	}
 		
 	res
@@ -55,8 +55,8 @@ setMethod("show",
 
 .spatial.summary <- function (x) {
 	res <- paste(
-		"\nproj4string      :", proj4string(x),
-		"\nextent           :",
+		"\nproj4string	  :", proj4string(x),
+		"\nextent		   :",
 			paste(paste(bbox(x)[1,], bbox(x)[2,]), collapse = " "),
 			" (lng lat / min max)")
 	res
@@ -75,8 +75,8 @@ setMethod("show",
 	res <- paste(
 		"\nfidelity measure :", x@method,
 		ifelse(all(is.na(x@lowerCI)), 
-		"\nbootstrap        : no",	
-		paste("\nbootstrap        :", x@nboot, "replicates")))
+		"\nbootstrap		: no",	
+		paste("\nbootstrap		:", x@nboot, "replicates")))
 	res
 }
 
@@ -137,7 +137,7 @@ setMethod("summary",
 
 #	class VegsoupPartitionFidelity
 setMethod("summary",
-    signature(object = "VegsoupPartitionFidelity"),
+	signature(object = "VegsoupPartitionFidelity"),
 	function (object, choice = c("all", "species", "sites", "partition", "fidelity"), ...) {
 		if (missing(choice)) choice <- "all"
 		CHOICES <- c("all", "species", "sites", "partition", "fidelity")

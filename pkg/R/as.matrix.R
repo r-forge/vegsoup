@@ -18,16 +18,16 @@
 
 #	return species matrix
 setMethod("as.numeric",
-    signature(x = "Vegsoup"),
-    function (x, mode) {
-    	if (missing(mode)) mode <- "Q"
-    	MODE <- c("Q", "R")
-    	mode <- match.arg(toupper(mode), MODE)  	
-    	m <- .cast2(x, "numeric")
-    	
+	signature(x = "Vegsoup"),
+	function (x, mode) {
+		if (missing(mode)) mode <- "Q"
+		MODE <- c("Q", "R")
+		mode <- match.arg(toupper(mode), MODE)  	
+		m <- .cast2(x, "numeric")
+		
 		#	standardization as definded by decostand(x)		
 		stand <- slot(slot(x, "decostand"), "method")
-    	
+		
 		if (!is.null(stand)) {
 			if (length(stand) < 2) {
 				if (stand == "wisconsin") {
@@ -53,30 +53,30 @@ setMethod("as.numeric",
 )
 
 setMethod("as.character",
-    signature(x = "Vegsoup"),
-    function (x, mode) {
-    	if (missing(mode)) mode <- "Q"
-    	MODE <- c("Q", "R")
-    	mode <- match.arg(toupper(mode), MODE)
-    	# m <- .cast(x, mode = 2)
-    	m <- .cast2(x, "character")
+	signature(x = "Vegsoup"),
+	function (x, mode) {
+		if (missing(mode)) mode <- "Q"
+		MODE <- c("Q", "R")
+		mode <- match.arg(toupper(mode), MODE)
+		# m <- .cast(x, mode = 2)
+		m <- .cast2(x, "character")
    		if (mode == "R") m <- t(m)
    		return(invisible(m))
-    }
+	}
 )
 	
 setMethod("as.logical",
-    signature(x = "Vegsoup"),
-    function (x, mode) {
-    	if (missing(mode)) mode <- "Q"
-    	MODE <- c("Q", "R")
-    	mode <- match.arg(toupper(mode), MODE)
-    	# m <- .cast(x, mode = 3)
-    	m <- .cast2(x, "logical")
+	signature(x = "Vegsoup"),
+	function (x, mode) {
+		if (missing(mode)) mode <- "Q"
+		MODE <- c("Q", "R")
+		mode <- match.arg(toupper(mode), MODE)
+		# m <- .cast(x, mode = 3)
+		m <- .cast2(x, "logical")
    		if (mode == "R") m <- t(m)
    		storage.mode(m) <- "integer"
-   		return(invisible(m))    	
-    }
+   		return(invisible(m))		
+	}
 )	
 
 #if (!isGeneric("as.matrix")) {
@@ -86,23 +86,23 @@ setMethod("as.logical",
 #}
 
 setMethod("as.matrix",
-    signature(x = "Vegsoup"),
-    function (x, typeof, ...) { # ... argument mode
-    	if (missing(typeof)) typeof <- "numeric"    		
-    	TYPEOF <- c("character", "numeric", "logical")
-    	typeof <- match.arg(typeof, TYPEOF)
+	signature(x = "Vegsoup"),
+	function (x, typeof, ...) { # ... argument mode
+		if (missing(typeof)) typeof <- "numeric"			
+		TYPEOF <- c("character", "numeric", "logical")
+		typeof <- match.arg(typeof, TYPEOF)
 
-    	if (typeof == "character") {
-    		m <- as.character(x, ...)
-    	}
-    	if (typeof == "numeric") {
-    		m <- as.numeric(x, ...)
-    	}
-    	if (typeof == "logical") {
-    		m <- as.logical(x, ...)
-    	}
-    	return(m)
-    }    	    
+		if (typeof == "character") {
+			m <- as.character(x, ...)
+		}
+		if (typeof == "numeric") {
+			m <- as.numeric(x, ...)
+		}
+		if (typeof == "logical") {
+			m <- as.logical(x, ...)
+		}
+		return(m)
+	}			
 )
 
 setAs(from = "Vegsoup", to = "matrix",
@@ -124,12 +124,12 @@ setGeneric("as.array",
 
 #	return array of species matrix, one dimension for each layer
 setMethod("as.array",
-    signature(x = "Vegsoup"),
-    function (x, typeof, ...) {	
+	signature(x = "Vegsoup"),
+	function (x, typeof, ...) {	
 	xx <- species(species(x)) #! get slot data
 	scale <- coverscale(x) # rename local object scale to ?
 	
-   	if (missing(typeof)) typeof <- "numeric"    		
+   	if (missing(typeof)) typeof <- "numeric"			
    	TYPEOF <- c("character", "numeric", "logical")
    	typeof <- match.arg(typeof, TYPEOF)
 
@@ -197,12 +197,12 @@ setGeneric("indices",
 setMethod("indices",
 	signature(x = "Vegsoup"),
 		function (x, typeof) {
-	    	if (missing(typeof)) {
-	    		typeof <- "numeric"
-	    	}	    		
-    		TYPEOF <- c("character", "numeric", "logical")
-    		typeof <- match.arg(typeof, TYPEOF)
-    	
+			if (missing(typeof)) {
+				typeof <- "numeric"
+			}				
+			TYPEOF <- c("character", "numeric", "logical")
+			typeof <- match.arg(typeof, TYPEOF)
+		
 			cs <- coverscale(x)
 			# was: al <- .abbr.layer(x)			
 			al <- file.path(species(x)$abbr, species(x)$layer, fsep = "@") 

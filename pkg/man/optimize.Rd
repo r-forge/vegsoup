@@ -25,20 +25,20 @@ Modify the partitioning of an object as to optimize silhouette widths (distance 
 
 \arguments{
   \item{ x }{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
   }
   \item{ maxitr }{
-    integer. The maximum number of iterations to perform.
+	integer. The maximum number of iterations to perform.
   }
   \item{ verbose }{
-    logical. Print elapsed CPU time.
+	logical. Print elapsed CPU time.
   } 
   \item{ minsiz }{
-    integer. The minimum size of the partition to consider reassigning a sample out of.
+	integer. The minimum size of the partition to consider reassigning a sample out of.
   }
   \item{ \dots }{
-    arguments passed to \code{\link{as.dist}} (\code{optsil}) or
-    \code{link{as.matrix}} (\code{optindval}).
+	arguments passed to \code{\link{as.dist}} (\code{optsil}) or
+	\code{link{as.matrix}} (\code{optindval}).
   }
 }
 

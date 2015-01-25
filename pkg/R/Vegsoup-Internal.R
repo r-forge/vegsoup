@@ -20,32 +20,32 @@
 #	helper function for VegsoupPartition
 #	credits go to Dave Roberts
 .VegsoupPartitionOptpartBestopt <- function (dist, k, numitr, verbose = TRUE) {
-    if (class(dist) != "dist") {
-        stop("bestopt is only defined for objects of class dist")
-    }
-    #	Imports: optpart
-    #	require(optpart)
-    
-    best <- 0
-    ratios <- rep(0, numitr)
-    for (i in 1:numitr) {
-    	if (verbose) cat(".")
+	if (class(dist) != "dist") {
+		stop("bestopt is only defined for objects of class dist")
+	}
+	#	Imports: optpart
+	#	require(optpart)
+	
+	best <- 0
+	ratios <- rep(0, numitr)
+	for (i in 1:numitr) {
+		if (verbose) cat(".")
 		tmp <- optpart::optpart(k, dist)
-        while (max(tmp$clustering) != k) {
-        	tmp <- optpart::optpart(k, dist)
-        	}
-        ratios[i] <- max(tmp$ratio)
-        if (ratios[i] > best) {
-            best <- ratios[i]
-            result <- tmp
-            itr <- i
-        }
-    }
-    cat("\nRatios for respective partitions \n")
-    print(format(ratios, digits = 4))
-    cat(paste("\nChoosing # ", itr, " ratio = ", format(best,
-        digits = 4), "\n"))
-    invisible(result)
+		while (max(tmp$clustering) != k) {
+			tmp <- optpart::optpart(k, dist)
+			}
+		ratios[i] <- max(tmp$ratio)
+		if (ratios[i] > best) {
+			best <- ratios[i]
+			result <- tmp
+			itr <- i
+		}
+	}
+	cat("\nRatios for respective partitions \n")
+	print(format(ratios, digits = 4))
+	cat(paste("\nChoosing # ", itr, " ratio = ", format(best,
+		digits = 4), "\n"))
+	invisible(result)
 }
 
 
@@ -100,12 +100,12 @@
 #	n <- n.i[i]						# n	
 #   for (j in 1:length(N_pi)) {		# loop over partitions
 #		N_p <- N_pi[j]				# N_p
-#		n_p <- n_pi[i,j]    	
-#    foi <- ObservedFreqencyTable(N, N_p, n, n_p)
-#    fei <- ExpectedFreqencyTable(N, N_p, n, n_p)
-#    res1 <- 2 * sum(foi * log(foi / fei), na.rm = T)
-#    res2 <- g.statistic(fei, correction = "none")
-#    }
+#		n_p <- n_pi[i,j]		
+#	foi <- ObservedFreqencyTable(N, N_p, n, n_p)
+#	fei <- ExpectedFreqencyTable(N, N_p, n, n_p)
+#	res1 <- 2 * sum(foi * log(foi / fei), na.rm = T)
+#	res2 <- g.statistic(fei, correction = "none")
+#	}
 #}	
 
 
@@ -125,7 +125,7 @@
 # Wright, S. P. 1992. Adjusted P-values for simultaneous inference. 
 # Biometrics 48: 1005-1013. 
 #
-#                  Pierre Legendre, May 2007
+#				  Pierre Legendre, May 2007
 #	k = length(vecP)
 #	
 #	vecPB = 0

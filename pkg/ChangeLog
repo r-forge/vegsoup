@@ -3,7 +3,6 @@
 we must rebuild polygons for coordinates<- method
 decostand method for fidelity, needs to recalculate fidelity if not presence absence
 more rigorous test for identical methods
-rename SpeciesList to taxalist
 generalize slot partition to contain class dendrogram, fuzzy memberships and maybe more?
 peaks, if curve bends down return no peaks with option
 implemnet math method e.g. obj^0.2
@@ -19,6 +18,7 @@ renamed Partitioning to partitioning
 renamed PartitioningMatrix partitioningMatrix
 renamed PartitioningCombinations to partitioningCombinations
 renamed Fidelity to fidelity
+rename SpeciesList to taxalist
 
 --- 2015-01-24, version: 0.2-4
 

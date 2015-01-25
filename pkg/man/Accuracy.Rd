@@ -21,13 +21,13 @@
 }
 
 \arguments{
-    \item{ obj1 }{
-      an object of class \code{'VegsoupPartition'}.
-    }
+	\item{ obj1 }{
+	  an object of class \code{'VegsoupPartition'}.
+	}
 
-    \item{ obj2 }{
-      a second object of class \code{'VegsoupPartition'} to compare to \code{obj1}.
-    }
+	\item{ obj2 }{
+	  a second object of class \code{'VegsoupPartition'} to compare to \code{obj1}.
+	}
 }
 
 \value{

@@ -50,7 +50,7 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
 }
 

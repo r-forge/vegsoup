@@ -4,29 +4,29 @@ setGeneric("nrow", function (x)
 }
 
 setMethod("nrow",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
 		nrow(sites(x))
 	}
 )
 
 setMethod("nrow",
-    signature(x = "Species"),
-    function (x) {
+	signature(x = "Species"),
+	function (x) {
 		nrow(species(x))
 	}
 )
 
 setMethod("nrow",
-    signature(x = "Sites"),
-    function (x) {
+	signature(x = "Sites"),
+	function (x) {
 		nrow(sites(x))
 	}
 )
 
 setMethod("nrow",
-    signature(x = "Taxonomy"),
-    function (x) {
+	signature(x = "Taxonomy"),
+	function (x) {
 		nrow(slot(x, "data"))
 	}
 )
@@ -38,21 +38,21 @@ setGeneric("ncol", function (x)
 }
 
 setMethod("ncol",
-    signature(x = "Vegsoup"),
-    function (x) {
-    	if (length(layers(x)) > 1) {
-    		nrow(unique(species(species(x))[, c("abbr", "layer")]))
-    	}
-    	else {
-    		nrow(taxonomy(x)) # !	
-    	}
+	signature(x = "Vegsoup"),
+	function (x) {
+		if (length(layers(x)) > 1) {
+			nrow(unique(species(species(x))[, c("abbr", "layer")]))
+		}
+		else {
+			nrow(taxonomy(x)) # !	
+		}
 	}
 )
 
 #	dim is a primitive function
 setMethod("dim",
-    signature(x = "Vegsoup"),
-	    function (x) {
+	signature(x = "Vegsoup"),
+		function (x) {
 			return(c(nrow(x), ncol(x)))
 		}
 )
@@ -65,8 +65,8 @@ setGeneric("ncell",
 setMethod("ncell",
 	signature(x = "Vegsoup"),
 	function (x) {
-    	prod(dim(x))
-    }
+		prod(dim(x))
+	}
 )
 
 #	matrix fill
@@ -78,8 +78,8 @@ setGeneric("fill",
 }
 
 setMethod("fill",
-    signature(obj = "Vegsoup"),
-    function (obj) {
+	signature(obj = "Vegsoup"),
+	function (obj) {
 		res <- sum(as.logical(obj) == 0) / prod(dim(obj))
 		res <- (1 - res) * 100
 		#	single plot object

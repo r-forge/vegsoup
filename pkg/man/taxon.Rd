@@ -25,14 +25,14 @@
 
 \arguments{
   \item{ x }{
-    \code{Vegsoup*} object.
+	\code{Vegsoup*} object.
   }
   \item{ subset }{
-    \code{numeric} index to \code{taxonomy(x)}, vector of mode \code{character}, or a logical
-    expression.
+	\code{numeric} index to \code{taxonomy(x)}, vector of mode \code{character}, or a logical
+	expression.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{grep}}.
+	Arguments passed to \code{\link{grep}}.
   }
 }
 

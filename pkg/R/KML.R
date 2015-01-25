@@ -111,11 +111,11 @@
 		"<name>vegsoup plots</name>",
 		"<Style id=\"downArrowIcon\">",
 			"<IconStyle>",
-	        	"<Icon>",
-	          		"<href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href>",
-	        	"</Icon>",
+				"<Icon>",
+			  		"<href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href>",
+				"</Icon>",
 			"</IconStyle>",
-	    "</Style>")
+		"</Style>")
 	end.kml <- c(
 		"</Document>",
 		"</kml>")
@@ -150,8 +150,8 @@ setGeneric("KML",
 )
 #}
 setMethod("KML",
-    signature(obj = "Vegsoup"),
-    .KMLVegsoup
+	signature(obj = "Vegsoup"),
+	.KMLVegsoup
 )
 
 #	for class "Vegsoup"
@@ -182,11 +182,11 @@ begin.kml <- c(
 	"<name>vegsoup partitions</name>",
 	"<Style id=\"downArrowIcon\">",
 		"<IconStyle>",
-        	"<Icon>",
-          		"<href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href>",
-        	"</Icon>",
+			"<Icon>",
+		  		"<href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href>",
+			"</Icon>",
 		"</IconStyle>",
-    "</Style>")
+	"</Style>")
 end.kml <- c(
 	"</Document>",
 	"</kml>")
@@ -317,5 +317,5 @@ return(invisible(res))
 
 setMethod("KML",
    signature(obj = "VegsoupPartition"),
-    .KMLVegsoupPartition
+	.KMLVegsoupPartition
 )

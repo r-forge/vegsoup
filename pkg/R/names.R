@@ -5,8 +5,8 @@ setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
 }
 	
 setMethod("rownames",
-    signature(x = "Vegsoup", do.NULL = "missing", prefix = "missing"),
-    function (x) {
+	signature(x = "Vegsoup", do.NULL = "missing", prefix = "missing"),
+	function (x) {
 		unique(species(x)$plot)
 	}
 )
@@ -57,29 +57,29 @@ setGeneric("colnames", function (x, do.NULL = TRUE, prefix = "col")
 }
 
 setMethod("colnames",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
 		a <- species(x)$abbr
 		l <- species(x)$layer
 		al <- file.path(a, l, fsep = "@") # faster than paste
 		res <- unique(unlist(sapply(layers(x), function (x) al[l == x])))
 		if (!is.vector(res)) res <- as.vector(res) # to coerce if there is only one layer
-	    res
-    }
+		res
+	}
 )
 
 setMethod("dimnames",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
 		list(rownames(x), colnames(x))
 	}
 )
 
 setMethod("dimnames",
-    signature(x = "Species"),
-    function (x) {
-    	p <- species(x)$plot
-    	a <- species(x)$abbr
+	signature(x = "Species"),
+	function (x) {
+		p <- species(x)$plot
+		a <- species(x)$abbr
 		l <- species(x)$layer	
 		al <- file.path(a, l, fsep = "@") # faster than paste
 		return(list(p, al))
@@ -88,10 +88,10 @@ setMethod("dimnames",
 
 #	for sites data frame
 setMethod("names",
-    signature(x = "Vegsoup"),
-    function (x) {
-    	names(sites(x))
-    }
+	signature(x = "Vegsoup"),
+	function (x) {
+		names(sites(x))
+	}
 )
 
 setReplaceMethod("names",
@@ -108,8 +108,8 @@ setGeneric("row.names", function (x)
 }	
 
 setMethod("row.names",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
 		row.names(sites(x))	
 	}
 )
@@ -154,16 +154,16 @@ setMethod("splitAbbr",
 
 #setMethod("abbr",
 #   signature(obj = "Vegsoup"),
-#    function (obj) {
-#    	splitAbbr(obj)$abbr
-#    }	
+#	function (obj) {
+#		splitAbbr(obj)$abbr
+#	}	
 #)
 
 setMethod("abbr",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-    	sort(unique(species(obj)$abbr))
-    }	
+	signature(obj = "Vegsoup"),
+	function (obj) {
+		sort(unique(species(obj)$abbr))
+	}	
 )
 
 #if (!isGeneric("abbr")) {
@@ -174,10 +174,10 @@ setGeneric("taxon",
 	}	
 )
 setMethod("taxon",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-    	taxonomy(obj)$taxon
-    }	
+	signature(obj = "Vegsoup"),
+	function (obj) {
+		taxonomy(obj)$taxon
+	}	
 )
 
 #setGeneric("abbr<-",

@@ -57,16 +57,16 @@ setGeneric("nndist",
 #}
 
 setMethod("nndist",
-    signature(X = "Vegsoup"),
-    function (X, ...) {
-    	d <- as.matrix(as.dist(X))
-    	diag(d) <- 1
-    	nn <- apply(d, 1, which.min)
-    	diag(d) <- 0
-    	res <- apply(cbind(nn, 1:ncol(d)), 1,
-    		function (x) d[x[1], x[2]])
-    	attr(res, "neighbour") <- rownames(d)[nn]
-    	
-    	return(res)
-    }
+	signature(X = "Vegsoup"),
+	function (X, ...) {
+		d <- as.matrix(as.dist(X))
+		diag(d) <- 1
+		nn <- apply(d, 1, which.min)
+		diag(d) <- 0
+		res <- apply(cbind(nn, 1:ncol(d)), 1,
+			function (x) d[x[1], x[2]])
+		attr(res, "neighbour") <- rownames(d)[nn]
+		
+		return(res)
+	}
 )   	

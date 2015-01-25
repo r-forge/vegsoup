@@ -32,26 +32,26 @@
 
 \arguments{
   \item{ x }{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
   }
   \item{ collapse }{
-    Character be be used as separator in dimnames. Only characters are
-    allowed that can be identified with \code{grep("[:punct:]", collapse)}.
-    See \code{\link{regex}} in package \pkg{base} for details.
+	Character be be used as separator in dimnames. Only characters are
+	allowed that can be identified with \code{grep("[:punct:]", collapse)}.
+	See \code{\link{regex}} in package \pkg{base} for details.
   }
 }
 
 \value{
   \item{ partitioning }{
-    returns the running partitioning vector.
+	returns the running partitioning vector.
   }
   \item{ partitioningMatrix }{
-    returns a \code{matrix} of zeros and ones where rows are plots and
-    columns are partitions. Ones indicate to which partition a plot belongs.
+	returns a \code{matrix} of zeros and ones where rows are plots and
+	columns are partitions. Ones indicate to which partition a plot belongs.
   }
   \item{ partitioningCombinations }{
-    returns a \code{matrix} of combinations where column names indicate a particular
-    combination.
+	returns a \code{matrix} of combinations where column names indicate a particular
+	combination.
   }
 }
 

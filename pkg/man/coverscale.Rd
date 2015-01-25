@@ -52,22 +52,22 @@ Coverscale(name, codes, lims)
 
 \arguments{
   \item{ name }{
-    character. Giving a name of a built in abundance scale, or a name to be
-    referred to a user supplied definition.
+	character. Giving a name of a built in abundance scale, or a name to be
+	referred to a user supplied definition.
   }
   \item{ codes }{
-    character. Vector assigning the level codes (ordinal scales).
+	character. Vector assigning the level codes (ordinal scales).
 	Need to not define zero.
   }
   \item{ lims }{
-    numeric. Vector defining the mean percentage cover for each entry
-    in \code{codes}. Need to not define zero.
+	numeric. Vector defining the mean percentage cover for each entry
+	in \code{codes}. Need to not define zero.
   }
   \item{ x }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ value }{
-    A \code{Coverscale} object or a \code{character} specifying a coverscale as accepted by
+	A \code{Coverscale} object or a \code{character} specifying a coverscale as accepted by
 	argument name of function \code{Coverscale}.
   }
 }

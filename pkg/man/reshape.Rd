@@ -24,26 +24,26 @@
 
 \arguments{
   \item{ x }{
-    A data frame given in a particular structure.
+	A data frame given in a particular structure.
   }
   \item{ obj }{
   A \code{Vegsoup*} object.
   }
   \item{ file }{
-    Path to a csv-file.
+	Path to a csv-file.
   }
   \item{ schema }{
-    Names of columns to be searched for. See \sQuote{Details}.
+	Names of columns to be searched for. See \sQuote{Details}.
   }
   \item{ sep }{
-    See \code{\link{read.csv}} for parsing of csv files. Defaults are set
-    according to \code{read.csv2}, also regarding \code{dec}!
+	See \code{\link{read.csv}} for parsing of csv files. Defaults are set
+	according to \code{read.csv2}, also regarding \code{dec}!
   }
   \item{ dec }{
-    See \code{read.csv}.
+	See \code{read.csv}.
   }
   \item{ verbose }{
-    Prints diagnostic messages.
+	Prints diagnostic messages.
   }
 }
 

@@ -116,7 +116,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 					convert <- TRUE
 					if (verbose) {
 						cat("\n... cover seems to be continous: ")
-						cat("\n    Tukey's five number summary:", fivenum(test), "\n")
+						cat("\n	Tukey's five number summary:", fivenum(test), "\n")
 					}
 				}
 				else {

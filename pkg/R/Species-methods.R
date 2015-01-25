@@ -23,33 +23,33 @@ setGeneric("abbr",
 
 
 setMethod("species",
-    signature(obj = "Species"),
-    function (obj) {
-    	obj@data
-    }
+	signature(obj = "Species"),
+	function (obj) {
+		obj@data
+	}
 )
 
 setMethod("species",
-    signature(obj = "data.frame"),
-    function (obj) {
-    	new("Species", data = obj)
-    }
+	signature(obj = "data.frame"),
+	function (obj) {
+		new("Species", data = obj)
+	}
 )
 
 setMethod("species",
-    signature(obj = "matrix"),
-    function (obj) {
-    	new("Species",
-    	data = as.data.frame(obj, stringsAsFactors = FALSE))
-    }
+	signature(obj = "matrix"),
+	function (obj) {
+		new("Species",
+		data = as.data.frame(obj, stringsAsFactors = FALSE))
+	}
 )
 
 setMethod("species",
-    signature(obj = "character"),
-    function (obj, ...) {
-    	new("Species",
-    	data = read.csv(obj, ...))
-    }
+	signature(obj = "character"),
+	function (obj, ...) {
+		new("Species",
+		data = read.csv(obj, ...))
+	}
 )
 
 setReplaceMethod("species",
@@ -65,7 +65,7 @@ setReplaceMethod("species",
 		if (any(nas)) {
 			stop("value does not match for:\n", levels(a)[nas],
 				"\npmatch returns:\n", value$taxon[pmatch(levels(a)[nas], value$taxon)],
-				call. = FALSE)	
+				call. = FALSE)
 		}
 		
 		levels(a) <- value$abbr[i]
@@ -77,8 +77,8 @@ setReplaceMethod("species",
 )
 
 setMethod("species",
-    signature(obj = "SpeciesTaxonomy"),
-    function (obj) slot(obj, "species")
+	signature(obj = "SpeciesTaxonomy"),
+	function (obj) slot(obj, "species")
 )
 
 setReplaceMethod("species",
@@ -103,17 +103,17 @@ setReplaceMethod("species",
 )
 
 setMethod("species",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-    	slot(obj, "species")
-    }	
+	signature(obj = "Vegsoup"),
+	function (obj) {
+		slot(obj, "species")
+	}	
 )
 
 setReplaceMethod("species",
 	signature(obj = "Vegsoup", value = "SpeciesTaxonomy"),
 	function (obj, value) {
 		warning("not implemented yet")
-		return(obj)		
+		return(obj)
 	}
 )
 
@@ -134,40 +134,40 @@ setReplaceMethod("species",
 		
 		#	if we loose layers
 		obj@layers <- unique(value$layer)
-						
+		
 		#	at least we need to subset taxonomy
 		value <- taxonomy(obj)[taxonomy(obj)$abbr %in% unique(abbr(obj)), ]
-		obj@taxonomy <- value		 
+		obj@taxonomy <- value
 		return(obj)
 	}
 )
 
 setMethod("show",
-    signature(object = "Species"),
-    function (object) {
+	signature(object = "Species"),
+	function (object) {
 		cat("object of class   :",
 			class(object))
 		cat("\nnumber of species :",
 			length(unique(species(object)$abbr)))
 		cat("\nnumber of sites   :",
-			length(unique(species(object)$plot)))		
+			length(unique(species(object)$plot)))
 		cat("\nshow only first",
 			ifelse(nrow(object@data) <= 6, nrow(object@data), 6),
 			"rows\n\n")
 		print(head(object@data, n = 6L))
-    }
+	}
 )
 
 setMethod("[",
-    signature(x = "Species",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = FALSE) {
-    	species(x@data[i, j, ...])
-    }
+	signature(x = "Species",
+	i = "ANY", j = "ANY", drop = "missing"),
+	function (x, i, j, ..., drop = FALSE) {
+		species(x@data[i, j, ...])
+	}
 )
 
 setMethod("$",
-    signature(x = "Species"),
+	signature(x = "Species"),
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {
 			stop("no $ method for object without slot data")
@@ -179,20 +179,20 @@ setMethod("$",
 setReplaceMethod("$",
 	signature(x = "Species"),
 	function (x, name, value) {
- 		x@data[[name]] <- value 	
-		return(x)		
+ 		x@data[[name]] <- value
+		return(x)
 	}
 )
 
 setMethod("abbr",
-    signature(obj = "Species"),
-    function (obj) {
-    	obj$abbr
-    }
+	signature(obj = "Species"),
+	function (obj) {
+		obj$abbr
+	}
 )
 
 setMethod("bind",
-    signature(... = "Species"),
+	signature(... = "Species"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)
 		x <- do.call("rbind", lapply(allargs, species))
@@ -210,96 +210,96 @@ setMethod("bind",
 setOldClass("VegsoupVerbatim")
 
 setMethod("species",
-    signature(obj = "VegsoupVerbatim"),
-    function (obj) {
+	signature(obj = "VegsoupVerbatim"),
+	function (obj) {
 		r <- data.frame(abbr = rownames(obj),
 				layer = NA,
 				taxon = NA, obj,
 				check.names = FALSE, stringsAsFactors = FALSE)
 						
 		if (length(grep("@", rownames(obj))) > 0 ) {
-			a <- strsplit(as.character(r$abbr), "@")			
-			r$abbr <- sapply(a, "[[", 1)		
-			r$layer <- sapply(a, "[[", 2)			
+			a <- strsplit(as.character(r$abbr), "@")
+			r$abbr <- sapply(a, "[[", 1)
+			r$layer <- sapply(a, "[[", 2)
 		}
 		r <- stackSpecies(r)[, 1:4]
 		return(r)
 	}
 )
 
-#if (!isGeneric("SpeciesList")) {
-setGeneric("SpeciesList",
+#if (!isGeneric("taxalist")) {
+setGeneric("taxalist",
 	function (obj, layered)
-		standardGeneric("SpeciesList")
+		standardGeneric("taxalist")
 )
 #}
-setMethod("SpeciesList",
-    signature(obj = "Vegsoup"),
-    function (obj, layered = FALSE) {
-    	if (missing(layered))
-    		layered <- FALSE
+setMethod("taxalist",
+	signature(obj = "Vegsoup"),
+	function (obj, layered = FALSE) {
+		if (missing(layered))
+			layered <- FALSE
 
-    	if (layered) {
-	    	res <- species(species(obj)) #! get slot data
-    		res <- unique(res[c("abbr", "layer")])
-    		# we can't use the [-method because we want layer replicates
-    		# these can easily by obtained by indexing rownames with characters
-    		res$taxon <- taxonomy(taxonomy(obj))[res$abbr, ]$taxon
-	    	res <- res[, c("abbr", "taxon", "layer")]
-	    	res <- res[order(res$layer, res$taxon),]	    				
-    	}
+		if (layered) {
+			res <- species(species(obj)) #! get slot data
+			res <- unique(res[c("abbr", "layer")])
+			# we can't use the [-method because we want layer replicates
+			# these can easily by obtained by indexing rownames with characters
+			res$taxon <- taxonomy(taxonomy(obj))[res$abbr, ]$taxon
+			res <- res[, c("abbr", "taxon", "layer")]
+			res <- res[order(res$layer, res$taxon),]
+		}
 		else {
-    		res <- taxonomy(taxonomy(obj))
-    	}
-    	rownames(res) <- seq_len(nrow(res))
-    	return(invisible(res))	
+			res <- taxonomy(taxonomy(obj))
+		}
+		rownames(res) <- seq_len(nrow(res))
+		return(invisible(res))
 	}
 )
 
-#if (!isGeneric("SpeciesList")) {
+#if (!isGeneric("taxalist")) {
 setGeneric("relevee",
 	function (obj, plot, format = FALSE)
 		standardGeneric("relevee")
 )
 #}
 setMethod("relevee",
-    signature(obj = "Vegsoup"),
-    function (obj, plot, format) {
+	signature(obj = "Vegsoup"),
+	function (obj, plot, format) {
 
-    	if (missing(plot)) {
-    		i <- 1
-    		message("return first plot in data set: ", rownames(obj)[i])    		
-    	} else {
-    		if (is.numeric(plot)) {
-    			stopifnot(plot %in% 1:nrow(obj))
-    			i <- plot
-    		}
-    		if (inherits(plot, "character")) {
-    			stopifnot(plot %in% rownames(obj))
-    			i <- which(rownames(obj) == plot)
-    		}
-    	}
-    	x <- obj[i, ]
+		if (missing(plot)) {
+			i <- 1
+			message("return first plot in data set: ", rownames(obj)[i])
+		} else {
+			if (is.numeric(plot)) {
+				stopifnot(plot %in% 1:nrow(obj))
+				i <- plot
+			}
+			if (inherits(plot, "character")) {
+				stopifnot(plot %in% rownames(obj))
+				i <- which(rownames(obj) == plot)
+			}
+		}
+		x <- obj[i, ]
 
 
 		#	header
-	    h <- cbind(coordinates(x), sites(x))
-	    
-	    h <- data.frame(variable = names(h), value = t(h)[, 1])
-	    rownames(h) <- seq_len(nrow(h))
+		h <- cbind(coordinates(x), sites(x))
+		
+		h <- data.frame(variable = names(h), value = t(h)[, 1])
+		rownames(h) <- seq_len(nrow(h))
 		
 		#	species
 		l <- species(species(x))
-    	l$taxon <- taxonomy(taxonomy(obj))[l$abbr, ]$taxon # see SpeciesList
-	    l <- l[order(l$layer, l$taxon), ]
-    	l <- l[, c("taxon", "layer", "cov")]
-    	rownames(l) <- seq_len(nrow(l))
-    	l$layer[duplicated(l$layer)] <- ""
-    	
-    	r <- list(sites = h, species = l)
-    	
-    	if (format) {
-    		r1 <- as.matrix(r$species)
+		l$taxon <- taxonomy(taxonomy(obj))[l$abbr, ]$taxon # see taxalist
+		l <- l[order(l$layer, l$taxon), ]
+		l <- l[, c("taxon", "layer", "cov")]
+		rownames(l) <- seq_len(nrow(l))
+		l$layer[duplicated(l$layer)] <- ""
+		
+		r <- list(sites = h, species = l)
+		
+		if (format) {
+			r1 <- as.matrix(r$species)
 			r2 <- as.matrix(r$sites)
 			
 			w <- apply(apply(r1, 2, nchar), 2, max)
@@ -316,10 +316,8 @@ setMethod("relevee",
 			r1 <- apply(r1, 1, function (x) paste(x, collapse = ""))
 			r2 <- paste(apply(r2, 1, function (x) paste (x, collapse = ": ")), collapse = ", ")
 			
-			r <- c(r1, " ", r2)	
-    	}
-
-    	return(r)
-    		
+			r <- c(r1, " ", r2)
+		}
+		return(r)
 	}
 )

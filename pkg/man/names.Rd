@@ -78,19 +78,19 @@ Retrieve the row or column names of the species matrix (see \code{\link[vegsoup]
 
 \arguments{
   \item{ x }{
-    \code{Vegsoup*} object. 
+	\code{Vegsoup*} object. 
   }
   \item{ name }{
-    character. Literal character string or a \link[base]{name}.
+	character. Literal character string or a \link[base]{name}.
   }
   \item{ do.NULL }{
-    not used.
+	not used.
   }
   \item{ prefix }{
-    not used.
+	not used.
   }
   \item{ value }{
-    character or integer vector of the same length as \code{rownames(x)}, or \code{NULL}.
+	character or integer vector of the same length as \code{rownames(x)}, or \code{NULL}.
   }
 }
 

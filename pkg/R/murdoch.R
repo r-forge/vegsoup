@@ -31,6 +31,6 @@ setMethod("murdoch",
 			res[,i] <- res.ls[[i]]$murdoch
 			pval[,i] <- round(res.ls[[i]]$pval, 3)
 		}
-    	return(c(res.ls, list(murdoch = res, pval = pval)))
-    }
+		return(c(res.ls, list(murdoch = res, pval = pval)))
+	}
 )

@@ -17,7 +17,7 @@ read.XML(file)
 
 \arguments{
   \item{ file }{
-    character. Path to a plain text file (text array).
+	character. Path to a plain text file (text array).
   }
 }
 

@@ -30,7 +30,7 @@ setMethod("initialize",
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
 		input <- data[ ,c(1,2,3)]
-		unique.input <- unique(input)            
+		unique.input <- unique(input)			
 		if (nrow(input) != nrow(unique.input)) {
 			tmp <- data[duplicated(input), ][c("plot", "abbr")]
 			tmp <- paste(paste(tmp[,1], tmp[,2]), collapse = "\n")

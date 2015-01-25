@@ -38,7 +38,7 @@ Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4st
 		if (inherits(x, "SpeciesTaxonomy")) {
 			# we have already subsetted the object and it's slots
 			z <- taxonomy(x)
-			x <- species(x)                        
+			x <- species(x)						
 		}
 		else			
 			z <- z[match(unique(x$abbr), z$abbr), ] # subset

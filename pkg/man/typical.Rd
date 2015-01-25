@@ -17,14 +17,14 @@ Identifies samples (plots) that typify clusters in a partition based on dissimil
 }
 \arguments{
   \item{ obj }{
-    An object inheriting from class \code{VegsoupPartition}. 
+	An object inheriting from class \code{VegsoupPartition}. 
   }
   \item{ k }{
-    integer. Number of typal species/clusters to identify. Defaults to 1.
+	integer. Number of typal species/clusters to identify. Defaults to 1.
   }
   \item{ \dots }{
-    currently not used.
-    %additional arguments passed to \code{\link{as.dist}}. 
+	currently not used.
+	%additional arguments passed to \code{\link{as.dist}}. 
   }
 }
 \details{

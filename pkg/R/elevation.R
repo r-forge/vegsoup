@@ -23,5 +23,5 @@ setGeneric("elevation",
 
 setMethod("elevation",
    signature(obj = "Vegsoup"),
-    .elevation
+	.elevation
 )

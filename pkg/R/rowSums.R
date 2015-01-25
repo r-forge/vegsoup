@@ -9,8 +9,8 @@ setMethod("colSums",
 		if (typeof == "character") {
 			stop("\n no way to calculate sums based on characters")
 		}
-    	colSums(as.matrix(x, typeof = typeof), ...)
-    }
+		colSums(as.matrix(x, typeof = typeof), ...)
+	}
 )
 
 #if (!isGeneric("rowSums")) {
@@ -24,8 +24,8 @@ setMethod("rowSums",
 		if (typeof == "character") {
 			stop("\n no way to calculate sums based on characters")
 		}	
-    	rowSums(as.matrix(x, typeof = typeof), ...)
-    }
+		rowSums(as.matrix(x, typeof = typeof), ...)
+	}
 )
 
 #if (!isGeneric("rowMeans")) {
@@ -38,8 +38,8 @@ setMethod("rowMeans",
 		if (typeof == "character") {
 			stop("\n no way to calculate sums based on characters")
 		}
-    	rowMeans(as.matrix(x, typeof = typeof), ...)
-    }
+		rowMeans(as.matrix(x, typeof = typeof), ...)
+	}
 )
 
 #if (!isGeneric("colMeans")) {
@@ -52,6 +52,6 @@ setMethod("colMeans",
 		if (typeof == "character") {
 			stop("\n no way to calculate sums based on characters")
 		}
-    	colMeans(as.matrix(x, typeof = typeof), ...)
-    }
+		colMeans(as.matrix(x, typeof = typeof), ...)
+	}
 )

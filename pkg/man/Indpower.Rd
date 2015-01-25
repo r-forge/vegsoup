@@ -16,13 +16,13 @@ Indicator power calculation of Halme et al. (2009) or the congruence between ind
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ type }{
-    Nothing here yet.
+	Nothing here yet.
   }
   \item{ \dots }{
-    arguments passed to \code{vegan::indpower} to specify \code{type}.
+	arguments passed to \code{vegan::indpower} to specify \code{type}.
   }
 }
 

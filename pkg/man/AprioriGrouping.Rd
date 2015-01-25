@@ -17,7 +17,7 @@ Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
 }
 

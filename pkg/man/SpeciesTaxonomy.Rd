@@ -13,42 +13,42 @@ Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{
 
 \usage{
 SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE,
-                skip = TRUE, verbose = FALSE, ...)
+				skip = TRUE, verbose = FALSE, ...)
 }
 
 \arguments{
   \item{ x }{
-    \code{'data.frame'} or \code{'matrix'} conforming to the specifications
-    of class \code{\linkS4class{Species}} or an object of that class.
+	\code{'data.frame'} or \code{'matrix'} conforming to the specifications
+	of class \code{\linkS4class{Species}} or an object of that class.
   }
   \item{ y }{
-    as above but conforming to the specifications
-    of class \code{\linkS4class{Taxonomy}} or an object of that class.
+	as above but conforming to the specifications
+	of class \code{\linkS4class{Taxonomy}} or an object of that class.
   }
   \item{ file.x }{
-    path to a csv-file having species abundances in \emph{long format} as defined by
-    \code{\linkS4class{Species}}.
+	path to a csv-file having species abundances in \emph{long format} as defined by
+	\code{\linkS4class{Species}}.
   }
   \item{ file.y }{
-    as above but giving a taxonomic reference list as defined by 
-    \code{\linkS4class{Taxonomy}}.
+	as above but giving a taxonomic reference list as defined by 
+	\code{\linkS4class{Taxonomy}}.
   }
   \item{ sep, dec }{
-    separators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
-    of \code{read.csv2}!
+	separators and decimals in input file, see \code{\link{read.csv}}. Defaults to the behavior
+	of \code{read.csv2}!
   }
   \item{ pmatch }{
-    use \code{pmatch} to match abbreviation in \code{x} respectively
-    \code{file.x} against the reference. See \sQuote{Details}.
+	use \code{pmatch} to match abbreviation in \code{x} respectively
+	\code{file.x} against the reference. See \sQuote{Details}.
   }
   \item{ skip }{
-    retain only mandatory columns, defaults to \code{TRUE}.
+	retain only mandatory columns, defaults to \code{TRUE}.
   }
   \item{ verbose }{
-    prints diagnostic messages.
+	prints diagnostic messages.
   }
   \item{ \dots }{
-    currently not used.
+	currently not used.
   }
 }
 
@@ -105,8 +105,8 @@ data(dune)
 # there are two moss species in the dune data set, see vector of taxon names below
 # we assign bryophytes to a moos layer ('ml') vascular palnts to herb layer ('hl')
 x <- data.frame(abbr = names(dune),
-                layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
-                taxon = "", t(dune))
+				layer = c(rep("hl", 8), "ml", rep("hl", 6), "ml", rep("hl", 14)),
+				taxon = "", t(dune))
 
 # groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])

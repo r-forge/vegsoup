@@ -74,7 +74,7 @@ shapeSpecies <- function (obj) {
 	#	slow
 	for (i in 1:nrow(res)) {
 		tmp <- res[i, ]
-	    sel <- tmp$plot == spc$plot & tmp$abbr == spc$abbr
+		sel <- tmp$plot == spc$plot & tmp$abbr == spc$abbr
    		res[i, match(spc[sel, 3], names(res))] <- spc[sel, 4]
 	}
 	return(invisible(res))

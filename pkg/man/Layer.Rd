@@ -18,10 +18,10 @@ Simply return the layer for each observation.
 
 \arguments{
   \item{ obj }{
-    \code{Vegsoup*} object
+	\code{Vegsoup*} object
   }
   \item{ \dots }{
-    passed from to methods.
+	passed from to methods.
   }
 }
 

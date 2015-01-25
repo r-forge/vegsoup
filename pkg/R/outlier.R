@@ -6,19 +6,19 @@ setGeneric("outlier",
 #}
 
 setMethod("outlier",
-    signature(obj = "Vegsoup"),
-    function (obj, type = c("mccune", "wildi"), thresh = 0.2, ...) {
-    	if (missing(type)) {
-    		type <- "mccune"
-    	}    	
-    	if (!missing(thresh)) {
-    		type <- "wildi"
-    	}
-    	else {
-    		thresh = 0.2
-    	} 
-	    TYPE <- c("wildi", "mccune")            
-	    type <- match.arg(type, TYPE, several.ok = TRUE)
+	signature(obj = "Vegsoup"),
+	function (obj, type = c("mccune", "wildi"), thresh = 0.2, ...) {
+		if (missing(type)) {
+			type <- "mccune"
+		}		
+		if (!missing(thresh)) {
+			type <- "wildi"
+		}
+		else {
+			thresh = 0.2
+		} 
+		TYPE <- c("wildi", "mccune")			
+		type <- match.arg(type, TYPE, several.ok = TRUE)
 
 		if (type == "mccune") {
 			message("outlier type McCune")

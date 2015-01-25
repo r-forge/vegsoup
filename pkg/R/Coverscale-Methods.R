@@ -90,62 +90,62 @@ setGeneric("is.occurence", function (x)
 #}
 
 setMethod("is.ordinal",
-    signature(x = "Coverscale"),
-    function (x) {
+	signature(x = "Coverscale"),
+	function (x) {
   		!is.null(x@codes) & !is.null(x@codes)
-    }
+	}
 )
 
 setMethod("is.continuous",
-    signature(x = "Coverscale"),
-    function (x) {
+	signature(x = "Coverscale"),
+	function (x) {
   		is.null(x@codes) & is.null(x@codes)
-    }
+	}
 )
 
 setMethod("is.occurence",
-    signature(x = "Coverscale"),
-    function (x) {
+	signature(x = "Coverscale"),
+	function (x) {
   		x@name == "pa"
-    }
+	}
 )
 
 #setMethod("show",
 #  signature(object = "Coverscale"),
-#    function (object) {
+#	function (object) {
 #			print(paste("cover scale:", object@name))
 #			print(rbind(codes = object@codes, lims = object@lims), quote = FALSE)
-#    }
+#	}
 #)
 #	removeMethod("show", "Coverscale")
 
 setMethod("is.continuous",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
   		is.continuous(coverscale(x))   	
-    }
+	}
 )
 
 setMethod("is.ordinal",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
   		is.ordinal(coverscale(x))   	
-    }
+	}
 )
 
 setMethod("is.occurence",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
   		is.occurence(coverscale(x))
-    }
+	}
 )
 
 
 setMethod("coverscale",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
   		x@coverscale   	
-    }
+	}
 )
 
 #	needs cover scale conversion 
@@ -154,7 +154,7 @@ setReplaceMethod("coverscale",
 	function (x, value) {
 
 		ss <- .identicalCoverscale(coverscale(x), value) # same, same
-		pa <- is.occurence(value)                        # presence/absence
+		pa <- is.occurence(value)						# presence/absence
 		bb <- coverscale(x)@name == "Braun-Blanquet" & value@name == "Braun-Blanquet 2"		
 		oo <- is.ordinal(x) & is.ordinal(value)
 		co <- is.continuous(x) & is.ordinal(value)
@@ -210,8 +210,8 @@ setReplaceMethod("coverscale",
 setReplaceMethod("coverscale",
 	signature(x = "Vegsoup", value = "character"),
 	function (x, value) {		
-		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R         
-       	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
+		COVERSCALES <- names(.COVERSCALES) # defined in Class-Coverscale.R		 
+	   	value <- match.arg(value, COVERSCALES, several.ok = TRUE)		
 		value <- as(.COVERSCALES[[match.arg(value, COVERSCALES)]], "Coverscale")
 		
 		coverscale(x) <- value
@@ -228,7 +228,7 @@ setGeneric("BraunBlanquetReduce",
 #}
 
 setMethod("BraunBlanquetReduce",
-    signature(x = "Vegsoup"),
+	signature(x = "Vegsoup"),
 	function (x) {	
 		coverscale(x) <- Coverscale("braun.blanquet2")
 		return(x)

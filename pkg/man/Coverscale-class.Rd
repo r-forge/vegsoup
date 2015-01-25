@@ -19,18 +19,18 @@ Contains the defintion for a cover scale (abundance scale) associated with an \c
 }
 \section{Slots}{
   \describe{
-    \item{\code{name}:}{A \code{character} object giving a descriptive name of the definition.}
-    \item{\code{codes}:}{A \code{character} vector giving the level codes for ordinal scales, or \code{NULL}.}
-    \item{\code{lims}:}{A \code{numeric} vector defining the mean percentage cover for each entry in \code{codes} or \code{NULL}.}
+	\item{\code{name}:}{A \code{character} object giving a descriptive name of the definition.}
+	\item{\code{codes}:}{A \code{character} vector giving the level codes for ordinal scales, or \code{NULL}.}
+	\item{\code{lims}:}{A \code{numeric} vector defining the mean percentage cover for each entry in \code{codes} or \code{NULL}.}
   }
 }
 \section{Methods}{
   \describe{
-    \item{coerce}{
-      \code{signature(from = "list", to = "Coverscale")}:
-      The \code{from} object has to be a list of length three. Components
-      \code{[2:3]} can be \code{NULL}.
-    }
+	\item{coerce}{
+	  \code{signature(from = "list", to = "Coverscale")}:
+	  The \code{from} object has to be a list of length three. Components
+	  \code{[2:3]} can be \code{NULL}.
+	}
   }
 }
 \references{

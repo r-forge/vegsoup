@@ -28,135 +28,135 @@
 
 \usage{
 read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
-         species.only = FALSE, vertical = TRUE, verbose = TRUE)
+		 species.only = FALSE, vertical = TRUE, verbose = TRUE)
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
-         collapse = ",", abundance)
+		 collapse = ",", abundance)
 
 castFooter(file, schema = c(":", ",", " "), first = TRUE, layers)
 
 header(x)
 
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
-          sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
+		  sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
+		  rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
 
 \S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
-          sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
+		  sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
+		  rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
 }
 
 \arguments{
 ## Arguments to functions
   \item{ file }{
-    character. Path to a plain text file (text array).
+	character. Path to a plain text file (text array).
 }
 ## Arguments to function \code{read.verbatim}
   \item{ colnames }{
-    character. String to be searched for in the header section and used to
-    assign plot names. Note, do not use any characters defined for argument
-    \code{replace} in the header section of the input file! See \sQuote{Details}.
+	character. String to be searched for in the header section and used to
+	assign plot names. Note, do not use any characters defined for argument
+	\code{replace} in the header section of the input file! See \sQuote{Details}.
   }
   \item{ layers }{
-    list or character. If \code{layers} is a named list, it defines start and end indices to
-    assign a layer to each species observation. \code{layers} can also be of mode character.
-    If the length of the supplied vector agrees with the number of species in the data set,
-    it assigns a the vaule of layer to each species observation. If layers are present
-    in the input file, argument layers can be a single character used to prune layers from taxa
-    abbreviations. See \sQuote{Examples}.
-    For \code{read.verbatim}, Separator used for trailing layer value (e.g. genus species@hl).
+	list or character. If \code{layers} is a named list, it defines start and end indices to
+	assign a layer to each species observation. \code{layers} can also be of mode character.
+	If the length of the supplied vector agrees with the number of species in the data set,
+	it assigns a the vaule of layer to each species observation. If layers are present
+	in the input file, argument layers can be a single character used to prune layers from taxa
+	abbreviations. See \sQuote{Examples}.
+	For \code{read.verbatim}, Separator used for trailing layer value (e.g. genus species@hl).
   }
   \item{ replace }{
-    logical. Vector of characters to be replaced by blanks. Note, both the hyphen and
-    dash characters are defined in default set. See \sQuote{Details}.
+	logical. Vector of characters to be replaced by blanks. Note, both the hyphen and
+	dash characters are defined in default set. See \sQuote{Details}.
   }
   \item{ schema }{
-    character. Vector of characters of length 3 to be used to split character strings.
-    Element one gives the separator to prune the plot identifier.
-    Element two is the separator in the taxon and abundance value part.
-    Element three is used to prune abundance values associated with each taxon.
-    See \sQuote{Details}.
+	character. Vector of characters of length 3 to be used to split character strings.
+	Element one gives the separator to prune the plot identifier.
+	Element two is the separator in the taxon and abundance value part.
+	Element three is used to prune abundance values associated with each taxon.
+	See \sQuote{Details}.
   }
   \item{ first }{
-    logical. If \code{TRUE} abundance value precede taxon names, if \code{FALSE} abundance
-    values are given after taxon names.
+	logical. If \code{TRUE} abundance value precede taxon names, if \code{FALSE} abundance
+	values are given after taxon names.
   }
   \item{ species.only }{
-    logical. Just return a vector of species extracted from the data set.
+	logical. Just return a vector of species extracted from the data set.
   }
   \item{ vertical }{
-    logical. Set to \code{FALSE} if numbers are not stacked vertically.
+	logical. Set to \code{FALSE} if numbers are not stacked vertically.
   }
   \item{ verbose }{
-    Print diagnostic messages.
+	Print diagnostic messages.
   }
 
 ## Arguments to function \code{read.verbatim.append}
   \item{ x }{
-    \code{VegsoupVerbatim} object. Usually created by calls to function
-    \code{read.verbatim}.
+	\code{VegsoupVerbatim} object. Usually created by calls to function
+	\code{read.verbatim}.
   }
   \item{ mode }{
-    character. Defines how the species occurrences in rows are organized.
-    See \sQuote{Details}.
+	character. Defines how the species occurrences in rows are organized.
+	See \sQuote{Details}.
   }
   \item{ sep }{
-    character. Separator between successive species. Defaults to \code{","}.
+	character. Separator between successive species. Defaults to \code{","}.
   }
   \item{ abundance }{
-    For \code{mode = "species"} a single \code{character} recycled for all
-    observations and setting a dummy cover value if no abundance for a species
-    is supplied in the data source. Defaults to \code{"+"}.
+	For \code{mode = "species"} a single \code{character} recycled for all
+	observations and setting a dummy cover value if no abundance for a species
+	is supplied in the data source. Defaults to \code{"+"}.
 
-    For \code{mode = "plots"} either \code{TRUE} or \code{FALSE} and
-    specifying if the character found after the species name should be treated
-    as a cover value. See \sQuote{Details}. If \code{abundance = FALSE} the
-    defaults of \code{mode = "species"} apply with no option to override it,
-    but setting \code{abundance} to any value (e.g. \code{"+"}) will use that
-    value.
+	For \code{mode = "plots"} either \code{TRUE} or \code{FALSE} and
+	specifying if the character found after the species name should be treated
+	as a cover value. See \sQuote{Details}. If \code{abundance = FALSE} the
+	defaults of \code{mode = "species"} apply with no option to override it,
+	but setting \code{abundance} to any value (e.g. \code{"+"}) will use that
+	value.
 }
 
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
-    \code{Vegsoup} object.
+	\code{Vegsoup} object.
   }
   \item{ select }{
-    character. Vector matching \code{names(obj)} or indices to columns in
-    \code{sites(obj)} to select information to be incorporated in the header section.
-    Beware, this only makes sense for numeric (e.g. elevation) or short string
-    variables (e.g. slope aspect)!
+	character. Vector matching \code{names(obj)} or indices to columns in
+	\code{sites(obj)} to select information to be incorporated in the header section.
+	Beware, this only makes sense for numeric (e.g. elevation) or short string
+	variables (e.g. slope aspect)!
   }
   \item{ absence }{
-    Character to code absences, defaults to \code{"."}.
+	Character to code absences, defaults to \code{"."}.
   }
   \item{ collapse }{
-    Character to be used as separator in columns of abundances (plots).
+	Character to be used as separator in columns of abundances (plots).
   }
   \item{ pad }{
-    Integer specifying the number of blanks to add to taxon names (right side)
-    and layers string (both sides), defaults to 1.
+	Integer specifying the number of blanks to add to taxon names (right side)
+	and layers string (both sides), defaults to 1.
   }
   \item{ abbreviate }{
-    Truncate abundance values to width 1 using \code{abbreviate(x, minlength =
-    1, strict = TRUE)}.
+	Truncate abundance values to width 1 using \code{abbreviate(x, minlength =
+	1, strict = TRUE)}.
   }
   \item{ rule }{
-    Integer vector of length equal to the number of plots \code{nrow(obj)}.
-    The lengths of runs of equal values in this vector are used to insert
-    vertical rule mimicked by the pipe gylph (\code{'|'}).
+	Integer vector of length equal to the number of plots \code{nrow(obj)}.
+	The lengths of runs of equal values in this vector are used to insert
+	vertical rule mimicked by the pipe gylph (\code{'|'}).
   }
   \item{ short.names }{
-    Use taxon abbreviation instead of long scientific names. Dots are
-    converted to blanks.
+	Use taxon abbreviation instead of long scientific names. Dots are
+	converted to blanks.
   }
   \item{ add.lines }{
-    Add blank lines separating header section.
+	Add blank lines separating header section.
   }
   \item{ latex.input }{
-    Warp output in LaTex verbatim environment.
+	Warp output in LaTex verbatim environment.
   }
   \item{ table.nr }{
-    Create a short running number.
+	Create a short running number.
   }
   
 }
@@ -223,7 +223,7 @@ library(vegsoup)
 require(stringr)
 
 file <- system.file("extdata", "Erschbammer1992Tab4.txt",
-                    package = "vegsoup")
+					package = "vegsoup")
 x <- read.verbatim(file)
 class(x)
 head(x)
@@ -239,7 +239,7 @@ head(x)
 
 # add species from table footer
 file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
-                    package = "vegsoup")
+					package = "vegsoup")
 x <- read.verbatim.append(x, file, mode = "species")
 tail(x)
 # 68 species were added
@@ -247,13 +247,13 @@ dim(x)
 
 # turn into long format
 x.df <- data.frame(abbr = rownames(x), layer = "hl", taxon = NA, x,
-                   check.names = FALSE)
+				   check.names = FALSE)
 # promote to class "Species"
 X <- stackSpecies(x.df)
 
 #   sites data including coordinates
 file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
-                    package = "vegsoup")
+					package = "vegsoup")
 Y <- read.delim(file, colClasses = "character")
 names(Y)[1] <- "plot"
 # promote to class "Sites"
@@ -261,7 +261,7 @@ Y <- stackSites(Y)
 
 # taxonomy reference list
 file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
-                    package = "vegsoup")
+					package = "vegsoup")
 Z <- read.delim(file, colClasses = "character")
 #   promote to class Taxonomy
 Z <- taxonomy(Z)
@@ -303,7 +303,7 @@ Confus(prt.flx, prt.org)
 
 # write object of class Vegsoup
 txt <- write.verbatim(seriation(dta), file = tempfile(),
-    select = c(8,7,6,9))
+	select = c(8,7,6,9))
 txt[1:30] # resize console window
 }
 }

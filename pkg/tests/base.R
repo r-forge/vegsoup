@@ -65,7 +65,7 @@ names(X)[1:2] <- names(X)[1:2]
 
 #	taxon abbreviations
 head(taxon(X))
-head(SpeciesList(X))
+head(taxalist(X))
 (splitAbbr(X))
 
 #	abundance scale
@@ -133,7 +133,7 @@ as.numeric(X)
 decostand(X)  <- c("hellinger", "standardize")
 as.numeric(X)
 decostand(X)  <- c("wisconsin")
-as.numeric(X)                  
+as.numeric(X)				  
 
 #	subsetting
 X[1:3,]

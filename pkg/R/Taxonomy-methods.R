@@ -9,52 +9,52 @@ setGeneric("taxonomy<-",
 )
 
 setMethod("taxonomy",
-    signature(obj = "Taxonomy"),
-    function (obj) obj@data
+	signature(obj = "Taxonomy"),
+	function (obj) obj@data
 )
 
 setMethod("taxonomy",
-    signature(obj = "character"),
-    function (obj, ...) {
-    	new("Taxonomy",
-    	data = read.csv(obj, ...))
-    }    
+	signature(obj = "character"),
+	function (obj, ...) {
+		new("Taxonomy",
+		data = read.csv(obj, ...))
+	}	
 )
 
 setMethod("taxonomy",
-    signature(obj = "data.frame"),
-    function (obj) {
-    	new("Taxonomy", data = obj)
-    }    
+	signature(obj = "data.frame"),
+	function (obj) {
+		new("Taxonomy", data = obj)
+	}	
 )
 
 setMethod("taxonomy",
-    signature(obj = "matrix"),
-    function (obj) {
-    	new("Taxonomy",
-    	data = as.data.frame(obj, stringsAsFactors = FALSE))
-    }    
+	signature(obj = "matrix"),
+	function (obj) {
+		new("Taxonomy",
+		data = as.data.frame(obj, stringsAsFactors = FALSE))
+	}	
 )
 
 setMethod("show",
-    signature(object = "Taxonomy"),
-    function (object) {
+	signature(object = "Taxonomy"),
+	function (object) {
 		cat("object of class :", class(object))
 		cat("\nnumber of taxa  :", nrow(object@data))
 		cat("\nshow only first",
 			ifelse(nrow(object@data) <= 6, nrow(object@data), 6),
 			"rows\n\n")
 		print(head(object@data, n = 6L))
-    }
+	}
 )
 
 setMethod("[",
-    signature(x = "Taxonomy",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = FALSE) {
+	signature(x = "Taxonomy",
+	i = "ANY", j = "ANY", drop = "missing"),
+	function (x, i, j, ..., drop = FALSE) {
 		x@data <- x@data[i, j, ...]
 		return(x)
-    }
+	}
 )
 
 setMethod("$",
@@ -68,14 +68,14 @@ setMethod("$",
 )
 
 setMethod("abbr",
-    signature(obj = "Taxonomy"),
-    function (obj) {
-    	obj$abbr
-    }	
+	signature(obj = "Taxonomy"),
+	function (obj) {
+		obj$abbr
+	}	
 )
 
 setMethod("bind",
-    signature(... = "Taxonomy"),
+	signature(... = "Taxonomy"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)	
 		r <- do.call("rbind", lapply(allargs, taxonomy))
@@ -96,8 +96,8 @@ setMethod("bind",
 
 	
 setMethod("taxonomy",
-    signature(obj = "Vegsoup"),
-    function (obj) obj@taxonomy
+	signature(obj = "Vegsoup"),
+	function (obj) obj@taxonomy
 )
 
 setGeneric("taxonomy<-", function (obj, value)
@@ -113,4 +113,4 @@ setReplaceMethod("taxonomy",
 		return(obj)		
 	}
 )
-	    	
+			

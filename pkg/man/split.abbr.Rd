@@ -19,7 +19,7 @@
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
 }
 
@@ -51,7 +51,7 @@
 \seealso{
 \code{\link{Vegsoup}}
 \code{\linkS4class{Taxonomy}}
-\code{\link{SpeciesList}}
+\code{\link{taxalist}}
 \code{\link{taxon}}
 }
 
@@ -77,7 +77,7 @@ head(a[rownames(m), ])
 taxon(x)
 
 # similar result but a matrix
-head(SpeciesList(x, layered = TRUE))
+head(taxalist(x, layered = TRUE))
 
 # species matrix including taxon names and layers
 m <- cbind(a[rownames(m), ], m)

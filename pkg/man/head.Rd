@@ -24,41 +24,41 @@
 \arguments{
 
   \item{ x }{
-    An object inheriting from class \code{Vegsoup}.
+	An object inheriting from class \code{Vegsoup}.
   }
   \item{ n }{
-    A single integer. If positive, size for the resulting object. If negative,
-    all but the n last/first number of elements of x. defaults to \code{n =
-    6L}.
+	A single integer. If positive, size for the resulting object. If negative,
+	all but the n last/first number of elements of x. defaults to \code{n =
+	6L}.
   }
   \item{ choice }{
-    Display the first rows of the species matrix (\code{"species"},
-    the default), or the sites data frame (\code{choice = "sites"}).
+	Display the first rows of the species matrix (\code{"species"},
+	the default), or the sites data frame (\code{choice = "sites"}).
   }
   \item{ typeof }{
-    If choice is \dQuote{species} of which mode should the returned matrix be
-    reported (see \code{\link{as.matrix}}). If missing a presence/absence
-    species matrix is printed (\code{typeof = "logical"}).
+	If choice is \dQuote{species} of which mode should the returned matrix be
+	reported (see \code{\link{as.matrix}}). If missing a presence/absence
+	species matrix is printed (\code{typeof = "logical"}).
   }
   \item{ \dots }{
-    Passed to functions.
+	Passed to functions.
   }
 }
 
 \section{Methods}{
 
   \describe{
-    \item{ \code{signature(obj = "Vegsoup")} }{
-      \code{head()} (\code{tail()}) returns the first (last) \code{n} rows of
-      the \emph{community matrix} when \code{choice = "species"} and the
-      \code{n} rows of the \emph{sites data frame}.
-    }
-    \item{ \code{signature(obj = "VegsoupPartition")} }{
-      If \code{n != 6L} the method prints the \emph{typal}
-      (\code{\link{typal}}) sample for each partition, with the number of rows
-      equaling \code{getK(x)}. If \code{n} is left as the default the
-      behaviour is the same as defined for class \code{Vegsoup}.
-    }
+	\item{ \code{signature(obj = "Vegsoup")} }{
+	  \code{head()} (\code{tail()}) returns the first (last) \code{n} rows of
+	  the \emph{community matrix} when \code{choice = "species"} and the
+	  \code{n} rows of the \emph{sites data frame}.
+	}
+	\item{ \code{signature(obj = "VegsoupPartition")} }{
+	  If \code{n != 6L} the method prints the \emph{typal}
+	  (\code{\link{typal}}) sample for each partition, with the number of rows
+	  equaling \code{getK(x)}. If \code{n} is left as the default the
+	  behaviour is the same as defined for class \code{Vegsoup}.
+	}
   }
 
 }

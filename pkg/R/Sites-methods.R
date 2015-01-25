@@ -1,36 +1,36 @@
 #	generic is set in sites.R
 
 setMethod("sites",
-    signature(obj = "Sites"),
-    function (obj) obj@data
+	signature(obj = "Sites"),
+	function (obj) obj@data
 )
 
 setMethod("sites",
-    signature(obj = "data.frame"),
-    function (obj) {
-    	new("Sites", data = obj)
-    }
-    
+	signature(obj = "data.frame"),
+	function (obj) {
+		new("Sites", data = obj)
+	}
+	
 )
 
 setMethod("sites",
-    signature(obj = "matrix"),
-    function (obj) {
-    	new("Sites",
-    	data = as.data.frame(obj, stringsAsFactors = FALSE))
-    }    
+	signature(obj = "matrix"),
+	function (obj) {
+		new("Sites",
+		data = as.data.frame(obj, stringsAsFactors = FALSE))
+	}	
 )
 
 setMethod("sites",
-    signature(obj = "character"),
-    function (obj, ...) {
-    	new("Sites",
-    	data = read.csv(obj, ...)[, 1:3])
-    }    
+	signature(obj = "character"),
+	function (obj, ...) {
+		new("Sites",
+		data = read.csv(obj, ...)[, 1:3])
+	}	
 )
 
 setMethod("$",
-    signature(x = "Sites"),
+	signature(x = "Sites"),
 	function(x, name) {
 		if (!("data" %in% slotNames(x))) {
 			stop("no $ method for object without slot data")
@@ -55,11 +55,11 @@ setGeneric("variable",
 #}
 
 setMethod("variable",
-    signature(x = "Sites"),
-    function (x, name) {
-    	p <- unique(x$plot)
-    	n <- length(p)
-    	i <- which(x$variable == name)
+	signature(x = "Sites"),
+	function (x, name) {
+		p <- unique(x$plot)
+		n <- length(p)
+		i <- which(x$variable == name)
 		r <- structure(x$value[i], names = x$plot[i])
 		
 		#	return NULL if variable is not present
@@ -71,7 +71,7 @@ setMethod("variable",
 			r <- xx
 		}
 		return(r)
-    }
+	}
 )
 
 #if (!isGeneric("variable<-")) {
@@ -104,38 +104,38 @@ setGeneric("variables",
 #}
 
 setMethod("variables",
-    signature(x = "Sites"),
-    function (x) {
-    	r <- unique(x$variable)
+	signature(x = "Sites"),
+	function (x) {
+		r <- unique(x$variable)
 		return(r)
-    }
+	}
 )
 
 setMethod("[",
-    signature(x = "Sites",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = FALSE) {
+	signature(x = "Sites",
+	i = "ANY", j = "ANY", drop = "missing"),
+	function (x, i, j, ..., drop = FALSE) {
 		if (!missing(j)) message("ignore argument j")
-    	j <- rep(TRUE, ncol(sites(x)))    	
-    	sites(x@data[i, j, ...])
-    }
+		j <- rep(TRUE, ncol(sites(x)))		
+		sites(x@data[i, j, ...])
+	}
 )
 
 setMethod("show",
-    signature(object = "Sites"),
-    function (object) {
-		cat("object of class     :", class(object))
+	signature(object = "Sites"),
+	function (object) {
+		cat("object of class	 :", class(object))
 		cat("\nnumber of variables :",
 			length(unique(object$variable)))
-		cat("\nnumber of sites     :",
+		cat("\nnumber of sites	 :",
 			length(unique(object$plot)))
 		cat("\nshow only frist 6 rows\n\n")
 		print(head(object@data, n = 6L))
-    }
+	}
 )
 
 setMethod("bind",
-    signature(... = "Sites"),
+	signature(... = "Sites"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)
 		res <- do.call("rbind", lapply(allargs, sites))

@@ -36,57 +36,57 @@ Data representation of taxonomic reference list.
   (see \sQuote{Methods}).
 
   \itemize{
-    \item \code{abbr} contains unique abbreviations of a scientific latin name
-      that translate those of class \code{\linkS4class{Species}}.
-    \item \code{taxon} gives the full scientific latin name.
+	\item \code{abbr} contains unique abbreviations of a scientific latin name
+	  that translate those of class \code{\linkS4class{Species}}.
+	\item \code{taxon} gives the full scientific latin name.
   }
 }
 \section{Slots}{
   \describe{
-    \item{\code{data}:}{Object of class \code{"data.frame"} with at least
-      two columns named \code{'abbr'} and \code{'taxon'}. }
+	\item{\code{data}:}{Object of class \code{"data.frame"} with at least
+	  two columns named \code{'abbr'} and \code{'taxon'}. }
   }
 }
 \section{Methods}{
   \describe{
-    \item{ taxonomy }{
-      \code{signature(obj = "Taxonomy")}:
-        accessor function (\emph{slot "data"}).
-      
-      \code{signature(obj = "SpeciesTaxonomy")}:
-        accessor function for objects of class \code{SpeciesTaxonomy}.
-      
-      \code{signature(obj = "data.frame")}:
-        promote \code{data.frame} to object of class \code{"Taxomomy"}.
+	\item{ taxonomy }{
+	  \code{signature(obj = "Taxonomy")}:
+		accessor function (\emph{slot "data"}).
+	  
+	  \code{signature(obj = "SpeciesTaxonomy")}:
+		accessor function for objects of class \code{SpeciesTaxonomy}.
+	  
+	  \code{signature(obj = "data.frame")}:
+		promote \code{data.frame} to object of class \code{"Taxomomy"}.
 
-      \code{signature(obj = "matrix")}:
-        promote \code{matrix} to object of class \code{"Taxomomy"}.
-        Note, \code{obj} does not need to have \code{dimnames}.
+	  \code{signature(obj = "matrix")}:
+		promote \code{matrix} to object of class \code{"Taxomomy"}.
+		Note, \code{obj} does not need to have \code{dimnames}.
 
-      \code{signature(obj = "character")}:
-        supply a file to be read by \code{read.csv} and promote that object to
-        class \code{"Species"}. Remember to pass appropriate arguments to
-        \code{\link{read.csv}} that meet the specifications of your file.
-    }
+	  \code{signature(obj = "character")}:
+		supply a file to be read by \code{read.csv} and promote that object to
+		class \code{"Species"}. Remember to pass appropriate arguments to
+		\code{\link{read.csv}} that meet the specifications of your file.
+	}
 
-    \item{ nrow }{
-      \code{signature(x = "Taxonomy")}:
-        the number of rows is the number of taxa.
-    }
+	\item{ nrow }{
+	  \code{signature(x = "Taxonomy")}:
+		the number of rows is the number of taxa.
+	}
 
-    \item{ [ }{
-      \code{signature(x = "Taxonomy")}:
-        Subset parts of an object. Note, indexing that will
-        evaluate to an object with less than two columns will fail,
-        due to the class inherent data model (see \sQuote{Slots}).
-    }
+	\item{ [ }{
+	  \code{signature(x = "Taxonomy")}:
+		Subset parts of an object. Note, indexing that will
+		evaluate to an object with less than two columns will fail,
+		due to the class inherent data model (see \sQuote{Slots}).
+	}
 
-    \item{ bind }{
-      \code{signature(x = "Taxonomy")}:
-        \code{bind} method to combine two or more objects. If there are any
-        duplicates in the \code{'abbr'} key column only one instance is kept,
-        the first one!
-    }
+	\item{ bind }{
+	  \code{signature(x = "Taxonomy")}:
+		\code{bind} method to combine two or more objects. If there are any
+		duplicates in the \code{'abbr'} key column only one instance is kept,
+		the first one!
+	}
 
   }
 }
@@ -114,7 +114,7 @@ t <- new("Taxonomy", data = x)
 ( t <- taxonomy(as.matrix(x)) )
 
 #	get slot data from object
-taxonomy(t)               # returns object of class 'data.frame'
+taxonomy(t)			   # returns object of class 'data.frame'
 
 # combine objects
 data(windsfeld)

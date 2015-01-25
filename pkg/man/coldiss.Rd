@@ -13,35 +13,35 @@ The method returns two plots corresponding to an unordered and an ordered colore
 }
 \usage{
 \S4method{coldiss}{Vegsoup}(obj, colors, byrank = TRUE, diag = FALSE, method = "dca",
-        ordered.only = FALSE, translate = FALSE, ...)
+		ordered.only = FALSE, translate = FALSE, ...)
 }
 \arguments{
   \item{ obj }{
-    An object of class \code{Vegsoup*}.
+	An object of class \code{Vegsoup*}.
    }
   \item{ colors }{
-    The number of colors, or a vector of colors. See \sQuote{Details}.
-   }                          
+	The number of colors, or a vector of colors. See \sQuote{Details}.
+   }						  
   \item{ byrank }{
-    Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equal-length
-    intervals.
-  }                          
+	Boolean, if \code{TRUE} create equal-sized categories, if \code{FALSE} find equal-length
+	intervals.
+  }						  
   \item{ diag }{
-    Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
-  }                          
+	Boolean, if \code{TRUE} annotae the diagonal of the colored matrix.
+  }						  
   \item{ method }{
-    Method argument passed to \code{\link{seriation}}.
-  }                          
+	Method argument passed to \code{\link{seriation}}.
+  }						  
   \item{ ordered.only }{
-    Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
+	Only display the ordered dissimilarity matrix. Defaults to \code{FALSE}.
   }
   \item{ translate }{
-    Display scientific taxon names as defined in \code{taxonomy(obj)}. Defaults to \code{FALSE}
-    and only applies if additional argument \code{mode} is supplied and it's value is
-    \code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
+	Display scientific taxon names as defined in \code{taxonomy(obj)}. Defaults to \code{FALSE}
+	and only applies if additional argument \code{mode} is supplied and it's value is
+	\code{"R"}, setting up a \emph{R mode} analysis. See \sQuote{Examples}.
   }
   \item{ \dots }{
-    Arguments passed to \code{as.dist}. See \sQuote{Examples}.
+	Arguments passed to \code{as.dist}. See \sQuote{Examples}.
   }
 }
 
@@ -81,7 +81,7 @@ coldiss(x, cols(4), byrank = FALSE, diag = TRUE)
 # R-mode analysis, see ?as.dist
 # first collapse layers
 x.0l <- layers(x, aggregate = "layer",
-                 collapse = "0l", verbose = TRUE)
+				 collapse = "0l", verbose = TRUE)
 decostand(x.0l) <- "chi.square"
 vegdist(x.0l) 
 
@@ -90,7 +90,7 @@ vegdist(x.0l)
 # label only the diagonal to avoid cluttered display
 # mode = "R" defunct due to generic dispatch of as.dist(x)
 coldiss(dta.0l, rev(cols(20)), mode = "R",
-    ordered.only = TRUE, translate = TRUE, diag = TRUE)
+	ordered.only = TRUE, translate = TRUE, diag = TRUE)
 }
 }
 \keyword{ methods }

@@ -88,6 +88,6 @@ setGeneric("coldiss",
 )
 #}
 setMethod("coldiss",
-    signature(obj = "Vegsoup"),
-    function (obj, colors, byrank = TRUE, diag = FALSE, method = "dca", ordered.only = FALSE, translate = FALSE, ...) .coldiss(obj, method = method, ...)
+	signature(obj = "Vegsoup"),
+	function (obj, colors, byrank = TRUE, diag = FALSE, method = "dca", ordered.only = FALSE, translate = FALSE, ...) .coldiss(obj, method = method, ...)
 )

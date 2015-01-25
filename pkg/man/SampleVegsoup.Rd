@@ -23,26 +23,26 @@ The methods take a sample of the specified size from the elements of \code{x} us
 
 \arguments{
   \item{ x }{
-    \code{Vegsoup*} object.
+	\code{Vegsoup*} object.
   }
   \item{ size }{
-    non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{sample} to \code{nrow(x)}.
+	non-negative integer giving the number of items to choose. For \code{hcr} defaults to \code{floor(nrow(x) * 0.1)} and for \code{sample} to \code{nrow(x)}.
   }
   \item{ replace }{
-    should sampling be with replacement?
+	should sampling be with replacement?
   }
   \item{ prob }{
-    vector of probability weights for obtaining the elements of the vector
-    being sampled.
+	vector of probability weights for obtaining the elements of the vector
+	being sampled.
   }
   \item{ nperm }{
-    the number of permutations.
+	the number of permutations.
   }
   \item{ fast }{
-    accelerate computations using package \code{'parallel'}.
+	accelerate computations using package \code{'parallel'}.
   }
   \item{ \dots }{
-    additional arguments \code{replace} and \code{prob} passed to \code{\link{sample}}.
+	additional arguments \code{replace} and \code{prob} passed to \code{\link{sample}}.
   }
 }
 

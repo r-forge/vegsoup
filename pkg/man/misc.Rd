@@ -21,10 +21,10 @@ singletons(obj)
 
 \arguments{
   \item{ x }{
-    numeric.
+	numeric.
 }
   \item{ obj }{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
 }
 
 }

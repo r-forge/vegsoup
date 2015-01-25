@@ -46,12 +46,12 @@
 
 \section{Slots}{
   \describe{
-    \item{\code{species}:}{Object of class \code{"Species"},
-      see class \code{\linkS4class{Species}} for details.
-    }
-    \item{\code{taxonomy}:}{Object of class \code{"Taxonomy"},
-      see class \code{\linkS4class{Taxonomy}} for details.
-    }
+	\item{\code{species}:}{Object of class \code{"Species"},
+	  see class \code{\linkS4class{Species}} for details.
+	}
+	\item{\code{taxonomy}:}{Object of class \code{"Taxonomy"},
+	  see class \code{\linkS4class{Taxonomy}} for details.
+	}
   }
 }
 
@@ -68,58 +68,58 @@
 
   \describe{
  
-    \item{ species }{
-      \code{ signature(obj = "SpeciesTaxonomy") }:
-        Accessor method for slot \code{species}
-        returning a \code{data.frame}
-    }
+	\item{ species }{
+	  \code{ signature(obj = "SpeciesTaxonomy") }:
+		Accessor method for slot \code{species}
+		returning a \code{data.frame}
+	}
 
-    \item{ taxonomy }{
-      \code{ signature(obj = "SpeciesTaxonomy") }:
-        Accessor method for slot \code{taxonomy}
-        returning a \code{data.frame}.
-    }
+	\item{ taxonomy }{
+	  \code{ signature(obj = "SpeciesTaxonomy") }:
+		Accessor method for slot \code{taxonomy}
+		returning a \code{data.frame}.
+	}
 
-    \item{ bind }{
-      \code{ signature(x = "SpeciesTaxonomy") }:
-      \code{ bind } method to combine two or more objects.
-    }
+	\item{ bind }{
+	  \code{ signature(x = "SpeciesTaxonomy") }:
+	  \code{ bind } method to combine two or more objects.
+	}
 
-    \item{ $ }{
-      \code{signature(x = "SpeciesTaxonomy")}:
-        retrieve column name of slot species (see \code{\linkS4class{Species}}).
-    }	
+	\item{ $ }{
+	  \code{signature(x = "SpeciesTaxonomy")}:
+		retrieve column name of slot species (see \code{\linkS4class{Species}}).
+	}	
 
-    \item{ [ }{
-      \code{signature(x = "SpeciesTaxonomy")}:
-        subset parts of an object (see \code{\linkS4class{Species}}).
-    }
+	\item{ [ }{
+	  \code{signature(x = "SpeciesTaxonomy")}:
+		subset parts of an object (see \code{\linkS4class{Species}}).
+	}
 	
-    \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
-      subset slot \code{species} as to contain only the taxa given by an
-      object of class \code{"Taxonomy"}, which by itself will replace
-      slot \code{taxonomy}.
-    }
+	\item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
+	  subset slot \code{species} as to contain only the taxa given by an
+	  object of class \code{"Taxonomy"}, which by itself will replace
+	  slot \code{taxonomy}.
+	}
 
-    \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
-      subset slot \code{species} as above, but by an object of class
-      \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
-    }
+	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
+	  subset slot \code{species} as above, but by an object of class
+	  \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
+	}
  
-    \item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
-      subset slot \code{taxonomy} as to contain only the taxa given by an
-      object of class \code{"Species"}, which by itself will replace
-      slot \code{species}.
-    }
+	\item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
+	  subset slot \code{taxonomy} as to contain only the taxa given by an
+	  object of class \code{"Species"}, which by itself will replace
+	  slot \code{species}.
+	}
  
-    \item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
-      experimental!
-    }
+	\item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
+	  experimental!
+	}
 
-    \item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
-      subset slot \code{taxonomy} as above, but by an object of class
-      \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
-    }
+	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
+	  subset slot \code{taxonomy} as above, but by an object of class
+	  \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
+	}
   }
 }
 
@@ -140,12 +140,12 @@ data(barmstein)
 x <- barmstein
 
 # extract from object for demonstration
-s <- species(species(x))    # returns a data.frame
+s <- species(species(x))	# returns a data.frame
 t <- taxonomy(taxonomy(x))  # returns a data.frame
 
 # using the new() inititialization method
 st0 <- new("SpeciesTaxonomy")
-slotNames(st0)              # see slots names
+slotNames(st0)			  # see slots names
 st0@species <- species(s)   # species method for class data.frame, returns a 'Species' object
 st0@taxonomy <- taxonomy(t) # taxonomy method for class data.frame, returns a 'Taxonomy' object
 st0

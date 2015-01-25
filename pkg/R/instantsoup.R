@@ -38,13 +38,13 @@ instantsoup <- function (folder, sep = ";", dec = ",", coverscale) {
 		y <- sites(paths[y.file], sep = sep, dec = dec)
 	}
 
-    if (length(z.file) == 0) {
-    	xz <- SpeciesTaxonomy(x = x,
-    	file.y = z)
-    } else {
-    	z <- taxonomy(z,sep = sep, dec = dec)
+	if (length(z.file) == 0) {
+		xz <- SpeciesTaxonomy(x = x,
+		file.y = z)
+	} else {
+		z <- taxonomy(z,sep = sep, dec = dec)
 		xz <- SpeciesTaxonomy(x, z)	
-    }
+	}
 
 	res <- Vegsoup(xz, y, coverscale = coverscale)
 	return(res)		

@@ -29,11 +29,11 @@ This wrapper function provides the standardization methods implemented in functi
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ value }{
-    A vector of characters giving methods as accepted by
-    \code{vegan::decostand} or \code{NULL}.
+	A vector of characters giving methods as accepted by
+	\code{vegan::decostand} or \code{NULL}.
   }
 }
 
@@ -74,7 +74,7 @@ require(vegsoup)
 
 data(barmstein)
 x <- barmstein
-    
+	
 # no standardization by default
 decostand(x)
 

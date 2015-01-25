@@ -8,8 +8,8 @@ setGeneric("QuickMap",
 
 #	gvisMap package
 setMethod("QuickMap",
-    signature(x = "Vegsoup"),
-    function (x) {
+	signature(x = "Vegsoup"),
+	function (x) {
 		# suppressPackageStartupMessages(require(googleVis))
 		pt <- SpatialPointsVegsoup(x)
 		if (nrow(pt) > 1) {

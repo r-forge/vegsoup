@@ -22,12 +22,12 @@ Retrieve dataset, sample or pooled species richness by partition.
 
 \arguments{
   \item{ obj }{
-    \code{Vegsoup*} or \code{Species}object.
+	\code{Vegsoup*} or \code{Species}object.
   }
   \item{ choice }{
-    Return either dataset or sample richness, defaults to \code{dataset}.
-    Partial matches are allowed. Objects of class \code{'VegsoupPartition'}
-    take an additional option \code{"partition"}.
+	Return either dataset or sample richness, defaults to \code{dataset}.
+	Partial matches are allowed. Objects of class \code{'VegsoupPartition'}
+	take an additional option \code{"partition"}.
   }
 }
 

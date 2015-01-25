@@ -23,21 +23,21 @@
    \code{'Vegsoup'} or \code{'VegsoupPartition'} object.
    }
   \item{ file }{
-    path to a file, can be missing.
+	path to a file, can be missing.
   }
   \item{ add.label }{
-    Show labels of push-pins in KML.
+	Show labels of push-pins in KML.
   } 
   \item{ thumbnail.url.path }{
-    A URL that serves a key photo graph of the plot.
-    See \sQuote{Examples}.
+	A URL that serves a key photo graph of the plot.
+	See \sQuote{Examples}.
   }
   \item{ website.url.path }{
-    A URL that serves a photo gallery for a plot.
-    See \sQuote{Examples}.
+	A URL that serves a photo gallery for a plot.
+	See \sQuote{Examples}.
   }
   \item{ \dots }{
-    Not used at the moment.
+	Not used at the moment.
   }
 }
 

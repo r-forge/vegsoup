@@ -16,10 +16,10 @@
 }
 \arguments{
   \item{x}{
-    \code{'VegsoupPartitionFidelity'} object.
+	\code{'VegsoupPartitionFidelity'} object.
   }
   \item{\dots}{
-    arguments passed to \code{\link{hist}}
+	arguments passed to \code{\link{hist}}
   }
 }
 \details{

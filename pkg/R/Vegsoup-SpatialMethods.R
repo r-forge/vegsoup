@@ -4,13 +4,13 @@
 #	warning: returns bbox only for SpatialPoints!
 setMethod("bbox",
 	signature(obj = "Vegsoup"),
-    function (obj) bbox(obj@sp.points)
+	function (obj) bbox(obj@sp.points)
 )
 
 #	coordinates method for class Vegsoup*
 setMethod("coordinates",
 	signature(obj = "Vegsoup"),
-    function (obj) coordinates(obj@sp.points)
+	function (obj) coordinates(obj@sp.points)
 )
 
 #	taken from SpatialPointsDataFrame-methods in package sp
@@ -65,7 +65,7 @@ setMethod("proj4string",
 	
 	#	test success
 	test0 <- !(length(x) == 0 | length(x) == 0) # if variables could not be found 
-	test1 <- !any(is.na(x), is.na(y))           # returns TRUE if test0 == TRUE
+	test1 <- !any(is.na(x), is.na(y))		   # returns TRUE if test0 == TRUE
 	test2 <- all(is.numeric(x), is.numeric(x))  # we must obtain numbers
 
 	if (test0 & test1 & test2) {
@@ -81,7 +81,7 @@ setMethod("proj4string",
 #	coordinates method for class Sites
 setMethod("coordinates",
 	signature(obj = "Sites"),
-    .coordinatesSites
+	.coordinatesSites
 )
 
 #	hidden function to construct polygons around plot centers	
@@ -96,7 +96,7 @@ setMethod("coordinates",
 	#	test if we got the variables and if they can be converted to numeric
 	#	otherwise, apply default of 10 m
 	ab <- rep(10, nrow(x))
-	if ( is.null(a) | is.null(b) )       a <- b <- ab
+	if ( is.null(a) | is.null(b) )	   a <- b <- ab
 	if ( any(is.na(a)) | any(is.na(b)) ) a <- b <- ab
 	if ( any(a == "") | any(b == "") )   a <- b <- ab
 	#if (length(a) == 0 | length(a) == 0) a <- b <- ab	
@@ -172,10 +172,10 @@ setGeneric("SpatialPointsVegsoup",
 		standardGeneric("SpatialPointsVegsoup")
 )
 setMethod("SpatialPointsVegsoup",
-    signature(obj = "Vegsoup"),
-    function (obj) {
-    	obj@sp.points
-    }
+	signature(obj = "Vegsoup"),
+	function (obj) {
+		obj@sp.points
+	}
 )
 #if (!isGeneric("SpatialPoints<-")) {
 #setGeneric("SpatialPointsVegsoup<-",
@@ -200,8 +200,8 @@ setGeneric("SpatialPolygonsVegsoup",
 )
 #}
 setMethod("SpatialPolygonsVegsoup",
-    signature(obj = "Vegsoup"),
-    function (obj) obj@sp.polygons
+	signature(obj = "Vegsoup"),
+	function (obj) obj@sp.polygons
 )
 #if (!isGeneric("SpatialPolygons"))
 #setGeneric("SpatialPolygonsVegsoup<-",

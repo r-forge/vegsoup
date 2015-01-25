@@ -16,7 +16,7 @@
 }
 \arguments{
   \item{ obj }{
-    An object inheriting from \code{"VegsoupPartition"}.
+	An object inheriting from \code{"VegsoupPartition"}.
   }
 }
 \value{

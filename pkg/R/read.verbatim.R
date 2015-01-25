@@ -75,7 +75,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	ti <- hi <- rep(FALSE, length(txt))
 	ti[(tb + 1) : (te - 1)] <- TRUE # species data
 	hi[(hb + 1) : (he - 1)] <- TRUE # header data 
-	ti[el] <- hi[el] <- FALSE       # omit empty lines
+	ti[el] <- hi[el] <- FALSE	   # omit empty lines
 		
 	#	we now subset the sub-tables as a vector
 	#	of strings for each line

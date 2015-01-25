@@ -18,19 +18,19 @@ Experimental.
 
 \arguments{
   \item{obj}{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
 }
   \item{ mode }{
-    type of analysis. See \sQuote{Details}.
+	type of analysis. See \sQuote{Details}.
   }
   \item{ nperm }{
-    number of permutations
+	number of permutations
   }
   \item{ alternative }{
-    alternative hypthersis.
+	alternative hypthersis.
   }
   \item{ verbose }{
-    more output.
+	more output.
   }
 }
 

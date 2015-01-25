@@ -23,14 +23,14 @@ The functions compute a contingency table (\code{\link{contingency}(object)}) an
 }
 \arguments{
   \item{ x, object }{
-    \code{VegsoupPartition} object. 
+	\code{VegsoupPartition} object. 
   }
   \item{ table }{
-    character. Either \code{\link{contingency}}, \code{\link{constancy}} or
-     \code{\link{average}}.
+	character. Either \code{\link{contingency}}, \code{\link{constancy}} or
+	 \code{\link{average}}.
   }
   \item{ \dots }{
-    Arguments passed to \code{vegan::vegdist}.
+	Arguments passed to \code{vegan::vegdist}.
 
   }
 }

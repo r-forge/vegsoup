@@ -4,6 +4,6 @@ setGeneric("AprioriGrouping",
 		standardGeneric("AprioriGrouping")
 )
 setMethod("AprioriGrouping",
-    signature(obj = "Vegsoup"),
-    function (obj) obj@group
+	signature(obj = "Vegsoup"),
+	function (obj) obj@group
 )

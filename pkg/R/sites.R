@@ -5,8 +5,8 @@ setGeneric("sites",
 )
 #}
 setMethod("sites",
-    signature(obj = "Vegsoup"),
-    function (obj) obj@sites
+	signature(obj = "Vegsoup"),
+	function (obj) obj@sites
 )
 #if (!isGeneric("sites<-")) {
 setGeneric("sites<-",

@@ -34,26 +34,26 @@
 	#	order y to x
 	y <- y[match(unique(x$plot), rownames(y)), ]
 
-    #	taxonomy
-    z <- sapply(allargs, taxonomy)
+	#	taxonomy
+	z <- sapply(allargs, taxonomy)
 	z <- do.call("bind", z)
 	
 	#	spatial points, taken from sp::rbind.SpatialPointsDataFrame because
 	#	of dispatch issue
-    pts <- sapply(allargs, SpatialPointsVegsoup, simplify = FALSE)
-    names(pts) <- NULL
-    sp <- do.call(sp::rbind.SpatialPoints, lapply(pts, function(x) as(x, "SpatialPoints")))
-    df <- do.call(rbind, lapply(pts, function(x) x@data))
-    pts <- sp::SpatialPointsDataFrame(sp, df, coords.nrs = pts[[1]]@coords.nrs)
+	pts <- sapply(allargs, SpatialPointsVegsoup, simplify = FALSE)
+	names(pts) <- NULL
+	sp <- do.call(sp::rbind.SpatialPoints, lapply(pts, function(x) as(x, "SpatialPoints")))
+	df <- do.call(rbind, lapply(pts, function(x) x@data))
+	pts <- sp::SpatialPointsDataFrame(sp, df, coords.nrs = pts[[1]]@coords.nrs)
 	#	order pts to x
 	pts <- pts[match(unique(x$plot), pts$plot), ] 
 	#	stopifnot(all.equal(unique(x$plot), pts$plot))
 	#	spatial polygons
 	pgs <- sapply(allargs, SpatialPolygonsVegsoup, simplify = FALSE)
 	names(pgs) <- NULL
-    sp <- do.call(sp::rbind.SpatialPolygons, lapply(pgs, function(x) as(x, "SpatialPolygons")))
-    df <- do.call(rbind, lapply(pgs, function(x) x@data))
-    pgs <- sp::SpatialPolygonsDataFrame(sp, df, match.ID = FALSE)
+	sp <- do.call(sp::rbind.SpatialPolygons, lapply(pgs, function(x) as(x, "SpatialPolygons")))
+	df <- do.call(rbind, lapply(pgs, function(x) x@data))
+	pgs <- sp::SpatialPolygonsDataFrame(sp, df, match.ID = FALSE)
 
 	pgs <- pgs[match(unique(x$plot), pgs$plot), ]
 	
@@ -82,7 +82,7 @@ setGeneric("bind",
 #}
 
 setMethod("bind",
-    signature(... = "Vegsoup"),
+	signature(... = "Vegsoup"),
 	function (..., deparse.level = 1) { # add na.action argument
 		.bind.Vegsoup(..., deparse.level = 1)	
 	}

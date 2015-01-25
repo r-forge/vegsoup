@@ -1,6 +1,6 @@
 setMethod("taxonomy",
-    signature(obj = "SpeciesTaxonomy"),
-    function (obj) slot(obj, "taxonomy")
+	signature(obj = "SpeciesTaxonomy"),
+	function (obj) slot(obj, "taxonomy")
 )
 
 setReplaceMethod("taxonomy",
@@ -32,7 +32,7 @@ setReplaceMethod("taxonomy",
 )
 
 setMethod("bind",
-    signature(... = "SpeciesTaxonomy"),
+	signature(... = "SpeciesTaxonomy"),
 	function (..., deparse.level = 1) {
 		allargs <- list(...)
 		x <- do.call("bind", lapply(allargs, species))  # get Species object
@@ -42,7 +42,7 @@ setMethod("bind",
 )
 
 setMethod("$",
-    signature(x = "SpeciesTaxonomy"),
+	signature(x = "SpeciesTaxonomy"),
 	function(x, name) {
 		if (!("species" %in% slotNames(x))) {
 			stop("no $ method for object without slot species")
@@ -52,19 +52,19 @@ setMethod("$",
 )
 
 setMethod("[",
-    signature(x = "SpeciesTaxonomy",
-    i = "ANY", j = "ANY", drop = "missing"),
-    function (x, i, j, ..., drop = FALSE) {
-    	if (!missing(j)) message("ignore argument j")
-    	j <- rep(TRUE, ncol(species(species(x)))) # ! slot data
-    	return(SpeciesTaxonomy(x@species[i, j], x@taxonomy))		    	
-    }
+	signature(x = "SpeciesTaxonomy",
+	i = "ANY", j = "ANY", drop = "missing"),
+	function (x, i, j, ..., drop = FALSE) {
+		if (!missing(j)) message("ignore argument j")
+		j <- rep(TRUE, ncol(species(species(x)))) # ! slot data
+		return(SpeciesTaxonomy(x@species[i, j], x@taxonomy))				
+	}
 )
 
 #setMethod("[",
-#    signature(x = "SpeciesTaxonomy",
-#    i = "ANY", j = "ANY", drop = "missing"),
-#    function (x, i, j, ..., drop = FALSE) {
-#    	species(x@data[i, j, ...])
-#    }
+#	signature(x = "SpeciesTaxonomy",
+#	i = "ANY", j = "ANY", drop = "missing"),
+#	function (x, i, j, ..., drop = FALSE) {
+#		species(x@data[i, j, ...])
+#	}
 #)

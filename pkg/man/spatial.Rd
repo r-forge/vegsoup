@@ -70,27 +70,27 @@ Spatial methods as defined in package \pkg{sp}.
 
 \arguments{
   \item{ x, obj }{
-    \code{Vegsoup} object.
+	\code{Vegsoup} object.
   }
   \item{ y }{
-    \code{SpatialPolygonsDataFrame} object.
+	\code{SpatialPolygonsDataFrame} object.
   }
   \item{ value }{
-    For \code{coordinates} spatial coordinates; either a \code{"matrix"},
-    \code{"list"}, or \code{"data.frame"} with numeric data. See
-    \code{\link[sp:coordinates]{coordinates}}.
+	For \code{coordinates} spatial coordinates; either a \code{"matrix"},
+	\code{"list"}, or \code{"data.frame"} with numeric data. See
+	\code{\link[sp:coordinates]{coordinates}}.
 
-    For \code{proj4string} a \code{\linkS4class{CRS}} object, containing a
-    valid \emph{Proj.4} string.
+	For \code{proj4string} a \code{\linkS4class{CRS}} object, containing a
+	valid \emph{Proj.4} string.
   }
   \item{ CRS }{
-    An object of class \code{"CRS"}. See \code{\linkS4class{CRS}}.
+	An object of class \code{"CRS"}. See \code{\linkS4class{CRS}}.
   }
   \item{ \dots }{
-    Additional arguments, not used.
+	Additional arguments, not used.
   }
   \item{ returnList, fn }{
-    See \code{\link{over}} in \pkg{sp}.
+	See \code{\link{over}} in \pkg{sp}.
   }
 }
 

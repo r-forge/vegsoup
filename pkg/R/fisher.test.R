@@ -65,10 +65,10 @@ setMethod("FisherTest",
 			less = pnhyper(x, 1),
 			greater = pnhyper(x, 1, upper.tail = TRUE),
 			two.sided = {
-    		        relErr <- 1 + 10^(-7)
-        		    d <- dnhyper(1)
-            		sum(d[d <= d[x - lo + 1] * relErr])
-	        })
+					relErr <- 1 + 10^(-7)
+					d <- dnhyper(1)
+					sum(d[d <= d[x - lo + 1] * relErr])
+			})
 		return(r)
 	}	
 

@@ -18,7 +18,7 @@ setGeneric("decostand<-",
 
 setMethod("decostand",
 		signature(x = "Vegsoup"),
-	    	function (x) {
+			function (x) {
 				slot(slot(x, "decostand"), "method")
 			}
 )

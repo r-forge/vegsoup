@@ -20,28 +20,28 @@ Objects can be by calls to the function \code{\link{fidelity}}.
 \section{Slots}{
   Class slots extending \code{'VegsoupPartition'}
   \describe{
-    \item{\code{stat}:}{
-      Object of class \code{"matrix"} containing the fidelity values.
-     }
-    \item{\code{fisher.test}:}{
-      Object of class \code{"matrix"} containing a Fisher test giving
-      the significance of fidelity values.
-    }
-    \item{\code{lowerCI}:}{
-      Object of class \code{"matrix"} containing boot strap confidence
-      intervals. All values are \code{NA} if no bootstrap was performed
-      by a call to \code{\link{fidelity}}.
-    }
-    \item{\code{upperCI}:}{
-      Same as \code{lowerCI}
-    }
-    \item{\code{nboot}:}{
-      Object of class \code{"integer"} giving the number of boot strap
-      replicates performed. See above.
-    }
-    \item{\code{method}:}{
-      Object of class \code{"character"} giving the name of the method.
-    }
+	\item{\code{stat}:}{
+	  Object of class \code{"matrix"} containing the fidelity values.
+	 }
+	\item{\code{fisher.test}:}{
+	  Object of class \code{"matrix"} containing a Fisher test giving
+	  the significance of fidelity values.
+	}
+	\item{\code{lowerCI}:}{
+	  Object of class \code{"matrix"} containing boot strap confidence
+	  intervals. All values are \code{NA} if no bootstrap was performed
+	  by a call to \code{\link{fidelity}}.
+	}
+	\item{\code{upperCI}:}{
+	  Same as \code{lowerCI}
+	}
+	\item{\code{nboot}:}{
+	  Object of class \code{"integer"} giving the number of boot strap
+	  replicates performed. See above.
+	}
+	\item{\code{method}:}{
+	  Object of class \code{"character"} giving the name of the method.
+	}
   }
 }
 
@@ -57,12 +57,12 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
   \code{\linkS4class{Vegsoup}} apply also by direct inheritance!
   See \sQuote{Extends}.
   \describe{
-    \item{ getStat }{
-      Method to return \code{slot(obj, "stat")}
-    }
-    \item{ summary }{
-      Summary method.
-    }
+	\item{ getStat }{
+	  Method to return \code{slot(obj, "stat")}
+	}
+	\item{ summary }{
+	  Summary method.
+	}
   }
 }
 

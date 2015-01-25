@@ -101,7 +101,7 @@
 				sg / sum(sums), 0)
 			indvals[1, 2] <- ifelse(sum(gmv == group) > 0,
 				sum((gmv == group) & (sav > 0)) / sum(gmv == group), 0)
-			indvals[1, 3] <- sqrt(indvals[1] * indvals[2])       
+			indvals[1, 3] <- sqrt(indvals[1] * indvals[2])	   
 		}
 		names(indvals) <- c("A", "B", "IndVal")
 		return(indvals)
@@ -293,13 +293,13 @@
 			for (i in 1:k) {
 				x2 <- ifelse(gmv == levels(gmv)[i], 1, 0)
 				l2 <- sqrt(sum(x2 * x2))
-		  		r[i] <- (sum(x1 * x2) / (l1 * l2))    
+		  		r[i] <- (sum(x1 * x2) / (l1 * l2))	
 		  		if (is.na(r[i])) r[i]=0 
 	   		}
 	   	} else {
 			x2 <- ifelse(gmv == group, 1, 0)
 			l2 <- sqrt(sum(x2 * x2))
-			r <- (sum(x1 * x2) / (l1 * l2))    
+			r <- (sum(x1 * x2) / (l1 * l2))	
 			if (is.na(r)) r <- 0 
 		}
 		return(r)
@@ -375,7 +375,7 @@
 				n - np,
 				N - Np - n + np), 2, 2)	
 			res[is.nan(res)] <- 0
-	    	return(res)	
+			return(res)	
 		}
 	
 	#	expected frequencies
@@ -386,7 +386,7 @@
 				n * (N - Np) / N,
 				(N - n) * (N - Np) / N), 2, 2)	
 			res[is.nan(res)] <- 0
-		    return(res)
+			return(res)
 		}
 		N <- length(sav)	
 		r <- vector("numeric", nlevels(gmv))
@@ -485,10 +485,10 @@
 			less = pnhyper(x, 1),
 			greater = pnhyper(x, 1, upper.tail = TRUE),
 			two.sided = {
-	    	        relErr <- 1 + 10^(-7)
-	        	    d <- dnhyper(1)
-	            	sum(d[d <= d[x - lo + 1] * relErr])
-		        })
+					relErr <- 1 + 10^(-7)
+					d <- dnhyper(1)
+					sum(d[d <= d[x - lo + 1] * relErr])
+				})
 		return(p)
 	}	
 	
@@ -500,7 +500,7 @@
 				n - np,
 				N - Np - n + np), 2, 2)	
 			res[is.nan(res)] <- 0
-	    	return(res)	
+			return(res)	
 		}
 	
 		r <- vector("numeric", nlevels(gmv))
@@ -512,8 +512,8 @@
 			Np <- sum(gmv == levels(gmv)[i])
 			np <- sum(sav * (gmv == levels(gmv)[i]))
 	
-	    	r[i] <- FisherPval(xm(N, Np, n, np))
-	    }
+			r[i] <- FisherPval(xm(N, Np, n, np))
+		}
 		if (!is.null(group)) r <- r[group]
 		return(r)
 	}

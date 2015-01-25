@@ -28,17 +28,17 @@ Function \code{constancy} lists for each species the fraction (percentage) of sa
 
 \arguments{
   \item{ obj }{
-    \code{VegsoupPartition} object.
+	\code{VegsoupPartition} object.
   }
   \item{ percentage }{
-    numeric. Return results of \code{constancy} as percentages.
+	numeric. Return results of \code{constancy} as percentages.
   }
   \item{ \dots }{
-    additional arguments passed to methods. For \code{contingency} and \code{average} \dots expand to
-    arguments passed to matrix methods \code{as.logical} and \code{as.matrix}
-    respectively (see \sQuote{Details}). Additional arguments to
-    \code{constancy} are passed to \code{\link{round}} and are only applicable
-    if \code{percentage = TRUE}.
+	additional arguments passed to methods. For \code{contingency} and \code{average} \dots expand to
+	arguments passed to matrix methods \code{as.logical} and \code{as.matrix}
+	respectively (see \sQuote{Details}). Additional arguments to
+	\code{constancy} are passed to \code{\link{round}} and are only applicable
+	if \code{percentage = TRUE}.
   }
 }
 

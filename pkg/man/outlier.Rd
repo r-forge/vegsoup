@@ -19,17 +19,17 @@
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ type }{
-    See \sQuote{Details}.
+	See \sQuote{Details}.
   }
   \item{ thresh }{
-    Threshold nearest neighbour distance for outliers. If specified and argument
-    \code{type} is missing it triggers type \code{"wildi"}.
+	Threshold nearest neighbour distance for outliers. If specified and argument
+	\code{type} is missing it triggers type \code{"wildi"}.
   }
   \item{ \dots }{
-    Not used.
+	Not used.
   }
 }
 
@@ -48,7 +48,7 @@
 
 \author{
   Roland Kaiser using code from function \code{outlier} of package \pkg{dave}.
-}    
+}	
 
 \references{
 McCune, B. & Grace, J.B. 2002. Analysis of ecological communities. MjM Software design. Gleneden Beach OR, US.

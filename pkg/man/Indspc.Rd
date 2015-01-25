@@ -18,13 +18,13 @@ Calculates the mean similarity of all plots in which a species occurs.
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ method }{
    Nothing here yet.
   }
   \item{\dots}{
-    arguments passed to \code{labdsv::indspc} to specify \code{numitr}.
+	arguments passed to \code{labdsv::indspc} to specify \code{numitr}.
   }
 }
 

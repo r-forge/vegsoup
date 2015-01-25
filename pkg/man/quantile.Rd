@@ -14,31 +14,31 @@ Returns sample quantiles corresponding to the given probabilities for each speci
 
 \usage{
 \S4method{quantile}{VegsoupPartition}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7,
-          coverscale = FALSE, ...)
+		  coverscale = FALSE, ...)
 }
 
 \arguments{
   \item{ x }{
-    A \code{VegsoupPartition} object.
+	A \code{VegsoupPartition} object.
   }
   \item{ probs }{
-    numeric vector of probabilities. See \code{\link[stats:quantile]{quantile}}.
+	numeric vector of probabilities. See \code{\link[stats:quantile]{quantile}}.
   }
   \item{ na.rm }{
-    Not used. A community matrix in \pkg{vegsoup} is not allowd to have \code{NAs}!
+	Not used. A community matrix in \pkg{vegsoup} is not allowd to have \code{NAs}!
   }
   \item{ names }{
-    Not used.
+	Not used.
   }  
   \item{ type }{
-    Selecting one of the nine quantile algorithms. See \code{\link[stats:quantile]{quantile}}.
+	Selecting one of the nine quantile algorithms. See \code{\link[stats:quantile]{quantile}}.
   }
   \item{ coverscale }{
-    Recode abundances and return orginal scale. Only applies if \code{is.ordinal(x)}
-    evaluates to \code{TRUE}.
+	Recode abundances and return orginal scale. Only applies if \code{is.ordinal(x)}
+	evaluates to \code{TRUE}.
   }
   \item{ \dots }{
-    Not used.
+	Not used.
   }
 }
 

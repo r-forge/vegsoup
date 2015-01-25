@@ -4,7 +4,7 @@ setGeneric("seriation",
 		standardGeneric("seriation")
 )
 setMethod("seriation",
-    signature(obj = "Vegsoup"),
+	signature(obj = "Vegsoup"),
 	function (obj, method, mode, ...) {
 	
 	if (missing(method)) {
@@ -36,7 +36,7 @@ setMethod("seriation",
 			tmp <- scores(use, choices = 1, display = "sites")
 			si.ind <- order(tmp)
 			sp.ind <- try(order(scores(use, choices = 1, 
-                  display = "species")))
+				  display = "species")))
 			if (inherits(sp.ind, "try-error")) {
 				sp.ind <- order(wascores(tmp, obj))
 			}

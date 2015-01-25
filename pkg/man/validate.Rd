@@ -46,19 +46,19 @@
 
 \arguments{
   \item{ x }{
-    A \code{"VegsoupPartition"} object.
+	A \code{"VegsoupPartition"} object.
   }
   \item{ numitr }{
-    Number of iterations to perform in calculating the probability of
-    obtaining as effective a classification as observed.
+	Number of iterations to perform in calculating the probability of
+	obtaining as effective a classification as observed.
   }
   \item{ verbose }{
   additional console output.
   }
   \item{ \dots }{
-    Arguments passed to \code{\link{as.dist}} (\code{Partana},
-    \code{Silhouette} and \code{Disdiam}) or \code{link{as.matrix}}
-    (\code{Tabdev}).
+	Arguments passed to \code{\link{as.dist}} (\code{Partana},
+	\code{Silhouette} and \code{Disdiam}) or \code{link{as.matrix}}
+	(\code{Tabdev}).
   }
 }
 \details{
@@ -74,12 +74,12 @@ As opposed to \emph{partition analysis} (\code{Partana}) \code{Tabdev} is a meth
   elements \code{'spcdev'} and \code{'totdev'}.
 
   \item{ spcdev }{
-    \code{data.frame} with four columns giving the species (\code{"numocc"}),
-    the number of occurrences of a species in the data set (\code{"numocc"}),
-    estimated deviance \code{"deviance"} and probability (\code{pval}).
+	\code{data.frame} with four columns giving the species (\code{"numocc"}),
+	the number of occurrences of a species in the data set (\code{"numocc"}),
+	estimated deviance \code{"deviance"} and probability (\code{pval}).
   }
   \item{ totdev }{
-    total tabele deviance.
+	total tabele deviance.
   }
 }
 \author{

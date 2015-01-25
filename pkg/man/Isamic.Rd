@@ -20,7 +20,7 @@
 
 \arguments{
   \item{x}{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
   }
 }
 \value{

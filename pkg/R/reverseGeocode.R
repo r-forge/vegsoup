@@ -59,67 +59,67 @@ setGeneric("reverseGeocode",
 #}
 
 setMethod("reverseGeocode",
-    signature(x = "Vegsoup"),
-    function (x, ...) {
-    	m <- coordinates(x)[, 1:2]
-    	p <- grep("horizontal.precision", names(x))
-    	if (length(p) == 1) {
-    		p <- sites(x)[,p]
-    		if (!is.numeric(p)) {
-    			p <- as.numeric(p)
-    			if (any(is.na(p))) {
-    				na <- 20
-    				p[is.na(p)] <- na
-    				message("replace NA with ", na)
-    			}
-    		}
-    	} else {
-    		message("variable horizontal.precision not found")
-    	}
-    	ll <- apply(cbind(m, p), 1, function (x) {
-    		.reverseGeocode(x[1:2], x[3], ...)	
-    	}
-    	)
+	signature(x = "Vegsoup"),
+	function (x, ...) {
+		m <- coordinates(x)[, 1:2]
+		p <- grep("horizontal.precision", names(x))
+		if (length(p) == 1) {
+			p <- sites(x)[,p]
+			if (!is.numeric(p)) {
+				p <- as.numeric(p)
+				if (any(is.na(p))) {
+					na <- 20
+					p[is.na(p)] <- na
+					message("replace NA with ", na)
+				}
+			}
+		} else {
+			message("variable horizontal.precision not found")
+		}
+		ll <- apply(cbind(m, p), 1, function (x) {
+			.reverseGeocode(x[1:2], x[3], ...)	
+		}
+		)
 		x$coordinate.string <- sapply(ll, "[[", 1)
 		x$locality <- sapply(ll, "[[", 2)
-    return(x)
-    }
+	return(x)
+	}
 )
 
 setMethod("reverseGeocode",
-    signature(x = "SpatialPointsDataFrame"),
-    function (x, ...) {
-    	m <- coordinates(x)[, 1:2]
-    	p <- sapply(c("accuracy", "precision"),
-    		function (y) agrep(y, names(x)))
-    	l <- sapply(p, length) > 0
-    	if (any(l)) {
-    		p <- unlist(p[which(l)])
-    	} else {
-    		message("variables accuracy or precision not found")
-    	}
-    	if (length(p) == 1) {
-    		p <- slot(x, "data")[, p]
-    		if (!is.numeric(p)) {
-    			p <- as.numeric(p)
-    			if (any(is.na(p))) {
-    				na <- 20
-    				p[is.na(p)] <- na
-    				message("replace NA with ", na)
-    			}
-    		}
-    	} else {
-    		message("multiple matches for variables accuracy or precision")
-    		p <- rep(NA, nrow(x))
-    	}
-    	ll <- apply(cbind(m, p), 1, function (x) {
-    		.reverseGeocode(x[1:2], x[3], ...)	
-    	}
-    	)
+	signature(x = "SpatialPointsDataFrame"),
+	function (x, ...) {
+		m <- coordinates(x)[, 1:2]
+		p <- sapply(c("accuracy", "precision"),
+			function (y) agrep(y, names(x)))
+		l <- sapply(p, length) > 0
+		if (any(l)) {
+			p <- unlist(p[which(l)])
+		} else {
+			message("variables accuracy or precision not found")
+		}
+		if (length(p) == 1) {
+			p <- slot(x, "data")[, p]
+			if (!is.numeric(p)) {
+				p <- as.numeric(p)
+				if (any(is.na(p))) {
+					na <- 20
+					p[is.na(p)] <- na
+					message("replace NA with ", na)
+				}
+			}
+		} else {
+			message("multiple matches for variables accuracy or precision")
+			p <- rep(NA, nrow(x))
+		}
+		ll <- apply(cbind(m, p), 1, function (x) {
+			.reverseGeocode(x[1:2], x[3], ...)	
+		}
+		)
 		coordinate.string <- sapply(ll, "[[", 1)
 		locality <- sapply(ll, "[[", 2)
 		r <- as.matrix(cbind(coordinate.string, locality))
-    return(r)
-    }
+	return(r)
+	}
 )
   

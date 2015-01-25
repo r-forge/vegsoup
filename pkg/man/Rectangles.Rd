@@ -18,14 +18,14 @@
 
 \arguments{
   \item{ obj }{
-    \code{'VegsoupPartiton'} object.
+	\code{'VegsoupPartiton'} object.
   }
   \item{ plot }{
-    If \code{TRUE} create a plot, otherwise just return a matrix of partition
-    dimensions used to create boxes. Defaults to \code{TRUE}.
+	If \code{TRUE} create a plot, otherwise just return a matrix of partition
+	dimensions used to create boxes. Defaults to \code{TRUE}.
   }
   \item{ \dots }{
-    graphical parameters. See \sQuote{Details}.
+	graphical parameters. See \sQuote{Details}.
   }
 }
 \details{
@@ -59,9 +59,9 @@ x <- VegsoupPartition(windsfeld, k = 10, polish = TRUE)
 #   add fancy colors to the boxes
 require(RColorBrewer)
 rectangles(x, plot = TRUE,
-           col = rgb(0,0,0,0.2),
-           border = RColorBrewer::brewer.pal(getK(x), "Spectral"),
-           lwd = 2)
+		   col = rgb(0,0,0,0.2),
+		   border = RColorBrewer::brewer.pal(getK(x), "Spectral"),
+		   lwd = 2)
 }
 \keyword{ methods }
 \keyword{ hplot }

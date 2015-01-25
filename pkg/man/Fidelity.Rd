@@ -40,7 +40,7 @@
 
 \usage{
 \S4method{fidelity}{VegsoupPartition}(obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1,
-         alternative = "greater", fast = FALSE, verbose = TRUE, ...)
+		 alternative = "greater", fast = FALSE, verbose = TRUE, ...)
 
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "greater")
 
@@ -53,35 +53,35 @@
 
 \arguments{
   \item{ obj }{
-    \code{'VegsoupPartition'} object.
+	\code{'VegsoupPartition'} object.
    }
   \item{ method }{
-    indicator measure.
+	indicator measure.
   }
   \item{ group }{
-    grouping variable.
+	grouping variable.
   }
   \item{ nboot }{
-    number of boot straps, defaults to.
+	number of boot straps, defaults to.
   }
   \item{ alpha }{
-    significance.
+	significance.
   }
   \item{ c }{
-    Forgot what that this is?
+	Forgot what that this is?
   }
   \item{ fast }{
-    accelerate computations using package \code{parallel}.
+	accelerate computations using package \code{parallel}.
   }
   \item{ verbose }{
-    display computation status bar.
+	display computation status bar.
   }
   \item{ alternative }{
-    alternative hypothesis. For \code{fidelity} takes effect only for \code{method = "Fisher"}
+	alternative hypothesis. For \code{fidelity} takes effect only for \code{method = "Fisher"}
   }
   \item{ \dots }{
-    For \code{fidelity} additional arguments for \code{method = "fisher.s"}
-    and for \code{Indval} arguments passed to \code{\link[labdsv:indval]{indval}}.
+	For \code{fidelity} additional arguments for \code{method = "fisher.s"}
+	and for \code{Indval} arguments passed to \code{\link[labdsv:indval]{indval}}.
   }
 }
 
@@ -89,27 +89,27 @@
 Methods currently implemented for method \code{fidelity} include the following:
 
   \itemize{
-     \item \code{r:} phi (point-biserial correlation coefficient)
-     \item \code{r.g:} phi, group equalised
-     \item \code{cos:} cosine (Ochiai index)
-     \item \code{cos.g:} cosine (Ochiai index), group equalised
-     \item \code{r.ind:} phi individual based
-     \item \code{r.ind.g:} phi individual based, group equalised
-     \item \code{s.ind:} square root of Indval A times Indval B
-     \item \code{s.ind.g:} square root of Indval A.g * Indval B, group equalised
-     \item \code{IndVal.g:} Indval, group equalised
-     \item \code{IndVal:} Indval
-     \item \code{A.g:} Indval A, group equalised
-     \item \code{A:} Indval A
-     \item \code{B:} Indval B
-     \item \code{u.hyp:} Bruelheide's corrected u value (Bruelheide 2000)
-     \item \code{u.binB:} Bruelheide's corrected u value uBinB (Bruelheide 2000)
-     \item \code{u.binA:} Bruelheide's corrected u value uBinA (Bruelheide 2000)
-     \item \code{g:} G statistic
-     \item \code{chi:} chi-square statistic with Yates correction
-     \item \code{Fisher:} Fisher test (Chytry et al. 2002)
-     \item \code{CR:} Willner's constancy ratio (Willner 2006)
-     \item \code{TCR:} Willner's total cover ratio (Willner 2006)
+	 \item \code{r:} phi (point-biserial correlation coefficient)
+	 \item \code{r.g:} phi, group equalised
+	 \item \code{cos:} cosine (Ochiai index)
+	 \item \code{cos.g:} cosine (Ochiai index), group equalised
+	 \item \code{r.ind:} phi individual based
+	 \item \code{r.ind.g:} phi individual based, group equalised
+	 \item \code{s.ind:} square root of Indval A times Indval B
+	 \item \code{s.ind.g:} square root of Indval A.g * Indval B, group equalised
+	 \item \code{IndVal.g:} Indval, group equalised
+	 \item \code{IndVal:} Indval
+	 \item \code{A.g:} Indval A, group equalised
+	 \item \code{A:} Indval A
+	 \item \code{B:} Indval B
+	 \item \code{u.hyp:} Bruelheide's corrected u value (Bruelheide 2000)
+	 \item \code{u.binB:} Bruelheide's corrected u value uBinB (Bruelheide 2000)
+	 \item \code{u.binA:} Bruelheide's corrected u value uBinA (Bruelheide 2000)
+	 \item \code{g:} G statistic
+	 \item \code{chi:} chi-square statistic with Yates correction
+	 \item \code{Fisher:} Fisher test (Chytry et al. 2002)
+	 \item \code{CR:} Willner's constancy ratio (Willner 2006)
+	 \item \code{TCR:} Willner's total cover ratio (Willner 2006)
   }
 }
 \value{

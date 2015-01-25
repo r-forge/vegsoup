@@ -20,18 +20,18 @@ Below is a list of functions grouped by theme.
 
 The package implements classes for vegetation data (see \link{Vegsoup-class}) and supports
   \itemize{
-    \item data to be structured in layers/strata.
-    \item several cover scales and conversions thereof.
-    \item taxonomic treatment including species traits.
-    \item standardizations and dissimilarity measures of the species data.
-    \item creation of species and dissimilarity/distance matrices.
-    \item indexing, extract, replace and sample operations.
-    \item row and column aggregation
-    \item merging of objects
-    \item coerce methods
-    \item output methods (Latex and plain text files)
-    \item spatial methods
-    \item plotting methods
+	\item data to be structured in layers/strata.
+	\item several cover scales and conversions thereof.
+	\item taxonomic treatment including species traits.
+	\item standardizations and dissimilarity measures of the species data.
+	\item creation of species and dissimilarity/distance matrices.
+	\item indexing, extract, replace and sample operations.
+	\item row and column aggregation
+	\item merging of objects
+	\item coerce methods
+	\item output methods (Latex and plain text files)
+	\item spatial methods
+	\item plotting methods
   }
 
 Type \code{vignette("vegsoup")} 
@@ -101,14 +101,14 @@ Basic writing
 %% }
 Advanced writing of entire files or parts thereof
 %%   \tabular{ll}{
-%%    \code{\link{}} \tab \cr
+%%	\code{\link{}} \tab \cr
 %%   }
 }
 
 \section{ I. Miscellaneous }{
 Miscellaneous methods and functions
 %%   \tabular{ll}{
-%%    \code{\link{}} \tab \cr
+%%	\code{\link{}} \tab \cr
 %%   }
 }
 

@@ -47,22 +47,22 @@
 \section{Slots}{
   \describe{
   \item{ \code{data}: }{
-    Object of class \code{"data.frame"} with at least four columns named
-    \code{'plot'}, \code{'abbr'}, \code{'layer'} and \code{'cov'}, all of
-    type \code{character}. The meaning of these columns is as detailed below:
+	Object of class \code{"data.frame"} with at least four columns named
+	\code{'plot'}, \code{'abbr'}, \code{'layer'} and \code{'cov'}, all of
+	type \code{character}. The meaning of these columns is as detailed below:
 
-    \itemize{
-    \item \code{"plot"} contains the plot identifier associated with each
-      species observation, any numeric values are coerced to characters.
-    \item \code{"abbr"} typically contains unique abbreviations of a scientific
-      latin name, although, any character string might be used (the full species name for example).
-      It's handy however, to keep \code{abbr} short and intuitive. In any case, syntactic valid
-      names are automatically created using \code{\link{make.names}} (e.g. blanks will be dots).
-    \item \code{"layer"} assigns a stratum/layer to each observation, even if they are all the same
-      (e.g. the data includes only a single herb layer)
-    \item \code{"cov"} contains an estimate of species abundance or performance (e.g. plant cover)
-      coerced to as character, regardless if it is ordinal (Braun-Blanquet scale),
-      continuous (frequencies or counts) or simple presence.
+	\itemize{
+	\item \code{"plot"} contains the plot identifier associated with each
+	  species observation, any numeric values are coerced to characters.
+	\item \code{"abbr"} typically contains unique abbreviations of a scientific
+	  latin name, although, any character string might be used (the full species name for example).
+	  It's handy however, to keep \code{abbr} short and intuitive. In any case, syntactic valid
+	  names are automatically created using \code{\link{make.names}} (e.g. blanks will be dots).
+	\item \code{"layer"} assigns a stratum/layer to each observation, even if they are all the same
+	  (e.g. the data includes only a single herb layer)
+	\item \code{"cov"} contains an estimate of species abundance or performance (e.g. plant cover)
+	  coerced to as character, regardless if it is ordinal (Braun-Blanquet scale),
+	  continuous (frequencies or counts) or simple presence.
    }
    
    The above outlined data columns must be available in order to create a \code{"Species"} object
@@ -79,75 +79,75 @@
 
 \section{Methods}{
   \describe{
-    \item{ species }{
-      There exists \code{species} methods for a number of R base classes:
+	\item{ species }{
+	  There exists \code{species} methods for a number of R base classes:
 
-      \code{signature(obj = "data.frame")}:
-        promote \code{data.frame} to object of class \code{"Species"}.
+	  \code{signature(obj = "data.frame")}:
+		promote \code{data.frame} to object of class \code{"Species"}.
 
-      \code{signature(obj = "matrix")}:
-        promote \code{matrix} to object of class \code{"Species"}.
-        Note, \code{obj} does not need to have \code{dimnames}, but order matters.
+	  \code{signature(obj = "matrix")}:
+		promote \code{matrix} to object of class \code{"Species"}.
+		Note, \code{obj} does not need to have \code{dimnames}, but order matters.
 
-      \code{signature(obj = "character")}:
-        supply a file to be read by \code{read.csv} and promote that object to
-        class \code{"Species"}. Remember to pass appropriate arguments to
-        \code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
+	  \code{signature(obj = "character")}:
+		supply a file to be read by \code{read.csv} and promote that object to
+		class \code{"Species"}. Remember to pass appropriate arguments to
+		\code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
 
-      The following classes defined in the vegsoup package have a \code{species} method:
+	  The following classes defined in the vegsoup package have a \code{species} method:
 
-      \code{signature(obj = "Species")}:
-        accessor function (\emph{slot "data"}).
+	  \code{signature(obj = "Species")}:
+		accessor function (\emph{slot "data"}).
 		Returns class \code{data.frame}.
 
-      \code{signature(obj = "SpeciesTaxonomy")}:
-        accessor function (\emph{slot "taxonomy"}).
+	  \code{signature(obj = "SpeciesTaxonomy")}:
+		accessor function (\emph{slot "taxonomy"}).
 		Returns class \code{Species}.
 		
-      \code{signature(obj = "Vegsoup")}:
-        accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
-        an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
-        \emph{slot data}. \code{species(obj)@data} should be avoided.
+	  \code{signature(obj = "Vegsoup")}:
+		accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
+		an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
+		\emph{slot data}. \code{species(obj)@data} should be avoided.
 
-      \code{signature(obj = "VergsoupVerbatim")}:
-        promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
+	  \code{signature(obj = "VergsoupVerbatim")}:
+		promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
 
-    }
+	}
 
-    \item{ species<- }{
-      \code{signature(obj = "Vegsoup", value = "Species")}:
-        assign (possibly subset) with object of class \code{"Species"}. 
-    }
+	\item{ species<- }{
+	  \code{signature(obj = "Vegsoup", value = "Species")}:
+		assign (possibly subset) with object of class \code{"Species"}. 
+	}
 
-    \item{ nrow }{
-      \code{signature(x = "Species")}:
-        the number of rows. Each observation of a species in plot (stratum-replicate)
-        constitutes a row.
-    }
+	\item{ nrow }{
+	  \code{signature(x = "Species")}:
+		the number of rows. Each observation of a species in plot (stratum-replicate)
+		constitutes a row.
+	}
 
-    \item{ dimnames }{
-      \code{signature(x = "Species")}:
-        non unique dimnames. The dimnames that are constructed by pasting plot and layer collapsed
-        with \code{@}. Not to be called by the user.
-    }
+	\item{ dimnames }{
+	  \code{signature(x = "Species")}:
+		non unique dimnames. The dimnames that are constructed by pasting plot and layer collapsed
+		with \code{@}. Not to be called by the user.
+	}
 
-    \item{ [ }{
-      \code{signature(x = "Species")}:
-        subset parts of an object. Note, indexing that will
-        evaluate to an object with less than four columns will fail,
-        due to the class inherent data model (see \sQuote{Slots}).
-    }
+	\item{ [ }{
+	  \code{signature(x = "Species")}:
+		subset parts of an object. Note, indexing that will
+		evaluate to an object with less than four columns will fail,
+		due to the class inherent data model (see \sQuote{Slots}).
+	}
 
-    \item{ $ }{
-      \code{signature(x = "Species")}:
-        retrieve column by name (see \sQuote{Slots}), or perform replacement.
-    }
+	\item{ $ }{
+	  \code{signature(x = "Species")}:
+		retrieve column by name (see \sQuote{Slots}), or perform replacement.
+	}
 
-    \item{ bind }{
-      \code{signature(x = "Species")}:
-        \code{bind} method to combine two or more objects. See \code{\link{verbatim}}
-        for an example.
-    }
+	\item{ bind }{
+	  \code{signature(x = "Species")}:
+		\code{bind} method to combine two or more objects. See \code{\link{verbatim}}
+		for an example.
+	}
 
   }
 }

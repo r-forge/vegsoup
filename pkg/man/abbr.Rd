@@ -36,10 +36,10 @@
 
 \arguments{
   \item{ obj }{
-    a \code{Vegsoup*}, \code{Species} or \code{Taxonomy} object.
+	a \code{Vegsoup*}, \code{Species} or \code{Taxonomy} object.
   }
   \item{ value }{
-    character. Useful to change abbreviations.
+	character. Useful to change abbreviations.
   }
 }
 \details{

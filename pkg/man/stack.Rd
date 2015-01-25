@@ -40,7 +40,7 @@
 
 \usage{
 stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer"),
-              discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
+			  discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
 
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE)
 
@@ -50,43 +50,43 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 \arguments{
 # Arguments to all functions
   \item{ x }{
-     An object converted to a data frame.
+	 An object converted to a data frame.
   }
   \item{ file }{
-     character. Path to a csv-file
+	 character. Path to a csv-file
   }
   \item{ sep, dec }{
-    character. See \code{\link{read.csv}}.
+	character. See \code{\link{read.csv}}.
   }
   \item{ schema }{
-     character. Names of columns to be searched for. See \sQuote{Details}.
+	 character. Names of columns to be searched for. See \sQuote{Details}.
   }
   \item{ zeros }{
-     logical. If \code{TRUE}, drop leading zeros in plot names.
+	 logical. If \code{TRUE}, drop leading zeros in plot names.
   }
   \item{ verbose }{
-     Prints some diagnostic messages.
+	 Prints some diagnostic messages.
   }
 # Arguments for function stackSpecies
   \item{ absences }{
-    Character used to code absences. Can be missing, see \sQuote{Details}.
+	Character used to code absences. Can be missing, see \sQuote{Details}.
   }
   \item{ discard }{
-     Names of additinal columns to be discarded.
+	 Names of additinal columns to be discarded.
   }
 # Arguments for function stackCoordinates
   \item{ dsn }{
-    Data source name. See \code{\link[rgdal]{readOGR}}.
+	Data source name. See \code{\link[rgdal]{readOGR}}.
   }
   \item{ layer }{
-    Layer name. See \code{readOGR}.
+	Layer name. See \code{readOGR}.
   }
   \item{ round }{
-    Round decimals to given precision. See \sQuote{Details}.
+	Round decimals to given precision. See \sQuote{Details}.
   }
   \item{ \dots }{
-    additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
-    \code{Species} respectively \code{Sites}.
+	additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
+	\code{Species} respectively \code{Sites}.
   }
 }
 
@@ -119,11 +119,11 @@ data(dune)
 # create data.frame according to the defaults of the schema argument in stackSpecies
 # there are two moss species in the dune data set, we assign them to a moss layer
 x <- data.frame(abbr = names(dune),
-                layer = c(rep("hl", 8), "ml",
-                          rep("hl", 6), "ml",
-                          rep("hl", 14)),
-                taxon = NA, # not mandatory, we don't use it here
-                t(dune))
+				layer = c(rep("hl", 8), "ml",
+						  rep("hl", 6), "ml",
+						  rep("hl", 14)),
+				taxon = NA, # not mandatory, we don't use it here
+				t(dune))
 
 # groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
@@ -147,7 +147,7 @@ require(rgdal)
 ## create a file of dummy coordiantes in a common format for spatial data
 # some random points
 pts <- data.frame(x = rnorm(20), y = rnorm(20),
-                  plot = unique(spc$plot))
+				  plot = unique(spc$plot))
 
 # promate to class 'SpatialPointsDataFrame'
 coordinates(pts) <- ~x+y

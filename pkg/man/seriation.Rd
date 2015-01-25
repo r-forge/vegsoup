@@ -21,18 +21,18 @@ The method rearranges the species matrix according to ordination coordinates, cl
 }
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ method }{
-    Method applied to obtain new order of data set. If missing defaults to
-    \code{"dca"}. See \sQuote{Details}.
+	Method applied to obtain new order of data set. If missing defaults to
+	\code{"dca"}. See \sQuote{Details}.
   }
   \item{ mode }{
-    \code{Q} or \code{R} mode analysis passed to \code{\link{as.matrix}}.
+	\code{Q} or \code{R} mode analysis passed to \code{\link{as.matrix}}.
   }
   \item{ \dots }{
-    Additional arguments passed to \code{\link[vegan:decorana]{decorana}}.
-    See \sQuote{Note}.
+	Additional arguments passed to \code{\link[vegan:decorana]{decorana}}.
+	See \sQuote{Note}.
   }
 }
 \details{

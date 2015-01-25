@@ -17,7 +17,7 @@
 }
 \arguments{
   \item{ obj }{
-    \code{Vegsoup*} object.
+	\code{Vegsoup*} object.
   }
 }
 \value{

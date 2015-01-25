@@ -9,7 +9,7 @@ setGeneric("plot", function(x, y, ...)
 #}	
   
 setMethod("plot",
-    signature(x = "Vegsoup", y = "missing"),
+	signature(x = "Vegsoup", y = "missing"),
 	function (x, ...) {
 	opar <- par(mfrow = c(2,2))
 
@@ -26,8 +26,8 @@ setMethod("plot",
 	}
 		
 		
-	hist(r1, main = "Species richness", xlab = "Number of species")        
-	hist(r2, main = "Species occurences", xlab = "Number of occurences")        
+	hist(r1, main = "Species richness", xlab = "Number of species")		
+	hist(r2, main = "Species occurences", xlab = "Number of occurences")		
 	plot(r3 / sum(r3), main = "Coverscale", ylab = "Fraction")
 	plot(r4 / sum(r4), main = "Layers", ylab = "Fraction")
 

@@ -37,9 +37,9 @@
 
 \usage{
 OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
-            method = c("ward", "flexible", "pam", "kmeans", "wards",
-                       "fanny", "FCM", "KM"),
-            fast = FALSE, ...)
+			method = c("ward", "flexible", "pam", "kmeans", "wards",
+					   "fanny", "FCM", "KM"),
+			fast = FALSE, ...)
 
 \S4method{method}{VegsoupOptimstride}(x, ...)
 
@@ -64,33 +64,33 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
    \code{VegsoupOptimstride} object
   }
   \item{ k }{
-    maximum number of cluster to compute (\code{seq(1:k)})
+	maximum number of cluster to compute (\code{seq(1:k)})
   }
   \item{ ft.threshold }{
-    threshold value of Fisher test, defaults to \code{1e-03}
+	threshold value of Fisher test, defaults to \code{1e-03}
   }
   \item{ alternative }{
-    alternative indicates the alternative hypothesis of the Fisher exact test
-    and must be one of "two.sided", "greater" or "less" (see
-    \code{\link{FisherTest}} and \link{fisher.test}).
+	alternative indicates the alternative hypothesis of the Fisher exact test
+	and must be one of "two.sided", "greater" or "less" (see
+	\code{\link{FisherTest}} and \link{fisher.test}).
   }
   \item{ threshold }{
-    threshold value for OptimClass2. See \sQuote{Details}
+	threshold value for OptimClass2. See \sQuote{Details}
   }
   \item{ method }{
-    any method supported by \code{\link{VegsoupPartition}}. For \code{OptimStride}
-    if method is missing, "ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", and "KM"
-    are computed. Computationally expensive methods, such as "isopam" and "optpart" are
-    omitted to reduce run duration.
+	any method supported by \code{\link{VegsoupPartition}}. For \code{OptimStride}
+	if method is missing, "ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", and "KM"
+	are computed. Computationally expensive methods, such as "isopam" and "optpart" are
+	omitted to reduce run duration.
   }
   \item{ fast }{
-    accelerate computations using package \code{parallel}. If \code{FALSE} a progress bar
-    is printed. Depending on the dimension of the community matrix and the value of k, computations
-    may consume a serious amount of time. If the host system provides 4 or more core, setting
-    \code{fast = TRUE} will significantly reduce run time.
+	accelerate computations using package \code{parallel}. If \code{FALSE} a progress bar
+	is printed. Depending on the dimension of the community matrix and the value of k, computations
+	may consume a serious amount of time. If the host system provides 4 or more core, setting
+	\code{fast = TRUE} will significantly reduce run time.
   }
   \item{ \dots }{
-    additional arguments passed to \code{VegsoupPartition}, otherwise not used.
+	additional arguments passed to \code{VegsoupPartition}, otherwise not used.
   }
 }
 \details{
@@ -106,37 +106,37 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
 }
 \section{ Methods }{
   \describe{
-    \item{ method }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-         retrieves the names of the computed method(s). These are the method arguments as accepted
-         by \code{VegsoupPartition}.
-    }
-    \item{ stride }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-        returns the number of faithful species for each partition and number of k.
-    }
-    \item{ threshold }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-         retrieves the threshold values set for the Fisher test.
-    }
-    \item{ optimclass1, optimclass2 }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-        returns a matrix with the counts of faithful species, those achieving
-        \code{ft.trshold}.
-    }
-    \item{ getK }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-        the computed maximum value of \code{k}, the length of each stride.
-    }
-    \item{ peaks }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-        the peaks along the stride.
-    }
-    \item{ which.max }{
-      \code{ signature(obj = "VegsoupOptimstride") }:
-        returns the number of k that coincides with the highest number of faithful species,
-        per method.
-    }
+	\item{ method }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		 retrieves the names of the computed method(s). These are the method arguments as accepted
+		 by \code{VegsoupPartition}.
+	}
+	\item{ stride }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		returns the number of faithful species for each partition and number of k.
+	}
+	\item{ threshold }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		 retrieves the threshold values set for the Fisher test.
+	}
+	\item{ optimclass1, optimclass2 }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		returns a matrix with the counts of faithful species, those achieving
+		\code{ft.trshold}.
+	}
+	\item{ getK }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		the computed maximum value of \code{k}, the length of each stride.
+	}
+	\item{ peaks }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		the peaks along the stride.
+	}
+	\item{ which.max }{
+	  \code{ signature(obj = "VegsoupOptimstride") }:
+		returns the number of k that coincides with the highest number of faithful species,
+		per method.
+	}
   }
 }
 

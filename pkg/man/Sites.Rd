@@ -22,10 +22,10 @@ Accessor and replacement methods acting on the \code{'sites'} slot.
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ value }{
-    An object of class \code{"data.frame"}.
+	An object of class \code{"data.frame"}.
   }
 
 }

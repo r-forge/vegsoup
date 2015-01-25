@@ -5,8 +5,8 @@ setGeneric("compress",
 #}
 
 setMethod("compress",
-    signature(x = "Vegsoup"),
-    function (x, retain) {
+	signature(x = "Vegsoup"),
+	function (x, retain) {
 		coverscale(x) <- "pa"
 		
 		if (!missing(retain)) {
@@ -28,7 +28,7 @@ setMethod("compress",
 			x@sites <- data.frame(
 				compress = rep(TRUE, nrow(x)),
 				cols = ncol(sites(x)),
-				row.names = rownames(sites(x)))     
+				row.names = rownames(sites(x)))	 
 		}
 		
 		x <- layers(x, collapse = "0l")
@@ -40,5 +40,5 @@ setMethod("compress",
 
 		x@taxonomy <- taxonomy(z)
 	return(x)	
-    }
+	}
 )

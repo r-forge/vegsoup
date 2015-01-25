@@ -1,11 +1,11 @@
 \encoding{UTF-8}
 
-\name{SpeciesList}
+\name{taxalist}
 \docType{methods}
 
-\alias{SpeciesList}
-\alias{SpeciesList-methods}
-\alias{SpeciesList,Vegsoup-method}
+\alias{taxalist}
+\alias{taxalist-methods}
+\alias{taxalist,Vegsoup-method}
 
 \alias{relevee}
 \alias{relevee-methods}
@@ -18,25 +18,25 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 }
 
 \usage{
-\S4method{SpeciesList}{Vegsoup}(obj, layered)
+\S4method{taxalist}{Vegsoup}(obj, layered)
 
 \S4method{relevee}{Vegsoup}(obj, plot, format = FALSE)
 }
 
 \arguments{
   \item{ obj }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
   \item{ layered }{
-    Return species list with layers, defaults to \code{FALSE}. See
-    \sQuote{Details}.
+	Return species list with layers, defaults to \code{FALSE}. See
+	\sQuote{Details}.
   }  
   \item{ format }{
-    logical. Format output.
+	logical. Format output.
   }
   \item{ plot }{
-    Index or character giving a rowname (\code{rownames(obj)}), defaults to \code{1}, the first plot
-    in the data set.
+	Index or character giving a rowname (\code{rownames(obj)}), defaults to \code{1}, the first plot
+	in the data set.
   }
 }
 
@@ -52,7 +52,7 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 }
 
 \note{
-  The SpeciesList method will not print anything to console.
+  The taxalist method will not print anything to console.
 }
 
 \author{ Roland Kaiser }
@@ -64,10 +64,10 @@ data(barmstein)
 x <- barmstein
 
 # including abbreviations
-l <- SpeciesList(x)
+l <- taxalist(x)
 head(l)
 
-l <- SpeciesList(x, layered = TRUE)
+l <- taxalist(x, layered = TRUE)
 head(l)
 
 # scientific taxon names only

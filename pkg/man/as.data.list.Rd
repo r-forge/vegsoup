@@ -20,7 +20,7 @@
 
 \arguments{
   \item{ x }{
-    A \code{Vegsoup*} object.
+	A \code{Vegsoup*} object.
   }
 }
 

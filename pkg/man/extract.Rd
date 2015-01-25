@@ -27,16 +27,16 @@
 
 \arguments{
   \item{ x }{
-    \code{'Vegsoup*'} object, for \code{partition} a \code{'VegsoupPartition'} object.
+	\code{'Vegsoup*'} object, for \code{partition} a \code{'VegsoupPartition'} object.
   }
    \item{ i, j, \dots }{
-    Elements to extract or replace.
+	Elements to extract or replace.
   }
   \item{ drop }{
-    Not used. The method will always return a valid \code{Vegsoup*} object!
+	Not used. The method will always return a valid \code{Vegsoup*} object!
   }
   \item{ value }{
-    integer. An \code{integer} defining a partition to be subsetted. Can also be a vector.
+	integer. An \code{integer} defining a partition to be subsetted. Can also be a vector.
   }
 
 }

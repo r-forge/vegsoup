@@ -6,7 +6,7 @@ setGeneric("richness",
 #}
 
 setMethod("richness",
-    signature(obj = "Species"),
+	signature(obj = "Species"),
 	function (obj, choice = c("dataset", "sample")) {
 
 		CHOICES <- c("dataset", "sample")
@@ -31,7 +31,7 @@ setMethod("richness",
 
 #	generic is set in Species-methods.R
 setMethod("richness",
-    signature(obj = "Vegsoup"),
+	signature(obj = "Vegsoup"),
 	function (obj, choice = c("dataset", "sample")) {
 		if (missing(choice)) choice <- "dataset"
 		r <- richness(species(obj), choice = choice) # use Species-method
@@ -40,7 +40,7 @@ setMethod("richness",
 )
 
 setMethod("richness",
-    signature(obj = "VegsoupPartition"),
+	signature(obj = "VegsoupPartition"),
 	function (obj, choice = c("dataset", "sample", "partition")) {
 		
 		CHOICES <- c("dataset", "sample", "partition")
