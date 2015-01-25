@@ -110,10 +110,8 @@ Collate: AAA.R
          optimize.R
          typical.R
          spread.R
-         VegsoupPartition-AssociationMethods.R
          Confus.R
          Accuracy.R
-         Association.R
          Contingency.R
          Constancy.R
          average.R
@@ -132,7 +130,7 @@ Collate: AAA.R
          VegsoupPartitionFidelity-BaseMethods.R
          OptimStride.R
          VegsoupOptimstride-BaseMethods.R
-         VegsoupOptimstride-VisualisationMethods.R        
+         VegsoupOptimstride-VisualisationMethods.R
          Latex.R
          plot.R
          misc.R

@@ -1,7 +1,19 @@
 --- todo
 
 we must rebuild polygons for coordinates<- method
+decostand method for fidelity, needs to recalculate fidelity if not presence absence
 more rigorous test for identical methods
+rename SpeciesList to taxalist
+generalize slot partition to contain class dendrogram, fuzzy memberships and maybe more?
+decotrans, better math method e.g. obj^0.2
+peaks, if curve bends down return no peaks with option
+more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
+add layers(obj) <- value logical-method, if FALSE collapse all layers
+
+
+--- 2015-01-25, version: 0.2-4 patched
+
+removed Association method
 
 --- 2015-01-24, version: 0.2-4
 

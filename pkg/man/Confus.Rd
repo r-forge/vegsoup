@@ -55,7 +55,7 @@ Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classi
 \author{ Roland Kaiser }
 \seealso{
 \code{\link{VegsoupPartition}},
-\code{\link{Accuracy}} and \code{\link{Association}} in package '\pkg{vegsoup}.
+\code{\link{Accuracy}} in package '\pkg{vegsoup}.
 \code{\link{confus}} in package \pkg{optpart} and
 \code{\link[polytomous:crosstable.statistics]{crosstable.statistics}} and \code{\link[polytomous:associations]{associations}} in package \pkg{polytomous}.
 }

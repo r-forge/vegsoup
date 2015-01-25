@@ -269,11 +269,6 @@
       Accuracy Statistics of two objects under comparison.
       See \code{\link{Accuracy}}.
     }
-    \item{Association}{
-      \code{signature(obj1 = "VegsoupPartition", obj2 = "VegsoupPartition")}:
-      Measures of association of two objects.
-      See \code{\link{Association}}.
-    }
     \item{Confus}{
       \code{signature(obj1 = "VegsoupPartition", obj2 = "VegsoupPartition")}:
       Confusion matrix of two objects.

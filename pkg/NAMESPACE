@@ -120,7 +120,6 @@ exportMethods(
     "abbr",
     "AprioriGrouping",
     "Accuracy",
-    "Association",
     "as.vector",
     "as.matrix",
     "as.character",
