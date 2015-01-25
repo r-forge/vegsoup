@@ -24,14 +24,14 @@ setMethod("Phi",
 
 	for (i in 1:SP) {	# loop over species
 		for (j in 1:ncol(cnst)) {	# loop over partitions
-			insd <- cnti[i, j]					<# original n in cluster j
+			insd <- cnti[i, j]					# original n in cluster j
 			outs <- sum(cnti[i,-j])				# original n outside cluster j
 			oc <- cs * (insd / siz[j])				# new n in cluster j
 			on <- (N - cs) * (outs / (N - siz[j]))	# new n outside cluster j
 			total <- oc + on						# new total value
-			res.1 <- nv <- (N * oc - total * cs) 
-			res.2 <- sqrt(total * cs * (N - total) * (N - cs))
-			nv <- res.1 / res.2
+			r1 <- nv <- (N * oc - total * cs) 
+			r2 <- sqrt(total * cs * (N - total) * (N - cs))
+			nv <- r1 / r2
 			res[i,j] <- nv
 		}
 	}
