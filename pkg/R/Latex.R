@@ -602,9 +602,7 @@
 			dimnames(tex)[[2]][sel] <- paste(dimnames(tex)[[2]][sel],
 				" (", LETTERS[sort(unique(partitioning(obj)))], ")", sep = "")
 		}
-		if (verbose) {
-			cat("\nprint LaTex table to", file)	
-		}
+		if (verbose) cat("\nprint LaTex table to", file)
 
 		Hmisc::latex(tex,
 			file = file,

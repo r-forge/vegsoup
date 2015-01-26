@@ -20,12 +20,11 @@ importFrom("graphics", plot, hist)
 
 importFrom("stringr", str_trim, str_pad)
 
-importFrom("Hmisc", latex) # also as Hmisc::latex
-
-
 #	used in a single function/method
 
 #importFrom("ggmap", revgeocode) # as ggmap::revgeocode
+
+import("Hmisc") #importFrom("Hmisc", latex) does not work?
 
 importFrom("RColorBrewer", brewer.pal) # also as RColorBrewer::brewer.pal
 
