@@ -54,9 +54,11 @@ Returns a modified object of class \code{'VegsoupPartition'} with possibly chang
 }
 
 \references{
-Dufrene, M. and Legendre, P. (1997). Species assemblages and indicator species: The need for a flexible asymmetrical approach. Ecological Monographs, 67(3):345-366.
+Dufrene, M. and Legendre, P. 1997 Species assemblages and indicator species: The need for a flexible asymmetrical approach. \emph{Ecological Monographs}, \bold{67},345--366.
 
-Rousseeuw, P. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. Journal of Computational and Applied Mathematics, 53:53-65.
+Rousseeuw, P. 1987 Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. \emph{Journal of Computational and Applied Mathematics}, \bold{53},53--65.
+
+Roberts, D. in prepeparation Vegetation classification by iterative reallocation optimization algorithms.
 }
 
 \author{ Roland Kaiser, implemented for vegsoup using Dave W. Roberts \code{optsil} and \code{optindval} procedures of package \pkg{optpart}.

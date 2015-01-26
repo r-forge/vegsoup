@@ -10,13 +10,11 @@ setGeneric("optsil",
 setMethod("optsil",
 	signature(x = "VegsoupPartition"),
 	function (x, maxitr = 100, verbose = FALSE, ...) {
-		#	Imports: optpart
-		#	require(optpart)
+		k <- getK(x)
+		if (k == 1) stop("meaningless with k = ", k)
 		
-		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
-		
-		nam <- names(x@part) # save names
-		cl <- match.call()
+		n <- names(x@part) # save names
+		cl <- match.call() # catch call, not used at the moment
 		
 		if (any(names(cl) == "mode")) {
 			if (cl$mode == "R") {
@@ -24,28 +22,38 @@ setMethod("optsil",
 			}
 		}
 		
-		cpu.time <- system.time({
-			tmp <- optpart::optsil(
+		cpu.time <- system.time( {
+			r <- optpart::optsil(
 					x = partitioning(x), dist = as.dist(x), #, ...
 					maxitr = maxitr)
-			x@part <- as.integer(tmp$clustering)
-			numitr <- tmp$numitr
-		})
-
+			i <- r$numitr # iterations
+		} )
+		
+		#	modify object
+		x@part <- as.integer(r$clustering)
+		names(x@part) <- n
+		
+		#	test if have to change slot k
+		kk <- length(unique(partitioning(x)))
+		if (k != kk) {
+			x@k <- kk
+			#	good language
+			message(ifelse(k > kk, "decreased ", "increased "),
+				"number of partitons from ", k, " to ", kk)
+		}
+		
 		if (verbose) {
 			cat("\n time to optimise species matrix of", ncell(x), "cells",
-				"and", getK(x), "partitions:",
+				"and", k, "partitions:",
 				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)
-		}	
-	
-		names(x@part) <- nam
+			cat("\n number of iterations performed:", i)
+		}
 		return(x)
 	}
 )
 
 #	optimise partitioning using Dave Roberts optindval procedure
-#	optpart defines: function (veg,clustering,maxitr=100,minsiz=5, ...) 
+#	optpart defines: function (veg, clustering, maxitr = 100, minsiz = 5, ...) 
 #if (!isGeneric("optindval"))) {
 setGeneric("optindval",
 	function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...)
@@ -55,35 +63,45 @@ setGeneric("optindval",
 setMethod("optindval",
 	signature(x = "VegsoupPartition"),
 	function (x, maxitr = 100, minsiz = 5, verbose = FALSE, ...) {
-		#	Imports: optpart
-		#	require(optpart)
+		k <- getK(x)
+		if (k == 1) stop("meaningless with k = ", k)
 		
-		if (getK(x) == 1) stop("meaningless with k = ", getK(x))
-
-		nam <- names(x@part) # save names
-		cl <- match.call()
+		n <- names(x@part) # save names
+		cl <- match.call() # catch call, not used at the moment
 		
 		if (any(names(cl) == "mode")) {
 			if (cl$mode == "R") {
 				stop("\n method not defined for R mode", call. = FALSE)
 			}
 		}
-
-		cpu.time <- system.time({
-			tmp <- optpart::optindval(
+		
+		cpu.time <- system.time( {
+			r <- optpart::optindval(
 					as.matrix(x, ...), partitioning(x),
 					maxitr = maxitr,
 					minsiz = minsiz)
-			x@part <- as.integer(tmp$clustering)
-			numitr <- tmp$numitr
-		})
+			i <- r$numitr # iterations
+		} )
+		
+		#	modify object
+		x@part <- as.integer(r$clustering)
+		names(x@part) <- n
+		
+		#	test if have to change slot k
+		kk <- length(unique(partitioning(x)))
+		if (k != kk) {
+			x@k <- kk
+			#	good language
+			message(ifelse(k > kk, "decreased ", "increased "),
+				"number of partitons from ", k, " to ", kk)
+		}
+		
 		if (verbose) {
 			cat("\n time to optimise species matrix of", ncell(x), "cells",
-				"and", getK(x), "partitions:",
+				"and", k, "partitions:",
 				cpu.time[3], "sec")
-			cat("\n number of iterations performed:", numitr)
+			cat("\n number of iterations performed:", i)
 		}
-		names(x@part) <- nam
 		return(x)
 	}
 )
