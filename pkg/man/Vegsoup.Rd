@@ -10,11 +10,11 @@
 
 \alias{coenoflex}
 
-\title{ Create an object of class \code{"Vegsoup"} }
+\title{ Create an object of class Vegsoup }
 
 \description{
   The provided creator functions build the basic data structures of
-  \code{Vegsoup*} objects from local R objects. Shorthand functions
+  \emph{Vegsoup*} objects from local R objects. Shorthand functions
   are provided to collect data files from a folder or build an object
   from a simple community matrix only, with dummy variables created
   for missing data structures (taxonomic reference list, sites data and/or
@@ -27,8 +27,8 @@
 
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
-		proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
-		verbose = FALSE)
+        proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
+        verbose = FALSE)
 
 coenoflex(numplt = 20, numspc = 10, ...)
 
@@ -39,74 +39,77 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 
 \arguments{
   \item{ x }{
-	object of class \code{\linkS4class{Species}} or
-	\code{\linkS4class{SpeciesTaxonomy}}.
+    object of class \code{\linkS4class{Species}} or
+    \code{\linkS4class{SpeciesTaxonomy}}.
   }
   \item{ y }{
-	object of class \code{\linkS4class{Sites}}.
+    object of class \code{\linkS4class{Sites}}.
   }
   \item{ z }{
-	object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
-	is of class \code{"SpeciesTaxonomy"}.
+    object of class \code{\linkS4class{Taxonomy}}. Can be missing if \code{x}
+    is of class \code{'SpeciesTaxonomy'}.
   }
   \item{ m }{
-	object that can be coereced to as matrix with plots as rows and species as columns.
+    object that can be coereced to as matrix with plots as rows and species as columns.
   }
   \item{ layer }{
-	layer code to be assigned.
+    layer code to be assigned.
   }
   \item{ folder }{
-	Path to a folder with three csv files. One file named \code{species.csv}
-	represents a table that can be coerced to class \code{"Species"} by
-	simply calling \code{species("./species.csv")}, the other one gives sites
-	as \code{sites("./sites.csv")} and the third one a taxonomic reference
-	list  (\code{taxonomy("./sites.csv")}). If files for species and or sites
-	have the file suffix \emph{wide}, functions \code{stackSpecies} and
-   \code{stackSites} are called.
+    Path to a folder with three csv files. One file named \code{species.csv}
+    represents a table structure that can be coerced to class \code{'Species'} by
+    simply calling \code{\link{species}("species.csv")}. Another file is coerced
+    by \code{\link{sites}("sites.csv")} and the third one, a taxonomic reference
+    list, is loaded via calls to \code{\link{taxonomy}("./taxonomy.csv")}).
+    For all these method the \code{character} dispatch is invoked
+    (cp. \code{signature(obj = "character")} in the methods section for the
+    respective method). If files for species and or sites
+    carry the file suffix \emph{wide} seperated with a blank,
+    functions \code{\link{stackSpecies}} and \code{\link{stackSites}} are called.
   }
   \item{ coverscale }{
-	Abundance scale of the observations. Possible choices include all
-	definitions given by \code{\link{Coverscale}}. For \code{plainsoup}
-	currently only an object of class \code{Coverscale} is accepted.
+    Abundance scale of the observations. Possible choices include all
+    definitions given by \code{\link{Coverscale}}. For \code{plainsoup}
+    currently only an object of class \code{Coverscale} is accepted.
   }
   \item{ group }{
-	A-priori grouping, if any and can be missing.
+    A-priori grouping, if any and can be missing.
   }
   \item{ proj4string }{
-	Projection attributes for slots \code{sp.points} and \code{sp.polygons}.
-	If missing set to \code{CRS("+init=epsg4326")}
-	(see \code{\link{proj4string}} for details).
+    Projection attributes for slots \code{sp.points} and \code{sp.polygons}.
+    If missing set to \code{CRS("+init=epsg4326")}
+    (see \code{\link{proj4string}} for details).
   }
   \item{ sp.points }{
-	Object of class \code{\link{SpatialPointsDataFrame}}, if missing
-	coordinates are seeked in argument \code{'y'}. If coordinate information
-	can not be extracted, a random point pattern in the unit square is
-	generated.
+    Object of class \code{\link{SpatialPointsDataFrame}}, if missing
+    coordinates are seeked in argument \code{'y'}. If coordinate information
+    can not be extracted, a random point pattern in the unit square is
+    generated.
   }
   \item{ sp.polygons }{
-	Object of class \code{\link{SpatialPolygonsDataFrame}}, if missing
-	a random polygon pattern is generated based on \code{'sp.points'} equal to
-	the number of plots (samples).
+    Object of class \code{\link{SpatialPolygonsDataFrame}}, if missing
+    a random polygon pattern is generated based on \code{'sp.points'} equal to
+    the number of plots (samples).
   }
   \item{ stringsAsFactors }{
-	Convert character strings in \code{y} to factors.
+    Convert character strings in \code{y} to factors.
   }
   \item{ sep }{
-	See \code{\link{read.csv}} for parsing of csv files. Defaults are set
-	according to \code{read.csv2}, also regarding \code{dec}!
+    See \code{\link{read.csv}} for parsing of csv files. Defaults are set
+    according to \code{read.csv2}, also regarding \code{dec}!
   }
   \item{ dec }{
-	See \code{read.csv}. 
+    See \code{read.csv}. 
   }
   \item{ numplt, numspc }{
-	%See \code{\link[coenoflex:coenoflex]{coenoflex}}.
-	See \code{coenoflex}.
+    %See \code{\link[coenoflex:coenoflex]{coenoflex}}.
+    See \code{coenoflex}.
   }
   \item{ \dots }{
-	Additional arguments passed to coenoflex.
+    Additional arguments passed to coenoflex.
   }
   \item{ verbose }{
-	Show status reports during function call.
+    Show status reports during function call.
   }
 }
 

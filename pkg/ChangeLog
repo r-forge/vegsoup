@@ -11,7 +11,7 @@ implement math methods e.g. obj^0.2
 implement CAP as decostand method
 more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
 add layers(obj) <- value logical-method, if FALSE collapse all layers
-
+test if order of layers is consistent over all methods
 
 --- 2015-01-25, version: 0.2-4 patched
 

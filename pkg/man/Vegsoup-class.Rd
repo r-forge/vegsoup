@@ -7,67 +7,72 @@
 
 \alias{Vegsoup-class}
 
-\title{ Class \code{"Vegsoup"} }
+\title{ Class Vegsoup }
 
 \description{
-  This is the foundation class of all \code{Vegsoup*} objects.
+  This is the foundation class of all \emph{Vegsoup*} objects.
 }
 
-\section{Objects from the Class}{
+\section{ Objects from the Class }{
 
-  Objects can be created by calls of the form \code{new("Vegsoup", ...)}.
-  The user is encouraged to use the creator function \code{\link{Vegsoup}}.
+Objects can be created by calls of the form \code{new("Vegsoup", ...)}.  
+The user is encouraged to use the creator function \code{\link{Vegsoup}}.  
 
 }
-\section{Slots}{
+\section{ Slots }{
   \describe{
 	\item{\code{species}:}{
-	  Object of class \code{"data.frame"},
+	  Object of class \code{\linkS4class{Species}},
 	  the species data in \emph{long} format.
 	}
 	\item{\code{sites}:}{
-	  Object of class \code{"data.frame"},
-	  the sites data in \emph{wide} format.
+	  Object of class \code{\linkS4class{data.frame}},
+	  the sites data in \emph{wide} format, developed from
+	  class \code{\linkS4class{Sites}} in \emph{long} format.
 	}
 	\item{\code{taxonomy}:}{
-	  Object of class \code{"data.frame"},
+	  Object of class \code{\linkS4class{Taxonomy}},
 	  the taxonomic reference list.
 	}
 	\item{\code{coverscale}:}{
-	  Object of class \code{"Coverscale"},
+	  Object of class \code{\linkS4class{Coverscale}},
 	  the description of the cover scale. See
 	  \code{\linkS4class{Coverscale}} for details.
 	}
 	\item{\code{decostand}:}{
-	  Object of class \code{"decostand"},
-	  the method for \code{\link[vegsoup]{decostand}}. Takes effect
-	  if \code{\link{as.matrix}} or \code{\link{as.dist}} is called on object.
+	  \code{character}, % 
+	  the method for \code{\link[vegsoup]{decostand}} in \pkg{vegan}. 
+	  Takes effect if \code{\link{as.matrix}} or \code{\link{as.dist}}
+	  is called. The \emph{slot decostand} is in fact of class
+	  \code{decostand}, this class is not exposed to the user
+	  and hence not documented.
 	}
 	\item{\code{dist}:}{
-	  Object of class \code{"character"},
+	  \code{character},
 	  giving a method for \code{\link[vegsoup]{vegdist}}.
 	  Takes effect in calls or dispatch of \code{\link{as.dist}}.
 	}
 	\item{\code{layers}:}{
-	  Object of class \code{"character"},
-	  containing the layers the object is structured by.
+	  \code{character},
+	  containing the (vegetation) layers the object is structured by.
+	  Order matters.
 	}
 	\item{\code{group}:}{
-	  Object of class \code{"integer"},
+	  \code{integer},
 	  a vector of a-priori group assignments.
 	}
 	\item{\code{sp.points}:}{
-	  Object of class \code{"SpatialPointsDataFrame"}
-	  see \code{\link{SpatialPoints}} in package \pkg{sp}.
+	  Object of class \code{\linkS4class{SpatialPointsDataFrame}}
+	  defined in package \pkg{sp}. See also \code{\link{SpatialPoints}}
 	}
 	\item{\code{sp.polygons}:}{
-	  Object of class \code{"SpatialPolygonsDataFrame"}
-	  see \code{\link{SpatialPolygons}} in package \pkg{sp}.
+	  Object of class \code{\linkS4class{SpatialPolygonsDataFrame}}.
+	  See also \code{\link{SpatialPolygons}}.
 	}
   }
 }
 
-\section{Methods}{
+\section{ Methods }{
 
   Classes \code{\linkS4class{VegsoupOptimstride}},
   \code{\linkS4class{VegsoupPartition}} and \code{"VegsoupPartitionFidelity"}
