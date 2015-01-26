@@ -8,7 +8,7 @@
 
 \title{ Grouping Variable of \code{Vegsoup*} Objects }
 \description{
-Returns the grouping variable. Equivalent to \code{slot(obj, "group")}.
+Returns the grouping variable. Equivalent to \emph{slot group)}.
 }
 
 \usage{

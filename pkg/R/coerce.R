@@ -122,7 +122,6 @@ setAs(from = "Vegsoup", to = "data.list",
 	}
 )
 
-#	as.mefa.Vegsoup <- fucntion(obj) as(obj, "data.list")
 
 #	set S3 class
 setOldClass("mefa")
@@ -137,8 +136,10 @@ setOldClass("mefa")
 	}
 	if (is.continuous(coverscale(obj))) {
 		x$cov <- as.numeric(x$cov)	
-	}			
-	return(mefa(stcs(x[, c(1,2,4,3)]), sites(obj), taxonomy(obj), nested = FALSE))
+	}
+	return(mefa(stcs(x[, c(1,2,4,3)]),
+		sites(obj),
+		taxonomy(taxonomy(obj)), nested = FALSE))
 }
 
 setAs(from = "Vegsoup", to = "mefa",
@@ -147,4 +148,4 @@ setAs(from = "Vegsoup", to = "mefa",
 	}
 )
 
-#	as.mefa.Vegsoup <- fucntion(obj) as(obj, "mefa")
+as.mefa.Vegsoup <- function(obj) as(obj, "mefa")

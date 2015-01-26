@@ -261,6 +261,8 @@ S3method(points, Vegsoup)
 S3method(as.data.frame, Vegsoup)
 S3method(as.data.frame, Sites)
 
+#S3method(as.mefa, Vegsoup)
+
 #S3method(as.SpatialPoints, Vegsoup)
 #S3method(as.SpatialPointsDataFrame, Vegsoup)
 
@@ -268,5 +270,5 @@ S3method(as.data.frame, Sites)
 #S3method(vegdist, Vegsoup)
 #S3method(as.dist, Vegsoup)
 
-#S3method(as.mefa, Vegsoup)
+
 #S3method(as.sparseMatrix, Vegsoup)
