@@ -87,3 +87,31 @@ setMethod("bind",
 		.bind.Vegsoup(..., deparse.level = 1)	
 	}
 )
+
+".bind.VegsoupPartiton" <- function (..., deparse.level = 1) {
+	allargs <- list(...)
+	n <- length(allargs)
+	k <- sapply(allargs, getK)
+	p <- sapply(allargs, partitioning, simplify = FALSE)
+	
+	#	vector to add to partition
+	a <- cumsum(k)
+	a <- c(0, a[-n])
+	
+	#	new partitioning vector
+	p <- unlist(sapply(1:n, function (i) p[[i]] + a[i], simplify = FALSE))
+	
+	#	revert to Vegsoup and bind
+	r <- do.call("bind", sapply(allargs, as, "Vegsoup"))
+	
+	r <- VegsoupPartition(r, method = "external", clustering = p)
+
+	return(r)	
+}	
+
+setMethod("bind",
+	signature(... = "VegsoupPartition"),
+	function (..., deparse.level = 1) { # add na.action argument
+		.bind.VegsoupPartiton(..., deparse.level = 1)	
+	}
+)	

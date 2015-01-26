@@ -8,6 +8,7 @@
 
 \alias{hcr}
 \alias{hcr,Vegsoup-method}
+\alias{hcr,VegsoupPartition-method}
 
 \title{ Random Samples and Permutations for \code{Vegsoup*} Objects }
 
@@ -19,6 +20,8 @@ The methods take a sample of the specified size from the elements of \code{x} us
 \S4method{sample}{Vegsoup}(x, size, replace = FALSE, prob = NULL)
 
 \S4method{hcr}{Vegsoup}(x, size, nperm = 1000, fast = FALSE, ...)
+
+\S4method{hcr}{VegsoupPartition}(x, size, nperm = 1000, fast = FALSE, ...)
 }
 
 \arguments{
@@ -65,19 +68,28 @@ Lengyel, A., Chytry, M., Tichy, L. (2011). Heterogeneity-constrained random resa
 \examples{
 library(vegsoup)
 data(windsfeld)
-r <- sample(windsfeld)
-rownames(r) # order is permuted
+x <- windsfeld
 
-rownames(sample(windsfeld, size = 3))
-rownames(sample(windsfeld, replace = TRUE))
+rownames(sample(x))            # order is permuted
+rownames(sample(x, size = 3))  # 3 random plots
 
-hcr(windsfeld, size = 20)
+# heterogeneity-constrained random samples
+# Vegsoup method
+hcr(x, size = 20) 
 
+# VegsoupPartition method
+# we use base::sample to obtain 2 random partitions
+p <- VegsoupPartition(x, clustering = sample(2, nrow(x), replace = TRUE))
+
+pp <- hcr(p, size = min(table(partitioning(p))))
+
+summary(lm(richness(pp, "sa") ~ partitioning(pp)))
+
+# compare run times
 \dontrun{
 system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = FALSE))
 system.time(hcr(windsfeld, size = 20, nperm = 100000, fast = TRUE))
 system.time(vegclust::hcr(as.dist(windsfeld), nout = 20, nsampl = 100000))
 }
 }
-\keyword{methods}
-
+\keyword{ methods }

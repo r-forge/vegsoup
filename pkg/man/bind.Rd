@@ -4,6 +4,7 @@
 
 \alias{bind}
 \alias{bind,Vegsoup-method}
+\alias{bind,VegsoupPartition-method}
 
 \title{ Combine \code{Vegsoup*} objects }
 
@@ -25,7 +26,10 @@ Take a sequence of arguments of objects from class \code{Vegsoup*} and combine t
 }
 
 \details{
-By calling \code{bind} all slots of the input objects are combined and a new object is returned. Note, if a list of \code{Vegsoup*} objects needs to be combined, simply call \code{do.call("bind", list.of.Vegsoup.objects)} (see \sQuote{Examples}).
+By calling \code{bind} all slots of the input objects are combined and a new object is returned.  
+Note, if a list of \code{Vegsoup*} objects needs to be combined, simply call \code{do.call("bind", list.of.Vegsoup.objects)} (see \sQuote{Examples}).  
+
+Binding VegsoupPartition objects will inevitably alter the partitioning and the method used to create the objects becomes meaningless.
 }
 \value{
 On object of class \code{VegsoupData}.
@@ -46,7 +50,8 @@ require(vegsoup)
 data(barmstein)
 x <- barmstein
 
-# split object in three parts
+# bind Vegsoup objects
+# first, split object in three parts
 s1 <- x[1:2, ]
 s2 <- x[3:4, ]
 s3 <- x[5:6, ]
@@ -64,7 +69,22 @@ xb <- do.call("bind", ss)
 # restore the orignal order
 rownames(xb[match(r0, rb), ])
 
+# bind VegsoupPartition objects
+# first, create 2 partitions (k)
+k <- 2
+i <- sample(k, nrow(x), replace = TRUE)
+# we might have not obtained what we want due to small size
+while(length(unique(i)) != k) i <- sample(k, nrow(x), replace = TRUE)
 
+p <- VegsoupPartition(x, clustering = i)
+
+# subset partitions
+pp <- sapply(1:k, function (x) partition(p, x))
+
+# bind together again
+pp <- do.call("bind", pp)
+
+identical(partitioning(p), partitioning(pp))
 }
 \keyword{methods}
 

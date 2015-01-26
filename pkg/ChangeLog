@@ -1,5 +1,7 @@
 --- todo
 
+summary methods lost indentation due to cleaning code
+implement method for class VegesoupPartion, to retrieve the partitioning method
 we must rebuild polygons for coordinates<- method
 decostand method for fidelity, needs to recalculate fidelity if not presence absence
 more rigorous test for identical methods
@@ -23,6 +25,8 @@ renamed SpeciesList to taxalist
 renamed AprioriGrouping to apriori
 renamed Confus to confusion
 renamed QuickMap to quicklook
+added bind method for class VegsoupPartion
+added hcr method for class VegsoupPartion
 
 --- 2015-01-24, version: 0.2-4
 
