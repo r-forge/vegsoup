@@ -1,14 +1,14 @@
 #	critcal!
 #	as.dist dispatach for generic with additional argument mode
 
-#	vectorized internal function 
+#	vectorized internal function
 .cast2 <- function (x, typeof) {
 	ij <- indices(x, typeof)
 	nc <- ncol(x)
 	nr <- nrow(x)
 	cv <- numeric(length = nc * nr)
 
-	#	plots must be ordered for rle()!		
+	#	plots must be ordered for rle()!
 	jj <- ij$j + rep(cumsum(rep(nc, nr)) - ncol(x), times = rle(ij$i)$length)
 	cv[jj] <- ij$x
 	
@@ -22,10 +22,10 @@ setMethod("as.numeric",
 	function (x, mode) {
 		if (missing(mode)) mode <- "Q"
 		MODE <- c("Q", "R")
-		mode <- match.arg(toupper(mode), MODE)  	
+		mode <- match.arg(toupper(mode), MODE)
 		m <- .cast2(x, "numeric")
 		
-		#	standardization as definded by decostand(x)		
+		#	standardization as definded by decostand(x)
 		stand <- slot(slot(x, "decostand"), "method")
 		
 		if (!is.null(stand)) {
@@ -41,13 +41,13 @@ setMethod("as.numeric",
 			}
 			else {
 				for (i in stand) {
-						m <- vegan::decostand(m, i)	
+						m <- vegan::decostand(m, i)
 					}
 			}
-			attributes(m)$decostand <- stand 
+			attributes(m)$decostand <- stand
 		}
-   	if (mode == "R") m <- t(m)
-   	return(invisible(m))
+	if (mode == "R") m <- t(m)
+	return(invisible(m))
 	}
 
 )
@@ -60,8 +60,8 @@ setMethod("as.character",
 		mode <- match.arg(toupper(mode), MODE)
 		# m <- .cast(x, mode = 2)
 		m <- .cast2(x, "character")
-   		if (mode == "R") m <- t(m)
-   		return(invisible(m))
+		if (mode == "R") m <- t(m)
+		return(invisible(m))
 	}
 )
 	
@@ -73,9 +73,9 @@ setMethod("as.logical",
 		mode <- match.arg(toupper(mode), MODE)
 		# m <- .cast(x, mode = 3)
 		m <- .cast2(x, "logical")
-   		if (mode == "R") m <- t(m)
-   		storage.mode(m) <- "integer"
-   		return(invisible(m))		
+		if (mode == "R") m <- t(m)
+		storage.mode(m) <- "integer"
+		return(invisible(m))
 	}
 )	
 
@@ -88,7 +88,7 @@ setMethod("as.logical",
 setMethod("as.matrix",
 	signature(x = "Vegsoup"),
 	function (x, typeof, ...) { # ... argument mode
-		if (missing(typeof)) typeof <- "numeric"			
+		if (missing(typeof)) typeof <- "numeric"
 		TYPEOF <- c("character", "numeric", "logical")
 		typeof <- match.arg(typeof, TYPEOF)
 
@@ -102,7 +102,7 @@ setMethod("as.matrix",
 			m <- as.logical(x, ...)
 		}
 		return(m)
-	}			
+	}
 )
 
 setAs(from = "Vegsoup", to = "matrix",
@@ -116,7 +116,7 @@ setAs(from = "Vegsoup", to = "matrix",
 as.matrix.Vegsoup <-
 	function (x, ...) as.matrix(x, ...) # as(x, "matrix")
 
-if (!isGeneric("as.array")) {	
+if (!isGeneric("as.array")) {
 setGeneric("as.array",
 	function (x, ...)
 	standardGeneric("as.array"))
@@ -129,9 +129,9 @@ setMethod("as.array",
 	xx <- species(species(x)) #! get slot data
 	scale <- coverscale(x) # rename local object scale to ?
 	
-   	if (missing(typeof)) typeof <- "numeric"			
-   	TYPEOF <- c("character", "numeric", "logical")
-   	typeof <- match.arg(typeof, TYPEOF)
+	if (missing(typeof)) typeof <- "numeric"
+	TYPEOF <- c("character", "numeric", "logical")
+	typeof <- match.arg(typeof, TYPEOF)
 
 	#	cover transformation
 	if (typeof == "numeric" & !is.null(scale@codes)) {
@@ -140,13 +140,13 @@ setMethod("as.array",
 			))
 		if (any(is.na(xx$cov))) {
 			stop("cover scale codes do not match data" )
-		}	
+		}
 	}
 	if (typeof == "numeric" & is.null(scale@codes)) {
-		xx$cov <- as.numeric(xx$cov)		
+		xx$cov <- as.numeric(xx$cov)
 	}
 	
-	res <- table(xx[c(1,2,3)]) 
+	res <- table(xx[ c(1,2,3) ])
 
 	#	insert values, not need for presence/absence ('logical')
 	if (typeof == "numeric" | typeof == "character") {
@@ -154,7 +154,7 @@ setMethod("as.array",
 			vals <- xx[xx$layer == i,]
 			for (j in 1:nrow(vals)) {
 				res[vals[j, 1], vals[j, 2], i] <- vals[j, 4]
-			}	
+			}
 		}
 	}
 	
@@ -163,7 +163,7 @@ setMethod("as.array",
 	return(res[, , layers(x)])
 	}
 )
-	
+
 setAs(from = "Vegsoup", to = "array",
 	def = function (from) {
 		as.array(from)
@@ -173,15 +173,16 @@ setAs(from = "Vegsoup", to = "array",
 #	ensure that also base functions dispatch properly
 as.array.Vegsoup <-	function (x, ...) {
 	as.array(x, ...)
-}	
+}
 
 #	return vector of abundances	
 setMethod("as.vector",
-	signature(x = "Vegsoup", mode = "missing"), # 
-	  function (x, mode) {
-	  	if (missing(mode)) mode = "numeric"
-	  	as.vector(as.matrix(x, typeof = mode))
+	signature(x = "Vegsoup", mode = "missing"),
+		function (x, mode) {
+			if (missing(mode)) mode = "numeric"
+				as.vector(as.matrix(x, typeof = mode))
 })
+
 #	ensure that base functions calling as.vector() work
 as.vector.Vegsoup <- function (x, mode) {
 	if (missing(mode)) mode = "numeric"
@@ -193,50 +194,50 @@ as.vector.Vegsoup <- function (x, mode) {
 setGeneric("indices",
 	function (x, ...) # removed argument typeof from generic
 	standardGeneric("indices"))	
-#}	
+#}
 setMethod("indices",
 	signature(x = "Vegsoup"),
 		function (x, typeof) {
 			if (missing(typeof)) {
 				typeof <- "numeric"
-			}				
+			}
 			TYPEOF <- c("character", "numeric", "logical")
 			typeof <- match.arg(typeof, TYPEOF)
 		
-			cs <- coverscale(x)			
-			al <- file.path(species(x)$abbr, species(x)$layer, fsep = "@")
-			ual <- colnames(x)			
+			cs <- coverscale(x)
+			al <- sprintf("%s@%s", species(x)$abbr, species(x)$layer)
+			ual <- colnames(x)
 			pl <- species(x)$plot
 			upl <- unique(pl)
-						
+			
 			#	i,j vectors of the same length
 			j <- match(al, ual)
 			i <- as.integer(ordered(pl, levels = upl))
 			
 			if (typeof == "numeric" & !is.continuous(x)) {
-				return(list(i = i, j = j, 				
+				return(list(i = i, j = j,
 					x = as.numeric(as.character(
 						factor(species(x)$cov, cs@codes, cs@lims))),
 					dimnames = list(upl, ual)))
 			}
 			if (typeof == "numeric" & is.continuous(x)) {
-				return(list(i = i, j = j, 				
+				return(list(i = i, j = j,
 					x = as.numeric(species(x)$cov),
-					dimnames = list(upl, ual)))				
+					dimnames = list(upl, ual)))
 			}
 			if (typeof == "character") {
 				if (!is.continuous(x)) {
 					#	message("coverscale has no codes")
 				}
-				return(list(i = i, j = j, 				
-					x = species(x)$cov,	# is character by definition 
+				return(list(i = i, j = j,
+					x = species(x)$cov,	# is character by definition
 					dimnames = list(upl, ual)))
 			}
 			if (typeof == "logical") {
-				return(list(i = i, j = j, 				
-					x = rep(1, nrow(species(species(x)))), #! use slot data 
+				return(list(i = i, j = j,
+					x = rep(1, nrow(species(species(x)))), #! use slot data
 					dimnames = list(upl, ual)))
-			}		
+			}
 		}
 )
 
@@ -257,8 +258,6 @@ setAs(from = "Vegsoup", to = "sparseMatrix",
 	
 setAs(from = "Vegsoup", to = "dsparseMatrix",
 	def = function (from) {
-		#	Imports:
-		#	require(Matrix)
 		ij <- indices(from)
 		res <- Matrix::sparseMatrix(i = ij$i, j = ij$j, x = as.numeric(ij$x),
 			dimnames = ij$dimnames)

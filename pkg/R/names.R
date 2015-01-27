@@ -61,7 +61,7 @@ setMethod("colnames",
 	function (x) {
 		a <- species(x)$abbr
 		l <- species(x)$layer
-		al <- file.path(a, l, fsep = "@") # faster than paste
+		al <- sprintf("%s@%s", a, l)
 		res <- unique(unlist(sapply(layers(x), function (x) al[l == x])))
 		if (!is.vector(res)) res <- as.vector(res) # to coerce if there is only one layer
 		res
@@ -81,7 +81,7 @@ setMethod("dimnames",
 		p <- species(x)$plot
 		a <- species(x)$abbr
 		l <- species(x)$layer	
-		al <- file.path(a, l, fsep = "@") # faster than paste
+		al <- sprintf("%s@%s", a, l)
 		return(list(p, al))
 	}
 )

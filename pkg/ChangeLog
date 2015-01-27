@@ -27,6 +27,7 @@ renamed Confus to confusion
 renamed QuickMap to quicklook
 added bind method for class VegsoupPartion
 added hcr method for class VegsoupPartion
+replaced file.path with sprintf to speed up
 
 --- 2015-01-24, version: 0.2-4
 
