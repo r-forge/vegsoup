@@ -203,10 +203,8 @@ setMethod("indices",
 			TYPEOF <- c("character", "numeric", "logical")
 			typeof <- match.arg(typeof, TYPEOF)
 		
-			cs <- coverscale(x)
-			# was: al <- .abbr.layer(x)			
-			al <- file.path(species(x)$abbr, species(x)$layer, fsep = "@") 
-			# was: ual <- .abbr.layer(x, TRUE)
+			cs <- coverscale(x)			
+			al <- file.path(species(x)$abbr, species(x)$layer, fsep = "@")
 			ual <- colnames(x)			
 			pl <- species(x)$plot
 			upl <- unique(pl)
@@ -246,8 +244,6 @@ setMethod("indices",
 #	very basic!
 setAs(from = "Vegsoup", to = "sparseMatrix",
 	def = function (from) {
-		#	Imports:
-		#	require(Matrix)	
 		ij <- indices(from)
 		res <- Matrix::sparseMatrix(i = ij$i, j = ij$j, x = as.integer(ij$x),
 			dimnames = ij$dimnames)
