@@ -1,8 +1,8 @@
-#	critcal!
-#	as.dist dispatach for generic with additional argument mode
+#	unfortunately as.dist dispatach for generic
+#	with additional argument mode is not possible
 
 #	vectorized internal function
-.cast2 <- function (x, typeof) {
+.cast <- function (x, typeof) {
 	ij <- indices(x, typeof)
 	nc <- ncol(x)
 	nr <- nrow(x)
@@ -23,11 +23,23 @@ setMethod("as.numeric",
 		if (missing(mode)) mode <- "Q"
 		MODE <- c("Q", "R")
 		mode <- match.arg(toupper(mode), MODE)
-		m <- .cast2(x, "numeric")
-		
+
 		#	standardization as definded by decostand(x)
 		stand <- slot(slot(x, "decostand"), "method")
 		
+		#	for efficency we get CAP before and then cast the matrix
+		if (any(stand == "cap")) {
+			#	we remove it from methods, because vegan::decostand can't handle it
+			stand <- stand[stand != "cap"]
+			if (length(stand) == 0) stand <- NULL
+			#	no handle yet if second element is pa
+			x <- cap(x, asVegsoup = TRUE)
+		}
+
+		#	cast matrix
+		m <- .cast(x, "numeric")
+		
+		#	standardize if need
 		if (!is.null(stand)) {
 			if (length(stand) < 2) {
 				if (stand == "wisconsin") {
@@ -46,7 +58,9 @@ setMethod("as.numeric",
 			}
 			attributes(m)$decostand <- stand
 		}
+	
 	if (mode == "R") m <- t(m)
+	
 	return(invisible(m))
 	}
 
@@ -58,8 +72,8 @@ setMethod("as.character",
 		if (missing(mode)) mode <- "Q"
 		MODE <- c("Q", "R")
 		mode <- match.arg(toupper(mode), MODE)
-		# m <- .cast(x, mode = 2)
-		m <- .cast2(x, "character")
+		
+		m <- .cast(x, "character")
 		if (mode == "R") m <- t(m)
 		return(invisible(m))
 	}
@@ -71,8 +85,20 @@ setMethod("as.logical",
 		if (missing(mode)) mode <- "Q"
 		MODE <- c("Q", "R")
 		mode <- match.arg(toupper(mode), MODE)
-		# m <- .cast(x, mode = 3)
-		m <- .cast2(x, "logical")
+		#	we can conduct cap with presence/absence data
+
+		#	standardization as definded by decostand(x)
+		stand <- slot(slot(x, "decostand"), "method")
+		
+		#	for efficency we get CAP before casting the matrix
+		if (any(stand == "cap")) {
+			#	we remove it from methods, because vegan::decostand can't handle it
+			stand <- stand[stand != "cap"]
+			if (length(stand) == 0) stand <- NULL
+			x <- cap(x, asVegsoup = TRUE)
+		}
+		
+		m <- .cast(x, "logical")
 		if (mode == "R") m <- t(m)
 		storage.mode(m) <- "integer"
 		return(invisible(m))

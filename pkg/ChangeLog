@@ -1,5 +1,7 @@
 --- todo
 
+document how layers must be ordered
+test if order of layers is really consistent over all methods
 summary methods lost indentation due to cleaning code
 implement method for class VegesoupPartion, to retrieve the partitioning method
 we must rebuild polygons for coordinates<- method
@@ -8,10 +10,9 @@ more rigorous test for identical methods
 generalize slot partition to contain class dendrogram, fuzzy memberships and maybe more?
 peaks, if curve bends down return no peaks with option
 implement math methods e.g. obj^0.2
-implement CAP as decostand method
 more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
 add layers(obj) <- value logical-method, if FALSE collapse all layers
-test if order of layers is consistent over all methods
+
 
 --- 2015-01-25, version: 0.2-4 patched
 
@@ -28,6 +29,7 @@ renamed QuickMap to quicklook
 added bind method for class VegsoupPartion
 added hcr method for class VegsoupPartion
 replaced file.path with sprintf to speed up
+implemented CAP as decostand method
 
 --- 2015-01-24, version: 0.2-4
 
