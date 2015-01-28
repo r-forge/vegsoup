@@ -16,7 +16,9 @@
 		if (!is.null(decostand(obj)) & method == "TCR") {
 			message("TCR is not defined for standardized data!",
 				"\nset decostand(obj) <- NULL")
-			decostand(obj) <- NULL
+			#	dont recompute partitioning				
+			obj@decostand <- new("decostand", method = NULL)
+			#	decostand(obj) <- NULL
 		}
 		if (verbose) {
 			cat("individual based index")

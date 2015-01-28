@@ -33,6 +33,7 @@ replaced file.path with sprintf to speed up
 implemented CAP as decostand method
 implemented table method for class VegsoupPartition
 set decostand and vegdist in results of bind for VegsoupPartition to the most frequent and raise a warning
+fidelity does not recompute partitioning with method TCR, this levers out decostand<- method
 
 
 --- 2015-01-24, version: 0.2-4
