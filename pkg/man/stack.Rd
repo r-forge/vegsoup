@@ -40,7 +40,7 @@
 
 \usage{
 stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer"),
-			  discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
+             discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
 
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE)
 
@@ -50,54 +50,73 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 \arguments{
 # Arguments to all functions
   \item{ x }{
-	 An object converted to a data frame.
+     An object converted to a data frame.
   }
   \item{ file }{
-	 character. Path to a csv-file
+     character. Path to a csv-file
   }
   \item{ sep, dec }{
-	character. See \code{\link{read.csv}}.
+    character. See \code{\link{read.csv}}.
   }
   \item{ schema }{
-	 character. Names of columns to be searched for. See \sQuote{Details}.
+     character. Names of columns to be searched for. See \sQuote{Details}.
   }
   \item{ zeros }{
-	 logical. If \code{TRUE}, drop leading zeros in plot names.
+     logical. If \code{TRUE}, drop leading zeros in plot names.
   }
   \item{ verbose }{
-	 Prints some diagnostic messages.
+     Prints some diagnostic messages.
   }
 # Arguments for function stackSpecies
   \item{ absences }{
-	Character used to code absences. Can be missing, see \sQuote{Details}.
+    Character used to code absences. Can be missing, see \sQuote{Details}.
   }
   \item{ discard }{
-	 Names of additinal columns to be discarded.
+     Names of additinal columns to be discarded.
   }
 # Arguments for function stackCoordinates
   \item{ dsn }{
-	Data source name. See \code{\link[rgdal]{readOGR}}.
+    Data source name. See \code{\link[rgdal]{readOGR}}.
   }
   \item{ layer }{
-	Layer name. See \code{readOGR}.
+    Layer name. See \code{readOGR}.
   }
   \item{ round }{
-	Round decimals to given precision. See \sQuote{Details}.
+    Round decimals to given precision. See \sQuote{Details}.
   }
   \item{ \dots }{
-	additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
-	\code{Species} respectively \code{Sites}.
+    additional arguments passed to \code{readOGR}. For \code{bind} method, objects of class
+    \code{Species} respectively \code{Sites}.
   }
 }
 
 \details{
-For \code{stackSpecies} the supported data frame, either read from file, or passed as \code{R} object must hold columns corresponding to argument schema. The default schema is 'abbr', 'layer' (cf. class \code{\linkS4class{Species}}). The first element of schema has to name a column holding valid strings for 'abbr'. The second element defines the column that has layer memberships. Any further elements (e.g 'taxon') are only mandatory if \code{x} has additional columns except schema and the taxa block (the plain matrix of only species cover values, see below). These columns may also be covered by argument \code{discard} (possibly by its defaults). Any further fields can be used to store taxonomic or other relevant information (accuracy of determination) on a particular observation, again, this is not mandatory. The species matrix is assumed to have species in rows and plots in columns. Plot names are derived form \code{names(x)}. If argument file is supplied, data is imported using \code{read.csv(..., colClasses = "character")}. This matters if species abundances were recorded on a non-ordinal scale (e.g. integers) and shall later be treated as continuos. The \code{\linkS4class{Coverscale}}) class controls these conversions.
+For \code{stackSpecies} the supported data frame, either read from file, or passed as \code{R} object must hold columns corresponding to argument schema.  
+The default schema is 'abbr', 'layer' (cf. class \code{\linkS4class{Species}}).  
+The first element of schema has to name a column holding valid strings for 'abbr'.  
+The second element defines the column that has layer memberships.  
+Any further elements (e.g 'taxon') are only mandatory if \code{x} has additional columns except schema and the taxa block (the plain matrix of only species cover values, see below).  
+These columns may also be covered by argument \code{discard} (possibly by its defaults).  
+Any further fields can be used to store taxonomic or other relevant information (accuracy of determination) on a particular observation, again, this is not mandatory.  
+The species matrix is assumed to have species in rows and plots in columns. Plot names are derived form \code{names(x)}.  
+If argument file is supplied, data is imported using \code{read.csv(..., colClasses = "character")}.  
+This matters if species abundances were recorded on a non-ordinal scale (e.g. integers) and shall later be treated as continuos. The \code{\linkS4class{Coverscale}}) class controls these conversions.
 
-Internal checking of type conversion is performed using \code{\link{type.convert}} to test for appropriate mode of the species abundances vector; setting \code{verbose = TRUE} will report results of this test. If argument \code{absences} is missing an almost save guess is obtained from the data and derived as the most frequent value in the species data matrix, these are usually species absences.
+Internal checking of type conversion is performed using \code{\link{type.convert}} to test for appropriate mode of the species abundances vector; setting \code{verbose = TRUE} will report results of this test.  
+If argument \code{absences} is missing an almost save guess is obtained from the data and derived as the most frequent value in the species data matrix, these are usually species absences.
 
-For \code{stackSites} there are no specific requirements about the form of the object, except that one column must be specified which will then be used as the plot identifier. The default is to search for a column named \code{'plot'}, but an other column name can be specified by argument \code{schema}. 
+For \code{stackSites} there are no specific requirements about the form of the object, except that one column must be specified which will then be used as the plot identifier.  
+The default is to search for a column named \code{'plot'}, but an other column name can be specified by argument \code{schema}. 
 
-For \code{stackCoordinates} the rgdal package needs to be loaded first. The first element of argument schema defines the name of the column in the OGR data source that identifies unique plots. This argument is mandatory and must match a column name in the spatial attributes data. A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements. If absent and the geometry is 3D the function reads the third (z) dimension of the data source. If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot. In case of irregular polygons the centroid so obtained must not be accurate. If the coordinate reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
+For \code{stackCoordinates} the rgdal package needs to be loaded first.  
+The first element of argument schema defines the name of the column in the OGR data source that identifies unique plots.  
+This argument is mandatory and must match a column name in the spatial attributes data.  
+A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements.  
+If absent and the geometry is 3D the function reads the third (z) dimension of the data source.  
+If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}.  
+Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot.  
+In case of irregular polygons the centroid so obtained must not be accurate.  
+If the coordinate reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
 }
 \note{
 Functionality related to package \pkg{rgdal} is only available if this package is installed and loaded. Currently it is a little bit of a hassle to have it available on Mac OSX. It needs compiling from source.
@@ -119,11 +138,11 @@ data(dune)
 # create data.frame according to the defaults of the schema argument in stackSpecies
 # there are two moss species in the dune data set, we assign them to a moss layer
 x <- data.frame(abbr = names(dune),
-				layer = c(rep("hl", 8), "ml",
-						  rep("hl", 6), "ml",
-						  rep("hl", 14)),
-				taxon = NA, # not mandatory, we don't use it here
-				t(dune))
+                layer = c(rep("hl", 8), "ml",
+                          rep("hl", 6), "ml",
+                          rep("hl", 14)),
+                taxon = NA, # not mandatory, we don't use it here
+                t(dune))
 
 # groom plot names
 names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
@@ -140,14 +159,14 @@ x$plot <- paste("dn", x$plot, sep = "")
 
 sts <- stackSites(x, verbose = TRUE)
 
-#	installing rgdal on MAC OSX is not straight forward
+#    installing rgdal on MAC OSX is not straight forward
 \dontrun{
 require(rgdal)
 
 ## create a file of dummy coordiantes in a common format for spatial data
 # some random points
 pts <- data.frame(x = rnorm(20), y = rnorm(20),
-				  plot = unique(spc$plot))
+                  plot = unique(spc$plot))
 
 # promate to class 'SpatialPointsDataFrame'
 coordinates(pts) <- ~x+y
