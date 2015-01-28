@@ -69,7 +69,7 @@ setMethod("show",
 		paste(rep(" ", 17 - (nchar(getK(x)) + 11)), collapse = ""), ": ", sep = "")
 	res <- paste(res, paste(as.vector(table(partitioning(x))), collapse = " "), sep = "")
 	res <- paste(res,
-		"\npartition method:", x@method)
+		"\npartition method :", x@method)
 	res
 }
 
