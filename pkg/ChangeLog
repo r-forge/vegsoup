@@ -30,6 +30,8 @@ added bind method for class VegsoupPartion
 added hcr method for class VegsoupPartion
 replaced file.path with sprintf to speed up
 implemented CAP as decostand method
+implemented table method for class VegsoupPartition
+
 
 --- 2015-01-24, version: 0.2-4
 

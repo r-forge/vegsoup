@@ -127,6 +127,7 @@ exportMethods(
 	"as.dist",
 	"as.hclust",
 	"as.dendrogram",
+        "as.table",
 	"average",
 	"bind",
 	"BraunBlanquetReduce",
