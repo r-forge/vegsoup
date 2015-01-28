@@ -5,6 +5,29 @@ setGeneric("confusion",
 )
 #}
 
+".confusion" <- function (t, N) {
+		stopifnot(is.table(t))
+		D <- sum(diag(t))
+		P <-  D / N * 100 # percentage correct
+		S <- sum(rowSums(t) * colSums(t))
+		
+		#	calculate kappa
+		K <- (c(N * D) - S) / (N^2 - S)
+
+		#	calculate lambda		
+		#	formula needs to be confirmed by a reference
+		q1 <- sum(apply(t, 1, function (x) max(x)))
+		q2 <- sum(apply(t, 2, function (x) max(x)))
+		q3 <- max(rowSums(t))
+		q4 <- max(colSums(t))
+		q5 <- 2 * sum(t)
+		L <- (q1 + q2 - q3 - q4) / (q5 - q3 - q4) # lambda
+		
+		r <- list(confus = t, correct = P, kappa = K, lambda = L)
+		
+		return(r)
+}
+
 setMethod("confusion",
 	signature(obj1 = "VegsoupPartition",
 		obj2 = "VegsoupPartition"),
@@ -16,31 +39,11 @@ setMethod("confusion",
 		stopifnot(all.equal(dim(obj1), dim(obj2)))
 		
 		#	reference (observed) as row margins, comparison (predicted) as column margins
-		N <- length(partitioning(obj1))
-		nc <- getK(obj1)
+		N <- length(partitioning(obj1))	
+		t <- table(partitioning(obj1), partitioning(obj2))
 		
-		res <- table(partitioning(obj1), partitioning(obj2))
-		
-		correct <- sum(diag(res))
-		percent <- correct / N * 100
-		sum <- sum(rowSums(res) * colSums(res))
-		
-		#	calculate kappa
-		kappa <- (c(N * correct) - sum) / (N^2 - sum)
-		
-		#	formula needs to be confirmed by a reference
-		#	calculate lambda
-		q1 <- sum(apply(res, 1, function (x) max(x)))
-		q2 <- sum(apply(res, 2, function (x) max(x)))
-		q3 <- max(rowSums(res))
-		q4 <- max(colSums(res))
-		q5 <- 2 * sum(res)
-		lambda <- (q1 + q2 - q3 - q4) / (q5 - q3 - q4)
-		
-		res <- list(confus = res,
-			correct = percent,
-			kappa = kappa,
-			lambda = lambda)
-		return(res)
+		r <- .confusion(t, N)
+
+		return(r)
 	}
 )

@@ -7,11 +7,11 @@
 \alias{confusion,VegsoupPartition-method}
 \alias{confusion,VegsoupPartition,VegsoupPartition-method}
 
-\title{ confusionion Matrix for Objects of class VegsoupPartition }
+\title{ Confusionion Matrix for VegsoupPartition Objects}
 
 \description{
   Cross-classifies each partition (clustering) by actual class membership and
-  predicted membership, computing overall accuracy, and the Kappa statistic of
+  predicted membership, computes overall accuracy, and the Kappa statistic of
   agreement.
 }
 
@@ -21,14 +21,14 @@
 
 \arguments{
 	\item{ obj1, obj2 }{
-	  \code{'VegsoupPartition'} object. \code{obj1} is be compared with \code{obj2}.
+	  \code{'VegsoupPartition'} object. \code{obj1} is compared with \code{obj2}.
 	}
 }
 \details{
   Method \code{confusion} takes two objects inheriting from class
-  \code{\link{VegsoupPartition}} (\code{obj1} and \code{obj2}) and computes a
-  cross-tabulation (contingency table) of reference (observed) (\code{obj1})
-  vs. comparison (predicted) class memberships (\code{obj2}), and calculates
+  \code{\link{VegsoupPartition}} and computes a
+  cross-tabulation (contingency table) of reference (observed, \code{obj1})
+  vs. comparison (predicted, \code{obj2}) class memberships, and calculates
   the Kappa and Goodman-Kruskal lambda statistics.
 }
 \value{
@@ -42,22 +42,21 @@
 	  the percentage of correctly predicted samples.
 	}
 	\item{ kappa }{
-	  the value of the Kappa statistic
+	  the value of the Kappa statistic.
 	}
 	\item{ lambda }{
-	  the value of the Lambda statistic
+	  the value of the Lambda statistic.
 	}
   }
 }
 \references{
-Goodman, L.A. and Kruskal, W.H. (1954). Measures of association for cross-classifications. Journal of the American Statistical Association, 49(268): 732-764.
+Goodman, L. A. and Kruskal, W. H. 1954 Measures of association for cross-classifications. \emph{Journal of the American Statistical Association} \bold{49}, 732--764.
 }
 \author{ Roland Kaiser }
 \seealso{
 \code{\link{VegsoupPartition}},
 \code{\link{accuracy}} in package '\pkg{vegsoup}.
 \code{\link{confus}} in package \pkg{optpart} and
-\code{\link[polytomous:crosstable.statistics]{crosstable.statistics}} and \code{\link[polytomous:associations]{associations}} in package \pkg{polytomous}.
 }
 \examples{
 require(vegsoup)
