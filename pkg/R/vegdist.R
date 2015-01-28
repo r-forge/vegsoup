@@ -62,7 +62,7 @@ setReplaceMethod("vegdist",
 			x@dist <- method
 			#	recompute
 			x <- VegsoupPartition(x, k = getK(x), method = x@method)
-			message("recomputed partitoning")
+			message("recomputed partitioning")
 		}
 		return(x)
 	}
