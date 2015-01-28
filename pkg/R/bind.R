@@ -98,11 +98,14 @@ setMethod("bind",
 	a <- cumsum(k)
 	a <- c(0, a[-n])
 	
-	#	new partitioning vector
+	#	new partitioning vector with names to restore order
 	p <- unlist(sapply(1:n, function (i) p[[i]] + a[i], simplify = FALSE))
 	
-	#	revert to Vegsoup and bind
+	#	revert to Vegsoup and bind, this implies reordering!
 	r <- do.call("bind", sapply(allargs, as, "Vegsoup"))
+	
+	#	reorder to partitioning vector 
+	r <- r[match(names(p), rownames(r)), ]
 	
 	r <- VegsoupPartition(r, method = "external", clustering = p)
 
