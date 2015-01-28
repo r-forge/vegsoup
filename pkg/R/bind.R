@@ -93,7 +93,11 @@ setMethod("bind",
 	n <- length(allargs)
 	k <- sapply(allargs, getK)
 	p <- sapply(allargs, partitioning, simplify = FALSE)
+	d <- sapply(allargs, vegdist)
+	s <- sapply(allargs, decostand)
 	
+	if (length(unique(d)) != 1)
+		warning("differnt values for vegdist")
 	#	vector to add to partition
 	a <- cumsum(k)
 	a <- c(0, a[-n])
@@ -104,17 +108,21 @@ setMethod("bind",
 	#	revert to Vegsoup and bind, this implies reordering!
 	r <- do.call("bind", sapply(allargs, as, "Vegsoup"))
 	
-	#	reorder to partitioning vector 
+	#	reorder to partitioning vector
 	r <- r[match(names(p), rownames(r)), ]
 	
 	r <- VegsoupPartition(r, method = "external", clustering = p)
+	
+	#	set vegdist and decostand to the most frequent
+	r@dist <- names(sort(table(d), decreasing = TRUE))[1]
+	r@decostand <- new("decostand", method = names(sort(table(s), decreasing = TRUE))[1])
 
-	return(r)	
+	return(r)
 }	
 
 setMethod("bind",
 	signature(... = "VegsoupPartition"),
 	function (..., deparse.level = 1) { # add na.action argument
-		.bind.VegsoupPartiton(..., deparse.level = 1)	
+		.bind.VegsoupPartiton(..., deparse.level = 1)
 	}
 )	

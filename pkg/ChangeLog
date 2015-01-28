@@ -1,5 +1,6 @@
 --- todo
 
+bind of VegsoupPartition does not allow recalculation the partition if e.g. vegdist is altered
 document how layers must be ordered
 test if order of layers is really consistent over all methods
 summary methods lost indentation due to cleaning code
@@ -31,6 +32,7 @@ added hcr method for class VegsoupPartion
 replaced file.path with sprintf to speed up
 implemented CAP as decostand method
 implemented table method for class VegsoupPartition
+set decostand and vegdist in results of bind for VegsoupPartition to the most frequent and raise a warning
 
 
 --- 2015-01-24, version: 0.2-4

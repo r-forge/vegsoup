@@ -29,7 +29,8 @@ Take a sequence of arguments of objects from class \code{Vegsoup*} and combine t
 By calling \code{bind} all slots of the input objects are combined and a new object is returned.  
 Note, if a list of \code{Vegsoup*} objects needs to be combined, simply call \code{do.call("bind", list.of.Vegsoup.objects)} (see \sQuote{Examples}).  
 
-Binding VegsoupPartition objects will inevitably alter the partitioning and the method used to create the objects becomes meaningless.
+Binding VegsoupPartition objects will inevitably alter the partitioning and the method used to create the objects becomes meaningless.  
+Note also, that values for \emph{slot dist} and \emph{slot decostand} are set to the most frequent values obtained from the input objects (majority rule).
 }
 \value{
 On object of class \code{VegsoupData}.
