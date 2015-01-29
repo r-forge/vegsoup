@@ -13,7 +13,8 @@ peaks, if curve bends down return no peaks with option
 implement math methods e.g. obj^0.2
 more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
 add layers(obj) <- value logical-method, if FALSE collapse all layers
-
+rename OptimStride to OptimClass and stop developing this approach
+implement more general method comparision frame work
 
 --- 2015-01-25, version: 0.2-4 patched
 
@@ -33,8 +34,9 @@ replaced file.path with sprintf to speed up
 implemented CAP as decostand method
 implemented table method for class VegsoupPartition
 set decostand and vegdist in results of bind for VegsoupPartition to the most frequent and raise a warning
-fidelity does not recompute partitioning with method TCR, this levers out decostand<- method
-
+fidelity performs now no recompilation of partitioning with method TCR, this levers out decostand<- method
+ensured that Fisher test has default alternative = "greater"
+optpart now starts from a flexible beta solution
 
 --- 2015-01-24, version: 0.2-4
 

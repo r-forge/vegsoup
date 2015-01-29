@@ -47,7 +47,7 @@ importFrom("gclus", dmat.color, plotcolors, order.single)
 
 importFrom("labdsv", indval)
 
-importFrom("optpart", optsil,  optindval, disdiam, tabdev, partana)
+importFrom("optpart", optpart, optsil, optindval, disdiam, tabdev, partana)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected,
 		   capscale, scores, ordiplot, ordiellipse, ordispider,

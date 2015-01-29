@@ -17,7 +17,13 @@ setMethod("plot",
 	oc1 <- optimclass1(x)
 	oc2 <- optimclass2(x)
 	p <- peaks(x)
-	cols = 1
+	nm <- nrow(oc1)
+	#	there are six default line types
+	lty <- rep(1:6, ceiling(nm / 6))[1:nm]
+	if (nm > 6)
+		col <- rep(c(1,2), each = 6)[1:nm]
+	else
+		rep(1, nm)
 
 	if (mode == 1) {
 		#	open plot
@@ -28,8 +34,8 @@ setMethod("plot",
 			sub = paste("Fisher's exact test, threshold",
 				format(ft.threshold, scientific = TRUE)), ...)
 		#	and add	lines
-		for (i in c(1:nrow(oc1))[m]) {
-				lines(1:k, oc1[i, ], lty = i, col = cols)			
+		for (i in c(1:nm)[m]) {
+				lines(1:k, oc1[i, ], lty = lty[i], col = col[i])			
 				rug(p[[i]], side = 3, lwd = 5, col = "grey80", ticksize = -0.03)
 		}			
 		#	add rug axes to help eye-balling curve peaks
@@ -52,7 +58,7 @@ setMethod("plot",
 	}
 	legend("bottomright",
 		lty = 1:length(m),
-		legend = vegsoup::method(x)[m], col = cols,
+		legend = vegsoup::method(x)[m], col = col,
 		inset = 0.04, bty = "n")
 }
 

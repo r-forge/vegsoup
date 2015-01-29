@@ -1,5 +1,5 @@
 #	warning! some how slot sp.points can get messed up?
-OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "two.sided", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM"), fast = FALSE, ...) {
+OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "greater", method = c("ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", "KM", "optpart"), fast = FALSE, ...) {
 
 	stopifnot(inherits(x, "Vegsoup"))
 

@@ -177,15 +177,13 @@ require(vegsoup)
 data(sim100)
 x <- sim100
 
-x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam"))
+x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam", "optpart"))
 
 summary(x)
 
-# use parallel package
+# use parallel
 \dontrun{
-if (require(parallel)) {
-   x <- OptimStride(sim100, k = 10, fast = TRUE)
-}
+x <- OptimStride(sim100, k = 10, fast = TRUE)
 }
 
 # get the computed clustering methods
@@ -196,6 +194,7 @@ threshold(x)
 
 # matrix of results for OptimClass1
 optimclass1(x)
+boxplot(t(optimclass1(x)))
 
 # the number of faithful species for each partition and method
 # warning, method dispatch will break if package optpart is loaded

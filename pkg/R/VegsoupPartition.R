@@ -109,32 +109,40 @@
 					#	there is switch flexible for setting par.method
 					#	, ...)
 			}, flexible = {
-				alpha <- 0.625
-				beta = 1 - 2 * alpha
+				#	the commonly used value of beta (0,25)
+				a <- 0.625     # alpha
+				b <- 1 - 2 * a # beta
 				P <- agnes(Xd, method = "flexible",
 					keep.diss = FALSE, keep.data = FALSE, # save time and memory
-					par.method = c(alpha, alpha, beta, 0))
+					par.method = c(a, a, b, 0))
 					#	as.above because of inherits(Xd, "dist")
 					#	, ...)
 			}, pam = {
 				P <- pam(Xd, k = k, diss = TRUE)
 					#	as above, exept do.swap = FALSE
 					#	, ...)
-			}, isopam = {
+			}, isopam = {  # performs not very well with high levels of k
 				if (verbose) cat("\nrun isopam, ignoring k=", k)
-				if (verbose) cat("\nplease supply c.fix to restict to a specific number of partitions\n")
+				if (verbose) cat("\nplease supply c.fix to restict to a specific number of k\n")
 				P <- isopam(X, distance = Xd)
 					#	complicated!
 					#	, ...)
 			}, optpart = {
-				if (verbose) cat("\nrun optpart from random starts ...")
-				if (verbose) cat("\nset to", k, "partitions\n")
-				P <- .VegsoupPartitionOptpartBestopt(Xd, k, numitr = 100)
+				# OPTPART/FLEX, initialize with flexible beta												
+				alpha <- 0.625
+				beta = 1 - 2 * alpha
+				P <- agnes(Xd, method = "flexible",
+					keep.diss = FALSE, keep.data = FALSE, # save time and memory
+					par.method = c(alpha, alpha, beta, 0))				
+
+				G <- cutree(P, k)
+				P <- optpart::optpart(G, Xd)
+					#	shoud accept: maxitr = 100, mininc = 0.001, maxdmu = 1
 					#	, ...)
 			}, kmeans = {
 				if (verbose) cat("kmeans doesn't use distance matrices, ignore", vegdist(obj))
 				P <- kmeans(X, centers = k)
-					#	iter.max = 10, nstart = 1, algorithm and irgnore trace
+					#	could accept: iter.max = 10, nstart = 1, algorithm
 					#	, ...)
 			}, wards = {
 				P <- hclust(Xd, method = "ward.D")
@@ -152,8 +160,8 @@
 				P <- fanny(Xd, k = k, diss = TRUE, memb.exp = m,
 					# in any case, we save memory allocation time here
 					cluster.only = TRUE, keep.diss = FALSE, keep.data = FALSE)
-					#	irgnore: diss and k 
-					#	stand = FALSE, irgnore we get standardisation from obj
+					#	ignore: diss and k 
+					#	stand = FALSE, we get standardisation from obj
 					#	should accept: iniMem.p = NULL, maxit = 500, tol = 1e-15
 					#	, ...)
 			}, FCM = {
@@ -179,7 +187,7 @@
 	} # end if (k > 1)
 
 	#	retrieve partitioning vector
-	#	for methoids in the function signature
+	#	for methods in the function signature
 	if (M != "FUN") {
 		#   handle k = 1
 		if (inherits(P, "NULL")) {
