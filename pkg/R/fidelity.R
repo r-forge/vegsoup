@@ -1,11 +1,15 @@
 #	adapted and extended from strassoc.R by Miquel De C\'{a}ceres in package(indicspecies)
 
 #	Fidelity measures
-#	gmv group membership vector (clusters)
-#	sav	species abundance vector
 
 #	to do: add column for indicator value, high priority!
 ".fidelityVegsoupPartition" <- function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, alternative = "greater", fast = FALSE, verbose = TRUE, ...) {
+
+	#	OptimClass (Tichy et al. 2010)
+	#	tests the right-tailed hypothesis (alternative = "greater") of a Fisher test
+	
+	#	gmv: group membership vector (clusters)
+	#	sav: species abundance vector
 
 	if (getK(obj) < 2) {
 		if (verbose)
@@ -16,20 +20,16 @@
 		if (!is.null(decostand(obj)) & method == "TCR") {
 			message("TCR is not defined for standardized data!",
 				"\nset decostand(obj) <- NULL")
-			#	dont recompute partitioning				
+			#	dont recompute partitioning
 			obj@decostand <- new("decostand", method = NULL)
 			#	decostand(obj) <- NULL
 		}
-		if (verbose) {
-			cat("individual based index")
-		}
+		if (verbose) cat("individual based index")
 		r.ind <- TRUE #	Fisher test needs binary matrix
 		X <- as.numeric(obj)
 	}
 	else {
-		if (verbose) {
-			cat("presence/absence based index\n")
-		}
+		if (verbose) cat("presence/absence based index\n")
 		X <- as.logical(obj)
 		r.ind <- FALSE # Fisher can use matrix X
 	}
@@ -41,6 +41,7 @@
 	}
 
 	#	functions that compute diagnostic values by row
+	#	Indval 1 and 2
 	IndVal1 <- function (sav, gmv, group = NULL, ...) {
 		gmv <- as.factor(gmv)
 		means <- vector("numeric", nlevels(gmv))
@@ -48,7 +49,7 @@
 		for (i in 1:nlevels(gmv)) {
 			means[i] <- mean(sav[gmv == levels(gmv)[i]])
 			if (is.na(means[i])) means[i] <- 0
-		}   
+		}
 		if (is.null(group)) {	# indval1 for all groups
 			indvals <- data.frame(matrix(0, nrow = nlevels(gmv), ncol = 3))
 			row.names(indvals) <- levels(gmv)
@@ -60,8 +61,9 @@
 				indvals[i,2] <- ifelse(sum(gmv == levels(gmv)[i]) > 0,
 					sum((gmv == levels(gmv)[i]) & (sav > 0)) / sum(gmv == levels(gmv)[i]), 0)
 				indvals[i,3] <- sqrt(indvals[i,1]*indvals[i,2])
-		}	 
-		} else {	# indval1 for one group
+			}
+		}
+		else {	# indval1 for one group
 			indvals <- data.frame(matrix(0, nrow = 1, ncol = 3))
 			row.names(indvals) <- c(group)
 			names(indvals) <- c("A.g", "B", "IndVal.g")
@@ -78,16 +80,16 @@
 	
 	IndVal2 <- function(sav, gmv, group = NULL, ...) {
 		gmv <- as.factor(gmv)
-		sums <- vector("numeric", nlevels(gmv)) 
+		sums <- vector("numeric", nlevels(gmv))
 		
-		for (i in 1:nlevels(gmv)) {
+		for (i in 1:nlevels(gmv))
 			sums[i] <- sum(sav[gmv == levels(gmv)[i]])
-		}
-	   
-		if (is.null(group)) {   # indval2 for all groups
+
+		# indval2 for all groups
+		if (is.null(group)) { 
 			indvals <- data.frame(matrix(0, nrow = nlevels(gmv), ncol = 3))
 			row.names(indvals) <- levels(gmv)
-		   
+			
 			for (i in 1:nlevels(gmv)) {
 				indvals[i, 1] <- ifelse(sum(sums) > 0,
 					sums[i] / sum(sums), 0)
@@ -95,7 +97,9 @@
 					sum((gmv == levels(gmv)[i]) & (sav > 0)) / sum(gmv == levels(gmv)[i]), 0)
 				indvals[i, 3] <- sqrt(indvals[i, 1] * indvals[i, 2])
 			}
-		} else {  # indval2 for one group
+		}
+		# indval2 for one group
+		else {
 			indvals <- data.frame(matrix(0, nrow = 1, ncol = 3))
 			row.names(indvals) <- c(group)
 			sg <- sum(sav[gmv == group])
@@ -103,23 +107,23 @@
 				sg / sum(sums), 0)
 			indvals[1, 2] <- ifelse(sum(gmv == group) > 0,
 				sum((gmv == group) & (sav > 0)) / sum(gmv == group), 0)
-			indvals[1, 3] <- sqrt(indvals[1] * indvals[2])	   
+			indvals[1, 3] <- sqrt(indvals[1] * indvals[2])
 		}
 		names(indvals) <- c("A", "B", "IndVal")
 		return(indvals)
 	}
-	
-	
+		
 	#	phi (point biserial correlation)
-	r.s <- function (sav, gmv, group = NULL, ...) {   
+	r.s <- function (sav, gmv, group = NULL, ...) {
 		gmv <- as.factor(gmv)
 		if (is.null(group)) {
-			r <- vector("numeric", nlevels(gmv))   
+			r <- vector("numeric", nlevels(gmv))
 			for (i in 1:nlevels(gmv)) {
 				r[i] <- cor(sav, gmv == levels(gmv)[i])
 				if (is.na(r[i])) r[i] <- 0
 			}
-		} else {
+		}
+		else {
 			r <- cor(sav, ifelse(gmv == group, 1, 0))
 			if (is.na(r)) r <- 0
 		}
@@ -127,7 +131,7 @@
 	}
 	
 	#	phi, group equalised
-	r.g <- function (sav, gmv, group = NULL, ...) {   
+	r.g <- function (sav, gmv, group = NULL, ...) {
 		gmv <- as.factor(gmv)
 		npm <- vector("numeric", nlevels(gmv))
 		k <- nlevels(gmv)
@@ -158,19 +162,18 @@
 				r[i] <- num / sqrt(s2 * g2)
 				if (num == 0) r[i] <- 0
 				if (is.nan(r[i])) cat(l2m, " " , nm, "\n")
-			}	 
-		} else {
-			#print((npmg/k)+nm)   	 
+			}
+		}
+		else {
 			num <- npmg-(nm*C)
-			r <- num/sqrt(s2*g2)	
-			if (num == 0) r <- 0	   	   
+			r <- num/sqrt(s2*g2)
+			if (num == 0) r <- 0
 		}
 		return(r)
 	}
 	
-	
 	#	phi individual based
-	r.ind.s <- function (sav, gmv, group = NULL, c = 1, ...) {   
+	r.ind.s <- function (sav, gmv, group = NULL, c = 1, ...) {
 		gmv <- as.factor(gmv)
 		N <- length(sav)
 		asp <- sum(sav)
@@ -185,20 +188,21 @@
 				r[i] <- num / sqrt(s2 * g2)
 				if (num == 0) r[i] <- 0
 			}
-		} else {
+		}
+		else {
 			ni <- sum(gmv == group)
 			aspi <- sum(sav * (gmv == group))
 			num <- (N * aspi) - (asp * ni)
 			s2 <- N * c * asp - asp^2
 			g2 <- N * ni - ni^2
 			r <- num / sqrt(s2 * g2)
-			if (num == 0) r <- 0	   	   
+			if (num == 0) r <- 0
 		}
-	   return(r)
+		return(r)
 	}
 	
 	#	phi individual based, group equalised
-	r.ind.g <- function (sav, gmv, group = NULL, c = 1, ...) {   
+	r.ind.g <- function (sav, gmv, group = NULL, c = 1, ...) {
 		gmv <- as.factor(gmv)
 		aspig <- vector("numeric", nlevels(gmv))
 		k <- nlevels(gmv)
@@ -223,18 +227,19 @@
 				r[i] <- num / sqrt(s2 * g2)
 				if (num == 0) r[i] <- 0
 			}	 
-		} else {
+		}
+		else {
 			num=(N*aspig[igroup])-(aspg*nig)
 			s2 <- N * c * aspg - aspg^2
 			g2 <- N * nig - nig^2
 			r <- num / sqrt(s2 * g2)
-			if (num == 0) r <- 0	   	   
+			if (num == 0) r <- 0
 		}
 		return(r)
 	}
 	
 	#	square root of Indval A * Indval B
-	s.ind.s <- function (sav, gmv, group = NULL, c = 1, ...) {   
+	s.ind.s <- function (sav, gmv, group = NULL, c = 1, ...) {
 		gmv <- as.factor(gmv)
 		N <- length(sav)
 		asp <- sum(sav)
@@ -245,18 +250,19 @@
 				aspi <- sum(sav * (gmv == levels(gmv)[i]))
 				r[i] <- aspi / sqrt(asp * c * ni)
 				if (aspi == 0) r[i] <- 0
-			}	 
-		} else {
+			}
+		}
+		else {
 			ni <- sum(gmv == group)
 			aspi <- sum(sav * (gmv == group))
 			r <- aspi / sqrt(asp * c * ni)
-			if (aspi == 0) r <- 0   	   
+			if (aspi == 0) r <- 0
 		}
 		return(r)
 	}
 	
 	#	square root of Indval A.g * Indval B, group equalised
-	s.ind.g <- function (sav, gmv, group = NULL, c = 1, ...) {   
+	s.ind.g <- function (sav, gmv, group = NULL, c = 1, ...) {
 		gmv <- as.factor(gmv)
 		N <- length(sav)
 		k <- nlevels(gmv)
@@ -274,12 +280,13 @@
 				r[i] <- sqrt(((aspi / ni) * aspi) / (asp * c * ni))
 				if (aspi == 0) r[i] <- 0
 			} 
-		} else {
+		}
+		else {
 			ni <- sum(gmv == group)
 			aspi <- sum(sav * (gmv == group))
-	#		r <- sqrt(((aspi / ni) * aspi) / (asp * c * ni))
+			#	r <- sqrt(((aspi / ni) * aspi) / (asp * c * ni))
 			r <- sqrt(((aspi / ni)) / (asp * c))
-		   if (aspi == 0) r <- 0	   	   
+			if (aspi == 0) r <- 0
 		}
 		return(r)
 	}
@@ -295,20 +302,21 @@
 			for (i in 1:k) {
 				x2 <- ifelse(gmv == levels(gmv)[i], 1, 0)
 				l2 <- sqrt(sum(x2 * x2))
-		  		r[i] <- (sum(x1 * x2) / (l1 * l2))	
-		  		if (is.na(r[i])) r[i]=0 
-	   		}
-	   	} else {
+				r[i] <- (sum(x1 * x2) / (l1 * l2))
+				if (is.na(r[i])) r[i] <- 0 
+			}
+		}
+		else {
 			x2 <- ifelse(gmv == group, 1, 0)
 			l2 <- sqrt(sum(x2 * x2))
-			r <- (sum(x1 * x2) / (l1 * l2))	
-			if (is.na(r)) r <- 0 
+			r <- (sum(x1 * x2) / (l1 * l2))
+			if (is.na(r)) r <- 0
 		}
 		return(r)
 	}
 	
 	#	cosine, group eqalised
-	cos.g <- function (sav, gmv, group = NULL, ...) {   
+	cos.g <- function (sav, gmv, group = NULL, ...) {
 		gmv <- as.factor(gmv)
 		s <- 0
 		k <- nlevels(gmv)
@@ -323,9 +331,8 @@
 			}
 			
 			for (i in 1:k) r[i] <- (a[i] / n[i]) / sqrt(s)
-			
-		} else {
-			
+		}
+		else {
 			for (i in 1:k) {
 				n <- sum(gmv == levels(gmv)[i])
 				a2 <- sum((sav^2) * (gmv == levels(gmv)[i]))
@@ -333,7 +340,7 @@
 			}
 			
 		r <- (sum(sav * (gmv == group)) / sum(gmv == group)) / sqrt(s)
-	#	if (is.na(r)) r <- 0 
+		#	if (is.na(r)) r <- 0 
 		}
 		return(r)
 	}
@@ -358,9 +365,9 @@
 			s.hyp <- sqrt((n * Np * (N -n) * (N - Np)) / (N^2 * (N - 1)))
 			s.binB <- sqrt(n * (Np / N) * (1 - Np / N))
 			s.binA <- sqrt(Np * (n / N) * (1 - n / N))
-		   	r[i,1] <- u / s.hyp
-		   	r[i,2] <- u / s.binB
-		   	r[i,3] <- u / s.binA
+			r[i, 1] <- u / s.hyp
+			r[i, 2] <- u / s.binB
+			r[i, 3] <- u / s.binA
 		}
 		if (!is.null(group)) r <- r[group,]
 		return(r)
@@ -368,8 +375,8 @@
 	
 	#	G statsitic
 	g.s <- function (sav, gmv, group = NULL, ...) {
-	#	i = 1
-	#	observed frequencies	
+
+	#	observed frequencies
 		xm <- function (N, Np, n, np) { 
 			res <- matrix(c(
 				np,
@@ -390,12 +397,11 @@
 			res[is.nan(res)] <- 0
 			return(res)
 		}
-		N <- length(sav)	
+		N <- length(sav)
 		r <- vector("numeric", nlevels(gmv))
 	
 		for (i in 1:nlevels(gmv)) { # loop over partitions
-		#	k = 1
-			n <- sum(sav)	
+			n <- sum(sav)
 			Np <- sum(gmv == levels(gmv)[i])
 			np <- sum(sav * (gmv == levels(gmv)[i]))
 			x <- xm(N, Np, n, np)
@@ -415,7 +421,7 @@
 			r[i] <- g / q
 		}
 		if (!is.null(group)) r <- r[group]
-	#	pval <- 1 - pchisq(r, df = 1)		
+		#	pval <- 1 - pchisq(r, df = 1)
 		return(r)
 	}
 	
@@ -428,14 +434,14 @@
 			n  <- sum(sav)	
 			Np <- sum(gmv == levels(gmv)[i])
 			np <- sum(sav * (gmv == levels(gmv)[i]))
-			#	eq (13) Chytry et al 2002:82		
+			#	eq (13) Chytry et al 2002:82
 			r[i] <- (N * (abs(N * np - n * Np) - (N / 2))^2) / (n * Np * (N - n) * (N - Np))
 		}
 		if (!is.null(group)) r <- r[group]
 		return(r)
 	}
 	
-	#	Fisher Test	apapted from isotab.R (package 'isopam')
+	#	Fisher Test, apapted from isotab.R (package 'isopam')
 	Fisher.s <-  function (sav, gmv, group = NULL, alternative = alternative) {
 	
 		alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
@@ -494,13 +500,13 @@
 		return(p)
 	}	
 	
-	#	observed frequencies	
-		xm <- function (N, Np, n, np) { 
+	#	observed frequencies
+		xm <- function (N, Np, n, np) {
 			res <- matrix(c(
 				np,
 				Np - np,
 				n - np,
-				N - Np - n + np), 2, 2)	
+				N - Np - n + np), 2, 2)
 			res[is.nan(res)] <- 0
 			return(res)	
 		}
@@ -509,11 +515,9 @@
 		N <- length(sav)
 		
 		for (i in 1:nlevels(gmv)) { # loop over partitions
-		#	k = 1
-			n  <- sum(sav)	
+			n  <- sum(sav)
 			Np <- sum(gmv == levels(gmv)[i])
 			np <- sum(sav * (gmv == levels(gmv)[i]))
-	
 			r[i] <- FisherPval(xm(N, Np, n, np))
 		}
 		if (!is.null(group)) r <- r[group]
@@ -537,7 +541,7 @@
 						r[i] <- cnst[i] / max(cnst)
 				}
 			}
-		if (!is.null(group)) r <- r[group]		
+		if (!is.null(group)) r <- r[group]
 		return(r)
 	}
 	
@@ -549,9 +553,9 @@
 	#		if (!max(sav) < 1) {
 				r <- vapply(1:nlevels(gmv),
 					FUN = function (x) mean(sav[gmv == levels(gmv)[x]]) / max(sav),
-					FUN.VALUE = numeric(1))		
+					FUN.VALUE = numeric(1))
 	#		}
-		if (!is.null(group)) r <- r[group]		
+		if (!is.null(group)) r <- r[group]
 		return(r)
 	}
 
@@ -580,7 +584,7 @@
 		else if (method == "TCR")		a <- tcr.ind.s(sav, gmv, group)
 		
 		return(a)
-	}	
+	}
 	
 	#	verbose method names
 			 if (method == "r")			method.name <- "phi (point-biserial correlation coefficient)"
@@ -604,15 +608,13 @@
 		else if (method == "Fisher")	method.name <- "Fisher test"
 		else if (method == "CR")		method.name <- "constancy ratio"
 		else if (method == "TCR")		method.name <- "total cover ratio"
-	  
+	
 	if (sum(is.na(cluster)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
 	if (sum(is.na(X)) > 0) stop("Cannot deal with NA values. Please Remove and run again.")
 	
 	#	init multicore if active
 	if (fast) {
-		#	parallel is in imports
 		message("fork multicore process on ", parallel::detectCores(), " cores")
-		#if (verbose) message("use multicore")
 	}	
 	#	create result object for fidelity measure
 	nsps <- dim(X)[2]	# dim(obj)[2] 
@@ -623,7 +625,7 @@
 		ngps <- 1
 	}
 	
-	cpu.time.dm <- system.time({	
+	cpu.time.dm <- system.time({
 	
 		if (verbose) {
 			pbapply::pboptions(char = ".")
@@ -634,7 +636,6 @@
 				x, cluster, method, group, ...))
 			dm <- matrix(unlist(dm), ncol = nlevels(cluster), nrow = length(dm),
 				dimnames = list(names(dm), levels(cluster)), byrow = TRUE)
-				
 		}
 		else {
 			if (verbose) {
@@ -642,12 +643,12 @@
 				function (x, ...) fidelity.method(
 				x, cluster, method, group, alternative = alternative, ...)))
 			}
-			else {	
-			dm <- t(apply(X, 2,
-				function (x, ...) fidelity.method(
-				x, cluster, method, group, alternative = alternative, ...)))
-			}	
-		}	
+			else {
+				dm <- t(apply(X, 2,
+					function (x, ...) fidelity.method(
+						x, cluster, method, group, alternative = alternative, ...)))
+			}
+		}
 	
 		if (is.null(group)) {
 			colnames(dm) <- levels(cluster)
@@ -657,11 +658,10 @@
 		}
 	
 		#	warning! shoud not happen
-	
 		dm[is.na(dm)] <- 0
 	
-		# Latex method needs rownames for indexing
-		#	all.equal(rownames(dm), names(obj)) 	
+		#	Latex method needs rownames for indexing
+		#	all.equal(rownames(dm), names(obj))
 	
 		#	IndVal.g returns the square root of indval (package(labdsv))!
 		if (method == "IndVal.g") {
@@ -672,9 +672,7 @@
 	#	compute Fisher test
 	
 	#	get binary matrix if fidelity measure is based on abundances
-	if (r.ind) {
-		X <- as.logical(obj)
-	}	
+	if (r.ind) X <- as.logical(obj)
 	
 	cpu.time.ft <- system.time({
 	if (verbose) {
@@ -690,7 +688,7 @@
 	else {
 		ft <- t(pbapply::pbapply(X, 2,
 			function (x, ...) fidelity.method(
-			x, cluster, "Fisher", group, alternative = alternative)))		
+			x, cluster, "Fisher", group, alternative = alternative)))
 	}
 	#}
 	
@@ -732,27 +730,30 @@
 	
 		for (i in 1:nsps) {	
 			for (k in 1:ngps) {	
-				   sdmb <- sort(dmb[,i,k])
-				   dmlower[i, k] <- sdmb[(alpha / 2.0) * nboot]
-				   dmupper[i, k] <- sdmb[(1 - (alpha / 2.0)) * nboot]
+				sdmb <- sort(dmb[,i,k])
+				dmlower[i, k] <- sdmb[(alpha / 2.0) * nboot]
+				dmupper[i, k] <- sdmb[(1 - (alpha / 2.0)) * nboot]
 			}
 		}
 		if (verbose) close (pb)
 		dmlower <- data.frame(dmlower)
 		dmupper <- data.frame(dmupper)
 		row.names(dmlower) <- names(X)
-		if (is.null(group)) {
+
+		if (is.null(group))
 			names(dmlower) <- levels(cluster)
-		} else {
+		else
 			names(dmlower) <- group
-		}	
+		
 		row.names(dmupper) <- names(X)
 		if (is.null(group)) {
 			names(dmupper) <- levels(cluster)
-		} else {
+		}
+		else {
 			names(dmupper) <- group
 		}
-	} else {
+	}
+	else {
 		dmlower = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 		dmupper = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 	}	# end nboot
@@ -775,7 +776,7 @@
 		layers= obj@layers,
 		group = obj@group,
 		sp.points = obj@sp.points,
-		sp.polygons = obj@sp.polygons			
+		sp.polygons = obj@sp.polygons
 )
 
 return(invisible(res))
@@ -783,15 +784,15 @@ return(invisible(res))
 }
 
 setGeneric("fidelity",
-	function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, alternative = "two.sided", fast = FALSE, verbose = TRUE, ...)
-		standardGeneric("fidelity")
+	function (obj, method = "r.g", group = NULL, nboot = 0, alpha = 0.05, c = 1, alternative = "greater", fast = FALSE, verbose = TRUE, ...)
+	standardGeneric("fidelity")
 )
 setMethod("fidelity",
 	signature(obj = "VegsoupPartition"),
 	.fidelityVegsoupPartition
 )
 
-.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE) {
+.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "greater", verbose = TRUE) {
 
 mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))
@@ -836,7 +837,7 @@ cpu.time <- system.time({
 			s = apply(aispni, 1, "sum")
 			dmp = sweep(aispni, 1, s, "/")
 			dmp[is.na(dmp)] <- 0 # check for division by zero
-		}			
+		}
 		if (alternative == "less") {
 			cdm <- cdm + as.numeric(dmp <= dm)
 		} else {
