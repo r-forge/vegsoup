@@ -19,7 +19,7 @@ The functions compute a contingency table (\code{\link{contingency}(object)}) an
 \usage{
 \S4method{as.hclust}{VegsoupPartition}(x, table = "constancy", ...)
 
-\S4method{as.dendrogram}{VegsoupPartition}(object, table = "constancy", ...)
+\S4method{as.dendrogram}{VegsoupPartition}(object, table = "constancy", labels = NULL, ...)
 }
 \arguments{
   \item{ x, object }{
@@ -29,9 +29,11 @@ The functions compute a contingency table (\code{\link{contingency}(object)}) an
 	character. Either \code{\link{contingency}}, \code{\link{constancy}} or
 	 \code{\link{average}}.
   }
+  \item{ labels }{
+	character. Column of \code{object} to label dendrogram. This must of course be in line with partitioning.
+  }
   \item{ \dots }{
 	Arguments passed to \code{vegan::vegdist}.
-
   }
 }
 %\details{
@@ -51,9 +53,6 @@ The functions compute a contingency table (\code{\link{contingency}(object)}) an
 }
 
 \examples{
-require(vegsoup)
-
-data(windsfeld)
 x <- VegsoupPartition(windsfeld, k = 10)
 
 par(mfrow = c(3,3))
@@ -80,6 +79,13 @@ plot(as.hclust(x, "constancy", "single"))
 plot(as.hclust(x, "constancy", "complete"))
 plot(as.hclust(x, "constancy", "average"))
 
+# as.dendrogram
+par(mfrow = c(2,1))
+plot(as.dendrogram(x))
+
+# define labels for as.dendrogram
+x$label <- LETTERS[partitioning(x)]
+plot(as.dendrogram(x, labels = "label"))
 }
 
 \keyword{ methods }
