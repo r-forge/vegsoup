@@ -176,7 +176,7 @@ require(vegsoup)
 data(sim100)
 x <- sim100
 
-x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam", "optpart"))
+x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam"))
 
 summary(x)
 
