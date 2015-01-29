@@ -36,10 +36,9 @@
 }
 
 \usage{
-OptimStride(x, k, ft.threshold = 1e-3, alternative = "two.sided",
-			method = c("ward", "flexible", "pam", "kmeans", "wards",
-					   "fanny", "FCM", "KM"),
-			fast = FALSE, ...)
+OptimStride(x, k, ft.threshold = 1e-3, alternative = "greater",
+            method = c("ward", "flexible", "pam", "kmeans", "wards",
+                       "fanny", "FCM", "KM", "optpart"), fast = FALSE, ...)
 
 \S4method{method}{VegsoupOptimstride}(x, ...)
 

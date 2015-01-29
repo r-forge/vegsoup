@@ -792,7 +792,7 @@ setMethod("fidelity",
 	.fidelityVegsoupPartition
 )
 
-.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "greater", verbose = TRUE) {
+.SigFidelityVegsoupPartition <- function (obj, mode = 1, nperm = 999, alternative = "two.sided", verbose = TRUE) {
 
 mode <- match.arg(as.character(mode), c("0","1"))
 alternative <-  match.arg(as.character(alternative), c("greater","less","two.sided"))

@@ -25,10 +25,8 @@ setMethod("stride",
 	signature(x = "VegsoupOptimstride"),
 	function (x, method, ...) {
 		if (missing(method)) {
-			message("+")
 			method <- vegsoup::method(x)#[1]
-		}
-			message("+")		
+		}	
 		r <- x@optimstride$indicators
 		m <- match(method, names(r))
 		if (any(is.na(m))) stop("method ", m[is.na(m)], " not found")

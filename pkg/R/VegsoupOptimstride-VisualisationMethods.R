@@ -23,7 +23,7 @@ setMethod("plot",
 	if (nm > 6)
 		col <- rep(c(1,2), each = 6)[1:nm]
 	else
-		rep(1, nm)
+		col <- rep(1, nm)
 
 	if (mode == 1) {
 		#	open plot
