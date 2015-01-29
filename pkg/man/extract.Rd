@@ -57,7 +57,8 @@
 \author{ Roland Kaiser }
 
 \seealso{
-  \code{\link[vegsoup]{subset}}
+\code{\link[vegsoup]{subset}},
+\code{\link[vegsoup]{reorder}}
 }
 
 \examples{

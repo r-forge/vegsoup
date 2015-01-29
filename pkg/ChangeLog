@@ -1,6 +1,5 @@
 --- todo
 
-implement reorder by dendrogram
 bind of VegsoupPartition does not allow recalculation the partition if e.g. vegdist is altered
 document how layers must be ordered
 test if order of layers is really consistent over all methods
@@ -39,6 +38,7 @@ fidelity performs now no recompilation of partitioning with method TCR, this lev
 ensured that Fisher test has default alternative = "greater"
 optpart now starts from a flexible beta solution
 added labels argument to as.dendrogram
+implemented reorder method as to change the partitioning vector by a dendrogram topology
 
 --- 2015-01-24, version: 0.2-4
 

@@ -200,6 +200,7 @@ exportMethods(
 	"proj4string<-",
 	"quantile",
 	"relevee",
+        "reorder",
 	"richness",
 	"rectangles",
 	"rownames",

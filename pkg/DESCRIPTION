@@ -105,6 +105,7 @@ Collate: AAA.R
 		 Vegsoup-VisualisationMethods.R
 		 VegsoupPartition.R
 		 VegsoupPartition-BaseMethods.R
+                 reorder.R
 		 partition.R
 		 validate.R
 		 optimize.R
@@ -117,7 +118,6 @@ Collate: AAA.R
 		 average.R
 		 rectangles.R
 		 ellipsoidhull.R
-		 write.verbatim.R
 		 silhouette.R
 		 disdiam.R
 		 murdoch.R
@@ -132,6 +132,7 @@ Collate: AAA.R
 		 VegsoupOptimstride-BaseMethods.R
 		 VegsoupOptimstride-VisualisationMethods.R
 		 Latex.R
+		 write.verbatim.R
 		 plot.R
 		 misc.R
 		 templates.R
