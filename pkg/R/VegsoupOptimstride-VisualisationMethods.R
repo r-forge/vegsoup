@@ -21,7 +21,7 @@ setMethod("plot",
 	#	there are six default line types
 	lty <- rep(1:6, ceiling(nm / 6))[1:nm]
 	if (nm > 6)
-		col <- rep(c(1,2), each = 6)[1:nm]
+		col <- rep(c(2,1), each = 6)[1:nm]
 	else
 		col <- rep(1, nm)
 
@@ -53,7 +53,7 @@ setMethod("plot",
 				format(ft.threshold,scientific = TRUE)), ...)
 			rug(1:k, side = 3)		
 		for (i in 1:nrow(oc2)) {
-			lines(1:k, oc2[i, ], lty = i, col = cols)
+			lines(1:k, oc2[i, ], lty = lty[i], col = col[i])
 		}
 	}
 	legend("bottomright",
