@@ -29,6 +29,7 @@ OptimStride <- function (x, k, ft.threshold = 1e-3, alternative = "greater", met
 	cycle <- function (x, k, X, Xd, ...) {
 		P <- VegsoupPartition(x, k = k, X = X, Xd = Xd, ...)
 		r <- FisherTest(P, alternative = alternative)
+		#	we do better if ft.threshold is applied with summary or plot methods
 		r <- apply(r < ft.threshold, 2, sum)
 		return(r)
 	}

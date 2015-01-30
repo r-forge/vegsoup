@@ -14,6 +14,7 @@ implement math methods e.g. obj^0.2
 more rigorous tests of coverscale, eg. cov "++" is accepted but must raise errors!
 add layers(obj) <- value logical-method, if FALSE collapse all layers
 rename OptimStride to OptimClass and stop developing this approach
+we do better if ft.threshold is applied with summary or plot methods
 implement a more general method comparison frame work
 
 --- 2015-01-25, version: 0.2-4 patched
