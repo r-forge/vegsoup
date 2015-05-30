@@ -103,12 +103,12 @@ setMethod("[",
 		#	develop class VegsoupPartition from class Vegsoup
 		res <- new("VegsoupPartition", tmp)
 		#	and reassign class slots
-		res@part <- part[names(part) %in% rownames(tmp)]
+		res@part <- part[match(rownames(res), names(part))]
 		k <- length(unique(res@part))
 		res@part[] <- as.integer(as.character(factor(res@part, labels = 1:k)))
 		res@method = x@method
 		res@k = k
-		res@group = res@group[names(part) %in% rownames(tmp)]
+		res@group = res@group[match(rownames(res), names(part))]
 
 		#	validity
 		if (!identical(names(res@part), rownames(tmp))) {
