@@ -110,7 +110,8 @@ export(
 	"singletons",
 	"castFooter",
 	"header",
-	"template"
+	"template",
+        "combine"
 )
 
 exportMethods(

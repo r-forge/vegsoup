@@ -124,7 +124,7 @@
 		}		
 	})
 	
-	#	must bring into order!
+	#	explicit ordering!
 	X <- X[order(X$plot, X$layer, X$abbr), ]
 	
 	if (!is.null(Y@codes)) {

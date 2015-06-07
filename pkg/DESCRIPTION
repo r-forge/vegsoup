@@ -78,6 +78,7 @@ Collate: AAA.R
 		 extract.R
 		 over.R
 		 layers.R
+                 combine.R
 		 sample.R
 		 seriation.R
 		 richness.R
