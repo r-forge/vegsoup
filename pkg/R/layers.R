@@ -177,6 +177,14 @@ setReplaceMethod("layers",
 				"\n use layers(obj, collapse = value)") 
 		}
 		obj@layers <- value
+		if (inherits(obj, "VegsoupPartitionFidelity")) {
+			#	resort what is independent of as.matrix methods
+			i <- colnames(obj)
+			obj@stat <- obj@stat[i, ]
+			#obj@lowerCI <- obj@lowerCI[i, ]
+			#obj@upperCI <- obj@upperCI[i, ]
+			obj@fisher.test <- obj@fisher.test[i, ]
+		}
 		return(obj)
 	}
 )
