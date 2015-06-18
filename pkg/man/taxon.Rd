@@ -12,13 +12,13 @@
 \title{ Get or Subset Object by Scientific Taxon Name }
 
 \description{
-  Retrieve a \code{character} vector of scientific taxon names as defined by
-  \code{taxonomy(x)} or subset an object based on these names such that
-  only a subset of species remain.
+  Print or retrieve a \code{character} vector of full scientific latin names of taxa
+  as defined by \code{taxonomy(x)}. Alternatively, subset an object based on taxon names,
+  such that only selected species remain in the object.
 }
 
 \usage{
-\S4method{taxon}{Vegsoup}(x)
+\S4method{taxon}{Vegsoup}(x, taxon = NULL)
 
 \S4method{subset}{Vegsoup}(x, subset, ...)
 }
@@ -26,6 +26,9 @@
 \arguments{
   \item{ x }{
 	\code{Vegsoup*} object.
+  }
+  \item{ taxon }{
+	\code{character} string of a full scientific latin name (see \code{\link{taxonomy}}).
   }
   \item{ subset }{
 	\code{numeric} index to \code{taxonomy(x)}, vector of mode \code{character}, or a logical
@@ -38,6 +41,8 @@
 
 \details{
   Function \code{taxon} retrieves scientific species names from an object.
+  
+  If argument taxon is supplied only those taxa returned by a call to \code{grep(taxon, taxon(x))]} are printed.
 
   Extending the functionality of the \code{\link[vegsoup]{Extract}} methods for
   vegsoup objects, that allow for a definition of subsets based on abbreviations as

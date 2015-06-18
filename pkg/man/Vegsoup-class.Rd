@@ -481,7 +481,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	  \code{signature(obj = "Vegsoup")}:
 	  congruence between indicator and target species.
 	}
-	\item{Indspc}{
+	\item{compspec}{
 	  \code{signature(obj = "Vegsoup")}:
 	  compositional indicator species analysis.
 	}

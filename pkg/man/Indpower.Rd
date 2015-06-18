@@ -46,7 +46,7 @@ Interfaced from Roland Kaiser for package vegsoup from function
 }
 
 \seealso{
-\code{\link{Indspc}}
+\code{\link{compspec}}
 }
 
 \keyword{ methods }

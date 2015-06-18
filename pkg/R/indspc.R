@@ -1,12 +1,12 @@
 #	compositional indicator species analysis
 #	to do: documentation
-#if (!isGeneric("Indspc")) {	
-setGeneric("Indspc",
+#if (!isGeneric("compspec")) {	
+setGeneric("compspec",
 	function (obj, ...)
-		standardGeneric("Indspc")
+		standardGeneric("compspec")
 )
 #}
-setMethod("Indspc",
+setMethod("compspec",
 	signature(obj = "Vegsoup"),
 	function (obj, method, ...) {
 		#	Suggests:
@@ -14,7 +14,7 @@ setMethod("Indspc",
 		Xd <- as.dist(obj)
 		#	ensure dissimilarities
 		if (max(Xd) > 1) Xd <- Xd / max(Xd)
-		res <- indspc(as.logical(obj), dis = Xd, ...)
+		res <- labdsv::compspec(as.logical(obj), dis = Xd, ...)
 		return(res)		
 	}
 )

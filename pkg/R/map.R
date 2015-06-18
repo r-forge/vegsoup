@@ -1,10 +1,10 @@
 ".map" <- function (x, database, ...) {
 	#	Suggests:
-	require(maps)
+	requireNamespace(maps)
 	#	Suggests:
-	require(mapdata)
+	requireNamespace(mapdata)
 	if (missing(database)) database = "world"
-	if (database != "world") require(mapdata)
+	if (database != "world") requireNamespace(mapdata)
 	
 	DATABASES <- c("world", "worldHires", "world2Hires")
 	database <- match.arg(database, DATABASES)	

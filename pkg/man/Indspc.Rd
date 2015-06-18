@@ -1,10 +1,10 @@
 \encoding{UTF-8}
 
-\name{Indspc}
+\name{compspec}
 \docType{methods}
 
-\alias{Indspc}
-\alias{Indspc,Vegsoup-method}
+\alias{compspec}
+\alias{compspec,Vegsoup-method}
 
 \title{ Compositional Indicator Species Analysis }
 
@@ -13,7 +13,7 @@ Calculates the mean similarity of all plots in which a species occurs.
 }
 
 \usage{
-\S4method{Indspc}{Vegsoup}(obj, method, ...)
+\S4method{compspec}{Vegsoup}(obj, method, ...)
 }
 
 \arguments{
@@ -51,7 +51,7 @@ require(vegsoup)
 
 data(barmstein)
 
-Indspc(barmstein)
+compspec(barmstein)
 }
 \keyword{ methods }
 

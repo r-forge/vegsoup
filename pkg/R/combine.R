@@ -10,6 +10,8 @@ Y <- coverscale(x)
 #	valid strings
 z$abbr <- make.names(z$abbr)
 
+stopifnot(!any(z$abbr == abbr(x)))
+
 #	convert original abundance scale to numeric to allow calculations
 if (is.ordinal(coverscale(x))) {
 	X$cov <- ordered(X$cov, levels = Y@codes, labels = Y@lims)

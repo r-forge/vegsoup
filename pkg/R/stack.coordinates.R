@@ -1,5 +1,7 @@
 #	read OGR data source
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
+	requireNamespace(rgdal)
+	
 	pt <- rgdal::ogrInfo(dsn, layer)
 	withz <- pt$with_z
 	
@@ -9,7 +11,7 @@ stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, 
 	}
 		
 	#	check column names with ogrInfo
-	pt <- ogrInfo(dsn, layer)
+	pt <- rgdal::ogrInfo(dsn, layer)
 	withz <- ifelse(pt$with_z == 0, FALSE, TRUE)
 	
 	pt.names <- pt$iteminfo$name

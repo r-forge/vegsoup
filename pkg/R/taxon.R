@@ -1,12 +1,15 @@
 setGeneric("taxon",
-	function (x)
+	function (x, ...)
 		standardGeneric("taxon")
 )
 
 setMethod("taxon",
 	signature = "Vegsoup",
-	function (x) {
-		taxonomy(x)$taxon	
+	function (x, taxon = NULL) {
+		if (!is.null(taxon))
+			taxon(x)[grep(taxon, taxon(x))]	
+		else
+			taxonomy(x)$taxon	
 	}
 )	
 #	subset = c("Carex")
