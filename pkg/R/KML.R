@@ -43,13 +43,13 @@
 		"<img title=\"Klick for Gallery\" src=\"", thumbnail.url, "\"", " width=\"400\" >",
 		"</a>", sep = "")
 	
-	coordinates <- coordinates(obj@sp.points[obj@sp.points$plot == plot,])
+	x <- coordinates(obj@sp.points[obj@sp.points$plot == plot,])
 
 	point <- c(
 		"<styleUrl>#downArrowIcon</styleUrl>",
 		"<Point>",
 			paste("<coordinates>",
-				coordinates[1], ",", coordinates[2], ",0",
+				sprintf("%.10f", x[1]), ",", sprintf("%.10f", x[2]), ",0",
 				"</coordinates>", sep =""),
 		"</Point>")
 
@@ -258,13 +258,13 @@ end.kml <- c(
 	"</description>", 
 #	"<gx:balloonVisibility>0</gx:balloonVisibility>",
 	"<Point>",
-		paste("<coordinates>", x[2], ",", x[3], ",0", "</coordinates>", sep =""),
+		paste("<coordinates>",
+			x[ 2 ], ",", x[ 3 ], ",0",
+			"</coordinates>", sep = ""),
 	"</Point>",
 	"</Placemark>")
 }	
 		
-#obj = prt
-
 if (max(partitioning(obj)) > 10) {
 	if (max(partitioning(obj)) < 26) {
 		message("numbered styled KML ouput is currently limited to 10 groups",
@@ -287,6 +287,9 @@ stylemap <- c(sapply(paddle.file, .stylemap.numbers))
 
 points <- data.frame(partitioning = paddle.identifier,
 	coordinates(obj), plot = rownames(obj), stringsAsFactors = FALSE)
+
+points$x <- sprintf("%.10f", points$x)
+points$y <- sprintf("%.10f", points$y)
 
 points$website.url <- paste(website.url.path, points$plot, sep = "")
 points$thumbnail.url <- paste(thumbnail.url.path, points$plot, sep = "")
