@@ -10,7 +10,8 @@ Y <- coverscale(x)
 #	valid strings
 z$abbr <- make.names(z$abbr)
 
-stopifnot(!any(z$abbr == abbr(x)))
+#	more precise and/or rigorious tests
+#stopifnot(!any(z$abbr == abbr(x)))
 
 #	convert original abundance scale to numeric to allow calculations
 if (is.ordinal(coverscale(x))) {
