@@ -50,6 +50,7 @@ Collate: AAA.R
 		 stack.sites.R
 		 stack.coordinates.R
 		 read.verbatim.R
+		 castFooter.R
 		 verbatim.R
 		 read.XML.R
 		 SpeciesTaxonomy.R
