@@ -1,12 +1,11 @@
 #	for class "Vegsoup"
-
-.KMLVegsoup <- function (obj, file, add.label, thumbnail.url.path, website.url.path, ...) {
+.KMLVegsoup <- function (x, filename, add.label, thumbnail.url.path, website.url.path, ...) {
 
 	#	function to format cdata tag in kml
-	.placemark <- function (x, obj, website.url.path, thumbnail.url.path) { # add.label
+	.placemark <- function (y, x, website.url.path, thumbnail.url.path) { # add.label
 		
-	plot <- unique(x[, 1])
-	table <- x[, -1]	
+	plot <- unique(y[, 1])
+	table <- y[, -1]	
 	
 	if (missing(website.url.path)) {
 		website.url.path <-
@@ -43,7 +42,7 @@
 		"<img title=\"Klick for Gallery\" src=\"", thumbnail.url, "\"", " width=\"400\" >",
 		"</a>", sep = "")
 	
-	x <- coordinates(obj@sp.points[obj@sp.points$plot == plot,])
+	x <- coordinates(x@sp.points[x@sp.points$plot == plot,])
 
 	point <- c(
 		"<styleUrl>#downArrowIcon</styleUrl>",
@@ -99,8 +98,8 @@
 		add.label = TRUE
 	}
 	
-	if (missing(file)) {
-		file <- paste(getwd(), "/plots.kml", sep = "")
+	if (missing(filename)) {
+		filename <- paste(getwd(), "/plots.kml", sep = "")
 		message("\nargument file missing, drop KML to folder ",
 			getwd(), " as ./plots.kml")
 	}	
@@ -121,46 +120,35 @@
 		"</kml>")
 	
 	#	obj = sp
-	sl <- species(species(obj)) #! get slot data
-	sl$taxon <- taxon(obj)[match(sl$abbr, taxonomy(obj)$abbr)]
-	#	resort to layers(obj)
-	sl <- sl[order(sl$plot, match(sl$layer, layers(obj))), ]
+	sl <- species(species(x)) #! get slot data
+	sl$taxon <- taxon(x)[match(sl$abbr, taxonomy(x)$abbr)]
+	#	resort to layers(x)
+	sl <- sl[order(sl$plot, match(sl$layer, layers(x))), ]
 	
 	sl <- sl[, c(1,5,3,4)]
 	sl <- split(sl, sl$plot)
 	
-	placemark <- unlist(sapply(sl, function (x) .placemark(x, obj)))
+	placemark <- unlist(sapply(sl, function (y) .placemark(y, x)))
 	
 	res <- 	c(
 		begin.kml,
 		placemark,
 		end.kml)	
 	
-	con <- file(file)
+	con <- file(filename)
 		writeLines(res, con)
 	close(con)
 	
 	return(invisible(res))
 }
 
-#if (!isGeneric("KML")) {
-setGeneric("KML",
-	function (obj, file, add.label, thumbnail.url.path, website.url.path, ...)
-		standardGeneric("KML")
-)
-#}
-setMethod("KML",
-	signature(obj = "Vegsoup"),
-	.KMLVegsoup
-)
-
 #	for class "Vegsoup"
-.KMLVegsoupPartition <- function (obj, file, add.label, thumbnail.url.path, website.url.path, ...) {
+.KMLVegsoupPartition <- function (x, filename, add.label, thumbnail.url.path, website.url.path, ...) {
 if (missing(add.label)) {
 	add.label = FALSE
 }	
-if (missing(file)) {
-	file <- file.path(getwd(), "partitions.kml")
+if (missing(filename)) {
+	filename <- file.path(getwd(), "partitions.kml")
 	message("\nargument file missing, drop KML to folder ",
 		getwd(), " as ./partitions partition.kml")
 }
@@ -187,6 +175,7 @@ begin.kml <- c(
 			"</Icon>",
 		"</IconStyle>",
 	"</Style>")
+
 end.kml <- c(
 	"</Document>",
 	"</kml>")
@@ -239,6 +228,7 @@ end.kml <- c(
 		"</Pair>",
 		"</StyleMap>")	
 }
+
 .placemark <- function (x) {
 	c(
 	"<Placemark>",
@@ -265,18 +255,18 @@ end.kml <- c(
 	"</Placemark>")
 }	
 		
-if (max(partitioning(obj)) > 10) {
-	if (max(partitioning(obj)) < 26) {
+if (max(partitioning(x)) > 10) {
+	if (max(partitioning(x)) < 26) {
 		message("numbered styled KML ouput is currently limited to 10 groups",
 			"\nuse alphabet as alternative to numbers")
-		paddle.file <- LETTERS[unique(partitioning(obj))]
-		paddle.identifier <- LETTERS[partitioning(obj)]
+		paddle.file <- LETTERS[unique(partitioning(x))]
+		paddle.identifier <- LETTERS[partitioning(x)]
 		} else {
 			stop("styled KML ouput is currently limited to 26 groups (letter coding)")
 		}
 	} else {	
-		paddle.file <- unique(partitioning(obj))
-		paddle.identifier <- partitioning(obj)
+		paddle.file <- unique(partitioning(x))
+		paddle.identifier <- partitioning(x)
 }
 
 styles.normal <- c(sapply(paddle.file, .style.numbers.normal))
@@ -286,9 +276,12 @@ stylemap <- c(sapply(paddle.file, .stylemap.numbers))
 #	to do! order folders!
 
 points <- data.frame(partitioning = paddle.identifier,
-	coordinates(obj), plot = rownames(obj), stringsAsFactors = FALSE)
+	coordinates(x), plot = rownames(x), stringsAsFactors = FALSE)
 
-points$x <- sprintf("%.10f", points$x)
+#	in case coordinates returns dimnames other than x and y
+names(points)[ 2:3 ] <- c("x", "y")
+
+points$x <- sprintf("%.10f", points$x) # for submeter accuracy
 points$y <- sprintf("%.10f", points$y)
 
 points$website.url <- paste(website.url.path, points$plot, sep = "")
@@ -311,14 +304,26 @@ res <- c(
 	folder,
 	end.kml)
 
-con <- file(file)
+con <- file(filename)
 	writeLines(res, con)
 close(con)
 	
 return(invisible(res))
 }
 
+if (!isGeneric("KML")) {
+	setGeneric("KML",
+		function (x, filename, add.label, thumbnail.url.path, website.url.path, ...)
+			standardGeneric("KML")
+	)
+}
+
 setMethod("KML",
-   signature(obj = "VegsoupPartition"),
+	signature(x = "Vegsoup"),
+	.KMLVegsoup
+)
+
+setMethod("KML",
+   signature(x = "VegsoupPartition"),
 	.KMLVegsoupPartition
 )

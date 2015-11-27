@@ -71,7 +71,7 @@ importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
 						  RasterBrick, RasterStack, RasterStackBrick)
-importMethodsFrom(raster, extract, ncell, extent)
+importMethodsFrom(raster, extract, ncell, extent, KML)
 
 importFrom("multitable", data.list)
 

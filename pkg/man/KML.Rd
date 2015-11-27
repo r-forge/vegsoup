@@ -14,15 +14,15 @@
 }
 
 \usage{
-\S4method{KML}{Vegsoup}(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
-\S4method{KML}{VegsoupPartition}(obj, file, add.label, thumbnail.url.path, website.url.path, ...)
+\S4method{KML}{Vegsoup}(x, filename, add.label, thumbnail.url.path, website.url.path, ...)
+\S4method{KML}{VegsoupPartition}(x, filename, add.label, thumbnail.url.path, website.url.path, ...)
 }
 
 \arguments{
-  \item{ obj }{
+  \item{ x }{
    \code{'Vegsoup'} or \code{'VegsoupPartition'} object.
    }
-  \item{ file }{
+  \item{ filename }{
 	path to a file, can be missing.
   }
   \item{ add.label }{
