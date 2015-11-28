@@ -202,23 +202,21 @@ An object of class \code{\linkS4class{Vegsoup}}.
 }
 
 \examples{
-require(vegsoup)
-
 data(barmstein)
 x <- barmstein
 
 summary(x)
 
 # plot ordinations of simulated data
-data(sim100)
-plotPCO(sim100, thresh = 0.2)
-plot(metaMDS(as.logical(sim100)))
+x <- coenoflex(100, 50)
+plotPCO(x, thresh = 0.2)
+plot(metaMDS(as.logical(x)))
 
-# we can omit 'as-logical'
-plot(decorana(sim100))
+# if we omit 'as-logical' and the default 'as.matrix' applies
+plot(decorana(x))
 
 # promote to ordinal scale
-coverscale(sim100) <- "ordinal"
+coverscale(x) <- "ordinal"
 table(species(sim100)$cov)
 
 # order and coerce to a sparse matrix representation
@@ -228,6 +226,9 @@ as(seriation(barmstein, method = "packed"), "sparseMatrix")
 
 # R-mode analysis using mode argument, one of 'Q' or 'R'
 as(as.logical(barmstein, mode = "R"), "sparseMatrix")
+
+# simulate 10 plots with 50 species
+coenoflex(10, 50)
 }
 
 \keyword{ classes }

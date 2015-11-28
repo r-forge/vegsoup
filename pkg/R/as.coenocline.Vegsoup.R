@@ -6,6 +6,12 @@ as.coenocline.Vegsoup <- function (obj) {
 	#	species
 	X <- obj[]
 	
+	#	ensure percentage bounds
+	if (any(X > 100)) {
+		X <- (X / max(X)) * 100
+	}
+	
+	
 	#	sites
 	if (inherits(attr(obj, "locations"), "matrix")) {
 		Y <- as.data.frame(attr(obj, "locations"))

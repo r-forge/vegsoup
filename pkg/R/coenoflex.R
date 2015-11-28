@@ -9,9 +9,9 @@ coenoflex <- function (n = 30, m = 20, gradients = 2, ...) {
 	# first gradient
 	min1 <- 0
 	max1 <- 1
-	loc1 <- seq(min1, max1, length = N)
+	loc1 <- seq(min1, max1, length = N)[sample(1:N, N)] # shuffle
 	opt1 <- runif(M, min = min1, max = max1)
-	tol1 <- rep(0.025, M)
+	tol1 <- rep(0.25, M)
 	h <- ceiling(rlnorm(M, meanlog = 3)) # mimic percentages
 	h <- ceiling(h / max(h) * 100)
 	par1 <- cbind(opt = opt1, tol = tol1, h = h)
@@ -19,9 +19,9 @@ coenoflex <- function (n = 30, m = 20, gradients = 2, ...) {
 	# second gradient
 	min2 <- 0
 	max2 <- 1
-	loc2 <- seq(min2, max2, length = N)
+	loc2 <- seq(min2, max2, length = N)[sample(1:N, N)]
 	opt2 <- runif(M, min = min2, max = max2)
-	tol2 <- ceiling(runif(M, min = 0.05, max = 0.5))
+	tol2 <- ceiling(runif(M, min = 0.15, max = 0.85))
 	par2 <- cbind(opt = opt2, tol = tol2)
 		
 	if (gradients == 1) {

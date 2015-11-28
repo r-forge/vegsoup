@@ -139,15 +139,15 @@ If \code{polish} is \code{TRUE} the function tries to groom singletons (single m
 require(vegsoup)
 
 # simulate 100 plots and 200 species distributed along a two-dimensional gradient
-data(sim100)
+x <- coenoflex(100, 200)
 
-r <- VegsoupPartition(sim100, k = 2, method = "fanny", memb.exp = 1.5)
+r <- VegsoupPartition(x, k = 2, method = "fanny", memb.exp = 2)
 partitioning(r)
 head(sites(r))
 
 # plot membership values against gradient values
 stars(sites(r)[grep("M", names(r))],
-      locations = sites(r)[, grep("X", names(r))] * 20, len = 1,
+      locations = sites(r)[, grep("gradient", names(r))], len = 0.05,
       draw.segments = TRUE, labels = NULL)
 }
 

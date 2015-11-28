@@ -154,7 +154,7 @@ setReplaceMethod("coverscale",
 	function (x, value) {
 
 		ss <- .identicalCoverscale(coverscale(x), value) # same, same
-		pa <- is.occurence(value)						# presence/absence
+		pa <- is.occurence(value)						 # presence/absence
 		bb <- coverscale(x)@name == "Braun-Blanquet" & value@name == "Braun-Blanquet 2"		
 		oo <- is.ordinal(x) & is.ordinal(value)
 		co <- is.continuous(x) & is.ordinal(value)

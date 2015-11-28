@@ -84,8 +84,8 @@ x <- fidelity(VegsoupPartition(barmstein, k = 2), method = "IndVal")
 
 \dontrun{
 if (require(parallel)) {
-	data(sim100)
-	x <- fidelity(VegsoupPartition(sim100, k = 10), method = "IndVal", fast = TRUE)
+	x <- coenoflex(100, 50)
+	x <- fidelity(VegsoupPartition(x, k = 10), method = "IndVal", fast = TRUE)
 }
 }
 }

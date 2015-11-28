@@ -109,7 +109,40 @@ Pfadenhauer, J., Poschlod, P., and Buchwald, R. (1986). \enc{Überlegungen}{Uebe
 }
 
 \examples{
-sim100
+# show built in coverscales
+Coverscale()
+
+# test properties of coverscale objects
+is.ordinal(Coverscale("ordinal"))
+is.occurence(Coverscale("pa"))
+is.continuous(Coverscale("percentage"))
+
+# create coverscale from scratch
+Coverscale("foo", letters[1:5], 1:5)
+
+# 
+data(barmstein)
+
+x <- barmstein
+# print reports name of coverscale
+x
+coverscale(x)
+
+# test properties of Vegsoup object
+is.ordinal(x)
+is.continuous(x)
+is.occurence(x)
+
+
+# use replace method to tarnsform covervalues
+# lower 9 point to 7 point Braun-Blanquet scale
+x1 <- x2 <- x
+
+coverscale(x1) <- "braun.blanquet2"
+coverscale(x2) <- Coverscale("braun.blanquet2")
+
+identical(coverscale(x1), coverscale(x2))
+
 }
 
 \keyword{ methods }

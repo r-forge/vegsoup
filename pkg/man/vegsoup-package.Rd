@@ -11,7 +11,7 @@
 \description{
 The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In one respect, it acts like a data base system. Vegetation data consists of at least of two related tables -- a species matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). If taxonomic identity, or traits of species is a concern an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects.
 
-The package should be useful in the field of vegetation ecology and phytoosociology in particular.
+The package should be useful in the field of vegetation ecology and classification and phytosociology in particular.
 
 }
 
@@ -19,11 +19,11 @@ The package should be useful in the field of vegetation ecology and phytoosociol
 
 The package implements classes for vegetation data (see \link{Vegsoup-class}) and supports
 \itemize{
-  \item a solid class that is capable to store 
+  \item a solid class that is capable to store all relevant information
   \item species data to be structured in layers/strata
   \item several cover scales and conversions thereof
-  \item taxonomic treatment (species traits.)
-  \item selection of standardizations and dissimilarity
+  \item taxonomic treatment (possibly including species traits)
+  \item selection of standardizations
   \item ad-hoc creation of species and dissimilarity/distance matrices
   \item indexing, extract, replace and sample operations
   \item row and column aggregation
@@ -43,14 +43,17 @@ Type \code{vignette("vegsoup")}
 }
 
 \section{ I. Creating Vegsoup objects }{
-Vegsoup objects can be created, from files, from data base views, from objects, from community simulations or from other classes, with the following functions:
+Vegsoup objects or their foundation classes can be created, from files, from data base views, from objects, from community simulations, or from other classes, with the following functions:
 
  \tabular{ll}{
   \code{\link{Vegsoup}} \tab \cr
+  \code{\link{plainsoup}} \tab \cr  
+  \code{\link{instantsoup}} \tab \cr    
   \code{\link{species}} \tab \cr
   \code{\link{sites}} \tab \cr
   \code{\link{taxonomy}} \tab \cr
   \code{\link{stackSpecies}} \tab \cr
+  \code{\link{stackSites}} \tab \cr
   \code{\link{stackSites}} \tab \cr
  }
 }
@@ -58,9 +61,9 @@ Vegsoup objects can be created, from files, from data base views, from objects, 
 %% 1
 \section{ I. Manipulating of Vegsoup* objects }{
 Nothing here yet.
-%%\tabular{ll}{
-%% \code{\link{}} \tab \cr
-%%}
+\tabular{ll}{
+ \code{\link{bind}} \tab \cr
+}
 }
 
 \section{ I. Set or changing the coverscale of Vegsoup* objects }{

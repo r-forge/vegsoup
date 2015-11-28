@@ -173,17 +173,11 @@ Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Opti
 require(vegsoup)
 
 # a dummy example using simulated data
-data(sim100)
-x <- sim100
+x <- coenoflex(50, 100)
 
 x <- OptimStride(x, k = 10, method = c("ward", "flexible", "pam"))
 
 summary(x)
-
-# use parallel
-\dontrun{
-x <- OptimStride(sim100, k = 10, fast = TRUE)
-}
 
 # get the computed clustering methods
 method(x)
