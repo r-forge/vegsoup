@@ -1,5 +1,7 @@
 #import(coenoflex) is missing from CRAN
 
+import(coenocliner)
+
 #useDynLib(vegsoup) dropped at the moment
 
 
@@ -92,7 +94,7 @@ export(
 	"reshapeSpecies",
 	"SpeciesTaxonomy",
 	"Vegsoup",
-#   "coenoflex",
+       "coenoflex",
 	"instantsoup",
 	"plainsoup",
 	"OptimStride",

@@ -30,12 +30,14 @@ Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
         verbose = FALSE)
 
-coenoflex(numplt = 20, numspc = 10, ...)
+coenoflex(n = 30, m = 20, gradients = 2, ...)
 
 plainsoup(m, coverscale, layer = "0l", verbose = TRUE)
 
 instantsoup(folder, sep = ";", dec = ",", coverscale)
 }
+
+% package coenoflex is not available anymore
 
 \arguments{
   \item{ x }{
@@ -101,9 +103,10 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   \item{ dec }{
     See \code{read.csv}. 
   }
-  \item{ numplt, numspc }{
+  \item{ n, m, gradient }{
     %See \code{\link[coenoflex:coenoflex]{coenoflex}}.
-    See \code{coenoflex}.
+    number of plots (\code{n}) and species (\code{m}) to simulate on
+    \code{gradient} (1 or 2 ).
   }
   \item{ \dots }{
     Additional arguments passed to coenoflex.
@@ -156,11 +159,11 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   The same is true for argument \code{'proj4string'}. The defaults for
   argument \code{'group'} is to create a dummy integer variable of ones.
 
-  Function \code{'coenflex'} (\emph{disfunct}) creates a random community
-  with two gradients with some undocumented default settings.
-  The \code{coenoflex} function in package \pkg{coenoflex} offers a complete
-  interfacea. Currently the package is missing from CRAN!
-  %\code{\link[coenoflex:coenoflex]{coenoflex}}
+  Function \code{coenflex} creates a random community with one or two
+  gradients and specified size (number of species and ploits). The \code{coenocline}
+  function in package \pkg{coenocliner} offers a complete interface. \code{coenocline}
+  objects can be coerced to class \code{Vegsoup} with the \code{as(obj, "Vegsoup")}
+  coerce method.
 }
 
 \note{
