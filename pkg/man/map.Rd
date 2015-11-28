@@ -18,7 +18,6 @@
 }
 
 \usage{
-\S4method{map}{Vegsoup}(x, database, ...)
 \S4method{quicklook}{Vegsoup}(x)
 \S4method{ellipsoidhull}{VegsoupPartition}(x, tol = 0.01, maxit = 5000, ret.wt = FALSE,
   ret.sqdist = FALSE, ret.pr = FALSE)
@@ -26,17 +25,14 @@
 
 \arguments{
   \item{ x }{
-	\code{Vegsoup*} or for ellipsoidhull a \code{'VegsoupPartition'} object.
+    \code{Vegsoup*} or for ellipsoidhull a \code{'VegsoupPartition'} object.
   }
-  \item{ database }{
-	Character string naming a geographical database. See \code{\link[maps:map]{map}}.
-   }
   \item{ \dots }{
-	Arguments passed to \code{\link[maps]{map}} in package \pkg{maps}.
+    Arguments passed to \code{\link[maps]{map}} in package \pkg{maps}.
   }
   \item{ tol, maxit, ret.wt, ret.sqdist, ret.pr }{
-	Arguments to \code{\link[cluster]{ellipsoidhull}} in package
-	\pkg{cluster}.
+    Arguments to \code{\link[cluster]{ellipsoidhull}} in package
+    \pkg{cluster}.
   }
 }
 

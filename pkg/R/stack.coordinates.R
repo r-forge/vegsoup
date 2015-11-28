@@ -1,8 +1,7 @@
 #	read OGR data source
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
-	requireNamespace(rgdal)
-	
-	pt <- ogrInfo(dsn, layer) # rgdal::
+
+	pt <- rgdal::ogrInfo(dsn, layer)
 	withz <- pt$with_z
 	
 	if (missing(schema)) {

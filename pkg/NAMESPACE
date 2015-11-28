@@ -53,7 +53,7 @@ importFrom("optpart", optpart, optsil, optindval, disdiam, tabdev, partana)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected,
 		   capscale, scores, ordiplot, ordiellipse, ordispider,
-		   wisconsin, decorana, wascores)
+		   wisconsin, decorana, wascores, indpower)
 
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
 
