@@ -65,13 +65,13 @@ setMethod("proj4string",
 	
 	#	test success
 	test0 <- !(length(x) == 0 | length(x) == 0) # if variables could not be found 
-	test1 <- !any(is.na(x), is.na(y))		   # returns TRUE if test0 == TRUE
+	test1 <- !any(is.na(x), is.na(y))		    # returns TRUE if test0 == TRUE
 	test2 <- all(is.numeric(x), is.numeric(x))  # we must obtain numbers
 
 	if (test0 & test1 & test2) {
 		r <- cbind(x,y)
 	} else {
-		message("NAs introduced, use random pattern")		
+		# message("NAs introduced, use random pattern")	# paranoid
 		r <- cbind(x = runif(n), y = runif(n))
 	}
 	dimnames(r)[[1]] <- p
@@ -137,7 +137,6 @@ setMethod("coordinates",
 	r <- sp::SpatialPolygonsDataFrame(sp::SpatialPolygons(r), data = d)
 	return(r)
 }
-
 
 
 #setReplaceMethod("proj4string",
