@@ -159,10 +159,6 @@ x$plot <- paste("dn", x$plot, sep = "")
 
 sts <- stackSites(x, verbose = TRUE)
 
-#    installing rgdal on MAC OSX is not straight forward
-\dontrun{
-require(rgdal)
-
 ## create a file of dummy coordiantes in a common format for spatial data
 # some random points
 pts <- data.frame(x = rnorm(20), y = rnorm(20),
@@ -173,6 +169,7 @@ coordinates(pts) <- ~x+y
 proj4string(pts) <- CRS("+init=epsg:4326") # WGS84
 
 # for demonstartion save to ESRI Shapefile
+require(rgdal)
 dsn <- tempfile()
 layer <- "foo"
 writeOGR(pts, dsn, layer, driver = "ESRI Shapefile")
@@ -183,7 +180,6 @@ sts.xy <- stackCoordinates(dsn, layer, schema = "plot")
 # bind with remaining environmental data
 sts <- bind(sts, sts.xy)
 unique(sts$variable)
-}
 }
 
 \seealso{
