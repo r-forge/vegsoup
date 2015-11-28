@@ -11,7 +11,7 @@ Imports: methods, parallel,
 	optpart, labdsv, cluster, vegclust (>= 1.5.1), isopam,
 	multitable, mefa, gclus,
 	Hmisc, pbapply, Matrix, XML, stringr,
-	geonames, googleVis, ggmap, RColorBrewer
+	geonames, googleVis, ggmap, RColorBrewer, coenocliner
 Suggests: rgdal (>= 0.8-11), misc3d, maptools, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.

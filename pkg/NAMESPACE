@@ -1,6 +1,5 @@
 #import(coenoflex) is missing from CRAN
 
-import(coenocliner)
 
 #useDynLib(vegsoup) dropped at the moment
 
@@ -23,6 +22,7 @@ importFrom("graphics", plot, hist)
 importFrom("stringr", str_trim, str_pad)
 
 #	used in a single function/method
+importFrom("coenocliner", "coenocline")
 
 #importFrom("ggmap", revgeocode) # as ggmap::revgeocode
 

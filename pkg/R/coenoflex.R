@@ -34,7 +34,7 @@ coenoflex <- function (n = 30, m = 20, gradients = 2, ...) {
 		locs <- cbind(x = loc1, y = loc2)	
 	} 
 
-	r <- coenocliner::coenocline(locs, responseModel = "gaussian",
+	r <- coenocline(locs, responseModel = "gaussian",
 			params = pars,
 			expectation = FALSE)
 	r <- as(r, "Vegsoup")
