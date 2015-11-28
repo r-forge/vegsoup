@@ -52,11 +52,8 @@ A list with the following components:
 }
 
 \author{
-Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe}
-}
+Adopted by Roland Kaiser for vegsoup from code by \emph{Antti Arppe} for function \code{crosstable.statistics} in package \pkg{polytomous}
 
-\seealso{
-\code{\link[polytomous:model.statistics]{model.statistics}} in package \pkg{polytomous}.
 }
 
 \examples{

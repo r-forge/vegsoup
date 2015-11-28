@@ -1,10 +1,10 @@
 #	package coenoflex is missing from CRAN since Summer 2014
 #	switched to package coenocliner
 
-coenoflex <- function (n = 30, m = 20, gradients = 2, ...) {
+coenoflex <- function (i = 30, j = 20, gradients = 2, ...) {
 	#	taken from coenocliner vignette page 9
-	N <- n # number of plots
-	M <- m # number of species
+	N <- i # number of plots
+	M <- j # number of species
 	
 	# first gradient
 	min1 <- 0

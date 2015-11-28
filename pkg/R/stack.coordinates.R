@@ -2,7 +2,7 @@
 stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, ...) {
 	requireNamespace(rgdal)
 	
-	pt <- rgdal::ogrInfo(dsn, layer)
+	pt <- ogrInfo(dsn, layer) # rgdal::
 	withz <- pt$with_z
 	
 	if (missing(schema)) {

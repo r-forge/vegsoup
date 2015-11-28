@@ -3,9 +3,6 @@
 \name{map}
 \docType{methods}
 
-\alias{map}
-\alias{map,Vegsoup-method}
-
 \alias{quicklook}
 \alias{quicklook,Vegsoup-method}
 
@@ -44,8 +41,6 @@
 }
 
 \details{
-method \code{map} is intended to provide a quick and dirty map background to dispaly plot locations.
-
 \code{ellipsoidhull} is a simple wrapper for function \code{\link{ellipsoidhull}} in package cluster. The main purpose of the function is to visualize partitions on a map.
 
 Function \code{quicklook} opens a browser window and plots pushpins of plot centers on top of \sQuote{Google Maps}. See \code{\link[googleVis]{gvisMap}} in package \pkg{googleVis} for details.

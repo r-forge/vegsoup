@@ -30,7 +30,7 @@ Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
         verbose = FALSE)
 
-coenoflex(n = 30, m = 20, gradients = 2, ...)
+coenoflex(i = 30, j = 20, gradients = 2, ...)
 
 plainsoup(m, coverscale, layer = "0l", verbose = TRUE)
 
@@ -103,7 +103,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   \item{ dec }{
     See \code{read.csv}. 
   }
-  \item{ n, m, gradient }{
+  \item{ i, j, gradients }{
     %See \code{\link[coenoflex:coenoflex]{coenoflex}}.
     number of plots (\code{n}) and species (\code{m}) to simulate on
     \code{gradient} (1 or 2 ).
@@ -217,7 +217,7 @@ plot(decorana(x))
 
 # promote to ordinal scale
 coverscale(x) <- "ordinal"
-table(species(sim100)$cov)
+table(species(coenoflex())$cov)
 
 # order and coerce to a sparse matrix representation
 vegdist(barmstein) <- "bray"

@@ -98,7 +98,6 @@ Collate: AAA.R
 		 Indval.R
 		 elevation.R
 		 KML.R
-		 map.R
 		 QuickMap.R
 		 coldiss.R
 		 reverseGeocode.R
