@@ -16,5 +16,5 @@ library(devtools)
 
 install_github("rforge/vegsoup/pkg")
 
-library(synoptic)
+library(vegsoup)
 ```
