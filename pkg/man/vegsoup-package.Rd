@@ -58,32 +58,43 @@ connections including data base views, (2) from local \R objects, (3) from commu
 simulations, (4) from plain text files (OCR-scans) or (5) from other classes,
 with the following functions:
 
- \tabular{ll}{
-  \code{\link{Vegsoup}} \tab
-    main constructor function demanding full specification \cr
-  \code{\link{plainsoup}} \tab
-    supply just a community matrix and no further data elements \cr
-  \code{\link{instantsoup}} \tab
-    shorthand function when data files conform to some format \cr
-  \code{\link{coenoflex}} \tab
-     random community of specified size \cr
-  \code{\link{species}} \tab
-    constructor function for class \code{"Species"} \cr
-  \code{\link{sites}} \tab
-    constructor function for class \code{"Sites"} \cr
-  \code{\link{taxonomy}} \tab
-    constructor function for class \code{"Taxonomy"} \cr
-  \code{\link{stackSpecies}} \tab
-    reshape a vegetation table from wide to long format \cr
-  \code{\link{stackSites}} \tab
-    as above, but for sites data \cr
-  \code{\link{reshapeSpecies}} \tab
-    conversion function to class \code{"Species"} \cr
-  \code{\link{stackCoordinates}} \tab
-    collects spatial coordinates \cr
-  \code{\link{read.verbatim}} \tab
-    reads data from text arrays (OCR scans) \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{Vegsoup}} }{
+    main constructor function demanding full specification
+  }
+  \item{ \code{\link{plainsoup}} }{
+    supply just a community matrix and no further data elements
+  }
+  \item{ \code{\link{instantsoup}} }{
+    shorthand function when data files conform to some format
+  }
+  \item{ \code{\link{coenoflex}} }{
+     random community of specified size
+  }
+  \item{ \code{\link{species}} }{
+    constructor function for class \code{"Species"}
+  }
+  \item{ \code{\link{sites}} }{
+    constructor function for class \code{"Sites"}
+  }
+  \item{ \code{\link{taxonomy}} }{
+    constructor function for class \code{"Taxonomy"}
+  }
+  \item{ \code{\link{stackSpecies}} }{
+    reshape a vegetation table from wide to long format
+  }
+  \item{ \code{\link{stackSites}} }{
+    as above, but for sites data
+  }
+  \item{ \code{\link{reshapeSpecies}} }{
+    conversion function to class \code{"Species"}
+  }
+  \item{ \code{\link{stackCoordinates}} }{
+    collects spatial coordinates
+  }
+  \item{ \code{\link{read.verbatim}} }{
+    reads data from text arrays (OCR scans)
+  }
  }
 }
 
@@ -92,32 +103,38 @@ The \pkg{vegsoup} package uses S4 classes that relate to each other by direct in
 
 The following functions and method are designed for class \code{"VegsoupPartition"}.
 
- \tabular{ll}{
-  \code{\link{VegsoupPartition}} \tab
-    constructor function \cr
-  \code{\link{stable}} \tab
-    classification stability \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{VegsoupPartition}} }{
+    constructor function
   }
+  \item{ \code{\link{stable}} }{
+    classification stability
+ }
+}
 
 Class \code{"VegsoupOptimstride"} also extends class \code{"Vegsoup"}. Thjis class contains information on how a data set could be partitioned.
 
- \tabular{ll}{
-  \code{\link{OptimStride}} \tab
-    compute a series of clusterings by different methods and quantify their quality \cr
-  \code{\link{stride}} \tab
-    number of faithful species for each partition \cr
-  \code{\link{threshold}} \tab
-    threshold values set for the Fisher test \cr
-  \code{\link{optimclass1},\link{optimclass2}} \tab
-    matrices with the counts of faithful species \cr
-  \code{\link{peaks}\link{which.max}} \tab
-    peaks along the stride and \cr
-  \code{\link{which.max}} \tab
-    number of k that coincides with the highest number of faithful species \cr
-  ________________________ \tab \cr
- }
- 
+ \describe{
+  \item{ \code{\link{OptimStride}} }{
+    compute a series of clusterings by different methods and quantify their quality
+  }
+  \item{ \code{\link{stride}} }{
+    number of faithful species for each partition
+  }
+  \item{ \code{\link{threshold}} }{
+    threshold values set for the Fisher test
+  }
+  \item{ \code{\link{optimclass1},\link{optimclass2}} }{
+    matrices with the counts of faithful species
+  }
+  \item{ \code{\link{peaks}\link{which.max}} }{
+    peaks along the stride and
+  }
+  \item{ \code{\link{which.max}} }{
+    number of k that coincides with the highest number of faithful species
+  }
+}
+
 When indicator species analysis was performed on an object of that class, an object of \code{"VegsoupPartitionFidelity"} obtained, again with it's own unique and additional properties. 
 
 }
