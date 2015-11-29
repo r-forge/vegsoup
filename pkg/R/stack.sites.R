@@ -42,7 +42,7 @@ stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = 
 		colClasses = "character")
 	
 	#	leading zeros!
-	if (zeros) res[, 1] <- as.character(res[,1]) else res[, 1] <- type.convert(res[, 1])
+	if (zeros) res[, 1] <- type.convert(res[, 1]) else res[, 1] <- as.character(res[,1])
 	if (is.factor(res[, 1])) res[, 1] <- as.character(res[, 1])
 		
 	res.stack <- stack(res, stringsAsFactors = FALSE)
