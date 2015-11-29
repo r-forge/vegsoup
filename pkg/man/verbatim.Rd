@@ -253,7 +253,7 @@ file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
                     package = "vegsoup")
 x2 <- castFooter(file, species.first = TRUE, abundance.first = NA,
                  abundance = "+")
-x2$plot <- sprintf("%03d", as.numeric(x2$plot))
+x2$plot <- sprintf("\%03d", as.numeric(x2$plot))
 richness(x2)
 # bind species in table footer with main table
 X <- bind(x1, x2)
@@ -266,7 +266,7 @@ file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
 y2 <- read.delim(file, colClasses = "character")
 head(y2)
 # add leading zeros
-y2$nr <- sprintf("%03d", as.numeric(y2$nr))
+y2$nr <- sprintf("\%03d", as.numeric(y2$nr))
 # promote to class "Sites"
 y2 <- stackSites(y2, schema = "nr")
 y2
