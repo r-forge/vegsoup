@@ -221,6 +221,8 @@ setMethod("species",
 			a <- strsplit(as.character(r$abbr), "@")
 			r$abbr <- sapply(a, "[[", 1)
 			r$layer <- sapply(a, "[[", 2)
+		} else {
+			r$layer <- "0l"
 		}
 		r <- stackSpecies(r)[, 1:4]
 		return(r)
