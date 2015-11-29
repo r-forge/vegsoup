@@ -1,5 +1,5 @@
 #	cast species (and abundances) given in table footers
-castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) {
+castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE, abundance.first = TRUE, abundance = "+", layers) {
 
 	if (missing(file)) {
 		stop("need a file name")
@@ -7,23 +7,14 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 	if (!missing(layers)) {
 		at <- layers[1]
 		layers <- TRUE
-	}
-	else {
+	} else {
 		layers <- FALSE
 	}
-	
-	#	argument to function
-	#	order = c("plot", "species", "abundance")
-	#ORDER <- c("plot", "species", "abundance")
-	#order <- match.arg(order, ORDER, several.ok = TRUE)
-	#if (length(order) != 3) stop("order must be of length 3")
-	
-	#order <- sapply(order, function (x) which(x == ORDER))
 	
 	#	seperate abundance value from species string
 	.seperateFirst <- function (x, y) {
 		m <- regexpr(y, x) # first schema match
-		v <- str_trim(substring(x, 1, m))	# value
+		v <- str_trim(substring(x, 1, m)) # value
 		s <- str_trim(substring(x, m + 1, nchar(x))) # species
 		r <- cbind(v, s)
 		colnames(r) <- NULL
@@ -35,7 +26,7 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 		for (i in seq_along(x)) {
 			p <- max(gregexpr(y, x[i])[[1]]) # position of last schema match
 			v <- str_trim(substring(x[i], p + 1, nchar(x[i]))) # value
-			s <- str_trim(substring(x[i], 1, p))	# species
+			s <- str_trim(substring(x[i], 1, p)) # species
 			r[i, 1] <- v
 			r[i, 2] <- s
 		}
@@ -50,55 +41,58 @@ castFooter <- function (file, schema = c(":", "," , " "), first = TRUE, layers) 
 		x <- x[-test]	
 	}
 	
-	x <- strsplit(x, schema[1], fixed = TRUE)
-	# plot
-	p <- str_trim(sapply(x, "[[", 1))
-	# species
-	x <- str_trim(sapply(x, "[[", 2))
-	x <- strsplit(x, schema[2], fixed = TRUE)
-	x <- sapply(x, function (y) {
-			sapply(y, function (z) {
-				str_trim(z)
-			}, USE.NAMES = FALSE)
-		}, USE.NAMES = FALSE)
-	# expand plot vector
-	if (length(p) == 1)
-		p <- rep(p, times = sum(sapply(x, length)))
-	else
-		p <- rep(p, times = sapply(x, length))
+	# split schema[1]
+	xx <- strsplit(x, schema[1], fixed = TRUE)
 	
-	#	cast string to values and species
-	if (first)
-		x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))
-	else
-		x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
-
-	#	single relevee
-	if (is.list(x))
-		x <- do.call("rbind", x)
-	else
-		x <- t(x)
-
-	r <- cbind(p, x)
-	test <- nchar(r[,2])
-	if (sum(test) != length(test)) {
-		message("at least abundance values are not speperated properly")
+	if (species.first) { # genu spec: 10, 32
+		s <- str_trim(sapply(xx, "[[", 1)) # species
+		pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances)
+		pa <- sapply(strsplit(pa, schema[2], fixed = TRUE), str_trim)
+		s <- rep(s, times = sapply(pa, length))
+		
+		if (is.na(abundance.first)) {
+			p <- unlist(pa)
+			a <- rep(abundance, length(s))
+		} else {
+			stop("not implemented yet")
+		}
+	} else { # 10: genu spec, genu spec
+		# plot
+		p <- str_trim(sapply(xx, "[[", 1))	
+		# species (and abundance)
+		sa <- str_trim(sapply(xx, "[[", 2))
+		sa <- strsplit(sa, schema[2], fixed = TRUE)
+		sa <- sapply(x, function (y) {
+				sapply(y, function (z) {
+					str_trim(z)
+				}, USE.NAMES = FALSE)
+			}, USE.NAMES = FALSE)
+		# expand plot vector
+		if (length(p) == 1)
+			p <- rep(p, times = sum(sapply(x, length)))
+		else
+			p <- rep(p, times = sapply(x, length))
+		
+		#	cast string to values and species
+		if (abundance.first)
+			x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))
+		else
+			x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
 	}
-	colnames(r) <- c("plot", "cov", "taxon")
+	
+	#	single relevee
+	if (is.list(x))	x <- do.call("rbind", x) else x <- t(x)
 
 	if (layers) {
-		x <- strsplit(r[,3], at)
-		x2 <- 
-		x2 <- 
-		r <- cbind(r[, 1:2],
-			taxon = sapply(x, "[", 1),
-			layer = gsub(at, "", paste0(at, sapply(x, "[", 2))))
-		r <- as.data.frame(r)[, c(1,3,4,2)]	# bring into order
+		stop("new implementation")
+		x <- strsplit(s, at)
+		s <- sapply(sapply(x, "[", 1), str_trim)
+		l <- sapply(sapply(x, "[", 2), str_trim)
+	} else {
+		l <- "0l"
 	}
-	else {
-		r <- as.data.frame(r)
-		r$layer = NA
-		r <- as.data.frame(r)[, c(1,3,4,2)]	
-	}
+
+	r <- species(cbind(p, s, l, a))
+
 	return(r)
 }
