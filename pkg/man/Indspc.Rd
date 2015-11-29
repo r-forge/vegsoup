@@ -47,11 +47,11 @@ Interfaced from Roland Kaiser for package vegsoup from function
 }
 
 \examples{
-require(vegsoup)
+require(labdsv)
 
 data(barmstein)
 
-compspec(barmstein)
+vegsoup::compspec(barmstein)
 }
 \keyword{ methods }
 

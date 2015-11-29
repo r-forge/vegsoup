@@ -8,7 +8,7 @@
 
 \description{
   The base S3 function \code{read.XML(file)} reads data from XML files exported
-  from the turboveg data base (Hennekens \& Joop 2009).
+  from the turboveg data base (Hennekens & Joop 2009).
 }
 
 \usage{
@@ -17,13 +17,14 @@ read.XML(file)
 
 \arguments{
   \item{ file }{
-	character. Path to a plain text file (text array).
+    character. Path to a plain text file (text array).
   }
 }
 
 \details{
-The way \emph{turboveg} exports to XML is very similar to the data model of a Vegsoup object.
-The function tries to format the date field that is in the \emph{standard_record} tag.
+  The way \emph{turboveg} exports to XML is very similar to the data model of a
+  Vegsoup object. The function tries to format the date field that is in the
+  \emph{standard_record} tag to POSIX standard.
 }
 
 \value{

@@ -9,7 +9,7 @@
 
 \title{ Typesetting Tables in LaTeX }
 \description{
-  Creates meaningful table structres to be compiled by \acronym{LaTeX}.
+  Creates meaningful table structures to be compiled by \acronym{LaTeX}.
 }
 \usage{
 \S4method{Latex}{VegsoupPartitionFidelity}(obj, choice = "species", recursive = FALSE, file,

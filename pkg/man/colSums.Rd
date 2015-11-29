@@ -21,7 +21,7 @@
 \title{ Row and Column Sums for Objects of Class VegsoupData* }
 
 \description{
-Form row and column sums for the the species matrix based on presence/absence and numeric matrices.
+Form row and column sums or means for the the species matrix based on presence/absence and numeric matrices.
 }
 
 \usage{

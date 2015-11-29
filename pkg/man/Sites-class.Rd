@@ -91,7 +91,7 @@
       Sites class has also a sites method.
 
       \code{signature(obj = "Sites")}:
-        accessor function for \emph{slot data}.
+        accessor function for \emph{slot 'data'}.
     }
 
     \item{ $ }{
@@ -157,7 +157,7 @@ showClass("Sites")
 data(barmstein)
 
 # extract from Vegsoup object for demonstration
-# get slot sites, a 'data.frame' in wide format
+# get slot 'sites', a 'data.frame' in wide format
 s <- sites(barmstein)
 
 # add column plot to match default schema of stackSites

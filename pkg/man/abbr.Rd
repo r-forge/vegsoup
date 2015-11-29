@@ -44,7 +44,7 @@
 }
 \details{
   For \code{'vegsoup'} objects \code{abbr} returns \code{sort(unique(species(obj)$abbr))} and
-  for \code{Species} or \code{Taxonomy} objects the method returns column abbr from \emph{slot data}.
+  for \code{Species} or \code{Taxonomy} objects the method returns column abbr from \emph{slot 'data'}.
 }
 \value{
 \code{character}.

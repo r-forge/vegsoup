@@ -35,7 +35,7 @@ Get the number of rows, columns, or cells of the species matrix contained in a V
 
 \S4method{nrow}{Vegsoup}(x)
 
-## not yet implemented, subsample to disred dimension
+## not yet implemented, subsample to discard dimension
 ## ncol(x) <- value
 ## nrow(x) <- value
 ## ncell(x) <- value

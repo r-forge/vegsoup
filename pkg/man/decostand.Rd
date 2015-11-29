@@ -40,7 +40,7 @@ Only the species matrix will be affected by standardization.
 
 \details{
   Standardization is often necessary before the species matrix is subject to analysis by a multivariate
-  method. This can easily be achieved by setting \emph{slot decostand} using the method of the same name.
+  method. This can easily be achieved by setting \emph{slot 'decostand'} using the method of the same name.
   The standardization method will be applied when any method for that object requests a species matrix
   (see \code{\link{as.matrix}}). It is possible to supply more than one method and these are applied
   sequentially to the data (order matters). In fact, method \code{wisconsion} invokes a double standardization
@@ -68,8 +68,9 @@ De \enc{Cáceres}{Caceres}, M., Legendre, P., He, F. 2013 Dissimilarity measurem
 \author{ Roland Kaiser }
 
 \note{
-  Manipulation of the sites data has to be performed by modifying elements of \emph{slot sites}, which is
-  represented as \code{data.frame}. Use the extract and replace operators \code{\link[=Extract]{"$"}} and
+  Manipulation of the sites data has to be performed by modifying elements of
+  \emph{slot 'sites'}, which is represented as \code{data.frame}. Use the extract and replace
+  operators \code{\link[=Extract]{"$"}} and
   \code{\link{names<-}} method to modify columns of the sites data. See \code{\link[vegsoup]{Extract}}
   for details.
 }

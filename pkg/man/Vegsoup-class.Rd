@@ -43,7 +43,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	  \code{character}, % 
 	  the method for \code{\link[vegsoup]{decostand}} in \pkg{vegan}. 
 	  Takes effect if \code{\link{as.matrix}} or \code{\link{as.dist}}
-	  is called. The \emph{slot decostand} is in fact of class
+	  is called. The \emph{slot 'decostand'} is in fact of class
 	  \code{decostand}, this class is not exposed to the user
 	  and hence not documented.
 	}
@@ -149,7 +149,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	\item{decostand<-}{
 	  \code{signature(obj = "Vegsoup", value = "character")}:
 	   sets the standardization method active for an object. Note,
-	   values of slot \code{decostand} have effect in \code{as.matrix} and
+	   values of \emph{slot 'decostand'} have effect in \code{as.matrix} and
 	   similar matrix methods.
 	  \code{signature(obj = "Vegsoup", value = "NULL")}:
 	   reset/remove the standardization for an object by setting the value to
@@ -331,7 +331,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	}
 	\item{[<-}{
 	  \code{signature(x = "Vegsoup", i = "ANY", j = "missing")}:
-	  allows assignments to the \code{'sites'} slot. Note, this does not
+	  allows assignments to \emph{slot 'sites'} . Note, this does not
 	  affect the species matrix.
 	}
 	\item{$}{

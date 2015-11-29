@@ -37,7 +37,7 @@
 
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("Species", ...)},
-  where \code{...} expands to slot \code{'data'}. Using the \code{species}
+  where \code{...} expands to \emph{slot 'data'}. Using the \code{species}
   method with appropriate objects is also convenient (see \sQuote{Methods}).
   The \code{\link{stackSpecies}} function is useful when the data is in \emph{wide}
   format (plot by species matrix).
@@ -80,7 +80,7 @@
 \section{Methods}{
   \describe{
 	\item{ species }{
-	  There exists \code{species} methods for a number of R base classes:
+	  There exists \code{species} methods for a number of \R base classes:
 
 	  \code{signature(obj = "data.frame")}:
 		promote \code{data.frame} to object of class \code{"Species"}.
@@ -97,17 +97,17 @@
 	  The following classes defined in the vegsoup package have a \code{species} method:
 
 	  \code{signature(obj = "Species")}:
-		accessor function (\emph{slot "data"}).
+		accessor function (\emph{slot 'data'}).
 		Returns class \code{data.frame}.
 
 	  \code{signature(obj = "SpeciesTaxonomy")}:
-		accessor function (\emph{slot "taxonomy"}).
+		accessor function (\emph{slot 'taxonomy'}).
 		Returns class \code{Species}.
 		
 	  \code{signature(obj = "Vegsoup")}:
-		accessor method for \emph{slot "Species"}, equals \code{species(obj)} and returns
+		accessor method for \emph{slot 'Species'}, equals \code{species(obj)} and returns
 		an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
-		\emph{slot data}. \code{species(obj)@data} should be avoided.
+		\emph{slot 'data'}. \code{species(obj)@data} should be avoided.
 
 	  \code{signature(obj = "VergsoupVerbatim")}:
 		promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
@@ -193,11 +193,11 @@ showClass("Species")
 
 data(barmstein)
 
-# for demonstration we first retrieve the slot "Species" of an existing Vegsoup object
+# for demonstration we first retrieve the slot 'Species' of an existing Vegsoup object
 spc <- species(barmstein)
 class(spc)
 
-# the data slot of a Species object can be accessed by
+# the slot 'data' of a Species object can be accessed by
 spc <- species(spc)
 class(spc)
 

@@ -42,7 +42,7 @@ A \code{data.frame} as above.
 }
 
 \author{
-  A wrapper for function \code{typal} by David W. Roberts in \pkg{optpart}.
+  A wrapper for function \code{typal} by David W. Roberts in package \pkg{optpart}.
 }
 
 \seealso{

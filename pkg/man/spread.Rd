@@ -25,7 +25,7 @@
 }
 \author{ Roland Kaiser }
 \seealso{
-\code{\linkS4class{VegsoupPartition}}, ~~~
+\code{\linkS4class{VegsoupPartition}}
 }
 \examples{
 require(vegsoup)

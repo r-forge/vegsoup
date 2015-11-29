@@ -14,7 +14,7 @@
 
 \description{
   The provided creator functions build the basic data structures of
-  \emph{Vegsoup*} objects from local R objects. Shorthand functions
+  \emph{Vegsoup*} objects from local \R objects. Shorthand functions
   are provided to collect data files from a folder or build an object
   from a simple community matrix only, with dummy variables created
   for missing data structures (taxonomic reference list, sites data and/or
@@ -78,7 +78,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     A-priori grouping, if any and can be missing.
   }
   \item{ proj4string }{
-    Projection attributes for slots \code{sp.points} and \code{sp.polygons}.
+    Projection attributes for slots \emph{'sp.points'} and \emph{'sp.polygons'}.
     If missing set to \code{CRS("+init=epsg4326")}
     (see \code{\link{proj4string}} for details).
   }

@@ -19,6 +19,7 @@
 
 \usage{
   reshapeSpecies(x, file, schema, sep = ";", dec = ",", verbose = FALSE)
+
   shapeSpecies(obj)
 }
 

@@ -34,7 +34,7 @@
 \section{Objects from the Class}{
   Objects can be created by calls of the form
   \code{new("SpeciesTaxonomy", ...)}, where \code{...} expands to slots
-  \code{'species'} and \code{'taxonomy'}, each of which is a class as
+  \emph{'species'} and \emph{'taxonomy'}, each of which is a class as
   indicated by the slot name. Note, class names in package \pkg{vegsoup}
   always start with an uppercase letter. When using the \code{new()} method
   to initialize an object of class \code{"SpeciesTaxonomy"} the corresponding
@@ -70,13 +70,13 @@
  
 	\item{ species }{
 	  \code{ signature(obj = "SpeciesTaxonomy") }:
-		Accessor method for slot \code{species}
+		Accessor method for \emph{slot 'species'}
 		returning a \code{data.frame}
 	}
 
 	\item{ taxonomy }{
 	  \code{ signature(obj = "SpeciesTaxonomy") }:
-		Accessor method for slot \code{taxonomy}
+		Accessor method for \emph{slot 'taxonomy'}
 		returning a \code{data.frame}.
 	}
 
@@ -87,7 +87,7 @@
 
 	\item{ $ }{
 	  \code{signature(x = "SpeciesTaxonomy")}:
-		retrieve column name of slot species (see \code{\linkS4class{Species}}).
+		retrieve column name of \emph{slot 'species'} (see \code{\linkS4class{Species}}).
 	}	
 
 	\item{ [ }{
@@ -96,20 +96,20 @@
 	}
 	
 	\item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
-	  subset slot \code{species} as to contain only the taxa given by an
+	  subset \emph{slot 'species'} as to contain only the taxa given by an
 	  object of class \code{"Taxonomy"}, which by itself will replace
-	  slot \code{taxonomy}.
+	  \emph{slot 'taxonomy'}.
 	}
 
 	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
-	  subset slot \code{species} as above, but by an object of class
+	  subset \emph{slot 'species'} as above, but by an object of class
 	  \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
 	}
  
 	\item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
-	  subset slot \code{taxonomy} as to contain only the taxa given by an
+	  subset \emph{slot 'taxonomy'} as to contain only the taxa given by an
 	  object of class \code{"Species"}, which by itself will replace
-	  slot \code{species}.
+	  \emph{slot 'species'}.
 	}
  
 	\item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
@@ -117,7 +117,7 @@
 	}
 
 	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
-	  subset slot \code{taxonomy} as above, but by an object of class
+	  subset \emph{slot 'taxonomy'} as above, but by an object of class
 	  \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
 	}
   }
@@ -145,7 +145,7 @@ t <- taxonomy(taxonomy(x))  # returns a data.frame
 
 # using the new() inititialization method
 st0 <- new("SpeciesTaxonomy")
-slotNames(st0)			  # see slots names
+slotNames(st0)              # see slots names
 st0@species <- species(s)   # species method for class data.frame, returns a 'Species' object
 st0@taxonomy <- taxonomy(t) # taxonomy method for class data.frame, returns a 'Taxonomy' object
 st0

@@ -31,7 +31,7 @@ Data representation of taxonomic reference list.
 }
 \section{Objects from the Class}{
   Objects can be created by calls of the form \code{new("Taxonomy", ...)},
-  where \code{...} expands to slot \code{'data'}. Using the \code{taxonomy}
+  where \code{...} expands to \emph{slot 'data'}. Using the \code{taxonomy}
   method with appropriate objects is also fast and convenient
   (see \sQuote{Methods}).
 
@@ -114,7 +114,7 @@ t <- new("Taxonomy", data = x)
 ( t <- taxonomy(as.matrix(x)) )
 
 #	get slot data from object
-taxonomy(t)			   # returns object of class 'data.frame'
+taxonomy(t)                # returns object of class 'data.frame'
 
 # combine objects
 data(windsfeld)

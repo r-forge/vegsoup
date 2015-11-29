@@ -13,7 +13,7 @@
 \title{ Methods for the Sites Slot of \code{Vegsoup*} Objects }
 
 \description{
-Accessor and replacement methods acting on the \code{'sites'} slot.
+Accessor and replacement methods acting on \emph{slot 'sites'}.
 }
 \usage{
 \S4method{sites}{Vegsoup}(obj)

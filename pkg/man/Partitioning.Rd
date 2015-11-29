@@ -25,8 +25,11 @@
 
 \usage{
 \S4method{getK}{VegsoupPartition}(x)
+
 \S4method{partitioning}{VegsoupPartition}(x)
+
 \S4method{partitioningMatrix}{VegsoupPartition}(x)
+
 \S4method{partitioningCombinations}{VegsoupPartition}(x, collapse)
 }
 

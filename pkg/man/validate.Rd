@@ -101,13 +101,12 @@ require(vegsoup)
 data(barmstein)
 x <- VegsoupPartition(barmstein, k = 2)
 
-\dontrun{
-## wait until optpart registers S3methods
-silhouette(x)
-disdiam(x)
-tabdev(x)
-partana(x)
-}
+## we need to use :: because optpart does not properly register S3methods
+require(optpart)
+vegsoup::silhouette(x)
+vegsoup::disdiam(x)
+vegsoup::tabdev(x)
+vegsoup::partana(x)
 }
 \keyword{ methods }
 

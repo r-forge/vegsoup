@@ -58,7 +58,7 @@ Class \code{"\linkS4class{Vegsoup}"}, by class "VegsoupPartition", distance 2.
   See \sQuote{Extends}.
   \describe{
 	\item{ getStat }{
-	  Method to return \code{slot(obj, "stat")}
+	  Method to return \emph{slot(obj, 'stat')}
 	}
 	\item{ summary }{
 	  Summary method.

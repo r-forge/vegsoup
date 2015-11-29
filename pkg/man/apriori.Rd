@@ -8,7 +8,7 @@
 
 \title{ Grouping Variable of \code{Vegsoup*} Objects }
 \description{
-Returns the grouping variable. Equivalent to \emph{slot group)}.
+Returns the grouping variable. Equivalent to \emph{slot 'group'}.
 }
 
 \usage{
@@ -17,7 +17,7 @@ Returns the grouping variable. Equivalent to \emph{slot group)}.
 
 \arguments{
   \item{ obj }{
-	A \code{Vegsoup*} object.
+    A \code{Vegsoup*} object.
   }
 }
 

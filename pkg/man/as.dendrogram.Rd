@@ -79,7 +79,7 @@ plot(as.hclust(x, "average"))
 plot(as.hclust(x, "contingency"))
 
 # resetting invokes recalculation of the partitioning vector!
-# we will regenreate it afterwards
+# we will regenerate it afterwards
 p <- partitioning(x)
 vegdist(x) <- "bray"
 x <- VegsoupPartition(x, method = "external", clustering = p)
@@ -101,8 +101,8 @@ plot(as.dendrogram(x))
 x$label <- LETTERS[partitioning(x)]
 plot(as.dendrogram(x, labels = "label"))
 
-# reorder partition slot with a dendrogram
-# see the differnce using a constancy table.
+# reorder slot 'partition' with a dendrogram
+# see the differnce using a constancy table
 head(constancy(x))
 
 xx <- reorder(x, as.dendrogram(x))

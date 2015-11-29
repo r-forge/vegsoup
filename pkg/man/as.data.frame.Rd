@@ -12,7 +12,7 @@
 \description{
   Besides the \code{as.matrix} and alike methods that return just the
   species matrix of \code{Vegsoup*} objects, an essential requirement is the
-  coercion to class \code{"data.frame"} for which the plethora of R functions for
+  coercion to class \code{"data.frame"} for which the plethora of \R functions for
   single-table data becomes available to \code{Vegsoup*} objects. Because this
   coercion is fundamental, the syntax to execute is as simple as possible.
   

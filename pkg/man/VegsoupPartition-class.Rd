@@ -16,7 +16,7 @@
 
 \section{ Objects from the Class }{
   Objects can be created by calls of the form \code{new("VegsoupPartition",
-  ...)} where \dots expand to slots \code{'part'}, \code{'method'} and
+  ...)} where \dots expand to slots \emph{'part'}, \emph{'method'} and
   \code{'k'}. It is strongly advisable to use the class creator function
   \code{\link{VegsoupPartition}}.
 }
@@ -61,8 +61,8 @@
 	\item{[}{
 	  \code{signature(x = "VegsoupPartition", i = "ANY", j = "ANY")}:
 	  Traditional row and column indexing. Note, that subsetting may also
-	  affect class slots \code{'part'}, \code{'method'} and
-	  \code{'k'} if necessary.
+	  affect slots \emph{'part'}, \emph{'method'}, and
+	  \emph{'k'} if necessary.
 	}
 	\item{partition}{
 	  \code{signature(obj = "VegsoupPartition")}:

@@ -61,7 +61,7 @@ Modify an object's layer structure by suppling a layer combination vector as a c
   For practical issues, the vegsoup package collapses the species and layer dimension into a single
   dimension by using the special mark-up character \code{'@'}. This concatenation takes place if a
   species matrix is requested from the object, column names a built ad-hoc based on the \code{"Species"}
-  object stored in \emph{slot species}. The order in which the collapsed dimension (layer replicates)
+  object stored in \emph{slot 'species'}. The order in which the collapsed dimension (layer replicates)
   appears in the column names of the resulting matrix is controlled by the order of \code{layers(obj)}.
   Permuting this reorder also orders the blocks of layers.
  

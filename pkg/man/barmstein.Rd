@@ -3,10 +3,6 @@
 \name{barmstein}
 
 \alias{barmstein}
-\alias{spc}
-\alias{sts}
-\alias{txn}
-
 
 \docType{data}
 

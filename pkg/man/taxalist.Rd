@@ -11,10 +11,12 @@
 \alias{relevee-methods}
 \alias{relevee,Vegsoup-method}
 
-\title{ Return Species List for an \code{Vegsoup*} object }
+\title{ Species and Relevee Listings }
 
 \description{
-Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"} or a listing for a particular plot. 
+  Function \code{taxalist} simply returns a list of taxon names and a corresponding
+  unique key \code{"abbr"}. A listing for a particular plot (s single releveé) can be
+  obtained with function \code{relevee}.
 }
 
 \usage{
@@ -25,18 +27,18 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 
 \arguments{
   \item{ obj }{
-	A \code{Vegsoup*} object.
+    A \code{Vegsoup*} object.
   }
   \item{ layered }{
-	Return species list with layers, defaults to \code{FALSE}. See
-	\sQuote{Details}.
+    Return species list with layers, defaults to \code{FALSE}. See
+    \sQuote{Details}.
   }  
   \item{ format }{
-	logical. Format output.
+    logical. Format output.
   }
   \item{ plot }{
-	Index or character giving a rowname (\code{rownames(obj)}), defaults to \code{1}, the first plot
-	in the data set.
+    Index or character giving a rowname (\code{rownames(obj)}), defaults to \code{1}, the first plot
+    in the data set.
   }
 }
 
@@ -58,8 +60,6 @@ Simpliy return a list of taxon names and a corresponding unique key \code{"abbr"
 \author{ Roland Kaiser }
 
 \examples{
-require(vegsoup)
-
 data(barmstein)
 x <- barmstein
 
@@ -81,4 +81,3 @@ relevee(x, "bs01") # equal to the above
 relevee(x, 1, format = TRUE)
 }
 \keyword{methods}
-

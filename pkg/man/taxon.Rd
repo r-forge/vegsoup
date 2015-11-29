@@ -12,30 +12,34 @@
 \title{ Get or Subset Object by Scientific Taxon Name }
 
 \description{
-  Print or retrieve a \code{character} vector of full scientific latin names of taxa
-  as defined by \code{taxonomy(x)}. Alternatively, subset an object based on taxon names,
-  such that only selected species remain in the object.
+  Print or retrieve a character vector of full scientific latin names of taxa
+  as defined by \code{taxonomy(x)}. Alternatively, subset an object based on
+  taxon names, such that only the selected species, or only those plots where
+  selected species occurs in, remain in the object.
 }
 
 \usage{
 \S4method{taxon}{Vegsoup}(x, taxon = NULL)
 
-\S4method{subset}{Vegsoup}(x, subset, ...)
+\S4method{subset}{Vegsoup}(x, subset, drop = TRUE, ...)
 }
 
 \arguments{
   \item{ x }{
-	\code{Vegsoup*} object.
+    \code{Vegsoup*} object.
   }
   \item{ taxon }{
-	\code{character} string of a full scientific latin name (see \code{\link{taxonomy}}).
+    \code{character} string of a full scientific latin name (see \code{\link{taxonomy}}).
   }
   \item{ subset }{
-	\code{numeric} index to \code{taxonomy(x)}, vector of mode \code{character}, or a logical
-	expression.
+    \code{numeric} index to \code{taxonomy(x)}, vector of mode
+    \code{character}, or a logical expression.
+  }
+  \item{ drop }{
+    \code{logical}, if \code{TRUE} only the selected species remain.
   }
   \item{ \dots }{
-	Arguments passed to \code{\link{grep}}.
+    Arguments passed to \code{\link{grep}}.
   }
 }
 
@@ -68,8 +72,6 @@ A \code{Vegsoup*} object.
 \code{\link[vegsoup]{Extract}}
 }
 \examples{
-require(vegsoup)
-
 data(barmstein)
 x <- barmstein
 
@@ -77,7 +79,8 @@ head(taxon(x)) # short-hand for head(taxonomy(x)$taxon)
 
 # subset object using a species scientific name
 # and use function taxon() for display
-taxon(subset(x, "Carex"))
+taxon(subset(x, "Carex")) # drop = TRUE is the default
+taxon(subset(x, "Carex", drop = FALSE))
 
 # pass argument to grep()
 # note, if invert = TRUE the selected subset is inverted
@@ -85,19 +88,20 @@ taxon(subset(x, "Carex"))
 taxon(subset(x, "carex", invert = TRUE, ignore.case = TRUE))
 
 # alternative if taxonomy(x)$abbr has meaningful abbreviations
-taxon(x[, grep("care" , colnames(x))])
+taxon(x[ , grep("care", colnames(x)) ])
 
 # numeric index to define subset
 i <- sample(1:length(taxon(x)), 10)
 colnames(subset(x, i)) # colnames() displays column names of as.matrix(x)
 
 # some more usage examples
-# subset object such that only the set of species of the most species rich sample remain
-res <- subset(x, taxon(x[which.max(richness(x, "sample")), ]))
+# subset object such that only the set of species of the most species rich
+# sample remain
+res <- subset(x, taxon(x[ which.max(richness(x, "sample")), ]))
 dim(res)
 
 # set of species that occur in all relevees (plots)
-res <- subset(x, taxon(x[, colSums(x) == nrow(x)]))
+res <- subset(x, taxon(x[, colSums(x) == nrow(x) ]))
 dim(res)
 
 # logical index to define subset
@@ -105,7 +109,8 @@ dim(res)
 \dontrun{
 library(Taxonstand)
 tmp <- TPL(taxon(x))
-# Carex is a genus of Cyperaceae, let's see if there are more members of this family
+# Carex is a genus of Cyperaceae, let's see if there are more members of
+# this family
 taxon(subset(x, tmp$Family == "Cyperaceae")) # no, there are not
 }
 }

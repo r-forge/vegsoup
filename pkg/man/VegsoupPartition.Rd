@@ -114,7 +114,7 @@ If \code{polish} is \code{TRUE} the function tries to groom singletons (single m
 
 \section{Warning}{
   Method \code{"fanny"} and \code{fast = TRUE} may hang due to warnings
-  issued by fanny and may freeze your R session. Setting \code{memb.exp = 1.1} will in most cases
+  issued by fanny and may freeze your \R session. Setting \code{memb.exp = 1.1} will in most cases
   avoid any warnings of fanny.
 }
 

@@ -66,7 +66,7 @@ Retrieve the row or column names of the species matrix (see \code{\link[vegsoup]
 
 \S4method{$}{Vegsoup}(x, name)
 
-## slot 'species'
+## slot 'sites'
 \S4method{row.names}{Vegsoup}(x) <- value
 
 \S4method{names}{Vegsoup}(x) <- value
@@ -78,24 +78,24 @@ Retrieve the row or column names of the species matrix (see \code{\link[vegsoup]
 
 \arguments{
   \item{ x }{
-	\code{Vegsoup*} object. 
+    \code{Vegsoup*} object. 
   }
   \item{ name }{
-	character. Literal character string or a \link[base]{name}.
+    character. Literal character string or a \link[base]{name}.
   }
   \item{ do.NULL }{
-	not used.
+    not used.
   }
   \item{ prefix }{
-	not used.
+    not used.
   }
   \item{ value }{
-	character or integer vector of the same length as \code{rownames(x)}, or \code{NULL}.
+    character or integer vector of the same length as \code{rownames(x)}, or \code{NULL}.
   }
 }
 
 \details{
-Function \code{dimnames} returns \code{dimnames(as.matrix(x))}. Correspondingly, \code{colnames} equals \code{dimnames(as.matrix(x))[[2]]}. This applies only to the species matrix which is of class \code{matrix}. Note, function \code{names} if called on an object of class \code{matrix} will return \code{NULL} in base R. Therefore the \code{names} method is only defined for the sites slot and equals \code{names(sites(x))}. As both, the species matrix and the sites data frame, have the same number of rows (plots) in exactly the same order, the \code{\link[base]{rownames}} and \code{\link[base]{row.names}} methods  return identical values for both data partitions (matrices and data.frames respectively).
+Function \code{dimnames} returns \code{dimnames(as.matrix(x))}. Correspondingly, \code{colnames} equals \code{dimnames(as.matrix(x))[ [2] ]}. This applies only to the species matrix which is of class \code{matrix}. Note, function \code{names} if called on an object of class \code{matrix} will return \code{NULL} in base \R. Therefore the \code{names} method is only defined for the sites slot and equals \code{names(sites(x))}. As both, the species matrix and the sites data frame, have the same number of rows (plots) in exactly the same order, the \code{\link[base]{rownames}} and \code{\link[base]{row.names}} methods  return identical values for both data partitions (matrices and data.frames respectively).
 
 The \code{"$"} operator can be used to access columns of the sites slot which is of class \code{data.frame} by name and has also functions to get or set the names of the object. Indexing of the species matrix can be done using indices specifying elements to extract. See \sQuote{Examples}.
 

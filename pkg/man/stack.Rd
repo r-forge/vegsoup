@@ -19,23 +19,28 @@
   (i.e., the addition of columns). In contrast, it is common in community
   ecology to store abundance data as spreadsheets with sites as
   rows and species as columns. Such a data storage format is often called
-  \emph{wide format}, because more sampling may result additionally in a widening of the
-  data (e.g., more columns are required as further sampling reveals an increasing
-  number of species).
+  \emph{wide format}, because more sampling may result additionally in a
+  widening of the data (e.g., more columns are required as further sampling
+  reveals an increasing number of species).
 
   Function \code{stackSpecies} converts a matrix like input object, or file,
-  into a representation in \emph{long format}, where each observation on a species
-  consists of one row in a resulting data frame that has as many rows as there
-  are single species occurrences in the data set, including layer replicates (see
-  \code{\linkS4class{Species}}). In a similar fashion, function
-  \code{stackSites} can be used to derive the \emph{long format} from a plot by variable
-  matrix (see \code{\linkS4class{Sites}}). Function \code{stackCoordinates}
-  collects spatial coordinates from spatial data stored on disk by calls to
-  \code{\link[rgdal]{readOGR}}. It then reshapes two or three columns (in case of 3D features)
-  of spatial coordinates along with a plot identifier to the format defined
-  by class \code{"Sites"}. Results of \code{stackSites} and
-  \code{stackCoordinates} can be combined using \code{bind} to associate the sites with
-  spatial information as intended for \code{Vegsoup} objects (see \sQuote{Examples}).
+  into a representation in \emph{long format}, where each observation on a
+  species consists of one row in a resulting data frame that has as many rows as
+  there are single species occurrences in the data set, including layer
+  replicates (see \code{\linkS4class{Species}}).
+  
+  In a similar fashion, function \code{stackSites} can be used to derive the
+  \emph{long format} from a plot by variable matrix
+  (see \code{\linkS4class{Sites}}).
+  
+  Function \code{stackCoordinates} collects spatial coordinates from spatial
+  data stored on disk by calls to \code{\link[rgdal]{readOGR}}. It then reshapes
+  two or three columns (in case of 3D features) of spatial coordinates along
+  with a plot identifier to the format defined by class \code{"Sites"}.
+  
+  Results of \code{stackSites} and \code{stackCoordinates} can be combined using
+  \code{bind} to associate the sites with spatial information as intended for
+  \code{Vegsoup} objects (see \sQuote{Examples}).
 }
 
 \usage{
@@ -91,35 +96,56 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 }
 
 \details{
-For \code{stackSpecies} the supported data frame, either read from file, or passed as \code{R} object must hold columns corresponding to argument schema.  
-The default schema is 'abbr', 'layer' (cf. class \code{\linkS4class{Species}}).  
-The first element of schema has to name a column holding valid strings for 'abbr'.  
-The second element defines the column that has layer memberships.  
-Any further elements (e.g 'taxon') are only mandatory if \code{x} has additional columns except schema and the taxa block (the plain matrix of only species cover values, see below).  
-These columns may also be covered by argument \code{discard} (possibly by its defaults).  
-Any further fields can be used to store taxonomic or other relevant information (accuracy of determination) on a particular observation, again, this is not mandatory.  
-The species matrix is assumed to have species in rows and plots in columns. Plot names are derived form \code{names(x)}.  
-If argument file is supplied, data is imported using \code{read.csv(..., colClasses = "character")}.  
-This matters if species abundances were recorded on a non-ordinal scale (e.g. integers) and shall later be treated as continuos. The \code{\linkS4class{Coverscale}}) class controls these conversions.
+  For \code{stackSpecies} the supported data frame, either read from file, or
+  passed as \code{R} object must hold columns corresponding to argument schema.
+  The default schema is 'abbr', 'layer' (cf. class
+  \code{\linkS4class{Species}}). The first element of schema has to name a
+  column holding valid strings for 'abbr'. The second element defines the column
+  that has layer memberships. Any further elements (e.g 'taxon') are only
+  mandatory if \code{x} has additional columns except schema and the taxa block
+  (the plain matrix of only species cover values, see below). These columns may
+  also be covered by argument \code{discard} (possibly by its defaults).
+  Any further fields can be used to store taxonomic or other relevant
+  information (accuracy of determination) on a particular observation, again,
+  this is not mandatory. The species matrix is assumed to have species in rows
+  and plots in columns. Plot names are derived form \code{names(x)}. If argument
+  file is supplied, data is imported using
+  \code{read.csv(..., colClasses = "character")}. This matters if species
+  abundances were recorded on a non-ordinal scale (e.g. integers) and shall
+  later be treated as continuos. The \code{\linkS4class{Coverscale}}) class
+  controls these conversions.
 
-Internal checking of type conversion is performed using \code{\link{type.convert}} to test for appropriate mode of the species abundances vector; setting \code{verbose = TRUE} will report results of this test.  
-If argument \code{absences} is missing an almost save guess is obtained from the data and derived as the most frequent value in the species data matrix, these are usually species absences.
+  Internal checking of type conversion is performed using
+  \code{\link{type.convert}} to test for appropriate mode of the species
+  abundances vector; setting \code{verbose = TRUE} will report results of this
+  test. If argument \code{absences} is missing an almost save guess is obtained
+  from the data and derived as the most frequent value in the species data
+  matrix, these are usually species absences.
 
-For \code{stackSites} there are no specific requirements about the form of the object, except that one column must be specified which will then be used as the plot identifier.  
-The default is to search for a column named \code{'plot'}, but an other column name can be specified by argument \code{schema}. 
+  For \code{stackSites} there are no specific requirements about the form of the
+  object, except that one column must be specified which will then be used as
+  the plot identifier. The default is to search for a column named
+  \code{'plot'}, but an other column name can be specified by argument
+  \code{schema}. 
 
-For \code{stackCoordinates} the rgdal package needs to be loaded first.  
-The first element of argument schema defines the name of the column in the OGR data source that identifies unique plots.  
-This argument is mandatory and must match a column name in the spatial attributes data.  
-A second element of argument \code{schema} can specify the name of the column in the OGR data source that identifies altitude measurements.  
-If absent and the geometry is 3D the function reads the third (z) dimension of the data source.  
-If \code{verbose} the function will print what is returned by \code{\link[rgdal]{ogrInfo}}.  
-Irrespective of the geometry type the function will use the \code{\link[sp:coordinates]{coordinates}} method in package \pkg{sp} to obtain a pair of geographic coordinates for each plot.  
-In case of irregular polygons the centroid so obtained must not be accurate.  
-If the coordinate reference system is not equivalent to \code{CRS("+init=epsg:4326")} it will be transformed.
+  For \code{stackCoordinates} the rgdal package needs to be loaded first.
+  The first element of argument schema defines the name of the column in the OGR
+  data source that identifies unique plots. This argument is mandatory and must
+  match a column name in the spatial attributes data. A second element of
+  argument \code{schema} can specify the name of the column in the OGR data
+  source that identifies altitude measurements. If absent and the geometry is
+  3D the function reads the third (z) dimension of the data source. If
+  \code{verbose} the function will print what is returned by
+  \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function
+  will use the \code{\link[sp:coordinates]{coordinates}} method in package
+  \pkg{sp} to obtain a pair of geographic coordinates for each plot.
+  In case of irregular polygons the centroid so obtained must not be accurate.
+  If the coordinate reference system is not equivalent to
+  \code{CRS("+init=epsg:4326")} it will be transformed.
 }
 \note{
-Functionality related to package \pkg{rgdal} is only available if this package is installed and loaded. Currently it is a little bit of a hassle to have it available on Mac OSX. It needs compiling from source.
+  Functionality related to package \pkg{rgdal} is only available if this package
+  is installed and loaded.
 }
 \value{
 \code{stackSpecies} returns an object of class \code{\linkS4class{Species}}
