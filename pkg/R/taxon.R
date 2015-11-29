@@ -7,14 +7,13 @@ setMethod("taxon",
 	signature = "Vegsoup",
 	function (x, taxon = NULL) {
 		if (!is.null(taxon))
-			taxon(x)[grep(taxon, taxon(x))]	
+			taxon(x)[ grep(taxon, taxon(x)) ]	
 		else
-			taxonomy(x)$taxon	
+			taxonomy(x)$taxon
 	}
 )	
-#	subset = c("Carex")
+
 .taxon.Taxonomy <- function (x, subset, ...) {
-	#	subset ="Carex"
 	allargs <- list(...)
 	if (any(names(allargs) == "invert")) {
 		#	invert argument to grep needs extra handling!
@@ -28,7 +27,7 @@ setMethod("taxon",
 	
 	if (is.logical(subset)) {
 		stopifnot(length(subset) == length(taxon(x)))
-		j <- taxonomy(x)[subset, 1]	
+		j <- taxonomy(taxonomy(x))[subset, 1]
 	}
 	if (is.numeric(subset)) {
 		if (length(unique(subset)) != length(subset)) {
@@ -49,11 +48,11 @@ setMethod("taxon",
 		else {
 			tmp <- rep(0, length(xx))
 			for (i in seq(along = j)) {
-				tmp[j[[i]]] <- tmp[j[[i]]] + 1
+				tmp[ j[[i]] ] <- tmp[ j[[i]] ] + 1
 			}
-			j <- which(tmp == max(tmp))		
+			j <- which(tmp == max(tmp))
 		}	
-		j <- taxonomy(taxonomy(x))[j, 1]
+		j <- taxonomy(taxonomy(x))[ j, 1 ]
 	}
 	jj <- colnames(x)
 	j <- unlist(sapply(j, simplify = FALSE, USE.NAMES = FALSE,
@@ -68,12 +67,14 @@ setMethod("taxon",
 setGeneric("subset",
 	function (x, ...)
 	standardGeneric("subset")
-)	
+)
 #}
 
 setMethod("subset",
 	signature = "Vegsoup",
-	function (x, subset, ...) {
-		.taxon.Taxonomy(x, subset, ...)	
+	function (x, subset, drop = TRUE, ...) {
+		r <- .taxon.Taxonomy(x, subset, ...)
+		if (!drop) r <- x[ rownames(r), ]
+		return(r)
 	}
 )
