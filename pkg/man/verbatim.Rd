@@ -33,7 +33,7 @@ read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
                      collapse = ",", abundance)
 
-castFooter(file, schema = c(":", ",", " "), species.first = TRUE,
+castFooter(file, schema = c(":", ",", " "), species.first = FALSE,
            abundance.first = TRUE, abundance = "+", layers)
 
 header(x)
@@ -173,7 +173,7 @@ The data format of the input file equals in its fundamentals the output format o
 
 In general, the data layout consists of species abundances measured on plots where species performance is coded nothing but as a single character. Species or variables are in rows and plots are columns. As a consequence, using a monospaced font each observation on a plot aligns to a column composed of single characters. Only in the header section (see 1. below) values of width longer than one are supported. Adopting the previous logic, these figures have to be aligned vertically. For example, a value of \sQuote{1000} needs for lines, one line for each digit. See \sQuote{Examples} for a valid input file. 
 
-Horizontal and vertical table rules are often found in printed tables. When digitizing such a table the it is often handy to use some special characters to align with the original table strokes. Because of their non informative properties these characters are discarded when parsing the input file and all characters supplied with \code{replace} are replaced with blanks. Care has to be taken with hyphens and dashes (see defaults of \code{replace}). R treats the minus sign as a dash (\code{"\uad"}). Warning, problems might arise on non UTF-8 platforms.
+Horizontal and vertical table rules are often found in printed tables. When digitizing such a table the it is often handy to use some special characters to align with the original table strokes. Because of their non informative properties these characters are discarded when parsing the input file and all characters supplied with \code{replace} are replaced with blanks. Care has to be taken with hyphens and dashes (see defaults of \code{replace}). \R treats the minus sign as a dash (\code{"\uad"}). Warning, problems might arise on non UTF-8 platforms.
 
 The S3 function \code{read.verbatim()} makes the following additional assumptions about the input file format (not a file format in the strict sense, but a set of conventions).
 
@@ -221,10 +221,10 @@ The demonstration data set used in the example is taken from:
 
 Erschbamer, B. (1992). Zwei neue Gesellschaften mit Krummseggen (\emph{Carex curvula} ssp. \emph{rosae}, \emph{Carex curvula} ssp. \emph{curvula}) aus den Alpen -- ein Beitrag zur \enc{Klärung}{Klaerung} eines alten \enc{ökologischen}{oekologischen} \enc{Rätsels}{Raetsels}. Phytocoenologia, 21:91-116.
 
-The are three text files. \code{"Erschbammer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbammer1992Taxonomy.txt"}. \code{"Erschbammer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbammer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
+The are three text files. \code{"Erschbamer1992Tab4.txt"} has the main vegetation table plus some header rows. Species names were taxonomically interpreted to a match a reference list supplied as \code{"Erschbamer1992Taxonomy.txt"}. \code{"Erschbamer1992Tab4Tablefooter.txt"} has a list of rare species, those with frequency lower than 4. \code{"Erschbamer1992Tab4Locations.txt"} has geographic coordinates interpreted from the data source.
 }
 \examples{
-file <- system.file("extdata", "Erschbammer1992Tab4.txt",
+file <- system.file("extdata", "Erschbamer1992Tab4.txt",
                     package = "vegsoup")
 
 # read OCR scan
@@ -249,7 +249,7 @@ richness(x1)
 # get species from table footer
 # a listing of species not covered by the main table and plot where they occur in
 # the source does not supply any abundance values, we assume '+'
-file <- system.file("extdata", "Erschbammer1992Tab4Tablefooter.txt",
+file <- system.file("extdata", "Erschbamer1992Tab4Tablefooter.txt",
                     package = "vegsoup")
 x2 <- castFooter(file, species.first = TRUE, abundance.first = NA,
                  abundance = "+")
@@ -261,7 +261,7 @@ X
 richness(X)
 
 #   additional sites data including coordinates as a tab delimited file
-file <- system.file("extdata", "Erschbammer1992Tab4Locations.txt",
+file <- system.file("extdata", "Erschbamer1992Tab4Locations.txt",
                     package = "vegsoup")
 y2 <- read.delim(file, colClasses = "character")
 head(y2)
@@ -275,7 +275,7 @@ y2
 Y <- bind(y1, y2)
 
 # taxonomic reference list
-file <- system.file("extdata", "Erschbammer1992Taxonomy.txt",
+file <- system.file("extdata", "Erschbamer1992Taxonomy.txt",
                     package = "vegsoup")
 Z <- read.delim(file, colClasses = "character")
 #   promote to class Taxonomy
