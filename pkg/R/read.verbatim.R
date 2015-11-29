@@ -343,6 +343,7 @@ print.VegsoupVerbatim <- function (x) {
 #	function to append to class VegsoupVerbatim
 read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"), collapse = ",", abundance) {
 
+	message("read.verbatim.append is depreciated, use castFooter instead")
 	if (!inherits(x, "VegsoupVerbatim")) {
 		stop("plaese supply an object of class VegsoupVerbatim")
 	}
@@ -453,7 +454,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 #	accesor to get header data from VegsoupVerbatim objects
 header <- function (x) {
 	stopifnot(inherits(x, "VegsoupVerbatim"))
-	r <- as.data.frame(attributes(x)[- c(1:3, length(attributes(x)))])
+	r <- data.frame(attributes(x)[- c(1:3, length(attributes(x)))])
 	rownames(r) <- colnames(x)
 	return(r)
 }
