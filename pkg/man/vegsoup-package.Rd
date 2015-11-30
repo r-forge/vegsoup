@@ -104,6 +104,9 @@ classes, with the following functions:
   \item{ \code{\link{read.verbatim}} }{
     reads data from text arrays (OCR scans)
   }
+  \item{ \code{\link{read.XML}} }{
+    reads data from XML files exported from the turboveg data base
+  }
  }
 
 }

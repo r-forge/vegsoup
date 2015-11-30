@@ -205,7 +205,7 @@ An object of class \code{\linkS4class{Vegsoup}}.
 data(barmstein)
 ( x <- barmstein )
 # this will open a browser window
-\dontrun{quicklook(x))
+\dontrun{quicklook(x)}
 	
 # for demonstration rebuild objects from its components 
 X <- species(x)
