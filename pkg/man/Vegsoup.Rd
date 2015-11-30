@@ -71,8 +71,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   }
   \item{ coverscale }{
     Abundance scale of the observations. Possible choices include all
-    definitions given by \code{\link{Coverscale}}. For \code{plainsoup}
-    currently only an object of class \code{Coverscale} is accepted.
+    definitions given by \code{\link{Coverscale}}.
   }
   \item{ group }{
     A-priori grouping, if any and can be missing.
@@ -168,7 +167,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 
 \note{
   If you gain errors using \code{instantsoup}, try to create separate objects
-  for classes \code{"Species"}, \code{"Sites"} and \code{"Taxonomy"}. You may
+  for classes \verb{Species}, \verb{Sites} and \verb{Taxonomy}. You may
   also want to call \code{"SpeciesTaxonomy"} for the first and last objects
   mentioned. Defaults for \code{sep} and \code{dec} passed to \code{read.csv}
   are set according to \code{read.csv2}!
@@ -202,10 +201,25 @@ An object of class \code{\linkS4class{Vegsoup}}.
 }
 
 \examples{
+# load example data
 data(barmstein)
-x <- barmstein
+( x <- barmstein )
+# this will open a browser window
+\dontrun{quicklook(x))
+	
+# for demonstration rebuild objects from its components 
+X <- species(x)
+Y <- stackSites(cbind(sites(x), coordinates(x)), schema = "rownames")
+Z <- taxonomy(x)
 
-summary(x)
+( x <- Vegsoup(X, Y, Z, "braun.blanquet") )
+
+# Vegsoup object from community matrix only
+# the dune data set
+# see ?SpeciesTaxonomy for a more complete case
+require(vegan)
+data(dune)
+x <- plainsoup(dune, "domin")
 
 # plot ordinations of simulated data
 x <- coenoflex(100, 50)
@@ -224,11 +238,8 @@ vegdist(barmstein) <- "bray"
 decostand(barmstein) <- "wisconsin"
 as(seriation(barmstein, method = "packed"), "sparseMatrix")
 
-# R-mode analysis using mode argument, one of 'Q' or 'R'
+# R-mode using mode argument, one of 'Q' or 'R'
 as(as.logical(barmstein, mode = "R"), "sparseMatrix")
-
-# simulate 10 plots with 50 species
-coenoflex(10, 50)
 }
 
 \keyword{ classes }

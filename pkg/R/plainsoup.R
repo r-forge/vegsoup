@@ -1,8 +1,14 @@
 plainsoup <- function (m, coverscale, layer = "0l", verbose = TRUE) {
-	if (missing(coverscale))
+	if (missing(coverscale)) {
 		stop("please supply appropiate cover scale of data")
-	stopifnot(inherits(coverscale, "Coverscale"))
-		
+	} else {
+		if (is.character(coverscale) & !inherits(coverscale, "Coverscale")) {
+			coverscale <- Coverscale(coverscale)	
+		} else {
+			stopifnot(inherits(coverscale, "Coverscale"))	
+		}		
+	}	
+			
 	x <- as.matrix(m)
 	x <- data.frame(
 		abbr = colnames(x),
