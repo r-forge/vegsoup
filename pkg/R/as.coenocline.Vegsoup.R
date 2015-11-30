@@ -67,6 +67,8 @@ as.coenocline.Vegsoup <- function (obj) {
 
 }
 
+setOldClass("coenocline")
+
 setAs(from = "coenocline", to = "Vegsoup",
 	def = function (from) {
 		as.coenocline.Vegsoup(from)
