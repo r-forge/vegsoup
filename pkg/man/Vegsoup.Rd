@@ -118,7 +118,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 
 \details{
   \code{Vegsoup()} is the constructor function to create a prototype
-  object of class \code{Vegsoup}. The first four arguments
+  object of class \verb{Vegsoup}. The first four arguments
   (\code{x, y, z, coverscale}) have to be specified. However, if argument
   \code{'x'} inherits from class "SpeciesTaxonomy", argument \code{'z'} can be
   left missing.
@@ -131,7 +131,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   formatted as decimal degrees! See e.g. \code{\link{char2dms}} to convert
   between formats.
 
-%%\code{Vegsoup} will discard any alphanumeric characters by calling
+%%\verb{Vegsoup} will discard any alphanumeric characters by calling
 %%\code{gsub(pattern = "[[:alpha:]]", replacement = "", ...}. Decimals (","
 %%and ".") are handled to yield numeric values for columns that can be coerced
 %%to \code{as.numeric} (e.\,g. in x$cov if abundance is not ordinal, or for
@@ -140,7 +140,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   Function \code{plainsoup} is a utility function that demands a community matrix
   but nothing more. This function is suitable if there is no further
   information on sample plots (sites or environmental data) and the taxonomic concept used.
-  In order to build a \code{Vegsoup} object dummy values have to be created.
+  In order to build a \verb{Vegsoup} object dummy values have to be created.
   Note, those will not be informative! To be exact, the function will create
   a single site variable named \code{"X1"} with all values set to zero.
   \code{colnames(m)} are used as abbreviations (see \code{\link{abbr}}) as well as
@@ -162,7 +162,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   Function \code{coenflex} creates a random community with one or two
   gradients and specified size (number of species and ploits). The \code{coenocline}
   function in package \pkg{coenocliner} offers a complete interface. \code{coenocline}
-  objects can be coerced to class \code{Vegsoup} with the \code{as(obj, "Vegsoup")}
+  objects can be coerced to class \verb{Vegsoup} with the \code{as(obj, "Vegsoup")}
   coerce method.
 }
 

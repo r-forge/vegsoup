@@ -30,7 +30,7 @@
   Function \code{Coverscale} creates an object of class \code{\linkS4class{Coverscale}} containing a
   definition for an ordinal scale, or alternatively setting up a \code{Coverscale} object
   representing species abundances on a continuous scale (counts, frequencies
-  or percentages). Objects of this class are mandatory for \code{Vegsoup} and
+  or percentages). Objects of this class are mandatory for \verb{Vegsoup} and
   it's extending classes.
 }
 

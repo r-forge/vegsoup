@@ -42,7 +42,7 @@
 }
 
 \details{
-  The method defined for \code{"Vegsoup"} creates pushpins that when clicked
+  The method defined for \verb{Vegsoup} creates pushpins that when clicked
   show a bubble with a species list for a respective plot and if
   \code{'thumbnail.url.path'} is accessible an additional key photo graph at
   the bottom of the bubble. The function creates a hyper link for that photo

@@ -125,7 +125,7 @@ header(x)
 
 ## Arguments for S4 method \code{write.verbatim} for signature \code{'Vegsoup'} and \code{'VegsoupPartition'}
   \item{ obj }{
-    \code{Vegsoup} object.
+    \verb{Vegsoup} object.
   }
   \item{ select }{
     character. Vector matching \code{names(obj)} or indices to columns in

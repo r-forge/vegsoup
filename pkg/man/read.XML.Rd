@@ -28,7 +28,7 @@ read.XML(file)
 }
 
 \value{
-\code{Vegsoup} object
+\verb{Vegsoup} object
 }
 
 \author{

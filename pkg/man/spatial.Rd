@@ -70,7 +70,7 @@ Spatial methods as defined in package \pkg{sp}.
 
 \arguments{
   \item{ x, obj }{
-	\code{Vegsoup} object.
+	\verb{Vegsoup} object.
   }
   \item{ y }{
 	\code{SpatialPolygonsDataFrame} object.

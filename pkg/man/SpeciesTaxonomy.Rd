@@ -82,7 +82,7 @@ SpeciesTaxonomy(x, y, file.x, file.y, sep = ";", dec = ",", pmatch = FALSE,
 }
 \note{
   Integrity of the taxonomic reference list is crucial to build an object of
-  class \code{"SpeciesTaxonomy"} and function \code{Vegsoup} also relies on
+  class \code{"SpeciesTaxonomy"} and function \verb{Vegsoup} also relies on
   it.  If it's necessary to replace several abbreviations it is handy to save
   \code{write.table(taxonomy(obj), "foo.txt", quote = FALSE, row.names = FALSE)}
   to create an object suitable for automatic replacement.

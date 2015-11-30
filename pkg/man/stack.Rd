@@ -40,7 +40,7 @@
   
   Results of \code{stackSites} and \code{stackCoordinates} can be combined using
   \code{bind} to associate the sites with spatial information as intended for
-  \code{Vegsoup} objects (see \sQuote{Examples}).
+  \verb{Vegsoup} objects (see \sQuote{Examples}).
 }
 
 \usage{

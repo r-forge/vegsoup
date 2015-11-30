@@ -1,3 +1,5 @@
+require(vegsoup)
+
 data(barmstein)
 x <- barmstein
 

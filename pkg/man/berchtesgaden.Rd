@@ -13,7 +13,7 @@
 }
 
 \format{
-  \code{Vegsoup} object.
+  \verb{Vegsoup} object.
 }
 \source{
   Grassland in the National Park Berechtesgaden spanning montane and alpine communities.

@@ -24,7 +24,7 @@
 \arguments{
 
   \item{ x }{
-	An object inheriting from class \code{Vegsoup}.
+	An object inheriting from class \verb{Vegsoup}.
   }
   \item{ n }{
 	A single integer. If positive, size for the resulting object. If negative,
@@ -57,7 +57,7 @@
 	  If \code{n != 6L} the method prints the \emph{typal}
 	  (\code{\link{typal}}) sample for each partition, with the number of rows
 	  equaling \code{getK(x)}. If \code{n} is left as the default the
-	  behaviour is the same as defined for class \code{Vegsoup}.
+	  behaviour is the same as defined for class \verb{Vegsoup}.
 	}
   }
 

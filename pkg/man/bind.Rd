@@ -18,7 +18,7 @@ Take a sequence of arguments of objects from class \code{Vegsoup*} and combine t
 
 \arguments{
   \item{ \dots }{
-	\code{Vegsoup} objects.
+	\verb{Vegsoup} objects.
   }
   \item{ deparse.level }{
 	Not used.

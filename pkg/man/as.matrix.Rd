@@ -69,7 +69,7 @@ The latter have a special meaning in all methods, since they carry an attribute 
 }
 
 \details{
-For any object inheriting from class \code{Vegsoup} the methods return an object of class \code{'matrix'} with \code{dimnames} giving plot and species names.  
+For any object inheriting from class \verb{Vegsoup} the methods return an object of class \code{'matrix'} with \code{dimnames} giving plot and species names.  
 The latter are strings where any occurrence in a layer is labeled using the layer name and the species abbreviation, collapsed with the \code{"@"} glyph (layer-replicate or pseudo-species, see \code{\link{layers}}, \code{\link{splitAbbr}} and \code{\link{abbr}}).  
 
 The object returned by a method (except \code{indices} and \code{as.vector}) is suitable as input to functions in other packages that demand an object of class \code{'matrix'}.  

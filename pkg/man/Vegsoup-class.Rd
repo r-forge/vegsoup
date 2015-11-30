@@ -76,7 +76,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 
   Classes \code{\linkS4class{VegsoupOptimstride}},
   \code{\linkS4class{VegsoupPartition}} and \code{"VegsoupPartitionFidelity"}
-  all contain and directly extend class \code{"Vegsoup"}. The methods
+  all contain and directly extend class \verb{Vegsoup}. The methods
   presented in the following sections apply to all these classes.
 
   \describe{

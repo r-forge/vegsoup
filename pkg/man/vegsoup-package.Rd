@@ -1,12 +1,12 @@
 % markup conventions
-% classes: \code{"class"} or \code{\linkS4class{Vegsoup}}
+% classes: \verb{class} or \code{\linkS4class{Vegsoup}}
 % methods and functions: \code{function()}
 % arguments: \code{argument}
 % objects: \code{'objects'}
 % slots: \emph{slot 'objects'}
 % \R for the R system itself
 %aAll of ‘% { } \’ should be escaped in LaTeX-like text
-% tabular width________________________ \tab \cr
+% tabular width________________________ }{
 
 \encoding{UTF-8}
 
@@ -19,15 +19,20 @@
 \title{ An overview of the functions in this package }
 
 \description{
-The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In a certain respect it acts like a data base system. Vegetation data consists of at least of two related tables -- a species or community matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). If taxonomic identity or traits of species is a concern, an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent \R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects.
+The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In a certain respect it acts like a data base system. The \emph{vegsoup} term follows the tradition of strange named functions in the \pkg{vegan} package – in particular \code{\link[vegan:vegemite]{vegemite}} to give but one example (but also notice the \code{tabasco() function}).
 
-This package should be useful in the field of vegetation ecology, vegetation mapping and classification, and phytosociology in particular.
+Vegetation data consists of at least of two related tables -- a species or community matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). At the very least a sampling date is available. If taxonomic identity or traits of species is a concern -- and it should be --  an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent \R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects, for example when random subsets needs be performed. Some \R package adress these issues, namely the \pkg{mefa} and \pkg{multitable} packages. They do so by extending the \code{data.frame} concept. None of these packages is spatially explicit nor handle cover scales commonly applied in vegetation ecology and present vegetation data bases.
+
+Besides that the package provides novel functionality, it also interfaces functions in other packages, most important are \pkg{vegan}, \pkg{optpart} and \pkg{labdsv}. These functions are extended or their arguments are simplified, due the inherent properties og \verb{Vegsoup} objects. It was avoided to create new function names whenever another package already defines a suitable and meaningful name. Examples are \code{decostand()} and \code{vegdist()} which have extended meaning.
+
+This package should be mainly useful in the field of vegetation ecology, vegetation mapping and classification, and phytosociology in particular.
 
 }
 
-\details{
+\section{ Summary }{
 
 The package implements classes for vegetation data (see \link{Vegsoup-class}) and supports
+
 \itemize{
   \item a solid class that is capable to store all relevant information
   \item species data to be structured in layers/strata
@@ -50,13 +55,17 @@ The package implements classes for vegetation data (see \link{Vegsoup-class}) an
 }
 
 Type \code{vignette("vegsoup")} for some usage example.
+
 }
 
 \section{ Creating Vegsoup objects and their base classes }{
-\code{"Vegsoup"} objects or their foundation classes (e.g. \code{\linkS4class{Species}}, \code{\linkS4class{Sites}}, \code{\linkS4class{Taxonomy}}) can be created (1) from file
-connections including data base views, (2) from local \R objects, (3) from community
-simulations, (4) from plain text files (OCR-scans) or (5) from other classes,
-with the following functions:
+
+\verb{Vegsoup} objects or their foundation classes (e.g.
+\code{\linkS4class{Species}}, \code{\linkS4class{Sites}},
+\code{\linkS4class{Taxonomy}}) can be created (1) from file
+connections including data base views, (2) from local \R objects, (3) from
+community simulations, (4) from plain text files (OCR-scans) or (5) from other
+classes, with the following functions:
 
  \describe{
   \item{ \code{\link{Vegsoup}} }{
@@ -96,10 +105,11 @@ with the following functions:
     reads data from text arrays (OCR scans)
   }
  }
+
 }
 
 \section{ Derived objects from base class Vegsoup }{
-The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived class from the base class \code{"Vegsoup"}. Objects of class \code{"VegsoupPartition"} directly extend the former class, that means all methods defined for class \code{"Vegsoup"} apply. As the name suggest, class \code{"VegsoupPartition"} represents an object that is \emph{partitioned} (clusterend).
+The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived class from the base class \verb{Vegsoup}. Objects of class \code{"VegsoupPartition"} directly extend the former class, that means all methods defined for class \verb{Vegsoup} apply. As the name suggest, class \code{"VegsoupPartition"} represents an object that is \emph{partitioned} (clusterend).
 
 The following functions and method are designed for class \code{"VegsoupPartition"}.
 
@@ -109,10 +119,10 @@ The following functions and method are designed for class \code{"VegsoupPartitio
   }
   \item{ \code{\link{stable}} }{
     classification stability
+  }
  }
-}
 
-Class \code{"VegsoupOptimstride"} also extends class \code{"Vegsoup"}. Thjis class contains information on how a data set could be partitioned.
+Class \code{"VegsoupOptimstride"} also extends class \verb{Vegsoup}. Thjis class contains information on how a data set could be partitioned.
 
  \describe{
   \item{ \code{\link{OptimStride}} }{
@@ -133,7 +143,7 @@ Class \code{"VegsoupOptimstride"} also extends class \code{"Vegsoup"}. Thjis cla
   \item{ \code{\link{which.max}} }{
     number of k that coincides with the highest number of faithful species
   }
-}
+ }
 
 When indicator species analysis was performed on an object of that class, an object of \code{"VegsoupPartitionFidelity"} obtained, again with it's own unique and additional properties. 
 
@@ -141,36 +151,45 @@ When indicator species analysis was performed on an object of that class, an obj
 
 \section{ Properties of Vegsoup* objects }{
 
-As outlined above, a \code{"Vegsoup"} object contains several data partitions. Besides the species and sites data it contains a taxonomic reference for all taxa, a definition of a cover scale, some standardisation statement(s), a dissimilarity measure to apply, and spatial coordinates. These properties can be queried (or changed) using a set of methods.
+As outlined above, a \verb{Vegsoup} object contains several data partitions. Besides the species and sites data it contains a taxonomic reference for all taxa, a definition of a cover scale, some standardisation statement(s), a dissimilarity measure to apply, and spatial coordinates. Basic parameters of existing \verb{Vegsoup} objects can be obtained, and in most cases changed.
 
- \tabular{ll}{
-  \code{\link{decostand}} \tab
-    retrieve or set a standardization method \cr
-  \code{\link{vegdist}} \tab
-    specify a dissimilarity measures \cr
-  \code{\link{nrow},\link{ncol},\link{dim}} \tab
-    return the dimensions of the species matrix \cr
-  \code{\link{ncell},\link{fill}} \tab
-    report the number of cells and the proportion non zero elements in the species matrix \cr
-  \code{\link{coverscale}} \tab
-    get or set coverscale \cr
-  \code{\link{layers}} \tab
-    the unique layers/strata \cr
-  \code{\link{extent}\link{bbox}} \tab
-    spatial extent \cr
-  \code{\link{proj4string}} \tab
-    projection attributes (coordinate reference system) \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{decostand}} }{
+    retrieve or set a standardization method
+  }
+  \item{ \code{\link{vegdist}} }{
+    specify a dissimilarity measures
+  }
+  \item{ \code{\link{nrow},\link{ncol},\link{dim}} }{
+    return the dimensions of the species matrix
+  }
+  \item{ \code{\link{ncell},\link{fill}} }{
+    report the number of cells and the proportion non zero elements in the
+    species matrix
+  }
+  \item{ \code{\link{coverscale}} }{
+    get or set coverscale
+  }
+  \item{ \code{\link{layers}} }{
+    the unique layers/strata
+  }
+  \item{ \code{\link{extent}\link{bbox}} }{
+    spatial extent
+  }
+  \item{ \code{\link{proj4string}} }{
+    projection attributes (coordinate reference system)
+  }
  }
 
 For \code{"VegsoupPartition"} objects the following additional methods are defined.
 
- \tabular{ll}{
-  \code{\link{partitioning}} \tab
-    partitioning vector \cr
-  \code{\link{getK}} \tab
-    number of partitions \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{partitioning}} }{
+    partitioning vector
+  }
+  \item{ \code{\link{getK}} }{
+    number of partitions
+  }
  }
 
 }
@@ -179,255 +198,319 @@ For \code{"VegsoupPartition"} objects the following additional methods are defin
 
 Summary and print method
 
- \tabular{ll}{
-   \code{\link{print}} \tab
-     show summary \cr
-   \code{\link{head},\link{tail}} \tab
-      return the first or last parts of the site data frame \cr
-   \code{\link{richness}} \tab
-     dataset, sample or pooled species richness \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{print}} }{
+     show summary
+  }
+  \item{ \code{\link{head},\link{tail}} }{
+      return the first or last parts of the site data frame
+  }
+  \item{ \code{\link{richness}} }{
+     dataset, sample or pooled species richness
+  }
  }
 
 For \code{"VegsoupPartition"} objects the following additional methods are defined.
 
- \tabular{ll}{
-   \code{\link{spread}} \tab
-    lists all occurrences of species in partitions \cr
-   \code{\link{shared}} \tab
-    matrix showing percentages of shared species between partitons \cr
-   \code{\link{typical}} \tab
-    identifies plots that typify partitions \cr
-   \code{\link{outlier}} \tab
-    outliers based on mean inter-plot dissimilarity or nearest neighbour criterion \cr
-   \code{\link{silhouette}} \tab
-    evaluates cluster by silhouette information \cr
-   \code{\link{partana}} \tab
-    evaluates cluster by partition analysis \cr
-   \code{\link{disdiam}} \tab
-    evaluates by dissimilarity diameters \cr
-   \code{\link{tabdev}} \tab
-    calculates the probability of observing as low a deviance as observed \cr
-   \code{\link{singleton}} \tab
-    test if any partition has only 1 member \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{spread}} }{
+    lists all occurrences of species in partitions
+  }
+  \item{ \code{\link{shared}} }{
+    matrix showing percentages of shared species between partitons
+  }
+  \item{ \code{\link{typical}} }{
+    identifies plots that typify partitions
+  }
+  \item{ \code{\link{outlier}} }{
+    outliers based on mean inter-plot dissimilarity or nearest neighbour criterion
+  }
+  \item{ \code{\link{silhouette}} }{
+    evaluates cluster by silhouette information
+  }
+  \item{ \code{\link{partana}} }{
+    evaluates cluster by partition analysis
+  }
+  \item{ \code{\link{disdiam}} }{
+    evaluates by dissimilarity diameters
+  }
+  \item{ \code{\link{tabdev}} }{
+    calculates the probability of observing as low a deviance as observed
+  }
+  \item{ \code{\link{singleton}} }{
+    test if any partition has only 1 member
+  }
  }
+
 }
 
 \section{ The species matrix stored in Vegsoup objects }{
-There exist several methods that retrieve a community table as class 'matrix' from \code{"Vegsoup"} objects. All methods access \emph{slot 'species'} of an object. Transposed versions of each are available with the mode argument.
+There exist several methods that retrieve a community table as class 'matrix' from \verb{Vegsoup} objects. All methods access \emph{slot 'species'} of an object. Transposed versions of each are available with the mode argument.
 
- \tabular{ll}{
-  \code{\link{as.logical}} \tab
-    returns a \code{"matrix"} with zeros coding for absences and ones for presences\cr
-  \code{\link{as.numeric}} \tab
-    returns a \code{"matrix"} with species abundances decoded by a coverscale \cr
-  \code{\link{as.character}} \tab
-    returns a \code{"matrix"} with species abundances in the data set's original scale \cr
-  \code{\link{as.matrix}} \tab
-    equivalent to the above, but storage type controlled by argument \code{typeof} \cr
-  \code{\link{as.array}} \tab
-    multidimensional dimensional array where is layer represents a dimension \cr
-  \code{\link{as.vector}} \tab
-    returns a vector with storage mode controlled by argument \code{mode} \cr
-  \code{\link{indices}} \tab
-    pointer to non empty cells in the species matrix \cr
-  \code{\link{rowSums}\link{colSums}} \tab
-    row and column sums for the the species matrix \cr
-  \code{\link{rowMeans}\link{colMeans}} \tab
-    row and column means for the the species matrix \cr
-  \code{\link{as.dist}} \tab
-    compute a dissimilarity matrix \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{as.logical}} }{
+    returns a \code{"matrix"} with zeros coding for absences and ones for presences
+  }
+  \item{ \code{\link{as.numeric}} }{
+    returns a \code{"matrix"} with species abundances decoded by a coverscale
+  }
+  \item{ \code{\link{as.character}} }{
+    returns a \code{"matrix"} with species abundances in the data set's original scale
+  }
+  \item{ \code{\link{as.matrix}} }{
+    equivalent to the above, but storage type controlled by argument \code{typeof}
+  }
+  \item{ \code{\link{as.array}} }{
+    multidimensional dimensional array where is layer represents a dimension
+  }
+  \item{ \code{\link{as.vector}} }{
+    returns a vector with storage mode controlled by argument \code{mode}
+  }
+  \item{ \code{\link{indices}} }{
+    pointer to non empty cells in the species matrix
+  }
+  \item{ \code{\link{rowSums}\link{colSums}} }{
+    row and column sums for the the species matrix
+  }
+  \item{ \code{\link{rowMeans}\link{colMeans}} }{
+    row and column means for the the species matrix
+  }
+  \item{ \code{\link{as.dist}} }{
+    compute a dissimilarity matrix
+  }
  }
 
 For \code{"VegsoupPartition"} objects the following additional methods are defined. 
 
- \tabular{ll}{
-  \code{\link{quantile}} \tab
-    sample quantiles for each species in each partition \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{quantile}} }{
+    sample quantiles for each species in each partition
+  }
  }
+
 }
 
 \section{ Row and Column Names }{
 
 Vegsoup objects have row and column names. Row names are the plots (releveé) and they are shared among the species matrix and the sites data frame. Column names are therefore either dimnames of the species matrix (class \code{matrix}) or the names of the sites data (\code{colnames} relates to the species matrix, whereas \code{names} relates to the sites data). The \code{"\$"} operator acts like with normal data frames, it extracts the sites data. Replacement methods are also defined.
 
- \tabular{ll}{
-  \code{\link{rownames},\link{row.names}} \tab
-    plot names (mode \code{"character"}), the identifier of the sampling units \cr
-  \code{\link{colnames}} \tab
-    compound string of abbreviated scientific species names and layer (collapsed with @) \cr
-  \code{\link{dimnames}} \tab
-    \code{dimnames(as.matrix(x))} equaling rownames and colnames as above \cr
-  \code{\link{names}} \tab
-    column names of the sites data \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{rownames},\link{row.names}} }{
+    plot names (mode \code{"character"}), the identifier of the sampling units
+  }
+  \item{ \code{\link{colnames}} }{
+    compound string of abbreviated scientific species names and layer (collapsed with @)
+  }
+  \item{ \code{\link{dimnames}} }{
+    \code{dimnames(as.matrix(x))} equaling rownames and colnames as above
+  }
+  \item{ \code{\link{names}} }{
+    column names of the sites data
+  }
  }
+
 }
 
 \section{ Print and summary methods }{
 
 There are several ways to manipulate vegsoup objects.
 
- \tabular{ll}{
-  \code{\link{relevee}} \tab
-    list a single relevee \cr
-  \code{\link{taxalist}} \tab
-    list of taxon names \cr
-  \code{\link{abbr}} \tab
-    abbreviations (abbr) used to encode scientific species names \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{relevee}} }{
+    list a single relevee
+  }
+  \item{ \code{\link{taxalist}} }{
+    list of taxon names
+  }
+  \item{ \code{\link{abbr}} }{
+    abbreviations (abbr) used to encode scientific species names
+  }
  }
+
 }
 
 \section{ Manipulating Vegsoup objects }{
 
 There are several ways to manipulate \code{"Vegsoup*"} objects.
 
- \tabular{ll}{
-  \code{\link{bind}} \tab
-    combine a sequence of objects and to a single object \cr
-  \code{\link{Extract}} \tab
-    basic row and column-wise indexing \cr
-  \code{\link{subset}} \tab
-    subset based on literal taxon names \cr
-  \code{\link{combine}} \tab
-    combines two or more taxa by selecting scientific species names \cr
-  \code{\link{combine}} \tab
-    combines two or more taxa by selecting scientific species names \cr
-  \code{\link{layers<-}} \tab
-    modify an object's layer structure \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{bind}} }{
+    combine a sequence of objects and to a single object
+  }
+  \item{ \code{\link{Extract}} }{
+    basic row and column-wise indexing
+  }
+  \item{ \code{\link{subset}} }{
+    subset based on literal taxon names
+  }
+  \item{ \code{\link{combine}} }{
+    combines two or more taxa by selecting scientific species names
+  }
+  \item{ \code{\link{combine}} }{
+    combines two or more taxa by selecting scientific species names
+  }
+  \item{ \code{\link{layers<-}} }{
+    modify an object's layer structure
+  }
  }
 
 For \code{"VegsoupPartition"} objects the following additional methods are defined.
 
- \tabular{ll}{
-  \code{\link{partition}} \tab
-    extract parts (partitions) of an object \cr
-  \code{\link{reorder}} \tab
-    reorder an partitioned object based on the topology of a dendrogram \cr
-  \code{\link{seriation}} \tab
-     modify an objects internal order as to reflect a vegetation table \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{partition}} }{
+    extract parts (partitions) of an object
+  }
+  \item{ \code{\link{reorder}} }{
+    reorder an partitioned object based on the topology of a dendrogram
+  }
+  \item{ \code{\link{seriation}} }{
+     modify an objects internal order as to reflect a vegetation table
+  }
  }
+
 }
 
 \section{ Sample Operation }{
 
 Nothing here yet.
- \tabular{ll}{
-  \code{\link{sample}} \tab
-    random aamples and permutations \cr
-  \code{\link{hcr}} \tab
-    heterogeneity-constrained random samples \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{sample}} }{
+    random aamples and permutations
+  }
+  \item{ \code{\link{hcr}} }{
+    heterogeneity-constrained random samples
+  }
  }
+
 }
 
 \section{ Table methods }{
 
 Only class \code{"VegsoupPartition"} has meaningful table methods.
 
- \tabular{ll}{
-   \code{\link{constancy}} \tab
-     constancy table \cr
-   \code{\link{contingency}} \tab
-     contingency table \cr
-   \code{\link{average}} \tab
-     table of mean abundances in partitions \cr
-   \code{\link{confusion}\link{accuracy}} \tab
-     cross-classifies each partition by actual and predicted class memberships \cr
-   \code{\link{as.table}} \tab
-     tabulation of partitioning(obj) against a cross-classifying factor \cr
-   \code{\link{partitioningMatrix}} \tab
-     memberships of plots to partitions \cr
-   \code{\link{partitioningCombinations}} \tab
-     tabulate all possibele combinations of partitions \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{constancy}} }{
+     constancy table
+  }
+  \item{ \code{\link{contingency}} }{
+     contingency table
+  }
+  \item{ \code{\link{average}} }{
+     table of mean abundances in partitions
+  }
+  \item{ \code{\link{confusion}\link{accuracy}} }{
+     cross-classifies each partition by actual and predicted class memberships
+  }
+  \item{ \code{\link{as.table}} }{
+     tabulation of partitioning(obj) against a cross-classifying factor
+  }
+  \item{ \code{\link{partitioningMatrix}} }{
+     memberships of plots to partitions
+  }
+  \item{ \code{\link{partitioningCombinations}} }{
+     tabulate all possibele combinations of partitions
+  }
  }
+
 }
 
 \section{ Optimization }{
- \tabular{ll}{
-  \code{\link{optsil}} \tab
-    modify partitioning as to optimize silhouette widths \cr
-  \code{\link{optindval}} \tab
-    modify partitioning as to optimize Dufrene and Legendre's indicator value \cr
-  ________________________ \tab \cr
+
+The clustering partition vetcor of \code{"VegsouPPartition"} objects can be optimized.
+ \describe{
+  \item{ \code{\link{optsil}} }{
+    modify partitioning as to optimize silhouette widths
+  }
+  \item{ \code{\link{optindval}} }{
+    modify partitioning as to optimize Dufrene and Legendre's indicator value
+  }
  }
+
 }
 
 \section{ Spatial methods }{
 
 Methods from spatial packges.
 
- \tabular{ll}{
- \code{\link{spTransform}} \tab
-   extract the values of a \code{"raster"} object \cr
- \code{\link{over}} \tab
-   overlay method for spatial polygons \cr
- \code{\link{spTransform}} \tab
-   extract the values of a \code{"raster"} object \cr
-  \code{\link{extract}} \tab
-   extract the values of a \code{"raster"} object \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{spTransform}} }{
+   extract the values of a \code{"raster"} object (package \pkg{sp})
+  }
+  \item{ \code{\link{over}} }{
+   overlay method for spatial polygons (package \pkg{sp})
+  }
+  \item{ \code{\link{extract}} }{
+   extract the values of a \code{"raster"} object (package \pkg{raster})
+  }
  }
+
 }
 
 \section{ Plotting }{
-Plot
- \tabular{ll}{
-  \code{\link{quicklook}} \tab
-    opens a browser window and plots pushpins of plot coordiantes \cr
-%  \code{\link{ellipsoidhull}} \tab
-%    computes the ellipsoid hull or spanning ellipsoid \cr
-  \code{\link{rectangles}} \tab
-    plots a box according to number of species and sites for each partition \cr
-  \code{\link{plotPCO}} \tab
-    plot principal coordinates \cr
-  \code{\link{coldiss}} \tab
-    plots unordered and ordered colored matrix of dissimilarities \cr
-  ________________________ \tab \cr
+
+ \describe{
+  \item{ \code{\link{quicklook}} }{
+    opens a browser window and plots pushpins of plot coordiantes
+  }
+  \item{ \code{\link{rectangles}} }{his
+    plots a box according to number of species and sites for each partition
+  }
+  \item{ \code{\link{plotPCO}} }{
+    plot principal coordinates
+  }
+  \item{ \code{\link{coldiss}} }{
+    plots unordered and ordered colored matrix of dissimilarities
+  }
  }
+
 }
 
 \section{ Typesetting }{
 
- \tabular{ll}{
-  \code{\link{Latex}} \tab \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{Latex}} }{
+    Create synoptic vegetation tables to be compiled by with LaTex.
+    The \pkg{synoptic} package (\url{https://github.com/kardinal-eros/synoptic})
+    provides another implementation.
+  }
  }
+
 }
 
 \section{ Writing files }{
 
 Basic and advanced writing of entire files or parts thereof.
 
- \tabular{ll}{
-  \code{\link{write.verbatim}} \tab
-    generates a table structures with mono-spaced fonts \cr
-  \code{\link{Latex}} \tab
-    table structures to be compiled by LaTeX \cr
-  \code{\link{KML}} \tab
-    visualization in google earth \cr
-  ________________________ \tab \cr
+ \describe{
+  \item{ \code{\link{write.verbatim}} }{
+    generates a table structures with mono-spaced fonts
+  }
+  \item{ \code{\link{Latex}} }{
+    table structures to be compiled by LaTeX
+  }
+  \item{ \code{\link{KML}} }{
+    visualization in google earth
+  }
  }
+
 }
 
 \section{ Miscellaneous }{
-Miscellaneous methods and functions
- \tabular{ll}{
-  \code{\link{compass}} \tab
-    cuts numeric values of angular degrees into characters of the wind-rose \cr
-  \code{\link{tile2latlng}} \tab
-    geocoding functionality using the grid scheme of tile map services \cr
-  \code{\link{elevation}} \tab
-    topographic height information from the SRTM3 dat set \cr
-  ________________________ \tab \cr
+
+Miscellaneous methods and functions.
+
+ \describe{
+  \item{ \code{\link{compass}} }{
+    cuts numeric values of angular degrees into characters of the wind-rose
+  }
+  \item{ \code{\link{tile2latlng}} }{
+    geocoding functionality using the grid scheme of tile map services
+  }
+  \item{ \code{\link{elevation}} }{
+    topographic height information from the SRTM3 dat set
+  }
  }
+
 }
 
 \author{
@@ -439,12 +522,15 @@ Extensive suggestions were made by \dots and many others.
 }
 
 \seealso{
+\code{\link[vegan:vegan-package]{vegan}}
+\code{optpart}
+\code{labdsv}
+% no package overview for these 2 packages
+%\code{\link[optpart:optpart-package]{optpart}}
+%\code{\link[labdsv:labdsv-package]{labdsv}}
 \code{\link[vegdata:vegdata-package]{vegdata}}
 \code{\link[mefa:mefa-package]{mefa}}
 \code{\link[multitable:multitable-package]{multitable}}
-\code{\link[vegan:vegan-package]{vegan}}
-\pkg{optpart}
-\pkg{labdsv}
 }
 
 \keyword{ package }

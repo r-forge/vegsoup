@@ -10,7 +10,7 @@
 \title{ Extract values from Raster objects }
 
 \description{
-Extract the values of the cells of a \code{"raster*"} object for the locations (\code{SpatialPoints}) of a \code{Vegsoup} object; that is perform a spatial query.
+Extract the values of the cells of a \code{"raster*"} object for the locations (\code{SpatialPoints}) of a \verb{Vegsoup} object; that is perform a spatial query.
 }
 
 \usage{

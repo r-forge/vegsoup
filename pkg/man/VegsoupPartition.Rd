@@ -19,7 +19,7 @@ VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
 
 \arguments{
   \item{ obj }{
-    \code{Vegsoup} object.
+    \verb{Vegsoup} object.
   }
   \item{ k }{
     number of partitions to create. Note, argument \code{k} can also be 1. In this case the whole object
