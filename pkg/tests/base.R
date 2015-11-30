@@ -187,19 +187,21 @@ quantile(prt, coverscale = TRUE)[,,3] # median
 prt[1,]
 prt[,1:10]
 
-partition(prt, 1)
+#	optpart does not register S3methods
+vegsoup::partition(prt, 1)
 
-#	wait until optpart registers S3methods
-#isamic(prt)
-#typical(prt)
-#optsil(prt)
-#optindval(prt)
-#partana(prt)
-#silhouette(prt)
-#disdiam(prt)
-#Murdoch(prt)
-#tabdev(prt)
-#Indval(prt)
+#	optpart does not register S3methods
+require(optpart)
+vegsoup::isamic(prt)
+vegsoup::typical(prt)
+vegsoup::optsil(prt)
+vegsoup::optindval(prt)
+vegsoup::partana(prt)
+vegsoup::silhouette(prt)
+vegsoup::disdiam(prt)
+vegsoup::murdoch(prt)
+vegsoup::tabdev(prt)
+vegsoup::Indval(prt)
 
 #	depreciated
 FisherTest(prt)
@@ -208,11 +210,13 @@ Phi(prt)
 #	test to compare nummerical stability of implementation
 x <- coenoflex()
 i.prt <- VegsoupPartition(x, k = 2)
-require(indicspecies)
-is <- strassoc(as.logical(i.prt),
-		partitioning(i.prt),
-		func = "IndVal.g")
-head(is)
+
+#	package indicspecies is not available for testing on r-forge
+#	require(indicspecies)
+#is <- strassoc(as.logical(i.prt),
+#		partitioning(i.prt),
+#		func = "IndVal.g")
+#head(is)
 	
 require(labdsv)
 ld <- indval(as.logical(i.prt),
