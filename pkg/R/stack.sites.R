@@ -19,24 +19,25 @@ stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = 
 				stringsAsFactors = FALSE, check.names = FALSE,
 				colClasses = cc)
 		}
-	}
-	else {
+	} else {
 		if (is.data.frame(x) & missing(file)) {
 				x <- x
-			}
-			else {
+			} else {
 				stop("please supply a data.frame or use file argument")	
 		}
 	}
 	if (length(schema) > 1) {
 		schema <- schema[1]
 		warning("use only first argument of schema", schema)	
+	}	
+	if (schema == "rownames") {
+		x <- cbind(rownames = rownames(x), x)		
+	} else {
+		stopifnot(!is.na(match(schema, names(x))))
+		if (!length(unique(x[[schema]])) == nrow(x))
+			stop("schema column is not unique")		
 	}
-	
-	stopifnot(!is.na(match(schema, names(x))))	
-	
-	if (!length(unique(x[[schema]])) == nrow(x)) stop("schema column is not unique")
-	
+		
 	#	all columns must be of mode character to use stack()
 	res <- as.data.frame(as.matrix(x), stringsAsFactors = FALSE,
 		colClasses = "character")

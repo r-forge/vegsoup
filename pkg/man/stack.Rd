@@ -36,7 +36,7 @@
   Function \code{stackCoordinates} collects spatial coordinates from spatial
   data stored on disk by calls to \code{\link[rgdal]{readOGR}}. It then reshapes
   two or three columns (in case of 3D features) of spatial coordinates along
-  with a plot identifier to the format defined by class \code{"Sites"}.
+  with a plot identifier to the format defined by class \verb{Sites}.
   
   Results of \code{stackSites} and \code{stackCoordinates} can be combined using
   \code{bind} to associate the sites with spatial information as intended for
@@ -64,7 +64,7 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
     character. See \code{\link{read.csv}}.
   }
   \item{ schema }{
-     character. Names of columns to be searched for. See \sQuote{Details}.
+     character. Names of columns to be searched for. For \code{stackSites()} \code{schema = "rownames"} is available. See \sQuote{Details}.
   }
   \item{ zeros }{
      logical. If \code{TRUE}, drop leading zeros in plot names.
@@ -155,8 +155,6 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
 \author{ Roland Kaiser }
 
 \examples{
-require(vegsoup)
-
 # species matrix from the dune data set
 require(vegan)
 data(dune)
@@ -167,45 +165,40 @@ x <- data.frame(abbr = names(dune),
                 layer = c(rep("hl", 8), "ml",
                           rep("hl", 6), "ml",
                           rep("hl", 14)),
-                taxon = NA, # not mandatory, we don't use it here
                 t(dune))
 
-# groom plot names
-names(x)[4:ncol(x)] <- gsub("X", "dn", names(x)[4:ncol(x)])
-
 # promote to class 'Species'
-spc <- stackSpecies(x,  verbose = TRUE)
+X <- stackSpecies(x, verbose = TRUE)
 
 # stack corresponding sites data
 data(dune.env)
 x <- data.frame(plot = row.names(dune.env), dune.env)
+Y <- stackSites(x, verbose = TRUE) # default schema = "plot" 
 
-# groom plot names too
-x$plot <- paste("dn", x$plot, sep = "")
-
-sts <- stackSites(x, verbose = TRUE)
+# the same using schema = "rownames"
+Y <- stackSites(dune.env, schema = "rownames")
 
 ## create a file of dummy coordiantes in a common format for spatial data
 # some random points
-pts <- data.frame(x = rnorm(20), y = rnorm(20),
-                  plot = unique(spc$plot))
+Y2 <- data.frame(x = rnorm(20), y = rnorm(20),
+                  plot = unique(X$plot))
 
 # promate to class 'SpatialPointsDataFrame'
-coordinates(pts) <- ~x+y
-proj4string(pts) <- CRS("+init=epsg:4326") # WGS84
+coordinates(Y2) <- ~x+y
+proj4string(Y2) <- CRS("+init=epsg:4326") # WGS84
 
 # for demonstartion save to ESRI Shapefile
 require(rgdal)
 dsn <- tempfile()
 layer <- "foo"
-writeOGR(pts, dsn, layer, driver = "ESRI Shapefile")
+writeOGR(Y2, dsn, layer, driver = "ESRI Shapefile")
 
 # read this file and promote to class 'Sites'
-sts.xy <- stackCoordinates(dsn, layer, schema = "plot")
+Y2 <- stackCoordinates(dsn, layer, schema = "plot")
 
 # bind with remaining environmental data
-sts <- bind(sts, sts.xy)
-unique(sts$variable)
+Y <- bind(Y, Y2)
+variables(Y)
 }
 
 \seealso{
