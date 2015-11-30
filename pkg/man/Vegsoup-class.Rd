@@ -241,7 +241,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	}
 	\item{species<-}{
 	  \code{signature(obj = "Vegsoup", value = "Species")}:
-	  assigns object of class \code{"Species"} to an existing
+	  assigns object of class \verb{Species} to an existing
 	  \code{Vegsoup*} object. See \code{\link{species<-}}.
 	  \code{signature(obj = "Vegsoup", value = "SpeciesTaxonomy")}:
 	  assigns object of class \code{"SpeciesTaxonomy"} to an existing
@@ -252,7 +252,7 @@ The user is encouraged to use the creator function \code{\link{Vegsoup}}.
 	  \code{signature(obj = "Vegsoup")}:
 	  returns slot, an object of class
 	  \code{"data.frame"}. Note, the sites slot of Vegsoup objects
-	  is of class data.frame not \code{"Sites"}.
+	  is of class data.frame not \verb{Sites}.
 	  %% equaling an object of class \code{\linkS4class{Sites}}.
 	}
 	\item{Sites<-}{

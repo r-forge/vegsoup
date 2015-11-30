@@ -84,7 +84,7 @@
 
       \code{signature(obj = "character")}:
         supply a file to be read by \code{read.csv} and promote that object to
-        class \code{"Sites"}. Remember to pass appropriate arguments to
+        class \verb{Sites}. Remember to pass appropriate arguments to
         \code{\link{read.csv}} that meet the specifications of your file
         (e.g. argument \code{sep}).
 

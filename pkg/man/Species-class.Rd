@@ -65,11 +65,11 @@
 	  continuous (frequencies or counts) or simple presence.
    }
    
-   The above outlined data columns must be available in order to create a \code{"Species"} object
+   The above outlined data columns must be available in order to create a \verb{Species} object
    and the species method below relies they are present, named or in the order above.
    
    Besides these mandatory columns and their rigid names and order, it is possible
-   for an object of class \code{"Species"} to contain more columns with
+   for an object of class \verb{Species} to contain more columns with
    data. Imagine, for example, additional useful information for an observed species
    in a particular plot (plant size, flowering/not flowering, etc.) is available.
 
@@ -83,15 +83,15 @@
 	  There exists \code{species} methods for a number of \R base classes:
 
 	  \code{signature(obj = "data.frame")}:
-		promote \code{data.frame} to object of class \code{"Species"}.
+		promote \code{data.frame} to object of class \verb{Species}.
 
 	  \code{signature(obj = "matrix")}:
-		promote \code{matrix} to object of class \code{"Species"}.
+		promote \code{matrix} to object of class \verb{Species}.
 		Note, \code{obj} does not need to have \code{dimnames}, but order matters.
 
 	  \code{signature(obj = "character")}:
 		supply a file to be read by \code{read.csv} and promote that object to
-		class \code{"Species"}. Remember to pass appropriate arguments to
+		class \verb{Species}. Remember to pass appropriate arguments to
 		\code{\link{read.csv}} that meet the specifications of your file (e.g. argument \code{sep}).
 
 	  The following classes defined in the vegsoup package have a \code{species} method:
@@ -106,17 +106,17 @@
 		
 	  \code{signature(obj = "Vegsoup")}:
 		accessor method for \emph{slot 'Species'}, equals \code{species(obj)} and returns
-		an object of class \code{"Species"}. Use \code{species(species(obj))} to get the
+		an object of class \verb{Species}. Use \code{species(species(obj))} to get the
 		\emph{slot 'data'}. \code{species(obj)@data} should be avoided.
 
 	  \code{signature(obj = "VergsoupVerbatim")}:
-		promote \code{"VegsoupVerbatim"} object to class \code{"Species"}.
+		promote \code{"VegsoupVerbatim"} object to class \verb{Species}.
 
 	}
 
 	\item{ species<- }{
 	  \code{signature(obj = "Vegsoup", value = "Species")}:
-		assign (possibly subset) with object of class \code{"Species"}. 
+		assign (possibly subset) with object of class \verb{Species}. 
 	}
 
 	\item{ nrow }{

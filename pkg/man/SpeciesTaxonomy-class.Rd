@@ -27,7 +27,7 @@
 \title{ SpeciesTaxonomy Class }
 
 \description{
-  A super class containing classes \code{"Species"} and \code{"Taxonomy"}. The class
+  A super class containing classes \verb{Species} and \verb{Taxonomy}. The class
   guarantees that both objects match by their primary key (\code{'abbr'}).
 }
 
@@ -46,17 +46,17 @@
 
 \section{Slots}{
   \describe{
-	\item{\code{species}:}{Object of class \code{"Species"},
+	\item{\code{species}:}{Object of class \verb{Species},
 	  see class \code{\linkS4class{Species}} for details.
 	}
-	\item{\code{taxonomy}:}{Object of class \code{"Taxonomy"},
+	\item{\code{taxonomy}:}{Object of class \verb{Taxonomy},
 	  see class \code{\linkS4class{Taxonomy}} for details.
 	}
   }
 }
 
 \section{ Methods }{
-  Unlike classes \code{"Species"} and \code{"Taxonomy"} there exists no
+  Unlike classes \verb{Species} and \verb{Taxonomy} there exists no
   custom initialize method. Therefore, function \code{SpeciesTaxonomy} should
   be used in cases where the data integrity is unsure.
 
@@ -97,18 +97,18 @@
 	
 	\item{ signature(obj = "SpeciesTaxonomy", value = "Taxonomy") }{
 	  subset \emph{slot 'species'} as to contain only the taxa given by an
-	  object of class \code{"Taxonomy"}, which by itself will replace
+	  object of class \verb{Taxonomy}, which by itself will replace
 	  \emph{slot 'taxonomy'}.
 	}
 
 	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
 	  subset \emph{slot 'species'} as above, but by an object of class
-	  \code{"data.frame"}. The latter is coerced to class \code{"Taxonomy"}.
+	  \code{"data.frame"}. The latter is coerced to class \verb{Taxonomy}.
 	}
  
 	\item{ signature(obj = "SpeciesTaxonomy", value = "Species") }{
 	  subset \emph{slot 'taxonomy'} as to contain only the taxa given by an
-	  object of class \code{"Species"}, which by itself will replace
+	  object of class \verb{Species}, which by itself will replace
 	  \emph{slot 'species'}.
 	}
  
@@ -118,7 +118,7 @@
 
 	\item{ signature(obj = "SpeciesTaxonomy", value = "data.frame") }{
 	  subset \emph{slot 'taxonomy'} as above, but by an object of class
-	  \code{"data.frame"}. The latter is coerced to class \code{"Species"}.
+	  \code{"data.frame"}. The latter is coerced to class \verb{Species}.
 	}
   }
 }

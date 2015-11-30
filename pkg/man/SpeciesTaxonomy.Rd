@@ -8,7 +8,7 @@
 \title{ Compare Species Abbreviations to Taxonomic Reference List }
 
 \description{
-Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} and \code{y}) or csv-files  (\code{file.x} and \code{file.y}) as inputs. All meaningful combinations (e. g. \code{x} and \code{file.y}) are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initialized as class \code{\linkS4class{Species}} and \code{y} as class \code{\linkS4class{Taxonomy}}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \code{"Species"} with column \code{'abbr'}) matches those in \code{y} (class \code{"Taxonomy"}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
+Function \code{SpeciesTaxonomy} accepts local \code{R} objects (arguments \code{x} and \code{y}) or csv-files  (\code{file.x} and \code{file.y}) as inputs. All meaningful combinations (e. g. \code{x} and \code{file.y}) are supported and each argument is coerced to it's corresponding class. Argument \code{x} is initialized as class \code{\linkS4class{Species}} and \code{y} as class \code{\linkS4class{Taxonomy}}, including basic data integrity checking for the respective class. The function further checks if the abbreviation in \code{x} (class \verb{Species} with column \code{'abbr'}) matches those in \code{y} (class \verb{Taxonomy}, itself with column \code{'abbr'}). Any mismatches are printed on screen, and possibly no object is returned if serious deviations where identified.
 }
 
 \usage{

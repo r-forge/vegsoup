@@ -9,7 +9,7 @@
 
 \description{
   \code{reshapeSpecies} is a utility function for conversion of objects of
-  class \code{"data.frame"} to class \code{"Species"}. The format demands
+  class \code{"data.frame"} to class \verb{Species}. The format demands
   cover values for layers to be given in separate columns. Such data structures
   might be delivered by certain data bases or archives, or are available as
   digitized field lists. \code{shapeSpecies} performs the reverse operation on

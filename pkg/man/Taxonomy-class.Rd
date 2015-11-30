@@ -25,7 +25,7 @@
 
 \alias{taxonomy<-,Vegsoup,SpeciesTaxonomy-method}
 
-\title{Class \code{"Taxonomy"}}
+\title{Class \verb{Taxonomy}}
 \description{
 Data representation of taxonomic reference list.
 }
@@ -65,7 +65,7 @@ Data representation of taxonomic reference list.
 
 	  \code{signature(obj = "character")}:
 		supply a file to be read by \code{read.csv} and promote that object to
-		class \code{"Species"}. Remember to pass appropriate arguments to
+		class \verb{Species}. Remember to pass appropriate arguments to
 		\code{\link{read.csv}} that meet the specifications of your file.
 	}
 

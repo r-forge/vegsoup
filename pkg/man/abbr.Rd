@@ -19,7 +19,7 @@
 
 \description{
   Get the abbreviations (\emph{abbr}) used to encode scientific species names. There are methods
-  for \code{"Species"} and \code{"Taxonomy"} classes, as well as for \verb{Vegsoup} objects.
+  for \verb{Species} and \verb{Taxonomy} classes, as well as for \verb{Vegsoup} objects.
 }
 
 \usage{

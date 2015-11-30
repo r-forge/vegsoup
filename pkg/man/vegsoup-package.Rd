@@ -72,22 +72,22 @@ classes, with the following functions:
     main constructor function demanding full specification
   }
   \item{ \code{\link{plainsoup}} }{
-    supply just a community matrix and no further data elements
+    suply just a community matrix and coverscale but no further data elements
   }
   \item{ \code{\link{instantsoup}} }{
-    shorthand function when data files conform to some format
+    shorthand function when data files conform to specific conventions (format)
   }
   \item{ \code{\link{coenoflex}} }{
      random community of specified size
   }
   \item{ \code{\link{species}} }{
-    constructor function for class \code{"Species"}
+    constructor function for class \verb{Species}
   }
   \item{ \code{\link{sites}} }{
-    constructor function for class \code{"Sites"}
+    constructor function for class \verb{Sites}
   }
   \item{ \code{\link{taxonomy}} }{
-    constructor function for class \code{"Taxonomy"}
+    constructor function for class \verb{Taxonomy}
   }
   \item{ \code{\link{stackSpecies}} }{
     reshape a vegetation table from wide to long format
@@ -96,7 +96,7 @@ classes, with the following functions:
     as above, but for sites data
   }
   \item{ \code{\link{reshapeSpecies}} }{
-    conversion function to class \code{"Species"}
+    conversion function to class \verb{Species}
   }
   \item{ \code{\link{stackCoordinates}} }{
     collects spatial coordinates
@@ -109,9 +109,9 @@ classes, with the following functions:
 }
 
 \section{ Derived objects from base class Vegsoup }{
-The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived class from the base class \verb{Vegsoup}. Objects of class \code{"VegsoupPartition"} directly extend the former class, that means all methods defined for class \verb{Vegsoup} apply. As the name suggest, class \code{"VegsoupPartition"} represents an object that is \emph{partitioned} (clusterend).
+The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived class from the base class \verb{Vegsoup}. Objects of class \verb{VegsoupPartition} directly extend the former class, that means all methods defined for class \verb{Vegsoup} apply. As the name suggest, class \verb{VegsoupPartition} represents an object that is \emph{partitioned} (clusterend).
 
-The following functions and method are designed for class \code{"VegsoupPartition"}.
+The following functions and method are designed for class \verb{VegsoupPartition}.
 
  \describe{
   \item{ \code{\link{VegsoupPartition}} }{
@@ -122,7 +122,7 @@ The following functions and method are designed for class \code{"VegsoupPartitio
   }
  }
 
-Class \code{"VegsoupOptimstride"} also extends class \verb{Vegsoup}. Thjis class contains information on how a data set could be partitioned.
+Class \verb{VegsoupOptimstride} also extends class \verb{Vegsoup}. Thjis class contains information on how a data set could be partitioned.
 
  \describe{
   \item{ \code{\link{OptimStride}} }{
@@ -145,7 +145,7 @@ Class \code{"VegsoupOptimstride"} also extends class \verb{Vegsoup}. Thjis class
   }
  }
 
-When indicator species analysis was performed on an object of that class, an object of \code{"VegsoupPartitionFidelity"} obtained, again with it's own unique and additional properties. 
+When indicator species analysis was performed on an object of that class, an object of \verb{VegsoupPartitionFidelity} obtained, again with it's own unique and additional properties. 
 
 }
 
@@ -181,7 +181,7 @@ As outlined above, a \verb{Vegsoup} object contains several data partitions. Bes
   }
  }
 
-For \code{"VegsoupPartition"} objects the following additional methods are defined.
+For \verb{VegsoupPartition} objects the following additional methods are defined.
 
  \describe{
   \item{ \code{\link{partitioning}} }{
@@ -210,7 +210,7 @@ Summary and print method
   }
  }
 
-For \code{"VegsoupPartition"} objects the following additional methods are defined.
+For \verb{VegsoupPartition} objects the following additional methods are defined.
 
  \describe{
   \item{ \code{\link{spread}} }{
@@ -249,13 +249,13 @@ There exist several methods that retrieve a community table as class 'matrix' fr
 
  \describe{
   \item{ \code{\link{as.logical}} }{
-    returns a \code{"matrix"} with zeros coding for absences and ones for presences
+    returns a \verb{matrix} with zeros coding for absences and ones for presences
   }
   \item{ \code{\link{as.numeric}} }{
-    returns a \code{"matrix"} with species abundances decoded by a coverscale
+    returns a \verb{matrix} with species abundances decoded by a coverscale
   }
   \item{ \code{\link{as.character}} }{
-    returns a \code{"matrix"} with species abundances in the data set's original scale
+    returns a \verb{matrix} with species abundances in the data set's original scale
   }
   \item{ \code{\link{as.matrix}} }{
     equivalent to the above, but storage type controlled by argument \code{typeof}
@@ -280,7 +280,7 @@ There exist several methods that retrieve a community table as class 'matrix' fr
   }
  }
 
-For \code{"VegsoupPartition"} objects the following additional methods are defined. 
+For \verb{VegsoupPartition} objects the following additional methods are defined. 
 
  \describe{
   \item{ \code{\link{quantile}} }{
@@ -292,11 +292,11 @@ For \code{"VegsoupPartition"} objects the following additional methods are defin
 
 \section{ Row and Column Names }{
 
-Vegsoup objects have row and column names. Row names are the plots (releveé) and they are shared among the species matrix and the sites data frame. Column names are therefore either dimnames of the species matrix (class \code{matrix}) or the names of the sites data (\code{colnames} relates to the species matrix, whereas \code{names} relates to the sites data). The \code{"\$"} operator acts like with normal data frames, it extracts the sites data. Replacement methods are also defined.
+Vegsoup objects have row and column names. Row names are the plots (releveé) and they are shared among the species matrix and the sites data frame. Column names are therefore either dimnames of the species matrix (class \code{matrix}) or the names of the sites data (\code{colnames} relates to the species matrix, whereas \code{names} relates to the sites data). The \verb{$} operator acts like with normal data frames, it extracts the sites data. Replacement methods are also defined.
 
  \describe{
   \item{ \code{\link{rownames},\link{row.names}} }{
-    plot names (mode \code{"character"}), the identifier of the sampling units
+    plot names (mode \verb{character}), the identifier of the sampling units
   }
   \item{ \code{\link{colnames}} }{
     compound string of abbreviated scientific species names and layer (collapsed with @)
@@ -331,7 +331,7 @@ There are several ways to manipulate vegsoup objects.
 
 \section{ Manipulating Vegsoup objects }{
 
-There are several ways to manipulate \code{"Vegsoup*"} objects.
+There are several ways to manipulate \verb{Vegsoup*} objects.
 
  \describe{
   \item{ \code{\link{bind}} }{
@@ -354,7 +354,7 @@ There are several ways to manipulate \code{"Vegsoup*"} objects.
   }
  }
 
-For \code{"VegsoupPartition"} objects the following additional methods are defined.
+For \verb{VegsoupPartition} objects the following additional methods are defined.
 
  \describe{
   \item{ \code{\link{partition}} }{
@@ -386,7 +386,7 @@ Nothing here yet.
 
 \section{ Table methods }{
 
-Only class \code{"VegsoupPartition"} has meaningful table methods.
+Only class \verb{VegsoupPartition} has meaningful table methods.
 
  \describe{
   \item{ \code{\link{constancy}} }{
@@ -416,7 +416,7 @@ Only class \code{"VegsoupPartition"} has meaningful table methods.
 
 \section{ Optimization }{
 
-The clustering partition vetcor of \code{"VegsouPPartition"} objects can be optimized.
+The clustering partition vetcor of \verb{VegsoupPartition} objects can be optimized.
  \describe{
   \item{ \code{\link{optsil}} }{
     modify partitioning as to optimize silhouette widths
@@ -434,13 +434,13 @@ Methods from spatial packges.
 
  \describe{
   \item{ \code{\link{spTransform}} }{
-   extract the values of a \code{"raster"} object (package \pkg{sp})
+   extract the values of a \verb{raster} object (package \pkg{sp})
   }
   \item{ \code{\link{over}} }{
    overlay method for spatial polygons (package \pkg{sp})
   }
   \item{ \code{\link{extract}} }{
-   extract the values of a \code{"raster"} object (package \pkg{raster})
+   extract the values of a \verb{raster} object (package \pkg{raster})
   }
  }
 
