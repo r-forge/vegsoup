@@ -59,9 +59,9 @@ JUICE software (\url{http://www.sci.muni.cz/botany/juice/})
 require(vegsoup)
 
 data(windsfeld)
-x <- VegsoupPartition(windsfeld, k = 10)
+x <- VegsoupPartition(coenoflex(), k = 3)
 
-stable(x, nitr = 100, nitr.lambda = 10)
+stable(x, nitr = 19, nitr.lambda = 10)
 }
 
 \keyword{ multivariate }
