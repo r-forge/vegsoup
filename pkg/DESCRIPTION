@@ -107,13 +107,13 @@ Collate: AAA.R
 		 Vegsoup-VisualisationMethods.R
 		 VegsoupPartition.R
 		 VegsoupPartition-BaseMethods.R
-                 reorder.R
+                reorder.R
 		 partition.R
 		 validate.R
 		 optimize.R
 		 typical.R
 		 spread.R
-		 Confus.R
+		 confusion.R
 		 Accuracy.R
 		 Contingency.R
 		 Constancy.R
