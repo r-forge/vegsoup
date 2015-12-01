@@ -6,14 +6,18 @@
 \alias{layer}
 \alias{layer,Vegsoup-method}
 
+\alias{layernumber}
+\alias{layer,Vegsoup-method}
+
 \title{ Return Stratum/Layer }
 
 \description{
-Simply return the layer for each observation.
+Simply return the layer for each observation in \emph{slot species}.
 }
 
 \usage{
 \S4method{layer}{Vegsoup}(obj, ...)
+\S4method{layernumber}{Vegsoup}(obj, ...)
 }
 
 \arguments{
@@ -26,13 +30,15 @@ Simply return the layer for each observation.
 }
 
 \details{
-  Simply returns the layer for each observation, equivalent to
-  \code{species(obj)$layer}.
+  Method \code{layer} simply returns the layer for each observation, equivalent
+  to \code{species(obj)$layer}. \code{layernumber} returns layer assignments as
+  an ordered integer.
 }
 
 \value{
-  \code{layer} returns a character vector equal in length to
-  \code{nrow(slot(species(obj), "data"))}}
+  \code{layer} and \code{layernumber} return a vector equal in length to
+  \code{nrow(species(obj))}.
+}
 
 \author{ Roland Kaiser }
 
@@ -46,8 +52,6 @@ Simply return the layer for each observation.
 }
 
 \examples{
-require(vegsoup)
-
 data(barmstein)
 x <- barmstein
 
@@ -56,6 +60,9 @@ table(layer(x))
 
 # alternative
 table(species(x)$layer)
+
+# layer as integer
+layernumber(x) 
 }
 \keyword{ methods }
 

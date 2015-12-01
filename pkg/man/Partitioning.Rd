@@ -9,6 +9,9 @@
 \alias{partitioning}
 \alias{partitioning,VegsoupPartition-method}
 
+\alias{partitions}
+\alias{partitions,VegsoupPartition-method}
+
 \alias{partitioningMatrix}
 \alias{partitioningMatrix,VegsoupPartition-method}
 
@@ -18,15 +21,19 @@
 \title{ Partitioning Vector of VegsoupPartition objects }
 
 \description{
-  Retrieve number of partitions (\code{getK}), partitioning vector (\code{partitioning}),
-  create a matrix of memberships of plots to partitions (\code{partitioningMatrix})
-  or tabulate all possibele combinations of partitions (\code{partitioningCombinations}).
+  Retrieve the number of partitions (\code{getK}),
+  the partitioning vector (\code{partitioning}),
+  the number of samples per partition (\code{partitions}),  
+  create a matrix of memberships of plots to partitions (\code{partitioningMatrix}),
+  or tabulate all possible combinations of partitions (\code{partitioningCombinations}).
 }
 
 \usage{
 \S4method{getK}{VegsoupPartition}(x)
 
 \S4method{partitioning}{VegsoupPartition}(x)
+
+\S4method{partitions}{VegsoupPartition}(x)
 
 \S4method{partitioningMatrix}{VegsoupPartition}(x)
 
@@ -75,6 +82,9 @@ getK(x)
 
 # vector of assigments
 partitioning(x)
+
+# number of samples per partition
+partitions(x)
 
 # matrix of memberships
 partitioningMatrix(x)

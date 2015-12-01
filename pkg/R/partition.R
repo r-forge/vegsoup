@@ -126,3 +126,22 @@ setMethod("partitioningCombinations",
 	signature(x = "VegsoupPartition"),
 	.partitioningCombinations
 )
+
+#	number of samples per cluster
+if (!isGeneric("partitions")) {
+setGeneric("partitions",
+	function (x, ...)
+		standardGeneric("partitions")
+)
+}
+
+.partitions <- function (x) {
+	r <- as.vector(table(partitioning(x)))
+	names(r) <- 1:getK(x)
+	return(r)
+}
+
+setMethod("partitions",
+	signature(x = "VegsoupPartition"),
+	.partitions
+)

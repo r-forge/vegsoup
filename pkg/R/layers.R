@@ -197,3 +197,14 @@ setMethod("layer",
    signature(obj = "Vegsoup"),
 	function (obj, ...) species(obj)$layer
 )
+
+#	return just the layer columns from species(obj)
+if (!isGeneric("layernumber")) {
+setGeneric("layernumber",
+	function (obj, ...)
+		standardGeneric("layernumber"))
+}		
+setMethod("layernumber",
+   signature(obj = "Vegsoup"),
+	function (obj, ...) as.numeric(ordered(splitAbbr(obj)$layer, layers(obj)))
+)
