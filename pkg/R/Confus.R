@@ -35,7 +35,7 @@ setMethod("confusion",
 
 		if (getK(obj1) != getK(obj2))
 			stop("Numbers of k differ for obj1 (", getK(obj1), ") ",
-				"and obj2 (", getK(obj1), ")!", sep = "")
+				"and obj2 (", getK(obj2), ")!", sep = "")
 		stopifnot(all.equal(dim(obj1), dim(obj2)))
 		
 		#	reference (observed) as row margins, comparison (predicted) as column margins
