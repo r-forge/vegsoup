@@ -10,7 +10,6 @@
 \alias{[,VegsoupPartition,ANY,ANY,missing-method}
 
 \alias{partition}
-\alias{partition,Vegsoup-method}
 \alias{partition,VegsoupPartition-method}
 \alias{[,partition,ANY,ANY,missing-method}
 
@@ -22,7 +21,7 @@
 
 \usage{
 \S4method{[}{Vegsoup}(x, i, j, ... , drop = TRUE)
-\S4method{partition}{Vegsoup}(x, value)
+\S4method{partition}{VegsoupPartition}(x, value)
 }
 
 \arguments{
