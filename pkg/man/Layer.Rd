@@ -7,7 +7,7 @@
 \alias{layer,Vegsoup-method}
 
 \alias{layernumber}
-\alias{layer,Vegsoup-method}
+\alias{layernumber,Vegsoup-method}
 
 \title{ Return Stratum/Layer }
 
