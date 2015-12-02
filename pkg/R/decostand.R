@@ -44,14 +44,15 @@ setReplaceMethod("decostand",
 			"standardize", "pa", "chi.square", "hellinger", "log",
 			"wisconsin", "cap") # cap is defined in vegan
 		value <- match.arg(value, METHODS, several.ok = TRUE)
-		
+
+		#	recompute partitioning
 		if (is.null(decostand(x))) {
 			x@decostand <- new("decostand", method = value)
-		}
-		else {
+				x <- VegsoupPartition(x, k = getK(x), method = x@method)
+				message("recomputed partitoning")			
+		} else {
 			if (value != decostand(x)) {
 				x@decostand <- new("decostand", method = value)
-				#	recompute
 				x <- VegsoupPartition(x, k = getK(x), method = x@method)
 				message("recomputed partitoning")
 			}
