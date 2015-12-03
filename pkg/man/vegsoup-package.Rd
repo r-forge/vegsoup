@@ -1,4 +1,6 @@
 % markup conventions
+% arguments{} section: mode and/or type of argument terminated by a dot
+% (e.g. \verb{character}. Any method ...)
 % classes: \verb{class} or \code{\linkS4class{Vegsoup}}
 % methods and functions: \code{function()}
 % arguments: \code{argument}
@@ -19,11 +21,13 @@
 \title{ An overview of the functions in this package }
 
 \description{
-The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In a certain respect it acts like a data base system. The \emph{vegsoup} term follows the tradition of strange named functions in the \pkg{vegan} package – in particular \code{\link[vegan:vegemite]{vegemite}} to give but one example (but also notice the \code{tabasco() function}).
+The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In a certain respect it acts like a data base system. In fact, it's data model is very similar to the \emph{TurboVeg} XML interchange format (see \code{\link{read.XML}}).
 
 Vegetation data consists of at least of two related tables -- a species or community matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). At the very least a sampling date is available. If taxonomic identity or traits of species is a concern -- and it should be --  an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent \R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects, for example when random subsets needs be performed. Some \R package adress these issues, namely the \pkg{mefa} and \pkg{multitable} packages. They do so by extending the \code{data.frame} concept. None of these packages is spatially explicit nor handle cover scales commonly applied in vegetation ecology and present vegetation data bases.
 
 Besides that the package provides novel functionality, it also interfaces functions in other packages, most important are \pkg{vegan}, \pkg{optpart} and \pkg{labdsv}. These functions are extended or their arguments are simplified, due the inherent properties og \verb{Vegsoup} objects. It was avoided to create new function names whenever another package already defines a suitable and meaningful name. Examples are \code{decostand()} and \code{vegdist()} which have extended meaning.
+
+The \emph{vegsoup} term follows the tradition of strange named functions in the \pkg{vegan} package – in particular \code{\link[vegan:vegemite]{vegemite}}, to give but one example but also notice the \code{tabasco() function}.
 
 This package should be mainly useful in the field of vegetation ecology, vegetation mapping and classification, and phytosociology in particular.
 
