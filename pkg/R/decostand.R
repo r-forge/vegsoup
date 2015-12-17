@@ -48,12 +48,12 @@ setReplaceMethod("decostand",
 		#	recompute partitioning
 		if (is.null(decostand(x))) {
 			x@decostand <- new("decostand", method = value)
-				x <- VegsoupPartition(x, k = getK(x), method = x@method)
-				message("recomputed partitoning")			
+				x <- VegsoupPartition(x, k = getK(x), method = x@partitioning.method)
+				message("recomputed partitoning")
 		} else {
 			if (value != decostand(x)) {
 				x@decostand <- new("decostand", method = value)
-				x <- VegsoupPartition(x, k = getK(x), method = x@method)
+				x <- VegsoupPartition(x, k = getK(x), method = x@partitioning.method)
 				message("recomputed partitoning")
 			}
 		}

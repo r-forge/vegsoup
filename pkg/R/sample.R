@@ -88,16 +88,14 @@ setMethod("hcr",
 		function (x, size, nperm = 1000, fast = FALSE, ...) {
 			k <- getK(x)
 			p <- partitioning(x)
-			m <- x@method
 			r <- sapply(1:k, function (i) {
-				hcr(as(partition(x, i), "Vegsoup"), size = size, ...)	
+				hcr(as(partition(x, i), "Vegsoup"), size = size, ...)
 			} )
 			r <- do.call("bind", r)
 			p <- p[match(rownames(r), names(p))]
-			
 			r <- VegsoupPartition(r, method = "external", clustering = p)
 			#	tweek method
-			r@method <- m
-			return(r)			
+			r@partitioning.method <- x@partitioning.method
+			return(r)
 	}
 )

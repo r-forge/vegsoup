@@ -182,8 +182,8 @@
 		)
 	}
 	else {
-	  P <- NULL
-	  M <- ""
+		P <- NULL
+		M <- ""
 	} # end if (k > 1)
 
 	#	retrieve partitioning vector
@@ -224,9 +224,9 @@
 		if (inherits(P, "isopam")) {
 			if (is.null (P$hier)) {
 				if (verbose) cat("no hierarchy estimated by isopam")
-			  	G <- P$flat
-			  	k  <- length(unique(P$flat))
-			} else { 
+				G <- P$flat
+				k  <- length(unique(P$flat))
+			} else {
 				if (verbose) cat("retieve lowest hierachy level")
 				G <- P$flat[[ncol(P$hier)]]
 				k <- length(unique(G))
@@ -293,7 +293,7 @@
 	r <- new("VegsoupPartition", obj)
 	#	assign class slots
 	r@part <- G
-	r@method <- ifelse(M != "FUN", M, paste(CALL$method, "<-", deparse(method)[1]))
+	r@partitioning.method <- ifelse(M != "FUN", M, paste(CALL$method, "<-", deparse(method)[1]))
 	r@k <- length(unique(G))
 	
 	return(r)

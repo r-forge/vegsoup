@@ -132,7 +132,7 @@
 		use.letters = TRUE
 
 	if (is.null(stat.min)) {
-		if (obj@method == "r.g") {
+		if (obj@fidelity.method == "r.g") {
 			#	automatic guess adapted from isopam()
 			stat.min = round(0.483709 + nc * -0.003272 + N * -0.000489 + sp * 0.000384 + sqrt (nc) * -0.01475, 2) 
 		}
@@ -339,7 +339,7 @@
 			add2caption  <- paste("All species in the same layer ",
 				layers(obj),
 				". ",
-				"Fidelity measure: ", obj@method, ". ",
+				"Fidelity measure: ", obj@fidelity.method, ". ",
 				sep = "")
 		} else {
 			add2caption  <- ""

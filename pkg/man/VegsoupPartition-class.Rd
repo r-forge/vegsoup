@@ -27,7 +27,7 @@
 	  Object of class \code{"numeric"}
 	  giving the partitioning (clustering) vector.
 	}
-	\item{\code{method}:}{
+	\item{\code{partitioning.method}:}{
 	  Object of class \code{"character"}
 	  giving the method thta was used to create the object.
 	}

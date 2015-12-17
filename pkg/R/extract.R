@@ -101,20 +101,20 @@ setMethod("[",
 		}
 		
 		#	develop class VegsoupPartition from class Vegsoup
-		res <- new("VegsoupPartition", tmp)
+		r <- new("VegsoupPartition", tmp)
 		#	and reassign class slots
-		res@part <- part[match(rownames(res), names(part))]
-		k <- length(unique(res@part))
-		res@part[] <- as.integer(as.character(factor(res@part, labels = 1:k)))
-		res@method = x@method
-		res@k = k
-		res@group = res@group[match(rownames(res), names(part))]
+		r@part <- part[match(rownames(res), names(part))]
+		k <- length(unique(r@part))
+		r@part[] <- as.integer(as.character(factor(r@part, labels = 1:k)))
+		r@partitioning.method = x@partitioning.method
+		r@k = k
+		r@group = r@group[match(rownames(r), names(part))]
 
 		#	validity
-		if (!identical(names(res@part), rownames(tmp))) {
+		if (!identical(names(r@part), rownames(tmp))) {
 			stop("inconsistency when subsetting partitioning vector")
 		}
-		return(res)
+		return(r)
 	}
 )
 

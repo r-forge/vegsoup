@@ -20,7 +20,7 @@
 		sub <- vegsoup::sample(x, replace = TRUE)
 		
 	#	subset classification
-		X <- VegsoupPartition(sub, k = k, method = x@method , ...)
+		X <- VegsoupPartition(sub, k = k, method = x@@partitioning.method, ...)
 		Y <- x[rownames(x) %in% rownames(X), ]
 		
 	#	raw lambda calculation
