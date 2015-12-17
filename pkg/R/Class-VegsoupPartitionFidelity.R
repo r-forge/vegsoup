@@ -5,7 +5,7 @@ setClass("VegsoupPartitionFidelity",
 	lowerCI = "matrix",
 	upperCI = "matrix",
 	nboot = "integer",
-	method = "character"),
+	fidelity.method = "character"),
 	contains = "VegsoupPartition"
 	)
 

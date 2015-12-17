@@ -39,7 +39,7 @@ Objects can be by calls to the function \code{\link{fidelity}}.
 	  Object of class \code{"integer"} giving the number of boot strap
 	  replicates performed. See above.
 	}
-	\item{\code{method}:}{
+	\item{\code{fidelity.method}:}{
 	  Object of class \code{"character"} giving the name of the method.
 	}
   }

@@ -75,10 +75,10 @@ setMethod("show",
 
 .fidelity.summary <- function (x) {
 	res <- paste(
-		"\nfidelity measure:", x@method,
+		"\nfidelity measure :", x@fidelity.method,
 		ifelse(all(is.na(x@lowerCI)), 
-		"\nbootstrap       : no",
-		paste("\nbootstrap :", x@nboot, "replicates")))
+		"\nbootstrap        : no",
+		paste("\nbootstrap        :", x@nboot, "replicates")))
 	res
 }
 
@@ -154,7 +154,7 @@ setMethod("summary",
 		cat("object of class  :", class(object))
 		switch(choice,
 			"all" = {
-			cat(s1, s2, s3, s4, "\n")
+			cat(s1, s2, s3, s4, s5, "\n")
 		}, "species" = {
 			cat(s1, s3, s4, "\n")
 		}, "sites" = {

@@ -757,29 +757,17 @@
 		dmlower = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 		dmupper = matrix(NA, nrow = nrow(dm), ncol = ncol(dm))
 	}	# end nboot
-	
-	#	change: develop form VegsoupPartition object"
-	res <- new("VegsoupPartitionFidelity",
-		stat = as.matrix(dm),
-		fisher.test = as.matrix(ft),
-		lowerCI = as.matrix(dmlower),
-		upperCI = as.matrix(dmupper),
-		nboot = as.integer(nboot),
-		method = method, # method.name
-		part = obj@part,
-		k = obj@k,
-		dist = obj@dist,
-		sites = obj@sites,
-		species = obj@species,
-		taxonomy = obj@taxonomy,
-		coverscale = obj@coverscale,
-		layers= obj@layers,
-		group = obj@group,
-		sp.points = obj@sp.points,
-		sp.polygons = obj@sp.polygons
-)
 
-return(invisible(res))
+	#	develop class VegsoupPartitionFidelity from class VegsoupPartition
+	r <- new("VegsoupPartitionFidelity", obj)
+	#	assign class slots
+	r@stat <- as.matrix(dm)
+	r@fisher.test <- as.matrix(ft)
+	r@lowerCI <- as.matrix(dmlower)
+	r@upperCI <- as.matrix(dmupper)
+	r@nboot <- as.integer(nboot)
+	r@fidelity.method <- method
+return(invisible(r))
 
 }
 
