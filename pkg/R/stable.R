@@ -41,16 +41,14 @@
 			}
 			return(r)
 		}
-		
-		r.nitr.l <- .randomLambda(nitr.l)
 
-		r.l <- r.l + sum(r.nitr.l)
+		r.l <- r.l + sum(.randomLambda(nitr.lambda))
 	}
 	close(pb)
 	
 	#	final modified lambda calculation
 	l <- sum(l) / nitr
-	r.l <- r.l / (nitr * nitr.l)
+	r.l <- r.l / (nitr * nitr.lambda)
 	l.m <- (l - r.l) / (1 - r.l) # modified lamda
 	
 	r <- list(lambda = l, modified.lambda = l.m)
