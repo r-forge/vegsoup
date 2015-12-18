@@ -300,7 +300,7 @@
 }
 
 #	exported function
-VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, ...) {
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, ...) {
 	
 	.VegsoupPartition(obj = obj, k = k, method = method, clustering = clustering, polish = polish,
 		seed = seed, verbose = verbose, ...)
