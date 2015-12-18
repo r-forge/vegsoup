@@ -7,7 +7,7 @@ setGeneric("sample")
 #}
 
 #	warning: does not behave as expected for the user
-#	StablePartition() relies on this method
+#	stable() relies on this method
 #	think about a method for class (VegsoupPartition) to sample conditional on Partitioning(obj)
 setMethod("sample",
 	signature(x = "Vegsoup"),
@@ -18,10 +18,9 @@ setMethod("sample",
 			size <- N
 		}
 		i <- sample(1:N, size, replace = replace, prob = prob)
+		#	remove all duplicated plots from sample
 		if (any(table(i) > 1)) {
 			i <- sort(unique(i))
-			#message("\nreplace was set to ", replace,
-			#	", can only select unique plots! A subsample will be returend!")
 		}
 		r <- x[i, ]
 		return(r)

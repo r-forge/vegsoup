@@ -50,7 +50,7 @@ The methods take a sample of the specified size from the elements of \code{x} us
 }
 
 \details{
-See \code{\link{sample}} for details. Method \code{hcr} returns \emph{the most representative} subsample of specified size by selecting from \code{nperm} independent subsets the one that has lowest mean dissimilarity and highest variance.
+See \code{\link{sample}} for details. If \code{replace = TRUE} and size is missing, all duplicated plots are removed from the sample. Method \code{hcr} returns \emph{the most representative} subsample of specified size by selecting from \code{nperm} independent subsets the one that has lowest mean dissimilarity and highest variance.
 }
 
 \value{
