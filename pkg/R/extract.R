@@ -103,7 +103,7 @@ setMethod("[",
 		#	develop class VegsoupPartition from class Vegsoup
 		r <- new("VegsoupPartition", tmp)
 		#	and reassign class slots
-		r@part <- part[match(rownames(res), names(part))]
+		r@part <- part[match(rownames(r), names(part))]
 		k <- length(unique(r@part))
 		r@part[] <- as.integer(as.character(factor(r@part, labels = 1:k)))
 		r@partitioning.method = x@partitioning.method
