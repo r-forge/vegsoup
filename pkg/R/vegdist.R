@@ -58,7 +58,7 @@ setReplaceMethod("vegdist",
 		if (method == -1)
 			stop("ambiguous distance method")
 		
-		if (method != x@method) {
+		if (method != x@partitioning.method) {
 			x@dist <- method
 			#	recompute
 			x <- VegsoupPartition(x, k = getK(x), method = x@partitioning.method)
