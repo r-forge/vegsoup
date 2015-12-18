@@ -13,7 +13,7 @@ Create an object of class \code{'VegsoupPartition'} by selecting a predefined cl
 \usage{
 VegsoupPartition(obj, k, method = c("ward", "flexible", "pam", "isopam",
                  "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"),
-                 clustering, polish = FALSE, seed = 1234, verbose = FALSE,
+                 clustering, polish = FALSE, seed = NULL, verbose = FALSE,
                  ...)
 }
 

@@ -2,12 +2,12 @@
 
 #	low level function to allow distance matrix as argument Xd and raw species matrix as argument X
 #	this speeds up calculation in OptimStride() 
-.VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = 1234, verbose = FALSE, X, Xd, ...) {
+.VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, X, Xd, ...) {
 
 	CALL <- match.call()
 	
 	#	set seed
-	set.seed(seed)
+	if (!is.null(seed)) set.seed(seed)
 	
 	if (!inherits(obj, "Vegsoup"))	stop("Need object of class Vegsoup")
 

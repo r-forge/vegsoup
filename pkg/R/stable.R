@@ -1,7 +1,7 @@
 #	adopted for vegsoup from script Classification Stability supplied for JUICE
 #	http://www.sci.muni.cz/botany/juice/R/classification%20stability.r
 
-.stable <- function (x, nitr = 200, nitr.l = 10, ...)	{
+.stable <- function (x, nitr = 200, nitr.lambda = 10, ...)	{
 	
 	k <- getK(x)
 	
