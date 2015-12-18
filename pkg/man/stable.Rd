@@ -54,7 +54,7 @@ Tichý, L. and Chytrý, M. and Šmarda, P. (2011) Evaluating the stability of th
   This function is experimental!
 }
 \examples{
-x <- VegsoupPartition(coenoflex(), k = 3)
+x <- VegsoupPartition(coenoflex(seed = 1234), k = 3)
 
 stable(x, nitr = 19, nitr.lambda = 10)
 }

@@ -30,7 +30,7 @@ Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
         proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
         verbose = FALSE)
 
-coenoflex(i = 30, j = 20, gradients = 2, ...)
+coenoflex(i = 30, j = 20, gradients = 2, seed = NULL, ...)
 
 plainsoup(m, coverscale, layer = "0l", verbose = TRUE)
 
@@ -107,6 +107,9 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     number of plots (\code{n}) and species (\code{m}) to simulate on
     \code{gradient} (1 or 2 ).
   }
+  \item{ seed }{
+    set random number generator to make results from methods reproducible.
+  }  
   \item{ \dots }{
     Additional arguments passed to coenoflex.
   }

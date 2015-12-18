@@ -7,7 +7,7 @@
 	CALL <- match.call()
 	
 	#	set seed
-	if (is.null(seed)) set.seed(seed)
+	if (!is.null(seed)) set.seed(seed)
 	
 	if (!inherits(obj, "Vegsoup"))	stop("Need object of class Vegsoup")
 

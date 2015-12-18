@@ -1,7 +1,9 @@
 #	package coenoflex is missing from CRAN since Summer 2014
 #	switched to package coenocliner
 
-coenoflex <- function (i = 30, j = 20, gradients = 2, ...) {
+coenoflex <- function (i = 30, j = 20, gradients = 2, seed = NULL, ...) {
+	if (!is.null(seed)) set.seed(seed)
+
 	#	taken from coenocliner vignette page 9
 	N <- i # number of plots
 	M <- j # number of species
