@@ -98,7 +98,7 @@ Collate: AAA.R
 		 Indval.R
 		 elevation.R
 		 KML.R
-		 QuickMap.R
+		 quicklook.R
 		 coldiss.R
 		 reverseGeocode.R
 		 Vegsoup-SpatialMethods.R
@@ -114,9 +114,9 @@ Collate: AAA.R
 		 typical.R
 		 spread.R
 		 confusion.R
-		 Accuracy.R
-		 Contingency.R
-		 Constancy.R
+		 accuracy.R
+		 contingency.R
+		 constancy.R
 		 average.R
 		 rectangles.R
 		 ellipsoidhull.R
