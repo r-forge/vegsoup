@@ -8,20 +8,17 @@ setGeneric("confusion",
 ".confusion" <- function (t, N) {
 		stopifnot(is.table(t))
 		D <- sum(diag(t))
-		P <-  D / N * 100 # percentage correct
+		P <- D / N * 100 # percentage correct
 		S <- sum(rowSums(t) * colSums(t))
 		
-		#	calculate kappa
+		#	calculate Cohen's kappa measure of agreement
 		K <- (c(N * D) - S) / (N^2 - S)
 
-		#	calculate lambda		
-		#	formula needs to be confirmed by a reference
-		q1 <- sum(apply(t, 1, function (x) max(x)))
-		q2 <- sum(apply(t, 2, function (x) max(x)))
-		q3 <- max(rowSums(t))
-		q4 <- max(colSums(t))
-		q5 <- 2 * sum(t)
-		L <- (q1 + q2 - q3 - q4) / (q5 - q3 - q4) # lambda
+		#	calculate Goodman and Kruskal's lambda
+		n <- sum(t)
+		e1 <- sum(apply(t, 1, max), apply(t, 2, max))
+		e2 <- max(rowSums(t)) + max(colSums(t))
+		L <- 0.5 * (e1 - e2) / (n - 0.5 * e2)
 		
 		r <- list(confus = t, correct = P, kappa = K, lambda = L)
 		
