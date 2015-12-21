@@ -22,7 +22,7 @@ setMethod("rownames",
 	sel <- match(levels(pl), xy$x)
 	xy$x <- xy$x[sel]
 	xy$y <- xy$y[sel]
-	levels(pl) <- xy$y		
+	levels(pl) <- xy$y
 	x@species$plot <- as.character(pl)
 	
 	#	sites
@@ -40,11 +40,11 @@ setMethod("rownames",
 	
 	return(x)
 }
-	
+
 setReplaceMethod("rownames",
 	signature(x = "Vegsoup", value = "character"),
 	.replace.rownames
-)	
+)
 
 setReplaceMethod("rownames",
 	signature(x = "Vegsoup", value = "integer"),
@@ -80,7 +80,7 @@ setMethod("dimnames",
 	function (x) {
 		p <- species(x)$plot
 		a <- species(x)$abbr
-		l <- species(x)$layer	
+		l <- species(x)$layer
 		al <- sprintf("%s@%s", a, l)
 		return(list(p, al))
 	}
@@ -125,7 +125,7 @@ setReplaceMethod("row.names",
 )
 
 decode <- function (x, obj) {
-	if (!(inherits(obj, "Vegsoup") | inherits(obj, "Taxonomy"))) {
+	if (!(inherits(obj, "Vegsoup") | inherits(obj, "Taxonomy"))) {
 		stop("argument obj must inherit from classes Vegsoup or Taxonomy")
 	}
 
@@ -135,7 +135,7 @@ decode <- function (x, obj) {
 		if (inherits(x, "character") | inherits(x, "list")) {
 			if (inherits(x, "list")) x <- names(x)
 		} else {
-		stop("argument not of class, matrix, vector ort list")		
+		stop("argument not of class, matrix, vector ort list")
 		}
 	}	
 	
@@ -150,9 +150,9 @@ decode <- function (x, obj) {
 	t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]
 	r <- list(abbr = a, layer = l, taxon = t)
 
-	return(r)			
+	return(r)
 }
-		
+
 #	convert abbr to taxon names
 #if (!isGeneric("splitAbbr")) {
 setGeneric("splitAbbr",
@@ -179,14 +179,14 @@ setMethod("splitAbbr",
 #   signature(obj = "Vegsoup"),
 #	function (obj) {
 #		splitAbbr(obj)$abbr
-#	}	
+#	}
 #)
 
 setMethod("abbr",
 	signature(obj = "Vegsoup"),
 	function (obj) {
 		sort(unique(species(obj)$abbr))
-	}	
+	}
 )
 
 #if (!isGeneric("taxon")) {
@@ -212,7 +212,7 @@ setMethod("taxon",
 #	signature(obj = "Vegsoup", value = "character"),
 #	function (obj, value) {
 #		#	to do: needs security for all slots!
-#		obj@species$abbr <- value		
-#		return(obj)		
+#		obj@species$abbr <- value
+#		return(obj)
 #	}
 #)
