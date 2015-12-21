@@ -165,7 +165,6 @@ decode <- function (x, obj) {
 		stop("argument obj must inherit from classes Vegsoup or Taxonomy")
 	}
 	if (length(grep("@", x)) == length(x)) {                          # if TRUE has layers
-		cat("hello")
 		a <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 1)) # abbreviation
 		l <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 2)) # layer
 		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]        # taxon
