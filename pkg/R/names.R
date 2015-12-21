@@ -134,23 +134,50 @@ setGeneric("splitAbbr",
 setMethod("splitAbbr",
 	signature(obj = "Vegsoup"),
 	function (obj) {
-	#	obj <- dta; type = "nospace"
-
-	abbr.layer <- colnames(obj)	
-	abbr <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 1))
-	layer <- unlist(lapply(strsplit(abbr.layer, "@", fixed = TRUE), "[[" , 2))
-	taxon <- taxonomy(obj)$taxon[match(abbr, taxonomy(obj)$abbr)]
+		al <- colnames(obj)	# abbreviation and layer
+		a <- unlist(lapply(strsplit(al, "@", fixed = TRUE), "[[" , 1)) # abbreviation
+		l <- unlist(lapply(strsplit(al, "@", fixed = TRUE), "[[" , 2)) # layer
+		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]         # taxon
 	
-	res <- data.frame(abbr, layer, taxon, stringsAsFactors = FALSE)
-	rownames(res) <- abbr.layer
+		r <- data.frame(abbr = a, layer = l, taxon = t, stringsAsFactors = FALSE)
+		rownames(r) <- al
 
-	if (any(is.na(res$layer)) | any(is.na(res$taxon))) {
-		stop("\n unable to deparse layer string,",
-			" consider setting type to nospace", call. = FALSE)
-	}
-	return(invisible(res))
-	}
+		if (any(is.na(r$layer)) | any(is.na(r$taxon))) {
+			stop("\n unable to deparse layer string,",
+				" consider setting type to nospace", call. = FALSE)
+		}
+		return(invisible(r))
+		}
 )
+
+decode <- function (x, obj) {
+	if (inherits(x, "matrix") | inherits(x, "data.frame")) {
+		x <- rownames(x)
+	} else {
+		if (inherits(x, "character") | inherits(x, "list")) {
+			if (inherits(x, "list")) x <- names(x)
+		} else {
+		stop("argument not of class, matrix, vector ort list")		
+		}
+	}	
+	
+	if (!(inherits(obj, "Vegsoup") | inherits(obj, "Taxonomy"))) {
+		stop("argument obj must inherit from classes Vegsoup or Taxonomy")
+	}
+	if (length(grep("@", x)) == length(x)) {                          # if TRUE has layers
+		cat("hello")
+		a <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 1)) # abbreviation
+		l <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 2)) # layer
+		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]        # taxon
+		r <- list(abbr = a, layer = l, taxon = t)
+	} else {
+		a <- x 
+		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]
+		r <- list(abbr = a, layer = NA, taxon = t)		
+	}
+	return(r)
+			
+}
 
 #setMethod("abbr",
 #   signature(obj = "Vegsoup"),
@@ -166,13 +193,14 @@ setMethod("abbr",
 	}	
 )
 
-#if (!isGeneric("abbr")) {
+#if (!isGeneric("taxon")) {
 #	get or set taxon abbreviation
 setGeneric("taxon",
 	function (obj) {
 		standardGeneric("taxon")
 	}	
 )
+#}
 setMethod("taxon",
 	signature(obj = "Vegsoup"),
 	function (obj) {

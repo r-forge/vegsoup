@@ -113,7 +113,8 @@ export(
 	"castFooter",
 	"header",
 	"template",
-        "combine"
+	"combine",
+	"decode"
 )
 
 exportMethods(

@@ -6,6 +6,8 @@
 \alias{splitAbbr}
 \alias{splitAbbr,Vegsoup-method}
 
+\alias{decode}
+
 \title{ Deparse Species Layer Replication of \code{Vegsoup*} Objects }
 
 \description{
@@ -15,24 +17,34 @@
 
 \usage{
 \S4method{splitAbbr}{Vegsoup}(obj)
+
+decode(x, obj)
 }
 
 \arguments{
   \item{ obj }{
-	A \code{Vegsoup*} object.
+    \verb{Vegsoup*} object.
+  }
+  \item{ x }{
+    \verb{data.frame}, \verb{matrix}, \verb{list}, or \verb{vector} with dimnames.
   }
 }
 
 \details{
-  The method decomposes the \code{colnames} of the species matrix into three
-  components. The first giving the taxon abbreviation only (\code{'abbr'}),
-  the second the layer code (\code{'layer'}) and the last component
-  corresponds to the full taxon name (\code{'taxon'}) as queried from
-  \code{taxonomy(obj)}.
+  The \verb{splitAbbr} method decomposes the \code{colnames} of the species
+  matrix into three components. The first giving the taxon abbreviation only
+  (\verb{abbr}), the second the layer code (\verb{layer}) and the last
+  component corresponds to the full taxon name (\verb{taxon}) as queried
+  from \code{taxonomy(obj)}.
 
-  The compound taxon key (\code{'abbr.layer'}) can be accessed from the
+  The compound taxon key (\verb{abbr.layer}) can be accessed from the
   \code{rownames} of the resulting object. This is advantageous as it provides 
   an easy means of subsetting with \code{colnames(obj)}.
+
+  \verb{decode} is equivalent to the above method, but works for base
+  classes (see \sQuote{Examples}). However, an appropriate
+  \code{\linkS4class{Vegsoup}} or \code{\linkS4class{Taxonomy}} object
+  has to be supplied to query scientific taxon names.
 
   \code{\link{Vegsoup}} and \code{\linkS4class{Species}} construct these
   \emph{compound taxon abbreviations} by pasting \code{make.names(x)} and
@@ -88,6 +100,20 @@ m <- cbind(a[rownames(m), ], m)
 # indexing of 'Vegsoup' object by suppling indices of the the species matrix
 # elements according to 'as.matrix' method
 x[, rownames(a)[sample(1:ncol(x), 10)]]
+
+# decode rownames of matrix ...
+class(xx <- constancy(x))
+decode(xx, x)
+
+# ... data.frame and Taxonomy object
+class(xx <- splitAbbr(x))
+decode(xx, taxonomy(x))
+
+# character vector without layer encoded with '@'
+decode(taxalist(x)$abbr, x)
+
+# a named list
+decode(spread(VegsoupPartition(x, k = 2)), x)
 }
 
 \keyword{ methods }
