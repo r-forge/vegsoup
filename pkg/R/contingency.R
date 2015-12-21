@@ -2,6 +2,29 @@ setGeneric("contingency",
 	function (obj, ...)
 		standardGeneric("contingency")
 )
+
+setMethod("contingency",
+	signature(obj = "Vegsoup"),
+	function (obj, ...) {
+		cl <- match.call()
+
+		if (any(names(cl) == "mode")) {
+			if (cl$mode == "R") {
+				stop("argument mode not yet implemented for objects of class Vegsoup")
+			}
+			else {
+				stop("omit mode argument for standard behaviour")
+			}
+		}
+		else {
+			r <- as.matrix(colSums(obj))
+			colnames(r) <- 0
+		}
+		return(r)
+	}
+)
+
+
 setMethod("contingency",
 	signature(obj = "VegsoupPartition"),
 	function (obj, ...) {

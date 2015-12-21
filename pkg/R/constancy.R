@@ -2,16 +2,28 @@ setGeneric("constancy",
 	function (obj, percentage = TRUE, ...)
 		standardGeneric("constancy")
 )
+
+setMethod("constancy",
+	signature(obj = "Vegsoup"),
+	function (obj, percentage = TRUE, ...) {
+		r <- contingency(obj) / nrow(obj)
+		if (percentage) {
+			r <- round(r * 100, ...)
+		}
+		return(r)
+	}
+)
+
 setMethod("constancy",
 	signature(obj = "VegsoupPartition"),
 	function (obj, percentage = TRUE, ...) {
-		res1 <- contingency(obj)
-		res2 <- matrix(as.vector(table(partitioning(obj))),
+		r1 <- contingency(obj)
+		r2 <- matrix(partitions(obj),
 			nrow = ncol(obj), ncol = getK(obj), byrow = TRUE)
-		res <- res1 / res2
+		r <- r1 / r2
 		if (percentage) {
-			res <- round(res * 100, ...)
+			r <- round(r * 100, ...)
 		}
-		return(res)
+		return(r)
 	}
 )

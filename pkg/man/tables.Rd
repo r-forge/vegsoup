@@ -4,9 +4,11 @@
 \docType{methods}
 
 \alias{contingency}
+\alias{contingency,Vegsoup-method}
 \alias{contingency,VegsoupPartition-method}
 
 \alias{constancy}
+\alias{constancy,Vegsoup-method}
 \alias{constancy,VegsoupPartition-method}
 
 \alias{average}
@@ -18,11 +20,15 @@
 \title{ Constancy and Contingency Tables }
 
 \description{
-Method \code{constancy} lists for each species the fraction (percentage) of samples in each partition the species occurs; \code{contingency} lists just the number of occurrences. The latter is based on presence/absence of a species (layer-replicate), whereas method \code{average} divides the sum of species abundances by the number of plots in which it occurs. A tabulation of \code{partitioning(obj)} against a cross-classifying factor taken from a column of \code{sites(obj)} can be obtained with the \code{as.table} method.
+Method \code{constancy} lists for each species the fraction (percentage) of samples in each partition (or the whole data set) the species occurs; \code{contingency} lists just the number of occurrences. The latter is based on presence/absence of a species (layer-replicate), whereas method \code{average} divides the sum of species abundances by the number of plots in which it occurs. A tabulation of \code{partitioning(obj)} against a cross-classifying factor taken from a column of \code{sites(obj)} can be obtained with the \code{as.table} method.
 }
 
 \usage{
+\S4method{constancy}{Vegsoup}(obj, percentage = TRUE, ...)
+
 \S4method{constancy}{VegsoupPartition}(obj, percentage = TRUE, ...)
+
+\S4method{contingency}{Vegsoup}(obj, ...)
 
 \S4method{contingency}{VegsoupPartition}(obj, ...)
 
@@ -33,18 +39,19 @@ Method \code{constancy} lists for each species the fraction (percentage) of samp
 
 \arguments{
   \item{ obj, x }{
-    VegsoupPartition object.
+    \verb{Vegsoup} or \verb{VegsoupPartition} object.
   }
   \item{ percentage }{
-    numeric. Return results of \code{constancy} as percentages.
+    \verb{numeric}. Return results of \code{constancy} as percentages.
   }
   \item{ \dots }{
-    additional arguments passed to methods. For \code{contingency} and \code{average} \code{...} expands to
-    arguments passed to matrix methods \code{as.logical} and \code{as.matrix}
-    respectively (see \sQuote{Details}). Additional arguments to
-    \code{constancy} are passed to \code{\link{round}} (the (\code{digits}) argument) and are only applicable
-    if \code{percentage = TRUE}. For \code{as.table} a character giving a column name of \code{sites(x)} or
-    a vector which can be interpreted as factor.
+    additional arguments passed to methods. For \code{contingency} and
+    \code{average} \code{...} expands to arguments passed to matrix methods
+    \code{as.logical} and \code{as.matrix} respectively (see
+    \sQuote{Details}). Additional arguments to \code{constancy} are passed to
+    \code{\link{round}} (the (\code{digits}) argument) and are only applicable
+    if \code{percentage = TRUE}. For \code{as.table} a character giving a
+    column name of \code{sites(x)} or a vector which can be interpreted as factor.
   }
 }
 
