@@ -123,6 +123,35 @@ setReplaceMethod("row.names",
 	signature(x = "Vegsoup", value = "integer"),
 	.replace.rownames
 )
+
+decode <- function (x, obj) {
+	if (!(inherits(obj, "Vegsoup") | inherits(obj, "Taxonomy"))) {
+		stop("argument obj must inherit from classes Vegsoup or Taxonomy")
+	}
+
+	if (inherits(x, "matrix") | inherits(x, "data.frame")) {
+		x <- rownames(x)
+	} else {
+		if (inherits(x, "character") | inherits(x, "list")) {
+			if (inherits(x, "list")) x <- names(x)
+		} else {
+		stop("argument not of class, matrix, vector ort list")		
+		}
+	}	
+	
+	if (length(grep("@", x)) == length(x)) {
+		a <- sapply(strsplit(x, "@", fixed = TRUE), "[[" , 1) # abbreviation
+		l <- sapply(strsplit(x, "@", fixed = TRUE), "[[" , 2) # layer
+	} else {
+		message("layer idientifier '@' not found, or unconsistent")
+		a <- x
+		l <- rep(NA, lentgh(a)) 
+	}
+	t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]
+	r <- list(abbr = a, layer = l, taxon = t)
+
+	return(r)			
+}
 		
 #	convert abbr to taxon names
 #if (!isGeneric("splitAbbr")) {
@@ -134,13 +163,9 @@ setGeneric("splitAbbr",
 setMethod("splitAbbr",
 	signature(obj = "Vegsoup"),
 	function (obj) {
-		al <- colnames(obj)	# abbreviation and layer
-		a <- unlist(lapply(strsplit(al, "@", fixed = TRUE), "[[" , 1)) # abbreviation
-		l <- unlist(lapply(strsplit(al, "@", fixed = TRUE), "[[" , 2)) # layer
-		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]         # taxon
-	
-		r <- data.frame(abbr = a, layer = l, taxon = t, stringsAsFactors = FALSE)
-		rownames(r) <- al
+		al <- colnames(obj)
+		r <- decode(al, x)
+		r <- as.data.frame(r, stringsAsFactors = FALSE, row.names = al)
 
 		if (any(is.na(r$layer)) | any(is.na(r$taxon))) {
 			stop("\n unable to deparse layer string,",
@@ -149,34 +174,6 @@ setMethod("splitAbbr",
 		return(invisible(r))
 		}
 )
-
-decode <- function (x, obj) {
-	if (inherits(x, "matrix") | inherits(x, "data.frame")) {
-		x <- rownames(x)
-	} else {
-		if (inherits(x, "character") | inherits(x, "list")) {
-			if (inherits(x, "list")) x <- names(x)
-		} else {
-		stop("argument not of class, matrix, vector ort list")		
-		}
-	}	
-	
-	if (!(inherits(obj, "Vegsoup") | inherits(obj, "Taxonomy"))) {
-		stop("argument obj must inherit from classes Vegsoup or Taxonomy")
-	}
-	if (length(grep("@", x)) == length(x)) {                          # if TRUE has layers
-		a <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 1)) # abbreviation
-		l <- unlist(lapply(strsplit(x, "@", fixed = TRUE), "[[" , 2)) # layer
-		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]        # taxon
-		r <- list(abbr = a, layer = l, taxon = t)
-	} else {
-		a <- x 
-		t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]
-		r <- list(abbr = a, layer = NA, taxon = t)		
-	}
-	return(r)
-			
-}
 
 #setMethod("abbr",
 #   signature(obj = "Vegsoup"),
