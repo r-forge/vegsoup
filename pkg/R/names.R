@@ -145,7 +145,7 @@ decode <- function (x, obj) {
 	} else {
 		message("layer idientifier '@' not found, or unconsistent")
 		a <- x
-		l <- rep(NA, lentgh(a)) 
+		l <- rep(NA, length(a)) 
 	}
 	t <- taxonomy(obj)$taxon[match(a, taxonomy(obj)$abbr)]
 	r <- list(abbr = a, layer = l, taxon = t)
