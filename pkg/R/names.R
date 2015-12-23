@@ -164,7 +164,7 @@ setMethod("splitAbbr",
 	signature(obj = "Vegsoup"),
 	function (obj) {
 		al <- colnames(obj)
-		r <- decode(al, x)
+		r <- decode(al, obj)
 		r <- as.data.frame(r, stringsAsFactors = FALSE, row.names = al)
 
 		if (any(is.na(r$layer)) | any(is.na(r$taxon))) {
