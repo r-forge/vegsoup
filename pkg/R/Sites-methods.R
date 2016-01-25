@@ -23,9 +23,16 @@ setMethod("sites",
 
 setMethod("sites",
 	signature(obj = "character"),
-	function (obj, ...) {
-		new("Sites",
-		data = read.csv(obj, ...)[, 1:3])
+	function (obj, ...) {		
+		n <- scan(obj, what = "character", nlines = 1, quiet = TRUE)
+		r <- try(new("Sites",
+			data = read.csv(obj, ...)[, 1:3]), silent = TRUE)
+		
+		if (class(r) == "try-error")
+			stop("could not read csv file, maybe try another sep argument? ",
+				"first line of file is \"", x, "\"")
+		else
+			return(r)			
 	}	
 )
 

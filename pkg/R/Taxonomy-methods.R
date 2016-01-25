@@ -16,9 +16,17 @@ setMethod("taxonomy",
 setMethod("taxonomy",
 	signature(obj = "character"),
 	function (obj, ...) {
-		new("Taxonomy",
-		data = read.csv(obj, ...))
-	}	
+
+		n <- scan(obj, what = "character", nlines = 1, quiet = TRUE)
+		r <- try(new("Taxonomy",
+			data = read.csv(obj, ...)), silent = TRUE)
+		
+		if (class(r) == "try-error")
+			stop("could not read csv file, maybe try another sep argument? ",
+				"first line of file is \"", x, "\"")
+		else
+			return(r)
+	}
 )
 
 setMethod("taxonomy",

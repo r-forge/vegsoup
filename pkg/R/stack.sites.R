@@ -7,7 +7,7 @@ stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = 
 	if (!missing(file)) {
 		if (is.character(file)) {
 			#	find schema column first
-			x <- scan(file, what = "character", nlines = 1, sep = sep)
+			x <- scan(file, what = "character", nlines = 1, sep = sep, quiet = TRUE)
 			j <- match(schema, x)
 			
 			cc <- rep(NA, length(j))

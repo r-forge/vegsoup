@@ -47,8 +47,15 @@ setMethod("species",
 setMethod("species",
 	signature(obj = "character"),
 	function (obj, ...) {
-		new("Species",
-		data = read.csv(obj, ...))
+		n <- scan(obj, what = "character", nlines = 1, quiet = TRUE)
+		r <- try(new("Species",
+			data = read.csv(obj, ...)), silent = TRUE)
+		
+		if (class(r) == "try-error")
+			stop("could not read csv file, maybe try another sep argument? ",
+				"first line of file is \"", x, "\"")
+		else
+			return(r)
 	}
 )
 
