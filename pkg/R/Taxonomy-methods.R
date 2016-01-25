@@ -23,7 +23,7 @@ setMethod("taxonomy",
 		
 		if (class(r) == "try-error")
 			stop("could not read csv file, maybe try another sep argument? ",
-				"first line of file is \"", x, "\"")
+				"first line of file is \"", n, "\"")
 		else
 			return(r)
 	}
