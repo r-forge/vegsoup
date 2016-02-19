@@ -33,6 +33,7 @@
 \alias{sites,matrix-method}
 \alias{sites,Sites-method}
 \alias{sites,bind-method}
+\alias{sites,VegsoupVerbatim-method}
 
 \title{ Sites Class }
 
@@ -93,6 +94,9 @@
       \code{signature(obj = "Sites")}:
         accessor function for \emph{slot 'data'}.
     }
+
+	  \code{signature(obj = "VergsoupVerbatim")}:
+		promote \code{"VegsoupVerbatim"} object to class \verb{Sites}.
 
     \item{ $ }{
       \code{signature(x = "Sites")}:

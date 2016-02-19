@@ -148,4 +148,15 @@ setMethod("bind",
 		res <- do.call("rbind", lapply(allargs, sites))
 		return(sites(res))
 	}
-)	
+)
+
+#	VegsoupVerbatim methods
+setOldClass("VegsoupVerbatim")
+
+setMethod("sites",
+	signature(obj = "VegsoupVerbatim"),
+	function (obj) {
+		r <- stackSites(header(obj), schema = "rownames")
+		return(r)
+	}
+)
