@@ -32,6 +32,7 @@ setMethod("rownames",
 	#	points
 	sel <- match(x@sp.points$plot, xy$x)
 	x@sp.points$plot <- as.character(xy$y[sel])
+	row.names(x@sp.points) <- x@sp.points$plot
 
 	#	polygons
 	sel <- match(x@sp.polygons$plot, xy$x)
