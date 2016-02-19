@@ -7,14 +7,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	if (!missing(layers)) {
 		if (!is.list(layers) & !is.character(layers) & !is.logical(layers)) {
 			stop("layers must be a list or character vector")
-		}
-		else {
+		} else {
 			if (is.list(layers)) {
 				stopifnot(length(names(layers)) == length(layers))
 				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))
 				stop("use @ assignment in inputfile")
-			}
-			else {
+			} else {
 				if (is.character(layers)) {
 					if (length(layers) == 1)
 						at <- "@"
@@ -25,23 +23,24 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			with.layers <- TRUE  # prune layer from taxa		
 			}
 		}
-	}
-	else {
+	} else {
 		with.layers <- FALSE	
 	}
 
 	#	read file
 	txt <- readLines(file.path(file))
 		
-	#	get and test keywords
+	#	get position of keywords
 	hb <- grep("BEGIN HEAD", txt)
 	he <- grep("END HEAD", txt)
 	tb <- grep("BEGIN TABLE", txt)  
 	te <- grep("END TABLE", txt)
-	ii <- c(hb, he, tb, te)
+	kw <- c(hb, he, tb, te)
 	
-	if (length(ii) != 4) stop("did not find all keywords!")
-
+	#	test for completeness
+	test <- length(hb) != 1 | length(he) != 1 |	length(tb) != 1 | length(te) != 1
+	if (test) stop("did not find all keywords!", call. = FALSE)
+		
 	#	test tabs
 	if (length(grep("\t", txt) > 0))
 		stop("detected tab characters, please review your data.")
@@ -63,7 +62,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	ul <- el < median(el) & el != 0
 	
 	#	disregard keywords
-	ul[ii] <- FALSE
+	ul[kw] <- FALSE
 	el <- el == 0
 	el[ul] <- TRUE
 	
@@ -123,6 +122,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	layer assigments at the end of taxa string
 	if (with.layers) {
 		jat <- which(apply(t.m, 2, function (x) all(x == at)))
+		if (length(jat) == 0) stop("could not resolve layer with symbol ", at, call. = FALSE)
 		#	next blank
 		t.at <- t.m[, jat:ncol(t.m)]
 		s <- apply(t.at, 2, function (x) length(grep("[[:space:]]", x)))

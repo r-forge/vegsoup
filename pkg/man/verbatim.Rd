@@ -62,10 +62,11 @@ header(x)
     list or character. If \code{layers} is a named list, it defines start and end indices to
     assign a layer to each species observation. \code{layers} can also be of mode character.
     If the length of the supplied vector agrees with the number of species in the data set,
-    it assigns a the vaule of layer to each species observation. If layers are present
+    it assigns a value of layer to each species observation. If layers are present
     in the input file, argument layers can be a single character used to prune layers from taxa
     abbreviations. See \sQuote{Examples}.
-    For \code{read.verbatim}, Separator used for trailing layer value (e.g. genus species@hl).
+    For \code{read.verbatim}, separator used for trailing layer value (e.g. genus species@hl).
+    Note, all layer assignment characters have to align vertically!
   }
   \item{ replace }{
     logical. Vector of characters to be replaced by blanks. Note, both the hyphen and
@@ -185,6 +186,8 @@ The S3 function \code{read.verbatim()} makes the following additional assumption
 \item Given that absences are coded as \sQuote{.} each cell of the community table has a value. This also ensures that the left margin of the community table can be filtered automatically.
 \item The width (number of characters) of the header and the table body data blocks has to perfectly match. The values found in the header (possibly of length longer than one and aligned vertically) exactly corresponds the species abundances on the same plot. In other words, they align to the same column in a monospaced font layout.
 \item Tab characters (\code{"\t"}) are not allowed in the input file!
+\item If layer assignment is supplied the character(s) ahs to align vertically.
+\item Empty lines, if present, are not allowed to have as many spaces as the whole text block.
 }
 
 Plot identifiers can be assigned using one of the attributes on the resulting object or by supplying an argument \code{colnames}.
