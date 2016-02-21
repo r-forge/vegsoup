@@ -26,7 +26,7 @@
 		select <- apply(tmp, 2,
 			function (x) is.numeric(type.convert(x, as.is = FALSE)))
 		if (all(select) == FALSE) {
-			message("found no numeric columns?")
+			#message("found no numeric columns?")
 			obj$richness <- richness(obj, "sample")
 			select <- select
 		}	
