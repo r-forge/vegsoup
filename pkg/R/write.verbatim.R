@@ -18,8 +18,8 @@
 		file <- file.path(file)
 	}
 	if (missing(select)) {
-		message("think about selecting sites varibales? ",
-			"try to use all numeric columns")
+		#message("think about selecting sites varibales? ",
+		#	"try to use all numeric columns"
 		#	select all numeric columns
 		tmp <- as.matrix(sites(obj))
 		mode(tmp) <- "character"
