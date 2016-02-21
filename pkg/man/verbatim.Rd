@@ -19,11 +19,11 @@
 \title{ Read or Write Fixed-Column-Width Community Tables From or To Plain Text Files }
 
 \description{
-  The base S3 function \code{read.verbatim(file)} reads data from text files
+  The function \code{read.verbatim(file)} reads data from text files
   as  encountered in published tables typesetted with monospaced fonts. It's
   main purpose is to help digitizing literature data. The corresponding
-  \code{write.verbatim(obj)} method performs the reverse on objects
-  inheriting from class \code{'Vegsoup'}.
+  \code{write.verbatim(obj)} method performs the reverse operation on objects
+  inheriting from class \code{\linkS4class{Vegsoup}}.
 }
 
 \usage{
@@ -186,7 +186,7 @@ The S3 function \code{read.verbatim()} makes the following additional assumption
 \item Given that absences are coded as \sQuote{.} each cell of the community table has a value. This also ensures that the left margin of the community table can be filtered automatically.
 \item The width (number of characters) of the header and the table body data blocks has to perfectly match. The values found in the header (possibly of length longer than one and aligned vertically) exactly corresponds the species abundances on the same plot. In other words, they align to the same column in a monospaced font layout.
 \item Tab characters (\code{"\t"}) are not allowed in the input file!
-\item If layer assignment is supplied the character(s) ahs to align vertically.
+\item If layer assignment is supplied the character(s) has to align vertically.
 \item Empty lines, if present, are not allowed to have as many spaces as the whole text block.
 }
 
