@@ -98,6 +98,9 @@ setMethod("names",
 setReplaceMethod("names",
 	signature(x = "Vegsoup", value = "character"),
 	function (x, value) {
+		if (length(names(x)) != length(value)) {
+			stop("length of value must match length names(x)", call. = FALSE)
+		}
 		x@sites@names <- value
 		x
 	}
