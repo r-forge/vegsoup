@@ -5,10 +5,10 @@
 \alias{singleton}
 \alias{singletons}
 
-\title{ Utility functions }
+\title{ Utility Functions }
 
 \description{
-Simple minded functions for regular data precessing tasks.
+  Simple functions for regular data precessing tasks.
 }
 
 \usage{
@@ -30,8 +30,12 @@ singletons(obj)
 }
 
 \details{
-Function \code{compass} cuts numeric values of angular degrees into characters of the wind-rose.
-\code{singeltons} is \code{TRUE} if any partition has only 1 member; \code{singelton} returns the index.
+  Function \code{compass} cuts numeric values of angular degrees into characters
+  of the wind-rose. If called without arguments the functions reports the
+  breakpoints an associated labels.
+  \code{singeltons} is \code{TRUE} if any partition has only 1 member;
+  \code{singelton} returns the index.
+
 }
 
 \value{
