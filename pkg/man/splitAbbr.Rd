@@ -104,6 +104,8 @@ x[, rownames(a)[sample(1:ncol(x), 10)]]
 # decode rownames of matrix ...
 class(xx <- constancy(x))
 decode(xx, x)
+rownames(xx) <- apply(sapply(decode(xx, x)[c("taxon", "layer")], paste), 1, paste, collapse = "@")
+head(xx)
 
 # ... data.frame and Taxonomy object
 class(xx <- splitAbbr(x))
