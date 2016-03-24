@@ -88,7 +88,6 @@ x <- fidelity(VegsoupPartition(coenoflex(1000, 50), k = 10),
               method = "IndVal", fast = TRUE)
 x
 }
-}
 
 \keyword{ classes }
 
