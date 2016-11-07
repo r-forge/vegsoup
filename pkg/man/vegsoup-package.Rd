@@ -535,9 +535,10 @@ Extensive suggestions were made by \dots and many others.
 % no package overview for these 2 packages
 %\code{\link[optpart:optpart-package]{optpart}}
 %\code{\link[labdsv:labdsv-package]{labdsv}}
+% package multitable was removed from the CRAN (2016-05-02)
+%\code{\link[multitable:multitable-package]{multitable}}
 \code{\link[vegdata:vegdata-package]{vegdata}}
 \code{\link[mefa:mefa-package]{mefa}}
-\code{\link[multitable:multitable-package]{multitable}}
 }
 
 \keyword{ package }

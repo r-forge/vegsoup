@@ -30,7 +30,7 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 \S4method{coerce}{Vegsoup,dsparseMatrix}(from,to)
 \S4method{coerce}{Vegsoup,list}(from,to)
 \S4method{coerce}{Vegsoup,data.frame}(from,to)
-\S4method{coerce}{Vegsoup,data.list}(from,to)
+#\S4method{coerce}{Vegsoup,data.list}(from,to)
 \S4method{coerce}{Vegsoup,mefa}(from,to)
 }
 
@@ -113,8 +113,9 @@ l <- as(x, "list")
 length(l)
 
 # coerce to data.list in package multitable
-xdl <- as(x, "data.list")
-summary(xdl)
+# package multitable was removed from the CRAN (2016-05-02)
+# xdl <- as(x, "data.list")
+# summary(xdl)
 
 # automatic dispatch of Vegsoup* object as argument in S3 function
 # if they internally call as.matrix or as.dist

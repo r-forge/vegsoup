@@ -193,19 +193,21 @@ s4 <- object.size(species(x))               # most general but least efficent
 s5 <- object.size(as.array(x))              # least efficent
 
 ( s <- data.frame(size = as.numeric(c(s1, s2, s3, s4, s5)),
-                  row.names = c("matrix", "indices", "sparseMatrix", "Species", "array")) )
+                  row.names = c("matrix", "indices", "sparseMatrix",
+                                "Species", "array")) )
 barplot(t(s), ylab = "object size")
 
 # comparison of memory demands of objects of other classes
-s1 <- object.size(as(x, "data.list"))       # least efficent, but highly generic
-s2 <- object.size(as(x, "mefa"))            # more efficent, but less generic
-s3 <- object.size(as.data.frame(x))         # efficent, but rather meaningless
+# package multitable was removed from the CRAN repository
+# s0 <- object.size(as(x, "data.list"))     # least efficent, but highly generic
+s1 <- object.size(as(x, "mefa"))            # more efficent, but less generic
+s2 <- object.size(as.data.frame(x))         # efficent, but rather meaningless
 # for comparison subtract slots with sp objects
 sp.object.size <- object.size(x@sp.points) + object.size(x@sp.polygons)
-s4 <- object.size(x) - sp.object.size       # most general and most efficent
+s3 <- object.size(x) - sp.object.size       # most general and most efficent
 
-( s <- data.frame(size = as.numeric(c(s1, s2, s3, s4)),
-                  row.names = c("data.list", "mefa", "data.frame", "vegsoup")) )
+( s <- data.frame(size = as.numeric(c(s1, s2, s3)),
+                  row.names = c("mefa", "data.frame", "vegsoup")) )
 barplot(t(s), ylab = "object size")
 }
 \keyword{ methods }

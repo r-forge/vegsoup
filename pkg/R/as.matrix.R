@@ -203,7 +203,7 @@ as.array.Vegsoup <-	function (x, ...) {
 
 #	return vector of abundances	
 setMethod("as.vector",
-	signature(x = "Vegsoup", mode = "missing"),
+	signature(x = "Vegsoup"), # , mode = "missing"
 		function (x, mode) {
 			if (missing(mode)) mode = "numeric"
 				as.vector(as.matrix(x, typeof = mode))

@@ -9,9 +9,10 @@
 \title{ Coercion to \code{"data.lists"} }
 
 \description{
-  This function coerces \code{Vegsoup*} objects to data lists defined in
-  package multitable. See \code{\link[multitable:as.data.list]{as.data.list}}
-  for details.
+Package multitable was removed from the CRAN repository.
+%  This function coerces \code{Vegsoup*} objects to data lists defined in
+%  package multitable. See \code{\link[multitable:as.data.list]{as.data.list}}
+%  for details.
 }
 
 \usage{
@@ -25,10 +26,11 @@
 }
 
 \details{
-  This a convenience coercion method for translation to \code{"data.list"} objects.
-  The current interface is rudimentary and does not accept additional
-  arguments supplied by function \code{\link{dlcast}}, although it is used internaly
-  to perform the conversion.
+Package multitable was removed from the CRAN repository.
+%  This a convenience coercion method for translation to \code{"data.list"} objects.
+%  The current interface is rudimentary and does not accept additional
+%  arguments supplied by function \code{\link{dlcast}}, although it is used internaly
+%  to perform the conversion.
 }
 
 \author{ Roland Kaiser }
@@ -41,8 +43,11 @@
 require(vegsoup)
 data(barmstein)
 
+# package multitable was removed from CRAN
+\dontrun{
 x <- as(barmstein, "data.list")
 summary(x)
+}
 
 \dontrun{
 # not implemented yet

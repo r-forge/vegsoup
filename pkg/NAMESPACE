@@ -16,6 +16,19 @@ importFrom("utils", head, tail)
 
 importFrom("graphics", plot, hist)
 
+importFrom("grDevices", "cm.colors", "rgb", "xy.coords")
+
+importFrom("graphics", "axis", "frame", "legend", "lines", "par",
+           "plot.window", "points", "rect", "rug", "text", "title")
+
+importFrom("stats", "aggregate", "cor", "cutree", "dendrapply",
+           "dhyper", "fivenum", "hclust", "heatmap", "is.leaf",
+           "kmeans", "mad", "median", "model.frame", "phyper", "pnorm",
+           "predict", "reshape", "rlnorm", "runif", "sd", "var")
+
+importFrom("utils", "combn", "read.csv", "setTxtProgressBar", "stack",
+           "txtProgressBar", "type.convert")
+
 
 #	used in several places
 
@@ -75,7 +88,8 @@ importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
 						  RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell, extent, KML)
 
-importFrom("multitable", data.list)
+# package multitable was removed from the CRAN (2016-05-02)
+# importFrom("multitable", data.list)
 
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 

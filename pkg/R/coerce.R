@@ -80,47 +80,48 @@ setAs("list", "Coverscale", def = function (from) {
 #	}
 #)
 
+#	package multitable was removed from the CRAN (2016-05-02)	
 #	set S3 class
-setOldClass("data.list")
+#	setOldClass("data.list")
 
-#	from Vegsoup to data.list
-".as.data.list.Vegsoup" <- function (obj) {
-	#	Imports:
-	#	require(multitable)
+#	from Vegsoup to data.list (package multitable)
+#".as.data.list.Vegsoup" <- function (obj) {
+#	#	Imports:
+#	#	require(multitable)
+#
+#	xx <- species(species(obj)) #! get slot data
+#	names(xx)[4] <- "abundance"
+#	scale <- coverscale(obj)
+#	
+#	#	cover transformation
+#	if (!is.null(scale@codes)) {
+#		xx$abundance <- as.numeric(as.character(
+#			factor(xx$abundance, levels = scale@codes, labels = scale@lims)))
+#		if (any(is.na(xx$abundance))) {
+#			stop("cover scale codes do not match data")
+#		}
+#	}
+#	if (is.null(scale@codes)) {
+#		xx$cov <- as.numeric(xx$cov)
+#	}
+#	
+#	yy <- data.frame(plot = rownames(obj), sites(obj))
+#		
+#	zz <- taxonomy(taxonomy(obj)) # slot data
+#
+#	#xyz <- data.frame(plot = rownames(obj), coordinates(obj))
+#		
+#	l <- list(xx[, c(1,2,4)], xx[, c(1,2,3)], yy, zz)
+#	res <- multitable::dlcast(l, fill = c(0, "", NA, NA))
+#	
+#	return(res)
+#}
 
-	xx <- species(species(obj)) #! get slot data
-	names(xx)[4] <- "abundance"
-	scale <- coverscale(obj)
-	
-	#	cover transformation
-	if (!is.null(scale@codes)) {
-		xx$abundance <- as.numeric(as.character(
-			factor(xx$abundance, levels = scale@codes, labels = scale@lims)))
-		if (any(is.na(xx$abundance))) {
-			stop("cover scale codes do not match data")
-		}
-	}
-	if (is.null(scale@codes)) {
-		xx$cov <- as.numeric(xx$cov)
-	}
-	
-	yy <- data.frame(plot = rownames(obj), sites(obj))
-		
-	zz <- taxonomy(taxonomy(obj)) # slot data
-
-	#xyz <- data.frame(plot = rownames(obj), coordinates(obj))
-		
-	l <- list(xx[, c(1,2,4)], xx[, c(1,2,3)], yy, zz)
-	res <- multitable::dlcast(l, fill = c(0, "", NA, NA))
-	
-	return(res)
-}
-
-setAs(from = "Vegsoup", to = "data.list",
-	def = function (from) {
-		.as.data.list.Vegsoup(from)
-	}
-)
+#setAs(from = "Vegsoup", to = "data.list",
+#	def = function (from) {
+#		.as.data.list.Vegsoup(from)
+#	}
+#)
 
 
 #	set S3 class
