@@ -49,9 +49,17 @@ setMethod("initialize",
 			data <- unique(data, fromLast = FALSE)
 		}
 		#	test for missing cover
-		if (any(data$cov == "") | any(is.na(data$cov)) ) {
-			stop("missing cover for plots",
-				"\nplease review your data!", call. = FALSE)
+		test1 <- data$cov == ""
+		test2 <- is.na(data$cov)
+		if (any(test1) | any(test2)) {
+			message("missing cover for plots")
+			if (nrow(data[test1, ]) > 0) {
+				print(data[test1, ])	
+			}
+			if (nrow(data[test2, ]) > 0) {
+				print(data[test2, ])
+			}	
+			stop("please review your data!", call. = FALSE)
 		}
 		#	ensure valid names					
 		rownames(data) <- seq_len(nrow(data))

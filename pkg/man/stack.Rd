@@ -118,7 +118,8 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   Internal checking of type conversion is performed using
   \code{\link{type.convert}} to test for appropriate mode of the species
   abundances vector; setting \code{verbose = TRUE} will report results of this
-  test. If argument \code{absences} is missing an almost save guess is obtained
+  test. If argument \code{absences} is missing an almost save guess
+  (matrix fill lower than 50\%) !is obtained
   from the data and derived as the most frequent value in the species data
   matrix, these are usually species absences.
 
