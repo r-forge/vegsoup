@@ -111,7 +111,7 @@
 		names(m) <- labels
 		
 		for (i in 1:length(labels)) {
-			width.i <- max(sapply(str_trim(y[i,]), nchar))
+			width.i <- max(sapply(str_trim(y[ i, ]), nchar), na.rm = TRUE)
 			#	remove blacks!
 			tmp.i <- format(str_trim(y[i,]),
 				width = width.i, justify = "right")
