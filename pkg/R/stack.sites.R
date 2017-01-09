@@ -7,11 +7,11 @@ stackSites <- function (x, file, sep = ";", dec = ",", schema = "plot", zeros = 
 	if (!missing(file)) {
 		if (is.character(file)) {
 			#	find schema column first
-			x <- scan(file, what = "character", nlines = 1, sep = sep, quiet = TRUE)
+			x <- scan(file, what = "character", nlines = 1, sep = sep, dec = dec, quiet = TRUE)
 			j <- match(schema, x)
 			
-			cc <- rep(NA, length(j))
-			cc[j] <- "character"
+			cc <- rep(NA, length(x))
+			cc[ j ] <- "character"
 			if (is.na(j)) stop("schema not found, you might try another sep argument")
 			
 			#	we will loose leading zeros if we don't set colClasses = "character"	
