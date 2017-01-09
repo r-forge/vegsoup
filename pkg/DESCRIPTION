@@ -109,6 +109,7 @@ Collate: AAA.R
 		 VegsoupPartition.R
 		 VegsoupPartition-BaseMethods.R
                 reorder.R
+                isolate.R
 		 partition.R
 		 validate.R
 		 optimize.R
