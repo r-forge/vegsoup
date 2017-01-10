@@ -90,11 +90,15 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	
 	#	there might still remain inconsistencies in taxa block
 	test0 <- nchar(t.txt)
-	test1 <- unique(test0)
+	test1 <- table(test0)
+	test2 <- which(names(test1)[min(test1)] == test0)
 	error1 <- "length of characters is not the same on all lines!"
 	error2 <- " check line(s) in taxa block: "
+	
 	if (length(test1) > 1)	
-		stop(error1, error2, paste(which(max(test1) == test0)), call. = FALSE)
+		stop(error1, error2,
+			test2, str(t.txt[test2]),
+			call. = FALSE)
 	
 	#	test header
 	test2 <- length(unique(nchar(h.txt))) > 1
@@ -146,8 +150,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
 			l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]			
 			txa	<- str_trim(txa, side = "right")
-		}
-		else {
+		} else {
 			if (length(layers) == 1) {			
 				l <- str_trim(sapply(strsplit(txa, at), "[[", 2), side = "right")
 				txa	<- str_trim(sapply(strsplit(txa, at), "[[", 1), side = "right")			
@@ -162,26 +165,26 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	additional check for data integrity
 	test <- which(n.space != nrow(t.m) & n.space != 0)
 	
-	if (verbose) cat("found", nrow(t.m), "species")
+	if (verbose) message("found ", nrow(t.m), " species")
 		
 	if (length(test) > 0) {
 		message("some mono type character columns deviate from the expected pattern")
+		message("please review your data and apply necessary changes")	
 		for (i in test) {
 			#	missing dot
 			if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
-				message("missing dot in species",
-					txa[which(val[,i] == " ")],
-					"in column", i + (jj - 1))	
-			}
-			else {
-				message("misplaced value in species",
+				error1 <- which(val[,i] == ".")
+				error2 <- which(val[,i] == " ")
+				stop("missing dot in species ",					
+					ifelse(length(error1) > length(error2), txa[error2], txa[error1]),
+					" in column ", i + (jj - 1), call. = FALSE)	
+			} else {
+				stop("misplaced value in species",
 					txa[which(val[,i] != " ")],
-					"in column", i + (jj - 1))			
+					"in column", i + (jj - 1), call. = FALSE)			
 			}		
 		}
-		stop("please review your data and apply necessary changes")
-	}
-	else {
+	} else {
 		if (verbose) {
 			cat("\nfound no obvious errors in species data block",
 				"\nskip",
