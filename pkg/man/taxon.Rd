@@ -77,6 +77,9 @@ x <- barmstein
 
 head(taxon(x)) # short-hand for head(taxonomy(x)$taxon)
 
+# display all taxa staring with letter C
+taxon(x, "C")
+ 
 # subset object using a species scientific name
 # and use function taxon() for display
 taxon(subset(x, "Carex")) # drop = TRUE is the default
