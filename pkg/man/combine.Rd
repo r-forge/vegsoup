@@ -29,7 +29,7 @@ combine(x, y, z)
 This utility function can be used to perform taxonomic aggregation.
 Argument \code{y} defines the taxa to be combined (list element \code{from}) and a \emph{new} taxonomic description of that aggregation (list element \code{to}).
 Argument \code{z} holds the \emph{new} abbreviation (see class \code{\linkS4class{Taxonomy}}) for the aggregated taxon and a taxonomic description of that aggregation (cp. argument \code{y}).
-Note, if any \code(z$abbr) or \code(z$taxon) equals an exiting entry in \code{taxonomy(x)} it has to be quoted in \code{y$from} (see \sQuote{Examples}, for Scapania).
+Note, if any \code{z$abbr} or \code{z$taxon} equals an exiting entry in \code{taxonomy(x)} it has to be quoted in \code{y$from} (see \sQuote{Examples}, for Scapania).
 }
 
 \value{
