@@ -1,6 +1,7 @@
 combine <- function (x, y, z) {
 
 stopifnot(inherits(x, "Vegsoup"))
+stopifnot(is.list(y))
 stopifnot(is.list(z))
 	
 X <- species(species(x))
@@ -31,7 +32,7 @@ to <- y$to
 Z.from <- match(from, Z$taxon)
 
 if (any(is.na(Z.from)))
-	stop(from[is.na(Z.from)], " not in data set")
+	stop(paste0(from[is.na(Z.from)], collapse = ", "), " not in data set")
 	
 Z.to <- match(to, Z$taxon) # no test yet, we use argument z
 
