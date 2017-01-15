@@ -7,6 +7,10 @@ X <- species(species(x))
 Z <- taxonomy(taxonomy(x))
 Y <- coverscale(x)
 
+#	ensure names if not given
+names(y) <- c("from", "to")
+names(z) <- c("abbr", "taxon")
+
 #	valid strings
 z$abbr <- make.names(z$abbr)
 
@@ -21,8 +25,8 @@ if (is.ordinal(coverscale(x))) {
 	X$cov <- as.numeric(X$cov)
 }
 
-from <- y[[1]]
-to <- y[[2]]
+from <- y$from
+to <- y$to
 
 Z.from <- match(from, Z$taxon)
 
@@ -36,7 +40,7 @@ Xi <- which(rowSums(sapply(Zi, function (i) i == X$abbr)) > 0)
 
 #	the species
 #	select subset of species to combine (c) or retain (r)
-Xc <- X[Xi, ]
+Xc <- X[ Xi, ]
 Xr <- X[-Xi, ]
 
 #	assign new abbr

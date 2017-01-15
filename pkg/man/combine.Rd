@@ -18,10 +18,10 @@ combine(x, y, z)
    \code{Vegsoup*} object.
   }
   \item{ y }{
-  list.
+  list. List elements should be named \code{from} and \code{to}. Entries must not to be named, but should otherwise be in that order.
   }
   \item{ z }{
-   list.
+   list. List elements should be named \code{abbr} and \code{taxon}, as in \code{taxonomy(x)}. Entries must not to be named, see above.
   }
 }
 
