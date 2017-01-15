@@ -29,6 +29,7 @@ combine(x, y, z)
 This utility function can be used to perform taxonomic aggregation.
 Argument \code{y} defines the taxa to be combined (list element \code{from}) and a \emph{new} taxonomic description of that aggregation (list element \code{to}).
 Argument \code{z} holds the \emph{new} abbreviation (see class \code{\linkS4class{Taxonomy}}) for the aggregated taxon and a taxonomic description of that aggregation (cp. argument \code{y}).
+Element \code{z} can also be missing. In this case \code{y$to} is queried from \code{taxonomy(x)}.
 Note, if any \code{z$abbr} or \code{z$taxon} equals an exiting entry in \code{taxonomy(x)} it has to be quoted in \code{y$from} (see \sQuote{Examples}, for Scapania).
 }
 
@@ -70,6 +71,12 @@ y <- list(from = c("Scapania aequiloba", "Scapania aspera",
 z <- list(abbr = "scap curt aggr",
           taxon = y$to)
 taxon(combine(x, y, z), "Scapania")
+
+# we can omit z if y$to exists in the data set
+taxon(x, "Biscutella")
+y <- list(from = c("Biscutella laevigata ssp. laevigata"),
+          to = "Biscutella laevigata s.lat.")
+taxon(combine(x, y), "Biscutella")
 
 }
 \seealso{

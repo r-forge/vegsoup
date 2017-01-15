@@ -2,11 +2,16 @@ combine <- function (x, y, z) {
 
 stopifnot(inherits(x, "Vegsoup"))
 stopifnot(is.list(y))
-stopifnot(is.list(z))
 	
 X <- species(species(x))
 Z <- taxonomy(taxonomy(x))
 Y <- coverscale(x)
+
+if (missing(z)) {
+	z <- list(Z$abbr[ match(y[[2]], Z$taxon) ], y[[2]])
+} else {
+	stopifnot(is.list(z))
+}
 
 #	ensure names if not given
 names(y) <- c("from", "to")
@@ -40,11 +45,11 @@ Zi <- Z$abbr[Z.from]
 Xi <- which(rowSums(sapply(Zi, function (i) i == X$abbr)) > 0)
 
 #	the species
-#	select subset of species to combine (c) or retain (r)
+#	select subset of species to combine (c, Xc) or retain (r, Xr)
 Xc <- X[ Xi, ]
 Xr <- X[-Xi, ]
 
-#	assign new abbr
+#	assign new abbr in subset
 Xc$abbr <- z$abbr
 
 #	sum duplicates
@@ -69,14 +74,24 @@ X <- species(X)
 #	select subset of species to combine (c) or retain (r)
 Zr <- Z[-Z.from, ]
 
-Zc <- Z[0, ]
-Zc[1, ]$abbr <- z$abbr
-Zc[1, ]$taxon <- z$taxon
+#	in case if y$from had more then 1 entry, if not because we dropped it already above
+if (length(y$from) > 1) {
+	Zc <- Z[0, ]
+	Zc[1, ]$abbr <- z$abbr
+	Zc[1, ]$taxon <- z$taxon
 
-Z <- rbind(Zr, Zc)
-
+	Z <- rbind(Zr, Zc)
+} else {
+	Z <- Zr
+}
 #	explicit ordering!
 Z <- Z[order(Z$abbr), ]
+
+#	check if we need to drop a taxon
+test <- length(unique(Z$abbr)) != nrow(Z)
+if (test) {
+	
+}
 Z <- taxonomy(Z)
 
 #	assign object slots
