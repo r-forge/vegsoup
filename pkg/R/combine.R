@@ -20,6 +20,8 @@ names(z) <- c("abbr", "taxon")
 #	valid strings
 z$abbr <- make.names(z$abbr)
 
+#	test if y$from exists in x
+
 #	more precise and/or rigorious tests
 #stopifnot(!any(z$abbr == abbr(x)))
 
@@ -72,16 +74,19 @@ X <- species(X)
 
 #	the taxonomy
 #	select subset of species to combine (c) or retain (r)
-Zr <- Z[-Z.from, ]
+Zr <- Z[ -Z.from, ] # delete from
 
 #	in case if y$from had more then 1 entry, if not because we dropped it already above
-if (length(y$from) > 1) {
+
+#	do we need to add a new taxon
+if (any(z$taxon == Zr$taxon) == FALSE) {
 	Zc <- Z[0, ]
 	Zc[1, ]$abbr <- z$abbr
 	Zc[1, ]$taxon <- z$taxon
 
 	Z <- rbind(Zr, Zc)
 } else {
+#	Zr <- Zr[ z$taxon != Zr$taxon, ]
 	Z <- Zr
 }
 #	explicit ordering!
@@ -90,7 +95,7 @@ Z <- Z[order(Z$abbr), ]
 #	check if we need to drop a taxon
 test <- length(unique(Z$abbr)) != nrow(Z)
 if (test) {
-	
+	message("error")
 }
 Z <- taxonomy(Z)
 
