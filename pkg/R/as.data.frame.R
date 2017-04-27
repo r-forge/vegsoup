@@ -18,7 +18,7 @@ as.data.frame.Vegsoup <- function (x, ...) as(x, "data.frame")
 
 
 setAs(from = "Sites", to = "data.frame",
-	def = function (from) {
+	def = function (from) {	
 	r <- reshape(sites(from), direction = "wide",
 		timevar = "variable",
 		idvar = "plot")
