@@ -9,6 +9,11 @@
 	
 	lnglat <- as.numeric(as.character(lnglat))
 	r <- ggmap::revgeocode(lnglat, output = c("more"))
+	#	run again if we fail for our attempt for some reason
+	while (is.na(r$address)) {
+		message("bad response from server, try again!")
+		r <- ggmap::revgeocode(lnglat, output = c("more"))	
+	}
 	r <- as.data.frame(as.matrix(r), stringsAsFactors = FALSE)
 	
 	#	country
