@@ -38,7 +38,7 @@ setMethod("show",
 		tmp <- species(species(x)) #! get data slot
 		tmp$taxon <-
 			taxon(x)[match(tmp$abbr, taxonomy(x)$abbr)]
-		tmp <- tmp[, c(1,5,3,4)]
+		tmp <- tmp[ c("plot", "taxon", "layer", "cov") ]
 		tmp <- tmp[order(tmp$taxon, tmp$layer), ]
 		tmp <- apply(tmp[, -1], 1,
 			function (x) paste(x[1], " (", x[2], ") ", x[3], sep = "", collpase = ", "))
