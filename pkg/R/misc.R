@@ -1,8 +1,14 @@
-compass  <- function (x) {
-	b <- c(0, seq(22.5/2, 360, by = 22.5))
-	l <- c("N","NNE","NE","ENE","E","ESE","SE","SSE",
-			"S","SSW","SW","WSW","W","WNW","NW","NNW")
-
+compass  <- function (x, fine = TRUE) {
+	
+	if (fine) {
+		b <- c(0, seq(22.5/2, 360, by = 22.5))
+		l <- c("N","NNE","NE","ENE","E","ESE","SE","SSE",
+				"S","SSW","SW","WSW","W","WNW","NW","NNW")
+	} else {
+	    b <- c(0, seq(45/2, 360, by = 45))
+    	l <- c("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+    }
+    
 	if (missing(x)) {
 		r <- list(breaks = b, labels = l)
 	} else {

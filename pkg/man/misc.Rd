@@ -23,6 +23,9 @@ singletons(obj)
   \item{ x }{
 	numeric.
 }
+  \item{ fine }{
+	logical.
+}
   \item{ obj }{
 	\code{'VegsoupPartition'} object.
 }
@@ -48,6 +51,8 @@ logical (singeltons)
 
 \examples{
 compass(c(0,220))
+compass(22, fine = FALSE)
+compass(22, fine = TRUE)
 }
 
 \keyword{ spatial }
