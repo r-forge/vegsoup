@@ -12,7 +12,7 @@ import(parallel)
 
 importFrom("stats", as.dist, quantile, as.dendrogram)
 
-importFrom("utils", head, tail)
+importFrom("utils", head, tail, str)
 
 importFrom("graphics", plot, hist)
 
@@ -129,7 +129,9 @@ export(
 	"header",
 	"template",
 	"combine",
-	"decode"
+	"decode",
+	"coverscale", # also in exportMethods
+	"identical"   # also in exportMethods
 )
 
 exportMethods(

@@ -12,7 +12,7 @@
 }
 
 \usage{
-compass(x)
+compass(x, fine = TRUE)
 
 singleton(obj)
 

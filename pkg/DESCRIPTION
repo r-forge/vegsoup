@@ -1,6 +1,6 @@
 Package: vegsoup
-Version: 0.2-6
-Date: 2016-11-07
+Version: 0.2-7
+Date: 2018-12-15
 Title: Classes and Methods for Phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 					 email = "kardinal.eros@gmail.com"))

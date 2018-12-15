@@ -58,12 +58,13 @@ Coverscale <- function (name, codes, lims) {
 
 #	vegan defines:
 #	coverscale(x, scale=c("Braun.Blanquet", "Domin", "Hult", "Hill",
-#	"fix","log"), maxabund)
+#	"fix","log"), maxabund, character = TRUE)
+
 
 #if (!isGeneric("coverscale")) {
 setGeneric("coverscale",
 	function (x, scale = c("Braun.Blanquet", "Domin", "Hult", "Hill",
-	"fix","log"), maxabund)
+	"fix","log"), maxabund, character = TRUE)
 	standardGeneric("coverscale"))
 #}
 

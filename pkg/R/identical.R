@@ -1,5 +1,6 @@
 if (!isGeneric("identical")) {
-	setGeneric("identical", function (x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE, ignore.bytecode = TRUE, ignore.environment = FALSE)
+	setGeneric("identical", function (x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE,
+	ignore.bytecode = TRUE, ignore.environment = FALSE, ignore.srcref = TRUE)
 		standardGeneric("identical"))
 }	
 
@@ -36,3 +37,14 @@ function (x, y) {
 	else
 		FALSE
 } )
+
+#setMethod("identical", signature(x = "Species", y = "Taxonomy"), 
+#function (x, y) {
+#	x <- sort(unique(x$abbr)) # do we really need call sort here?
+#	y <- sort(unique(y$abbr))
+#	test <- x %in% y
+#	if (all(test))
+#		if (length(x) == length(y)) TRUE else FALSE
+#	else
+#		FALSE
+#} )
