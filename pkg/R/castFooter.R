@@ -82,6 +82,8 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 				sa <- sapply(sa, function (x) .seperateFirst(x, schema[ 3 ]))
 			} else {
 				sa <- sapply(sa, function (x) .seperateLast(x, schema[ 3 ]))
+				s <- unlist(sapply(sa, function (x) x[ ,2] ))
+				a <- unlist(sapply(sa, function (x) x[ ,1] ))		
 			}
 		}		
 	}
