@@ -24,11 +24,11 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	.seperateLast <- function (x, y) {
 		r <- matrix("", nrow = length(x), ncol = 2)
 		for (i in seq_along(x)) {
-			p <- max(gregexpr(y, x[i])[[1]]) # position of last schema match
-			v <- str_trim(substring(x[i], p + 1, nchar(x[i]))) # value
-			s <- str_trim(substring(x[i], 1, p)) # species
-			r[i, 1] <- v
-			r[i, 2] <- s
+			p <- max(gregexpr(y, x[ i ])[[ 1 ]]) # position of last schema match
+			v <- str_trim(substring(x[ i], p + 1, nchar(x[ i ]))) # value
+			s <- str_trim(substring(x[ i ], 1, p)) # species
+			r[ i, 1 ] <- v
+			r[ i, 2 ] <- s
 		}
 		return(r)	
 	}
@@ -38,16 +38,16 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	test <- which(x == "")
 	if (length(test > 0)) {
 		message("skip line(s) ", test)
-		x <- x[-test]	
+		x <- x[ -test ]	
 	}
 	
 	# split schema[1]
-	xx <- strsplit(x, schema[1], fixed = TRUE)
+	xx <- strsplit(x, schema[ 1 ], fixed = TRUE)
 	
 	if (species.first) { # genu spec: 10, 32
 		s <- str_trim(sapply(xx, "[[", 1)) # species
 		pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances)
-		pa <- sapply(strsplit(pa, schema[2], fixed = TRUE), str_trim)
+		pa <- sapply(strsplit(pa, schema[ 2 ], fixed = TRUE), str_trim)
 		s <- rep(s, times = sapply(pa, length))
 		
 		if (is.na(abundance.first)) {
@@ -61,23 +61,29 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 		p <- str_trim(sapply(xx, "[[", 1))	
 		# species (and abundance)
 		sa <- str_trim(sapply(xx, "[[", 2))
-		sa <- strsplit(sa, schema[2], fixed = TRUE)
-		sa <- sapply(x, function (y) {
+		sa <- strsplit(sa, schema[ 2 ], fixed = TRUE)
+		sa <- sapply(sa, function (y) {
 				sapply(y, function (z) {
 					str_trim(z)
 				}, USE.NAMES = FALSE)
 			}, USE.NAMES = FALSE)
 		# expand plot vector
-		if (length(p) == 1)
-			p <- rep(p, times = sum(sapply(x, length)))
-		else
-			p <- rep(p, times = sapply(x, length))
-		
+		if (length(p) == 1) {
+			p <- rep(p, times = sum(sapply(sa, length)))
+		} else {
+			p <- rep(p, times = sapply(sa, length))
+		}
 		#	cast string to values and species
-		if (abundance.first)
-			x <- sapply(x, function (xx) .seperateFirst(xx, schema[3]))
-		else
-			x <- sapply(x, function (xx) .seperateLast(xx, schema[3]))
+		if (is.na(abundance.first)) {
+			s <- unlist(sa)
+			a <- rep(abundance, length(s))
+		} else {
+			if (abundance.first) {	
+				sa <- sapply(sa, function (x) .seperateFirst(x, schema[ 3 ]))
+			} else {
+				sa <- sapply(sa, function (x) .seperateLast(x, schema[ 3 ]))
+			}
+		}		
 	}
 	
 	#	single relevee

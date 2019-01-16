@@ -6,12 +6,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		
 	if (!missing(layers)) {
 		if (!is.list(layers) & !is.character(layers) & !is.logical(layers)) {
-			stop("layers must be a list or character vector")
+			stop("layers must be a list or character vector", call. = FALSE)
 		} else {
 			if (is.list(layers)) {
 				stopifnot(length(names(layers)) == length(layers))
 				l <- rep(names(layers), lapply(layers, function (x) diff(x) + 1))
-				stop("use @ assignment in inputfile")
+				stop("use @ assignment in inputfile", call. = FALSE)
 			} else {
 				if (is.character(layers)) {
 					if (length(layers) == 1)
@@ -43,13 +43,13 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		
 	#	test tabs
 	if (length(grep("\t", txt) > 0))
-		stop("detected tab characters, please review your data.")
+		stop("detected tab characters, please review your data.", call. = FALSE)
 	
 	#	replace
 	if (length(replace) > 0) {
 		for (i in 1:length(replace)) {
 			txt <- sapply(txt,
-				function (x) gsub(replace[i], " ", x, fixed = TRUE),
+				function (x) gsub(replace[ i ], " ", x, fixed = TRUE),
 				USE.NAMES = FALSE)
 		}	
 	}
@@ -72,21 +72,21 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	select elements with species abundances and header entries
 	#	based on position of keywords and empty lines 
 	ti <- hi <- rep(FALSE, length(txt))
-	ti[(tb + 1) : (te - 1)] <- TRUE # species data
-	hi[(hb + 1) : (he - 1)] <- TRUE # header data 
-	ti[el] <- hi[el] <- FALSE	   # omit empty lines
+	ti[ (tb + 1) : (te - 1) ] <- TRUE # species data
+	hi[ (hb + 1) : (he - 1) ] <- TRUE # header data 
+	ti[ el ] <- hi[ el ] <- FALSE	   # omit empty lines
 		
 	#	we now subset the sub-tables as a vector
 	#	of strings for each line
-	t.txt <- txt[ti] # species 
-	h.txt <- txt[hi] # header
+	t.txt <- txt[ ti ] # species 
+	h.txt <- txt[ hi ] # header
 	
 	#	test what we have done so far
 	#	header may have trimming errors
 	nc <- nchar(h.txt)
 	test <- nc < median(nc)
 	
-	if (any(test)) h.txt[test] <- str_pad(h.txt[test], max(nc), side = "right")
+	if (any(test)) h.txt[ test ] <- str_pad(h.txt[ test ], max(nc), side = "right")
 	
 	#	there might still remain inconsistencies in taxa block
 	test0 <- nchar(t.txt)
@@ -95,17 +95,19 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	error1 <- "length of characters is not the same on all lines!"
 	error2 <- " check line(s) in taxa block: "
 	
-	if (length(test1) > 1)	
+	if (length(test1) > 1) {	
 		stop(error1, error2,
 			test2, str(t.txt[test2]),
 			call. = FALSE)
+	}
 	
 	#	test header
 	test2 <- length(unique(nchar(h.txt))) > 1
 	error <- "no success in pruning header section"
-	if (test2)
+	if (test2) {
 		stop(error, which(nchar(h.txt) != median(nchar(h.txt))), call. = FALSE)
-
+	}
+	
 	#	the species	
 	#	if passed all test proceed to cast to a mono spaced type matrix,
 	#	where each cell is a single glyph, space or dot
@@ -128,7 +130,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		jat <- which(apply(t.m, 2, function (x) all(x == at)))
 		if (length(jat) == 0) stop("could not resolve layer with symbol ", at, call. = FALSE)
 		#	next blank
-		t.at <- t.m[, jat:ncol(t.m)]
+		t.at <- t.m[ , jat:ncol(t.m) ]
 		s <- apply(t.at, 2, function (x) length(grep("[[:space:]]", x)))
 		jj <- min(which(s > 0)) + jat		
 	}
@@ -136,7 +138,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	split species (txa) and data blocks	(val)
 	txa <- str_trim(apply(t.m[, 1:(jj -1)], 1,
 		function (x) paste(x, collapse = "")), side = "right")
-	val <- t.m[, jj: ncol(t.m)]
+	val <- t.m[ , jj: ncol(t.m) ]
 	
 	#	prune layer from taxa if present
 	if (with.layers) {
@@ -145,10 +147,10 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			lay <- sapply(lay, function (x) grep(x, txa, fixed = TRUE))
 			names(lay) <- layers
 			if (length(unlist(lay)) != length(txa))
-				stop("did not find all layer codes in all rows")
+				stop("did not find all layer codes in all rows", call. = FALSE)
 			for (i in layers)
 				txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
-			l <- rep(names(lay), sapply(lay, length))[order(unlist(lay))]			
+			l <- rep(names(lay), sapply(lay, length))[ order(unlist(lay)) ]			
 			txa	<- str_trim(txa, side = "right")
 		} else {
 			if (length(layers) == 1) {			
@@ -224,7 +226,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		attr <- vector("list", length = length(par))
 		names(attr) <- par
 		
-		if (ncol(x) != ncol(y)) stop("error parsing header with option vertical = ", vertical)
+		if (ncol(x) != ncol(y)) stop("error parsing header with option vertical = ", vertical, call. = FALSE)
 	}
 	
 	if (vertical) { # the default
@@ -259,9 +261,10 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			val <- val[, n.space != nrow(val)]
 		
 		#	for sanity
-		if (dim(val)[2] != (dim(x)[2] - 1))
-			stop("\nplease check your header data for misplaced characters")
-		
+		if (dim(val)[2] != (dim(x)[2] - 1)) {
+			message("maybe set vertical = FALSE")
+			stop("\nplease check your header data for misspelling or formatting", call. = FALSE)
+		}
 		#	header blocking variable
 		for (i in 1:length(par)) {
 			#	assume that the frist element is not empty
@@ -281,7 +284,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		test <- rle(par)$values
 		if (any(duplicated(test))) {
 			error <- test[duplicated(test)]
-			stop("duplicates in header entries: ", error)	
+			stop("duplicates in header entries: ", error, call. = FALSE)	
 		}
 			
 		tmp <- str_trim(apply(y[y[, 1] == i, -1, drop = FALSE], 2, paste, collapse = ""))
@@ -301,12 +304,10 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			" is the data structured in layers?",
 			"\nreturn vector of species instead of matrix")
 		x <- txa	
-	}
-	else {
+	} else {
 		if (species.only) {
 			x <- txa		
-		}
-		else {
+		} else {
 			#	paste layers
 			if (with.layers) {
 				rownames(x) <- paste(x[, 1], l, sep = "@")	
@@ -323,7 +324,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				cn <- attr[[colnames]]
 				if (any(duplicated(cn))) {
 					stop("duplicated colnames not allowed: ",
-					paste(as.character(cn[duplicated(cn)]), collapse = " & "))				
+					paste(as.character(cn[duplicated(cn)]), collapse = " & "), call. = FALSE)				
 				}
 				dimnames(x)[[2]] <- as.character(cn)
 				attributes(x) <- c(attributes(x), attr)
