@@ -44,7 +44,7 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	# split schema[1]
 	xx <- strsplit(x, schema[ 1 ], fixed = TRUE)
 	
-	if (species.first) { # genu spec: 10, 32
+	if (species.first) { # genu spec: 10 +, 32 1
 		s <- str_trim(sapply(xx, "[[", 1)) # species
 		pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances)
 		pa <- sapply(strsplit(pa, schema[ 2 ], fixed = TRUE), str_trim)
@@ -54,7 +54,15 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 			p <- unlist(pa)
 			a <- rep(abundance, length(s))
 		} else {
-			stop("not implemented yet")
+			if (abundance.first) {
+				sa <- sapply(pa, function (x) .seperateFirst(x, schema[ 3 ]))
+				p <- unlist(sapply(sa, function (x) x[ ,2] ))
+				a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+			} else {
+				sa <- sapply(pa, function (x) .seperateLast(x, schema[ 3 ]))
+				p <- unlist(sapply(sa, function (x) x[ ,2] ))
+				a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+			}
 		}
 	} else { # 10: genu spec, genu spec
 		# plot
