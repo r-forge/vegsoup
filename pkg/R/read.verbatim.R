@@ -458,7 +458,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 #	accesor to get header data from VegsoupVerbatim objects
 header <- function (x) {
 	stopifnot(inherits(x, "VegsoupVerbatim"))
-	r <- data.frame(attributes(x)[- c(1:3, length(attributes(x)))])
+	r <- data.frame(attributes(x)[- c(1:2, length(attributes(x)))])
 	rownames(r) <- colnames(x)
 	return(r)
 }
