@@ -44,7 +44,7 @@ setMethod("proj4string",
 	function (obj) proj4string(obj@sp.points)
 )
 
-#	hidden function to find coordinates, otherwise generate random points	
+#	hidden function to find coordinates, otherwise generate random points
 ".coordinatesSites" <- function (obj) {
 	#	objects of class Sites are ordered by plot and variable
 	p <- unique(obj$plot)
@@ -54,24 +54,28 @@ setMethod("proj4string",
 	#	we can safely proceed with the following steps in this case
 	x <- variable(obj, "longitude")
 	y <- variable(obj, "latitude")
-
+	
 	#	strip of N, E and any blanks
 	x <- gsub("[[:alpha:][:blank:]]", "", x)
 	y <- gsub("[[:alpha:][:blank:]]", "", y)
-	
+		
 	#	check decimal and change mode
 	x <- as.numeric(gsub("[[:punct:]]", ".", x))
 	y <- as.numeric(gsub("[[:punct:]]", ".", y))
 	
+
 	#	test success
-	test0 <- !(length(x) == 0 | length(x) == 0) # if variables could not be found 
-	test1 <- !any(is.na(x), is.na(y))		    # returns TRUE if test0 == TRUE
-	test2 <- all(is.numeric(x), is.numeric(x))  # we must obtain numbers
+	test0 <- !(length(x) == 0 | length(x) == 0) # if variables could not be found
+	test1 <- !any(is.na(x), is.na(y))           # returns TRUE if test0 == TRUE
+	test2 <- all(is.numeric(x), is.numeric(y))  # we must obtain numbers
 
 	if (test0 & test1 & test2) {
 		r <- cbind(x,y)
 	} else {
 		# message("NAs introduced, use random pattern")	# paranoid
+		#if (test2) {
+		#	message("errors occurred while checking decimal sign")
+		#}
 		r <- cbind(x = runif(n), y = runif(n))
 	}
 	dimnames(r)[[1]] <- p
@@ -84,7 +88,7 @@ setMethod("coordinates",
 	.coordinatesSites
 )
 
-#	hidden function to construct polygons around plot centers	
+#	hidden function to construct polygons around plot centers
 ".polygonsSites" <- function (obj, x) {
 	#	obj: Sites object
 	#	x: matrix, as returned by coordiantes(Y)
@@ -96,10 +100,10 @@ setMethod("coordinates",
 	#	test if we got the variables and if they can be converted to numeric
 	#	otherwise, apply default of 10 m
 	ab <- rep(10, nrow(x))
-	if ( is.null(a) | is.null(b) )	   a <- b <- ab
+	if ( is.null(a) | is.null(b) )       a <- b <- ab
 	if ( any(is.na(a)) | any(is.na(b)) ) a <- b <- ab
 	if ( any(a == "") | any(b == "") )   a <- b <- ab
-	#if (length(a) == 0 | length(a) == 0) a <- b <- ab	
+	#if (length(a) == 0 | length(a) == 0) a <- b <- ab
 	
 	#	nasty decimals
 	a <- gsub(",", ".", a)
@@ -114,9 +118,9 @@ setMethod("coordinates",
 	#	assuming short distances this should be sufficently accurate
 	m <- (2 * pi * (6371) / 360) * 1000
 	a <- a/m
-	b <- b/m	
+	b <- b/m
 		
-	n <- nrow(x)	
+	n <- nrow(x)
 	ids <- rownames(x)
 		
 	r <- sapply(1:n, function (i) {
@@ -187,7 +191,7 @@ setMethod("SpatialPointsVegsoup",
 #	function (obj, value) {
 #		#	to do: needs checking of plot names
 #		obj@sp.points <- value
-#		return(obj)		
+#		return(obj)
 #	}
 #)
 
@@ -213,7 +217,7 @@ setMethod("SpatialPolygonsVegsoup",
 #	function (obj, value) {
 #		#	to do: needs checking of plot names
 #		obj@sp.polygons <- value
-#		return(obj)		
+#		return(obj)
 #	}
 #)
 
