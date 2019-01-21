@@ -20,11 +20,11 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 						l <- layers
 				}
 			paste.layers <- TRUE # add layers to taxa
-			with.layers <- TRUE  # prune layer from taxa		
+			with.layers <- TRUE  # prune layer from taxa
 			}
 		}
 	} else {
-		with.layers <- FALSE	
+		with.layers <- FALSE
 	}
 
 	#	read file
@@ -33,12 +33,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	get position of keywords
 	hb <- grep("BEGIN HEAD", txt)
 	he <- grep("END HEAD", txt)
-	tb <- grep("BEGIN TABLE", txt)  
+	tb <- grep("BEGIN TABLE", txt)
 	te <- grep("END TABLE", txt)
 	kw <- c(hb, he, tb, te)
 	
 	#	test for completeness
-	test <- length(hb) != 1 | length(he) != 1 |	length(tb) != 1 | length(te) != 1
+	test <- length(hb) != 1 | length(he) != 1 | length(tb) != 1 | length(te) != 1
 	if (test) stop("did not find all keywords!", call. = FALSE)
 		
 	#	test tabs
@@ -95,7 +95,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	error1 <- "length of characters is not the same on all lines!"
 	error2 <- " check line(s) in taxa block: "
 	
-	if (length(test1) > 1) {	
+	if (length(test1) > 1) {
 		stop(error1, error2,
 			test2, str(t.txt[test2]),
 			call. = FALSE)
@@ -136,7 +136,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		#	next blank
 		t.at <- t.m[ , jat:ncol(t.m) ]
 		s <- apply(t.at, 2, function (x) length(grep("[[:space:]]", x)))
-		jj <- min(which(s > 0)) + jat		
+		jj <- min(which(s > 0)) + jat
 	}
 	
 	#	split species (txa) and data blocks	(val)
@@ -154,12 +154,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				stop("did not find all layer codes in all rows", call. = FALSE)
 			for (i in layers)
 				txa <- gsub(paste("  ", i, sep = ""), "", txa, fixed = TRUE)
-			l <- rep(names(lay), sapply(lay, length))[ order(unlist(lay)) ]			
+			l <- rep(names(lay), sapply(lay, length))[ order(unlist(lay)) ]
 			txa	<- str_trim(txa, side = "right")
 		} else {
-			if (length(layers) == 1) {			
+			if (length(layers) == 1) {
 				l <- str_trim(sapply(strsplit(txa, at), "[[", 2), side = "right")
-				txa	<- str_trim(sapply(strsplit(txa, at), "[[", 1), side = "right")			
+				txa	<- str_trim(sapply(strsplit(txa, at), "[[", 1), side = "right")
 			}
 		}
 	}
@@ -181,13 +181,13 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			if (length(grep(".", val[,i], fixed = TRUE)) > 0) {
 				error1 <- which(val[,i] == ".")
 				error2 <- which(val[,i] == " ")
-				stop("missing dot in species ",					
+				stop("missing dot in species ",
 					ifelse(length(error1) > length(error2), txa[error2], txa[error1]),
 					" in column ", i + (jj - 1), call. = FALSE)	
 			} else {
 				stop("misplaced value in species",
 					txa[which(val[,i] != " ")],
-					"in column", i + (jj - 1), call. = FALSE)			
+					"in column", i + (jj - 1), call. = FALSE)
 			}		
 		}
 	} else {
@@ -196,7 +196,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				"\nskip",
 				 ifelse(is.na(table(n.space)[2]), 0, table(n.space)[2]),
 				 "columns of blanks",
-				 "and retain", dim(val[, n.space == 0])[2], "columns of data")	
+				 "and retain", dim(val[, n.space == 0])[2], "columns of data")
 		}
 	}
 	
@@ -216,7 +216,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	test <- length(h.txt)
 	if (test < 2) {
 		message("no header data found, just plot names")
-		#	dummy duplicate
+		#	duplicate entry and name it dummy
 		test <- str_detect(h.txt, colnames)
 		if (test) {
 			if (nchar("dummy") < nchar(colnames)) {
@@ -225,12 +225,14 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				d.txt <- gsub(colnames, substring("dummy", 1, nchar(colnames)), h.txt)
 			}
 			
+		} else {
+			
 		}
-				
+		
 		h.txt <- c(h.txt, d.txt)
 	}
 	
-	#	take care about vertical mode	
+	#	take care about vertical mode
 	if (!vertical) { 
 		#	we use object 'jj' here and hope that fits?
 		par <- str_trim(substring(h.txt, 1, jj -1), "right")
@@ -260,7 +262,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				str_pad(h.txt[ne < median(ne)], width = median(ne), side = "right")
 		}
 		
-		#	split variables (var) and data blocks (val)		
+		#	split variables (var) and data blocks (val)
 		h.m <- matrix(" ", ncol = length(h.txt),
 			nrow = max(sapply(h.txt, nchar)))
 		vals <- sapply(h.txt, function (x) {
@@ -303,12 +305,12 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	}
 
 	#	assign to attributes list,
-	#	perform string grooming and type convert	
+	#	perform string grooming and type convert
 	for (i in unique(par)) {
 		test <- rle(par)$values
 		if (any(duplicated(test))) {
 			error <- test[duplicated(test)]
-			stop("duplicates in header entries: ", error, call. = FALSE)	
+			stop("duplicates in header entries: ", error, call. = FALSE)
 		}
 			
 		tmp <- str_trim(apply(y[y[, 1] == i, -1, drop = FALSE], 2, paste, collapse = ""))
@@ -330,11 +332,11 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		x <- txa	
 	} else {
 		if (species.only) {
-			x <- txa		
+			x <- txa
 		} else {
 			#	paste layers
 			if (with.layers) {
-				rownames(x) <- paste(x[, 1], l, sep = "@")	
+				rownames(x) <- paste(x[, 1], l, sep = "@")
 			}
 			else {
 				rownames(x) <- x[, 1]
@@ -348,7 +350,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 				cn <- attr[[colnames]]
 				if (any(duplicated(cn))) {
 					stop("duplicated colnames not allowed: ",
-					paste(as.character(cn[duplicated(cn)]), collapse = " & "), call. = FALSE)				
+					paste(as.character(cn[duplicated(cn)]), collapse = " & "), call. = FALSE)
 				}
 				dimnames(x)[[2]] <- as.character(cn)
 				attributes(x) <- c(attributes(x), attr)
@@ -407,7 +409,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 		}
 		if (mode == "plots") {
 			abundance = TRUE
-		}			
+		}
 	}
 	#	save attributes
 	attr <- attributes(x)
@@ -432,7 +434,7 @@ read.verbatim.append <- function (x, file, mode = c("plots", "species", "layers"
 			#	i = 1
 			ii <- match(names(xx)[i], rownames(y))
 			stopifnot(length(ii) == 1)
-			jj <- match(xx[[i]], colnames(y))	
+			jj <- match(xx[[i]], colnames(y))
 			y[ii, jj] <- abundance
 		}
 	}
