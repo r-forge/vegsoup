@@ -27,16 +27,17 @@ setMethod("initialize",
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings
 		data$abbr <- make.names(data$abbr)
+		data$plot <- gsub("[[:blank:]]", "", data$plot)
 		#	test for duplicated species
 		#	robust test, disregard 'cov'
 		input <- data[ ,c(1,2,3)]
 		unique.input <- unique(input)			
 		if (nrow(input) != nrow(unique.input)) {
-			tmp <- data[duplicated(input), ][c("plot", "abbr")]
-			tmp <- paste(paste(tmp[,1], tmp[,2]), collapse = "\n")
+			test <- data[duplicated(input), ][c("plot", "abbr")]
+			test <- paste(paste(test[,1], test[,2]), collapse = "\n")
 
 			message("found duplicated species and dropped all duplicates",
-				"\nplease review your data for observations:\n", tmp)
+				"\nplease review your data for observations:\n", test)
 			
 			data <- data[!duplicated(data[, c(1,2,3)]), ]
 		}
@@ -61,7 +62,7 @@ setMethod("initialize",
 			}	
 			stop("please review your data!", call. = FALSE)
 		}
-		#	ensure valid names					
+		#	ensure valid data frame row names					
 		rownames(data) <- seq_len(nrow(data))
 		
 	.Object@data <- data	
