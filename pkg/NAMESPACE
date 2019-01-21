@@ -32,7 +32,7 @@ importFrom("utils", "combn", "read.csv", "setTxtProgressBar", "stack",
 
 #	used in several places
 
-importFrom("stringr", str_trim, str_pad)
+importFrom("stringr", str_trim, str_pad, str_detect)
 
 #	used in a single function/method
 importFrom("coenocliner", "coenocline")
