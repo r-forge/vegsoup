@@ -106,7 +106,11 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	error <- "no success in pruning header section"
 	if (test2) {
 		stop(error, which(nchar(h.txt) != median(nchar(h.txt))), call. = FALSE)
-	}
+	} #else {
+		#if (!inherits(h.txt, "matrix")) {
+		#	h.txt <- matrix(h.txt)
+		#}
+	#}
 	
 	#	the species	
 	#	if passed all test proceed to cast to a mono spaced type matrix,
@@ -207,7 +211,26 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	x <- data.frame(abbr = txa, val, stringsAsFactors = FALSE)
 	
 	#	the header
-	#	for the header need to take care about vertical mode
+	
+	#	test if any header data exept plot names are present
+	test <- length(h.txt)
+	if (test < 2) {
+		message("no header data found, just plot names")
+		#	dummy duplicate
+		test <- str_detect(h.txt, colnames)
+		if (test) {
+			if (nchar("dummy") < nchar(colnames)) {
+				d.txt <- gsub(colnames, str_pad("dummy", width = nchar(colnames), side = "right"), h.txt)
+			} else {
+				d.txt <- gsub(colnames, substring("dummy", 1, nchar(colnames)), h.txt)
+			}
+			
+		}
+				
+		h.txt <- c(h.txt, d.txt)
+	}
+	
+	#	take care about vertical mode	
 	if (!vertical) { 
 		#	we use object 'jj' here and hope that fits?
 		par <- str_trim(substring(h.txt, 1, jj -1), "right")
@@ -265,6 +288,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 			message("maybe set vertical = FALSE")
 			stop("\nplease check your header data for misspelling or formatting", call. = FALSE)
 		}
+		
 		#	header blocking variable
 		for (i in 1:length(par)) {
 			#	assume that the frist element is not empty
