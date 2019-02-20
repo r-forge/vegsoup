@@ -29,7 +29,14 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 
 	#	read file
 	txt <- readLines(file.path(file))
-		
+	
+	#	test argument colnames
+	test <- str_detect(txt, colnames)
+
+	if (!any(test)) {
+		stop("Did not find matches for argument colnames: ", colnames, ". Baybe misspelled?")
+	}
+	
 	#	get position of keywords
 	hb <- grep("BEGIN HEAD", txt)
 	he <- grep("END HEAD", txt)
