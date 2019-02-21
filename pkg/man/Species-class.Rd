@@ -31,8 +31,9 @@
 
 \description{
   Data representation of species data in \emph{long format}, where each
-  observation of a species in a particular plot is represented by one row
-  spanning at least four columns.
+  observation of a species in a particular plot and vegetation stratum
+  is represented by a single row with at least four columns, grouping
+  the observation into plot, taxon, layer, and abundance (cover).
 }
 
 \section{Objects from the Class}{
@@ -58,15 +59,15 @@
 	  latin name, although, any character string might be used (the full species name for example).
 	  It's handy however, to keep \code{abbr} short and intuitive. In any case, syntactic valid
 	  names are automatically created using \code{\link{make.names}} (e.g. blanks will be dots).
-	\item \code{"layer"} assigns a stratum/layer to each observation, even if they are all the same
+	\item \code{"layer"} assigns a layer/stratum to each observation, even if they are all the same
 	  (e.g. the data includes only a single herb layer)
 	\item \code{"cov"} contains an estimate of species abundance or performance (e.g. plant cover)
-	  coerced to as character, regardless if it is ordinal (Braun-Blanquet scale),
+	  coerced to as character, regardless if it is ordinal (e.g. Braun-Blanquet scale),
 	  continuous (frequencies or counts) or simple presence.
    }
    
    The above outlined data columns must be available in order to create a \verb{Species} object
-   and the species method below relies they are present, named or in the order above.
+   and the species methods detailed below relies they are present, named or in the order above.
    
    Besides these mandatory columns and their rigid names and order, it is possible
    for an object of class \verb{Species} to contain more columns with

@@ -1,5 +1,24 @@
 #	cast species (and abundances) given in table footers
-castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE, abundance.first = TRUE, abundance = "+", layers) {
+#	schema[ 1 ] prune either species or plot
+#	schema[ 2 ] prune either abundance or plot
+
+#	species.first = TRUE, abundance.first = FASLE, multiple = TRUE
+#	Melica nutans: 262 +, 264 1
+#	Carex aterima: 1, 109, 23
+
+#	species.first = TRUE, abundance.first = TRUE, multiple = FALSE
+#	Aster bellidiastrum: 1, 5
+
+#	species.first = FALSE, abundance.first = FASLE
+#	11: Aster bellidiastrum 1, Linum catharticum +, Lotus comiculatus +
+
+#	species.first = FALSE, abundance.first = TRUE
+#	16: + Aruncus dioicus, + Urtica dioica
+
+#	species.first = FALSE, abundance.first = NA
+#	1: Sisymbrium officinale, Sambucus nigra
+
+castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE, abundance.first = TRUE, multiple = TRUE, abundance = "+", layers) {
 
 	if (missing(file)) {
 		stop("need a file name")
@@ -10,7 +29,23 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	} else {
 		layers <- FALSE
 	}
+
+#	if (!is.logical(species.first)) {
+#		stop("argument species.first must of mode logical")
+#	}
 	
+#	if (is.na(abundance.first)) {
+#		message("don't expect to find abundances, set to default: ", abundance)
+#	} else {
+#		if (!is.logical(abundance.first)) {
+#			stop("argument abundance.first must be either of mode logical or NA")
+#		}
+#	}
+
+#	if (!is.logical(multiple)) {
+#		stop("argument species.first must of mode logical")
+#	}
+
 	#	seperate abundance value from species string
 	.seperateFirst <- function (x, y) {
 		m <- regexpr(y, x) # first schema match
@@ -33,6 +68,12 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 		return(r)	
 	}
 	
+	.seperate <- function (x, y) {
+		r <- strsplit(x, y)
+		r <- sapply(r, str_trim, simplify = FALSE)
+		return(r)
+	}
+	
 	x <- readLines(file)
 	
 	test <- which(x == "")
@@ -42,29 +83,57 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	}
 	
 	# split schema[1]
-	xx <- strsplit(x, schema[ 1 ], fixed = TRUE)
+
 	
-	if (species.first) { # genu spec: 10 +, 32 1
-		s <- str_trim(sapply(xx, "[[", 1)) # species
-		pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances)
-		pa <- sapply(strsplit(pa, schema[ 2 ], fixed = TRUE), str_trim)
-		s <- rep(s, times = sapply(pa, length))
+	if (species.first) { # genu spec: 10 +, 32 1 \n or genu spec: 10, + \n
 		
-		if (is.na(abundance.first)) {
-			p <- unlist(pa)
-			a <- rep(abundance, length(s))
-		} else {
-			if (abundance.first) {
-				sa <- sapply(pa, function (x) .seperateFirst(x, schema[ 3 ]))
-				p <- unlist(sapply(sa, function (x) x[ ,2] ))
-				a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+		xx <- strsplit(x, schema[ 1 ], fixed = TRUE)
+		
+		if (multiple) { # genu spec: 10 +, 32 1 \n
+			
+			s <- str_trim(sapply(xx, "[[", 1)) # species
+			pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances) or vice-versa 
+			pa <- strsplit(pa, schema[ 2 ], fixed = TRUE)
+			pa <- sapply(pa, str_trim, simplify = FALSE)
+			s <- rep(s, times = sapply(pa, length))
+		
+			if (is.na(abundance.first)) {
+				p <- unlist(pa)
+				a <- rep(abundance, length(s))
 			} else {
-				sa <- sapply(pa, function (x) .seperateLast(x, schema[ 3 ]))
-				p <- unlist(sapply(sa, function (x) x[ ,2] ))
-				a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+				if (abundance.first) {
+					sa <- sapply(pa, function (x) .seperateFirst(x, schema[ 3 ]))
+					p <- unlist(sapply(sa, function (x) x[ ,2] ))
+					a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+				} else {
+					sa <- sapply(pa, function (x) .seperateLast(x, schema[ 3 ]))
+					p <- unlist(sapply(sa, function (x) x[ ,2] ))
+					a <- unlist(sapply(sa, function (x) x[ ,1] ))		
+				}
 			}
 		}
-	} else { # 10: genu spec, genu spec
+		
+		if (!multiple) { # genu spec: 10, + \n
+			s <- str_trim(sapply(xx, "[[", 1)) # species
+			pa <- str_trim(sapply(xx, "[[", 2)) # plots (and abundances) or vice-versa
+			
+			if (abundance.first) {
+				pa <- sapply(pa, function (x) .seperate(x, schema[ 3 ]))
+				p <- sapply(pa, "tail", 1)
+				a <- sapply(pa, "head", 1)
+			} else {
+				pa <- sapply(pa, function (x) .seperate(x, schema[ 3 ]))
+				p <- sapply(pa, "head", 1)
+				a <- sapply(pa, "tail", 1)
+			}
+						
+		}
+	}
+	
+	if (!species.first) { # 10: genu spec, genu spec \n
+
+		xx <- strsplit(x, schema[ 1 ], fixed = TRUE)
+		
 		# plot
 		p <- str_trim(sapply(xx, "[[", 1))	
 		# species (and abundance)

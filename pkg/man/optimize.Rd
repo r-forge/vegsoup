@@ -58,7 +58,7 @@ Dufrene, M. and Legendre, P. 1997 Species assemblages and indicator species: The
 
 Rousseeuw, P. 1987 Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. \emph{Journal of Computational and Applied Mathematics}, \bold{53},53--65.
 
-Roberts, D. in prepeparation Vegetation classification by iterative reallocation optimization algorithms.
+Roberts, D. 2015 Vegetation classification by two new iterative reallocation optimization algorithms. \emph{Plant Ecology, 216},741–758.
 }
 
 \author{ Roland Kaiser, implemented for vegsoup using Dave W. Roberts \code{optsil} and \code{optindval} procedures of package \pkg{optpart}.

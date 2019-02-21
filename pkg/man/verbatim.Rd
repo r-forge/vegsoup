@@ -34,7 +34,7 @@ read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
                      collapse = ",", abundance)
 
 castFooter(file, schema = c(":", ",", " "), species.first = FALSE,
-           abundance.first = TRUE, abundance = "+", layers)
+           abundance.first = TRUE, multiple = TRUE, abundance = "+", layers)
 
 header(x)
 
@@ -74,9 +74,10 @@ header(x)
   }
   \item{ schema }{
     character. Vector of characters of length 3 to be used to split character strings.
-    Element one gives the separator to prune the plot identifier.
+    Element one gives the separator to prune the plot identifier or a species.
     Element two is the separator in the taxon and abundance value part.
-    Element three is used to prune abundance values associated with each taxon.
+    Element three is used to prune abundance values associated with each taxon
+    or plot.
     See \sQuote{Details}.
   }
   \item{ species.first }{
@@ -89,6 +90,12 @@ header(x)
     abundance values are given after taxon names. If \code{NA} no abundance is
     available and the value of argument \code{abundance} is assigned.
   }
+  \item{ multiple }{
+    logical. If \code{TRUE} several obersations per species or plot (\code{schema[ 2 ]}).
+    If \code{FALSE} a single obersavtion per line. \code{schema[ 3 ]} specifies the split
+    and \code{schema[ 2 ]} is not uased at all.
+  }  
+  
   \item{ species.only }{
     logical. Just return a vector of species extracted from the data set.
   }
@@ -239,9 +246,9 @@ dim(x1)
 # extract header (sites) data from VegsoupVerbatim object
 y1 <- header(x1)
 # translate and groome names
-names(y1) <- c("altitude", "aspect", "slope", "cover", "pH", "block")
-# promote to Sites object	
-y1$plot <- rownames(y1) # header returns plot names as rownames 
+# header() returns also plot names as rownames
+names(y1) <- c("plot", "altitude", "aspect", "slope", "cover", "pH", "block")
+# promote to Sites object
 y1 <- stackSites(y1, schema = "plot")
 y1
 
