@@ -1,4 +1,5 @@
 --- todo
+document OptimStride plot method
 bind of VegsoupPartition does not allow recalculation the partition if e.g. vegdist is altered
 document how layers must be ordered
 test if order of layers is really consistent over all methods

@@ -11,13 +11,12 @@ setGeneric("quantile",
 		message("disregard decostand method for calculations")
 	 	decostand(x) <- NULL
 	}
-	tmp <- as.numeric(x)
 	#	speed issuse?
 	tmp <- aggregate(as.numeric(x),
 		by = list(partitioning(x)),
 		FUN = function (x) stats::quantile(x), simplify = FALSE) # , ...
 	part <- tmp[, 1]
-	tmp <- tmp[, -1]	
+	tmp <- tmp[, -1]
 	res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], length(probs)),
 		dimnames = list(names(tmp), part, probs))
 	for (i in seq(along = probs)) {
@@ -29,6 +28,7 @@ setGeneric("quantile",
 	#	groome names
 	dimnames(res)[[3]] <- paste0("q", dimnames(res)[[3]])
 	if (coverscale & is.ordinal(x)) {
+		#	message("backconvert to coverscale: ", coverscale(x)@name)
 		for (i in 1:dim(res)[3]) {
 			tmp <- res[, , i]
 			if (mode(tmp) != "numeric") mode(tmp) <- "numeric"
@@ -40,8 +40,8 @@ setGeneric("quantile",
 			tmp.i[] <- vals
 			res[, , i] <- tmp.i
 		}
-	}
-	else {
+	} else {
+			#	message("did not backconvert to coverscale: ", coverscale(x)@name)	
 		if (coverscale & is.continuous(x)) {
 			message("coverscale is not ordinal")
 		}
@@ -51,5 +51,7 @@ setGeneric("quantile",
 
 setMethod("quantile",
 	signature(x = "VegsoupPartition"),
-	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) .quantile.Vegsoup(x, ...)
+	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) {
+		.quantile.Vegsoup(x, probs = probs, na.rm = na.rm, names = names, type = type, coverscale = coverscale, ...)	
+	}
 )

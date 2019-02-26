@@ -7,24 +7,23 @@ setMethod("plot",
 		METHODS <- vegsoup::method(x) # for dispatch to work
 		m <- match.arg(method, METHODS, several.ok = TRUE)
 		m <- match(m, vegsoup::method(x))
-	}
-	else {
+	} else {
 		m <- 1:length(vegsoup::method(x))
 	}	
 	
 	k <- getK(x)
-	ft.threshold <- threshold(x)
+	ft.threshold <- vegsoup::threshold(x) # for dispatch to work
 	oc1 <- optimclass1(x)
-	oc2 <- optimclass2(x)
+	oc2 <- optimclass2(x, threshold = oc.threshold)
 	p <- peaks(x)
 	nm <- nrow(oc1)
 	#	there are six default line types
-	lty <- rep(1:6, ceiling(nm / 6))[1:nm]
-	if (nm > 6)
-		col <- rep(c(2,1), each = 6)[1:nm]
-	else
+	lty <- rep(1:6, ceiling(nm / 6))[ 1:nm ]
+	if (nm > 6) {
+		col <- rep(c(2,1), each = 6)[ 1:nm ]
+	} else {
 		col <- rep(1, nm)
-
+	}
 	if (mode == 1) {
 		#	open plot
 		plot(1:k, rep(0, k),
@@ -35,13 +34,13 @@ setMethod("plot",
 				format(ft.threshold, scientific = TRUE)), ...)
 		#	and add	lines
 		for (i in c(1:nm)[m]) {
-				lines(1:k, oc1[i, ], lty = lty[i], col = col[i])			
-				rug(p[[i]], side = 3, lwd = 5, col = "grey80", ticksize = -0.03)
-		}			
+				lines(1:k, oc1[ i, ], lty = lty[i], col = col[ i ])
+				rug(p[[i]], side = 3, lwd = 5, col = "grey80", ticksize = -0.03, quiet = TRUE)
+		}
 		#	add rug axes to help eye-balling curve peaks
-		rug(1:k, side = 3)
-		rug(1:k, side = 1)
-		axis(3)		
+		rug(1:k, side = 3, quiet = TRUE)
+		rug(1:k, side = 1, quiet = TRUE)
+		axis(3)
 	}
 	if (mode == 2) {
 		plot(1:k, rep(0, k),
@@ -51,15 +50,16 @@ setMethod("plot",
 				oc.threshold, "significant indicator species"),
 			sub = paste("Fisher's exact test, threshold",
 				format(ft.threshold,scientific = TRUE)), ...)
-			rug(1:k, side = 3)		
+		rug(1:k, side = 3, quiet = TRUE)
+		abline(0,1, col = "grey80", lwd = 4)
 		for (i in 1:nrow(oc2)) {
-			lines(1:k, oc2[i, ], lty = lty[i], col = col[i])
+			lines(1:k, oc2[ i, ], lty = lty[i], col = col[i])
 		}
+
 	}
 	legend("bottomright",
 		lty = 1:length(m),
-		legend = vegsoup::method(x)[m], col = col,
+		legend = vegsoup::method(x)[ m ], col = col,
 		inset = 0.04, bty = "n")
-}
-
-)	
+	}
+)

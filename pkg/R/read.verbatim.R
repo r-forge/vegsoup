@@ -34,7 +34,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	test <- str_detect(txt, colnames)
 
 	if (!any(test)) {
-		stop("Did not find matches for argument colnames: ", colnames, ". Baybe misspelled?")
+		stop("Did not find matches for argument colnames: ", colnames, ". Maybe misspelled?")
 	}
 	
 	#	get position of keywords
