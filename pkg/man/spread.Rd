@@ -12,11 +12,15 @@
   The method simply lists all occurrences of species in partitions.
 }
 \usage{
-  spread(obj)
+  spread(obj, condensed = FALSE)
 }
 \arguments{
   \item{ obj }{
-	An object inheriting from \code{"VegsoupPartition"}.
+    An object inheriting from \code{"VegsoupPartition"}.
+  }
+  \item{ obj }{
+    \code{logical}. If \code{TRUE} return in condensed form with as manny
+    elements as there are partitions.
   }
 }
 \value{
@@ -34,6 +38,8 @@ data(barmstein)
 x <- VegsoupPartition(barmstein, k = 2)
 
 spread(x)
+
+spread(x, condensed = TRUE)
 }
 \keyword{ methods }
 

@@ -1,12 +1,12 @@
 #	list occurences of species in partitions
 setGeneric("spread",
-	function (obj)
+	function (obj, ...)
 		standardGeneric("spread")
 )
 
 setMethod("spread",
 	signature(obj = "VegsoupPartition"),
-	function (obj) {
+	function (obj, condensed = FALSE) {
 	part  <- partitioning(obj)
 	X <- as.logical(obj)
 	
@@ -22,6 +22,11 @@ setMethod("spread",
 			USE.NAMES = FALSE)
 		}			
 	)
+	
+	if (condensed) {
+	res <- sapply(res, function (x) sort(unique(x)), simplify = FALSE)	
+	}
+		
 	return(res)
 	}
 )
