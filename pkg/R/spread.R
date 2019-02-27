@@ -15,16 +15,16 @@ setMethod("spread",
 	}
 	
 	res <- apply(X, 2, function (y) {
-		sapply(rownames(X[y > 0, , drop = FALSE]),
+		sapply(rownames(X[ y > 0, , drop = FALSE ]),
 			function (z) {
-				part[which(names(part) == z)]
+				part[ which(names(part) == z) ]
 			},
 			USE.NAMES = FALSE)
-		}			
+		}
 	)
 	
 	if (condensed) {
-	res <- sapply(res, function (x) sort(unique(x)), simplify = FALSE)	
+		res <- sapply(res, function (x) sort(unique(x)), simplify = FALSE)
 	}
 		
 	return(res)
