@@ -13,6 +13,7 @@
 \alias{decostand<-,VegsoupPartition,character-method}
 \alias{decostand<-,Vegsoup,NULL-method}
 \alias{decostand<-,VegsoupPartition,NULL-method}
+\alias{decostand<-,VegsoupPartitionFidelity,NULL-method}
 
 \title{ Standardization Methods }
 

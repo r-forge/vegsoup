@@ -27,7 +27,7 @@ setReplaceMethod("decostand",
 	signature(x = "Vegsoup", value = "character"),
 	function (x, value) {
 		#	taken from vegan
-		METHODS <- c("total", "max", "frequency", "normalize", "range", 
+		METHODS <- c("total", "max", "frequency", "normalize", "range",
 			"standardize", "pa", "chi.square", "hellinger", "log",
 			"wisconsin", "cap") # cap is not defined in vegan
 		value <- match.arg(value, METHODS, several.ok = TRUE)
@@ -40,7 +40,7 @@ setReplaceMethod("decostand",
 	signature(x = "VegsoupPartition", value = "character"),
 	function (x, value) {
 		#	taken from vegan
-		METHODS <- c("total", "max", "frequency", "normalize", "range", 
+		METHODS <- c("total", "max", "frequency", "normalize", "range",
 			"standardize", "pa", "chi.square", "hellinger", "log",
 			"wisconsin", "cap") # cap is defined in vegan
 		value <- match.arg(value, METHODS, several.ok = TRUE)
@@ -82,10 +82,22 @@ setReplaceMethod("decostand",
 	}
 )
 
+setReplaceMethod("decostand",
+	signature(x = "VegsoupPartitionFidelity", value = "NULL"),
+	function (x, value) {
+		if (!is.null(decostand(x))) {
+			x@decostand <- new("decostand", method = NULL)
+			#	do not recompute
+			#	message("decostand set to NULL, but did not recompute partitioning")
+		}
+		return(x)
+	}
+)
+
 #	cummulative abundance profile
 #	De Caceres et al. 2013 Methods in Ecology and Evolution 4: 1167-1177
 cap <- function (x, asVegsoup = FALSE) {
-	a <- as.array(x, mode = "numeric") # default is 
+	a <- as.array(x, mode = "numeric") # default is ?
 	X <- species(species(x))
 		
 	#	reverse array, bring upper layer in front
@@ -115,7 +127,7 @@ cap <- function (x, asVegsoup = FALSE) {
 		x@species <- r
 		x@coverscale <- Coverscale("as.is") # must change
 		return(x)
-	}
-	else
+	} else {
 		return(r)
+	}
 }

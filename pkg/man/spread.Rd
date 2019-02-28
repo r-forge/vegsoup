@@ -18,7 +18,7 @@
   \item{ obj }{
     An object inheriting from \code{"VegsoupPartition"}.
   }
-  \item{ obj }{
+  \item{ condensed }{
     \code{logical}. If \code{TRUE} return in condensed form with as manny
     elements as there are partitions.
   }

@@ -29,4 +29,3 @@ singletons <- function (obj) {
 singleton <- function (obj) {
 	as.vector(which(table(partitioning(obj)) == 1))
 }
-

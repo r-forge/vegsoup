@@ -1,6 +1,6 @@
 #	list occurences of species in partitions
 setGeneric("spread",
-	function (obj, ...)
+	function (obj, condensed = FALSE)
 		standardGeneric("spread")
 )
 
