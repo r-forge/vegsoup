@@ -8,6 +8,7 @@
 
 \alias{FisherTest}
 \alias{FisherTest,VegsoupPartition-method}
+\alias{FisherTest,VegsoupPartitionFidelity-method}
 
 \alias{Phi}
 \alias{Phi,VegsoupPartition-method}
@@ -23,9 +24,10 @@
 \description{
   Method \code{fidelity} calculates fidelity values for objects inheriting
   \code{'VegsoupPartition'} and returns an extended object of class
-  \code{\linkS4class{VegsoupPartitionFidelity}}. Function \code{fidelity} is based on the implementation
-  of function \code{\link[indicspecies]{strassoc}} in \pkg{indicspecies} and offers
-  all it's methods plus some more (see \sQuote{Details}).
+  \code{\linkS4class{VegsoupPartitionFidelity}}. Function \code{fidelity} is
+  based on the implementation of function \code{\link[indicspecies]{strassoc}}
+  in \pkg{indicspecies} and offers all it's methods plus some more
+  (see \sQuote{Details}).
 
   Functions \code{Phi} and \code{Indval} calculates the \emph{phi} and \emph{Indval}
   statistics according to \code{\link[optpart:phi]{phi}} in package
@@ -43,6 +45,8 @@
 		 alternative = "greater", fast = FALSE, verbose = TRUE, ...)
 
 \S4method{FisherTest}{VegsoupPartition}(obj, alternative = "greater")
+
+\S4method{FisherTest}{VegsoupPartitionFidelity}(obj)
 
 \S4method{Phi}{VegsoupPartition}(obj)
 
@@ -115,7 +119,7 @@ Methods currently implemented for method \code{fidelity} include the following:
 \value{
 For \code{fidelity} an object of class \code{'VegsoupPartitionFidelity'}.
 
-For \code{FisherTest} and \code{Phi} a \code{'matrix'} of values with species as rows and partitions as columns.
+For \code{FisherTest} and \code{Phi} a \code{'matrix'} of values with species as rows and partitions as columns. Note, for class \code{\linkS4class{VegsoupPartitionFidelity}} \code{FisherTest} just extracts what was already calculated.
 }
 \references{
 Willner, W., Tichy, L., and Chytry, M. (2009). Effects of different fidelity measures and contexts on the determination of diagnostic species. Journal of Vegetation Science, 20(1):130-137.

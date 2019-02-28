@@ -102,3 +102,10 @@ setMethod("FisherTest",
 	return(r)
 	}
 )
+
+setMethod("FisherTest",
+	signature(obj = "VegsoupPartitionFidelity"),
+	function (obj) {
+		return(obj@fisher.test)
+}
+		

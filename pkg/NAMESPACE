@@ -14,7 +14,7 @@ importFrom("stats", as.dist, quantile, as.dendrogram)
 
 importFrom("utils", head, tail, str)
 
-importFrom("graphics", plot, hist)
+importFrom("graphics", abline, plot, hist)
 
 importFrom("grDevices", "cm.colors", "rgb", "xy.coords")
 
