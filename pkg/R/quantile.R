@@ -8,7 +8,7 @@ setGeneric("quantile",
 #}
 .quantile.Vegsoup <- function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) {
 	if (coverscale & !is.null(decostand(x))) {
-		message("disregard decostand method for calculations")
+		message("disregard decostand method for calculations of quantiles")
 	 	decostand(x) <- NULL
 	}
 	#	speed issuse?

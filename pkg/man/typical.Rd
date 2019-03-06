@@ -10,7 +10,7 @@
 Typical Samples of an Object of Class Vegsoup*
 }
 \description{
-Identifies samples (plots) that typify clusters in a partition based on dissimilarity.
+Identifies samples (plots) that typify partitions based on dissimilarity.
 }
 \usage{
 \S4method{typical}{VegsoupPartition}(obj, k = 1, ...)
@@ -33,7 +33,7 @@ Typical calculates two versions of typal species. Silhouette analysis returns \c
 \value{
 Returns a \code{list} with two components
 \item{ partana }{
-A \code{data.frame} with the clusters as rows and typal samples as columns.
+A \code{data.frame} with the partitons as rows and typical samples as columns.
 }
 \item{ silhouette }{
 A \code{data.frame} as above.

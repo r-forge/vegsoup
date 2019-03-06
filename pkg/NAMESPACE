@@ -220,6 +220,7 @@ exportMethods(
 	"peaks",
 	"Phi",
 	"plot",
+        "private",
 	"proj4string",
 	"proj4string<-",
 	"quantile",
