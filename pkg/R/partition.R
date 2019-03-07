@@ -65,8 +65,14 @@ setGeneric("partition",
 setMethod("partition",
 	signature(x = "VegsoupPartition"),
 	function (x, value) {
-			stopifnot(!any(value > getK(x)))
-			x[x@part %in% value, ]
+			if (all(value < 0)) { # drop
+				stopifnot(!any(abs(value) > getK(x)))
+				i <- !partitioning(x) %in% abs(value)
+			} else {
+				stopifnot(!any(value > getK(x)))
+				i <- partitioning(x) %in% value
+			}
+			x[ i, ]
 	}
 )
 
