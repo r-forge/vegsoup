@@ -40,7 +40,7 @@
 }
 \author{ Roland Kaiser }
 \seealso{
-\code{\code{\link{shared}}, \linkS4class{VegsoupPartition}}
+\code{\link{shared}}, \linkS4class{VegsoupPartition}
 }
 \examples{
 require(vegsoup)

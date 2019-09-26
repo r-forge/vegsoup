@@ -47,7 +47,7 @@ Compute a dissimilarity matrix as specified by \code{vegdist(x)} by internal cal
 	\code{\link[vegan:vegdist]{vegdist}} of \pkg{vegan}.
   }
   \item{ diag, upper, na.rm }{
-	Not used.
+	Compute diagonals or return only the upper diagonal.
   }
   \item{ method, binary }{
 	Not used.

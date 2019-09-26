@@ -23,7 +23,7 @@ setMethod("as.dist",
 		#if (missing(mode)) {
 			mode = "Q"
 		#}
-		Xd <- vegan::vegdist(as.matrix(m), method = vegdist(m)) # ...
+		Xd <- vegan::vegdist(as.matrix(m), method = vegdist(m), diag = diag, upper = upper) # ...
 		
 		#	ensure dissimilarities
 		#if (vegdist(m) != "manhattan" & vegdist(m) != "euclidean") {
