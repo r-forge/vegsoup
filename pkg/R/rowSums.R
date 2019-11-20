@@ -1,8 +1,8 @@
-#if (!isGeneric("colSums")) {
+if (!isGeneric("colSums")) {
 setGeneric("colSums",
 	function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("colSums"))
-#}
+}
 setMethod("colSums",
 	signature(x = "Vegsoup"),
 	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
@@ -13,11 +13,11 @@ setMethod("colSums",
 	}
 )
 
-#if (!isGeneric("rowSums")) {
+if (!isGeneric("rowSums")) {
 setGeneric("rowSums",
 	function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("rowSums"))
-#}
+}
 setMethod("rowSums",
 	signature(x = "Vegsoup"),
 	function (x, na.rm = FALSE, dims = 1, typeof = "logical", ...) {
@@ -28,10 +28,10 @@ setMethod("rowSums",
 	}
 )
 
-#if (!isGeneric("rowMeans")) {
+if (!isGeneric("rowMeans")) {
 setGeneric("rowMeans", function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("rowMeans"))
-#}
+}
 setMethod("rowMeans",
 	signature(x = "Vegsoup"),
 	function (x, na.rm = FALSE, dims = 1, typeof = "numeric", ...) {
@@ -42,10 +42,10 @@ setMethod("rowMeans",
 	}
 )
 
-#if (!isGeneric("colMeans")) {
+if (!isGeneric("colMeans")) {
 setGeneric("colMeans", function (x, na.rm = FALSE, dims = 1, ...)
 	standardGeneric("colMeans"))
-#}
+}
 setMethod("colMeans",
 	signature(x = "Vegsoup"),
 	function (x, na.rm = FALSE, dims = 1, typeof = "numeric", ...) {
