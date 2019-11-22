@@ -23,11 +23,11 @@
 \description{
 The vegsoup package provides classes and methods to store and manipulate vegetation data (spatial and temporal explicit species co-occurrence data). In a certain respect it acts like a data base system. In fact, it's data model is very similar to the \emph{TurboVeg} XML interchange format (see \code{\link{read.XML}}).
 
-Vegetation data consists of at least of two related tables -- a species or community matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). At the very least a sampling date is available. If taxonomic identity or traits of species is a concern -- and it should be --  an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent \R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects, for example when random subsets needs be performed. Some \R package adress these issues, namely the \pkg{mefa} and \pkg{multitable} packages. They do so by extending the \code{data.frame} concept. None of these packages is spatially explicit nor handle cover scales commonly applied in vegetation ecology and present vegetation data bases.
+Vegetation data consists of at least of two related tables -- a species or community matrix and a table of measurements taken at a site (sampling unit or \enc{relevée}{relevee}). At the very least a sampling date is available. If taxonomic identity or traits of species is a concern -- and it should be --  an additional table has to be tightly linked to the species matrix. Moreover, if spatial representation (e.g. plot coordinates and/or polygons) needs to be addressed another data layer has to be included. In the most complete case, up to five independent \R objects have to be managed. Indexing and manipulation easily get cumbersome in this situation and the general workflow is hindered by a serious amount of code that ensures linking of objects, for example when random subsets needs be performed. Some \R packages address these issues, namely the \pkg{mefa} and \pkg{multitable} packages (Note, package multitable was removed from the CRAN repository by mid 2016). They do so by extending the \code{data.frame} concept. None of these packages is spatially explicit nor do they handle cover scales commonly applied in vegetation ecology and present vegetation data bases.
 
-Besides that the package provides novel functionality, it also interfaces functions in other packages, most important are \pkg{vegan}, \pkg{optpart} and \pkg{labdsv}. These functions are extended or their arguments are simplified, due the inherent properties og \verb{Vegsoup} objects. It was avoided to create new function names whenever another package already defines a suitable and meaningful name. Examples are \code{decostand()} and \code{vegdist()} which have extended meaning.
+Besides that, the package provides novel functionality, it also interfaces functions in other packages, most important are \pkg{vegan}, \pkg{optpart} and \pkg{labdsv}. These functions are extended or their arguments are simplified, due the inherent properties of \verb{Vegsoup} objects. It was avoided to create new function names whenever another package already defines a suitable and meaningful name. Examples are \code{decostand()} and \code{vegdist()} which have extended meaning.
 
-The \emph{vegsoup} term follows the tradition of strange named functions in the \pkg{vegan} package – in particular \code{\link[vegan:vegemite]{vegemite}}, to give but one example but also notice the \code{tabasco() function}.
+The \emph{vegsoup} term follows the tradition of strange named functions in the \pkg{vegan} package – in particular \code{\link[vegan:vegemite]{vegemite}}, to give but one example, but also notice the \code{tabasco()} function.
 
 This package should be mainly useful in the field of vegetation ecology, vegetation mapping and classification, and phytosociology in particular.
 
@@ -76,10 +76,10 @@ classes, with the following functions:
     main constructor function demanding full specification
   }
   \item{ \code{\link{plainsoup}} }{
-    suply just a community matrix and coverscale but no further data elements
+    supply just a community matrix and coverscale but no further data elements
   }
   \item{ \code{\link{instantsoup}} }{
-    shorthand function when data files conform to specific conventions (format)
+    shorthand function when data files conform to some specific conventions (format)
   }
   \item{ \code{\link{coenoflex}} }{
      random community of specified size
@@ -109,16 +109,16 @@ classes, with the following functions:
     reads data from text arrays (OCR scans)
   }
   \item{ \code{\link{read.XML}} }{
-    reads data from XML files exported from the turboveg data base
+    reads data from XML files exported from the \emph{TurboVeg} data base
   }
  }
 
 }
 
 \section{ Derived objects from base class Vegsoup }{
-The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived class from the base class \verb{Vegsoup}. Objects of class \verb{VegsoupPartition} directly extend the former class, that means all methods defined for class \verb{Vegsoup} apply. As the name suggest, class \verb{VegsoupPartition} represents an object that is \emph{partitioned} (clusterend).
+The \pkg{vegsoup} package uses S4 classes that relate to each other by direct inheritance. There are 2 derived classes from the base class \verb{Vegsoup}. Objects of class \verb{VegsoupPartition} directly extend the former class, that means all methods defined for class \verb{Vegsoup} apply. As the name suggest, class \verb{VegsoupPartition} represents an object that is \emph{partitioned} (clusterend).
 
-The following functions and method are designed for class \verb{VegsoupPartition}.
+The following functions and method are designed for class \code{\linkS4class{VegsoupPartition}}.
 
  \describe{
   \item{ \code{\link{VegsoupPartition}} }{
@@ -144,7 +144,7 @@ Class \verb{VegsoupOptimstride} also extends class \verb{Vegsoup}. Thjis class c
   \item{ \code{\link{optimclass1},\link{optimclass2}} }{
     matrices with the counts of faithful species
   }
-  \item{ \code{\link{peaks}\link{which.max}} }{
+  \item{ \code{\link{peaks}} }{
     peaks along the stride and
   }
   \item{ \code{\link{which.max}} }{
@@ -158,7 +158,7 @@ When indicator species analysis was performed on an object of that class, an obj
 
 \section{ Properties of Vegsoup* objects }{
 
-As outlined above, a \verb{Vegsoup} object contains several data partitions. Besides the species and sites data it contains a taxonomic reference for all taxa, a definition of a cover scale, some standardisation statement(s), a dissimilarity measure to apply, and spatial coordinates. Basic parameters of existing \verb{Vegsoup} objects can be obtained, and in most cases changed.
+As outlined above, a \verb{Vegsoup} object contains several data partitions. Besides the species and sites data it contains a taxonomic reference for all taxa, a definition of a cover scale, some standardisation statement(s), a dissimilarity measure to apply, and spatial coordinates. Basic parameters of existing \verb{Vegsoup} objects can be obtained, and in most cases also changed, by:
 
  \describe{
   \item{ \code{\link{decostand}} }{
@@ -171,7 +171,7 @@ As outlined above, a \verb{Vegsoup} object contains several data partitions. Bes
     return the dimensions of the species matrix
   }
   \item{ \code{\link{ncell},\link{fill}} }{
-    report the number of cells and the proportion non zero elements in the
+    report the number of cells and the proportion of non zero elements in the
     species matrix
   }
   \item{ \code{\link{coverscale}} }{
@@ -180,7 +180,7 @@ As outlined above, a \verb{Vegsoup} object contains several data partitions. Bes
   \item{ \code{\link{layers}} }{
     the unique layers/strata
   }
-  \item{ \code{\link{extent}\link{bbox}} }{
+  \item{ \code{\link{extent},\link{bbox}} }{
     spatial extent
   }
   \item{ \code{\link{proj4string}} }{
@@ -203,7 +203,7 @@ For \verb{VegsoupPartition} objects the following additional methods are defined
 
 \section{ Summarizing and validation }{
 
-Summary and print method
+Summary and print methods
 
  \describe{
   \item{ \code{\link{print}} }{
@@ -239,7 +239,7 @@ For \verb{VegsoupPartition} objects the following additional methods are defined
     evaluates cluster by partition analysis
   }
   \item{ \code{\link{disdiam}} }{
-    evaluates by dissimilarity diameters
+    evaluates cluster by dissimilarity diameters
   }
   \item{ \code{\link{tabdev}} }{
     calculates the probability of observing as low a deviance as observed
@@ -276,10 +276,10 @@ There exist several methods that retrieve a community table as class 'matrix' fr
   \item{ \code{\link{indices}} }{
     pointer to non empty cells in the species matrix
   }
-  \item{ \code{\link{rowSums}\link{colSums}} }{
+  \item{ \code{\link{rowSums},\link{colSums}} }{
     row and column sums for the the species matrix
   }
-  \item{ \code{\link{rowMeans}\link{colMeans}} }{
+  \item{ \code{\link{rowMeans},\link{colMeans}} }{
     row and column means for the the species matrix
   }
   \item{ \code{\link{as.dist}} }{
@@ -514,7 +514,7 @@ Miscellaneous methods and functions.
     geocoding functionality using the grid scheme of tile map services
   }
   \item{ \code{\link{elevation}} }{
-    topographic height information from the SRTM3 dat set
+    topographic height information from the SRTM3 data set
   }
  }
 
