@@ -24,8 +24,8 @@ setMethod("initialize",
 	function(.Object, data) {
 		#	depreciated
 		#	for safety and to ensure validity		
-		data <- as.data.frame(
-			as.matrix(data), stringsAsFactors = FALSE)
+		#	data <- as.data.frame(
+		#	as.matrix(data), stringsAsFactors = FALSE)
 
 		#	bring columns into order
 		
