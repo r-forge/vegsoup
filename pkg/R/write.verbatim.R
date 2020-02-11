@@ -12,8 +12,7 @@
 	if (missing(file)) {
 		no.save <- TRUE
 		message("no filename provided")
-	}
-	else {
+	} else {
 		no.save <- FALSE
 		file <- file.path(file)
 	}
@@ -30,8 +29,7 @@
 			obj$richness <- richness(obj, "sample")
 			select <- select
 		}	
-	}
-	else {
+	} else {
 		if (is.numeric(select)) {
 			if (any(is.na(names(obj)[select]))) {
 				stop("select must match columns in sites(obj)")
@@ -46,8 +44,7 @@
 	}
 	if (missing(rule) & class(obj) != "VegsoupPartition") {
 		rule <- FALSE
-	}
-	else {
+	} else {
 		if (class(obj) == "Vegsoup") {
 			stopifnot(length(rule) == nrow(obj))
 			rule.col <- cumsum(rle(rule)$lengths)
@@ -67,8 +64,7 @@
 	
 	if (singleton) {
 		res <- relevee(obj, 1, format = TRUE)
-	}
-	else {	
+	} else {	
 		#	width of layer codes
 		nchar.layer <- max(sapply(layers(obj), nchar))
 		
@@ -79,7 +75,7 @@
 		if (short.names) {
 			taxon <- gsub(".", " ", txa$abbr, fixed = TRUE)
 		} else {
-			taxon <- txa$taxon
+			taxon <- as.character(txa$taxon)
 		}
 		#	pad space to taxa (right) and layer (both sides)
 		#	this also ensures equal widths 

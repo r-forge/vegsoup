@@ -24,7 +24,7 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 		stop("need a file name")
 	}
 	if (!missing(layers)) {
-		at <- layers[1]
+		at <- layers[ 1 ]
 		layers <- TRUE
 	} else {
 		layers <- FALSE
@@ -169,7 +169,7 @@ castFooter <- function (file, schema = c(":", "," , " "), species.first = FALSE,
 	if (is.list(x))	x <- do.call("rbind", x) else x <- t(x)
 
 	if (layers) {
-		stop("new implementation")
+		#	message("new implementation")
 		x <- strsplit(s, at)
 		s <- sapply(sapply(x, "[", 1), str_trim)
 		l <- sapply(sapply(x, "[", 2), str_trim)

@@ -1,5 +1,5 @@
 #	function to import monospaced commuity tables
-read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), species.only = FALSE, vertical = TRUE, verbose = TRUE) {
+read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), species.only = FALSE, vertical = TRUE, verbose = FALSE) {
 
 	if (missing(file))
 		stop("plaese supply a path to a file")
@@ -178,7 +178,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	additional check for data integrity
 	test <- which(n.space != nrow(t.m) & n.space != 0)
 	
-	if (verbose) message("found ", nrow(t.m), " species")
+	if (verbose) cat("found ", nrow(t.m), " species")
 		
 	if (length(test) > 0) {
 		message("some mono type character columns deviate from the expected pattern")
@@ -222,7 +222,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 	#	test if any header data exept plot names are present
 	test <- length(h.txt)
 	if (test < 2) {
-		message("no header data found, just plot names")
+		if (verbose) cat("no header data found, just plot names")
 		#	duplicate entry and name it dummy
 		test <- str_detect(h.txt, colnames)
 		if (test) {

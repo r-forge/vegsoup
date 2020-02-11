@@ -198,9 +198,7 @@ setMethod("abbr",
 	}
 )
 
-setMethod("bind",
-	signature(... = "Species"),
-	function (..., deparse.level = 1) {
+".bind.Species" <- function (..., deparse.level = 1) {
 		allargs <- list(...)
 		x <- do.call("rbind", lapply(allargs, species))
 		if (any(duplicated(x))) {
@@ -210,6 +208,12 @@ setMethod("bind",
 		#	explicit ordering!
 		x <- x[order(x$plot, x$layer, x$abbr), ]
 		return(species(x))
+	}
+
+setMethod("bind",
+	signature(... = "Species"),
+	function (..., deparse.level = 1) { # add na.action argument
+		.bind.Species(..., deparse.level = 1)	
 	}
 )
 

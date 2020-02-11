@@ -28,7 +28,7 @@
 
 \usage{
 read.verbatim(file, colnames, layers, replace = c("|", "-", "_"),
-              species.only = FALSE, vertical = TRUE, verbose = TRUE)
+              species.only = FALSE, vertical = TRUE, verbose = FALSE)
 
 read.verbatim.append(x, file, mode = c("plots", "species", "layers"),
                      collapse = ",", abundance)
@@ -238,7 +238,7 @@ file <- system.file("extdata", "Erschbamer1992Tab4.txt",
                     package = "vegsoup")
 
 # read OCR scan
-x1 <- read.verbatim(file, colnames = "Aufnahme Nr.")
+x1 <- read.verbatim(file, colnames = "Aufnahme Nr.", verbose = TRUE)
 class(x1)
 head(x1)
 dim(x1)
@@ -312,7 +312,7 @@ confusion(prt1, prt0)
 
 # write object of class Vegsoup
 txt <- write.verbatim(seriation(x), file = tempfile(),
-                      select = c(8,1,3))
+                      select = c(8,1,3), verbose = TRUE)
 txt[1:30] # resize console window
 }
 \seealso{
