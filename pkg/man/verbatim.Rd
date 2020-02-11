@@ -312,7 +312,7 @@ confusion(prt1, prt0)
 
 # write object of class Vegsoup
 txt <- write.verbatim(seriation(x), file = tempfile(),
-                      select = c(8,1,3), verbose = TRUE)
+                      select = c(8,1,3))
 txt[1:30] # resize console window
 }
 \seealso{
