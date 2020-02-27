@@ -27,8 +27,9 @@ setMethod("initialize",
 		#	data <- as.data.frame(
 		#	as.matrix(data), stringsAsFactors = FALSE)
 
-		#	bring columns into order
-		
+		data <- as.data.frame(data, stringsAsFactors = FALSE)
+
+		#	bring columns into order		
 		if (dim(data)[2] > 2) {
  			sel.abbr.taxon <- match(c("abbr", "taxon"), names(data))
 			sel <- 1:length(names(data))
