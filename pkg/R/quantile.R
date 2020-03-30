@@ -11,10 +11,11 @@ setGeneric("quantile",
 		message("disregard decostand method for calculations of quantiles")
 	 	decostand(x) <- NULL
 	}
-	#	speed issuse?
-	tmp <- aggregate(as.numeric(x),
+	x <- as.numeric(x)
+	x[ x == 0 ] <- NA
+	tmp <- aggregate(x,
 		by = list(partitioning(x)),
-		FUN = function (x) stats::quantile(x), simplify = FALSE) # , ...
+		FUN = function (x) stats::quantile(x, probs = probs, na.rm = TRUE), simplify = FALSE) # , ...
 	part <- tmp[, 1]
 	tmp <- tmp[, -1]
 	res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], length(probs)),
