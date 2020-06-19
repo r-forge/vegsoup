@@ -11,19 +11,19 @@ setGeneric("quantile",
 		message("disregard decostand method for calculations of quantiles")
 	 	decostand(x) <- NULL
 	}
-	x <- as.numeric(x)
-	x[ x == 0 ] <- NA
-	tmp <- aggregate(x,
+	xx <- as.numeric(x)
+	xx[ xx == 0 ] <- NA
+	tmp <- aggregate(xx,
 		by = list(partitioning(x)),
 		FUN = function (x) stats::quantile(x, probs = probs, na.rm = TRUE), simplify = FALSE) # , ...
-	part <- tmp[, 1]
-	tmp <- tmp[, -1]
-	res <- array(0, dim = c(dim(tmp)[2], dim(tmp)[1], length(probs)),
+	part <- tmp[ , 1 ]
+	tmp <- tmp[ , -1 ]
+	res <- array(0, dim = c(dim(tmp)[ 2 ], dim(tmp)[ 1 ], length(probs)),
 		dimnames = list(names(tmp), part, probs))
 	for (i in seq(along = probs)) {
 		for (j in 1:nrow(res)) {
 			#	j = 1; i = 1
-			res[j, , i] <- sapply(tmp[, j], function (x) x[i])
+			res[ j, , i ] <- sapply(tmp[ , j ], function (x) x[ i ])
 		}
 	}
 	#	groome names
