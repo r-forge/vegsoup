@@ -10,6 +10,7 @@ setMethod("silhouette",
 			stop("meaningless with k = ", getK(x))
 		
 		res <- cluster::silhouette(partitioning(x), dist = as.dist(x, ...))
+		rownames(res) <- rownames(x)
 		return(res)
 	}
 )
