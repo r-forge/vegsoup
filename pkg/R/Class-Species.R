@@ -23,6 +23,7 @@ setMethod("initialize",
 	function(.Object, data) {
 		#	for safety and to get rid of factors
 		#	improve speed, efficency
+		#	as.matrix has effect if abbr is numeric
 		data <- as.data.frame(as.matrix(data), stringsAsFactors = FALSE)
 		names(data)[1:4] <- c("plot", "abbr", "layer", "cov")
 		#	valid strings

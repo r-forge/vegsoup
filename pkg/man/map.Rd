@@ -12,7 +12,7 @@
 \title{ Draw Map of Plot Locations }
 
 \description{
-\code{map} draws a simple vector background map and plot locations. \code{ellipsoidhull} computes the \emph{ellipsoid hull} or \emph{spanning ellipsoid} such that all given points lie just inside or on the boundary of the ellipsoid and adds it to a map.
+\code{ellipsoidhull} computes the \emph{ellipsoid hull} or \emph{spanning ellipsoid} such that all given points lie just inside or on the boundary of the ellipsoid and adds it to a map.
 
 \code{quicklook} opens a browser window and plots pushpins of plot coordiantes on top of \sQuote{Google Maps}.
 }
@@ -26,9 +26,6 @@
 \arguments{
   \item{ x }{
     \code{Vegsoup*} or for ellipsoidhull a \code{'VegsoupPartition'} object.
-  }
-  \item{ \dots }{
-    Arguments passed to \code{\link[maps]{map}} in package \pkg{maps}.
   }
   \item{ tol, maxit, ret.wt, ret.sqdist, ret.pr }{
     Arguments to \code{\link[cluster]{ellipsoidhull}} in package

@@ -51,11 +51,14 @@ setMethod("species",
 		r <- try(new("Species",
 			data = read.csv(obj, ...)), silent = TRUE)
 		
-		if (class(r) == "try-error")
+		if (class(r) == "try-error") {
 			stop("could not read csv file, maybe try another sep argument? ",
 				"first line of file is \"", n, "\"")
-		else
+		} else {
+			#	implicit ordering
+			r@data <- r@data[ order(r$plot, r$layer, r$abbr), ]
 			return(r)
+		}	
 	}
 )
 

@@ -22,12 +22,10 @@ setValidity("Taxonomy",
 setMethod("initialize",
 	"Taxonomy",
 	function(.Object, data) {
-		#	depreciated
-		#	for safety and to ensure validity		
-		#	data <- as.data.frame(
-		#	as.matrix(data), stringsAsFactors = FALSE)
-
-		data <- as.data.frame(data, stringsAsFactors = FALSE)
+		#	for safety and to ensure validity
+		#	as.matrix has effect if abbr is numeric
+		data <- as.data.frame(as.matrix(data), stringsAsFactors = FALSE)
+		#	data <- as.data.frame(data, stringsAsFactors = FALSE)
 
 		#	bring columns into order		
 		if (dim(data)[2] > 2) {

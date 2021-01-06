@@ -56,7 +56,7 @@ Currently there are only very limited ways to pass down arguments to functions a
 }
 \seealso{
 \code{\link{vegemite}} in package \pkg{vegan} for the ancestor of all vegetation table functions,
-\code{\link[labdsv:ordtaxa]{ordtaxa}} for an interactive implementation in package \pkg{labdsv},
+\code{\link[labdsv:ordcomm]{ordcomm}} for an interactive implementation in package \pkg{labdsv},
 and \code{\link{VegsoupPartition}} for creating a partitions.
 }
 
