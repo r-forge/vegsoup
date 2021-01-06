@@ -4,7 +4,7 @@ Date: 2020-01-06
 Title: Classes and Methods for Phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 					 email = "kardinal.eros@gmail.com"))
-Maintainer: Roland Kaiser <kardinal.eros@gmail.com>
+Maintainer: Roland Kaiser<kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, sp (>= 1.0-9)
 Imports: methods, parallel,
 	raster,
@@ -12,7 +12,6 @@ Imports: methods, parallel,
 	mefa, gclus,
 	Hmisc, pbapply, Matrix, XML, stringr,
 	geonames, googleVis, ggmap, RColorBrewer, coenocliner
-# multitable: package multitable was removed from the CRAN
 Suggests: rgdal (>= 0.8-11), misc3d, maptools, maps, mapdata, Taxonstand, vegdata
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
