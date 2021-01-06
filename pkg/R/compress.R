@@ -14,7 +14,7 @@ setMethod("compress",
 			if (any(!is.na(j)))	{
 				x@sites <- data.frame(
 					compress = rep(TRUE, nrow(x)),
-					sites(x)[, j[!is.na(j)], drop = FALSE],
+					sites(x)[ , j[!is.na(j) ], drop = FALSE],
 					row.names = rownames(sites(x)))
 			}
 			else {
@@ -31,12 +31,12 @@ setMethod("compress",
 				row.names = rownames(sites(x)))	 
 		}
 		
-		x <- layers(x, collapse = "0l")
+		x <- layers(x, collapse = "0l", aggregate = "min")
 		
 		z <- taxonomy(taxonomy(x)) 
 		j <- c("abbr", "taxon", "family", "level")
 		j <- match(j, names(z))
-		z <- z[, j[!is.na(j)]]
+		z <- z[ , j[!is.na(j)] ]
 
 		x@taxonomy <- taxonomy(z)
 	return(x)	
