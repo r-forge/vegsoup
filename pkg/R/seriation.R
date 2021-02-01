@@ -6,7 +6,7 @@ setGeneric("seriation",
 setMethod("seriation",
 	signature(obj = "Vegsoup"),
 	function (obj, method, mode, ...) {
-	
+
 	if (missing(method)) {
 		method  <- "dca"
 	}
@@ -20,12 +20,13 @@ setMethod("seriation",
 	}
 	
 	if (method != "dca" | method != "packed") {
-	si.dis <- as.dist(obj, "logical")
+	#	distance matrices
+	Id <- as.dist(obj, "logical")
 	#	as.dist lost argument mode = "R", generic is missing ... argument,
-	#	as.matrix has a dots ... argument, we use it!
-	sp.dis <- vegan::vegdist(as.matrix(obj, "logical", mode = "R"),
+	#	as.matrix has a dots ... argument, we use this option!
+	Jd <- vegan::vegdist(as.matrix(obj, "logical", mode = "R"),
 		method = vegdist(obj))	
-	#sp.dis <- as.dist(obj, "logical", mode = "R")	
+	#Jd <- as.dist(obj, "logical", mode = "R")	
 	}
 	switch(method, dca = {
 		use <- try(decorana(obj), silent = TRUE, ...) # as.matrix dispatch
@@ -34,49 +35,49 @@ setMethod("seriation",
 		}	
 		if (is.list(use)) {	
 			tmp <- scores(use, choices = 1, display = "sites")
-			si.ind <- order(tmp)
-			sp.ind <- try(order(scores(use, choices = 1, 
+			i <- order(tmp)
+			j <- try(order(scores(use, choices = 1, 
 				  display = "species")))
-			if (inherits(sp.ind, "try-error")) {
-				sp.ind <- order(wascores(tmp, obj))
+			if (inherits(j, "try-error")) {
+				j <- order(wascores(tmp, obj))
 			}
 		}
 		else {
-			si.ind <- 1:dim(obj)[1]
-			sp.ind <- 1:dim(obj)[2]
+			i <- 1:dim(obj)[ 1 ]
+			j <- 1:dim(obj)[ 2 ]
 		}
 		}, hclust = {
-			si.ind <- hclust(si.dis,
+			i <- hclust(Id,
 				method = "ward")$order
-			sp.ind <- hclust(sp.dis,
+			j <- hclust(Jd,
 				method = "ward")$order
 		}, ward = {
-			si.ind <- agnes(si.dis, diss = TRUE,
+			i <- agnes(Id, diss = TRUE,
 				method = "ward")$order
-			sp.ind <- agnes(sp.dis, diss = TRUE,
+			j <- agnes(Jd, diss = TRUE,
 				method = "ward")$order
 		}, flexible = {
 		   	alpha <- 0.625
 	   		beta = 1 - 2 * alpha
-		   	si.ind <- agnes(si.dis, method = "flexible",
+		   	i <- agnes(Id, method = "flexible",
 		   		par.method = c(alpha, alpha, beta, 0))$order
-	   		sp.ind <- agnes(sp.dis, method = "flexible",
+	   		j <- agnes(Jd, method = "flexible",
 	   			par.method = c(alpha, alpha, beta, 0))$order
 		}, packed = {
-			si.ind <- order(rowSums(obj), decreasing = TRUE)
-			sp.ind  <- order(colSums(obj), decreasing = TRUE)
+			i <- order(rowSums(obj), decreasing = TRUE)
+			j  <- order(colSums(obj), decreasing = TRUE)
 		}
 	)
 	if (!missing(mode)) {
 		if (mode == "R") {
-			res <- obj[, sp.ind]	
+			res <- obj[, j]	
 		}
 		if (mode == "Q") {
-			res <- obj[si.ind, ]
+			res <- obj[i, ]
 		}
 	}
 	else {	
-		res <- obj[si.ind, sp.ind]
+		res <- obj[i, j]
 	}
 	
 	return(res)
@@ -87,12 +88,10 @@ setMethod("seriation",
 setMethod("seriation",
 	signature(obj = "VegsoupPartition"),
 	function (obj, method, mode, ...) {
-		res <- lapply(1:getK(obj), function (x) obj[partitioning(obj) == x, ])
-		res <- sapply(res, function (x) seriation(as(x, "Vegsoup"), ...))
-		res <- new("VegsoupPartition", do.call("rbind", res))
-		res@k <- getK(obj)
-		# this seems to be save based on lapply(1:getK(obj), ...)
-		res@part <- sort(partitioning(obj))
+		res <- sapply(1:getK(obj), function (x) partition(obj, x))
+		res <- sapply(res, function (x) seriation(as(x, "Vegsoup"), ...))		
+		res <- obj[ unlist(sapply(res, rownames)), ]
+		
 		return(res)
 	}
 )
