@@ -4,16 +4,19 @@
 \docType{methods}
 
 \alias{quantile}
+\alias{quantile,Vegsoup-method}
 \alias{quantile,VegsoupPartition-method}
 
 \title{ Sample Quantiles for a Community Matrix }
 
 \description{
-Returns sample quantiles corresponding to the given probabilities for each species in each partition.
+Returns sample quantiles corresponding to the given probabilities for each species in each partition or for the whole data set.
 }
 
 \usage{
 \S4method{quantile}{VegsoupPartition}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7,
+		  coverscale = FALSE, ...)
+\S4method{quantile}{Vegsoup}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7,
 		  coverscale = FALSE, ...)
 }
 
@@ -45,6 +48,8 @@ Returns sample quantiles corresponding to the given probabilities for each speci
 \details{
 %%There is special meaning of argument \code{na.rm} that is used to handle missing observations of species in the community matrix. Those absences are conveniently coded as zeros. If \code{na.rm = TRUE} all zeros are replaced by \code{NA} and the function returns \code{NA} for absence of a particular species in a respective cluster. If \code{na.rm = FALSE} zeros are treated as is.
 If the input object has layers the summary statistics are calculated for each layer. If abundances are ordinal \code{as.numeric(obj)} is used to obtain numeric values for calculation. If \code{coverscale = TRUE} results are back converted to ordinal scale (e.g. Braun-Blanquet scale), otherwise will be returned as class midpoints as defiuned in \code{coverscale(x)}. Note, suppling presence/absence data is supported, however, results may be meaningless.
+
+For \code{Vegsoup} objects values for the whole (unpartitioned) data set are returned.
 }
 \value{
 An array with as many dimensions as \code{length(probs)} containing the summary information of  \code{\link[stats:quantile]{quantile}} for a species by cluster matrix.

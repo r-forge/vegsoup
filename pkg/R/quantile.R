@@ -11,6 +11,10 @@ setGeneric("quantile",
 		message("disregard decostand method for calculations of quantiles")
 	 	decostand(x) <- NULL
 	}
+	if (!inherits(obj, "VegsoupPartition")) {
+		#	to keep the function below unchanged
+		x <- VegsoupPartition(x, clustering = rep(1, nrow(x)))
+	}
 	xx <- as.numeric(x)
 	xx[ xx == 0 ] <- NA
 	tmp <- aggregate(xx,
@@ -52,6 +56,13 @@ setGeneric("quantile",
 
 setMethod("quantile",
 	signature(x = "VegsoupPartition"),
+	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) {
+		.quantile.Vegsoup(x, probs = probs, na.rm = na.rm, names = names, type = type, coverscale = coverscale, ...)	
+	}
+)
+
+setMethod("quantile",
+	signature(x = "Vegsoup"),
 	function (x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE, type = 7, coverscale = FALSE, ...) {
 		.quantile.Vegsoup(x, probs = probs, na.rm = na.rm, names = names, type = type, coverscale = coverscale, ...)	
 	}
