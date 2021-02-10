@@ -11,7 +11,7 @@ setGeneric("quantile",
 		message("disregard decostand method for calculations of quantiles")
 	 	decostand(x) <- NULL
 	}
-	if (!inherits(obj, "VegsoupPartition")) {
+	if (!inherits(x, "VegsoupPartition")) {
 		#	to keep the function below unchanged
 		x <- VegsoupPartition(x, clustering = rep(1, nrow(x)))
 	}

@@ -258,6 +258,7 @@ exportMethods(
 	"taxonomy",
 	"threshold",
 	"typical",
+	"abundant",
 	"variable",
 	"variable<-",
 	"variables",
