@@ -152,6 +152,7 @@ exportMethods(
 	"average",
 	"bind",
 	"BraunBlanquetReduce",
+	"coerce",
 	"colSums",
 	"colMeans",
 	"compress",

@@ -15,6 +15,10 @@
 \alias{coerce,Vegsoup,data.frame-method}
 \alias{coerce,Vegsoup,data.list-method}
 \alias{coerce,Vegsoup,mefa-method}
+\alias{coerce,Sites,data.frame-method}
+\alias{coerce,Vegsoup,SpatialPoints-method}
+\alias{coerce,Vegsoup,SpatialPointsDataFrame-method}
+\alias{coerce,coenocline,Vegsoup-method}
 
 \title{ Coerce Methods for \sQuote{Vegsoup*} objects  }
 
@@ -23,15 +27,18 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 }
 
 \usage{
-\S4method{coerce}{Vegsoup,matrix}(from,to)
-\S4method{coerce}{Vegsoup,array}(from,to)
-\S4method{coerce}{Vegsoup,dist}(from,to)
-\S4method{coerce}{Vegsoup,sparseMatrix}(from,to)
-\S4method{coerce}{Vegsoup,dsparseMatrix}(from,to)
-\S4method{coerce}{Vegsoup,list}(from,to)
-\S4method{coerce}{Vegsoup,data.frame}(from,to)
-#\S4method{coerce}{Vegsoup,data.list}(from,to)
-\S4method{coerce}{Vegsoup,mefa}(from,to)
+\S4method{coerce}{Vegsoup,matrix}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,array}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,dist}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,sparseMatrix}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,dsparseMatrix}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,list}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,data.frame}(from,to,strict = TRUE)
+#\S4method{coerce}{Vegsoup,data.list}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,mefa}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,SpatialPoints}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,SpatialPointsDataFrame}(from,to,strict = TRUE)
+\S4method{coerce}{coenocline,Vegsoup}(from,to,strict = TRUE)
 }
 
 \arguments{
@@ -41,12 +48,15 @@ Coerce object a \code{'Vegsoup*'} object to other class.
   \item{ to }{
 	class to coerce to.
   }
+  \item{ strict }{
+	If TRUE, the returned object must be strictly from the target class.
+  }
 }
 
 \details{
   These are generic coerce methods to ensure that S3 functions dispatch
   properly, especially regarding the \code{as(x, "matrix")} and \code{as(x,
-  "dist")} coercion methods. In this way it is almost allways possible to
+  "dist")} coercion methods. In this way it is almost always possible to
   supply a \code{'Vegsoup*'} object directly to functions for multivariate
   analysis (see \sQuote{Examples}). Note, the matrix coercion retrieves a
   species matrix according to the defaults of \code{\link{as.matrix}} and the
@@ -79,7 +89,7 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 }
 
 \section{ Warning }{
-  S3 functions must contain a call to \code{as.matrix} to gurantee dispatch.
+  S3 functions must contain a call to \code{as.matrix} to guarantee dispatch.
   For example \code{metaMDS(obj)} does not work, but other functions in
   package vegan will. Note, if a function that expects a species matrix calls
   \code{as.data.frame} in the function body it will certainly break, because
