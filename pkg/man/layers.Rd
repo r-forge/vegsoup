@@ -13,7 +13,10 @@
 \title{ Get or Modify Layers }
 
 \description{
-Modify an object's layer structure by suppling a layer combination vector as a character argument \code{collapse}. A layer that is intended to be collapsed with one or more layers is simply given the same value of collapse. Different aggregation modes are provided.
+  Modify an object's layer structure by suppling a layer combination vector as a
+  character argument \code{collapse}. A layer that is intended to be collapsed
+  with one or more layers is simply given the same value of collapse. Different
+  aggregation modes are provided.
 }
 
 \usage{
@@ -49,42 +52,51 @@ Modify an object's layer structure by suppling a layer combination vector as a c
 
 \details{
 
-  A data set composed of more than one layer might be represented as a multidimensional dimensional
-  array, where there are as many dimensions as there are layers. Unfortunately, many multivariate methods
-  requires a matrix-valued response variable.
+  A data set composed of more than one layer might be represented as a
+  multidimensional dimensional array, where there are as many dimensions as
+  there are layers. Unfortunately, many multivariate methods require a
+  matrix-valued response variable.
 
   The design of package vegsoup with regard to layer replication is to encode
   species and layer in a collapsed string which is used then as column names in
-  the species matrix. This so avoids the creation of multi dimensional arrays.
-  \code{layers} build blocks in the species matrix. The order is determined by \code{layers(obj)}.
+  the species matrix. This so circumvents the creation of multi dimensional
+  arrays. \code{layers} build blocks in the species matrix. The order is
+  determined by \code{layers(obj)}.
   
-  For practical issues, the vegsoup package collapses the species and layer dimension into a single
-  dimension by using the special mark-up character \code{'@'}. This concatenation takes place if a
-  species matrix is requested from the object, column names a built ad-hoc based on the \verb{Species}
-  object stored in \emph{slot 'species'}. The order in which the collapsed dimension (layer replicates)
-  appears in the column names of the resulting matrix is controlled by the order of \code{layers(obj)}.
-  Permuting this reorder also orders the blocks of layers.
+  For practical reasons, the vegsoup package collapses the species and layer
+  dimension into a single string by using the special mark-up character
+  \code{'@'}. This concatenation takes place if a species matrix is requested
+  from the object, column names are built ad-hoc based on the \verb{Species}
+  object stored in \emph{slot 'species'}. The order in which the collapsed
+  dimension (layer replicates) appears in the column names of the resulting
+  matrix is controlled by the order of \code{layers(obj)}. Permuting this
+  order also reorders the blocks of layers.
  
-  In stage of aggregating several data sources it might be necessary to homogenize the various layers
-  present in the object. For this task some basic aggregation modes are provided. Aggregation mode
-  \code{"layer"} combines layers assuming their independence. For example, a species occurring in two
-  layers with a cover of 50 \% will result in an overall cover of 75 \%. Mode \code{"sum"} will sum up
-  cover values of all layers (see \code{\link[vegdata:tv.veg]{tv.veg}}). If \code{collapse} is missing,
-  or of length 1 all layers are collapsed and labeled according to the value of \code{collapse}, or
-  \code{0l} if \code{collapse} is missing. If \code{collapse} is a character vector it has to
-  match \code{length(layers(obj))} (see \sQuote{Examples}).
+  In stage of aggregating several data sources it might be necessary to
+  homogenize the various layers present in the object. For this task some basic
+  aggregation modes are provided. Aggregation mode \code{"layer"} combines
+  layers assuming their independence (Fischer 2015). For example, a species
+  occurring in two layers with a cover of 50 \% will result in an overall cover
+  of 75 \%. Mode \code{"sum"} will sum up cover values of all layers
+  (see \code{\link[vegdata:tv.veg]{tv.veg}}). If \code{collapse} is missing,
+  or of length 1 all layers are collapsed and labeled according to the value of
+  \code{collapse}, or \code{0l} if \code{collapse} is missing.
+  If \code{collapse} is a character vector it has to match
+  \code{length(layers(obj))} (see \sQuote{Examples}).
 }
 
 \note{
- The returned object is reordered by plot, abbr and layer!
+  The returned object is reordered by plot, abbr and layer!
 
-  If there are any \code{NAs} in \code{collapse} all species that occur only on these layers will be
-  dropped from the data set and a warning is issued. This can be useful e.g. if you want to drop
-  cryptogams (bryophytes and/or lichens) from a dataset that has no complete coverage for these taxa and
-  would otherwise influence the analysis (see \sQuote{Examples}).
+  If there are any \code{NAs} in \code{collapse} all species that occur only on
+  these layers will be dropped from the data set and a warning is issued. This
+  can be useful e.g. if you want to drop cryptogams (bryophytes and/or lichens)
+  from a dataset that has no complete coverage for these taxa and would
+  otherwise influence the analysis (see \sQuote{Examples}).
 }
 \references{
 Mucina, L., Schaminee, J., and Rodwell, J. (2000). Common data standards for recording \enc{relevées}{relevees} in field survey for vegetation classification. Journal of Vegetation Science, 11: 769-772.
+Fischer, H. S. (2015). On the combination of species cover values from different vegetation layer. Applied Vegetation Science, 18: 169-170.
 }
 \value{
 An object depending on the input class.

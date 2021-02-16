@@ -1,4 +1,4 @@
-#	see Ewald 2013, Tuexina 33
+#	see Fischer 2015, Applied Vegetation Science 18
 #l <- c(75,15,55)
 #names(ll) <- c("tl1", "tl2", "sl")
 #ll <- l/100
