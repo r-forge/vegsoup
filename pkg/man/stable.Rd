@@ -35,23 +35,24 @@
 \value{
   returns a list with components
   \item{ lambda }{
-    lambda statistic, values range from 0 (no association) to 1 (the theoretical
-    maximum possible association)
+    lambda statistic, values range from 0 (no association) to 1 (the
+    theoretical maximum possible association)
   }
   \item{ modified.lambda }{
     modified lambda statistic
   }
 }
 \references{
-Tichý, L. and Chytrý, M. and Šmarda, P. (2011) Evaluating the stability of the classification of community data. Ecography 34:807-813
+  Tichý, L. and Chytrý, M. and Šmarda, P. (2011) Evaluating the stability of
+  the classification of community data. Ecography 34:807-813
 }
-\author{ original authors, Roland Kaiser }
+\author{ adapted by Kaiser based on \R-code supplied with the JUICE software }
 \seealso{
 \code{\link{OptimStride}},
-\code{\link{sample}},
+\code{\link{sample}}
 }
 \note{
-  This function is experimental!
+  This function is not fully tested.
 }
 \examples{
 x <- VegsoupPartition(coenoflex(seed = 1234), k = 3)

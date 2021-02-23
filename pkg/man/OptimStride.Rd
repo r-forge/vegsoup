@@ -59,14 +59,15 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "greater",
 
 \arguments{
   \item{ x }{
-   for \code{OptimStride} a \code{'VegsoupPartition'} object, otherwise a
+   for \code{OptimStride} a \code{VegsoupPartition} object, otherwise a
    \code{VegsoupOptimstride} object
   }
   \item{ k }{
 	maximum number of cluster to compute (\code{seq(1:k)})
   }
   \item{ ft.threshold }{
-	threshold value of Fisher test, defaults to \code{1e-03}
+	threshold value of Fisher test, defaults to a not very strict value of
+	\verb{1e-03}.
   }
   \item{ alternative }{
 	alternative indicates the alternative hypothesis of the Fisher exact test
@@ -78,30 +79,31 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "greater",
   }
   \item{ method }{
 	any method supported by \code{\link{VegsoupPartition}}. For \code{OptimStride}
-	if method is missing, "ward", "flexible", "pam", "kmeans", "wards", "fanny", "FCM", and "KM"
-	are computed. Computationally expensive methods, such as "isopam" and "optpart" are
-	omitted to reduce run duration.
+	if method is missing, "ward", "flexible", "pam", "kmeans", "wards", "fanny",
+	"FCM", and "KM" are computed. Computationally expensive methods, such as
+	"isopam" and "optpart" are omitted to reduce run duration.
   }
   \item{ fast }{
-	accelerate computations using package \code{parallel}. If \code{FALSE} a progress bar
-	is printed. Depending on the dimension of the community matrix and the value of k, computations
-	may consume a serious amount of time. If the host system provides 4 or more core, setting
-	\code{fast = TRUE} will significantly reduce run time.
+	accelerate computations using package \code{parallel}. If \code{FALSE} a
+	progress bar is printed. Depending on the dimension of the community matrix
+	and the value of k, computations may consume a serious amount of time. If the
+	host system provides 4 or more cores, setting\code{fast = TRUE} will
+	significantly reduce run time.
   }
   \item{ \dots }{
 	additional arguments passed to \code{VegsoupPartition}, otherwise not used.
   }
 }
 \details{
-  The implementation follows the method of Tichy et al. (2010) and uses a Fisher test
-  (\code{\link{FisherTest}}) to identify the number of \sQuote{faithful} species. This sensitivity
-  of this statistic can be controlled by setting a threshold value. Per default this value
-  (argument \code{ft.threshold}) is set to it's lowest meaningful bound \code{1e-3}.
+  The implementation follows the method of Tichy et al. (2010) and uses a
+  Fisher test (\code{\link{FisherTest}}) to identify the number of
+  \sQuote{faithful} species. This sensitivity of this statistic can be
+  controlled by setting a threshold value. Per default this value (argument
+  \code{ft.threshold}) is set to it's lowest meaningful bound \code{1e-3}.
   
-  Partitioning/clustering methods, type of distance matrix and standardization are taken from the
-  input object. Generic methods for \code{'VegsoupOptimstride'} are detailed in the
-  \sQuote{Methods} section.
-  
+  Partitioning/clustering methods, type of distance matrix and standardization
+  are taken from the input object. Generic methods for
+  \code{'VegsoupOptimstride'} are detailed in the \sQuote{Methods} section.
 }
 \section{ Methods }{
   \describe{
@@ -133,8 +135,8 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "greater",
 	}
 	\item{ which.max }{
 	  \code{ signature(obj = "VegsoupOptimstride") }:
-		returns the number of k that coincides with the highest number of faithful species,
-		per method.
+		returns the number of k that coincides with the highest number of faithful
+		species, per method.
 	}
   }
 }
@@ -147,19 +149,24 @@ OptimStride(x, k, ft.threshold = 1e-3, alternative = "greater",
   character. The computed methods.
   }
   \item{ stride }{
-  list. A list with length equal to \code{length(method(x))}. Each nested list gives the number
-  of significant indicator species (faithful species) for each partition for a particular value
-  of \code{k}.
+  list. A list with length equal to \code{length(method(x))}. Each nested list
+  gives the number of significant indicator species (faithful species) for each
+  partition for a particular value of \code{k}.
   }
   \item{ optimclass1, optimclass2 }{
-  matrix with dimnames. Rows are methods and columns are the respective values of \code{k}.
+  matrix with dimnames. Rows are methods and columns are the respective values
+  of \code{k}.
   }
-  \item{ peaks,  }{
+  \item{ peaks }{
+  peaks of the curve.
   }
 }
 
 \references{
-Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010). Optimclass: Using species-to-cluster fidelity to determine the optimal partition in classification of ecological communities. Journal of Vegetation Science, 21(2):287-299.
+  Tichy, L., Chytry, M., Hajek, M., Talbot, S.S., and Botta-Dukat, Z. (2010).
+  Optimclass: Using species-to-cluster fidelity to determine the optimal
+  partition in classification of ecological communities. Journal of Vegetation
+  Science, 21(2):287-299.
 }
 
 \author{ Roland Kaiser }

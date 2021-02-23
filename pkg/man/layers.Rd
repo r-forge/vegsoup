@@ -13,10 +13,10 @@
 \title{ Get or Modify Layers }
 
 \description{
-  Modify an object's layer structure by suppling a layer combination vector as a
-  character argument \code{collapse}. A layer that is intended to be collapsed
-  with one or more layers is simply given the same value of collapse. Different
-  aggregation modes are provided.
+  Modify an object's layer structure by suppling a layer combination vector as
+  a character argument \code{collapse}. A layer that is intended to be
+  collapsed with one or more layers is simply given the same value of collapse.
+  Different aggregation modes are provided.
 }
 
 \usage{
@@ -51,11 +51,10 @@
 }
 
 \details{
-
   A data set composed of more than one layer might be represented as a
   multidimensional dimensional array, where there are as many dimensions as
   there are layers. Unfortunately, many multivariate methods require a
-  matrix-valued response variable.
+  matrix-valued response variable (two-dimensional matrix).
 
   The design of package vegsoup with regard to layer replication is to encode
   species and layer in a collapsed string which is used then as column names in
@@ -96,6 +95,7 @@
 }
 \references{
 Mucina, L., Schaminee, J., and Rodwell, J. (2000). Common data standards for recording \enc{relevées}{relevees} in field survey for vegetation classification. Journal of Vegetation Science, 11: 769-772.
+
 Fischer, H. S. (2015). On the combination of species cover values from different vegetation layer. Applied Vegetation Science, 18: 169-170.
 }
 \value{

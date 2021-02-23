@@ -62,7 +62,7 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     represents a table structure that can be coerced to class \code{'Species'} by
     simply calling \code{\link{species}("species.csv")}. Another file is coerced
     by \code{\link{sites}("sites.csv")} and the third one, a taxonomic reference
-    list, is loaded via calls to \code{\link{taxonomy}("./taxonomy.csv")}).
+    list, is loaded via calls to \code{\link{taxonomy}("taxonomy.csv")}).
     For all these method the \code{character} dispatch is invoked
     (cp. \code{signature(obj = "character")} in the methods section for the
     respective method). If files for species and or sites
@@ -82,13 +82,13 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
     (see \code{\link{proj4string}} for details).
   }
   \item{ sp.points }{
-    Object of class \code{\link{SpatialPointsDataFrame}}, if missing
-    coordinates are seeked in argument \code{'y'}. If coordinate information
-    can not be extracted, a random point pattern in the unit square is
-    generated.
+    Object of class \code{\link{SpatialPointsDataFrame}}. If missing, it is tried
+    to obtain coordinates from argument \code{'y'}, the sites data. If
+    coordinate information can not be successfully extracted, a random point
+    pattern in the unit square is  generated.
   }
   \item{ sp.polygons }{
-    Object of class \code{\link{SpatialPolygonsDataFrame}}, if missing
+    Object of class \code{\link{SpatialPolygonsDataFrame}}. If missing
     a random polygon pattern is generated based on \code{'sp.points'} equal to
     the number of plots (samples).
   }
@@ -139,17 +139,20 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
 %%to \code{as.numeric} (e.\,g. in x$cov if abundance is not ordinal, or for
 %%all in y that represent continuous measurement on plot.).
 
-  Function \code{plainsoup} is a utility function that demands a community matrix
-  but nothing more. This function is suitable if there is no further
-  information on sample plots (sites or environmental data) and the taxonomic concept used.
+  Function \code{plainsoup} is a utility function that demands on a community
+  matrix, but nothing more. This function is suitable if there is no further
+  information on sample plots (sites or environmental data) and the taxonomic
+  concept used.
+  
   In order to build a \verb{Vegsoup} object dummy values have to be created.
   Note, those will not be informative! To be exact, the function will create
   a single site variable named \code{"X1"} with all values set to zero.
-  \code{colnames(m)} are used as abbreviations (see \code{\link{abbr}}) as well as
-  full scientific latin names (see \code{\linkS4class{Taxonomy}}).
+  \code{colnames(m)} are used as abbreviations (see \code{\link{abbr}}) as well
+  as  full scientific latin names (see \code{\linkS4class{Taxonomy}}).
   All observations are put on a single layer encoded by argument \code{layer}.
   Because the cover (abundance) scale can not be guessed from argument \code{m}
-  a suitable cover scale as object \code{\linkS4class{Coverscale}} needs to be assigned.
+  a suitable cover scale as object \code{\linkS4class{Coverscale}} needs to be
+  assigned.
 
   Function \code{instantsoup} is a shorthand when data files are guaranteed to
   conform to some format that can be interpreted by the import functions
@@ -162,10 +165,10 @@ instantsoup(folder, sep = ";", dec = ",", coverscale)
   argument \code{'group'} is to create a dummy integer variable of ones.
 
   Function \code{coenflex} creates a random community with one or two
-  gradients and specified size (number of species and ploits). The \code{coenocline}
-  function in package \pkg{coenocliner} offers a complete interface. \code{coenocline}
-  objects can be coerced to class \verb{Vegsoup} with the \code{as(obj, "Vegsoup")}
-  coerce method.
+  gradients and specified size (number of species and ploits). The
+  \code{coenocline} function in package \pkg{coenocliner} offers a complete
+  interface. \code{coenocline} objects can be coerced to class \verb{Vegsoup}
+  with the \code{as(obj, "Vegsoup")} coerce method.
 }
 
 \note{

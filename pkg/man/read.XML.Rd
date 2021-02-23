@@ -31,16 +31,19 @@ read.XML(file)
 \verb{Vegsoup} object
 }
 
-\author{
-Roland Kaiser
-}
+\author{ Roland Kaiser }
 \references{
-Hennekens, S M and Joop, H J. 2009. Turboveg, a comprehensive data base management system for vegetation data. Journal of Vegetation Science, 12:589–591.
+  Hennekens, S M and Joop, H J. 2009. Turboveg, a comprehensive data base
+  management system for vegetation data. Journal of Vegetation Science,
+  12:589–591.
 }
 \examples{
 file <- system.file("extdata", "turboveg.xml", package = "vegsoup")
 x <- read.XML(file)
+
 #	assign coordiantes
+sites(x)
+
 coordinates(x) <-  ~ e_coord + n_coord
 }
 \seealso{

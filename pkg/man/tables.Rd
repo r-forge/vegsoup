@@ -20,7 +20,14 @@
 \title{ Constancy and Contingency Tables }
 
 \description{
-Method \code{constancy} lists for each species the fraction (percentage) of samples in each partition (or the whole data set) the species occurs; \code{contingency} lists just the number of occurrences. The latter is based on presence/absence of a species (layer-replicate), whereas method \code{average} divides the sum of species abundances by the number of plots in which it occurs. A tabulation of \code{partitioning(obj)} against a cross-classifying factor taken from a column of \code{sites(obj)} can be obtained with the \code{as.table} method.
+  Method \code{constancy} lists for each species the fraction (percentage) of
+  samples in each partition (or the whole data set) the species occurs
+  \code{contingency} lists just the number of occurrences. The latter is based
+  on presence/absence of a species (layer-replicate), whereas method
+  \code{average} divides the sum of species abundances by the number of plots in
+  which it occurs. A tabulation of \code{partitioning(obj)} against a
+  cross-classifying factor can be obtained with the \code{as.table} method.
+  The grouping is taken from a data column of \code{sites(obj)}.
 }
 
 \usage{
@@ -46,12 +53,13 @@ Method \code{constancy} lists for each species the fraction (percentage) of samp
   }
   \item{ \dots }{
     additional arguments passed to methods. For \code{contingency} and
-    \code{average} \code{...} expands to arguments passed to matrix methods
+    \code{average} \verb{...} expands to arguments passed to matrix methods
     \code{as.logical} and \code{as.matrix} respectively (see
     \sQuote{Details}). Additional arguments to \code{constancy} are passed to
-    \code{\link{round}} (the (\code{digits}) argument) and are only applicable
-    if \code{percentage = TRUE}. For \code{as.table} a character giving a
-    column name of \code{sites(x)} or a vector which can be interpreted as factor.
+    \code{\link{round}} (the \code{digits} argument) and are only applicable
+    if \code{percentage = TRUE}. For \code{as.table} \verb{...} expands to a
+    character giving a column name of \code{sites(x)} or a vector which can be
+    interpreted as factor.
   }
 }
 
