@@ -25,6 +25,9 @@ setGeneric("confusion",
 		return(r)
 }
 
+#	.confusion(table(1:5, 5:1), 5)
+#	.confusion(table(1:5, 1:5), 5)
+
 setMethod("confusion",
 	signature(obj1 = "VegsoupPartition",
 		obj2 = "VegsoupPartition"),

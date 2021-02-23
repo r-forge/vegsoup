@@ -6,9 +6,8 @@ setGeneric("sample")
 #	standardGeneric("sample"))
 #}
 
-#	warning: does not behave as expected for the user
-#	stable() relies on this method
 #	think about a method for class (VegsoupPartition) to sample conditional on Partitioning(obj)
+#	stable() relies on dispatch of this method
 setMethod("sample",
 	signature(x = "Vegsoup"),
 	function (x, size, replace = FALSE, prob = NULL) {

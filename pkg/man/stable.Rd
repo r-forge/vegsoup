@@ -10,8 +10,9 @@
 \description{
   Adjusted Goodman-Kruskal's lambda index of classification stability
   calculated from cross-tabulation of partitions (clusters) obtained from the
-  data set and the subset selected by without-replacement bootstrap.
-  Assignments are evaluated by Goodman-Kruskal’s lambda index.
+  data set and the subset selected by without-replacement bootstrap
+  (\enc{Tichý}{Tichy} et al. 2011). Assignments are evaluated by
+  Goodman-Kruskal’s lambda index and a modified version of lambda.
 }
 \usage{
 \S4method{stable}{VegsoupPartition}(x, nitr = 200, nitr.lambda = 10, ...)

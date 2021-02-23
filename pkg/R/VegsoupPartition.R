@@ -276,7 +276,7 @@
 		if (out.G) message("single member groups detected!")
 	} 
 	if (out.G && polish) {
-		if (verbose) cat("\n... try to resolve using function optsil")
+		if (verbose) cat("\n... try to resolve using function remos")
 		#	Imports: optpart
 		G.opt <- optpart::optsil(G, Xd, k^2)$clustering
 		names(G.opt) <- rownames(obj)
