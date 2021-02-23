@@ -18,7 +18,7 @@
 \title{ Optimize Partitioning }
 
 \description{
-Modify the partitioning of an object as to optimize silhouette widths (distance based method) or Dufrene and Legendre's indicator value (original data).
+Modify the partitioning of an object as to optimize silhouette widths (distance based methods) or Dufrene and Legendre's indicator value (original data).
 }
 
 \usage{
@@ -43,7 +43,7 @@ Modify the partitioning of an object as to optimize silhouette widths (distance 
     integer. A threshold of silhouette width for misclassified objects. It is basically close to zero but can be changed to any value between -1 and 0.
   }
   \item{ method }{
-    integer. 1 for REMOS1, 2 for REMOS2, defaults to 2
+    integer. 1 for REMOS1, 2 for REMOS2, defaults to 2.
   }
   \item{ minsiz }{
     integer. The minimum size of the partition to consider reassigning a sample out of.
@@ -60,7 +60,7 @@ Modify the partitioning of an object as to optimize silhouette widths (distance 
 
 \code{optindval} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximizes the Dufrene and Legendre's indicator value (Indval).
 
-\code{remos} interfaces function \code{\link[optpart:optindval]{optindval}} in package \pkg{optpart}. This method maximizes the Dufrene and Legendre's indicator value (Indval).
+\code{remos} interfaces the REMOS1 and REMOS2 algorithms according to Lengyel et al. 2021.
 }
 
 \value{
@@ -77,11 +77,11 @@ Rousseeuw, P. 1987 Silhouettes: A graphical aid to the interpretation and valida
 Roberts, D. 2015 Vegetation classification by two new iterative reallocation optimization algorithms. \emph{Plant Ecology, 216},741–758.
 }
 
-\author{ Roland Kaiser, implemented for vegsoup using Dave W. Robert's \code{optsil} and \code{optindval} procedures of package \pkg{optpart} and Attila Lengyel's REMOS method
+\author{ Roland Kaiser, implemented for vegsoup using Dave W. Robert's \code{optsil} and \code{optindval} procedures of package \pkg{optpart} and Attila Lengyel's REMOS method.
 }
 
 \note{
-\code{optsil} and \code{optindval} can be very slow when applied to big data sets! \code{optsil} is usually faster. \code{remos} has best performance.
+\code{optsil} and \code{optindval} can be very slow when applied to big data sets! \code{optsil} is usually faster. \code{remos(x, method = 2)} is the most time efficient algrithm.
 }
 
 \examples{
@@ -90,7 +90,6 @@ data(windsfeld)
 
 x <- VegsoupPartition(windsfeld, k = 5)
 
-## wait until optpart registers S3methods
 xs <- optsil(x, verbose = TRUE)
 xi <- optindval(x, verbose = TRUE)
 confusion(xs, xi)
@@ -98,6 +97,15 @@ confusion(xs, xi)
 xr <- remos(x, verbose = TRUE)
 confusion(xs, xr)
 
+x <- coenoflex(500, 300)
+x <- VegsoupPartition(x, k = 10)
+xr <- remos(x, verbose = TRUE)
+confusion(x, xr)
+
+op <- par(mfrow = c(1, 2), pty = "s")
+plot(silhouette(x))
+plot(silhouette(xr))
+par(op)
 }
 \seealso{
 \code{\link[labdsv:indval]{indval}},

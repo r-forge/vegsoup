@@ -489,11 +489,10 @@ optimized using the below set of methods.
   }
   \item{ \code{\link{remos}} }{
     as above but deploy the REMOS method
+  }
   \item{ \code{\link{optindval}} }{
     modify partitioning as to optimize Dufrene and Legendre's indicator value
   }
-  }
-
  }
 
 }
