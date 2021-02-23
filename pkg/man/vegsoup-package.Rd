@@ -482,14 +482,18 @@ work for \verb{Vegsoup*} objects as well (constancy and contingency).
 \section{ Optimization }{
 
 The clustering partition vector of \verb{VegsoupPartition} objects can be
-optimized using the belew set of methods.
+optimized using the below set of methods.
  \describe{
   \item{ \code{\link{optsil}} }{
     modify partitioning as to optimize silhouette widths
   }
+  \item{ \code{\link{remos}} }{
+    as above but deploy the REMOS method
   \item{ \code{\link{optindval}} }{
     modify partitioning as to optimize Dufrene and Legendre's indicator value
   }
+  }
+
  }
 
 }
@@ -516,7 +520,7 @@ Methods from spatial packges.
 
  \describe{
   \item{ \code{\link{quicklook}} }{
-    opens a browser window and plots pushpins of plot coordiantes
+    opens a browser window and plots pushpins of plot coordinates
   }
   \item{ \code{\link{rectangles}} }{
     plots a box according to number of species and sites for each partition
