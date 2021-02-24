@@ -15,7 +15,7 @@
   Goodman-Kruskal’s lambda index and a modified version of lambda.
 }
 \usage{
-\S4method{stable}{VegsoupPartition}(x, nitr = 200, nitr.lambda = 10, ...)
+\S4method{stable}{VegsoupPartition}(x, nitr = 200, nitr.lambda = 10, seed = 1234, ...)
 }
 
 \arguments{
@@ -27,6 +27,9 @@
   }
   \item{ nitr.lambda }{
     number of iteration to calculate random values of lambda.
+  }
+  \item{ seed }{
+    to make things reproducible.
   }
   \item{ \dots }{
     arguments passed to \code{\link{VegsoupPartition}} except argument \code{method}
@@ -40,7 +43,10 @@
     theoretical maximum possible association)
   }
   \item{ modified.lambda }{
-    modified lambda statistic
+    modified lambda statistic.
+  }
+  \item{ random.lambda }{
+    random lambda statistic used to adjust raw lambda values.
   }
 }
 \references{
@@ -51,9 +57,6 @@
 \seealso{
 \code{\link{OptimStride}},
 \code{\link{sample}}
-}
-\note{
-  This function is not fully tested.
 }
 \examples{
 x <- VegsoupPartition(coenoflex(seed = 1234), k = 3)

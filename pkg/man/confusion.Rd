@@ -7,12 +7,12 @@
 \alias{confusion,VegsoupPartition-method}
 \alias{confusion,VegsoupPartition,VegsoupPartition-method}
 
-\title{ Confusionion Matrix for VegsoupPartition Objects}
+\title{ Confusion Matrix for VegsoupPartition Objects}
 
 \description{
   Cross-classifies each partition (clustering) by actual class membership and
-  predicted membership, computes overall accuracy, and the Kappa statistic of
-  agreement.
+  predicted membership, computes overall accuracy, the Cohen's Kappa statistic
+  of agreement and Goodman-Kruskal's lambda.
 }
 
 \usage{
@@ -20,9 +20,9 @@
 }
 
 \arguments{
-	\item{ obj1, obj2 }{
-	  \code{'VegsoupPartition'} object. \code{obj1} is compared with \code{obj2}.
-	}
+  \item{ obj1, obj2 }{
+    \code{'VegsoupPartition'} object. \code{obj1} is compared with \code{obj2}.
+  }
 }
 \details{
   Method \code{confusion} takes two objects inheriting from class
@@ -34,23 +34,25 @@
 \value{
   A list with the following components:
   \describe{
-	\item{ confus }{
-	  the cross tabulation of \code{obj1} (rows) and \code{obj2} (columns).
-	  % (\code{table(partitioning(obj1), partitioning(obj1))}).
-	}
-	\item{ correct }{
-	  the percentage of correctly predicted samples.
-	}
-	\item{ kappa }{
-	  the value of the Kappa statistic.
-	}
-	\item{ lambda }{
-	  the value of the Lambda statistic.
-	}
+    \item{ confusion }{
+      the cross tabulation of \code{obj1} (rows) and \code{obj2} (columns).
+      % (\code{table(partitioning(obj1), partitioning(obj1))}).
+    }
+    \item{ correct }{
+      the percentage of correctly predicted samples.
+    }
+    \item{ kappa }{
+      the value of the Kappa statistic.
+    }
+    \item{ lambda }{
+      the value of the lambda statistic.
+    }
   }
 }
 \references{
-Goodman, L. A. and Kruskal, W. H. 1954 Measures of association for cross-classifications. \emph{Journal of the American Statistical Association} \bold{49}, 732--764.
+Goodman, L. A. and Kruskal, W. H. 1954 Measures of association for
+cross-classifications. \emph{Journal of the American Statistical Association}
+\bold{49}, 732--764.
 }
 \author{ Roland Kaiser }
 \seealso{

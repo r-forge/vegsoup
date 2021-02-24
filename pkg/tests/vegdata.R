@@ -1,6 +1,4 @@
 if (FALSE){
-# R-forge complains: there is no package called 'vegdata'	
-	
 library(vegsoup)
 library(vegdata)
 

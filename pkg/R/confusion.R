@@ -1,32 +1,43 @@
-#if(!isGeneric("confusion")) {
+if(!isGeneric("confusion")) {
 setGeneric("confusion",
 	function (obj1, obj2)
 		standardGeneric("confusion")
-)
-#}
+) }
 
-".confusion" <- function (t, N) {
-		stopifnot(is.table(t))
-		D <- sum(diag(t))
-		P <- D / N * 100 # percentage correct
-		S <- sum(rowSums(t) * colSums(t))
+#	compute Goodman and Kruskal's Lambda
+".lambda" <- function (x) {
+	#	n <- sum(t)
+	#	e1 <- sum(apply(t, 1, max), apply(t, 2, max))
+	#	e2 <- max(rowSums(t)) + max(colSums(t))
+	#	r <- 0.5 * (e1 - e2) / (n - 0.5 * e2)
+	#	r <- (e1 - e2) / (n - e2)
 		
-		#	calculate Cohen's kappa measure of agreement
-		K <- (c(N * D) - S) / (N^2 - S)
-
-		#	calculate Goodman and Kruskal's lambda
-		n <- sum(t)
-		e1 <- sum(apply(t, 1, max), apply(t, 2, max))
-		e2 <- max(rowSums(t)) + max(colSums(t))
-		L <- 0.5 * (e1 - e2) / (n - 0.5 * e2)
-		
-		r <- list(confus = t, correct = P, kappa = K, lambda = L)
-		
-		return(r)
+	n <-  2 * sum(x)
+	e1 <- sum(apply(x, 1, max)) + sum(apply(x, 2, max))
+	e2 <- max(rowSums(x)) + max(colSums(x))
+	r <- (e1 - e2) / (n - e2)
+	
+	#	r <- (sum(apply(x, 1, max)) + sum(apply(x, 2, max)) - max(rowSums(x)) - max(colSums(x))) /
+	#	(n -  max(rowSums(x)) - max(colSums(x)))
+	return(r)
 }
 
-#	.confusion(table(1:5, 5:1), 5)
-#	.confusion(table(1:5, 1:5), 5)
+#	compute overall accuracy, Cohen's Kappa and Goodman and Kruskal's Lamda
+".confusion" <- function (t, N) {
+	stopifnot(is.table(t))
+	D <- sum(diag(t))
+	P <- D / N * 100 # percentage correct
+	S <- sum(rowSums(t) * colSums(t))
+		
+	#	calculate Cohen's kappa measure of agreement
+	K <- (c(N * D) - S) / (N^2 - S)
+
+	#	calculate Goodman and Kruskal's lambda	
+	L <- .lambda(t)			
+	r <- list(confusion = t, correct = P, kappa = K, lambda = L)
+		
+	return(r)
+}
 
 setMethod("confusion",
 	signature(obj1 = "VegsoupPartition",
