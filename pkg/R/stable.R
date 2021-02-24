@@ -10,7 +10,7 @@
 	set.seed(seed)
 	
 	k <- getK(x)
-
+	
 	#	classification of original data set
 	o <- partitioning(x)
 	
@@ -19,29 +19,29 @@
 	
 	# results vector to store lamda values
 	l <- vector(mode = "numeric", length = nitr)
-
+	
 	# results vector to store random lamda values
 	rl <- 0
 		
 	for (i in 1:nitr) {
 		setTxtProgressBar(pb, i)
-
 		#	subsets created by the without-replacement bootstrap
-		#	xi <- vegsoup::sample(x, replace = TRUE) # default of size = nrow(x) # aquivalnet
 		xi <- x[ unique(sort(sample(c(1:nrow(x)), replace = TRUE))), ]
+		#	equivalent
+		#	xi <- vegsoup::sample(x, replace = TRUE) # default of size = nrow(x)
 		#	classification of bootstrap sample 
 		s <- VegsoupPartition(xi, k = k, method = x@partitioning.method, ...)
 		s <- partitioning(s)
 		#	only sites present in the sample are considered
-		os <- o[ names(o) %in% names(s) ]	
+		os <- o[ names(o) %in% names(s) ]
 		#	calculate lamda (cp. confusion.R)
-		l[ i ] <- .lambda(table(s, os))		
+		l[ i ] <- .lambda(table(s, os))
 		#	random values for lambda for size of subset
 		for (j in 1:nitr.lambda) {
-   			rl <- rl + .lambda(table(
+			rl <- rl + .lambda(table(
 				factor(sample(1:k, length(s), replace = TRUE), levels = 1:k),
 				factor(sample(1:k, length(s), replace = TRUE), levels = 1:k)))
-		}	
+		}
 	}
 	close(pb)
 	
