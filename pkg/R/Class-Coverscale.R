@@ -30,13 +30,13 @@ setClass("Coverscale",
 .braun.blanquet <- list(
 	name = "Braun-Blanquet", 
 	codes = c("r", "+", "1", "2m", "2a", "2b", "3", "4", "5"),
-	lims = c(  0.3,0.7,   3,   4,	8,	18,   38,  68,  88))
+	lims = c(  0.3, 0.7, 3,   4,    8,    18,   38,  68,  88))
 
 #	Braun-Blanquet old
 .braun.blanquet2 <- list(
 	name = "Braun-Blanquet 2", 
 	codes = c("r", "+", "1", "2", "3", "4", "5"),
-	lims = c(  0.3,0.7,   3,  13,  38,  68,  88))
+	lims = c(  0.3, 0.7, 3,   13,  38,  68,  88))
 
 #	Hult, Sernander, Du Rietz
 #	reference
@@ -101,7 +101,12 @@ setClass("Coverscale",
 .pfadenhauer <- list(
 	name = "Pfadenhauer",
 	codes = c("+", "1a", "1b", "2a", "2b", "3", "4", "5"),
-	lims =  c( 1,   2,	4,	10,   20,   38,  63,  88)) 
+	lims =  c( 1,   2,    4,    8.75, 18.75,37.5,62.5,87.5)) 
+#	modified version
+.pfadenhauer2 <- list(
+	name = "Pfadenhauer",
+	codes = c("+", "1a", "1b", "2a", "2b", "3", "4", "5"),
+	lims =  c( 1,   2,	  4,    10,   20,   38,  63,  88)) 
 
 #	Ebert Klopfer et Po"tsch
 #ebert.klopfer.poetsch <- list(
@@ -129,6 +134,7 @@ setClass("Coverscale",
 	londo2 = .londo2,
 	dengler = .dengler,
 	pfadenhauer = .pfadenhauer,
+	pfadenhauer2 = .pfadenhauer2,	
 	percentage = .percentage,
 	frequency = .frequency,
 	counts = .counts,
