@@ -93,7 +93,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	#	check data type of abundances
 	#	can become private function used in other places
 	#	useless as long class "Species" only supports characters
-	test <- type.convert(res$cov)
+	test <- type.convert(res$cov, as.is = TRUE)
 	
 	if (class(test) == "factor" | class(test) == "character") {
 		convert <- TRUE
@@ -147,7 +147,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	res$cov <- gsub("[[:blank:]]", "", res$cov)
 	
 	#	leading zeros!
-	#if (zeros) res[, 1] <- as.character(res[, 1]) else res[, 1] <- type.convert(res[, 1])
+	#if (zeros) res[, 1] <- as.character(res[, 1]) else res[, 1] <- type.convert(res[, 1], as.is = TRUE)
 	#if (is.factor(res[,1])) res[, 1] <- as.character(res[, 1])
 	
 	r <- new("Species", data = res)

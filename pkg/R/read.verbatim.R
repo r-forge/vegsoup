@@ -327,7 +327,7 @@ read.verbatim <- function (file, colnames, layers, replace = c("|", "-", "_"), s
 		if (i == colnames)
 			attr[[i]] <- tmp
 		else
-			attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE))	
+			attr[[i]] <- type.convert(gsub(".", "", tmp, fixed = TRUE), as.is = TRUE)	
 	}
 	
 	#	finally assign abbr to rownames and turn into matrix
