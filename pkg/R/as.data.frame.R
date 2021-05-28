@@ -26,7 +26,7 @@ setAs(from = "Sites", to = "data.frame",
 	#	save row names
 	ii <- as.character(r$plot) # leading zeros!
 	r <- r[, names(r) != "plot", drop = FALSE] 
-	r <- as.data.frame(sapply(r, function (x) type.convert(x), simplify = FALSE))
+	r <- as.data.frame(sapply(r, function (x) type.convert(x, as.is = TRUE), simplify = FALSE))
 	rownames(r) <- ii
 #	if (!stringsAsFactors) {
 #		r <- as.data.frame(as.matrix(r), stringsAsFactors = FALSE)
