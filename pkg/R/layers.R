@@ -15,9 +15,13 @@
 	
 	#	return object if there is nothing to do
 	if (length(obj@layers) < 2) {
+		if (length(collapse) > 1) {
+			message("collapse of length ", length(collapse), " take first non NA element")
+			collapse <- collapse[ !is.na(collapse) ][ 1 ]
+		}
 		if (verbose) {
 			message("obj has already only a single layer: ",
-			obj@layers, ", set to: ", collapse)
+			obj@layers, ", set collapse to: ", collapse)
 		}	
 		species(obj)$layer <- collapse
 		obj@layers <- collapse
