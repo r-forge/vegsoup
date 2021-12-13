@@ -40,11 +40,13 @@ header(x)
 
 \S4method{write.verbatim}{Vegsoup}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE,
+          order = FALSE)
 
 \S4method{write.verbatim}{VegsoupPartition}(obj, file, select, absence = ".",
           sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE,
-          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
+          rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE,
+          order = FALSE)
 }
 
 \arguments{
@@ -173,7 +175,9 @@ header(x)
   \item{ table.nr }{
     Create a short running number.
   }
-  
+  \item{ order }{
+    Order species.
+  }  
 }
 
 \details{

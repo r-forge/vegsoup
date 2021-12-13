@@ -1,5 +1,5 @@
 #	complements verbatim() in Vegsoup-Import.R
-.write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE) {
+.write.verbatimVegsoup <- function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE, order = FALSE) {
 
 	if (class(obj) != "Vegsoup" & class(obj) != "VegsoupPartition") {
 		stop("verbatim is currently only implemented for class Vegsoup and VegsoupPartition?")
@@ -69,6 +69,12 @@
 		nchar.layer <- max(sapply(layers(obj), nchar))
 		
 		m <- as.matrix(obj, typeof = "character", mode = "R")
+		
+		if (order) {
+			#m <- m[ ,order(rowSums(obj)) ]		
+			m <- m[ order(-colSums(obj)), ]	
+		}
+				
 		txa <- splitAbbr(obj)[rownames(m), ]
 		
 		#	prepare species data block
