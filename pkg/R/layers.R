@@ -83,71 +83,78 @@
 		if (length(rownames(obj@sites)) > length(unique(X$plot))) {
 			if (verbose) message("also some plots will be dropped")
 		}
+		#	is there anything left to calculate?
+		if (length(unique(X$layer)) == 1) {
+			do <- FALSE
+		}
 	}	
 	
-	X$layer <- factor(X$layer)
-	levels(X$layer) <- L[match(levels(X$layer), L[, 1]), 2]
-	X$layer <- as.character(X$layer)
+	if (do) {
 	
-	#	convert original abundance scale to numeric to allow calculations
-	if (is.ordinal(coverscale(obj))) {
-		X$cov <- ordered(X$cov, levels = Y@codes, labels = Y@lims)
-		X$cov <- as.numeric(as.character(X$cov))
-	}
-	else {
-		X$cov <- as.numeric(X$cov)
-	}
-	
-	#	aggregate layers
-	X  <- switch(aggregate,
-	   mean = {
-		aggregate(cov ~ plot + abbr + layer, data = X,
-			FUN = mean)
-	}, min = {
-		aggregate(cov ~ plot + abbr + layer, data = X,
-			FUN = min)				
-	}, max = {
-		aggregate(cov ~ plot + abbr + layer, data = X,
-			FUN = max)
-	}, sum = {
-		aggregate(cov ~ plot + abbr + layer, data = X,
-			FUN = sum)
-	}, layer = {
+		X$layer <- factor(X$layer)
+		levels(X$layer) <- L[match(levels(X$layer), L[, 1]), 2]
+		X$layer <- as.character(X$layer)
+		
+		#	convert original abundance scale to numeric to allow calculations
 		if (is.ordinal(coverscale(obj))) {
-		aggregate(cov ~ plot + abbr + layer, data = X,
-				FUN = function (x) {
-					round((1 - prod(1 - x / max(Y@lims))) * max(Y@lims), dec)
-				})
+			X$cov <- ordered(X$cov, levels = Y@codes, labels = Y@lims)
+			X$cov <- as.numeric(as.character(X$cov))
 		}
-		#	critcal! returns 0 for e.g. 0.1 if dec = 0
 		else {
-			aggregate(cov ~ plot + abbr + layer, data = X,
-				FUN = function (x) {
-					round((1 - prod(1 - x / 100)) * 100, dec)	
-					})
-		}		
-	})
-	
-	#	explicit ordering!
-	X <- X[order(X$plot, X$layer, X$abbr), ]
-	
-	if (!is.null(Y@codes)) {
-		if (any(max(X$cov) > max(Y@lims))) {
-			message("\nreduced maximum aggregated abundance value to fit into limits: ",
-				min(Y@lims)[1], " to ", max(Y@lims))
-			X$cov[X$cov > max(Y@lims)] <- max(Y@lims)
+			X$cov <- as.numeric(X$cov)
 		}
-	}
-
-	#	round to dec, do we really need this?
-	if (dec == 0)
-		X$cov <- ceiling(X$cov)
-	else
-		X$cov <- round(X$cov, dec)
+		
+		#	aggregate layers
+		X  <- switch(aggregate,
+		   mean = {
+			aggregate(cov ~ plot + abbr + layer, data = X,
+				FUN = mean)
+		}, min = {
+			aggregate(cov ~ plot + abbr + layer, data = X,
+				FUN = min)				
+		}, max = {
+			aggregate(cov ~ plot + abbr + layer, data = X,
+				FUN = max)
+		}, sum = {
+			aggregate(cov ~ plot + abbr + layer, data = X,
+				FUN = sum)
+		}, layer = {
+			if (is.ordinal(coverscale(obj))) {
+			aggregate(cov ~ plot + abbr + layer, data = X,
+					FUN = function (x) {
+						round((1 - prod(1 - x / max(Y@lims))) * max(Y@lims), dec)
+					})
+			}
+			#	critical! returns 0 for e.g. 0.1 if dec = 0
+			else {
+				aggregate(cov ~ plot + abbr + layer, data = X,
+					FUN = function (x) {
+						round((1 - prod(1 - x / 100)) * 100, dec)	
+						})
+			}		
+		})
+		
+		#	explicit ordering!
+		X <- X[order(X$plot, X$layer, X$abbr), ]
+		
+		if (!is.null(Y@codes)) {
+			if (any(max(X$cov) > max(Y@lims))) {
+				message("\nreduced maximum aggregated abundance value to fit into limits: ",
+					min(Y@lims)[1], " to ", max(Y@lims))
+				X$cov[X$cov > max(Y@lims)] <- max(Y@lims)
+			}
+		}
 	
-	#	back convert to original abundance scale if it was character
-	if (is.ordinal(coverscale(obj))) {
-		X$cov <- as.character(cut(X$cov, breaks = c(0, Y@lims), labels = Y@codes))
+		#	round to dec, do we really need this?
+		if (dec == 0)
+			X$cov <- ceiling(X$cov)
+		else
+			X$cov <- round(X$cov, dec)
+		
+		#	back convert to original abundance scale if it was character
+		if (is.ordinal(coverscale(obj))) {
+			X$cov <- as.character(cut(X$cov, breaks = c(0, Y@lims), labels = Y@codes))
+		}
 	}
 	
 	#	use replace method (keeps order of obj)
