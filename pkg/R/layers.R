@@ -28,10 +28,10 @@
 		return(obj)
 	}
 	
-	#	check 'aggregate' argument or set defaults
+	#	check argument 'aggregate' or set defaults
 	if (missing(aggregate)) aggregate <- "layer" else aggregate <- match.arg(aggregate)
 	
-	#	'collapse' missing or of length 1 (full collapse)
+	#	argument 'collapse' missing or of length 1 (full collapse)
 	if (missing(collapse) || length(collapse) == 1) {
 		if (verbose) message("collapse to a single layer")
 		if (missing(collapse)) { L <- "0l" } else { L <- collapse }
@@ -86,7 +86,11 @@
 		#	is there anything left to calculate?
 		if (length(unique(X$layer)) == 1) {
 			do <- FALSE
+		} else {
+			do <- TRUE
 		}
+	} else {
+		do <- TRUE
 	}	
 	
 	if (do) {

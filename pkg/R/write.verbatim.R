@@ -197,7 +197,7 @@
 
 #if (!inGeneric("write.verbatim")) {
 setGeneric("write.verbatim",
-	function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE)
+	function (obj, file, select, absence = ".", sep = " ", pad = 1, abbreviate = TRUE, short.names = FALSE, rule, add.lines = FALSE, latex.input = FALSE, table.nr = FALSE, ...)
 		standardGeneric("write.verbatim")
 )
 #}
