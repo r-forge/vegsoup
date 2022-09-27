@@ -1,6 +1,6 @@
 Package: vegsoup
 Version: 0.2-9
-Date: 2021-02-23
+Date: 2022-09-27
 Title: Classes and Methods for Phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 					 email = "kardinal.eros@gmail.com"))
@@ -8,7 +8,7 @@ Maintainer: Roland Kaiser<kardinal.eros@gmail.com>
 Depends: R (>= 3.0.1), vegan, sp (>= 1.0-9)
 Imports: methods, parallel,
 	raster,
-	optpart, labdsv, cluster, vegclust (>= 1.5.1), isopam,
+	optpart, labdsv, cluster, vegclust (>= 1.5.1),
 	mefa, gclus,
 	Hmisc, pbapply, Matrix, XML, stringr,
 	geonames, googleVis, ggmap, RColorBrewer, coenocliner

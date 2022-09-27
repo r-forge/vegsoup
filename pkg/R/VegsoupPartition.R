@@ -2,7 +2,8 @@
 
 #	low level function to allow distance matrix as argument Xd and raw species matrix as argument X
 #	this speeds up calculation in OptimStride() 
-.VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, X, Xd, ...) {
+#	dropped "isopam"
+.VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, X, Xd, ...) {
 
 	CALL <- match.call()
 	
@@ -38,7 +39,7 @@
 		}
 		else {
 			# what we have in the function signature
-			METHODS <- c("ward", "flexible", "pam", "isopam",
+			METHODS <- c("ward", "flexible", "pam", # "isopam",
 						 "kmeans", "optpart", "wards", "fanny",
 						 "FCM", "KM", "external")
 			M <- match.arg(method, METHODS)
@@ -121,12 +122,12 @@
 				P <- pam(Xd, k = k, diss = TRUE)
 					#	as above, exept do.swap = FALSE
 					#	, ...)
-			}, isopam = {  # performs not very well with high levels of k
-				if (verbose) cat("\nrun isopam, ignoring k=", k)
-				if (verbose) cat("\nplease supply c.fix to restict to a specific number of k\n")
-				P <- isopam(X, distance = Xd)
-					#	complicated!
-					#	, ...)
+			#}, isopam = {  # performs not very well with high levels of k
+			#	if (verbose) cat("\nrun isopam, ignoring k=", k)
+			#	if (verbose) cat("\nplease supply c.fix to restict to a specific number of k\n")
+			#	P <- isopam(X, distance = Xd)
+			#		#	complicated!
+			#		#	, ...)
 			}, optpart = {
 				# OPTPART/FLEX, initialize with flexible beta												
 				alpha <- 0.625
@@ -221,17 +222,17 @@
 		if (inherits(P, "pam")) {
 			G <- P$clustering
 		}
-		if (inherits(P, "isopam")) {
-			if (is.null (P$hier)) {
-				if (verbose) cat("no hierarchy estimated by isopam")
-				G <- P$flat
-				k  <- length(unique(P$flat))
-			} else {
-				if (verbose) cat("retieve lowest hierachy level")
-				G <- P$flat[[ncol(P$hier)]]
-				k <- length(unique(G))
-			}
-		}
+		#if (inherits(P, "isopam")) {
+		#	if (is.null (P$hier)) {
+		#		if (verbose) cat("no hierarchy estimated by isopam")
+		#		G <- P$flat
+		#		k  <- length(unique(P$flat))
+		#	} else {
+		#		if (verbose) cat("retieve lowest hierachy level")
+		#		G <- P$flat[[ncol(P$hier)]]
+		#		k <- length(unique(G))
+		#	}
+		#}
 		if (inherits(P, "partana")) {
 			G <- P$clustering
 			names(G) <- rownames(obj)
@@ -246,9 +247,9 @@
 				)
 			}
 		}
-		if (k != length(unique(G)) && class(P) != "isopam") {
-			message(M, "did not converge for ", k, " partitions")
-		}
+		#if (k != length(unique(G)) && class(P) != "isopam") {
+		#	message(M, "did not converge for ", k, " partitions")
+		#}
 	}
 	#	for function interface
 	else {
@@ -300,7 +301,8 @@
 }
 
 #	exported function
-VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "isopam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, ...) {
+#	dropped "isopam"
+VegsoupPartition <- function (obj, k, method = c("ward", "flexible", "pam", "kmeans", "optpart", "wards", "fanny", "FCM", "KM", "external"), clustering, polish = FALSE, seed = NULL, verbose = FALSE, ...) {
 	
 	.VegsoupPartition(obj = obj, k = k, method = method, clustering = clustering, polish = polish,
 		seed = seed, verbose = verbose, ...)
