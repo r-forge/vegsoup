@@ -1,6 +1,5 @@
 #import(coenoflex) is missing from CRAN
-
-
+#importFrom("isopam", isopam) is missing from CRAN
 #useDynLib(vegsoup) dropped at the moment
 
 
@@ -35,6 +34,7 @@ importFrom("utils", "combn", "read.csv", "setTxtProgressBar", "stack",
 importFrom("stringr", str_trim, str_pad, str_detect)
 
 #	used in a single function/method
+
 importFrom("coenocliner", "coenocline")
 
 #importFrom("ggmap", revgeocode) # as ggmap::revgeocode
@@ -51,8 +51,6 @@ importFrom("geonames", GNsrtm3)
 
 importFrom("googleVis", gvisMap)
 
-importFrom("isopam", isopam)
-
 importFrom("mefa", mefa, stcs)
 
 importFrom("gclus", dmat.color, plotcolors, order.single)
@@ -65,27 +63,26 @@ importFrom("labdsv", indval)
 importFrom("optpart", optpart, optsil, optindval, disdiam, tabdev, partana)
 
 importFrom("vegan", coverscale, vegdist, decostand, distconnected,
-		   capscale, scores, ordiplot, ordiellipse, ordispider,
-		   wisconsin, decorana, wascores, indpower)
+	capscale, scores, ordiplot, ordiellipse, ordispider,
+	wisconsin, decorana, wascores, indpower)
 
 importFrom("cluster", ellipsoidhull, agnes, pam, silhouette, fanny)
 
 importFrom("vegclust", vegclustdist, defuzzify, hcr)
 
 importFrom("sp", rbind.SpatialPoints, rbind.SpatialPointsDataFrame,
-				 rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
-				 SpatialPointsDataFrame, SpatialPolygonsDataFrame,
-				 identicalCRS, CRS)
+	rbind.SpatialPolygons, rbind.SpatialPolygonsDataFrame,
+	SpatialPointsDataFrame, SpatialPolygonsDataFrame,
+	identicalCRS, CRS)
 importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
 					  SpatialPolygonsDataFrame, CRS, GridTopology)
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
-					  proj4string, "proj4string<-", spTransform,
-					  over)
+	proj4string, "proj4string<-", spTransform, over)
 
 # importFrom("rgdal", ogrInfo)
 
 importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
-						  RasterBrick, RasterStack, RasterStackBrick)
+	RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell, extent, KML)
 
 # package multitable was removed from the CRAN (2016-05-02)
@@ -283,6 +280,7 @@ exportClasses(
 )
 
 # ensure that dispatch also works inside base functions
+
 S3method(as.matrix, Vegsoup)
 S3method(as.array, Vegsoup)
 S3method(as.vector, Vegsoup)
