@@ -1,4 +1,4 @@
-stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer"), discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE) {
+stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "layer"), discard = c("taxon", "comment"), absences = "", zeros = FALSE, verbose = FALSE) {
 
 	if (missing(x) & missing(file)) {
 		stop("please supply either a data.frame or a csv file")	
@@ -59,6 +59,7 @@ stackSpecies <- function (x, file, sep = ";", dec = ",", schema = c("abbr", "lay
 	
 	#	test absences
 	#	trust on matrix fill lower than 50%!
+	#	otherwise this breaks the function
 	if (missing(absences)) {
 		absences <- table(cov)
 		absences <- names(absences)[which.max(absences)]

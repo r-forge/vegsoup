@@ -81,8 +81,9 @@ importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
 
 # importFrom("rgdal", ogrInfo)
 
-importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
-	RasterBrick, RasterStack, RasterStackBrick)
+import(terra)
+#importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
+#	RasterBrick, RasterStack, RasterStackBrick)
 importMethodsFrom(raster, extract, ncell, extent, KML)
 
 # package multitable was removed from the CRAN (2016-05-02)

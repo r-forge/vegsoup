@@ -45,7 +45,7 @@
 
 \usage{
 stackSpecies(x, file, sep = ";", dec = ",", schema = c("abbr", "layer"),
-             discard = c("taxon", "comment"), absences, zeros = FALSE, verbose = FALSE)
+             discard = c("taxon", "comment"), absences = "", zeros = FALSE, verbose = FALSE)
 
 stackSites(x, file, sep = ";", dec = ",", schema = "plot", zeros = FALSE, verbose = FALSE)
 
