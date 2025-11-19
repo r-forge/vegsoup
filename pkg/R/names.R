@@ -1,7 +1,9 @@
 #	for species matrix
 if (!isGeneric("rownames")) {
-setGeneric("rownames", function (x, do.NULL = TRUE, prefix = "row")
-	standardGeneric("rownames"))
+  setGeneric("rownames",
+    function(x, ...) standardGeneric("rownames"),
+    useAsDefault = function(x, ...) base::rownames(x, ...)
+  )
 }
 	
 setMethod("rownames",
@@ -223,13 +225,6 @@ setMethod("splitAbbr",
 		return(invisible(r))
 		}
 )
-
-#setMethod("abbr",
-#   signature(obj = "Vegsoup"),
-#	function (obj) {
-#		splitAbbr(obj)$abbr
-#	}
-#)
 
 setMethod("abbr",
 	signature(obj = "Vegsoup"),

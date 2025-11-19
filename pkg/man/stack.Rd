@@ -34,7 +34,7 @@
   (see \code{\linkS4class{Sites}}).
   
   Function \code{stackCoordinates} collects spatial coordinates from spatial
-  data stored on disk by calls to \code{\link[rgdal]{readOGR}}. It then reshapes
+  data stored on disk by calls to \code{\link[terra]{vect}}. It then reshapes
   two or three columns (in case of 3D features) of spatial coordinates along
   with a plot identifier to the format defined by class \verb{Sites}.
   
@@ -188,7 +188,7 @@ proj4string(Y2) <- CRS("EPSG:4326") # WGS84
 require(terra)
 dsn <- tempfile()
 layer <- "foo"
-writeVector(Y2, dsn, layer, filetype = "ESRI Shapefile")
+writeVector(as(Y2, "SpatVector"), dsn, layer, filetype = "ESRI Shapefile")
 
 # read this file and promote to class 'Sites'
 Y2 <- stackCoordinates(dsn, layer, schema = "plot")

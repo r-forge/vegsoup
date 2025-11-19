@@ -5,7 +5,7 @@ stackCoordinates <- function (dsn, layer, schema, round = TRUE, verbose = TRUE, 
     pt <- terra::vect(dsn, layer = layer, ...)
 
     # check for Z dimension
-	g <- terra::geom(pt, geom = TRUE)
+	g <- terra::geom(pt, df = TRUE)
 	withz <- "z" %in% colnames(g)
 
     if (missing(schema)) {
