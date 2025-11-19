@@ -206,6 +206,7 @@ setMethod("SpatialPolygonsVegsoup",
 	signature(obj = "Vegsoup"),
 	function (obj) obj@sp.polygons
 )
+
 #if (!isGeneric("SpatialPolygons"))
 #setGeneric("SpatialPolygonsVegsoup<-",
 #	function (obj, value)
@@ -228,19 +229,18 @@ setAs(from = "Vegsoup", to = "SpatialPoints",
 	}
 )
 
-#as.SpatialPoints.Vegsoup <- function (x) {
-#	as(x, "SpatialPoints")
-#}	
+#	?dispatch on Spat*
+setAs(from = "Vegsoup", to = "SpatVector",
+	def = function (from) {
+		vect(from@sp.points)
+	}
+)	
 
 setAs(from = "Vegsoup", to = "SpatialPointsDataFrame",
 	def = function (from) {
 		from@sp.points
 	}
 )
-
-#as.SpatialPointsDataFrame.Vegsoup <- function (x) {
-#	as(x, "SpatialPointsDataFrame")
-#}	
 
 #	plot spatial points
 points.Vegsoup <- function (x, y = NULL, ...) {

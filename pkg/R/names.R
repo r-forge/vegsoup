@@ -42,6 +42,41 @@ setMethod("rownames",
 	return(x)
 }
 
+".replace.rownames2" <- function (x, value) {	
+	if (length(value) != nrow(x)) {
+		stop("length of values must match nrow(x)", call. = FALSE)
+	}
+	xy <- list(x = rownames(sites(x)), y = value)
+	
+	#	species	
+	pl <- factor(species(x)$plot, ordered = FALSE)
+	sel <- match(levels(pl), xy$x)
+	xy$x <- xy$x[sel]
+	xy$y <- xy$y[sel]
+	levels(pl) <- xy$y
+	x@species$plot <- as.character(pl)
+	
+	#	sites
+	sel <- match(rownames(sites(x)), xy$x)
+	rownames(x@sites) <- xy$y[sel]
+
+	#	part
+	sel <- match(names(partitioning(x)), xy$x)
+	names(x@part) <- xy$y[sel]
+	
+	#	points
+	sel <- match(x@sp.points$plot, xy$x)
+	x@sp.points$plot <- as.character(xy$y[sel])
+	row.names(x@sp.points) <- x@sp.points$plot
+
+	#	polygons
+	sel <- match(x@sp.polygons$plot, xy$x)
+	x@sp.polygons$plot <- xy$y[sel]
+	row.names(x@sp.polygons) <- as.character(xy$y[sel])
+	
+	return(x)
+}
+
 setReplaceMethod("rownames",
 	signature(x = "Vegsoup", value = "character"),
 	.replace.rownames
@@ -50,6 +85,16 @@ setReplaceMethod("rownames",
 setReplaceMethod("rownames",
 	signature(x = "Vegsoup", value = "integer"),
 	.replace.rownames
+)
+
+setReplaceMethod("rownames",
+	signature(x = "VegsoupPartition", value = "character"),
+	.replace.rownames2
+)
+
+setReplaceMethod("rownames",
+	signature(x = "VegsoupPartition", value = "integer"),
+	.replace.rownames2
 )
 
 if (!isGeneric("colnames")) {

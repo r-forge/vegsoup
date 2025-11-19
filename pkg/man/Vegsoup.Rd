@@ -27,7 +27,7 @@
 
 \usage{
 Vegsoup(x, y, z, coverscale, group, sp.points, sp.polygons,
-        proj4string = "+init=epsg:4326", stringsAsFactors = TRUE,
+        proj4string = "EPSG:4326", stringsAsFactors = TRUE,
         verbose = FALSE)
 
 coenoflex(i = 30, j = 20, gradients = 2, seed = NULL, ...)

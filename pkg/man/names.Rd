@@ -8,8 +8,11 @@
 
 \alias{rownames<-}
 \alias{rownames<-,Vegsoup-method}
+\alias{rownames<-,VegsoupPartition-method}
 \alias{rownames<-,Vegsoup,integer-method}
 \alias{rownames<-,Vegsoup,character-method}
+\alias{rownames<-,VegsoupPartition,integer-method}
+\alias{rownames<-,VegsoupPartition,character-method}
 \alias{rownames<-,Vegsoup,missing,missing-method}
 
 \alias{row.names}

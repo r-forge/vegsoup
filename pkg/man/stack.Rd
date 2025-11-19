@@ -81,7 +81,7 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   }
 # Arguments for function stackCoordinates
   \item{ dsn }{
-    Data source name. See \code{\link[rgdal]{readOGR}}.
+    Data source # name. See \code{\link[terra]{vect}}.
   }
   \item{ layer }{
     Layer name. See \code{readOGR}.
@@ -129,24 +129,20 @@ stackCoordinates(dsn, layer, schema, round = TRUE, verbose = TRUE, ...)
   \code{'plot'}, but an other column name can be specified by argument
   \code{schema}. 
 
-  For \code{stackCoordinates} the rgdal package needs to be loaded first.
-  The first element of argument schema defines the name of the column in the OGR
-  data source that identifies unique plots. This argument is mandatory and must
-  match a column name in the spatial attributes data. A second element of
+  For \code{stackCoordinates} the first element of argument schema defines the
+  name of the column in the data source that identifies unique plots.
+  This argument is mandatory and must match a column name in the spatial
+  attributes data. A second element of
   argument \code{schema} can specify the name of the column in the OGR data
   source that identifies altitude measurements. If absent and the geometry is
   3D the function reads the third (z) dimension of the data source. If
   \code{verbose} the function will print what is returned by
-  \code{\link[rgdal]{ogrInfo}}. Irrespective of the geometry type the function
+  \code{\link[terra]{vect}}. Irrespective of the geometry type the function
   will use the \code{\link[sp:coordinates]{coordinates}} method in package
   \pkg{sp} to obtain a pair of geographic coordinates for each plot.
   In case of irregular polygons the centroid so obtained must not be accurate.
   If the coordinate reference system is not equivalent to
-  \code{CRS("+init=epsg:4326")} it will be transformed.
-}
-\note{
-  Functionality related to package \pkg{rgdal} is only available if this package
-  is installed and loaded.
+  \code{CRS("EPSG:4326")} it will be transformed.
 }
 \value{
 \code{stackSpecies} returns an object of class \code{\linkS4class{Species}}
@@ -184,15 +180,15 @@ Y <- stackSites(dune.env, schema = "rownames")
 Y2 <- data.frame(x = rnorm(20), y = rnorm(20),
                   plot = unique(X$plot))
 
-# promate to class 'SpatialPointsDataFrame'
+# promote to class 'SpatialPointsDataFrame'
 coordinates(Y2) <- ~x+y
-proj4string(Y2) <- CRS("+init=epsg:4326") # WGS84
+proj4string(Y2) <- CRS("EPSG:4326") # WGS84
 
 # for demonstartion save to ESRI Shapefile
-require(rgdal)
+require(terra)
 dsn <- tempfile()
 layer <- "foo"
-writeOGR(Y2, dsn, layer, driver = "ESRI Shapefile")
+writeVector(Y2, dsn, layer, filetype = "ESRI Shapefile")
 
 # read this file and promote to class 'Sites'
 Y2 <- stackCoordinates(dsn, layer, schema = "plot")
@@ -210,7 +206,7 @@ variables(Y)
 \code{\link{elevation}},
 \code{\link{tile2latlng}},
 \code{\link{read.csv}},
-\code{\link[rgdal]{readOGR}} in package \pkg{rgdal}
+\code{\link[terra]{vect}} in package \pkg{terra}
 }
 
 \keyword{ import }

@@ -1,4 +1,6 @@
 --- todo
+Check documentation for spatial.Rd and stack.Rd
+
 document OptimStride plot method
 bind of VegsoupPartition does not allow recalculation the partition if e.g. vegdist is altered
 document how layers must be ordered
@@ -16,6 +18,10 @@ add layers(obj) <- value logical-method, if FALSE collapse all layers
 rename OptimStride to OptimClass and stop developing this approach
 we do better if ft.threshold is applied with summary or plot methods
 implement a more general method comparison frame work
+
+--- 2025-11-19, version 0.2-11
+
+Removed rgal and raster entirely
 
 --- 2015-01-25, version: 0.2-4 patched
 

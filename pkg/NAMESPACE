@@ -1,7 +1,6 @@
 #import(coenoflex) is missing from CRAN
 #importFrom("isopam", isopam) is missing from CRAN
-#useDynLib(vegsoup) dropped at the moment
-
+# importFrom("multitable", data.list) is missing from CRAN
 
 #	imports from base packages
 
@@ -28,7 +27,6 @@ importFrom("stats", "aggregate", "cor", "cutree", "dendrapply",
 importFrom("utils", "combn", "read.csv", "setTxtProgressBar", "stack",
            "txtProgressBar", "type.convert")
 
-
 #	used in several places
 
 importFrom("stringr", str_trim, str_pad, str_detect)
@@ -36,10 +34,6 @@ importFrom("stringr", str_trim, str_pad, str_detect)
 #	used in a single function/method
 
 importFrom("coenocliner", "coenocline")
-
-#importFrom("ggmap", revgeocode) # as ggmap::revgeocode
-
-import("Hmisc") #importFrom("Hmisc", latex) does not work?
 
 importFrom("RColorBrewer", brewer.pal) # also as RColorBrewer::brewer.pal
 
@@ -54,7 +48,6 @@ importFrom("googleVis", gvisMap)
 importFrom("mefa", mefa, stcs)
 
 importFrom("gclus", dmat.color, plotcolors, order.single)
-
 
 #	imports the package really needs
 
@@ -79,19 +72,13 @@ importClassesFrom(sp, Spatial, SpatialPointsDataFrame,
 importMethodsFrom(sp, coordinates, "coordinates<-", bbox, spplot,
 	proj4string, "proj4string<-", spTransform, over)
 
-# importFrom("rgdal", ogrInfo)
-
 import(terra)
-#importClassesFrom(raster, Extent, BasicRaster, Raster, RasterLayer,
-#	RasterBrick, RasterStack, RasterStackBrick)
-importMethodsFrom(raster, extract, ncell, extent, KML)
+importMethodsFrom(terra, extract, ncell, ext)
 
-# package multitable was removed from the CRAN (2016-05-02)
-# importFrom("multitable", data.list)
 
 importClassesFrom(Matrix, sparseMatrix, dsparseMatrix)
 
-#explicit exports
+#	explicit exports
 export(
 	"Coverscale",
 	"species",   # also in exportMethods
@@ -165,7 +152,7 @@ exportMethods(
 	"dim",
 	"disdiam",
 	"elevation",
-	"extent",
+	"ext",
 	"extract",
 	"fill",
 	"hist",

@@ -101,7 +101,6 @@ partition(x, c(2,3))
 # as above using logical index vector
 partition(x, c(FALSE, TRUE, TRUE))
 
-
 }
 
 \keyword{ methods }

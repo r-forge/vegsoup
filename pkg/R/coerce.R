@@ -80,6 +80,33 @@ setAs("list", "Coverscale", def = function (from) {
 #	}
 #)
 
+#	set S3 class
+setOldClass("mefa")
+
+#	from Vegsoup to mefa
+".as.mefa.Vegsoup" <- function (obj) {
+	x <- species(species(obj)) #! get slot data
+	if (is.ordinal(coverscale(obj))) {
+		x$cov = as.numeric(as.character(factor(species(obj)$cov,
+					levels = coverscale(obj)@codes,
+					labels = coverscale(obj)@lims)))
+	}
+	if (is.continuous(coverscale(obj))) {
+		x$cov <- as.numeric(x$cov)	
+	}
+	return(mefa(stcs(x[, c(1,2,4,3)]),
+		sites(obj),
+		taxonomy(taxonomy(obj)), nested = FALSE))
+}
+
+setAs(from = "Vegsoup", to = "mefa",
+	def = function (from) {
+		.as.mefa.Vegsoup(from)
+	}
+)
+
+as.mefa.Vegsoup <- function(obj) as(obj, "mefa")
+
 #	package multitable was removed from the CRAN (2016-05-02)	
 #	set S3 class
 #	setOldClass("data.list")
@@ -122,31 +149,3 @@ setAs("list", "Coverscale", def = function (from) {
 #		.as.data.list.Vegsoup(from)
 #	}
 #)
-
-
-#	set S3 class
-setOldClass("mefa")
-
-#	from Vegsoup to mefa
-".as.mefa.Vegsoup" <- function (obj) {
-	x <- species(species(obj)) #! get slot data
-	if (is.ordinal(coverscale(obj))) {
-		x$cov = as.numeric(as.character(factor(species(obj)$cov,
-					levels = coverscale(obj)@codes,
-					labels = coverscale(obj)@lims)))
-	}
-	if (is.continuous(coverscale(obj))) {
-		x$cov <- as.numeric(x$cov)	
-	}
-	return(mefa(stcs(x[, c(1,2,4,3)]),
-		sites(obj),
-		taxonomy(taxonomy(obj)), nested = FALSE))
-}
-
-setAs(from = "Vegsoup", to = "mefa",
-	def = function (from) {
-		.as.mefa.Vegsoup(from)
-	}
-)
-
-as.mefa.Vegsoup <- function(obj) as(obj, "mefa")

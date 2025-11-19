@@ -47,7 +47,7 @@
 }
 
 \author{
-  Roland Kaiser using code from function \code{outlier} of package \pkg{dave}.
+  Roland Kaiser
 }	
 
 \references{
@@ -57,7 +57,7 @@ Wildi, O. 2013. Data Analysis in Vegetation Ecology. 2nd ed. Wiley-Blackwell, Ch
 }
 
 \seealso{
-\code{\link{plotPCO}}, \code{\link{coldiss}}, \code{\link[dave:outlier]{outlier}} in \pkg{dave}.
+\code{\link{plotPCO}}, \code{\link{coldiss}}.
 }
 
 \examples{

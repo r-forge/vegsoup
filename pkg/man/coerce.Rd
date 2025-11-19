@@ -13,10 +13,10 @@
 \alias{coerce,Vegsoup,dist-method}
 \alias{coerce,Vegsoup,list-method}
 \alias{coerce,Vegsoup,data.frame-method}
-\alias{coerce,Vegsoup,data.list-method}
 \alias{coerce,Vegsoup,mefa-method}
 \alias{coerce,Sites,data.frame-method}
 \alias{coerce,Vegsoup,SpatialPoints-method}
+\alias{coerce,Vegsoup,SpatVector-method}
 \alias{coerce,Vegsoup,SpatialPointsDataFrame-method}
 \alias{coerce,coenocline,Vegsoup-method}
 
@@ -34,9 +34,9 @@ Coerce object a \code{'Vegsoup*'} object to other class.
 \S4method{coerce}{Vegsoup,dsparseMatrix}(from,to,strict = TRUE)
 \S4method{coerce}{Vegsoup,list}(from,to,strict = TRUE)
 \S4method{coerce}{Vegsoup,data.frame}(from,to,strict = TRUE)
-#\S4method{coerce}{Vegsoup,data.list}(from,to,strict = TRUE)
 \S4method{coerce}{Vegsoup,mefa}(from,to,strict = TRUE)
 \S4method{coerce}{Vegsoup,SpatialPoints}(from,to,strict = TRUE)
+\S4method{coerce}{Vegsoup,SpatVector}(from,to,strict = TRUE)
 \S4method{coerce}{Vegsoup,SpatialPointsDataFrame}(from,to,strict = TRUE)
 \S4method{coerce}{coenocline,Vegsoup}(from,to,strict = TRUE)
 }

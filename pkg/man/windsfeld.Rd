@@ -19,7 +19,7 @@ A \code{\link{Vegsoup}} object
 \source{
 Species abundances were estimated adopting the nine-point Braun-Blanquet scale
 (see \code{\link{Coverscale}}). Taxonomy of vascular plants agrees with Fischer
-et al. (2008), lichens with \enc{Türk}{Tuerk} \& Hafellner 2010 and bryophytes
+et al. (2008), lichens with \enc{Türk}{Tuerk} & Hafellner 2010 and bryophytes
 with \enc{Köckinger}{Koeckinger} et al. (2012). On sample plot (wf60 to wf70)
 no cryptogams were recorded. The data set has five layers \code{hl}, \code{ml},
 \code{sl}, \code{tl1} and  \code{tl2}, where hl means herb layer, ml moos

@@ -1,4 +1,4 @@
-Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "+init=epsg:4326", stringsAsFactors = TRUE, verbose = FALSE) {
+Vegsoup <- function (x, y, z, coverscale, group, sp.points, sp.polygons, proj4string = "EPSG:4326", stringsAsFactors = TRUE, verbose = FALSE) {
 	if (missing(x))
 		stop("species are missing!")
 	if (missing(y))

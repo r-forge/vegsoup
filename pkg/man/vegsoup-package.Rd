@@ -223,7 +223,7 @@ changed, by:
   \item{ \code{\link{layers}} }{
     the unique layers/strata
   }
-  \item{ \code{\link{extent},\link{bbox}} }{
+  \item{ \code{\link{ext},\link{bbox}} }{
     spatial extent
   }
   \item{ \code{\link{proj4string}} }{
@@ -503,13 +503,13 @@ Methods from spatial packges.
 
  \describe{
   \item{ \code{\link{spTransform}} }{
-   extract the values of a \verb{raster} object (package \pkg{sp})
+   map projection and datum transformation of \verb{SpatRaster} object (package \pkg{sp})
   }
   \item{ \code{\link{over}} }{
    overlay method for spatial polygons (package \pkg{sp})
   }
   \item{ \code{\link{extract}} }{
-   extract the values of a \verb{raster} object (package \pkg{raster})
+   extract the values of a \verb{SpatRaster} object (package \pkg{terra})
   }
  }
 

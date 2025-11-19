@@ -15,8 +15,8 @@
 \alias{bbox}
 \alias{bbox,Vegsoup-method}
 
-\alias{extent}
-\alias{extent,Vegsoup-method}
+\alias{ext}
+\alias{ext,Vegsoup-method}
 
 \alias{proj4string}
 \alias{proj4string,Vegsoup-method}
@@ -112,7 +112,7 @@ All methods operate on the spatial slots of an object:
   \code{bbox} retrieves the spatial extent (extremes) from \code{coordinates(obj)}.
 
   \item
-  \code{extent} returns the same but as class \code{\linkS4class{Extent}}.
+  \code{ext} returns the same but as class \code{\linkS4class{SpatExtent}}.
 
   \item
   \code{proj4string} retrieves or sets the projection attributes (coordinate
@@ -121,8 +121,7 @@ All methods operate on the spatial slots of an object:
 
   \item
   \code{spTransform} provides transformation between datum(s) and conversion between
-  projections (also known as projection and/or re-projection). Note, load package
-  rgdal for spTransform method to work.
+  projections (also known as projection and/or re-projection).
 
   \item
   \code{over} provides an overlay method for spatial polygons.
@@ -149,8 +148,7 @@ x <- barmstein
 proj4string(x)
 
 # transform to WGS 84 / Pseudo Mercator
-require(rgdal)
-xt <- spTransform(x, CRS("+init=epsg:3857"))
+xt <- spTransform(x, CRS("EPSG:3857"))
 
 # plain matrix of coordiantes
 coordinates(x)
@@ -158,9 +156,9 @@ coordinates(x)
 # bounding box, as defined in package 'sp'
 bbox(x)
 
-# extent, the same as above but returned as class 'Extent'
-# as defined in package 'raster'
-extent(x)
+# extent, the same as above but returned as class 'SpatExtent'
+# as defined in package 'terra'
+ext(x)
 
 # assign new coordinates
 # first create the data as columns

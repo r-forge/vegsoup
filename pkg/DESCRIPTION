@@ -1,6 +1,6 @@
 Package: vegsoup
-Version: 0.2-10
-Date: 2025-02-17
+Version: 0.2-11
+Date: 2025-11-19
 Title: Classes and Methods for Phytosociology
 Authors@R: c(person("Roland", "Kaiser", role = c("aut", "cre"),
 					 email = "kardinal.eros@gmail.com"))
@@ -10,9 +10,9 @@ Imports: methods, parallel,
 	terra,
 	optpart, labdsv, cluster, vegclust (>= 1.5.1),
 	mefa, gclus,
-	Hmisc, pbapply, Matrix, XML, stringr,
+	pbapply, Matrix, XML, stringr,
 	geonames, googleVis, ggmap, RColorBrewer, coenocliner
-Suggests: misc3d, maptools, maps, mapdata, Taxonstand, vegdata
+Suggests: misc3d, maps, mapdata, vegdata, Hmisc
 Description: S4 classes for phytosociological data. The classes document
 	community samples, sites data, taxonomy and spatial representation.
 	Methods are provided for data manipulation, multivariate analysis,
@@ -56,7 +56,7 @@ Collate: AAA.R
 		 SpeciesTaxonomy.R
 		 Vegsoup.R
 		 coerce.R
-                as.coenocline.Vegsoup.R
+                 as.coenocline.Vegsoup.R
 		 instantsoup.R
 		 plainsoup.R
 		 coenoflex.R
@@ -102,20 +102,20 @@ Collate: AAA.R
 		 coldiss.R
 		 reverseGeocode.R
 		 Vegsoup-SpatialMethods.R
-		 Vegsoup-RasterMethods.R
+		 Vegsoup-TerraMethods.R
 		 Vegsoup-OutputMethods.R
 		 Vegsoup-VisualisationMethods.R
 		 VegsoupPartition.R
 		 VegsoupPartition-BaseMethods.R
-                reorder.R
-                isolate.R
+                 reorder.R
+                 isolate.R
 		 partition.R
 		 validate.R
 		 optimize.R
 		 typical.R
-                abundant.R
+                 abundant.R
 		 spread.R
-                private.R
+                 private.R
 		 confusion.R
 		 accuracy.R
 		 contingency.R

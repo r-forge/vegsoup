@@ -41,7 +41,7 @@ Roland Kaiser
 }
 
 \note{
-Projection is assumed to be longitude/latitude (e.g. \code{CRS("+init=epsg:4326")}). Use \code{\link{spTransform}} for reprojection if necessary.
+Projection is assumed to be longitude/latitude (e.g. \code{CRS("EPSG:4326")}). Use \code{\link{spTransform}} for reprojection if necessary.
 }
 
 \section{Warning}{
